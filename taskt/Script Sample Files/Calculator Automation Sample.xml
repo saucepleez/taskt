@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2017 Jason Bayldon
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginLoopCommand" CommandName="BeginLoopCommand" IsCommented="false" SelectionName="Loop - Begin Loop" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopType="Loop Number Of Times" v_LoopParameter="2" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="StartProcessCommand" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Process - Start Process" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="calc" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ThickAppClickItemCommand" CommandName="ThickAppClickItemCommand" IsCommented="false" SelectionName="Thick App - Click Item" DefaultPause="3000" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_AutomationWindowName="Calculator" v_AutomationHandleName="5" v_MouseClick="Left Click" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ThickAppClickItemCommand" CommandName="ThickAppClickItemCommand" IsCommented="false" SelectionName="Thick App - Click Item" DefaultPause="3000" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_AutomationWindowName="Calculator" v_AutomationHandleName="Multiply" v_MouseClick="Left Click" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ThickAppClickItemCommand" CommandName="ThickAppClickItemCommand" IsCommented="false" SelectionName="Thick App - Click Item" DefaultPause="3000" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_AutomationWindowName="Calculator" v_AutomationHandleName="5" v_MouseClick="Left Click" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ThickAppClickItemCommand" CommandName="ThickAppClickItemCommand" IsCommented="false" SelectionName="Thick App - Click Item" DefaultPause="3000" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_AutomationWindowName="Calculator" v_AutomationHandleName="Equals" v_MouseClick="Left Click" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ThickAppGetTextCommand" CommandName="ThickAppGetTextCommand" IsCommented="false" SelectionName="Thick App - Get Text" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true">
+          <v_AutomationWindowName>Calculator</v_AutomationWindowName>
+          <v_AutomationHandleDisplayName>25</v_AutomationHandleDisplayName>
+          <v_AutomationID>150</v_AutomationID>
+          <v_userVariableName>vCalc</v_userVariableName>
+        </ScriptCommand>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Message Box - Show Message" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vCalc]" v_AutoCloseAfter="5" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CloseWindowCommand" CommandName="CloseWindowCommand" IsCommented="false" SelectionName="Window - Close Window" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Calculator" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="Loop - End Loop" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <currentPosition>0</currentPosition>
+      <variableName>vCalc</variableName>
+    </ScriptVariable>
+  </Variables>
+</Script>

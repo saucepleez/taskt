@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Example demonstrating WebAPI and XPath Querying" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vCounter" v_Input="1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginLoopCommand" CommandName="BeginLoopCommand" IsCommented="false" SelectionName="Begin Loop" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopType="Loop Number Of Times" v_LoopParameter="5" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="HTTPRequestCommand" CommandName="HTTPRequestCommand" IsCommented="false" SelectionName="HTTP Request" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_WebRequestURL="http://google.com" v_userVariableName="vPageSource" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+          <v_IfActionParameterTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="I6AcPionPara29Table122717.072930">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                    <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I6AcPionPara29Table122717.072930" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="I6AcPionPara29Table122717.072930" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <I6AcPionPara29Table122717.072930 diffgr:id="I6AcPionPara29Table122717.0729301" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>[vCounter]</Parameter_x0020_Value>
+                </I6AcPionPara29Table122717.072930>
+                <I6AcPionPara29Table122717.072930 diffgr:id="I6AcPionPara29Table122717.0729302" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>is greater than</Parameter_x0020_Value>
+                </I6AcPionPara29Table122717.072930>
+                <I6AcPionPara29Table122717.072930 diffgr:id="I6AcPionPara29Table122717.0729303" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>3</Parameter_x0020_Value>
+                </I6AcPionPara29Table122717.072930>
+              </DocumentElement>
+            </diffgr:diffgram>
+          </v_IfActionParameterTable>
+        </ScriptCommand>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="HTTPQueryResultCommand" CommandName="HTTPRequestQueryCommand" IsCommented="false" SelectionName="HTTP Result Query" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPageSource" v_xPathQuery="//*[@id=&quot;hptl&quot;]/a[2]" v_applyToVariableName="vParseResult" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="HTTPQueryResultCommand" CommandName="HTTPRequestQueryCommand" IsCommented="false" SelectionName="HTTP Result Query" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPageSource" v_xPathQuery="//*[@id=&quot;gbw&quot;]/div/div/div[1]/div[2]/a" v_applyToVariableName="vParseResult" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vCounter] - [vParseResult]" v_AutoCloseAfter="5" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vCounter" v_Input="[vCounter] + 1" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <currentPosition>0</currentPosition>
+      <variableName>vPageSource</variableName>
+    </ScriptVariable>
+    <ScriptVariable>
+      <currentPosition>0</currentPosition>
+      <variableName>vParseResult</variableName>
+    </ScriptVariable>
+    <ScriptVariable>
+      <currentPosition>0</currentPosition>
+      <variableName>vCounter</variableName>
+    </ScriptVariable>
+  </Variables>
+</Script>

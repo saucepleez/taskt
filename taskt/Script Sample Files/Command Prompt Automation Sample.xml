@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2017 Jason Bayldon
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Command Prompt automation to showcase RPA capability" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="start new command prompt" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Process - Start Process" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="cmd" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" v_Comment="send ipconfig keystrokes" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Input - Send Keystrokes" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="C:\Windows\System32\cmd.exe" v_TextToSend="ipconfig /all {ENTER}" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="wait for information to load" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause - Pause Script" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="500" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="send ctrl-a to select all" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Input - Send Keystrokes" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="C:\Windows\System32\cmd.exe" v_TextToSend="^a" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="send ctrl-c to copy to clipboard" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Input - Send Keystrokes" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="C:\Windows\System32\cmd.exe" v_TextToSend="^c" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" v_Comment="start notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Process - Start Process" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="paste clipboard contents" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Input - Send Keystrokes" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Untitled - Notepad" v_TextToSend="^v" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" v_Comment="save and close notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Input - Send Keystrokes" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Untitled - Notepad" v_TextToSend="^s" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Input - Send Keystrokes" DefaultPause="250" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Current Window" v_TextToSend="[Folder.Desktop]\Command Prompt Sample [DateTime.Now.FileSafe].txt" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Input - Send Keystrokes" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Current Window" v_TextToSend="{ENTER}" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CloseWindowCommand" CommandName="CloseWindowCommand" IsCommented="false" SelectionName="Window - Close Window" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Notepad" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="21" PauseBeforeExeucution="false" v_Comment="save and close notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ClipboardGetTextCommand" CommandName="ClipboardCommand" IsCommented="false" SelectionName="Clipboard - Get Text" DefaultPause="250" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vCmdPromptData" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment - Add Code Comment" DefaultPause="250" LineNumber="23" PauseBeforeExeucution="false" v_Comment="split by return line and display each" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StringSplitCommand" CommandName="StringSplitCommand" IsCommented="false" SelectionName="String - Split" DefaultPause="250" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vCmdPromptData" v_splitCharacter="[crLF]" v_applyToVariableName="vCmdPromptData" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginLoopCommand" CommandName="BeginLoopCommand" IsCommented="false" SelectionName="Loop - Begin Loop" DefaultPause="250" LineNumber="25" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopType="Loop Through List" v_LoopParameter="vCmdPromptData" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Message Box - Show Message" DefaultPause="250" LineNumber="26" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Got Data: [vCmdPromptData]" v_AutoCloseAfter="3" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="Loop - End Loop" DefaultPause="0" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CloseWindowCommand" CommandName="CloseWindowCommand" IsCommented="false" SelectionName="Window - Close Window" DefaultPause="250" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="cmd.exe" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <currentPosition>0</currentPosition>
+      <variableName>vCmdPromptData</variableName>
+    </ScriptVariable>
+  </Variables>
+</Script>
