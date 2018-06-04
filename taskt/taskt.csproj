@@ -380,6 +380,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="External Dependencies\" />
+    <Folder Include="Sample Scripts\" />
     <Folder Include="UI\Utilities\" />
   </ItemGroup>
   <ItemGroup>
