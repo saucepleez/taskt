@@ -4,7 +4,9 @@ taskt is a free, open-source, and easy-to-use process automation solution built 
 
 ![Main App Window](https://i.imgur.com/BbaGB75.png)
 
-
+# Sample Script
+![Sample](https://i.imgur.com/zMJ9UuV.png)
+Please see the Samples folder for script samples.
 
 ### Request a Feature
 Don't see an automation feature you are looking for?  [Create a new enhancement issue!](https://github.com/saucepleez/taskt/issues/new)
