@@ -4,8 +4,8 @@ taskt is a free, open-source, and easy-to-use robotic process automation client 
 
 ![Main App Window](https://i.imgur.com/BbaGB75.png)
 
-# How does taskt Work?
-taskt works by essentially building and executing XML command instructions.  Each automation command has an independent definition and parameters that are required for command execution.  Bot Developers chain the commands together to create an automation script.
+# How does taskt work?
+taskt works by essentially building and executing XML command instructions.  Each automation command has an independent definition and parameters that are required for command execution.  Bot Developers chain the commands together using a rich user interface to create an automation script.
 
 # What can taskt do?
 taskt can perform automation on Web Applications as well as standard, thick-client applications.  Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among a lot of other features.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
