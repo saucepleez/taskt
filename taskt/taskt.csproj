@@ -371,12 +371,6 @@
     <None Include="Resources\header-backing.png" />
     <None Include="Resources\various-question.png" />
     <Content Include="rpalogo.ico" />
-    <Content Include="Script Sample Files\Calculator Automation Sample.xml" />
-    <Content Include="Script Sample Files\Command Prompt Automation Sample.xml" />
-    <Content Include="Script Sample Files\If Conditional Sample.xml" />
-    <Content Include="Script Sample Files\Selenium Automation Sample.xml" />
-    <Content Include="Script Sample Files\String Split Sample.xml" />
-    <Content Include="Script Sample Files\Web Automation Sample.xml" />
     <Content Include="Resources\chromedriver.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
