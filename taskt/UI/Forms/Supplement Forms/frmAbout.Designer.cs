@@ -40,7 +40,7 @@
             this.lblProjectName.AutoSize = true;
             this.lblProjectName.BackColor = System.Drawing.Color.Transparent;
             this.lblProjectName.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProjectName.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblProjectName.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblProjectName.Location = new System.Drawing.Point(1, 2);
             this.lblProjectName.Name = "lblProjectName";
             this.lblProjectName.Size = new System.Drawing.Size(102, 47);
@@ -52,7 +52,7 @@
             this.lblAppVersion.AutoSize = true;
             this.lblAppVersion.BackColor = System.Drawing.Color.Transparent;
             this.lblAppVersion.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAppVersion.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblAppVersion.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblAppVersion.Location = new System.Drawing.Point(8, 46);
             this.lblAppVersion.Name = "lblAppVersion";
             this.lblAppVersion.Size = new System.Drawing.Size(61, 21);
@@ -64,7 +64,7 @@
             this.lblCopyright.AutoSize = true;
             this.lblCopyright.BackColor = System.Drawing.Color.Transparent;
             this.lblCopyright.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCopyright.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblCopyright.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblCopyright.Location = new System.Drawing.Point(8, 84);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(168, 21);
@@ -76,7 +76,7 @@
             this.lblBuildDate.AutoSize = true;
             this.lblBuildDate.BackColor = System.Drawing.Color.Transparent;
             this.lblBuildDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBuildDate.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblBuildDate.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblBuildDate.Location = new System.Drawing.Point(8, 65);
             this.lblBuildDate.Name = "lblBuildDate";
             this.lblBuildDate.Size = new System.Drawing.Size(94, 21);
@@ -88,11 +88,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 110;
-            this.ClientSize = new System.Drawing.Size(452, 116);
+            this.ClientSize = new System.Drawing.Size(452, 111);
             this.Controls.Add(this.lblBuildDate);
             this.Controls.Add(this.lblCopyright);
             this.Controls.Add(this.lblAppVersion);
             this.Controls.Add(this.lblProjectName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAbout";
             this.Text = "About";

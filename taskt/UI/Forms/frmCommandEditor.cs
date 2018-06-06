@@ -157,7 +157,7 @@ namespace taskt.UI.Forms
                 Label inputLabel = new Label();
                 inputLabel.AutoSize = true;
                 inputLabel.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-                inputLabel.ForeColor = Color.SteelBlue;
+                inputLabel.ForeColor = Color.WhiteSmoke;
                 inputLabel.Name = "lbl_" + inputField.Name;
                 formHeight += 50;
                 //apply friendly translation
@@ -189,7 +189,7 @@ namespace taskt.UI.Forms
                     {
                         taskt.UI.CustomControls.CommandItemControl variableInsertion = new taskt.UI.CustomControls.CommandItemControl();
                         variableInsertion.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-                        variableInsertion.ForeColor = Color.Black;
+                        variableInsertion.ForeColor = Color.AliceBlue;
                         variableInsertion.Tag = inputControl;
 
                         switch (attrib.additionalHelper)
@@ -206,7 +206,7 @@ namespace taskt.UI.Forms
                                 //show file selector
                                 variableInsertion.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
                                 variableInsertion.CommandDisplay = "Select a File";
-                                variableInsertion.ForeColor = Color.Black;
+                                variableInsertion.ForeColor = Color.AliceBlue;
                                 variableInsertion.Tag = inputControl;
                                 variableInsertion.Click += ShowFileSelector;
                                 flw_InputVariables.Controls.Add(variableInsertion);
@@ -216,7 +216,7 @@ namespace taskt.UI.Forms
                                 //show file selector
                                 variableInsertion.CommandImage = UI.Images.GetUIImage("OCRCommand");
                                 variableInsertion.CommandDisplay = "Capture Reference Image";
-                                variableInsertion.ForeColor = Color.Black;
+                                variableInsertion.ForeColor = Color.AliceBlue;
                                 variableInsertion.Tag = inputControl;
                                 variableInsertion.Click += ShowImageCapture;
                                 flw_InputVariables.Controls.Add(variableInsertion);
@@ -224,11 +224,11 @@ namespace taskt.UI.Forms
 
                                 taskt.UI.CustomControls.CommandItemControl testRun = new taskt.UI.CustomControls.CommandItemControl();
                                 testRun.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-                                testRun.ForeColor = Color.Black;
+                                testRun.ForeColor = Color.AliceBlue;
 
                                 testRun.CommandImage = UI.Images.GetUIImage("OCRCommand");
                                 testRun.CommandDisplay = "Run Image Recognition Test";
-                                testRun.ForeColor = Color.Black;
+                                testRun.ForeColor = Color.AliceBlue;
                                 testRun.Tag = inputControl;
                                 testRun.Click += RunImageCapture;
                                 flw_InputVariables.Controls.Add(testRun);
@@ -263,7 +263,7 @@ namespace taskt.UI.Forms
 
                     newitm.CommandImage = UI.Images.GetUIImage(webCommand.CommandName);
                     newitm.CommandDisplay = "Click here to Capture Web Element";
-                    newitm.ForeColor = Color.Black;
+                    newitm.ForeColor = Color.AliceBlue;
                     newitm.Click += ShowElementCaptureForm;
                     flw_InputVariables.Controls.Add(newitm);
                 }
@@ -273,7 +273,7 @@ namespace taskt.UI.Forms
                     taskt.UI.CustomControls.CommandItemControl newitm = new taskt.UI.CustomControls.CommandItemControl();
                     newitm.CommandImage = UI.Images.GetUIImage(mouseCommand.CommandName);
                     newitm.CommandDisplay = "Click here to Capture Mouse Position";
-                    newitm.ForeColor = Color.Black;
+                    newitm.ForeColor = Color.AliceBlue;
                     newitm.Click += ShowMouseCaptureForm;
                     flw_InputVariables.Controls.Add(newitm);
                 }

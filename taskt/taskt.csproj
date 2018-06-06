@@ -370,6 +370,7 @@
     <None Include="Resources\various-stop-button.png" />
     <None Include="Resources\header-backing.png" />
     <None Include="Resources\various-question.png" />
+    <None Include="Resources\header_backing_dark.png" />
     <Content Include="rpalogo.ico" />
     <Content Include="Resources\chromedriver.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

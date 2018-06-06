@@ -169,9 +169,12 @@ namespace taskt.UI.Forms
         {
             if (uiBtnRecord.DisplayText == "Start")
             {
+                this.Height = 150;
                 this.BringToFront();
                 MoveFormToBottomRight(this);
                 this.TopMost = true;
+                uiBtnRecord.Top = lblRecording.Top + 50;
+
                 pnlOptions.Hide();
 
                 lblRecording.Show();

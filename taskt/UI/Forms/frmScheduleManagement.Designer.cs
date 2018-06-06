@@ -89,7 +89,7 @@
             this.lblMainLogo.AutoSize = true;
             this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
             this.lblMainLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMainLogo.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblMainLogo.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblMainLogo.Location = new System.Drawing.Point(1, 4);
             this.lblMainLogo.Name = "lblMainLogo";
             this.lblMainLogo.Size = new System.Drawing.Size(152, 37);
@@ -101,7 +101,7 @@
             this.lblScheduledScripts.AutoSize = true;
             this.lblScheduledScripts.BackColor = System.Drawing.Color.Transparent;
             this.lblScheduledScripts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScheduledScripts.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblScheduledScripts.ForeColor = System.Drawing.Color.AliceBlue;
             this.lblScheduledScripts.Location = new System.Drawing.Point(6, 36);
             this.lblScheduledScripts.Name = "lblScheduledScripts";
             this.lblScheduledScripts.Size = new System.Drawing.Size(202, 21);
@@ -113,7 +113,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label3.ForeColor = System.Drawing.Color.AliceBlue;
             this.label3.Location = new System.Drawing.Point(7, 221);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(233, 17);
@@ -234,7 +234,7 @@
             this.uiBtnShowScheduleManager.BackColor = System.Drawing.Color.Transparent;
             this.uiBtnShowScheduleManager.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.uiBtnShowScheduleManager.DisplayText = "Launch Task Scheduler";
-            this.uiBtnShowScheduleManager.DisplayTextBrush = System.Drawing.Color.SteelBlue;
+            this.uiBtnShowScheduleManager.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnShowScheduleManager.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.uiBtnShowScheduleManager.Image = global::taskt.Properties.Resources.command_files;
             this.uiBtnShowScheduleManager.IsMouseOver = false;
@@ -373,7 +373,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label2.ForeColor = System.Drawing.Color.AliceBlue;
             this.label2.Location = new System.Drawing.Point(6, 200);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 21);

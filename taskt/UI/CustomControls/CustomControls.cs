@@ -337,12 +337,48 @@ namespace taskt.UI
         {
             Dictionary<string, Image> imageIcons = UIImageDictionary();
             ImageList uiImages = new ImageList();
+            uiImages.ImageSize = new Size(16, 16);
             foreach (var icon in imageIcons)
             {
+
+                //var someImage = icon.Value;
+
+                //using (Image src = icon.Value)
+                //using (Bitmap dst = new Bitmap(16, 16))
+                //using (Graphics g = Graphics.FromImage(dst))
+                //{
+                //    g.SmoothingMode = SmoothingMode.AntiAlias;
+                //    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                //    g.DrawImage(src, 0, 0, dst.Width, dst.Height);
+                //    uiImages.Images.Add(icon.Key, dst);
+                //}
+
                 uiImages.Images.Add(icon.Key, icon.Value);
+
+
             }
 
+
+
             return uiImages;
+        }
+        public static Image ResizeImageFile(Image image)
+        {
+            using (System.Drawing.Image oldImage = image)
+            {
+      
+                using (Bitmap newImage = new Bitmap(16, 16, System.Drawing.Imaging.PixelFormat.Format32bppRgb))
+                {
+                    using (Graphics canvas = Graphics.FromImage(newImage))
+                    {
+                        canvas.SmoothingMode = SmoothingMode.AntiAlias;
+                        canvas.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        canvas.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                        canvas.DrawImage(oldImage, new Rectangle(new Point(0, 0), new Size(16,16)));
+                        return newImage;
+                    }
+                }
+            }
         }
         public static Image GetUIImage(string commandName)
         {

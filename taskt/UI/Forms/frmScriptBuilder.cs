@@ -106,8 +106,6 @@ namespace taskt.UI.Forms
 
 
 
-
-
             //create undo list
             undoList = new List<List<ListViewItem>>();
 
@@ -159,8 +157,7 @@ namespace taskt.UI.Forms
             //instantiate and populate display icons for commands
             uiImages = UI.Images.UIImageList();
 
-
-
+            //set image list
             lstScriptActions.SmallImageList = uiImages;
 
 
@@ -201,6 +198,7 @@ namespace taskt.UI.Forms
         private void GenerateRecentFiles()
         {
             flwRecentFiles.Controls.Clear();
+   
 
             var scriptPath = Core.Common.GetScriptFolderPath();
 
@@ -208,6 +206,8 @@ namespace taskt.UI.Forms
             {
                 lblRecentFiles.Text = "Script Folder does not exist";
                 lblFilesMissing.Text = "Directory Not Found: " + scriptPath;
+                lblRecentFiles.ForeColor = Color.White;
+                lblFilesMissing.ForeColor = Color.White;
                 lblFilesMissing.Show();
                 flwRecentFiles.Hide();
                 return;
@@ -231,6 +231,8 @@ namespace taskt.UI.Forms
                 //noFilesLabel.Margin = new Padding(0, 0, 0, 0);
                 //flwRecentFiles.Controls.Add(noFilesLabel);
                 lblRecentFiles.Text = "No Recent Files Found";
+                lblRecentFiles.ForeColor = Color.White;
+                lblFilesMissing.ForeColor = Color.White;
                 lblFilesMissing.Show();
                 flwRecentFiles.Hide();
             }
@@ -244,7 +246,7 @@ namespace taskt.UI.Forms
                     LinkLabel newFileLink = new LinkLabel();
                     newFileLink.Text = fil;
                     newFileLink.AutoSize = true;
-                    newFileLink.LinkColor = Color.SteelBlue;
+                    newFileLink.LinkColor = Color.AliceBlue;
                     newFileLink.Font = lnkGitIssue.Font;
                     newFileLink.Margin = new Padding(0, 0, 0, 0);
                     newFileLink.LinkClicked += NewFileLink_LinkClicked;
@@ -694,7 +696,7 @@ namespace taskt.UI.Forms
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
             newCommand.Tag = cmdDetails;
             newCommand.ForeColor = cmdDetails.DisplayForeColor;
-
+            newCommand.BackColor = Color.DimGray;
             newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
             return newCommand;
         }
@@ -771,11 +773,11 @@ namespace taskt.UI.Forms
                 //mod 2 to color alt rows
                 if (rowItem.Index % 2 == 0)
                 {
-                    rowItem.BackColor = Color.White;
+                    rowItem.BackColor = Color.WhiteSmoke;
                 }
                 else
                 {
-                    rowItem.BackColor = Color.AliceBlue;
+                    rowItem.BackColor = Color.WhiteSmoke;
                 }
 
                 //if code is commented change back color
@@ -783,7 +785,7 @@ namespace taskt.UI.Forms
 
                 if ((selectedCommand.IsCommented) || (selectedCommand is Core.AutomationCommands.CommentCommand))
                 {
-                    rowItem.ForeColor = Color.ForestGreen;
+                    rowItem.ForeColor = Color.Green;
                 }
                 else
                 {

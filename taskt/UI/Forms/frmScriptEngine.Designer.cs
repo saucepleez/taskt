@@ -81,7 +81,7 @@
             this.lblMainLogo.AutoSize = true;
             this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
             this.lblMainLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMainLogo.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblMainLogo.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblMainLogo.Location = new System.Drawing.Point(1, 9);
             this.lblMainLogo.Name = "lblMainLogo";
             this.lblMainLogo.Size = new System.Drawing.Size(177, 37);
@@ -93,7 +93,7 @@
             this.uiBtnPause.BackColor = System.Drawing.Color.Transparent;
             this.uiBtnPause.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.uiBtnPause.DisplayText = "Pause";
-            this.uiBtnPause.DisplayTextBrush = System.Drawing.Color.Black;
+            this.uiBtnPause.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnPause.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnPause.Image = global::taskt.Properties.Resources.command_pause;
             this.uiBtnPause.IsMouseOver = false;
@@ -109,7 +109,7 @@
             this.uiBtnCancel.BackColor = System.Drawing.Color.Transparent;
             this.uiBtnCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.uiBtnCancel.DisplayText = "Cancel";
-            this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.Black;
+            this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
             this.uiBtnCancel.IsMouseOver = false;

@@ -60,9 +60,9 @@ namespace taskt.UI.Forms
             //{
             //    e.Graphics.FillRectangle(brush, 0, BackgroundChangeIndex, this.Width, this.Height);
             //}
-
+            var topColor = Color.FromArgb(49, 49, 49);
             using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush
-                  (new Rectangle(0, 0, this.Width, BackgroundChangeIndex), Color.White, Color.WhiteSmoke, System.Drawing.Drawing2D.LinearGradientMode.Vertical))
+                  (new Rectangle(0, 0, this.Width, BackgroundChangeIndex), topColor, topColor, System.Drawing.Drawing2D.LinearGradientMode.Vertical))
             {
                 e.Graphics.FillRectangle(brush, 0, 0, this.Width, BackgroundChangeIndex);
             }

@@ -59,7 +59,7 @@
             // flw_InputVariables
             // 
             this.flw_InputVariables.AutoScroll = true;
-            this.flw_InputVariables.BackColor = System.Drawing.Color.Transparent;
+            this.flw_InputVariables.BackColor = System.Drawing.Color.DimGray;
             this.flw_InputVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flw_InputVariables.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flw_InputVariables.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -73,7 +73,7 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.DimGray;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.cboSelectedCommand, 0, 0);
