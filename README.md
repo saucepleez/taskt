@@ -11,7 +11,7 @@ taskt works by essentially building and executing XML command instructions.  Eac
 taskt can perform automation on Web Applications as well as standard, thick-client applications.  Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among a lot of other features.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
 
 # What does a completed script look like?
-![Sample](https://i.imgur.com/VO0GEr2.png)
+![Sample](https://i.imgur.com/fbi8JrB.png)
 
 # Documentation
 Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic documenation surrounding the application and the available commands
