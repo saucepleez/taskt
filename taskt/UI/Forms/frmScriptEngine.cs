@@ -47,7 +47,7 @@ namespace taskt.UI.Forms
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
               (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm)
+              public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm)
         {
 
             filePath = pathToFile;
@@ -163,7 +163,7 @@ namespace taskt.UI.Forms
             {
                 if (bgwRunScript.CancellationPending)
                 {
-                    LogInfo("User Requested Cancellation");
+                    LogInfo("Stopping Script");
                     e.Cancel = true;
                     return;
                 }
@@ -235,6 +235,11 @@ namespace taskt.UI.Forms
                 else if(parentCommand is Core.AutomationCommands.SequenceCommand)
                 {
                     parentCommand.RunCommand(this, command, bgw);
+                }
+                else if(parentCommand is Core.AutomationCommands.StopTaskCommand)
+                {
+                    bgw.CancelAsync();
+                    return;
                 }
                 else
                 {
@@ -332,11 +337,11 @@ namespace taskt.UI.Forms
 
             if ((e.Error == null) && (!e.Cancelled))
             {
-                LogInfo("Script Ran Successfully");
+                LogInfo("Task Ran Successfully");
                 lblMainLogo.Text = "debug info (success)";
                 lstSteppingCommands.Items.Add("Bot Finished Task Successfully");
                 if (callBackForm != null)
-                    callBackForm.Notify("Script Execution Completed Successfully!");
+                    callBackForm.Notify("Task Execution Completed Successfully!");
 
                 if (engineSettings.AutoCloseDebugWindow)
                                      tmrNotify.Enabled = true;
@@ -345,19 +350,19 @@ namespace taskt.UI.Forms
             }
             else if ((e.Error == null) && (e.Cancelled))
             {
-                LogInfo("Script Cancelled By User");
-                lblMainLogo.Text = "debug info (cancelled)";
-                lstSteppingCommands.Items.Add("Operation Cancelled by User");
+                LogInfo("Task Stopped");
+                lblMainLogo.Text = "debug info (stopped)";
+                lstSteppingCommands.Items.Add("Task Stopped");
                 if (callBackForm != null)
-                    callBackForm.Notify("Script Execution Cancelled!");
+                    callBackForm.Notify("Task Execution Stopped!");
             }
             else
             {
-                log.Error("Script Failed: " + e.Error.Message);
+                log.Error("Task Failed: " + e.Error.Message);
                 lblMainLogo.Text = "debug info (error)";
                 lstSteppingCommands.Items.Add("Bot Had A Problem: " + e.Error.Message);
                 if (callBackForm != null)
-                    callBackForm.Notify("Script Execution Encountered an Error!");
+                    callBackForm.Notify("Task Execution Encountered an Error!");
             }
 
             AddStatus("Bot Engine Finished: " + DateTime.Now.ToString());

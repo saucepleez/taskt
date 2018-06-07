@@ -93,6 +93,8 @@ namespace taskt.UI.Forms
 
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
+
+
             //detect latest release
             //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/saucepleez/taskt/releases");
             //myHttpWebRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2;)";
@@ -1239,6 +1241,7 @@ namespace taskt.UI.Forms
         private void uiBtnRunScript_Click(object sender, EventArgs e)
         {
 
+            
             if (lstScriptActions.Items.Count == 0)
             {
                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");

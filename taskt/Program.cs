@@ -41,6 +41,7 @@ namespace taskt
             if (args.Length > 0)
             {
                 string filePath = args[0];
+             
 
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -49,7 +50,7 @@ namespace taskt
                         eventLog.Source = "Application";
                         eventLog.WriteEntry("An attempt was made to run a taskt script file from '" + filePath + "' but the file was not found.  Please verify that the file exists at the path indicated.", System.Diagnostics.EventLogEntryType.Error, 101, 1);
                     }
-                    //MessageBox.Show("Please pass a valid file as the parameter!", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   
                     Application.Exit();
                     return;
                 }

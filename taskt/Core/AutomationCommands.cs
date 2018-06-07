@@ -90,6 +90,8 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(BeginNumberOfTimesLoopCommand))]
     [XmlInclude(typeof(BeginListLoopCommand))]
     [XmlInclude(typeof(SequenceCommand))]
+    [XmlInclude(typeof(StopTaskCommand))]
+    [XmlInclude(typeof(RunTaskCommand))]
     [Serializable]
     public abstract class ScriptCommand
     {
@@ -3404,8 +3406,78 @@ namespace taskt.Core.AutomationCommands
             }
         }
 
-        #endregion
+    #endregion
+
+    #region Task Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Task Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to stop the script from executing.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class StopTaskCommand : ScriptCommand
+    {
+
+
+        public StopTaskCommand()
+        {
+            this.CommandName = "StopTaskCommand";
+            this.SelectionName = "Stop Current Task";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue();
+        }
     }
+
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Task Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to stop the script from executing.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class RunTaskCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Select a Task")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_taskPath { get; set; }
+
+        public RunTaskCommand()
+        {
+            this.CommandName = "RunTaskCommand";
+            this.SelectionName = "Run Task";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get assembly reference
+            var assembly = System.Reflection.Assembly.GetEntryAssembly().Location;
+
+            //get variable
+            var startFile = v_taskPath.ConvertToUserVariable(sender);
+            startFile = @"""" + startFile + @"""";
+
+            //start process
+            var p = System.Diagnostics.Process.Start(assembly, startFile);
+            
+            //wait for exit
+            p.WaitForExit();
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [" + v_taskPath + "]";
+        }
+    }
+
+
+    #endregion
+}
 
 
 

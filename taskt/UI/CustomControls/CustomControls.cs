@@ -284,10 +284,12 @@ namespace taskt.UI
             uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
             uiImages.Add("ResizeWindowCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("MessageBoxCommand", taskt.Properties.Resources.command_comment);
-            uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process);
+            uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process); 
             uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
             uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);
+            uiImages.Add("StopTaskCommand", taskt.Properties.Resources.command_stop_process);
             uiImages.Add("CloseWindowCommand", taskt.Properties.Resources.command_window_close);
             uiImages.Add("WebBrowserCreateCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("WebBrowserNavigateCommand", taskt.Properties.Resources.command_web);
