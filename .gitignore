@@ -260,3 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 /sharpRPA/sharpRPA2.licenseheader
+
+#Custom Files
+SocketServer.cs

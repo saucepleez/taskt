@@ -113,6 +113,9 @@
     <Reference Include="WebDriver, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.WebDriver.3.7.0\lib\net45\WebDriver.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.1.0, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocketSharp-netstandard.1.0.1\lib\net45\websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="WebSocket4Net, Version=0.15.0.9, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.15.0\lib\net45\WebSocket4Net.dll</HintPath>
     </Reference>
@@ -124,6 +127,7 @@
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\DatasetCommands.cs" />
     <Compile Include="Core\Logging.cs" />
+    <Compile Include="Core\SocketServer.cs" />
     <Compile Include="Core\Win32Commands.cs" />
     <Compile Include="Core\Script.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
