@@ -145,9 +145,6 @@ namespace taskt.UI.Forms
             //get latest files for recent files list on load
             GenerateRecentFiles();
 
-            //get current version
-            lblHeaderVersion.Text = "v" + new Version(System.Windows.Forms.Application.ProductVersion);
-
             //no height for status bar
             HideNotificationRow();
 
@@ -657,7 +654,7 @@ namespace taskt.UI.Forms
             editMode = true;
             this.Text = "edit sequence";
             lblMainLogo.Text = "edit sequence";
-            lblHeaderVersion.Hide();
+ 
             FormatCommandListView();
             pnlCommandHelper.Hide();
             

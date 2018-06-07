@@ -53,7 +53,6 @@
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblMainLogo = new System.Windows.Forms.Label();
-            this.lblHeaderVersion = new System.Windows.Forms.Label();
             this.lblCoordinatorInfo = new System.Windows.Forms.Label();
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
@@ -414,7 +413,6 @@
             // 
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.SteelBlue;
             this.flowLayoutPanel1.Controls.Add(this.lblMainLogo);
-            this.flowLayoutPanel1.Controls.Add(this.lblHeaderVersion);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -434,18 +432,6 @@
             this.lblMainLogo.TabIndex = 0;
             this.lblMainLogo.Text = "taskt";
             this.lblMainLogo.Click += new System.EventHandler(this.lblMainLogo_Click);
-            // 
-            // lblHeaderVersion
-            // 
-            this.lblHeaderVersion.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblHeaderVersion.AutoSize = true;
-            this.lblHeaderVersion.Font = new System.Drawing.Font("Segoe UI Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeaderVersion.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblHeaderVersion.Location = new System.Drawing.Point(96, 12);
-            this.lblHeaderVersion.Name = "lblHeaderVersion";
-            this.lblHeaderVersion.Size = new System.Drawing.Size(55, 21);
-            this.lblHeaderVersion.TabIndex = 12;
-            this.lblHeaderVersion.Text = "v. 0.0.0";
             // 
             // lblCoordinatorInfo
             // 
@@ -959,7 +945,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblRecentFiles;
         private CustomControls.UIFlowLayoutPanel flwRecentFiles;
-        private System.Windows.Forms.Label lblHeaderVersion;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox4;
