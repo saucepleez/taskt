@@ -1229,6 +1229,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_WindowName { get; set; }
 
         public ActivateWindowCommand()
@@ -1239,7 +1240,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            IntPtr hWnd = User32Functions.FindWindow(v_WindowName);
+            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            IntPtr hWnd = User32Functions.FindWindow(windowName);
             if (hWnd != IntPtr.Zero)
             {
                 User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
