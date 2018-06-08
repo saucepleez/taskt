@@ -1585,6 +1585,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Enter the process name to be stopped (calc, notepad)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ProgramShortName { get; set; }
 
         public StopProcessCommand()
@@ -1596,7 +1597,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var processes = System.Diagnostics.Process.GetProcessesByName(v_ProgramShortName);
+            string shortName = v_ProgramShortName.ConvertToUserVariable(sender);
+            var processes = System.Diagnostics.Process.GetProcessesByName(shortName);
 
             foreach (var prc in processes)
                 prc.CloseMainWindow();
