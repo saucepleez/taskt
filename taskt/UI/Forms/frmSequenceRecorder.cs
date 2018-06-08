@@ -185,7 +185,7 @@ namespace taskt.UI.Forms
 
 
                 GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-                GlobalHook.StartScreenRecordingHook(chkCaptureClicks.Checked, chkCaptureMouse.Checked, chkGroupMovesIntoSequences.Checked, chkCaptureKeyboard.Checked, chkCaptureWindowEvents.Checked, chkActivateTopLeft.Checked, chkTrackWindowSize.Checked, samplingResolution);
+                GlobalHook.StartScreenRecordingHook(chkCaptureClicks.Checked, chkCaptureMouse.Checked, chkGroupMovesIntoSequences.Checked, chkCaptureKeyboard.Checked, chkCaptureWindowEvents.Checked, chkActivateTopLeft.Checked, chkTrackWindowSize.Checked, chkTrackWindowsOpenLocation.Checked, samplingResolution);
 
                // WindowHook.StartHook();
 
@@ -204,7 +204,17 @@ namespace taskt.UI.Forms
             }
         }
 
+        private void chkActivateTopLeft_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkActivateTopLeft.Checked)
+                chkTrackWindowsOpenLocation.Checked = false;
+        }
 
+        private void chkTrackWindowsOpenLocation_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTrackWindowsOpenLocation.Checked)
+                chkActivateTopLeft.Checked = false;
+        }
     }
 }
 
