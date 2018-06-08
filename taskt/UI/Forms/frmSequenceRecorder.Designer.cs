@@ -134,9 +134,11 @@
             // chkTrackWindowsOpenLocation
             // 
             this.chkTrackWindowsOpenLocation.AutoSize = true;
+            this.chkTrackWindowsOpenLocation.Checked = true;
+            this.chkTrackWindowsOpenLocation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTrackWindowsOpenLocation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkTrackWindowsOpenLocation.ForeColor = System.Drawing.Color.White;
-            this.chkTrackWindowsOpenLocation.Location = new System.Drawing.Point(11, 272);
+            this.chkTrackWindowsOpenLocation.Location = new System.Drawing.Point(11, 250);
             this.chkTrackWindowsOpenLocation.Name = "chkTrackWindowsOpenLocation";
             this.chkTrackWindowsOpenLocation.Size = new System.Drawing.Size(200, 19);
             this.chkTrackWindowsOpenLocation.TabIndex = 16;
@@ -206,11 +208,9 @@
             // chkActivateTopLeft
             // 
             this.chkActivateTopLeft.AutoSize = true;
-            this.chkActivateTopLeft.Checked = true;
-            this.chkActivateTopLeft.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkActivateTopLeft.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkActivateTopLeft.ForeColor = System.Drawing.Color.White;
-            this.chkActivateTopLeft.Location = new System.Drawing.Point(11, 254);
+            this.chkActivateTopLeft.Location = new System.Drawing.Point(11, 270);
             this.chkActivateTopLeft.Name = "chkActivateTopLeft";
             this.chkActivateTopLeft.Size = new System.Drawing.Size(206, 19);
             this.chkActivateTopLeft.TabIndex = 10;
