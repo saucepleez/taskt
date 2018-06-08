@@ -1262,14 +1262,17 @@ namespace taskt.Core.AutomationCommands
     public class MoveWindowCommand : ScriptCommand
     {
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the X position to move the window to.")]
-        public int v_XWindowPosition { get; set; }
+        public string v_XWindowPosition { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Y position to move the window to.")]
-        public int v_YWindowPosition { get; set; }
+        public string v_YWindowPosition { get; set; }
 
         public MoveWindowCommand()
         {
@@ -1280,11 +1283,27 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            IntPtr hWnd = User32Functions.FindWindow(v_WindowName);
+
+            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
             if (hWnd != IntPtr.Zero)
             {
-                User32Functions.SetWindowPosition(hWnd, v_XWindowPosition, v_YWindowPosition);
+                
+                var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);
+                var variableYPosition = v_YWindowPosition.ConvertToUserVariable(sender);
+
+                if (!int.TryParse(variableXPosition, out int xPos))
+                {
+                    throw new Exception("X Position Invalid - " + v_XWindowPosition);
+                }
+                if (!int.TryParse(variableYPosition, out int yPos))
+                {
+                    throw new Exception("X Position Invalid - " + v_XWindowPosition);
+                }
+
+
+                User32Functions.SetWindowPosition(hWnd, xPos, yPos);
             }
             else
             {
