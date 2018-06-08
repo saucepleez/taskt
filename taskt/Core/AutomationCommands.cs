@@ -1858,18 +1858,17 @@ namespace taskt.Core.AutomationCommands
             foreach (var item in v_scriptActions)
             {
 
-                //var update = new ProgressUpdate();
-                //update.LineNumber = 0;
-                //update.UpdateText = item.GetDisplayValue();
-                //bgWorker.ReportProgress(0, update);
-
+                //exit if cancellation pending
                 if (bgWorker.CancellationPending)
                 {
                     return;
                 }
-                
 
-                item.RunCommand(sender);
+                //only run if not commented
+                if (!item.IsCommented)
+                    item.RunCommand(sender);
+           
+             
            
             }
   
