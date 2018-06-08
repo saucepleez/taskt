@@ -1325,14 +1325,17 @@ namespace taskt.Core.AutomationCommands
     public class ResizeWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window name")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new window width")]
-        public int v_XWindowSize { get; set; }
+        public string v_XWindowSize { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new window height")]
-        public int v_YWindowSize { get; set; }
+        public string v_YWindowSize { get; set; }
 
         public ResizeWindowCommand()
         {
@@ -1340,16 +1343,29 @@ namespace taskt.Core.AutomationCommands
             this.SelectionName = "Resize Window";
 
             //not working
-            //this.CommandEnabled = true;
+            this.CommandEnabled = true;
         }
 
         public override void RunCommand(object sender)
         {
-            IntPtr hWnd = User32Functions.FindWindow(v_WindowName);
+            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
             if (hWnd != IntPtr.Zero)
             {
-                User32Functions.SetWindowSize(hWnd, v_XWindowSize, v_YWindowSize);
+                var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
+                var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
+
+                if (!int.TryParse(variableXSize, out int xPos))
+                {
+                    throw new Exception("X Position Invalid - " + v_XWindowSize);
+                }
+                if (!int.TryParse(variableYSize, out int yPos))
+                {
+                    throw new Exception("X Position Invalid - " + v_YWindowSize);
+                }
+
+                User32Functions.SetWindowSize(hWnd, xPos, yPos);
             }
         }
 
@@ -1366,6 +1382,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_WindowName { get; set; }
 
         public CloseWindowCommand()
@@ -1377,7 +1394,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            IntPtr hWnd = User32Functions.FindWindow(v_WindowName);
+            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
             if (hWnd != IntPtr.Zero)
             {
@@ -1401,6 +1419,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select a Window State")]
@@ -1418,7 +1437,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            IntPtr hWnd = User32Functions.FindWindow(v_WindowName);
+            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
             if (hWnd != IntPtr.Zero) //If found
             {
@@ -1461,9 +1481,11 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Seconds To Wait")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_LengthToWait { get; set; }
 
         public WaitForWindowCommand()
@@ -1475,15 +1497,16 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-
-            var waitUntil = int.Parse(v_LengthToWait.ConvertToUserVariable(sender));
+            var lengthToWait = v_LengthToWait.ConvertToUserVariable(sender);
+            var waitUntil = int.Parse(lengthToWait);
             var endDateTime = DateTime.Now.AddSeconds(waitUntil);
 
             IntPtr hWnd = IntPtr.Zero;
 
             while (DateTime.Now < endDateTime)
             {
-                hWnd = User32Functions.FindWindow(v_WindowName);
+                string windowName = v_WindowName.ConvertToUserVariable(sender);
+                hWnd = User32Functions.FindWindow(windowName);
 
                 if (hWnd != IntPtr.Zero) //If found
                     break;
@@ -1533,16 +1556,17 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            v_ProgramName = v_ProgramName.ConvertToUserVariable(sender);
-            v_ProgramArgs = v_ProgramArgs.ConvertToUserVariable(sender);
+
+            string vProgramName = v_ProgramName.ConvertToUserVariable(sender);
+            string vProgramArgs = v_ProgramArgs.ConvertToUserVariable(sender);
 
             if (v_ProgramArgs == "")
             {
-                System.Diagnostics.Process.Start(v_ProgramName);
+                System.Diagnostics.Process.Start(vProgramName);
             }
             else
             {
-                System.Diagnostics.Process.Start(v_ProgramName, v_ProgramArgs);
+                System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
             }
 
             System.Threading.Thread.Sleep(2000);
