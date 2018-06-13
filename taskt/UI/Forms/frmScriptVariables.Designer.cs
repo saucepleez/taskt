@@ -28,60 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptVariables));
-            this.dgvVariables = new System.Windows.Forms.DataGridView();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnOK = new taskt.UI.CustomControls.UIPictureButton();
-            this.cboVariableView = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tvScriptVariables = new taskt.UI.CustomControls.UITreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).BeginInit();
+            this.lblDefineName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dgvVariables
-            // 
-            this.dgvVariables.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvVariables.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvVariables.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvVariables.Location = new System.Drawing.Point(3, 52);
-            this.dgvVariables.Name = "dgvVariables";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvVariables.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvVariables.Size = new System.Drawing.Size(563, 223);
-            this.dgvVariables.TabIndex = 0;
-            this.dgvVariables.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvVariables_DataError);
             // 
             // lblMainLogo
             // 
@@ -127,49 +90,68 @@
             this.uiBtnOK.TabStop = false;
             this.uiBtnOK.Click += new System.EventHandler(this.uiBtnOK_Click);
             // 
-            // cboVariableView
-            // 
-            this.cboVariableView.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboVariableView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboVariableView.FormattingEnabled = true;
-            this.cboVariableView.Items.AddRange(new object[] {
-            "User Variables",
-            "System Variables"});
-            this.cboVariableView.Location = new System.Drawing.Point(157, 13);
-            this.cboVariableView.Name = "cboVariableView";
-            this.cboVariableView.Size = new System.Drawing.Size(209, 28);
-            this.cboVariableView.TabIndex = 16;
-            this.cboVariableView.SelectedIndexChanged += new System.EventHandler(this.cboVariableView_SelectedIndexChanged);
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.tvScriptVariables, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dgvVariables, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 97F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(569, 329);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(607, 417);
             this.tableLayoutPanel1.TabIndex = 17;
+            // 
+            // tvScriptVariables
+            // 
+            this.tvScriptVariables.BackColor = System.Drawing.Color.DimGray;
+            this.tvScriptVariables.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvScriptVariables.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvScriptVariables.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tvScriptVariables.ForeColor = System.Drawing.Color.White;
+            this.tvScriptVariables.Location = new System.Drawing.Point(3, 100);
+            this.tvScriptVariables.Name = "tvScriptVariables";
+            this.tvScriptVariables.ShowLines = false;
+            this.tvScriptVariables.Size = new System.Drawing.Size(601, 263);
+            this.tvScriptVariables.TabIndex = 18;
+            this.tvScriptVariables.DoubleClick += new System.EventHandler(this.tvScriptVariables_DoubleClick);
+            this.tvScriptVariables.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvScriptVariables_KeyDown);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.cboVariableView);
+            this.panel1.Controls.Add(this.lblDefineName);
+            this.panel1.Controls.Add(this.uiBtnNew);
             this.panel1.Controls.Add(this.lblMainLogo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(569, 49);
+            this.panel1.Size = new System.Drawing.Size(607, 97);
             this.panel1.TabIndex = 18;
+            // 
+            // uiBtnNew
+            // 
+            this.uiBtnNew.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnNew.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnNew.DisplayText = "Add";
+            this.uiBtnNew.DisplayTextBrush = System.Drawing.Color.AliceBlue;
+            this.uiBtnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.uiBtnNew.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.uiBtnNew.IsMouseOver = false;
+            this.uiBtnNew.Location = new System.Drawing.Point(5, 45);
+            this.uiBtnNew.Name = "uiBtnNew";
+            this.uiBtnNew.Size = new System.Drawing.Size(48, 49);
+            this.uiBtnNew.TabIndex = 13;
+            this.uiBtnNew.TabStop = false;
+            this.uiBtnNew.Click += new System.EventHandler(this.uiBtnNew_Click);
             // 
             // panel2
             // 
@@ -177,11 +159,24 @@
             this.panel2.Controls.Add(this.uiBtnOK);
             this.panel2.Controls.Add(this.uiBtnCancel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 278);
+            this.panel2.Location = new System.Drawing.Point(0, 366);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(569, 51);
+            this.panel2.Size = new System.Drawing.Size(607, 51);
             this.panel2.TabIndex = 19;
+            // 
+            // lblDefineName
+            // 
+            this.lblDefineName.AutoSize = true;
+            this.lblDefineName.BackColor = System.Drawing.Color.Transparent;
+            this.lblDefineName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDefineName.ForeColor = System.Drawing.Color.LightSteelBlue;
+            this.lblDefineName.Location = new System.Drawing.Point(55, 47);
+            this.lblDefineName.Name = "lblDefineName";
+            this.lblDefineName.Size = new System.Drawing.Size(301, 42);
+            this.lblDefineName.TabIndex = 16;
+            this.lblDefineName.Text = "Double-Click to edit existing variables\r\nPress \'DEL\' key to delete existing varia" +
+    "bles";
             // 
             // frmScriptVariables
             // 
@@ -189,32 +184,32 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.BackgroundChangeIndex = 196;
-            this.ClientSize = new System.Drawing.Size(569, 329);
+            this.ClientSize = new System.Drawing.Size(607, 417);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmScriptVariables";
             this.Text = "Variables";
             this.Load += new System.EventHandler(this.frmScriptVariables_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVariables)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).EndInit();
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dgvVariables;
         private System.Windows.Forms.Label lblMainLogo;
         private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
         private taskt.UI.CustomControls.UIPictureButton uiBtnOK;
-        private System.Windows.Forms.ComboBox cboVariableView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private CustomControls.UITreeView tvScriptVariables;
+        private CustomControls.UIPictureButton uiBtnNew;
+        private System.Windows.Forms.Label lblDefineName;
     }
 }
