@@ -53,7 +53,7 @@
             this.lblXPosition.AutoSize = true;
             this.lblXPosition.BackColor = System.Drawing.Color.Transparent;
             this.lblXPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblXPosition.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblXPosition.ForeColor = System.Drawing.Color.White;
             this.lblXPosition.Location = new System.Drawing.Point(7, 9);
             this.lblXPosition.Name = "lblXPosition";
             this.lblXPosition.Size = new System.Drawing.Size(311, 29);
