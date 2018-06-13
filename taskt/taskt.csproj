@@ -231,12 +231,6 @@
     <Compile Include="UI\Forms\frmScriptBuilder.Designer.cs">
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmScriptSelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmScriptSelector.Designer.cs">
-      <DependentUpon>frmScriptSelector.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmShowCursorPosition.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -287,9 +281,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmImageCapture.resx">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmScriptSelector.resx">
-      <DependentUpon>frmScriptSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScriptVariables.resx">
       <DependentUpon>frmScriptVariables.cs</DependentUpon>
