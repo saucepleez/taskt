@@ -198,6 +198,12 @@ namespace taskt.UI.Forms
  
         private void tvScriptVariables_KeyDown(object sender, KeyEventArgs e)
         {
+            //handling outside
+            if (tvScriptVariables.SelectedNode == null)
+            {
+                return;
+            }
+
             //if parent was selected return
             if (tvScriptVariables.SelectedNode.Parent == null)
             {
