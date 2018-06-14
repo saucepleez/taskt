@@ -139,7 +139,7 @@
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpControls.Size = new System.Drawing.Size(937, 542);
+            this.tlpControls.Size = new System.Drawing.Size(909, 558);
             this.tlpControls.TabIndex = 2;
             // 
             // panel1
@@ -150,7 +150,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 123);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(937, 5);
+            this.panel1.Size = new System.Drawing.Size(909, 5);
             this.panel1.TabIndex = 13;
             // 
             // splitContainer1
@@ -171,7 +171,7 @@
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.splitContainer1.Panel2.Controls.Add(this.pnlCommandHelper);
             this.splitContainer1.Panel2.Controls.Add(this.lstScriptActions);
-            this.splitContainer1.Size = new System.Drawing.Size(931, 377);
+            this.splitContainer1.Size = new System.Drawing.Size(903, 393);
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -185,7 +185,7 @@
             this.tvCommands.Location = new System.Drawing.Point(0, 0);
             this.tvCommands.Name = "tvCommands";
             this.tvCommands.ShowLines = false;
-            this.tvCommands.Size = new System.Drawing.Size(238, 377);
+            this.tvCommands.Size = new System.Drawing.Size(238, 393);
             this.tvCommands.TabIndex = 8;
             this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
             // 
@@ -208,17 +208,18 @@
             this.pnlCommandHelper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCommandHelper.Location = new System.Drawing.Point(0, 0);
             this.pnlCommandHelper.Name = "pnlCommandHelper";
-            this.pnlCommandHelper.Size = new System.Drawing.Size(689, 377);
+            this.pnlCommandHelper.Size = new System.Drawing.Size(661, 393);
             this.pnlCommandHelper.TabIndex = 7;
             this.pnlCommandHelper.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCommandHelper_Paint);
             // 
             // flwRecentFiles
             // 
+            this.flwRecentFiles.AutoScroll = true;
             this.flwRecentFiles.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flwRecentFiles.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.flwRecentFiles.Location = new System.Drawing.Point(116, 233);
             this.flwRecentFiles.Name = "flwRecentFiles";
-            this.flwRecentFiles.Size = new System.Drawing.Size(397, 141);
+            this.flwRecentFiles.Size = new System.Drawing.Size(397, 157);
             this.flwRecentFiles.TabIndex = 12;
             this.flwRecentFiles.WrapContents = false;
             // 
@@ -379,7 +380,7 @@
             this.lstScriptActions.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstScriptActions.Location = new System.Drawing.Point(0, 0);
             this.lstScriptActions.Name = "lstScriptActions";
-            this.lstScriptActions.Size = new System.Drawing.Size(689, 377);
+            this.lstScriptActions.Size = new System.Drawing.Size(661, 393);
             this.lstScriptActions.TabIndex = 6;
             this.lstScriptActions.UseCompatibleStateImageBehavior = false;
             this.lstScriptActions.View = System.Windows.Forms.View.Details;
@@ -405,7 +406,7 @@
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(937, 44);
+            this.pnlHeader.Size = new System.Drawing.Size(909, 44);
             this.pnlHeader.TabIndex = 2;
             this.pnlHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -451,10 +452,10 @@
             this.tlpControls.SetColumnSpan(this.pnlStatus, 3);
             this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlStatus.Location = new System.Drawing.Point(0, 511);
+            this.pnlStatus.Location = new System.Drawing.Point(0, 527);
             this.pnlStatus.Margin = new System.Windows.Forms.Padding(0);
             this.pnlStatus.Name = "pnlStatus";
-            this.pnlStatus.Size = new System.Drawing.Size(937, 31);
+            this.pnlStatus.Size = new System.Drawing.Size(909, 31);
             this.pnlStatus.TabIndex = 3;
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
             // 
@@ -472,7 +473,7 @@
             this.pnlControlContainer.Location = new System.Drawing.Point(0, 44);
             this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
             this.pnlControlContainer.Name = "pnlControlContainer";
-            this.pnlControlContainer.Size = new System.Drawing.Size(937, 79);
+            this.pnlControlContainer.Size = new System.Drawing.Size(909, 79);
             this.pnlControlContainer.TabIndex = 7;
             this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
             // 
@@ -859,7 +860,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(937, 542);
+            this.ClientSize = new System.Drawing.Size(909, 558);
             this.Controls.Add(this.tlpControls);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
