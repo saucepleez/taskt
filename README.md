@@ -34,4 +34,4 @@ This project is licensed under the Apache License - see the LICENSE.md file for 
 - Screen Recording requires Windows scale settings to be at 100%.
 
 ### Support? Questions? Feature Request?
- [Create a new enhancement issue!](https://github.com/saucepleez/taskt/issues/new)
+ [Create a new issue!](https://github.com/saucepleez/taskt/issues/new)
