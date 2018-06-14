@@ -17,10 +17,10 @@ Here is a sample script
 ## Documentation
 Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic documenation surrounding the application and the available commands
 
-## Getting Started
-- Download and extract the taskt project to any folder.
-- Taskt will ask if you want to create a scripts folder under \My Documents\taskt\My Scripts (recommended)
-- Copy sample files from the taskt project folder to \My Documents\taskt\My Scripts 
+## Getting Started For Script Building
+- Download the latest from the releases page and extract the taskt project to any folder.  Double-click 'taskt.exe' to launch the application.
+- Taskt will ask if you want to create a scripts folder under \My Documents\taskt\My Scripts (optional)
+- Copy sample files from the taskt project folder to \My Documents\taskt\My Scripts (optional)
 
 ## Dependencies
 - Excel Commands require Microsoft Excel to be installed and configured.
