@@ -18,7 +18,7 @@ Here is a sample script
 Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic documenation surrounding the application and the available commands
 
 ## Getting Started For Script Building
-- Download the latest from the releases page and extract the taskt project to any folder.  Double-click 'taskt.exe' to launch the application.
+- Click [HERE](https://github.com/saucepleez/taskt/releases/download/1.0.0.0/taskt.v1.0.0.0.OFFICIAL-SIGNED.zip) Download the latest from the releases page and extract the taskt project to any folder.  Double-click 'taskt.exe' to launch the application.
 - Taskt will ask if you want to create a scripts folder under \My Documents\taskt\My Scripts (optional)
 - Copy sample files from the taskt project folder to \My Documents\taskt\My Scripts (optional)
 
