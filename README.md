@@ -10,8 +10,8 @@ taskt works by essentially building and executing XML command instructions.  Eac
 ## What can taskt do?
 taskt can perform automation on both web and desktop applications, simulating the actions a person would do. Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
 
-## What does a completed script look like?
-Here is a sample script
+## What does a completed task look like?
+Depicted below is an example of a completed task (script). Note that scripts can be simple or they can be complex, its all up to you!
 ![Sample](https://i.imgur.com/fbi8JrB.png)
 
 ## Documentation
@@ -29,6 +29,9 @@ Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic 
 
 ## License
 This project is licensed under the Apache License - see the LICENSE.md file for details.  This project is free for personal or commercial use.
+
+## Known Issues
+- Screen Recording requires Windows scale settings to be at 100%.
 
 ### Support? Questions? Feature Request?
  [Create a new enhancement issue!](https://github.com/saucepleez/taskt/issues/new)
