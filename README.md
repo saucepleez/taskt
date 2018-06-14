@@ -30,5 +30,5 @@ Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic 
 ## License
 This project is licensed under the Apache License - see the LICENSE.md file for details.  This project is free for personal or commercial use.
 
-### Request a Feature
-Don't see an automation feature you are looking for or have a great idea for an enhancement?  [Create a new enhancement issue!](https://github.com/saucepleez/taskt/issues/new)
+### Support? Questions? Feature Request?
+ [Create a new enhancement issue!](https://github.com/saucepleez/taskt/issues/new)
