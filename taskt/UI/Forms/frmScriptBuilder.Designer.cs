@@ -408,7 +408,7 @@
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(909, 44);
             this.pnlHeader.TabIndex = 2;
-            this.pnlHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+
             // 
             // flowLayoutPanel1
             // 
