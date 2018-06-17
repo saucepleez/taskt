@@ -30,6 +30,11 @@ Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic 
 ## License
 This project is licensed under the Apache License - see the LICENSE.md file for details.  This project is free for personal or commercial use.
 
+## Releases and Updates
+Officially-signed builds are released generally once per week assuming there are updates.  Each officially-signed build contains all updated features since the last officially signed release.  Otherwise, source code is constantly updated 'daily' as required and is the always the latest.
+
+If you would like an officially-signed build of a specific or latest version, please [create a new issue.](https://github.com/saucepleez/taskt/issues/new)
+
 ## Known Issues
 - Screen Recording requires Windows scale settings to be at 100%.
 
