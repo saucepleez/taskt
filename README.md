@@ -40,4 +40,5 @@ If you would like an officially-signed build of a specific or latest version, pl
 
 ### Support? Questions? Feature Request?
  [Create a new issue!](https://github.com/saucepleez/taskt/issues/new)
+ 
  [Chat with us on Gitter!](https://gitter.im/taskt-rpa/Lobby)
