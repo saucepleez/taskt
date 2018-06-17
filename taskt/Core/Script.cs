@@ -122,9 +122,11 @@ namespace taskt.Core.Script
 
             //output to xml file
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
-            var settings = new XmlWriterSettings();
-            settings.NewLineHandling = NewLineHandling.Entitize;
-            settings.Indent = true;
+            var settings = new XmlWriterSettings
+            {
+                NewLineHandling = NewLineHandling.Entitize,
+                Indent = true
+            };
 
             //write to file
             if (scriptFilePath != "")

@@ -58,7 +58,6 @@ namespace taskt.Core
                     string dsleading = splitVariable[0];
                     string datasetName = splitVariable[1];
                     string columnRequired = splitVariable[2];
-                    int columnNumber;
 
                     var datasetVariable = variableList.Where(f => f.variableName == datasetName).FirstOrDefault();
 
@@ -70,7 +69,7 @@ namespace taskt.Core
                     if (datasetVariable == null)
                         continue;
 
-                    if ((dsleading == "ds") && (int.TryParse(columnRequired, out columnNumber)))
+                    if ((dsleading == "ds") && (int.TryParse(columnRequired, out int columnNumber)))
                     {
                         //get by column index
                         str = (string)dataTable.Rows[datasetVariable.currentPosition][columnNumber];
@@ -107,9 +106,11 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreInUserVariable(this String str, object sender, string targetVariable)
         {
-            AutomationCommands.VariableCommand newVariableCommand = new AutomationCommands.VariableCommand();
-            newVariableCommand.v_userVariableName = targetVariable;
-            newVariableCommand.v_Input = str;
+            AutomationCommands.VariableCommand newVariableCommand = new AutomationCommands.VariableCommand
+            {
+                v_userVariableName = targetVariable,
+                v_Input = str
+            };
             newVariableCommand.RunCommand(sender);
         }
         /// <summary>

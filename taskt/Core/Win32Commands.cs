@@ -294,8 +294,8 @@ namespace taskt.Core.AutomationCommands
         {
             private const int WH_KEYBOARD_LL = 13;
             private const int WM_KEYDOWN = 0x0100;
-            private static LowLevelKeyboardProc _kbProc = KeyboardHookEvent;
-            private static LowLevelMouseProc _mouseProc = MouseHookEvent;
+            private static readonly LowLevelKeyboardProc _kbProc = KeyboardHookEvent;
+            private static readonly LowLevelMouseProc _mouseProc = MouseHookEvent;
             private static IntPtr _keyboardHookID = IntPtr.Zero;
             private static IntPtr _mouseHookID = IntPtr.Zero;
             private static Stopwatch sw;
@@ -733,8 +733,7 @@ namespace taskt.Core.AutomationCommands
                     if (trackActivatedWindowSizes)
                     {
                         //create rectangle from hwnd
-                        RECT windowRect;
-                        GetWindowRect(hwnd, out windowRect);
+                        GetWindowRect(hwnd, out RECT windowRect);
 
                         //do math to get height, etc
                         var width = windowRect.right - windowRect.left;
