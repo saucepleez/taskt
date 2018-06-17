@@ -35,9 +35,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tvScriptVariables = new taskt.UI.CustomControls.UITreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblDefineName = new System.Windows.Forms.Label();
             this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lblDefineName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -137,6 +137,19 @@
             this.panel1.Size = new System.Drawing.Size(607, 97);
             this.panel1.TabIndex = 18;
             // 
+            // lblDefineName
+            // 
+            this.lblDefineName.AutoSize = true;
+            this.lblDefineName.BackColor = System.Drawing.Color.Transparent;
+            this.lblDefineName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDefineName.ForeColor = System.Drawing.Color.LightSteelBlue;
+            this.lblDefineName.Location = new System.Drawing.Point(55, 47);
+            this.lblDefineName.Name = "lblDefineName";
+            this.lblDefineName.Size = new System.Drawing.Size(301, 42);
+            this.lblDefineName.TabIndex = 16;
+            this.lblDefineName.Text = "Double-Click to edit existing variables\r\nPress \'DEL\' key to delete existing varia" +
+    "bles";
+            // 
             // uiBtnNew
             // 
             this.uiBtnNew.BackColor = System.Drawing.Color.Transparent;
@@ -164,19 +177,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(607, 51);
             this.panel2.TabIndex = 19;
-            // 
-            // lblDefineName
-            // 
-            this.lblDefineName.AutoSize = true;
-            this.lblDefineName.BackColor = System.Drawing.Color.Transparent;
-            this.lblDefineName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDefineName.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.lblDefineName.Location = new System.Drawing.Point(55, 47);
-            this.lblDefineName.Name = "lblDefineName";
-            this.lblDefineName.Size = new System.Drawing.Size(301, 42);
-            this.lblDefineName.TabIndex = 16;
-            this.lblDefineName.Text = "Double-Click to edit existing variables\r\nPress \'DEL\' key to delete existing varia" +
-    "bles";
             // 
             // frmScriptVariables
             // 

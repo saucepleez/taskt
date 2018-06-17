@@ -47,11 +47,11 @@
             // cboIEWindow
             // 
             this.cboIEWindow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboIEWindow.Font = new System.Drawing.Font("Raleway", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboIEWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboIEWindow.FormattingEnabled = true;
             this.cboIEWindow.Location = new System.Drawing.Point(12, 69);
             this.cboIEWindow.Name = "cboIEWindow";
-            this.cboIEWindow.Size = new System.Drawing.Size(398, 27);
+            this.cboIEWindow.Size = new System.Drawing.Size(398, 28);
             this.cboIEWindow.TabIndex = 0;
             this.cboIEWindow.SelectedIndexChanged += new System.EventHandler(this.cboIEWindow_SelectedIndexChanged);
             this.cboIEWindow.SelectionChangeCommitted += new System.EventHandler(this.cboIEWindow_SelectionChangeCommitted);
@@ -61,7 +61,7 @@
             this.dgvSearchParameters.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Raleway", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -77,11 +77,11 @@
             // 
             this.lblMainLogo.AutoSize = true;
             this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
-            this.lblMainLogo.Font = new System.Drawing.Font("Raleway", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMainLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMainLogo.ForeColor = System.Drawing.Color.SteelBlue;
             this.lblMainLogo.Location = new System.Drawing.Point(12, 19);
             this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(330, 29);
+            this.lblMainLogo.Size = new System.Drawing.Size(337, 29);
             this.lblMainLogo.TabIndex = 5;
             this.lblMainLogo.Text = "Please select an IE Window";
             // 
@@ -89,11 +89,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Raleway", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.SteelBlue;
             this.label1.Location = new System.Drawing.Point(12, 102);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(333, 29);
+            this.label1.Size = new System.Drawing.Size(339, 29);
             this.label1.TabIndex = 6;
             this.label1.Text = "Element Search Parameters";
             // 
@@ -103,7 +103,7 @@
             this.uiBtnRefresh.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.uiBtnRefresh.DisplayText = "Refresh";
             this.uiBtnRefresh.DisplayTextBrush = System.Drawing.Color.Black;
-            this.uiBtnRefresh.Font = new System.Drawing.Font("Eras Medium ITC", 8F);
+            this.uiBtnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.uiBtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnRefresh.Image")));
             this.uiBtnRefresh.IsMouseOver = false;
             this.uiBtnRefresh.Location = new System.Drawing.Point(416, 58);
@@ -149,11 +149,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Raleway Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.SteelBlue;
             this.label3.Location = new System.Drawing.Point(14, 47);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(316, 18);
+            this.label3.Size = new System.Drawing.Size(296, 18);
             this.label3.TabIndex = 19;
             this.label3.Text = "Select a window name, then click to capture";
             // 

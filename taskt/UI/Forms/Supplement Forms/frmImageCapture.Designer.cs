@@ -117,10 +117,10 @@
             // tabFingerPrintImage
             // 
             this.tabFingerPrintImage.Controls.Add(this.pbTaggedImage);
-            this.tabFingerPrintImage.Location = new System.Drawing.Point(4, 22);
+            this.tabFingerPrintImage.Location = new System.Drawing.Point(4, 24);
             this.tabFingerPrintImage.Name = "tabFingerPrintImage";
             this.tabFingerPrintImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFingerPrintImage.Size = new System.Drawing.Size(835, 337);
+            this.tabFingerPrintImage.Size = new System.Drawing.Size(835, 335);
             this.tabFingerPrintImage.TabIndex = 0;
             this.tabFingerPrintImage.Text = "Tagged Image";
             this.tabFingerPrintImage.UseVisualStyleBackColor = true;
@@ -130,7 +130,7 @@
             this.pbTaggedImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbTaggedImage.Location = new System.Drawing.Point(3, 3);
             this.pbTaggedImage.Name = "pbTaggedImage";
-            this.pbTaggedImage.Size = new System.Drawing.Size(829, 331);
+            this.pbTaggedImage.Size = new System.Drawing.Size(829, 329);
             this.pbTaggedImage.TabIndex = 0;
             this.pbTaggedImage.TabStop = false;
             // 

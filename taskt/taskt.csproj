@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>rpalogo.ico</ApplicationIcon>
+    <ApplicationIcon>taskt_logo_alt.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -352,6 +352,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="taskt_logo_alt.ico" />
     <None Include="Resources\item-header96.png" />
     <None Include="Resources\item-header.png" />
     <None Include="Resources\action-bar-new.png" />

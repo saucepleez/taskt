@@ -79,14 +79,15 @@ namespace taskt.UI.Forms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UIForm));
             this.SuspendLayout();
-            //
+            // 
             // UIForm
-            //
+            // 
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UIForm";
             this.Load += new System.EventHandler(this.UIForm_Load);
             this.ResumeLayout(false);
+
         }
 
         private void UIForm_Load(object sender, EventArgs e)
