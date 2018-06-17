@@ -26,16 +26,24 @@ namespace taskt.Core.Script
 
     public class Script
     {
+        /// <summary>
+        /// Contains user-defined variables
+        /// </summary>
         public List<ScriptVariable> Variables { get; set; }
-
+        /// <summary>
+        /// Contains user-selected commands
+        /// </summary>
         public List<ScriptAction> Commands;
+
         public Script()
         {
+            //initialize
             Variables = new List<ScriptVariable>();
-
             Commands = new List<ScriptAction>();
         }
-
+        /// <summary>
+        /// Returns a new 'Top-Level' command.  
+        /// </summary>
         public ScriptAction AddNewParentCommand(Core.AutomationCommands.ScriptCommand scriptCommand)
         {
             ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
@@ -43,6 +51,9 @@ namespace taskt.Core.Script
             return newExecutionCommand;
         }
 
+        /// <summary>
+        /// Converts and serializes the user-defined commands into an XML file  
+        /// </summary>
         public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, string scriptFilePath = "")
         {
             //create fileStream
@@ -130,6 +141,9 @@ namespace taskt.Core.Script
 
             return script;
         }
+        /// <summary>
+        /// Deserializes a valid XML file back into user-defined commands
+        /// </summary>
         public static Script DeserializeFile(string scriptFilePath)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
@@ -139,7 +153,9 @@ namespace taskt.Core.Script
             fs.Close();
             return deserializedData;
         }
-
+        /// <summary>
+        /// Deserializes an XML string into user-defined commands (server sends a string to the client)
+        /// </summary>
         public static Script DeserializeXML(string scriptXML)
         {
             System.IO.StringReader reader = new System.IO.StringReader(scriptXML);
@@ -151,11 +167,19 @@ namespace taskt.Core.Script
 
     public class ScriptAction
     {
+        /// <summary>
+        /// generic 'top-level' user-defined script command (ex. not nested)
+        /// </summary>
         [XmlElement(Order = 1)]
         public Core.AutomationCommands.ScriptCommand ScriptCommand { get; set; }
+        /// <summary>
+        /// generic 'sub-level' commands (ex. nested commands within a loop)
+        /// </summary>
         [XmlElement(Order = 2)]
         public List<ScriptAction> AdditionalScriptCommands = new List<ScriptAction>();
-
+        /// <summary>
+        /// adds a command as a nested command to a top-level command
+        /// </summary>
         public ScriptAction AddAdditionalAction(Core.AutomationCommands.ScriptCommand scriptCommand)
         {
             ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
@@ -166,10 +190,21 @@ namespace taskt.Core.Script
 
     public class ScriptVariable
     {
+        /// <summary>
+        /// name that will be used to identify the variable
+        /// </summary>
         public string variableName { get; set; }
+        /// <summary>
+        /// index/position tracking for complex variables (list)
+        /// </summary>
         public int currentPosition = 0;
+        /// <summary>
+        /// value of the variable or current index
+        /// </summary>
         public object variableValue { get; set; }
-
+        /// <summary>
+        /// retrieve value of the variable
+        /// </summary>
         public string GetDisplayValue()
         {
             if (variableValue is string)

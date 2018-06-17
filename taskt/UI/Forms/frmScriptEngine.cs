@@ -472,7 +472,11 @@ namespace taskt.UI.Forms
         }
     }
 
-
+    public class ProgressUpdate
+    {
+        public int LineNumber { get; set; }
+        public string UpdateText { get; set; }
+    }
 
     public class PauseRequest { }
 

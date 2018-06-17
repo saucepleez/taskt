@@ -11,8 +11,14 @@ using log4net.Layout;
 
 namespace taskt.Core
 {
+    /// <summary>
+    /// Handles functionality for logging to files
+    /// </summary>
     public static class Logging
     {
+        /// <summary>
+        /// Sets up a new logging instance
+        /// </summary>
         public static void Setup(string logName)
         {
             Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
