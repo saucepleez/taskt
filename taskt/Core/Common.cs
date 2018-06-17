@@ -38,7 +38,7 @@ namespace taskt.Core
                 throw new ArgumentException("The type must be serializable.", "source");
             }
 
-            if (Object.ReferenceEquals(source, null))
+            if (source == null)
             {
                 return default(T);
             }
@@ -274,6 +274,12 @@ namespace taskt.Core
     {
         public ServerSettings ServerSettings { get; set; } = new ServerSettings();
         public EngineSettings EngineSettings { get; set; } = new EngineSettings();
+        public ClientSettings ClientSettings { get; set; } = new ClientSettings();
+        public ApplicationSettings()
+        {
+
+        }
+
 
         public void Save(ApplicationSettings appSettings)
         {
@@ -338,5 +344,15 @@ namespace taskt.Core
             AutoCloseDebugWindow = true;
             EnableDiagnosticLogging = true;
             }
+    }
+    [Serializable]
+    public class ClientSettings
+    {
+        public bool AntiIdleWhileOpen { get; set; }
+
+        public ClientSettings()
+        {
+            AntiIdleWhileOpen = false;
+        }
     }
 }

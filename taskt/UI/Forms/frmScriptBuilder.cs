@@ -37,7 +37,6 @@ namespace taskt.UI.Forms
     //Features ability to add, drag/drop reorder commands
     {
         #region Instance and Form Events
-
         private ListViewItem rowSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
         bool editMode { get; set;}
@@ -48,6 +47,7 @@ namespace taskt.UI.Forms
         public Core.ApplicationSettings appSettings;
         private string streamedXMLData { get; set; }
         private List<List<ListViewItem>> undoList;
+        private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
         public frmScriptBuilder()
         {
@@ -93,7 +93,7 @@ namespace taskt.UI.Forms
 
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
-
+           
 
             //detect latest release
             //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/saucepleez/taskt/releases");
@@ -112,8 +112,8 @@ namespace taskt.UI.Forms
             undoList = new List<List<ListViewItem>>();
 
             //get app settings
-            var appSettingClass = new Core.ApplicationSettings();
-            appSettings = appSettingClass.GetOrCreateApplicationSettings();
+            appSettings = new Core.ApplicationSettings();
+            appSettings = appSettings.GetOrCreateApplicationSettings();
 
             //get server setting preferences
             var serverSettings = appSettings.ServerSettings;
@@ -910,6 +910,8 @@ namespace taskt.UI.Forms
         List<string> notificationList = new List<string>();
         private DateTime notificationExpires;
         private bool isDisplaying;
+
+
         private void tmrNotify_Tick(object sender, EventArgs e)
         {
 
@@ -918,6 +920,10 @@ namespace taskt.UI.Forms
                 HideNotification();
             }
 
+            if ((appSettings.ClientSettings.AntiIdleWhileOpen) && (DateTime.Now > lastAntiIdleEvent.AddMinutes(1)))
+            {
+                PerformAntiIdle();
+            }
 
 
             //check if notification is required
@@ -1290,7 +1296,27 @@ namespace taskt.UI.Forms
             frmSettings newSettings = new frmSettings(this);
             newSettings.ShowDialog();
 
+            //reload app settings
+            appSettings = new Core.ApplicationSettings();
+            appSettings = appSettings.GetOrCreateApplicationSettings();
+
+
+          
+
+
         }
+
+        private void PerformAntiIdle()
+        {
+
+            lastAntiIdleEvent = DateTime.Now;
+            var mouseMove = new Core.AutomationCommands.SendMouseMoveCommand();
+            mouseMove.v_XMousePosition = Cursor.Position.X + 1;
+            mouseMove.v_YMousePosition = Cursor.Position.Y + 1;
+            Notify("Anti-Idle Triggered");
+        }
+
+
         #endregion
 
         #region Create Command Logic

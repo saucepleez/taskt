@@ -39,7 +39,6 @@ namespace taskt.UI.Forms
             newAppSettings = new Core.ApplicationSettings();
             newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
 
-
             var serverSettings = newAppSettings.ServerSettings;
             chkServerEnabled.DataBindings.Add("Checked", serverSettings, "ServerConnectionEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutomaticallyConnect.DataBindings.Add("Checked", serverSettings, "ConnectToServerOnStartup", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -50,6 +49,10 @@ namespace taskt.UI.Forms
             chkShowDebug.DataBindings.Add("Checked", engineSettings, "ShowDebugWindow", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutoCloseWindow.DataBindings.Add("Checked", engineSettings, "AutoCloseDebugWindow", false, DataSourceUpdateMode.OnPropertyChanged);
             chkEnableLogging.DataBindings.Add("Checked", engineSettings, "EnableDiagnosticLogging", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            var clientSettings = newAppSettings.ClientSettings;
+            chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
+
         }
 
         private void btnConnect_Click(object sender, EventArgs e)

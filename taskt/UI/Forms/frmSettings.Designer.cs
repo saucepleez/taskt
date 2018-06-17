@@ -45,6 +45,8 @@
             this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblOptions = new System.Windows.Forms.Label();
+            this.lblApplicationSettings = new System.Windows.Forms.Label();
+            this.chkAntiIdle = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -210,7 +212,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(7, 412);
+            this.uiBtnOpen.Location = new System.Drawing.Point(6, 461);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -241,12 +243,39 @@
             this.lblOptions.TabIndex = 15;
             this.lblOptions.Text = "Debug Settings";
             // 
+            // lblApplicationSettings
+            // 
+            this.lblApplicationSettings.AutoSize = true;
+            this.lblApplicationSettings.BackColor = System.Drawing.Color.Transparent;
+            this.lblApplicationSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblApplicationSettings.ForeColor = System.Drawing.Color.White;
+            this.lblApplicationSettings.Location = new System.Drawing.Point(4, 409);
+            this.lblApplicationSettings.Name = "lblApplicationSettings";
+            this.lblApplicationSettings.Size = new System.Drawing.Size(128, 24);
+            this.lblApplicationSettings.TabIndex = 21;
+            this.lblApplicationSettings.Text = "App Settings";
+            // 
+            // chkAntiIdle
+            // 
+            this.chkAntiIdle.AutoSize = true;
+            this.chkAntiIdle.BackColor = System.Drawing.Color.Transparent;
+            this.chkAntiIdle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAntiIdle.ForeColor = System.Drawing.Color.White;
+            this.chkAntiIdle.Location = new System.Drawing.Point(6, 436);
+            this.chkAntiIdle.Name = "chkAntiIdle";
+            this.chkAntiIdle.Size = new System.Drawing.Size(217, 24);
+            this.chkAntiIdle.TabIndex = 20;
+            this.chkAntiIdle.Text = "Anti-Idle (while app is open)";
+            this.chkAntiIdle.UseVisualStyleBackColor = false;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(485, 467);
+            this.ClientSize = new System.Drawing.Size(485, 513);
+            this.Controls.Add(this.lblApplicationSettings);
+            this.Controls.Add(this.chkAntiIdle);
             this.Controls.Add(this.txtPublicKey);
             this.Controls.Add(this.lblOptions);
             this.Controls.Add(this.label2);
@@ -290,5 +319,7 @@
         private System.Windows.Forms.CheckBox chkEnableLogging;
         private System.Windows.Forms.Label lblMainLogo;
         private System.Windows.Forms.Label lblOptions;
+        private System.Windows.Forms.Label lblApplicationSettings;
+        private System.Windows.Forms.CheckBox chkAntiIdle;
     }
 }
