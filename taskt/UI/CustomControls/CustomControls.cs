@@ -333,6 +333,8 @@ namespace taskt.UI
             uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
+            uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WriteTextFileCommand", taskt.Properties.Resources.command_files);
             return uiImages;
         }
         public static ImageList UIImageList()

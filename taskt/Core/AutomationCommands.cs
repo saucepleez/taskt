@@ -92,6 +92,8 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(SequenceCommand))]
     [XmlInclude(typeof(StopTaskCommand))]
     [XmlInclude(typeof(RunTaskCommand))]
+    [XmlInclude(typeof(WriteTextFileCommand))]
+    [XmlInclude(typeof(ReadTextFileCommand))]
     [Serializable]
     public abstract class ScriptCommand
     {
@@ -3523,6 +3525,100 @@ namespace taskt.Core.AutomationCommands
 
 
     #endregion
+
+    #region Text File Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Text File Commands")]
+    [Attributes.ClassAttributes.Description("This command writes specified data to a text file")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    public class WriteTextFileCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_FilePath { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the text to be written")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_TextToWrite { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select overwrite option")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Append")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Overwrite")]
+        public string v_Overwrite { get; set; }
+        public WriteTextFileCommand()
+        {
+            this.CommandName = "WriteTextFileCommand";
+            this.SelectionName = "Write To File";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //convert variables
+            var filePath = v_FilePath.ConvertToUserVariable(sender);
+            var outputText = v_TextToWrite.ConvertToUserVariable(sender);
+
+            //append or overwrite as necessary
+            if (v_Overwrite == "Append")
+            {
+                System.IO.File.AppendAllText(filePath, outputText);
+            }
+            else
+            {
+                System.IO.File.WriteAllText(filePath, outputText);
+            }
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [" + v_Overwrite + " to '" + v_FilePath + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Text File Commands")]
+    [Attributes.ClassAttributes.Description("This command reads text data into a variable")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    public class ReadTextFileCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_FilePath { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define where the text should be stored")]
+        public string v_userVariableName { get; set; }
+
+
+        public ReadTextFileCommand()
+        {
+            this.CommandName = "ReadTextFileCommand";
+            this.SelectionName = "Read Text File";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //convert variables
+            var filePath = v_FilePath.ConvertToUserVariable(sender);
+            //read text from file
+            var textFromFile = System.IO.File.ReadAllText(filePath);
+            //assign text to user variable
+            textFromFile.StoreInUserVariable(sender, v_userVariableName);              
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Read from '" + v_FilePath + "']";
+        }
+    }
+    #endregion
+
 }
 
 
