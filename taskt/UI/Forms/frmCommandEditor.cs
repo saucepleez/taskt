@@ -728,7 +728,13 @@ namespace taskt.UI.Forms
                     ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
 
                     break;
+                case "Window Name Exists":
+                case "Current Window Name Is":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Window Name", "");
 
+                    break;
                 default:
                     break;
             }

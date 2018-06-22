@@ -2826,6 +2826,8 @@ namespace taskt.Core.AutomationCommands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Current Window Name Is")]
         public string v_IfActionType { get; set; }
 
         [XmlElement]
@@ -2851,6 +2853,11 @@ namespace taskt.Core.AutomationCommands
         {
             var engineForm = (UI.Forms.frmScriptEngine)sender;
 
+
+
+            bool ifResult = false;
+
+
             if (v_IfActionType == "Value")
             {
                 string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
@@ -2866,7 +2873,7 @@ namespace taskt.Core.AutomationCommands
                 value1 = value1.ConvertToUserVariable(sender);
                 value2 = value2.ConvertToUserVariable(sender);
 
-                bool ifResult = false;
+
 
                 decimal cdecValue1, cdecValue2;
 
@@ -2904,6 +2911,50 @@ namespace taskt.Core.AutomationCommands
                         ifResult = (cdecValue1 <= cdecValue2);
                         break;
                 }
+            }
+            else if (v_IfActionType == "Window Name Exists")
+            {
+                //get user supplied name
+                string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Window Name"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                //variable translation
+                string variablizedWindowName = windowName.ConvertToUserVariable(sender);
+
+                //search for window
+                IntPtr windowPtr = User32Functions.FindWindow(variablizedWindowName);
+
+                //conditional
+                if (windowPtr != IntPtr.Zero)
+                {
+                    ifResult = true;
+                }
+
+
+
+            }
+            else if (v_IfActionType == "Current Window Name Is")
+            {
+                string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Window Name"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                string variablizedWindowName = windowName.ConvertToUserVariable(sender);
+
+                var currentWindowTitle = User32Functions.GetActiveWindowTitle();
+
+                if (currentWindowTitle == variablizedWindowName)
+                {
+                    ifResult = true;m
+                }
+
+            }
+            else
+            {
+                throw new Exception("If type not recognized!");
+            }
+  
+
 
                 int startIndex, endIndex, elseIndex;
                 if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.AutomationCommands.ElseCommand))
@@ -2937,7 +2988,12 @@ namespace taskt.Core.AutomationCommands
                         return;
                     engineForm.ExecuteCommand(parentCommand.AdditionalScriptCommands[i], bgw);
                 }
-            }
+            
+
+
+
+
+
         }
 
         public override string GetDisplayValue()
@@ -2957,6 +3013,14 @@ namespace taskt.Core.AutomationCommands
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (" + value1 + " " + operand + " " + value2 + ")";
+                case "Window Name Exists":
+                case "Current Window Name Is":
+
+                    string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Window Name"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If " + v_IfActionType + " [Name: " + windowName + "]";
 
                 default:
                     break;
@@ -3619,7 +3683,6 @@ namespace taskt.Core.AutomationCommands
     }
     #endregion
 
-}
 
 
 
