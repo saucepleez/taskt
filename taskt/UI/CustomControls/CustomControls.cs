@@ -335,6 +335,9 @@ namespace taskt.UI
             uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
             uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("WriteTextFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("MoveFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("DeleteFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("RenameFileCommand", taskt.Properties.Resources.command_files);
             return uiImages;
         }
         public static ImageList UIImageList()
