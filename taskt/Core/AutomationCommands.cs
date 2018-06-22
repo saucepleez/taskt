@@ -95,6 +95,8 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(WriteTextFileCommand))]
     [XmlInclude(typeof(ReadTextFileCommand))]
     [XmlInclude(typeof(MoveFileCommand))]
+    [XmlInclude(typeof(DeleteFileCommand))]
+    [XmlInclude(typeof(RenameFileCommand))]
     [Serializable]
     public abstract class ScriptCommand
     {
@@ -3693,6 +3695,12 @@ namespace taskt.Core.AutomationCommands
     public class MoveFileCommand : ScriptCommand
     {
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to move or copy the file")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Move File")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Copy File")]
+        public string v_OperationType { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
@@ -3701,7 +3709,6 @@ namespace taskt.Core.AutomationCommands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to copy to")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
@@ -3710,10 +3717,17 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         public string v_CreateDirectory { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Delete file if it already exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        public string v_DeleteExisting { get; set; }
+
+
         public MoveFileCommand()
         {
             this.CommandName = "MoveFileCommand";
-            this.SelectionName = "Move File";
+            this.SelectionName = "Move/Copy File";
             this.CommandEnabled = true;
         }
 
@@ -3735,19 +3749,122 @@ namespace taskt.Core.AutomationCommands
             //create destination
             var destinationPath = System.IO.Path.Combine(destinationFolder, sourceFileInfo.Name);
 
-            //move file
-            System.IO.File.Move(sourceFile, destinationPath);
+            //delete if it already exists per user
+            if (v_DeleteExisting == "Yes")
+            {
+                System.IO.File.Delete(destinationPath);
+            }
+
+            if (v_OperationType == "Move File")
+            {
+                //move file
+                System.IO.File.Move(sourceFile, destinationPath);
+            }
+            else
+            {
+                //copy file
+                System.IO.File.Copy(sourceFile, destinationPath);
+            }
+         
            
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [from '" + v_SourceFilePath + "' to '" + v_DestinationDirectory + "']";
+            return base.GetDisplayValue() + " [" + v_OperationType + " from '" + v_SourceFilePath + "' to '" + v_DestinationDirectory + "']";
         }
     }
 
+    [Serializable]
+    [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.Description("This command deletes a file from a specified destination")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    public class DeleteFileCommand : ScriptCommand
+    {
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_SourceFilePath { get; set; }
 
 
+
+        public DeleteFileCommand()
+        {
+            this.CommandName = "DeleteFileCommand";
+            this.SelectionName = "Delete File";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+            //apply variable logic
+            var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
+   
+             //delete file
+             System.IO.File.Delete(sourceFile);
+
+            }
+
+
+        
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [delete " + v_SourceFilePath + "']";
+        }
+    }
+
+    [Serializable]
+    [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    public class RenameFileCommand : ScriptCommand
+    {
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_SourceFilePath { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new file name (with extension)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_NewName { get; set; }
+
+       
+        public RenameFileCommand()
+        {
+            this.CommandName = "RenameFileCommand";
+            this.SelectionName = "Rename File";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+         //apply variable logic
+         var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
+         var newFileName = v_NewName.ConvertToUserVariable(sender);
+            
+         //get source file name and info
+         System.IO.FileInfo sourceFileInfo = new FileInfo(sourceFile);
+
+          //create destination
+          var destinationPath = System.IO.Path.Combine(sourceFileInfo.DirectoryName, newFileName);
+       
+          //rename file
+          System.IO.File.Move(sourceFile, destinationPath);
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [rename " + v_SourceFilePath + " to '" + v_NewName + "']";
+        }
+    }
 
     #endregion
 
