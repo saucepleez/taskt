@@ -94,6 +94,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(RunTaskCommand))]
     [XmlInclude(typeof(WriteTextFileCommand))]
     [XmlInclude(typeof(ReadTextFileCommand))]
+    [XmlInclude(typeof(MoveFileCommand))]
     [Serializable]
     public abstract class ScriptCommand
     {
@@ -2945,7 +2946,7 @@ namespace taskt.Core.AutomationCommands
 
                 if (currentWindowTitle == variablizedWindowName)
                 {
-                    ifResult = true;m
+                    ifResult = true;
                 }
 
             }
@@ -3683,6 +3684,74 @@ namespace taskt.Core.AutomationCommands
     }
     #endregion
 
+
+    #region File Operation Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    public class MoveFileCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_SourceFilePath { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to copy to")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_DestinationDirectory { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Create folder if destination does not exist")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        public string v_CreateDirectory { get; set; }
+
+        public MoveFileCommand()
+        {
+            this.CommandName = "MoveFileCommand";
+            this.SelectionName = "Move File";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+            //apply variable logic
+            var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
+            var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(sender);
+
+            if ((v_CreateDirectory == "Yes") && (!System.IO.Directory.Exists(destinationFolder)))
+            {
+                System.IO.Directory.CreateDirectory(destinationFolder); 
+            }
+
+            //get source file name and info
+            System.IO.FileInfo sourceFileInfo = new FileInfo(sourceFile);
+
+            //create destination
+            var destinationPath = System.IO.Path.Combine(destinationFolder, sourceFileInfo.Name);
+
+            //move file
+            System.IO.File.Move(sourceFile, destinationPath);
+           
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [from '" + v_SourceFilePath + "' to '" + v_DestinationDirectory + "']";
+        }
+    }
+
+
+
+
+    #endregion
+
+}
 
 
 
