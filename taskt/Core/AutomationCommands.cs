@@ -2831,6 +2831,8 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Active Window Name Is")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Folder Exists")]
         public string v_IfActionType { get; set; }
 
         [XmlElement]
@@ -2952,6 +2954,58 @@ namespace taskt.Core.AutomationCommands
                 }
 
             }
+            else if (v_IfActionType == "File Exists")
+            {
+
+                string fileName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "File Path"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "True When"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                var userFileSelected = fileName.ConvertToUserVariable(sender);
+
+                bool existCheck = false;
+                if (trueWhenFileExists == "It Does Exist")
+                {
+                    existCheck = true;
+                }
+
+
+                if (System.IO.File.Exists(userFileSelected) == existCheck)
+                {
+                    ifResult = true;
+                }
+
+
+            }
+            else if (v_IfActionType == "Folder Exists")
+            {
+                string folderName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                    where rw.Field<string>("Parameter Name") == "Folder Path"
+                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                              where rw.Field<string>("Parameter Name") == "True When"
+                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                var userFolderSelected = folderName.ConvertToUserVariable(sender);
+
+                bool existCheck = false;
+                if (trueWhenFileExists == "It Does Exist")
+                {
+                    existCheck = true;
+                }
+
+
+                if (System.IO.Directory.Exists(folderName) == existCheck)
+                {
+                    ifResult = true;
+                }
+    
+            }
             else
             {
                 throw new Exception("If type not recognized!");
@@ -3024,7 +3078,34 @@ namespace taskt.Core.AutomationCommands
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If " + v_IfActionType + " [Name: " + windowName + "]";
+                case "File Exists":
 
+                    string filePath = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "File Path"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    string fileCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "True When"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+
+                    return "If " + v_IfActionType + " [File: " + filePath + "]";
+                 
+                case "Folder Exists":
+
+                    string folderPath = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Folder Path"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    string folderCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                               where rw.Field<string>("Parameter Name") == "True When"
+                                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+
+                    return "If " + v_IfActionType + " [Folder: " + folderPath + "]";
+
+
+    
                 default:
                     break;
             }

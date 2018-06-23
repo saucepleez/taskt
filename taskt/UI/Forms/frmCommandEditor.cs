@@ -705,6 +705,7 @@ namespace taskt.UI.Forms
             Core.AutomationCommands.BeginIfCommand cmd = (Core.AutomationCommands.BeginIfCommand)selectedCommand;
             DataTable actionParameters = cmd.v_IfActionParameterTable;
             actionParameters.Rows.Clear();
+            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
 
             switch (ifAction.Text)
             {
@@ -716,7 +717,7 @@ namespace taskt.UI.Forms
                     actionParameters.Rows.Add("Value2", "");
 
                     //combobox cell for Variable Name
-                    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox = new DataGridViewComboBoxCell();
                     comparisonComboBox.Items.Add("is equal to");
                     comparisonComboBox.Items.Add("is greater than");
                     comparisonComboBox.Items.Add("is greater than or equal to");
@@ -733,7 +734,35 @@ namespace taskt.UI.Forms
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
                     actionParameters.Rows.Add("Window Name", "");
+                    break;
+                case "File Exists":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("File Path", "");
+                    actionParameters.Rows.Add("True When", "");
 
+                    //combobox cell for Variable Name
+                    comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("It Does Exist");
+                    comparisonComboBox.Items.Add("It Does Not Exist");
+
+                    //assign cell as a combobox
+                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+
+                    break;
+                case "Folder Exists":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Folder Path", "");
+                    actionParameters.Rows.Add("True When", "");
+
+                    //combobox cell for Variable Name
+                    comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("It Does Exist");
+                    comparisonComboBox.Items.Add("It Does Not Exist");
+
+                    //assign cell as a combobox
+                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
                     break;
                 default:
                     break;
