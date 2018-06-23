@@ -514,24 +514,16 @@ namespace taskt.Core.AutomationCommands
                     selectedKey = "{" + selectedKey + "}";
                 }
 
-
-
-
-
-
-
-
-
-
-
-
                 //generate sendkeys together
                 if ((generatedCommands.Count > 1) && (generatedCommands[generatedCommands.Count - 1] is SendKeysCommand))
                 {
-                    var lastSendKeys = (SendKeysCommand)generatedCommands[generatedCommands.Count - 1];
 
-                    if (lastSendKeys.v_TextToSend.Contains("{ENTER}"))
+                    var lastCreatedSendKeysCommand = (SendKeysCommand)generatedCommands[generatedCommands.Count - 1];
+
+                    if (lastCreatedSendKeysCommand.v_TextToSend.Contains("{ENTER}"))
                     {
+                        //append this to a new command because you dont want text to input after user presses enter
+
                         //build a pause command to track pause since last command
                         BuildPauseCommand();
 
@@ -545,7 +537,10 @@ namespace taskt.Core.AutomationCommands
                     }
                     else
                     {
-                        lastSendKeys.v_TextToSend += selectedKey;
+                        //append chars to previously created command
+                        //this makes editing easier for the user because only 1 command is issued rather than multiples
+                        var previouslyInputChars = lastCreatedSendKeysCommand.v_TextToSend;
+                        lastCreatedSendKeysCommand.v_TextToSend = previouslyInputChars + selectedKey;
                     }
 
 
