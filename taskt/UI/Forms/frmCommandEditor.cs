@@ -729,7 +729,7 @@ namespace taskt.UI.Forms
 
                     break;
                 case "Window Name Exists":
-                case "Current Window Name Is":
+                case "Active Window Name Is":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
                     actionParameters.Rows.Add("Window Name", "");

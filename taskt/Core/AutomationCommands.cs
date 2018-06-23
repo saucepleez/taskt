@@ -2830,7 +2830,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Current Window Name Is")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Active Window Name Is")]
         public string v_IfActionType { get; set; }
 
         [XmlElement]
@@ -3017,7 +3017,7 @@ namespace taskt.Core.AutomationCommands
 
                     return "If (" + value1 + " " + operand + " " + value2 + ")";
                 case "Window Name Exists":
-                case "Current Window Name Is":
+                case "Active Window Name Is":
 
                     string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Window Name"
@@ -3685,7 +3685,6 @@ namespace taskt.Core.AutomationCommands
         }
     }
     #endregion
-
 
     #region File Operation Commands
     [Serializable]
