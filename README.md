@@ -34,10 +34,10 @@ This project is licensed under the Apache License - see the LICENSE.md file for 
 Officially-signed builds are released generally once per week assuming there are updates.  Each officially-signed build contains all updated features since the last officially signed release.  Otherwise, source code is constantly updated 'daily' as required and is the always the latest.
 
 Version Number Strategy (as of 1.1.0.0):
-Major - Breaking Changes or Incompatability
-Minor - Features and Enhancement Implementation
-Revision - Bugfixes, Post Implementation fixes
-Build - Reserved for Rebuilds
+- Major - Breaking Changes or Incompatability
+- Minor - Features and Enhancement Implementation
+- Revision - Bugfixes, Post Implementation fixes
+- Build - Reserved for Rebuilds
 
 If you would like an officially-signed build of a specific or latest version, please [create a new issue.](https://github.com/saucepleez/taskt/issues/new)
 
