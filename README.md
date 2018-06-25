@@ -39,7 +39,7 @@ Version Number Strategy (as of 1.1.0.0):
 - Revision - Bugfixes, Post Implementation fixes
 - Build - Reserved for Rebuilds
 
-If you would like an officially-signed build of a specific or latest version, please [create a new issue.](https://github.com/saucepleez/taskt/issues/new)
+If you would like an officially-signed build of a specific or latest version, please [create a new issue](https://github.com/saucepleez/taskt/issues/new).
 
 ## Known Issues
 - Screen Recording requires Windows scale settings to be at 100%.
