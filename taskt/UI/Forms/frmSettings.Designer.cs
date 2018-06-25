@@ -47,6 +47,7 @@
             this.lblOptions = new System.Windows.Forms.Label();
             this.lblApplicationSettings = new System.Windows.Forms.Label();
             this.chkAntiIdle = new System.Windows.Forms.CheckBox();
+            this.btnUpdates = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -212,7 +213,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(6, 461);
+            this.uiBtnOpen.Location = new System.Drawing.Point(5, 497);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -268,12 +269,24 @@
             this.chkAntiIdle.Text = "Anti-Idle (while app is open)";
             this.chkAntiIdle.UseVisualStyleBackColor = false;
             // 
+            // btnUpdates
+            // 
+            this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdates.Location = new System.Drawing.Point(5, 464);
+            this.btnUpdates.Name = "btnUpdates";
+            this.btnUpdates.Size = new System.Drawing.Size(207, 27);
+            this.btnUpdates.TabIndex = 22;
+            this.btnUpdates.Text = "Check For Updates";
+            this.btnUpdates.UseVisualStyleBackColor = true;
+            this.btnUpdates.Click += new System.EventHandler(this.btnUpdateCheck_Click);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(485, 513);
+            this.ClientSize = new System.Drawing.Size(485, 548);
+            this.Controls.Add(this.btnUpdates);
             this.Controls.Add(this.lblApplicationSettings);
             this.Controls.Add(this.chkAntiIdle);
             this.Controls.Add(this.txtPublicKey);
@@ -321,5 +334,6 @@
         private System.Windows.Forms.Label lblOptions;
         private System.Windows.Forms.Label lblApplicationSettings;
         private System.Windows.Forms.CheckBox chkAntiIdle;
+        private System.Windows.Forms.Button btnUpdates;
     }
 }
