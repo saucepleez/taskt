@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace taskt
 {
     static class Program
@@ -59,6 +60,15 @@ namespace taskt
             }
             else
             {
+                //clean up updater
+                var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+
+                if (System.IO.File.Exists(updaterExecutableDestination))
+                {
+                    System.IO.File.Delete(updaterExecutableDestination);
+                }
+                        
+
                 Application.Run(new UI.Forms.frmScriptBuilder());
             }
         }
