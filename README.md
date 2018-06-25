@@ -2,7 +2,7 @@
 # taskt
 taskt (formerly sharpRPA) is the first truly free, easy to use, and open source process automation client built on the .NET Framework in C#.  taskt allows you to build a digital workforce and automate straight-forward and repetative actions with ease.  Included is a "what you see is what you get" designer with dozens of automation commands and options as well as a screen recorder that records and replays scripted automation. With taskt, you can spend less time writing code and more time building functionality.
 
-![Main App Window](https://i.imgur.com/ynlr3p6.png)
+![Main App Window](http://www.taskt.net/assets/images/RPA.gif)
 
 ## How does taskt work?
 taskt works by essentially building and executing XML command instructions.  Each automation command has an independent definition and parameters that are required for command execution.  Bot Developers chain the commands together using a rich user interface to create an automation script.
