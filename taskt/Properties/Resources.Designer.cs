@@ -463,16 +463,6 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap robot_error1 {
-            get {
-                object obj = ResourceManager.GetObject("robot-error1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap robot_source {
             get {
                 object obj = ResourceManager.GetObject("robot source", resourceCulture);
