@@ -2837,6 +2837,7 @@ namespace taskt.Core.AutomationCommands
 
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_IfActionParameterTable { get; set; }
 
         public BeginIfCommand()

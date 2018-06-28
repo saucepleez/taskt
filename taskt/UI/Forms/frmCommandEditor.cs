@@ -1008,6 +1008,25 @@ namespace taskt.UI.Forms
                     //concat variable name with brackets [vVariable] as engine searches for the same
                     targetCombobox.Text = targetCombobox.Text + string.Concat("[", newVariableSelector.lstVariables.SelectedItem.ToString(), "]");
                 }
+                else if(inputBox.Tag is DataGridView)
+                {
+                    DataGridView targetDGV = (DataGridView)inputBox.Tag;
+
+                    if (targetDGV.SelectedCells.Count == 0)
+                    {
+                        MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    {
+                        MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat("[", newVariableSelector.lstVariables.SelectedItem.ToString(), "]");
+                }
+           
 
             }
         }
