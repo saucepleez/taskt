@@ -38,7 +38,7 @@ namespace taskt.UI.Forms
         private System.Diagnostics.Stopwatch sw;
         public frmScriptBuilder callBackForm { get; set; }
         public List<Core.Script.ScriptVariable> variableList { get; set; }
-
+        private bool advancedDebug { get; set; }
         public Dictionary<string, object> appInstances { get; set; }
         private bool isPaused { get; set; }
         public Core.AutomationCommands.ErrorHandlingCommand errorHandling;
@@ -77,12 +77,33 @@ namespace taskt.UI.Forms
             LogInfo("taskt Engine Loaded");
             LogInfo("Selected Script: " + pathToFile);
 
+
+            advancedDebug = engineSettings.ShowAdvancedDebugOutput;
+
+            if (advancedDebug)
+            {
+                lstSteppingCommands.Show();
+                lblMainLogo.Show();
+                pbBotIcon.Hide();
+                lblAction.Hide();
+            }
+            else
+            {
+                lstSteppingCommands.Hide();
+                lblMainLogo.Hide();
+                pbBotIcon.Show();
+                lblAction.Show();
+            }
+
+
             //apply debug window setting
             if (!engineSettings.ShowDebugWindow)
             {
                 this.Visible = false;
                 this.Opacity = 0;
             }
+
+
 
 
         }
@@ -309,6 +330,7 @@ namespace taskt.UI.Forms
 
         private void AddStatus(string text)
         {
+            lblAction.Text = text + "..";
             lstSteppingCommands.Items.Add(text + "..");
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
 
@@ -358,11 +380,21 @@ namespace taskt.UI.Forms
             }
             else
             {
+                if (!advancedDebug)
+                {
+                    pbBotIcon.Image = Properties.Resources.robot_error;
+                }
+
                 log.Error("Task Failed: " + e.Error.Message);
                 lblMainLogo.Text = "debug info (error)";
                 lstSteppingCommands.Items.Add("Bot Had A Problem: " + e.Error.Message);
                 if (callBackForm != null)
                     callBackForm.Notify("Task Execution Encountered an Error!");
+            }
+
+            if (!advancedDebug)
+            {
+                tmrNotify.Enabled = true;
             }
 
             AddStatus("Bot Engine Finished: " + DateTime.Now.ToString());
@@ -436,6 +468,7 @@ namespace taskt.UI.Forms
 
             uiBtnPause.Visible = false;
             uiBtnCancel.Visible = false;
+            lblKillProcNote.Text = "Cancelling...";
             isPaused = false;
             lstSteppingCommands.Items.Add("[User Requested Cancellation]");
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
@@ -469,6 +502,12 @@ namespace taskt.UI.Forms
         {
             //dispose of any unnecessary application instances
             CleanUpMemory();
+        }
+
+        private void pbBotIcon_Click(object sender, EventArgs e)
+        {
+            //show debug if user clicks
+            lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
     }
 

@@ -45,7 +45,6 @@
             this.lblJetBrainsAnnotations = new System.Windows.Forms.LinkLabel();
             this.lblIMAPX = new System.Windows.Forms.LinkLabel();
             this.lblHTMLAgilityPack = new System.Windows.Forms.LinkLabel();
-            this.lblRobot = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // lblProjectName
@@ -280,28 +279,12 @@
             this.lblHTMLAgilityPack.Text = "HtmlAgilityPack";
             this.lblHTMLAgilityPack.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblHTMLAgilityPack_LinkClicked);
             // 
-            // lblRobot
-            // 
-            this.lblRobot.ActiveLinkColor = System.Drawing.Color.AliceBlue;
-            this.lblRobot.AutoSize = true;
-            this.lblRobot.BackColor = System.Drawing.Color.Transparent;
-            this.lblRobot.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRobot.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lblRobot.LinkColor = System.Drawing.Color.White;
-            this.lblRobot.Location = new System.Drawing.Point(24, 405);
-            this.lblRobot.Name = "lblRobot";
-            this.lblRobot.Size = new System.Drawing.Size(253, 20);
-            this.lblRobot.TabIndex = 18;
-            this.lblRobot.TabStop = true;
-            this.lblRobot.Text = "Arkady Zaifman (Dancing Robot GIF)";
-            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 115;
             this.ClientSize = new System.Drawing.Size(582, 437);
-            this.Controls.Add(this.lblRobot);
             this.Controls.Add(this.lblHTMLAgilityPack);
             this.Controls.Add(this.lblIMAPX);
             this.Controls.Add(this.lblJetBrainsAnnotations);
@@ -345,6 +328,5 @@
         private System.Windows.Forms.LinkLabel lblJetBrainsAnnotations;
         private System.Windows.Forms.LinkLabel lblIMAPX;
         private System.Windows.Forms.LinkLabel lblHTMLAgilityPack;
-        private System.Windows.Forms.LinkLabel lblRobot;
     }
 }

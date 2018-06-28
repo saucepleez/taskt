@@ -84,13 +84,14 @@ namespace taskt.Core
         public bool ShowDebugWindow { get; set; }
         public bool AutoCloseDebugWindow { get; set; }
         public bool EnableDiagnosticLogging { get; set; }
-
+        public bool ShowAdvancedDebugOutput { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
             AutoCloseDebugWindow = true;
             EnableDiagnosticLogging = true;
-        }
+            ShowAdvancedDebugOutput = false;
+    }
     }
     /// <summary>
     /// Defines application/client-level settings which can be managed by the user

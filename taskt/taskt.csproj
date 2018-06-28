@@ -362,6 +362,11 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\robot-bouncing.gif" />
+    <None Include="Resources\robot-bouncing-transparent.gif" />
+    <None Include="Resources\robot-error.png" />
+    <None Include="Resources\robot-error1.png" />
+    <None Include="Resources\robot source.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
