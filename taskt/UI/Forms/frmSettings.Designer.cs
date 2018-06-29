@@ -49,6 +49,7 @@
             this.chkAntiIdle = new System.Windows.Forms.CheckBox();
             this.btnUpdates = new System.Windows.Forms.Button();
             this.chkAdvancedDebug = new System.Windows.Forms.CheckBox();
+            this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -214,7 +215,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(4, 515);
+            this.uiBtnOpen.Location = new System.Drawing.Point(5, 543);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -251,7 +252,7 @@
             this.lblApplicationSettings.BackColor = System.Drawing.Color.Transparent;
             this.lblApplicationSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblApplicationSettings.ForeColor = System.Drawing.Color.White;
-            this.lblApplicationSettings.Location = new System.Drawing.Point(3, 427);
+            this.lblApplicationSettings.Location = new System.Drawing.Point(4, 455);
             this.lblApplicationSettings.Name = "lblApplicationSettings";
             this.lblApplicationSettings.Size = new System.Drawing.Size(128, 24);
             this.lblApplicationSettings.TabIndex = 21;
@@ -263,7 +264,7 @@
             this.chkAntiIdle.BackColor = System.Drawing.Color.Transparent;
             this.chkAntiIdle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAntiIdle.ForeColor = System.Drawing.Color.White;
-            this.chkAntiIdle.Location = new System.Drawing.Point(5, 454);
+            this.chkAntiIdle.Location = new System.Drawing.Point(6, 482);
             this.chkAntiIdle.Name = "chkAntiIdle";
             this.chkAntiIdle.Size = new System.Drawing.Size(217, 24);
             this.chkAntiIdle.TabIndex = 20;
@@ -273,7 +274,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(4, 482);
+            this.btnUpdates.Location = new System.Drawing.Point(5, 510);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 27);
             this.btnUpdates.TabIndex = 22;
@@ -294,12 +295,26 @@
             this.chkAdvancedDebug.Text = "Show Advanced Debug Logs During Execution";
             this.chkAdvancedDebug.UseVisualStyleBackColor = false;
             // 
+            // chkCreateMissingVariables
+            // 
+            this.chkCreateMissingVariables.AutoSize = true;
+            this.chkCreateMissingVariables.BackColor = System.Drawing.Color.Transparent;
+            this.chkCreateMissingVariables.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkCreateMissingVariables.ForeColor = System.Drawing.Color.White;
+            this.chkCreateMissingVariables.Location = new System.Drawing.Point(8, 428);
+            this.chkCreateMissingVariables.Name = "chkCreateMissingVariables";
+            this.chkCreateMissingVariables.Size = new System.Drawing.Size(306, 24);
+            this.chkCreateMissingVariables.TabIndex = 24;
+            this.chkCreateMissingVariables.Text = "Create Missing Variables During Execution";
+            this.chkCreateMissingVariables.UseVisualStyleBackColor = false;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
             this.ClientSize = new System.Drawing.Size(485, 595);
+            this.Controls.Add(this.chkCreateMissingVariables);
             this.Controls.Add(this.chkAdvancedDebug);
             this.Controls.Add(this.btnUpdates);
             this.Controls.Add(this.lblApplicationSettings);
@@ -351,5 +366,6 @@
         private System.Windows.Forms.CheckBox chkAntiIdle;
         private System.Windows.Forms.Button btnUpdates;
         private System.Windows.Forms.CheckBox chkAdvancedDebug;
+        private System.Windows.Forms.CheckBox chkCreateMissingVariables;
     }
 }

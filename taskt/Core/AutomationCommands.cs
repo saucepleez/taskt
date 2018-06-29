@@ -1682,18 +1682,18 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+            //get sending instance
             var sendingInstance = (UI.Forms.frmScriptEngine)sender;
 
-            var requiredVariable = sendingInstance.variableList.Where(var => var.variableName == v_userVariableName).FirstOrDefault();
+            var requiredVariable = LookupVariable(sendingInstance);
 
-            if ((requiredVariable == null) && (v_userVariableName.StartsWith("[")) && (v_userVariableName.EndsWith("]")))
+            //if still not found and user has elected option, create variable at runtime
+            if ((requiredVariable == null) && (sendingInstance.createMissingVariables))
             {
-                var reformattedVariable = v_userVariableName.Replace("[", "").Replace("]", "");
-                requiredVariable = sendingInstance.variableList.Where(var => var.variableName == reformattedVariable).FirstOrDefault();
-
+                sendingInstance.variableList.Add(new Script.ScriptVariable() { variableName = v_userVariableName });
+                requiredVariable = LookupVariable(sendingInstance);
             }
-
-
+       
             if (requiredVariable != null)
             {
                 requiredVariable.variableValue = v_Input.ConvertToUserVariable(sender);
@@ -1702,6 +1702,22 @@ namespace taskt.Core.AutomationCommands
             {
                 throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
             }
+        }
+
+        private Script.ScriptVariable LookupVariable(UI.Forms.frmScriptEngine sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.variableList.Where(var => var.variableName == v_userVariableName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (v_userVariableName.StartsWith("[")) && (v_userVariableName.EndsWith("]")))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_userVariableName.Replace("[", "").Replace("]", "");
+                requiredVariable = sendingInstance.variableList.Where(var => var.variableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
 
         public override string GetDisplayValue()
