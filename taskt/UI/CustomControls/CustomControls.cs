@@ -291,10 +291,10 @@ namespace taskt.UI
             uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);
             uiImages.Add("StopTaskCommand", taskt.Properties.Resources.command_stop_process);
             uiImages.Add("CloseWindowCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("WebBrowserCreateCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("WebBrowserNavigateCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("WebBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("WebBrowserElementCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserCreateCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserNavigateCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
+            uiImages.Add("IEBrowserElementCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SendKeysCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendMouseMoveCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendMouseClickCommand", taskt.Properties.Resources.command_input);
@@ -390,7 +390,16 @@ namespace taskt.UI
         public static Image GetUIImage(string commandName)
         {
             var uiImageDictionary = UIImageDictionary();
-            return uiImageDictionary[commandName];
+            Image uiImage;
+            try
+            {
+                uiImage = uiImageDictionary[commandName];
+            }
+            catch (Exception)
+            {
+                uiImage = Properties.Resources.command_files;
+            }
+            return uiImage;
         }
     }
 }
