@@ -882,6 +882,7 @@ namespace taskt.Core.AutomationCommands
         public string v_SeleniumElementAction { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_WebActionParameterTable { get; set; }
         public SeleniumBrowserElementActionCommand()
         {
@@ -902,7 +903,8 @@ namespace taskt.Core.AutomationCommands
         {
             var sendingInstance = (UI.Forms.frmScriptEngine)sender;
             //convert to user variable -- https://github.com/saucepleez/taskt/issues/22
-            v_SeleniumSearchParameter = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
+           var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
+      
 
             if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
@@ -912,9 +914,14 @@ namespace taskt.Core.AutomationCommands
 
                 if (v_SeleniumElementAction == "Wait For Element To Exist")
                 {
-                    int timeOut = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
-                                                   where rw.Field<string>("Parameter Name") == "Timeout (Seconds)"
-                                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    var timeoutText = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Timeout (Seconds)"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    timeoutText = timeoutText.ConvertToUserVariable(sender);
+
+                    int timeOut = Convert.ToInt32(timeoutText);
 
                     var timeToEnd = DateTime.Now.AddSeconds(timeOut);
 
@@ -950,23 +957,23 @@ namespace taskt.Core.AutomationCommands
                 switch (v_SeleniumSearchType)
                 {
                     case "Find Element By XPath":
-                        element = seleniumInstance.FindElementByXPath(v_SeleniumSearchParameter);
+                        element = seleniumInstance.FindElementByXPath(seleniumSearchParam);
                         break;
 
                     case "Find Element By ID":
-                        element = seleniumInstance.FindElementById(v_SeleniumSearchParameter);
+                        element = seleniumInstance.FindElementById(seleniumSearchParam);
                         break;
 
                     case "Find Element By Name":
-                        element = seleniumInstance.FindElementByName(v_SeleniumSearchParameter);
+                        element = seleniumInstance.FindElementByName(seleniumSearchParam);
                         break;
 
                     case "Find Element By Tag Name":
-                        element = seleniumInstance.FindElementByTagName(v_SeleniumSearchParameter);
+                        element = seleniumInstance.FindElementByTagName(seleniumSearchParam);
                         break;
 
                     case "Find Element By Class Name":
-                        element = seleniumInstance.FindElementByClassName(v_SeleniumSearchParameter);
+                        element = seleniumInstance.FindElementByClassName(seleniumSearchParam);
                         break;
 
                     default:
@@ -983,13 +990,15 @@ namespace taskt.Core.AutomationCommands
                     case "Right Click":
                     case "Middle Click":
                     case "Double Left Click":
+
+
                         int userXAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
                                                            where rw.Field<string>("Parameter Name") == "X Adjustment"
-                                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                                           select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
                         int userYAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
                                                            where rw.Field<string>("Parameter Name") == "Y Adjustment"
-                                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                                           select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
                         var elementLocation = element.Location;
                         SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand();
@@ -1041,7 +1050,7 @@ namespace taskt.Core.AutomationCommands
 
                         string attributeName = (from rw in v_WebActionParameterTable.AsEnumerable()
                                                 where rw.Field<string>("Parameter Name") == "Attribute Name"
-                                                select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
                         string elementValue;
                         if (v_SeleniumElementAction == "Get Text")
@@ -1674,8 +1683,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+
             var requiredVariable = sendingInstance.variableList.Where(var => var.variableName == v_userVariableName).FirstOrDefault();
 
+            if ((requiredVariable == null) && (v_userVariableName.StartsWith("[")) && (v_userVariableName.EndsWith("]")))
+            {
+                var reformattedVariable = v_userVariableName.Replace("[", "").Replace("]", "");
+                requiredVariable = sendingInstance.variableList.Where(var => var.variableName == reformattedVariable).FirstOrDefault();
+
+            }
 
 
             if (requiredVariable != null)
@@ -1684,7 +1700,7 @@ namespace taskt.Core.AutomationCommands
             }
             else
             {
-                throw new Exception("Variable was not found. Enclose variables within brackets, ex. [vVariable]");
+                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
             }
         }
 
