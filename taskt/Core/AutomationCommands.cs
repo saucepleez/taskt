@@ -162,7 +162,7 @@ namespace taskt.Core.AutomationCommands
             this.CommandName = "IEBrowserCreateCommand";
             this.SelectionName = "Create Browser";
             this.v_InstanceName = "default";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
         }
 
         public override void RunCommand(object sender)
@@ -198,7 +198,7 @@ namespace taskt.Core.AutomationCommands
             this.CommandName = "IEBrowserFindBrowserCommand";
             this.SelectionName = "Find Browser";
             this.v_InstanceName = "default";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
         }
 
         public override void RunCommand(object sender)
@@ -260,7 +260,7 @@ namespace taskt.Core.AutomationCommands
             this.CommandName = "WebBrowserNavigateCommand";
             this.SelectionName = "Navigate";
             this.v_InstanceName = "default";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
         }
 
         public override void RunCommand(object sender)
@@ -309,7 +309,7 @@ namespace taskt.Core.AutomationCommands
         {
             this.CommandName = "IEBrowserCloseCommand";
             this.SelectionName = "Close Browser";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
             this.v_InstanceName = "default";
         }
 
@@ -356,7 +356,8 @@ namespace taskt.Core.AutomationCommands
         {
             this.CommandName = "IEBrowserElementCommand";
             this.SelectionName = "Element Action";
-            this.CommandEnabled = true;
+            //this command is broken -- consider enhancing selenium instead
+            this.CommandEnabled = false;
             this.v_InstanceName = "default";
 
             this.v_WebSearchTable = new System.Data.DataTable
