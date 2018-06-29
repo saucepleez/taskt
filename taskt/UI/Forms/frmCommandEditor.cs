@@ -190,6 +190,7 @@ namespace taskt.UI.Forms
                         taskt.UI.CustomControls.CommandItemControl variableInsertion = new taskt.UI.CustomControls.CommandItemControl();
                         variableInsertion.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
                         variableInsertion.ForeColor = Color.AliceBlue;
+                        variableInsertion.Name = inputLabel.Name + "_helper";
                         variableInsertion.Tag = inputControl;
 
                         switch (attrib.additionalHelper)
@@ -198,6 +199,7 @@ namespace taskt.UI.Forms
                                 //show variable selector
                                 variableInsertion.CommandImage = UI.Images.GetUIImage("VariableCommand");
                                 variableInsertion.CommandDisplay = "Insert Variable";
+                 
                                 variableInsertion.Click += ShowVariableSelector;
                                 flw_InputVariables.Controls.Add(variableInsertion);
                                 break;
@@ -310,8 +312,14 @@ namespace taskt.UI.Forms
                 {
                     DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
                     Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
+                    CustomControls.CommandItemControl variableHelper = (CustomControls.CommandItemControl)flw_InputVariables.Controls["lbl_v_WebActionParameterTable_helper"];
                     additionalParameterLabel.Visible = false;
                     webActionParameterBox.Visible = false;
+                    variableHelper.Visible = false;
+                }
+                else
+                {
+
                 }
             }
 
@@ -637,7 +645,7 @@ namespace taskt.UI.Forms
             ComboBox webAction = (ComboBox)sender;
             DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
             Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
-
+            
             if ((webActionParameterBox == null) || (webAction == null) || (webActionParameterBox.DataSource == null))
                 return;
 
@@ -649,7 +657,7 @@ namespace taskt.UI.Forms
             {
                 case "Invoke Click":
                     additionalParameterLabel.Visible = false;
-                    webActionParameterBox.Visible = false;
+                    webActionParameterBox.Visible = false;         
                     break;
 
                 case "Left Click":
@@ -675,23 +683,13 @@ namespace taskt.UI.Forms
                     actionParameters.Rows.Add("Attribute Name");
                     actionParameters.Rows.Add("Variable Name");
 
-                    //DataGridViewComboBoxCell getAttributeComboBox = new DataGridViewComboBoxCell();
-                    //getAttributeComboBox.Items.Add("innerText");
-                    //webActionParameterBox.Rows[0].Cells[1] = getAttributeComboBox;
-
-                    //DataGridViewComboBoxCell variableComboBox = new DataGridViewComboBoxCell();
-                    //scriptVariables.Where(x => !string.IsNullOrEmpty(x.variableName)).ToList().ForEach(x => variableComboBox.Items.Add(x.variableName));
-                    //webActionParameterBox.Rows[1].Cells[1] = variableComboBox;
-
                     break;
 
                 default:
                     break;
             }
 
-            //AutomationCommands.WebBrowserElementCommand cmd = (AutomationCommands.WebBrowserElementCommand)selectedCommand;
-            //webActionParameterBox.DataSource = actionParameters;
-            //cmd.v_WebSearchTable = actionParameters;
+
         }
         private void ifAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -773,6 +771,7 @@ namespace taskt.UI.Forms
             ComboBox webAction = (ComboBox)sender;
             DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
             Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
+            CustomControls.CommandItemControl variableHelper = (CustomControls.CommandItemControl)flw_InputVariables.Controls["lbl_v_WebActionParameterTable_helper"];
 
             if ((webActionParameterBox == null) || (webAction == null) || (webActionParameterBox.DataSource == null))
                 return;
@@ -786,6 +785,7 @@ namespace taskt.UI.Forms
                 case "Invoke Click":
                     webActionParameterBox.Hide();
                     additionalParameterLabel.Hide();
+                    variableHelper.Hide();
                     break;
 
                 case "Left Click":
@@ -793,6 +793,7 @@ namespace taskt.UI.Forms
                 case "Right Click":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
+                    variableHelper.Show();
                     actionParameters.Rows.Add("X Adjustment", 0);
                     actionParameters.Rows.Add("Y Adjustment", 0);
                     break;
@@ -800,18 +801,21 @@ namespace taskt.UI.Forms
                 case "Set Text":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
+                    variableHelper.Show();
                     actionParameters.Rows.Add("Text To Set");
                     break;
 
                 case "Get Text":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
+                    variableHelper.Show();
                     actionParameters.Rows.Add("Variable Name");
                     break;
 
                 case "Get Attribute":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
+                    variableHelper.Show();
                     actionParameters.Rows.Add("Attribute Name");
                     actionParameters.Rows.Add("Variable Name");
                     break;
@@ -819,6 +823,7 @@ namespace taskt.UI.Forms
                 case "Wait For Element To Exist":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
+                    variableHelper.Show();
                     actionParameters.Rows.Add("Timeout (Seconds)");
                     break;
 
