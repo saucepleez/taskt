@@ -39,6 +39,7 @@ namespace taskt.UI.Forms
         public frmScriptBuilder callBackForm { get; set; }
         public List<Core.Script.ScriptVariable> variableList { get; set; }
         private bool advancedDebug { get; set; }
+        public bool createMissingVariables { get; set; }
         public Dictionary<string, object> appInstances { get; set; }
         private bool isPaused { get; set; }
         public Core.AutomationCommands.ErrorHandlingCommand errorHandling;
@@ -73,6 +74,9 @@ namespace taskt.UI.Forms
             {
                 appenders.Threshold = log4net.Core.Level.Off;
             }
+
+
+            createMissingVariables = engineSettings.CreateMissingVariablesDuringExecution;
 
             LogInfo("taskt Engine Loaded");
             LogInfo("Selected Script: " + pathToFile);

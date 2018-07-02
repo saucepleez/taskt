@@ -85,12 +85,14 @@ namespace taskt.Core
         public bool AutoCloseDebugWindow { get; set; }
         public bool EnableDiagnosticLogging { get; set; }
         public bool ShowAdvancedDebugOutput { get; set; }
+        public bool CreateMissingVariablesDuringExecution { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
             AutoCloseDebugWindow = true;
             EnableDiagnosticLogging = true;
             ShowAdvancedDebugOutput = false;
+            CreateMissingVariablesDuringExecution = true;
     }
     }
     /// <summary>
