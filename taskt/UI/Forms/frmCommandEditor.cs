@@ -762,6 +762,24 @@ namespace taskt.UI.Forms
                     //assign cell as a combobox
                     ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
                     break;
+                case "Web Element Exists":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Selenium Instance Name", "default");
+                    actionParameters.Rows.Add("Element Search Method", "");
+                    actionParameters.Rows.Add("Element Search Parameter", "");
+
+                    comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("Find Element By XPath");
+                    comparisonComboBox.Items.Add("Find Element By ID");
+                    comparisonComboBox.Items.Add("Find Element By Name");
+                    comparisonComboBox.Items.Add("Find Element By Tag Name");
+                    comparisonComboBox.Items.Add("Find Element By Class Name");
+
+                    //assign cell as a combobox
+                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+
+                    break;
                 default:
                     break;
             }

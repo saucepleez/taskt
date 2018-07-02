@@ -885,6 +885,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_WebActionParameterTable { get; set; }
+
         public SeleniumBrowserElementActionCommand()
         {
             this.CommandName = "SeleniumBrowserCreateCommand";
@@ -953,33 +954,6 @@ namespace taskt.Core.AutomationCommands
                     element = FindElement(seleniumInstance);
                 }
 
-
-
-                switch (v_SeleniumSearchType)
-                {
-                    case "Find Element By XPath":
-                        element = seleniumInstance.FindElementByXPath(seleniumSearchParam);
-                        break;
-
-                    case "Find Element By ID":
-                        element = seleniumInstance.FindElementById(seleniumSearchParam);
-                        break;
-
-                    case "Find Element By Name":
-                        element = seleniumInstance.FindElementByName(seleniumSearchParam);
-                        break;
-
-                    case "Find Element By Tag Name":
-                        element = seleniumInstance.FindElementByTagName(seleniumSearchParam);
-                        break;
-
-                    case "Find Element By Class Name":
-                        element = seleniumInstance.FindElementByClassName(seleniumSearchParam);
-                        break;
-
-                    default:
-                        throw new Exception("Search Type was not found");
-                }
 
                 switch (v_SeleniumElementAction)
                 {
@@ -1108,6 +1082,34 @@ namespace taskt.Core.AutomationCommands
             }
 
             return element;
+        }
+
+        public bool ElementExists(object sender, string searchType, string elementName)
+        {
+            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+
+            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            {
+                var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+                v_SeleniumSearchType = searchType.ConvertToUserVariable(sender);
+                v_SeleniumSearchParameter = elementName.ConvertToUserVariable(sender);
+
+                try
+                {
+                    var element = FindElement(seleniumInstance);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception("Session Instance was not found");
+            }
+
+  
         }
 
         public override string GetDisplayValue()
@@ -2866,6 +2868,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Active Window Name Is")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Folder Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Web Element Exists")]
         public string v_IfActionType { get; set; }
 
         [XmlElement]
@@ -3040,6 +3043,21 @@ namespace taskt.Core.AutomationCommands
                 }
     
             }
+            else if(v_IfActionType == "Web Element Exists")
+            {
+                string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Element Search Method"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
+                bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
+                ifResult = elementExists;
+              
+            }
             else
             {
                 throw new Exception("If type not recognized!");
@@ -3138,13 +3156,26 @@ namespace taskt.Core.AutomationCommands
 
                     return "If " + v_IfActionType + " [Folder: " + folderPath + "]";
 
+                case "Web Element Exists":
 
-    
+
+                    string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                             where rw.Field<string>("Parameter Name") == "Element Search Method"
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+
+                    return "If Web Element Exists [" + searchMethod +": " + parameterName + "]";
+
+          
                 default:
-                    break;
+
+                    return "If .... ";
             }
 
-            return "";
         }
     }
     [Serializable]
