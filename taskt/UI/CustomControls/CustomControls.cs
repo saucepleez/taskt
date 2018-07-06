@@ -27,81 +27,82 @@ namespace taskt.UI.CustomControls
 
     public class UITabControl : TabControl
     {
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            DrawControl(e.Graphics);
-        }
 
-        internal void DrawControl(Graphics g)
-        {
-            if (!Visible)
-                return;
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    DrawControl(e.Graphics);
+        //}
 
-            Brush br = new SolidBrush(Color.Black);
-            Brush brTab = new SolidBrush(Color.Orange);
+        //internal void DrawControl(Graphics g)
+        //{
+        //    if (!Visible)
+        //        return;
 
-            Rectangle TabControlArea = ClientRectangle;
-            Rectangle TabArea = DisplayRectangle;
+        //    Brush br = new SolidBrush(Color.Black);
+        //    Brush brTab = new SolidBrush(Color.Orange);
 
-            g.FillRectangle(br, TabControlArea);
-            g.FillRectangle(brTab, TabArea);
+        //    Rectangle TabControlArea = ClientRectangle;
+        //    Rectangle TabArea = DisplayRectangle;
 
-            br.Dispose();
-            brTab.Dispose();
+        //    g.FillRectangle(br, TabControlArea);
+        //    g.FillRectangle(brTab, TabArea);
 
-            //for (int i = 0; i < TabCount; i++)
-            //    DrawTab(g, TabPages[i], i, false);
+        //    br.Dispose();
+        //    brTab.Dispose();
 
-            //if (_mouseTabIndex != null && _mouseTabIndex != _mouseTabIndexSave && _mouseTabIndex != SelectedIndex)
-            //    DrawTab(g, TabPages[(int)_mouseTabIndex], (int)_mouseTabIndex, true);
+        //    //for (int i = 0; i < TabCount; i++)
+        //    //    DrawTab(g, TabPages[i], i, false);
 
-            //_mouseTabIndexSave = _mouseTabIndex;
-        }
+        //    //if (_mouseTabIndex != null && _mouseTabIndex != _mouseTabIndexSave && _mouseTabIndex != SelectedIndex)
+        //    //    DrawTab(g, TabPages[(int)_mouseTabIndex], (int)_mouseTabIndex, true);
 
-        internal void DrawTab(Graphics g, TabPage tabPage, int nIndex, bool mouseOverTab)
-        {
-            //var recBounds = GetTabRect(nIndex);
+        //    //_mouseTabIndexSave = _mouseTabIndex;
+        //}
 
-            //SetBounds(ref recBounds);
-            //var pt = SetPointsForTabFill(recBounds);
+        //internal void DrawTab(Graphics g, TabPage tabPage, int nIndex, bool mouseOverTab)
+        //{
+        //    //var recBounds = GetTabRect(nIndex);
 
-            //DrawTabBounds(g, recBounds);
+        //    //SetBounds(ref recBounds);
+        //    //var pt = SetPointsForTabFill(recBounds);
 
-            //FillTabl(g, recBounds, pt, false);
+        //    //DrawTabBounds(g, recBounds);
 
-            //DrawTabSeparators(g, recBounds, nIndex, 0 /*y-bottom*/);
+        //    //FillTabl(g, recBounds, pt, false);
 
-            //if (SelectedIndex == nIndex)
-            //{
-            //    DrawTabGradient(g, recBounds, pt, nIndex, 0/*width*/, 1/*height*/);
-            //    DrawTabSeparators(g, recBounds, nIndex, 1 /*y-bottom*/);
-            //}
+        //    //DrawTabSeparators(g, recBounds, nIndex, 0 /*y-bottom*/);
 
-            //if (mouseOverTab)
-            //    DrawTabGradient(g, recBounds, pt, nIndex, -2/*width*/, 0/*height*/);
+        //    //if (SelectedIndex == nIndex)
+        //    //{
+        //    //    DrawTabGradient(g, recBounds, pt, nIndex, 0/*width*/, 1/*height*/);
+        //    //    DrawTabSeparators(g, recBounds, nIndex, 1 /*y-bottom*/);
+        //    //}
 
-            //DrawText(g, recBounds, tabPage.Text);
-        }
+        //    //if (mouseOverTab)
+        //    //    DrawTabGradient(g, recBounds, pt, nIndex, -2/*width*/, 0/*height*/);
 
-        private void DrawText(Graphics g, Rectangle recBounds, string text)
-        {
-            var strFormat = new StringFormat();
-            strFormat.Alignment = strFormat.LineAlignment = StringAlignment.Center;
+        //    //DrawText(g, recBounds, tabPage.Text);
+        //}
 
-            g.TextRenderingHint =
-                System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+        //private void DrawText(Graphics g, Rectangle recBounds, string text)
+        //{
+        //    var strFormat = new StringFormat();
+        //    strFormat.Alignment = strFormat.LineAlignment = StringAlignment.Center;
 
-            //var fnt = new Font(MsFonts.familyPTSans, 8F, FontStyle.Regular,  GraphicsUnit.Point, (byte)204);
-            var fnt = new Font("Arial", 8.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+        //    g.TextRenderingHint =
+        //        System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-            RectangleF tabTextArea = recBounds;
-            var br = new SolidBrush(Color.Black);
-            g.DrawString(text, fnt, br, tabTextArea);
+        //    //var fnt = new Font(MsFonts.familyPTSans, 8F, FontStyle.Regular,  GraphicsUnit.Point, (byte)204);
+        //    var fnt = new Font("Arial", 8.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
 
-            br.Dispose();
-            strFormat.Dispose();
-            fnt.Dispose();
-        }
+        //    RectangleF tabTextArea = recBounds;
+        //    var br = new SolidBrush(Color.Black);
+        //    g.DrawString(text, fnt, br, tabTextArea);
+
+        //    br.Dispose();
+        //    strFormat.Dispose();
+        //    fnt.Dispose();
+        //}
     }
 
     public partial class UIPictureButton : PictureBox
