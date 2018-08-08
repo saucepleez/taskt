@@ -995,6 +995,22 @@ namespace taskt.Core.AutomationCommands
                                             where rw.Field<string>("Parameter Name") == "Text To Set"
                                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
+                        
+                        string clearElement = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
+                                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                        if (clearElement == null)
+                        {
+                            clearElement = "No";
+                        }
+
+                        if (clearElement == "Yes")
+                        {
+                            element.Clear();
+                        }
+
+
                         string[] potentialKeyPresses = textToSet.Split('{', '}');
 
                         Type seleniumKeys = typeof(OpenQA.Selenium.Keys);

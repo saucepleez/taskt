@@ -822,6 +822,17 @@ namespace taskt.UI.Forms
                     additionalParameterLabel.Show();
                     variableHelper.Show();
                     actionParameters.Rows.Add("Text To Set");
+                    actionParameters.Rows.Add("Clear Element Before Setting Text");
+
+                    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("Yes");
+                    comparisonComboBox.Items.Add("No");
+
+                    //assign cell as a combobox
+                    webActionParameterBox.Rows[1].Cells[1].Value = "No";
+                    webActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+
+
                     break;
 
                 case "Get Text":
