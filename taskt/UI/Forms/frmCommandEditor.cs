@@ -801,6 +801,7 @@ namespace taskt.UI.Forms
             switch (webAction.Text)
             {
                 case "Invoke Click":
+                case "Clear Element":
                     webActionParameterBox.Hide();
                     additionalParameterLabel.Hide();
                     variableHelper.Hide();
