@@ -880,6 +880,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Click")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
@@ -1044,7 +1045,9 @@ namespace taskt.Core.AutomationCommands
                         elementValue.StoreInUserVariable(sender, variableName);
 
                         break;
-
+                    case "Clear Element":
+                        element.Clear();
+                        break;
                     default:
                         throw new Exception("Element Action was not found");
                 }
@@ -2706,7 +2709,7 @@ namespace taskt.Core.AutomationCommands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Apply to '" + v_applyToVariableName + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
     [Serializable]
