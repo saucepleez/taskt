@@ -66,6 +66,10 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(ExcelCloseApplicationCommand))]
     [XmlInclude(typeof(ExcelGetCellCommand))]
     [XmlInclude(typeof(ExcelRunMacroCommand))]
+    [XmlInclude(typeof(ExcelActivateSheetCommand))]
+    [XmlInclude(typeof(ExcelDeleteRowCommand))]
+    [XmlInclude(typeof(ExcelDeleteCellCommand))]
+    [XmlInclude(typeof(ExcelGetLastRowCommand))]
     [XmlInclude(typeof(SeleniumBrowserCreateCommand))]
     [XmlInclude(typeof(SeleniumBrowserNavigateURLCommand))]
     [XmlInclude(typeof(SeleniumBrowserNavigateForwardCommand))]
@@ -2214,6 +2218,7 @@ namespace taskt.Core.AutomationCommands
     public class BeginNumberOfTimesLoopCommand : ScriptCommand
     {
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Enter how many times to perform the loop")]
         public string v_LoopParameter { get; set; }
 
@@ -2232,7 +2237,9 @@ namespace taskt.Core.AutomationCommands
             int loopTimes;
             Script.ScriptVariable complexVarible = null;
 
-            loopTimes = int.Parse(loopCommand.v_LoopParameter);
+            var loopParameter = loopCommand.v_LoopParameter.ConvertToUserVariable(sender);
+
+            loopTimes = int.Parse(loopParameter);
 
             for (int i = 0; i < loopTimes; i++)
             {
@@ -2576,7 +2583,7 @@ namespace taskt.Core.AutomationCommands
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-                excelSheet.Range[targetAddress].Value = targetAddress;
+                excelSheet.Range[targetAddress].Value = targetText;
             }
         }
         public override string GetDisplayValue()
@@ -2662,6 +2669,48 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to find the last row in a used range in an Excel Workbook.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    public class ExcelGetLastRowCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter Letter of the Column to check (ex. A, B, C)")]
+        public string v_ColumnLetter { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the row number")]
+        public string v_applyToVariableName { get; set; }
+        public ExcelGetLastRowCommand()
+        {
+            this.CommandName = "ExcelGetLastRowCommand";
+            this.SelectionName = "Get Last Row";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            {
+
+                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+                var excelSheet = excelInstance.ActiveSheet;
+                var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, "A").End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
+
+         
+                lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+
+
+            }
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to close Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelCloseApplicationCommand : ScriptCommand
@@ -2691,6 +2740,154 @@ namespace taskt.Core.AutomationCommands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Save On Close: " + v_ExcelSaveOnExit + ", Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to switch worksheet tabs")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    public class ExcelActivateSheetCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
+        public string v_SheetName { get; set; }
+        public ExcelActivateSheetCommand()
+        {
+            this.CommandName = "ExcelActivateSheetCommand";
+            this.SelectionName = "Activate Sheet";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            {
+                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+                string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
+                Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.Sheets[sheetToDelete];
+                workSheet.Select();
+              
+
+
+            }
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Sheet Name: " + v_SheetName + ", Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to delete a specified row in Excel")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    public class ExcelDeleteRowCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the row number to delete")]
+        public string v_RowNumber { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        public string v_ShiftUp { get; set; }
+        public ExcelDeleteRowCommand()
+        {
+            this.CommandName = "ExcelDeleteRowCommand";
+            this.SelectionName = "Delete Row";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            {
+
+                
+                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+                Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
+
+                string rowToDelete = v_RowNumber.ConvertToUserVariable(sender);
+
+               var cells = workSheet.Range["A" + rowToDelete, Type.Missing];
+                var entireRow = cells.EntireRow;
+                if (v_ShiftUp == "Yes")
+                {          
+                    entireRow.Delete();
+                }
+                else
+                {
+                    entireRow.Clear();
+                }
+           
+
+            }
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Row Number: " + v_RowNumber + ", Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to delete a specified row in Excel")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    public class ExcelDeleteCellCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the range to delete ex. A1 or A1:C1")]
+        public string v_Range { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Should the cells below shift upward after deletion?")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        public string v_ShiftUp { get; set; }
+        public ExcelDeleteCellCommand()
+        {
+            this.CommandName = "ExcelDeleteCellCommand";
+            this.SelectionName = "Delete Cell";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            {
+
+
+                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+                Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
+
+                string range = v_Range.ConvertToUserVariable(sender);
+                var cells = workSheet.Range[range, Type.Missing];
+
+
+                if (v_ShiftUp == "Yes")
+                {  
+                    cells.Delete();
+                }
+                else
+                {
+                    cells.Clear();
+                }
+             
+
+
+            }
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Range: " + v_Range + ", Instance Name: '" + v_InstanceName + "']";
         }
     }
     [Serializable]
