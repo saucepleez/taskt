@@ -44,12 +44,10 @@ namespace taskt.UI.Forms
         private bool isPaused { get; set; }
         public Core.AutomationCommands.ErrorHandlingCommand errorHandling;
 
-        //create logger
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
-              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-              public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm)
+     
+        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm)
         {
+        
 
             filePath = pathToFile;
             callBackForm = builderForm;
@@ -58,23 +56,8 @@ namespace taskt.UI.Forms
             //get engine settings
             engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
-
-            //setup logging
-            taskt.Core.Logging.Setup("Script Execution Log");
-
-            //define log appender
-            var appenders = log.Logger.Repository.GetAppenders().OfType<FileAppender>().FirstOrDefault();
-
-            //set log mode
-            if (engineSettings.EnableDiagnosticLogging)
-            {
-                appenders.Threshold = log4net.Core.Level.Debug;
-            }
-            else
-            {
-                appenders.Threshold = log4net.Core.Level.Off;
-            }
-
+           
+       
 
             createMissingVariables = engineSettings.CreateMissingVariablesDuringExecution;
 
@@ -148,7 +131,7 @@ namespace taskt.UI.Forms
         private void LogInfo(string logText)
         {
             if (engineSettings.EnableDiagnosticLogging)
-                             log.Info(logText);
+                             Logging.log.Info(logText);
         }
         private void bgwRunScript_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -274,14 +257,14 @@ namespace taskt.UI.Forms
             }
             catch (Exception ex)
             {
-                log.Error("Exception Occured:" + ex.ToString());
+                Logging.log.Error("Exception Occured:" + ex.ToString());
                 //error occuured so decide what user selected
                 if (errorHandling != null)
                 {
                     switch (errorHandling.v_ErrorHandlingAction)
                     {
                         case "Continue Processing":
-                            log.Warn("User set continue processing");
+                            Logging.log.Warn("User set continue processing");
                             //bgwRunScript.ReportProgress(0, new object[] { parentCommand.LineNumber, "Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString() });
                             //bgwRunScript.ReportProgress(0, new object[] { parentCommand.LineNumber, "Continuing Per Error Handling" });
                             bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = parentCommand.LineNumber, UpdateText = "Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString() });
@@ -290,13 +273,13 @@ namespace taskt.UI.Forms
                             break;
 
                         default:
-                            log.Warn("User did not handle Exception");
+                            Logging.log.Warn("User did not handle Exception");
                           throw new Exception(ex.ToString());
                     }
                 }
                 else
                 {
-                    log.Error("User did not handle Exception");
+                    Logging.log.Error("User did not handle Exception");
                     throw new Exception(ex.ToString());
                 }
             }
@@ -338,10 +321,9 @@ namespace taskt.UI.Forms
             lstSteppingCommands.Items.Add(text + "..");
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
 
-            if (callBackForm != null)
-            {
-                callBackForm.SendMessage(text);
-            }
+
+            Core.Sockets.SocketClient.SendMessage("ENGINE=" + text);
+           
 
         }
 
@@ -389,7 +371,7 @@ namespace taskt.UI.Forms
                     pbBotIcon.Image = Properties.Resources.robot_error;
                 }
 
-                log.Error("Task Failed: " + e.Error.Message);
+                Logging.log.Error("Task Failed: " + e.Error.Message);
                 lblMainLogo.Text = "debug info (error)";
                 lstSteppingCommands.Items.Add("Bot Had A Problem: " + e.Error.Message);
                 if (callBackForm != null)
@@ -403,13 +385,14 @@ namespace taskt.UI.Forms
 
             AddStatus("Bot Engine Finished: " + DateTime.Now.ToString());
             AddStatus("Total Run Time: " + sw.Elapsed.ToString());
+
             LogInfo("Total Execution Time: " + sw.Elapsed.ToString());
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
 
-            if (callBackForm != null)
-            {
-                callBackForm.SendMessage("Available, Previous Run-Time: " + sw.Elapsed.ToString());
-            }
+   
+            Core.Sockets.SocketClient.SendMessage("ENGINE=Available, Previous Run-Time: " + sw.Elapsed.ToString());
+
+        
 
 
         }

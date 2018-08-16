@@ -44,7 +44,8 @@ namespace taskt.UI.Forms
             chkServerEnabled.DataBindings.Add("Checked", serverSettings, "ServerConnectionEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutomaticallyConnect.DataBindings.Add("Checked", serverSettings, "ConnectToServerOnStartup", false, DataSourceUpdateMode.OnPropertyChanged);
             chkRetryOnDisconnect.DataBindings.Add("Checked", serverSettings, "RetryServerConnectionOnFail", false, DataSourceUpdateMode.OnPropertyChanged);
-            txtServerURL.DataBindings.Add("Text", serverSettings, "ServerURL");
+            txtPublicKey.DataBindings.Add("Text", serverSettings, "ServerPublicKey", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtServerURL.DataBindings.Add("Text", serverSettings, "ServerURL", false, DataSourceUpdateMode.OnPropertyChanged);
 
             var engineSettings = newAppSettings.EngineSettings;
             chkShowDebug.DataBindings.Add("Checked", engineSettings, "ShowDebugWindow", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -62,18 +63,7 @@ namespace taskt.UI.Forms
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (!chkServerEnabled.Checked)
-            {
-                return;
-            }
-            if (scriptBuilderForm.CreateSocketConnection(txtServerURL.Text, txtPublicKey.Text))
-            {
-                lblStatus.Text = "Current Status: Connected";
-            }
-            else
-            {
-                lblStatus.Text = "Current Status: Not Connected";
-            }
+            Core.Sockets.SocketClient.Connect(txtServerURL.Text);
         }
 
 
@@ -90,6 +80,7 @@ namespace taskt.UI.Forms
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
             newAppSettings.Save(newAppSettings);
+            taskt.Core.Sockets.SocketClient.LoadSettings();
             this.Close();
         }
 
@@ -143,6 +134,26 @@ namespace taskt.UI.Forms
                 MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);         
             }
             
+        }
+
+        private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
+        {
+            lblStatus.Text = "Socket Status: " + Core.Sockets.SocketClient.GetSocketState();
+            if (Core.Sockets.SocketClient.connectionException != string.Empty)
+            {
+                lblSocketException.Show();
+                lblSocketException.Text = Core.Sockets.SocketClient.connectionException;
+            }
+            else
+            {
+                lblSocketException.Hide();
+            }
+        
+        }
+
+        private void btnCloseConnection_Click(object sender, EventArgs e)
+        {
+            Core.Sockets.SocketClient.Disconnect();
         }
     }
 }
