@@ -44,8 +44,10 @@ namespace taskt.UI.Forms
             chkServerEnabled.DataBindings.Add("Checked", serverSettings, "ServerConnectionEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutomaticallyConnect.DataBindings.Add("Checked", serverSettings, "ConnectToServerOnStartup", false, DataSourceUpdateMode.OnPropertyChanged);
             chkRetryOnDisconnect.DataBindings.Add("Checked", serverSettings, "RetryServerConnectionOnFail", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkBypassValidation.DataBindings.Add("Checked", serverSettings, "BypassCertificateValidation", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublicKey.DataBindings.Add("Text", serverSettings, "ServerPublicKey", false, DataSourceUpdateMode.OnPropertyChanged);
             txtServerURL.DataBindings.Add("Text", serverSettings, "ServerURL", false, DataSourceUpdateMode.OnPropertyChanged);
+           
 
             var engineSettings = newAppSettings.EngineSettings;
             chkShowDebug.DataBindings.Add("Checked", engineSettings, "ShowDebugWindow", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -154,6 +156,14 @@ namespace taskt.UI.Forms
         private void btnCloseConnection_Click(object sender, EventArgs e)
         {
             Core.Sockets.SocketClient.Disconnect();
+        }
+
+        private void chkBypassValidation_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBypassValidation.Checked)
+            {
+                MessageBox.Show("Bypassing SSL Certificate Validation procedures is inherently insecure as the client will trust any server certificate.  Please consider issuing proper SSL Certificates.", "Warning - Insecure", MessageBoxButtons.OK);
+            }
         }
     }
 }

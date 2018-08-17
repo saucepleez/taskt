@@ -72,6 +72,7 @@ namespace taskt.Core
         public bool ServerConnectionEnabled { get; set; }
         public bool ConnectToServerOnStartup { get; set; }
         public bool RetryServerConnectionOnFail { get; set; }
+        public bool BypassCertificateValidation { get; set; }
         public string ServerURL { get; set; }
         public string ServerPublicKey { get; set; }
     }

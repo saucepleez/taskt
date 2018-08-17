@@ -18,6 +18,7 @@ namespace taskt.Core.Sockets
         public static string connectionException;
         private static bool retryOnFail;
         private static System.Timers.Timer heartbeatTimer;
+        private static bool bypassCertificationValidation;
         static SocketClient()
         {
 
@@ -50,6 +51,7 @@ namespace taskt.Core.Sockets
             serverURI = serverSettings.ServerURL;
             retryOnFail = serverSettings.RetryServerConnectionOnFail;
             publicKey = serverSettings.ServerPublicKey;
+            bypassCertificationValidation = serverSettings.BypassCertificateValidation;
 
             Logging.log.Info("Socket Client - URI: " + serverURI);
             Logging.log.Info("Socket Client - Retry On Fail: " + retryOnFail);
@@ -80,6 +82,13 @@ namespace taskt.Core.Sockets
                 //var fileName = "Server Connection Logs";
                 //var logging = new taskt.Core.Logging();
                 //log = logging.Setup(fileName, log4net.Core.Level.Debug);
+
+                if (bypassCertificationValidation)
+                {
+                    Logging.log.Info("Client bypassing certificate validation");
+                    //trust all certificates -- for self signed certificates, etc.
+                    System.Net.ServicePointManager.ServerCertificateValidationCallback = (a, b, c, d) => true;
+                }
 
                 //reset connection exception
                 connectionException = string.Empty;
