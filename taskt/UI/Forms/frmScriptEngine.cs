@@ -47,7 +47,7 @@ namespace taskt.UI.Forms
      
         public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm)
         {
-        
+            Core.Client.EngineBusy = true;
 
             filePath = pathToFile;
             callBackForm = builderForm;
@@ -61,9 +61,14 @@ namespace taskt.UI.Forms
 
             createMissingVariables = engineSettings.CreateMissingVariablesDuringExecution;
 
+
+
+       
+
             LogInfo("taskt Engine Loaded");
             LogInfo("Selected Script: " + pathToFile);
 
+            
 
             advancedDebug = engineSettings.ShowAdvancedDebugOutput;
 
@@ -322,7 +327,7 @@ namespace taskt.UI.Forms
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
 
 
-            Core.Sockets.SocketClient.SendMessage("ENGINE=" + text);
+            //Core.Sockets.SocketClient.SendMessage("ENGINE=" + text);
            
 
         }
@@ -389,10 +394,9 @@ namespace taskt.UI.Forms
             LogInfo("Total Execution Time: " + sw.Elapsed.ToString());
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
 
-   
-            Core.Sockets.SocketClient.SendMessage("ENGINE=Available, Previous Run-Time: " + sw.Elapsed.ToString());
+  
+            Core.Client.EngineBusy = false;
 
-        
 
 
         }

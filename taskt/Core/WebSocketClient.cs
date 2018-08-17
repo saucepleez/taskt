@@ -39,7 +39,7 @@ namespace taskt.Core.Sockets
             Logging.log.Info("Loading Socket Client Settings");
             //setup heartbeat to the server
             heartbeatTimer = new System.Timers.Timer();
-            heartbeatTimer.Interval = 30000;
+            heartbeatTimer.Interval = 10000;
             heartbeatTimer.Elapsed += HeartbeatTimer_Elapsed;
 
             //get app settings
@@ -132,13 +132,14 @@ namespace taskt.Core.Sockets
             Logging.log.Info("Server Connection Opened");
             connectionOpened = DateTime.Now;
             SendMessage("CONN_REQUEST");
-            heartbeatTimer.Enabled = true;
+            heartbeatTimer.Enabled = false;
 
+                          
         }
 
         private static void HeartbeatTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            SendMessage("PING");
+            
         }
 
         /// <summary>
@@ -150,6 +151,12 @@ namespace taskt.Core.Sockets
         {
             heartbeatTimer.Enabled = false;
             Logging.log.Info("Server Connection Closed");
+
+            if (retryOnFail)
+            {
+                Connect(serverURI);
+            }
+
 
         }
         /// <summary>
@@ -180,10 +187,10 @@ namespace taskt.Core.Sockets
             {
                 //execute scripts
             }
-            //server sent a ping request
-            else if (e.Message.Contains("PING_REQUEST"))
+            //server wants the client status
+            else if (e.Message.Contains("CLIENT_STATUS"))
             {
-                SendMessage("CONNECTION_ACTIVE");
+                SendMessage("CLIENT_STATUS=" + Client.ClientStatus);
             }
             //server send a new public key
             else if (e.Message.Contains("ACCEPT_KEY"))
@@ -199,7 +206,10 @@ namespace taskt.Core.Sockets
 
                 appSettings.Save(appSettings);
 
+           
             }
+
+           
 
         }
         public static void SendMessage(string message)
