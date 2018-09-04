@@ -138,12 +138,13 @@
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation Command Attributes\Automation Command Attributes.cs" />
     <Compile Include="Core\AutomationCommands.cs" />
+    <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\DatasetCommands.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\Logging.cs" />
-    <Compile Include="Core\SocketServer.cs" />
+    <Compile Include="Core\WebSocketClient.cs" />
     <Compile Include="Core\Win32Commands.cs" />
     <Compile Include="Core\Script.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -16,10 +16,8 @@ namespace taskt.Core
     /// </summary>
     public static class Logging
     {
-        /// <summary>
-        /// Sets up a new logging instance
-        /// </summary>
-        public static void Setup(string logName)
+        public static ILog log;
+        static Logging()
         {
             Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
 
@@ -28,11 +26,11 @@ namespace taskt.Core
                 ConversionPattern = "%date [%thread] %-5level - %message%newline"
             };
             patternLayout.ActivateOptions();
-
-            RollingFileAppender roller = new RollingFileAppender
+    
+        RollingFileAppender roller = new RollingFileAppender
             {
                 AppendToFile = true,
-                File = Core.Common.GetLogFolderPath() + "\\" + logName + ".txt",
+                File = Core.Common.GetLogFolderPath() + "\\taskt Client Logs.txt",
                 Layout = patternLayout,
                 MaxSizeRollBackups = 5,
                 MaximumFileSize = "1GB",
@@ -48,6 +46,11 @@ namespace taskt.Core
 
             hierarchy.Root.Level = Level.Info;
             hierarchy.Configured = true;
+
+         log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         }
+
+      
     }
 }

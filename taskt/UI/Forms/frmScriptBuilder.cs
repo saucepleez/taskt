@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using log4net.Appender;
 using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
@@ -39,16 +40,14 @@ namespace taskt.UI.Forms
         #region Instance and Form Events
         private ListViewItem rowSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
-        bool editMode { get; set;}
-        private ImageList uiImages;
-        private WebSocket4Net.WebSocket webSocket;
-        private string publicKey;
-        private string webSocketConnectionID;
+        bool editMode { get; set; }
+        private ImageList uiImages; 
         public Core.ApplicationSettings appSettings;
-        private string streamedXMLData { get; set; }
         private List<List<ListViewItem>> undoList;
         private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
+        private int reqdIndex;
+
         public frmScriptBuilder()
         {
             InitializeComponent();
@@ -82,18 +81,13 @@ namespace taskt.UI.Forms
                 this.Text = "taskt";
             }
 
-            if ((webSocketConnectionID != "") && (webSocketConnectionID != null))
-            {
-                this.Text = this.Text + " [" + webSocketConnectionID + "]";
-            }
-
-
 
         }
 
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
-           
+
+   
 
             //detect latest release
             //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/saucepleez/taskt/releases");
@@ -115,21 +109,9 @@ namespace taskt.UI.Forms
             appSettings = new Core.ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
-            //get server setting preferences
-            var serverSettings = appSettings.ServerSettings;
-
-
-            //try to connect to server
-            if ((serverSettings.ServerConnectionEnabled) && (serverSettings.ConnectToServerOnStartup))
-            {
-                CreateSocketConnection(serverSettings.ServerURL, serverSettings.ServerPublicKey);
-            }
-
-
-
-
-            //create folder to store scripts
-           // var rpaScriptsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\taskt\\My Scripts\\";
+            Core.Sockets.SocketClient.Initialize();
+            Core.Sockets.SocketClient.associatedBuilder = this;
+            //get scripts folder
             var rpaScriptsFolder = Core.Common.GetScriptFolderPath();
 
             if (!System.IO.Directory.Exists(rpaScriptsFolder))
@@ -197,7 +179,7 @@ namespace taskt.UI.Forms
         private void GenerateRecentFiles()
         {
             flwRecentFiles.Controls.Clear();
-   
+
 
             var scriptPath = Core.Common.GetScriptFolderPath();
 
@@ -211,7 +193,7 @@ namespace taskt.UI.Forms
                 flwRecentFiles.Hide();
                 return;
             }
-        
+
 
 
             var directory = new System.IO.DirectoryInfo(scriptPath);
@@ -279,6 +261,11 @@ namespace taskt.UI.Forms
             //e.Graphics.DrawLine(lightSteelBluePen, 0, 0, pnlControlContainer.Width, 0);
             //e.Graphics.DrawLine(lightSteelBluePen, 0, pnlControlContainer.Height - 1, pnlControlContainer.Width, pnlControlContainer.Height - 1);
 
+        }
+        private void lblMainLogo_Click(object sender, EventArgs e)
+        {
+            Supplemental.frmAbout aboutForm = new Supplemental.frmAbout();
+            aboutForm.Show();
         }
         #endregion
 
@@ -579,11 +566,11 @@ namespace taskt.UI.Forms
                 //get sequence events
                 Core.AutomationCommands.SequenceCommand sequence = (Core.AutomationCommands.SequenceCommand)currentCommand;
                 frmScriptBuilder newBuilder = new frmScriptBuilder();
-           
+
                 //append to new builder
                 foreach (var cmd in sequence.v_scriptActions)
                 {
-                    newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));            
+                    newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
                 }
 
 
@@ -638,7 +625,7 @@ namespace taskt.UI.Forms
 
 
 
-            
+
 
         }
 
@@ -654,11 +641,11 @@ namespace taskt.UI.Forms
             editMode = true;
             this.Text = "edit sequence";
             lblMainLogo.Text = "edit sequence";
- 
+
             FormatCommandListView();
             pnlCommandHelper.Hide();
-            
-           
+
+
             grpSaveClose.Location = grpFileActions.Location;
 
             grpRecordRun.Hide();
@@ -707,7 +694,7 @@ namespace taskt.UI.Forms
             lstScriptActions.Items.Add(CreateScriptCommandListViewItem(selectedCommand));
 
             //special types also get a following command and comment
-            if((selectedCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginListLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
+            if ((selectedCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginListLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
             {
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.EndLoopCommand()));
@@ -1047,7 +1034,7 @@ namespace taskt.UI.Forms
             {
 
                 lstScriptActions.Items.Clear();
-   
+
                 scriptVariables = new List<Core.Script.ScriptVariable>();
 
                 this.ScriptFilePath = filePath;
@@ -1239,10 +1226,10 @@ namespace taskt.UI.Forms
         private void uiBtnRunScript_Click(object sender, EventArgs e)
         {
 
-            
+
             if (lstScriptActions.Items.Count == 0)
             {
-               // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
+                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
                 Notify("You must first build the script by adding commands!");
                 return;
             }
@@ -1256,10 +1243,17 @@ namespace taskt.UI.Forms
             }
 
             Notify("Running Script..");
+
+
             UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
+
+            //this.executionManager = new ScriptExectionManager();
+            //executionManager.CurrentlyExecuting = true;
+            //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
+
             newEngine.callBackForm = this;
             newEngine.Show();
-
+           
         }
 
         private void uiBtnNew_Click(object sender, EventArgs e)
@@ -1278,7 +1272,6 @@ namespace taskt.UI.Forms
             scheduleManager.Show();
         }
 
-       
         private void uiBtnAbout_Click(object sender, EventArgs e)
         {
             UI.Forms.Supplemental.frmAbout frmAboutForm = new UI.Forms.Supplemental.frmAbout();
@@ -1296,7 +1289,7 @@ namespace taskt.UI.Forms
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
 
-          
+
 
 
         }
@@ -1311,6 +1304,27 @@ namespace taskt.UI.Forms
             Notify("Anti-Idle Triggered");
         }
 
+        private void uiBtnRecordSequence_Click(object sender, EventArgs e)
+        {
+
+            this.Hide();
+            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
+            sequenceRecorder.callBackForm = this;
+            sequenceRecorder.ShowDialog();
+
+            pnlCommandHelper.Hide();
+
+            this.Show();
+            this.BringToFront();
+
+
+        }
+
+        private void uiBtnClearAll_Click(object sender, EventArgs e)
+        {
+            HideSearchInfo();
+            lstScriptActions.Items.Clear();
+        }
 
         #endregion
 
@@ -1332,131 +1346,6 @@ namespace taskt.UI.Forms
             }
 
         }
-        #endregion
-
-        #region WebServer Socket Management
-
-        public bool CreateSocketConnection(string serverURL, string publicKey)
-        {
-            try
-            {
-                this.publicKey = publicKey;
-                webSocket = new WebSocket4Net.WebSocket(serverURL);
-                webSocket.Error += new EventHandler<SuperSocket.ClientEngine.ErrorEventArgs>(ConnectionError);
-                webSocket.Opened += new EventHandler(ConnectionOpened);
-                webSocket.Closed += new EventHandler(ConnectionClosed);
-                webSocket.MessageReceived += new EventHandler<WebSocket4Net.MessageReceivedEventArgs>(websocket_MessageReceived);
-                webSocket.Open();
-                Notify("Connected To Server");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Notify("Server Connection Problem: " + ex.Message);
-                return false;
-            }
-        }
-        public static string Encrypt(string publicKey, string data)
-        {
-
-            if (publicKey is null)
-            {
-                return string.Empty;
-            }
-
-            System.Security.Cryptography.CspParameters cspParams = new System.Security.Cryptography.CspParameters { ProviderType = 1 };
-            System.Security.Cryptography.RSACryptoServiceProvider rsaProvider = new System.Security.Cryptography.RSACryptoServiceProvider(cspParams);
-
-            rsaProvider.ImportCspBlob(Convert.FromBase64String(publicKey));
-
-            byte[] plainBytes = System.Text.Encoding.UTF8.GetBytes(data);
-            byte[] encryptedBytes = rsaProvider.Encrypt(plainBytes, false);
-
-            return Encoding.Unicode.GetString(encryptedBytes);
-
-        }
-
-
-        public void SendMessage(string message)
-        {
-            //encrypt as needed
-            if (webSocketConnectionID != null)
-            {
-                var encryptedString = Encrypt(publicKey, message);
-                webSocket.Send(encryptedString);
-            }
-
-        }
-
-        private void ConnectionOpened(object sender, EventArgs e)
-        {
-            SendMessage("ClientStatus=Available");
-        }
-        private void ConnectionClosed(object sender, EventArgs e)
-        {
-            //start retrying to connect
-        }
-
-        private void ConnectionError(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
-        {
-            //connection has failed, start retrying
-        }
-        private void websocket_MessageReceived(object sender, WebSocket4Net.MessageReceivedEventArgs e)
-        {
-
-
-            if (e.Message.Contains("connectionID"))
-            {
-                //set connection ID to display locally
-                var connectionID = e.Message.Replace("connectionID=", "");
-                webSocketConnectionID = connectionID;
-                UpdateServerConnectionInfo(connectionID);
-            }
-            else if (e.Message.Contains("?xml"))
-            {
-                //code is being sent from the server so run it
-                streamedXMLData = e.Message;
-                RunXMLScript();
-            }
-            else if (e.Message.Contains("ping"))
-            {
-                SendMessage("Alive");
-            }
-        }
-
-        private void UpdateServerConnectionInfo(string connectionID)
-        {
-            if (InvokeRequired)
-            {
-                this.Invoke((MethodInvoker)delegate
-                {
-                    UpdateServerConnectionInfo(connectionID);
-                });
-
-            }
-
-            else
-            {
-                UpdateWindowTitle();
-            }
-
-        }
-        private void RunXMLScript()
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new MethodInvoker(RunXMLScript));
-            }
-            else
-            {
-                frmScriptEngine newEngine = new UI.Forms.frmScriptEngine("", this);
-                newEngine.xmlInfo = streamedXMLData;
-                newEngine.callBackForm = this;
-                newEngine.Show();
-            }
-
-        }
-
         #endregion
 
         #region TreeView Events
@@ -1502,45 +1391,14 @@ namespace taskt.UI.Forms
 
         #endregion
 
-        private void pnlCommandHelper_Paint(object sender, PaintEventArgs e)
-        {
-           
-        }
+        #region ListView Search
 
-        private void uiBtnRecordSequence_Click(object sender, EventArgs e)
-        {
-
-            this.Hide();
-            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
-            sequenceRecorder.callBackForm = this;
-            sequenceRecorder.ShowDialog();
-
-            pnlCommandHelper.Hide();
-
-            this.Show();
-            this.BringToFront();
-
-
-        }
-        private void uiBtnAbout_Click_1(object sender, EventArgs e)
-        {
-         
-        }
-
-        private void uiBtnClearAll_Click(object sender, EventArgs e)
-        {
-            HideSearchInfo();
-            lstScriptActions.Items.Clear();
-        }
-
-
-        int reqdIndex;
         private void txtCommandSearch_TextChanged(object sender, EventArgs e)
         {
 
             if (lstScriptActions.Items.Count == 0)
                 return;
-        
+
 
             if (txtCommandSearch.Text == "")
             {
@@ -1553,17 +1411,13 @@ namespace taskt.UI.Forms
                 lblTotalResults.Show();
                 SearchForItemInListView();
             }
-         
+
         }
 
         private void HideSearchInfo()
         {
             lblCurrentlyViewing.Hide();
             lblTotalResults.Hide();
-        }
-        private void btnSearchNext_Click(object sender, EventArgs e)
-        {
-           
         }
 
         private void pbSearch_Click(object sender, EventArgs e)
@@ -1575,7 +1429,6 @@ namespace taskt.UI.Forms
             }
 
         }
-
 
         private void SearchForItemInListView()
         {
@@ -1591,7 +1444,7 @@ namespace taskt.UI.Forms
             int? matchCount = matchingItems.Count();
             int totalMatches = matchCount ?? 0;
 
-         
+
             if (reqdIndex == matchingItems.Count)
             {
                 reqdIndex = 0;
@@ -1612,9 +1465,9 @@ namespace taskt.UI.Forms
                 lblTotalResults.Text = totalMatches + " total results found";
             }
 
-          
 
-          
+
+
 
 
             foreach (ListViewItem itm in matchingItems)
@@ -1627,14 +1480,14 @@ namespace taskt.UI.Forms
             reqdItem.BackColor = Color.Orange;
 
 
-         
+
 
             lstScriptActions.EnsureVisible(reqdItem.Index);
 
 
 
 
-         
+
         }
 
         private void pbSearch_MouseEnter(object sender, EventArgs e)
@@ -1647,25 +1500,10 @@ namespace taskt.UI.Forms
             this.Cursor = Cursors.Arrow;
         }
 
-        private void lblMainLogo_Click(object sender, EventArgs e)
-        {
-            Supplemental.frmAbout aboutForm = new Supplemental.frmAbout();
-            aboutForm.Show();
-        }
-    }
-
-
-    public class SocketMessage
-        {
-        public string Message { get; set; }
-        }
-
-    public class SocketCommandMessage : SocketMessage
-    {
-        public Core.AutomationCommands.ScriptCommand cmd { get; set; }
-
-    }
+        #endregion
 
 
     }
+
+}
 

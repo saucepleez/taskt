@@ -369,7 +369,7 @@
             this.pnlCommandHelper.Name = "pnlCommandHelper";
             this.pnlCommandHelper.Size = new System.Drawing.Size(661, 393);
             this.pnlCommandHelper.TabIndex = 7;
-            this.pnlCommandHelper.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCommandHelper_Paint);
+         
             // 
             // flwRecentFiles
             // 

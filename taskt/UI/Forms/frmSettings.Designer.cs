@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.btnConnect = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -54,9 +55,13 @@
             this.tabAppSettings = new System.Windows.Forms.TabPage();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
             this.tabServerSettings = new System.Windows.Forms.TabPage();
+            this.chkBypassValidation = new System.Windows.Forms.CheckBox();
+            this.btnCloseConnection = new System.Windows.Forms.Button();
+            this.lblSocketException = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -69,7 +74,7 @@
             // btnConnect
             // 
             this.btnConnect.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnConnect.Location = new System.Drawing.Point(12, 196);
+            this.btnConnect.Location = new System.Drawing.Point(12, 222);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 33);
             this.btnConnect.TabIndex = 17;
@@ -83,11 +88,10 @@
             this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblStatus.Location = new System.Drawing.Point(10, 233);
+            this.lblStatus.Location = new System.Drawing.Point(13, 258);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(228, 20);
+            this.lblStatus.Size = new System.Drawing.Size(0, 20);
             this.lblStatus.TabIndex = 16;
-            this.lblStatus.Text = "Current Status: Not Connected";
             // 
             // chkRetryOnDisconnect
             // 
@@ -142,7 +146,7 @@
             // txtServerURL
             // 
             this.txtServerURL.ForeColor = System.Drawing.Color.SteelBlue;
-            this.txtServerURL.Location = new System.Drawing.Point(10, 115);
+            this.txtServerURL.Location = new System.Drawing.Point(10, 141);
             this.txtServerURL.Name = "txtServerURL";
             this.txtServerURL.Size = new System.Drawing.Size(371, 29);
             this.txtServerURL.TabIndex = 11;
@@ -153,7 +157,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.SlateGray;
-            this.label3.Location = new System.Drawing.Point(7, 93);
+            this.label3.Location = new System.Drawing.Point(7, 119);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(232, 16);
             this.label3.TabIndex = 9;
@@ -162,7 +166,7 @@
             // txtPublicKey
             // 
             this.txtPublicKey.ForeColor = System.Drawing.Color.SteelBlue;
-            this.txtPublicKey.Location = new System.Drawing.Point(11, 164);
+            this.txtPublicKey.Location = new System.Drawing.Point(11, 190);
             this.txtPublicKey.Name = "txtPublicKey";
             this.txtPublicKey.Size = new System.Drawing.Size(371, 29);
             this.txtPublicKey.TabIndex = 19;
@@ -173,7 +177,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.SlateGray;
-            this.label2.Location = new System.Drawing.Point(9, 146);
+            this.label2.Location = new System.Drawing.Point(9, 172);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 16);
             this.label2.TabIndex = 18;
@@ -227,7 +231,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 377);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 442);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -330,7 +334,7 @@
             this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(557, 298);
+            this.uiSettingTabs.Size = new System.Drawing.Size(563, 363);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
@@ -342,7 +346,7 @@
             this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppSettings.Size = new System.Drawing.Size(549, 262);
+            this.tabAppSettings.Size = new System.Drawing.Size(549, 288);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
@@ -358,13 +362,16 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(549, 264);
+            this.tabDebugSettings.Size = new System.Drawing.Size(549, 288);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Debug";
             // 
             // tabServerSettings
             // 
             this.tabServerSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabServerSettings.Controls.Add(this.chkBypassValidation);
+            this.tabServerSettings.Controls.Add(this.btnCloseConnection);
+            this.tabServerSettings.Controls.Add(this.lblSocketException);
             this.tabServerSettings.Controls.Add(this.label4);
             this.tabServerSettings.Controls.Add(this.chkServerEnabled);
             this.tabServerSettings.Controls.Add(this.txtPublicKey);
@@ -378,9 +385,45 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(549, 262);
+            this.tabServerSettings.Size = new System.Drawing.Size(555, 329);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
+            // 
+            // chkBypassValidation
+            // 
+            this.chkBypassValidation.AutoSize = true;
+            this.chkBypassValidation.BackColor = System.Drawing.Color.Transparent;
+            this.chkBypassValidation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkBypassValidation.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkBypassValidation.Location = new System.Drawing.Point(11, 97);
+            this.chkBypassValidation.Name = "chkBypassValidation";
+            this.chkBypassValidation.Size = new System.Drawing.Size(138, 19);
+            this.chkBypassValidation.TabIndex = 23;
+            this.chkBypassValidation.Text = "Bypass SSL Validation";
+            this.chkBypassValidation.UseVisualStyleBackColor = false;
+            this.chkBypassValidation.CheckedChanged += new System.EventHandler(this.chkBypassValidation_CheckedChanged);
+            // 
+            // btnCloseConnection
+            // 
+            this.btnCloseConnection.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btnCloseConnection.Location = new System.Drawing.Point(90, 222);
+            this.btnCloseConnection.Name = "btnCloseConnection";
+            this.btnCloseConnection.Size = new System.Drawing.Size(75, 33);
+            this.btnCloseConnection.TabIndex = 22;
+            this.btnCloseConnection.Text = "Close";
+            this.btnCloseConnection.UseVisualStyleBackColor = true;
+            this.btnCloseConnection.Click += new System.EventHandler(this.btnCloseConnection_Click);
+            // 
+            // lblSocketException
+            // 
+            this.lblSocketException.AutoSize = true;
+            this.lblSocketException.BackColor = System.Drawing.Color.Transparent;
+            this.lblSocketException.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSocketException.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblSocketException.Location = new System.Drawing.Point(13, 278);
+            this.lblSocketException.Name = "lblSocketException";
+            this.lblSocketException.Size = new System.Drawing.Size(0, 20);
+            this.lblSocketException.TabIndex = 21;
             // 
             // label4
             // 
@@ -409,7 +452,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(563, 434);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(569, 499);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -421,15 +464,21 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(563, 70);
+            this.panel1.Size = new System.Drawing.Size(569, 70);
             this.panel1.TabIndex = 26;
+            // 
+            // tmrGetSocketStatus
+            // 
+            this.tmrGetSocketStatus.Enabled = true;
+            this.tmrGetSocketStatus.Interval = 250;
+            this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(563, 434);
+            this.ClientSize = new System.Drawing.Size(569, 499);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -480,5 +529,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblSocketException;
+        private System.Windows.Forms.Button btnCloseConnection;
+        private System.Windows.Forms.Timer tmrGetSocketStatus;
+        private System.Windows.Forms.CheckBox chkBypassValidation;
     }
 }
