@@ -144,7 +144,6 @@
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\Logging.cs" />
-    <Compile Include="Core\SocketServer.cs" />
     <Compile Include="Core\WebSocketClient.cs" />
     <Compile Include="Core\Win32Commands.cs" />
     <Compile Include="Core\Script.cs" />

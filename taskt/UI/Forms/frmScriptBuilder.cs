@@ -110,7 +110,7 @@ namespace taskt.UI.Forms
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
             Core.Sockets.SocketClient.Initialize();
-
+            Core.Sockets.SocketClient.associatedBuilder = this;
             //get scripts folder
             var rpaScriptsFolder = Core.Common.GetScriptFolderPath();
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace taskt.Core.Sockets
 {
@@ -11,6 +13,7 @@ namespace taskt.Core.Sockets
     /// </summary>
    public static class SocketClient
     {
+        public static UI.Forms.frmScriptBuilder associatedBuilder;
         private static string publicKey;
         private static string serverURI;
         private static DateTime connectionOpened;
@@ -186,6 +189,7 @@ namespace taskt.Core.Sockets
             if (e.Message.Contains("?xml"))
             {
                 //execute scripts
+                RunXMLScript(e.Message);
             }
             //server wants the client status
             else if (e.Message.Contains("CLIENT_STATUS"))
@@ -212,6 +216,7 @@ namespace taskt.Core.Sockets
            
 
         }
+
         public static void SendMessage(string message)
         {
             //if connection isnt open don't bother sending
@@ -261,21 +266,19 @@ namespace taskt.Core.Sockets
             }
         }
 
-        //private void RunXMLScript()
-        //{
-        //    if (InvokeRequired)
-        //    {
-        //        Invoke(new MethodInvoker(RunXMLScript));
-        //    }
-        //    else
-        //    {
-        //        frmScriptEngine newEngine = new UI.Forms.frmScriptEngine("", this);
-        //        newEngine.xmlInfo = streamedXMLData;
-        //        newEngine.callBackForm = this;
-        //        newEngine.Show();
-        //    }
+        private static void RunXMLScript(string scriptData)
+        {
 
-        //}
+
+            associatedBuilder.Invoke(new MethodInvoker(delegate ()
+            {
+                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine("", null);
+                newEngine.xmlInfo = scriptData;
+                newEngine.callBackForm = null;
+                newEngine.Show();
+            }));            
+
+        }
     }
 
   
