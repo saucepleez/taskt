@@ -4295,7 +4295,7 @@ namespace taskt.Core.AutomationCommands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [wait for " + v_WaitTime + " seconds]";
+            return base.GetDisplayValue() + " [file: " + v_FileName + ", wait " + v_WaitTime + "s]";
         }
     }
     #endregion
