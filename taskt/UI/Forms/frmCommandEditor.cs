@@ -237,6 +237,13 @@ namespace taskt.UI.Forms
 
 
                                 break;
+                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
+                                //show variable selector
+                                variableInsertion.CommandImage = UI.Images.GetUIImage("RunScriptCommand");
+                                variableInsertion.CommandDisplay = "Code Builder";
+                                variableInsertion.Click += ShowCodeBuilder;
+                                flw_InputVariables.Controls.Add(variableInsertion);
+                                break;
 
                             default:
                                 break;
@@ -1005,6 +1012,25 @@ namespace taskt.UI.Forms
                 cmd.v_XMousePosition = frmShowCursorPos.xPos;
                 cmd.v_YMousePosition = frmShowCursorPos.yPos;
             }
+        }
+        private void ShowCodeBuilder(object sender, EventArgs e)
+        {
+            //get textbox text
+            CustomControls.CommandItemControl commandItem = (CustomControls.CommandItemControl)sender;
+            TextBox targetTextbox = (TextBox)commandItem.Tag;
+
+
+            UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new Supplemental.frmCodeBuilder(targetTextbox.Text);
+
+            if (codeBuilder.ShowDialog() == DialogResult.OK)
+            {
+
+                targetTextbox.Text = codeBuilder.rtbCode.Text;
+            }
+
+
+
+
         }
         private void ShowVariableSelector(object sender, EventArgs e)
         {

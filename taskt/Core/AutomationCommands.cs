@@ -27,6 +27,8 @@ using taskt.Core;
 using System.Net;
 using System.IO;
 using System.Drawing;
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
 
 namespace taskt.Core.AutomationCommands
 {
@@ -102,6 +104,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(DeleteFileCommand))]
     [XmlInclude(typeof(RenameFileCommand))]
     [XmlInclude(typeof(WaitForFileToExistCommand))]
+    [XmlInclude(typeof(RunCustomCodeCommand))]
     [Serializable]
     public abstract class ScriptCommand
     {
@@ -1685,6 +1688,57 @@ namespace taskt.Core.AutomationCommands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Script Path: " + v_ScriptPath + "]";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Programs/Process Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to run C# code from the input")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
+    public class RunCustomCodeCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Paste the C# code to execute")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
+        public string v_Code { get; set; }
+
+        public RunCustomCodeCommand()
+        {
+            this.CommandName = "RunCustomCodeCommand";
+            this.SelectionName = "Run Custom Code";
+            this.CommandEnabled = true;       
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //create compiler service
+            var compilerSvc = new Core.CompilerServices();
+            var customCode = v_Code.ConvertToUserVariable(sender);
+
+            //compile custom code
+            var result = compilerSvc.CompileInput(customCode);
+
+            //check for errors
+            if (result.Errors.HasErrors)
+            {
+                //throw exception
+                var errors = string.Join(", ", result.Errors);
+                throw new Exception("Errors Occured: " + errors);
+            }
+            else
+            {
+                //run code, taskt will wait for the app to exit before resuming
+                System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
+                scriptProc.StartInfo.FileName = result.PathToAssembly;
+                scriptProc.Start();
+                scriptProc.WaitForExit();
+                scriptProc.Close();
+            }
+
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue();
         }
     }
     [Serializable]
