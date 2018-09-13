@@ -36,6 +36,10 @@ namespace taskt.UI.Forms.Supplemental
 
         private void rtbCode_TextChanged(object sender, EventArgs e)
         {
+            //Credits to Apex for RegEx Highlighting Sample
+            //http://www.codingvision.net/interface/c-simple-syntax-highlighting
+
+
             // getting keywords/functions
             string keywords = @"\b(public|private|partial|static|namespace|class|using|void|foreach|in)\b";
             MatchCollection keywordMatches = Regex.Matches(rtbCode.Text, keywords);
