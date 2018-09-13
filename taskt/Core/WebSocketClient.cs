@@ -219,6 +219,12 @@ namespace taskt.Core.Sockets
 
         public static void SendMessage(string message)
         {
+
+            if (webSocket == null)
+            {
+                return;
+            }
+
             //if connection isnt open don't bother sending
             if ((webSocket.State != WebSocket4Net.WebSocketState.Open))
             {
@@ -245,6 +251,11 @@ namespace taskt.Core.Sockets
 
         public static string GetSocketState()
         {
+            if (webSocket == null)
+            {
+                return "Unknown";
+            }
+
             switch (webSocket.State)
             {
                 case WebSocket4Net.WebSocketState.None:

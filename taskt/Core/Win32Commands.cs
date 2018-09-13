@@ -471,7 +471,7 @@ namespace taskt.Core.AutomationCommands
 
 
                 //translate key press to sendkeys identifier
-                if (selectedKey == "End")
+                if (selectedKey == "Pause")
                 {
                     StopHook();
                     return;

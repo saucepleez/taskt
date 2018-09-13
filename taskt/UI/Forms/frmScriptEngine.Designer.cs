@@ -99,9 +99,9 @@
             this.lblKillProcNote.ForeColor = System.Drawing.Color.White;
             this.lblKillProcNote.Location = new System.Drawing.Point(4, 176);
             this.lblKillProcNote.Name = "lblKillProcNote";
-            this.lblKillProcNote.Size = new System.Drawing.Size(274, 20);
+            this.lblKillProcNote.Size = new System.Drawing.Size(333, 20);
             this.lblKillProcNote.TabIndex = 17;
-            this.lblKillProcNote.Text = "Press the \'End\' key to stop automation.";
+            this.lblKillProcNote.Text = "Press the \'Pause/Break\' key to stop automation.";
             // 
             // lblAction
             // 
