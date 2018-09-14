@@ -465,13 +465,13 @@ namespace taskt.Core.AutomationCommands
                                                 where rw.Field<string>("Parameter Name") == "Attribute Name"
                                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                        string variableName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                        string VariableName = (from rw in v_WebActionParameterTable.AsEnumerable()
                                                where rw.Field<string>("Parameter Name") == "Variable Name"
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                         string convertedAttribute = Convert.ToString(element.getAttribute(attributeName));
 
-                        convertedAttribute.StoreInUserVariable(sender, variableName);
+                        convertedAttribute.StoreInUserVariable(sender, VariableName);
 
                         break;
                     }
@@ -1044,7 +1044,7 @@ namespace taskt.Core.AutomationCommands
                     case "Get Text":
                     case "Get Attribute":
 
-                        string variableName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                        string VariableName = (from rw in v_WebActionParameterTable.AsEnumerable()
                                                where rw.Field<string>("Parameter Name") == "Variable Name"
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
@@ -1062,7 +1062,7 @@ namespace taskt.Core.AutomationCommands
                             elementValue = element.GetAttribute(attributeName);
                         }
 
-                        elementValue.StoreInUserVariable(sender, variableName);
+                        elementValue.StoreInUserVariable(sender, VariableName);
 
                         break;
                     case "Clear Element":
@@ -1771,13 +1771,13 @@ namespace taskt.Core.AutomationCommands
             //if still not found and user has elected option, create variable at runtime
             if ((requiredVariable == null) && (sendingInstance.createMissingVariables))
             {
-                sendingInstance.variableList.Add(new Script.ScriptVariable() { variableName = v_userVariableName });
+                sendingInstance.variableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
                 requiredVariable = LookupVariable(sendingInstance);
             }
        
             if (requiredVariable != null)
             {
-                requiredVariable.variableValue = v_Input.ConvertToUserVariable(sender);
+                requiredVariable.VariableValue = v_Input.ConvertToUserVariable(sender);
             }
             else
             {
@@ -1788,14 +1788,14 @@ namespace taskt.Core.AutomationCommands
         private Script.ScriptVariable LookupVariable(UI.Forms.frmScriptEngine sendingInstance)
         {
             //search for the variable
-            var requiredVariable = sendingInstance.variableList.Where(var => var.variableName == v_userVariableName).FirstOrDefault();
+            var requiredVariable = sendingInstance.variableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
             if ((requiredVariable == null) && (v_userVariableName.StartsWith("[")) && (v_userVariableName.EndsWith("]")))
             {
                 //reformat and attempt
                 var reformattedVariable = v_userVariableName.Replace("[", "").Replace("]", "");
-                requiredVariable = sendingInstance.variableList.Where(var => var.variableName == reformattedVariable).FirstOrDefault();
+                requiredVariable = sendingInstance.variableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 
             return requiredVariable;
@@ -2266,8 +2266,8 @@ namespace taskt.Core.AutomationCommands
 
             Script.ScriptVariable newDataset = new Script.ScriptVariable
             {
-                variableName = v_DataSetName,
-                variableValue = requiredData
+                VariableName = v_DataSetName,
+                VariableValue = requiredData
             };
 
             sendingInstance.variableList.Add(newDataset);
@@ -2318,7 +2318,7 @@ namespace taskt.Core.AutomationCommands
             for (int i = 0; i < loopTimes; i++)
             {
                 if (complexVarible != null)
-                    complexVarible.currentPosition = i;
+                    complexVarible.CurrentPosition = i;
 
                 bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber });
 
@@ -2366,13 +2366,13 @@ namespace taskt.Core.AutomationCommands
 
 
            //get variable by regular name
-            complexVariable = engineForm.variableList.Where(x => x.variableName == v_LoopParameter).FirstOrDefault();
+            complexVariable = engineForm.variableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
 
 
             //user may potentially include brackets []
             if (complexVariable == null)
             {
-                complexVariable = engineForm.variableList.Where(x => x.variableName.ApplyVariableFormatting() == v_LoopParameter).FirstOrDefault();
+                complexVariable = engineForm.variableList.Where(x => x.VariableName.ApplyVariableFormatting() == v_LoopParameter).FirstOrDefault();
             }
 
             //if still null then throw exception
@@ -2382,14 +2382,14 @@ namespace taskt.Core.AutomationCommands
             }
 
 
-                var listToLoop = (List<string>)complexVariable.variableValue;
+                var listToLoop = (List<string>)complexVariable.VariableValue;
                 loopTimes = listToLoop.Count();
 
 
             for (int i = 0; i < loopTimes; i++)
             {
                 if (complexVariable != null)
-                    complexVariable.currentPosition = i;
+                    complexVariable.CurrentPosition = i;
 
                 bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber });
 
@@ -2432,21 +2432,21 @@ namespace taskt.Core.AutomationCommands
             Core.AutomationCommands.BeginExcelDatasetLoopCommand loopCommand = (Core.AutomationCommands.BeginExcelDatasetLoopCommand)parentCommand.ScriptCommand;
             var engineForm = (UI.Forms.frmScriptEngine)sender;
 
-            var dataSetVariable = engineForm.variableList.Where(f => f.variableName == v_DataSetName).FirstOrDefault();
+            var dataSetVariable = engineForm.variableList.Where(f => f.VariableName == v_DataSetName).FirstOrDefault();
 
             if (dataSetVariable == null)
                 throw new Exception("DataSet Name Not Found - " + v_DataSetName);
 
 
 
-                DataTable excelTable = (DataTable)dataSetVariable.variableValue;
+                DataTable excelTable = (DataTable)dataSetVariable.VariableValue;
 
 
                 var loopTimes = excelTable.Rows.Count;
 
             for (int i = 0; i < excelTable.Rows.Count; i++)
             {
-                dataSetVariable.currentPosition = i;
+                dataSetVariable.CurrentPosition = i;
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
@@ -3000,8 +3000,8 @@ namespace taskt.Core.AutomationCommands
 
             Script.ScriptVariable newDataset = new Script.ScriptVariable
             {
-                variableName = v_DataSetName,
-                variableValue = requiredData
+                VariableName = v_DataSetName,
+                VariableValue = requiredData
             };
 
             sendingInstance.variableList.Add(newDataset);
@@ -3113,8 +3113,8 @@ namespace taskt.Core.AutomationCommands
             var sendingInstance = (UI.Forms.frmScriptEngine)sender;
             var v_receivingVariable = v_applyConvertToUserVariableName.Replace("[", "").Replace("]", "");
             //get complex variable from engine and assign
-            var requiredComplexVariable = sendingInstance.variableList.Where(x => x.variableName == v_receivingVariable).FirstOrDefault();
-            requiredComplexVariable.variableValue = splitString;
+            var requiredComplexVariable = sendingInstance.variableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
+            requiredComplexVariable.VariableValue = splitString;
         }
         public override string GetDisplayValue()
         {

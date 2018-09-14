@@ -995,35 +995,16 @@ namespace taskt.UI.Forms
         #region Open, Save, Parse File
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
-
-            //var scriptFolder = Core.Common.GetScriptFolderPath();
-            //var files = System.IO.Directory.GetFiles(scriptFolder);
-
-            //if (files.Count() == 0)
-            //{
-            //    //MessageBox.Show("There were no scripts found in the scripts folder at " + scriptFolder, "No Scripts Found");
-            //    Notify("There were no scripts found in the scripts folder at " + scriptFolder);
-            //    return;
-            //}
-
-            ////create script selector
-            //UI.Forms.Supplemental.frmScriptSelector frmSelector = new UI.Forms.Supplemental.frmScriptSelector();
-            //frmSelector.fileList = files;
-
-            ////if script was selected, then run the script
-            //if (frmSelector.ShowDialog() == DialogResult.OK)
-            //{
-            //   var selectedScript = System.IO.Path.Combine(scriptFolder, frmSelector.cboSelectFile.Text);
-            //    OpenFile(selectedScript);
-            //}
-
+            //show ofd
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Core.Common.GetScriptFolderPath();
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Filter = "Xml (*.xml)|*.xml";
 
+            //if user selected file
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                //open file
                 OpenFile(openFileDialog.FileName);
             }
         }
@@ -1032,31 +1013,37 @@ namespace taskt.UI.Forms
 
             try
             {
-
+                //reinitialize
                 lstScriptActions.Items.Clear();
-
                 scriptVariables = new List<Core.Script.ScriptVariable>();
 
-                this.ScriptFilePath = filePath;
-
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(ScriptFilePath);
+                //get deserialized script
+                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
                     Notify("Error Parsing File: Commands not found!");
                 }
 
+                //update file path and reflect in title bar
+                this.ScriptFilePath = filePath;
+
+                //assign variables
                 scriptVariables = deserializedScript.Variables;
 
+                //populate commands
                 PopulateExecutionCommands(deserializedScript.Commands);
 
+                //format listview
                 FormatCommandListView();
 
+                //notify
                 Notify("Script Loaded Successfully!");
             }
             catch (Exception ex)
             {
-                Notify("Oops, an error occured: " + ex.Message);
+                //signal an error has happened
+                Notify("An Error Occured: " + ex.Message);
             }
         }
         private void btnClose_Click(object sender, EventArgs e)

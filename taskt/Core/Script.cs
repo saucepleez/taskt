@@ -56,11 +56,6 @@ namespace taskt.Core.Script
         /// </summary>
         public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, string scriptFilePath = "")
         {
-            //create fileStream
-
-
-
-
             var script = new Core.Script.Script();
 
             //save variables to file
@@ -128,16 +123,18 @@ namespace taskt.Core.Script
                 Indent = true
             };
 
-            //write to file
+            //if output path was provided
             if (scriptFilePath != "")
             {
-                var fileStream = System.IO.File.Create(scriptFilePath);
-                using (XmlWriter writer = XmlWriter.Create(fileStream, settings))
+                //write to file
+                System.IO.FileStream fs;
+                using (fs = System.IO.File.Create(scriptFilePath))
                 {
-                    serializer.Serialize(writer, script);
-                }
-
-                fileStream.Close();
+                    using (XmlWriter writer = XmlWriter.Create(fs, settings))
+                    {
+                        serializer.Serialize(writer, script);
+                    }
+                }  
             }
 
 
@@ -149,11 +146,20 @@ namespace taskt.Core.Script
         public static Script DeserializeFile(string scriptFilePath)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
-            System.IO.FileStream fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open);
-            XmlReader reader = XmlReader.Create(fs);
-            Script deserializedData = (Script)serializer.Deserialize(reader);
-            fs.Close();
-            return deserializedData;
+
+            System.IO.FileStream fs;
+
+            //open file stream from file
+            using (fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
+            {
+                //read and return data
+                XmlReader reader = XmlReader.Create(fs);
+                Script deserializedData = (Script)serializer.Deserialize(reader);
+                return deserializedData;
+            }
+
+          
+            
         }
         /// <summary>
         /// Deserializes an XML string into user-defined commands (server sends a string to the client)
@@ -178,12 +184,17 @@ namespace taskt.Core.Script
         /// generic 'sub-level' commands (ex. nested commands within a loop)
         /// </summary>
         [XmlElement(Order = 2)]
-        public List<ScriptAction> AdditionalScriptCommands = new List<ScriptAction>();
+        public List<ScriptAction> AdditionalScriptCommands { get; set; }
         /// <summary>
         /// adds a command as a nested command to a top-level command
         /// </summary>
         public ScriptAction AddAdditionalAction(Core.AutomationCommands.ScriptCommand scriptCommand)
         {
+            if (AdditionalScriptCommands == null)
+            {
+                AdditionalScriptCommands = new List<ScriptAction>();
+            }
+
             ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
             AdditionalScriptCommands.Add(newExecutionCommand);
             return newExecutionCommand;
@@ -195,28 +206,29 @@ namespace taskt.Core.Script
         /// <summary>
         /// name that will be used to identify the variable
         /// </summary>
-        public string variableName { get; set; }
+        public string VariableName { get; set; }
         /// <summary>
         /// index/position tracking for complex variables (list)
         /// </summary>
-        public int currentPosition = 0;
+        [XmlIgnore]
+        public int CurrentPosition = 0;
         /// <summary>
         /// value of the variable or current index
         /// </summary>
-        public object variableValue { get; set; }
+        public object VariableValue { get; set; }
         /// <summary>
         /// retrieve value of the variable
         /// </summary>
         public string GetDisplayValue()
         {
-            if (variableValue is string)
+            if (VariableValue is string)
             {
-                return (string)variableValue;
+                return (string)VariableValue;
             }
             else
             {
-                List<string> requiredValue = (List<string>)variableValue;
-                return requiredValue[currentPosition];
+                List<string> requiredValue = (List<string>)VariableValue;
+                return requiredValue[CurrentPosition];
             }
         }
     }

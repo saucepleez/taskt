@@ -481,8 +481,8 @@ namespace taskt.UI.Forms
                     InputControl = new ComboBox();
                     foreach (var scriptVariable in scriptVariables)
                     {
-                        if (!string.IsNullOrEmpty(scriptVariable.variableName))
-                            InputControl.Items.Add(scriptVariable.variableName);
+                        if (!string.IsNullOrEmpty(scriptVariable.VariableName))
+                            InputControl.Items.Add(scriptVariable.VariableName);
                     }
 
                     if (scriptVariables.Count == 0)
@@ -1038,8 +1038,8 @@ namespace taskt.UI.Forms
             UI.Forms.Supplemental.frmVariableSelector newVariableSelector = new Supplemental.frmVariableSelector();
 
             //get copy of user variables and append system variables, then load to combobox
-            var variableList = scriptVariables.Select(f => f.variableName).ToList();
-            variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.variableName));
+            var variableList = scriptVariables.Select(f => f.VariableName).ToList();
+            variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
             newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
 
             //if user pressed "OK"
