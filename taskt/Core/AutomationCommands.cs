@@ -3255,7 +3255,7 @@ namespace taskt.Core.AutomationCommands
 
 
             }
-            else if (v_IfActionType == "Current Window Name Is")
+            else if (v_IfActionType == "Active Window Name Is")
             {
                 string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Window Name"
