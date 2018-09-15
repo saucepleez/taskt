@@ -104,8 +104,12 @@ namespace taskt.UI.Forms
             engineInstance = new Core.AutomationEngineInstance();
             engineInstance.ReportProgressEvent += Engine_ReportProgress;
             engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
+            engineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
             engineInstance.ExecuteScriptAsync(this, filePath);
         }
+
+     
+
         /// <summary>
         /// Triggers the automation engine to stop based on a hooked key press
         /// </summary>
@@ -170,6 +174,11 @@ namespace taskt.UI.Forms
        
             AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
 
+        }
+
+        private void EngineInstance_LineNumberChangedEvent(object sender, LineNumberChangedEventArgs e)
+        {
+            UpdateLineNumber(e.CurrentLineNumber);
         }
         #endregion
 
@@ -269,6 +278,20 @@ namespace taskt.UI.Forms
                 confirmationForm.ShowDialog();
             }
          
+        }
+
+        public delegate void SetLineNumber(int lineNumber);
+        public void UpdateLineNumber(int lineNumber)
+        {
+            if (InvokeRequired)
+            {
+                var d = new SetLineNumber(UpdateLineNumber);
+                Invoke(d, new object[] { lineNumber });
+            }
+            else
+            {
+                callBackForm.DebugLine = lineNumber;               
+            }
         }
         #endregion
 

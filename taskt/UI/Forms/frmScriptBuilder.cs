@@ -32,7 +32,6 @@ using System.Xml.Serialization;
 namespace taskt.UI.Forms
 {
 
-
     public partial class frmScriptBuilder : Form
     //Form tracks the overall configuration and enables script editing, saving, and running
     //Features ability to add, drag/drop reorder commands
@@ -1486,6 +1485,10 @@ namespace taskt.UI.Forms
         {
             this.Cursor = Cursors.Arrow;
         }
+
+        #endregion
+
+        #region Automation Engine Delegate
 
         #endregion
 

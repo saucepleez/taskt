@@ -23,6 +23,7 @@ namespace taskt.Core
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
+        public event EventHandler<LineNumberChangedEventArgs> LineNumberChangedEvent;
 
         public AutomationEngineInstance()
         {
@@ -157,7 +158,8 @@ namespace taskt.Core
 
             //report intended execution
             ReportProgress("Running Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
-         
+            LineNumberChanged(parentCommand.LineNumber);
+
             //handle any errors
             try
             {
@@ -240,6 +242,12 @@ namespace taskt.Core
             args.ExecutionTime = sw.Elapsed;
             ScriptFinishedEvent?.Invoke(this, args);
         }
+        public virtual void LineNumberChanged(int lineNumber)
+        {
+            LineNumberChangedEventArgs args = new LineNumberChangedEventArgs();
+            args.CurrentLineNumber = lineNumber;
+            LineNumberChangedEvent?.Invoke(this, args);
+        }
 
        public enum EngineStatus
         {
@@ -261,5 +269,8 @@ namespace taskt.Core
             Successful, Error, Cancelled
         }
     }
-
+    public class LineNumberChangedEventArgs : EventArgs
+    {
+       public int CurrentLineNumber { get; set; }
+    }
 }
