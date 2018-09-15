@@ -142,6 +142,7 @@
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />
     <Compile Include="Core\DatasetCommands.cs" />
+    <Compile Include="Core\AutomationEngine.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\Logging.cs" />

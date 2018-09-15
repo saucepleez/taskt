@@ -284,7 +284,7 @@ namespace taskt.Core.Sockets
             associatedBuilder.Invoke(new MethodInvoker(delegate ()
             {
                 UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine("", null);
-                newEngine.xmlInfo = scriptData;
+               // newEngine.xmlInfo = scriptData;
                 newEngine.callBackForm = null;
                 newEngine.Show();
             }));            

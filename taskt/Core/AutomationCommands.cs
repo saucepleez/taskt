@@ -121,7 +121,7 @@ namespace taskt.Core.AutomationCommands
         [XmlAttribute]
         public bool PauseBeforeExeucution { get; set; }
         [XmlIgnore]
-        public System.Drawing.Color DisplayForeColor { get; set; }
+        public Color DisplayForeColor { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Comment Field (Optional)")]
         public string v_Comment { get; set; }
@@ -140,7 +140,7 @@ namespace taskt.Core.AutomationCommands
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
-        public virtual void RunCommand(object sender, Core.Script.ScriptAction command, System.ComponentModel.BackgroundWorker bgw)
+        public virtual void RunCommand(object sender, Core.Script.ScriptAction command)
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
@@ -175,12 +175,12 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
             var newBrowserSession = new InternetExplorer
             {
                 Visible = true
             };
-            sendingInstance.appInstances.Add(v_InstanceName, newBrowserSession);
+            engine.AppInstances.Add(v_InstanceName, newBrowserSession);
         }
 
         public override string GetDisplayValue()
@@ -211,14 +211,14 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
             bool browserFound = false;
             var shellWindows = new ShellWindows();
             foreach (IWebBrowser2 shellWindow in shellWindows)
             {
                 if ((shellWindow.Document is MSHTML.HTMLDocument) && (shellWindow.Document.Title == v_IEBrowserName))
                 {
-                    sendingInstance.appInstances.Add(v_InstanceName, shellWindow.Application);
+                    engine.AppInstances.Add(v_InstanceName, shellWindow.Application);
                     browserFound = true;
                     break;
                 }
@@ -231,7 +231,7 @@ namespace taskt.Core.AutomationCommands
                 {
                     if ((shellWindow.Document is MSHTML.HTMLDocument) && (shellWindow.Document.Title.Contains(v_IEBrowserName)))
                     {
-                        sendingInstance.appInstances.Add(v_InstanceName, shellWindow.Application);
+                        engine.AppInstances.Add(v_InstanceName, shellWindow.Application);
                         browserFound = true;
                         break;
                     }
@@ -273,8 +273,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var browserInstance = (SHDocVw.InternetExplorer)browserObject;
                 browserInstance.Navigate(v_URL.ConvertToUserVariable(sender));
@@ -323,12 +323,13 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var browserInstance = (SHDocVw.InternetExplorer)browserObject;
                 browserInstance.Quit();
-                sendingInstance.appInstances.Remove(v_InstanceName);
+                engine.AppInstances.Remove(v_InstanceName);
+
             }
             else
             {
@@ -386,9 +387,9 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var browserInstance = (SHDocVw.InternetExplorer)browserObject;
 
@@ -617,20 +618,20 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources");
             OpenQA.Selenium.Chrome.ChromeDriverService driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
             //driverService.HideCommandPromptWindow = true;
 
             var newSeleniumSession = new OpenQA.Selenium.Chrome.ChromeDriver(driverService, new OpenQA.Selenium.Chrome.ChromeOptions());
 
-            if (sendingInstance.appInstances.ContainsKey(v_InstanceName))
+            if (engine.AppInstances.ContainsKey(v_InstanceName))
             {
                 //need to figure out how to handle multiple potential session names
-                sendingInstance.appInstances.Remove(v_InstanceName);
+                engine.AppInstances.Remove(v_InstanceName);
             }
 
-            sendingInstance.appInstances.Add(v_InstanceName, newSeleniumSession);
+            engine.AppInstances.Add(v_InstanceName, newSeleniumSession);
 
             //handle window type on startup - https://github.com/saucepleez/taskt/issues/22
             switch (v_BrowserWindowOption)
@@ -677,8 +678,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
@@ -727,8 +728,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Forward();
@@ -765,8 +766,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Back();
@@ -802,8 +803,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            var engine = (Core.AutomationEngineInstance)sender; 
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Refresh();
@@ -839,8 +840,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Quit();
@@ -912,12 +913,12 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
             //convert to user variable -- https://github.com/saucepleez/taskt/issues/22
-           var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
+            var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
       
 
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
 
@@ -945,7 +946,7 @@ namespace taskt.Core.AutomationCommands
                         }
                         catch (Exception)
                         {
-                            sendingInstance.ReportProgress("Element Not Yet Found... " + (timeToEnd - DateTime.Now).Seconds + "s remain");
+                            engine.ReportProgress("Element Not Yet Found... " + (timeToEnd - DateTime.Now).Seconds + "s remain");
                             System.Threading.Thread.Sleep(1000);
                         }
                     }
@@ -1113,9 +1114,9 @@ namespace taskt.Core.AutomationCommands
 
         public bool ElementExists(object sender, string searchType, string elementName)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object browserObject))
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 v_SeleniumSearchType = searchType.ConvertToUserVariable(sender);
@@ -1197,8 +1198,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            UI.Forms.frmScriptEngine engineForm = (UI.Forms.frmScriptEngine)sender;
-            engineForm.errorHandling = this;
+            var engine = (Core.AutomationEngineInstance)sender;
+            engine.ErrorHandler = this;
         }
 
         public override string GetDisplayValue()
@@ -1248,16 +1249,23 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            UI.Forms.frmScriptEngine engineForm = (UI.Forms.frmScriptEngine)sender;
-           string variableMessage = v_Message.ConvertToUserVariable(sender);
+            var engine = (Core.AutomationEngineInstance)sender;
+            string variableMessage = v_Message.ConvertToUserVariable(sender);
 
-            var result = engineForm.Invoke(new Action(() =>
+            if (engine.tasktEngineUI == null)
             {
-                engineForm.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
+                engine.ReportProgress("Complex Messagebox Supported With UI Only");
+                System.Windows.Forms.MessageBox.Show(variableMessage, "Message Box Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);        
+                return;
+            }
+
+            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            {
+                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
             }
 
             ));
-            //System.Windows.Forms.MessageBox.Show(ConvertToUserVariabledText, "Message Box Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+            
         }
 
         public override string GetDisplayValue()
@@ -1764,15 +1772,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             //get sending instance
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
-            var requiredVariable = LookupVariable(sendingInstance);
+            var requiredVariable = LookupVariable(engine);
 
             //if still not found and user has elected option, create variable at runtime
-            if ((requiredVariable == null) && (sendingInstance.createMissingVariables))
+            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
             {
-                sendingInstance.variableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-                requiredVariable = LookupVariable(sendingInstance);
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
+                requiredVariable = LookupVariable(engine);
             }
        
             if (requiredVariable != null)
@@ -1785,17 +1793,17 @@ namespace taskt.Core.AutomationCommands
             }
         }
 
-        private Script.ScriptVariable LookupVariable(UI.Forms.frmScriptEngine sendingInstance)
+        private Script.ScriptVariable LookupVariable(Core.AutomationEngineInstance sendingInstance)
         {
             //search for the variable
-            var requiredVariable = sendingInstance.variableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
             if ((requiredVariable == null) && (v_userVariableName.StartsWith("[")) && (v_userVariableName.EndsWith("]")))
             {
                 //reformat and attempt
                 var reformattedVariable = v_userVariableName.Replace("[", "").Replace("]", "");
-                requiredVariable = sendingInstance.variableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 
             return requiredVariable;
@@ -2015,16 +2023,16 @@ namespace taskt.Core.AutomationCommands
             this.CommandEnabled = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand, System.ComponentModel.BackgroundWorker bgw)
+        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
-       
-           var bgWorker = (System.ComponentModel.BackgroundWorker)bgw;
+
+            var engine = (Core.AutomationEngineInstance)sender;
 
             foreach (var item in v_scriptActions)
             {
 
                 //exit if cancellation pending
-                if (bgWorker.CancellationPending)
+                if (engine.IsCancellationPending)
                 {
                     return;
                 }
@@ -2262,7 +2270,7 @@ namespace taskt.Core.AutomationCommands
             DatasetCommands dataSetCommand = new DatasetCommands();
             DataTable requiredData = dataSetCommand.CreateDataTable(v_ConnectionString.ConvertToUserVariable(sender), v_UserQuery);
 
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
             Script.ScriptVariable newDataset = new Script.ScriptVariable
             {
@@ -2270,7 +2278,7 @@ namespace taskt.Core.AutomationCommands
                 VariableValue = requiredData
             };
 
-            sendingInstance.variableList.Add(newDataset);
+            engine.VariableList.Add(newDataset);
 
         }
 
@@ -2303,10 +2311,11 @@ namespace taskt.Core.AutomationCommands
             this.CommandEnabled = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand, System.ComponentModel.BackgroundWorker bgw)
+        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
             Core.AutomationCommands.BeginNumberOfTimesLoopCommand loopCommand = (Core.AutomationCommands.BeginNumberOfTimesLoopCommand)parentCommand.ScriptCommand;
-            var engineForm = (UI.Forms.frmScriptEngine)sender;
+
+            var engine = (Core.AutomationEngineInstance)sender;
 
             int loopTimes;
             Script.ScriptVariable complexVarible = null;
@@ -2320,16 +2329,16 @@ namespace taskt.Core.AutomationCommands
                 if (complexVarible != null)
                     complexVarible.CurrentPosition = i;
 
-                bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber });
+                engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
-                    if (bgw.CancellationPending)
+                    if (engine.IsCancellationPending)
                         return;
-                    engineForm.ExecuteCommand(cmd, bgw);
+                    engine.ExecuteCommand(cmd);
                 }
 
-                bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Finished Loop From Line " + loopCommand.LineNumber });
+                engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
             }
         }
 
@@ -2356,23 +2365,23 @@ namespace taskt.Core.AutomationCommands
             this.CommandEnabled = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand, System.ComponentModel.BackgroundWorker bgw)
+        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
             Core.AutomationCommands.BeginListLoopCommand loopCommand = (Core.AutomationCommands.BeginListLoopCommand)parentCommand.ScriptCommand;
-            var engineForm = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
             int loopTimes;
             Script.ScriptVariable complexVariable = null;
 
 
            //get variable by regular name
-            complexVariable = engineForm.variableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
+            complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
 
 
             //user may potentially include brackets []
             if (complexVariable == null)
             {
-                complexVariable = engineForm.variableList.Where(x => x.VariableName.ApplyVariableFormatting() == v_LoopParameter).FirstOrDefault();
+                complexVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting() == v_LoopParameter).FirstOrDefault();
             }
 
             //if still null then throw exception
@@ -2391,16 +2400,16 @@ namespace taskt.Core.AutomationCommands
                 if (complexVariable != null)
                     complexVariable.CurrentPosition = i;
 
-                bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber });
+                engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
-                    if (bgw.CancellationPending)
+                    if (engine.IsCancellationPending)
                         return;
-                    engineForm.ExecuteCommand(cmd, bgw);
+                    engine.ExecuteCommand(cmd);
                 }
 
-                bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Finished Loop From Line " + loopCommand.LineNumber });
+                engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
             }
         }
 
@@ -2426,13 +2435,13 @@ namespace taskt.Core.AutomationCommands
             this.CommandEnabled = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand, System.ComponentModel.BackgroundWorker bgw)
+        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
 
             Core.AutomationCommands.BeginExcelDatasetLoopCommand loopCommand = (Core.AutomationCommands.BeginExcelDatasetLoopCommand)parentCommand.ScriptCommand;
-            var engineForm = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
-            var dataSetVariable = engineForm.variableList.Where(f => f.VariableName == v_DataSetName).FirstOrDefault();
+            var dataSetVariable = engine.VariableList.Where(f => f.VariableName == v_DataSetName).FirstOrDefault();
 
             if (dataSetVariable == null)
                 throw new Exception("DataSet Name Not Found - " + v_DataSetName);
@@ -2452,9 +2461,9 @@ namespace taskt.Core.AutomationCommands
                 {
                     //bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber });
 
-                    if (bgw.CancellationPending)
+                    if (engine.IsCancellationPending)
                         return;
-                    engineForm.ExecuteCommand(cmd, bgw);
+                    engine.ExecuteCommand(cmd);
                     // bgw.ReportProgress(0, new object[] { loopCommand.LineNumber, "Finished Loop From Line " + loopCommand.LineNumber });
                 }
             }
@@ -2516,12 +2525,12 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
                 Visible = true
             };
-            sendingInstance.appInstances.Add(v_InstanceName, newExcelSession);
+            engine.AppInstances.Add(v_InstanceName, newExcelSession);
         }
         public override string GetDisplayValue()
         {
@@ -2549,8 +2558,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Workbooks.Open(v_FilePath);
@@ -2579,8 +2588,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Workbooks.Add();
@@ -2611,8 +2620,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
@@ -2649,8 +2658,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
               var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
               var targetText = v_TextToSet.ConvertToUserVariable(sender);
@@ -2691,8 +2700,8 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
 
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
@@ -2729,8 +2738,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Run(v_MacroName);
@@ -2764,8 +2773,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
@@ -2803,8 +2812,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.ActiveWorkbook.Close(v_ExcelSaveOnExit);
@@ -2837,8 +2846,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
@@ -2879,8 +2888,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
 
                 
@@ -2934,8 +2943,8 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
-            if (sendingInstance.appInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
 
 
@@ -2996,7 +3005,7 @@ namespace taskt.Core.AutomationCommands
            DatasetCommands dataSetCommand = new DatasetCommands();
            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=No;IMEX=1""", "Select * From [" + v_SheetName + "$]");
 
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
             Script.ScriptVariable newDataset = new Script.ScriptVariable
             {
@@ -3004,7 +3013,7 @@ namespace taskt.Core.AutomationCommands
                 VariableValue = requiredData
             };
 
-            sendingInstance.variableList.Add(newDataset);
+            engine.VariableList.Add(newDataset);
 
         }
 
@@ -3110,10 +3119,10 @@ namespace taskt.Core.AutomationCommands
                 splitString = stringVariable.Split(new string[] { v_splitCharacter }, StringSplitOptions.None).ToList();
             }
 
-            var sendingInstance = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
             var v_receivingVariable = v_applyConvertToUserVariableName.Replace("[", "").Replace("]", "");
             //get complex variable from engine and assign
-            var requiredComplexVariable = sendingInstance.variableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
+            var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
             requiredComplexVariable.VariableValue = splitString;
         }
         public override string GetDisplayValue()
@@ -3162,9 +3171,9 @@ namespace taskt.Core.AutomationCommands
             this.v_IfActionParameterTable.Columns.Add("Parameter Value");
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand, System.ComponentModel.BackgroundWorker bgw)
+        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
-            var engineForm = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
 
 
@@ -3364,9 +3373,9 @@ namespace taskt.Core.AutomationCommands
 
                 for (int i = startIndex; i < endIndex; i++)
                 {
-                    if (bgw.CancellationPending)
+                    if (engine.IsCancellationPending)
                         return;
-                    engineForm.ExecuteCommand(parentCommand.AdditionalScriptCommands[i], bgw);
+                    engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
                 }
             
 
@@ -3516,10 +3525,10 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var engineForm = (UI.Forms.frmScriptEngine)sender;
+            var engine = (Core.AutomationEngineInstance)sender;
 
             var ocrEngine = new OneNoteOCRDll.OneNoteOCR();
-            var arr = ocrEngine.OcrTexts(v_FilePath.ConvertToUserVariable(engineForm)).ToArray();
+            var arr = ocrEngine.OcrTexts(v_FilePath.ConvertToUserVariable(engine)).ToArray();
 
             string endResult = "";
             foreach (var text in arr)

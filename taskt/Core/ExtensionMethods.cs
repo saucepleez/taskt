@@ -18,9 +18,9 @@ namespace taskt.Core
             if (str == null)
                 return string.Empty;
 
-            var engineForm = (UI.Forms.frmScriptEngine)sender; ;
+            var engine = (Core.AutomationEngineInstance)sender;
 
-            var variableList = engineForm.variableList;
+            var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
 
             var searchList = new List<Core.Script.ScriptVariable>();
