@@ -87,6 +87,14 @@ namespace taskt.Core
 
             }
 
+
+            //bypass math for types that are dates
+            DateTime dateTest;
+            if (DateTime.TryParse(str, out dateTest))
+            {
+                return str;
+            }
+
             //test if math is required
             try
             {

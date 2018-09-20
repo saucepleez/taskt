@@ -33,7 +33,7 @@ using System.CodeDom.Compiler;
 namespace taskt.Core.AutomationCommands
 {
     #region Base Command
-
+    [Serializable]
     [XmlInclude(typeof(SendKeysCommand))]
     [XmlInclude(typeof(SendMouseMoveCommand))]
     [XmlInclude(typeof(PauseCommand))]
@@ -105,7 +105,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(RenameFileCommand))]
     [XmlInclude(typeof(WaitForFileToExistCommand))]
     [XmlInclude(typeof(RunCustomCodeCommand))]
-    [Serializable]
+    [XmlInclude(typeof(DateCalculationCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -1812,6 +1812,153 @@ namespace taskt.Core.AutomationCommands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class DateCalculationCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. [DateTime.Now]")]
+        public string v_InputValue { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Select a Calculation Method")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Seconds")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Minutes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Hours")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Days")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Years")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Seconds")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Minutes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Hours")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Days")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Years")]
+        public string v_CalculationMethod { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value")]
+        public string v_Increment { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify String Format")]
+        public string v_ToStringFormat { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the date calculation")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_applyToVariableName { get; set; }
+
+        public DateCalculationCommand()
+        {
+            this.CommandName = "DateCalculationCommand";
+            this.SelectionName = "Date Calculation";
+            this.CommandEnabled = true;
+
+            this.v_InputValue = "[DateTime.Now]";
+            this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss.mmm";
+
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get variablized string
+            var variableDateTime = v_InputValue.ConvertToUserVariable(sender);
+
+            //convert to date time
+            DateTime requiredDateTime;
+            if (!DateTime.TryParse(variableDateTime, out requiredDateTime))
+            {
+                throw new InvalidDataException("Date was unable to be parsed - " + variableDateTime);
+            }
+
+            //get increment value
+            double requiredInterval;
+            var variableIncrement = v_Increment.ConvertToUserVariable(sender);
+
+            //convert to double
+            if (!Double.TryParse(variableIncrement, out requiredInterval))
+            {
+                throw new InvalidDataException("Date was unable to be parsed - " + variableIncrement);
+            }
+
+            //perform operation
+            switch (v_CalculationMethod)
+            {
+                case "Add Seconds":
+                    requiredDateTime = requiredDateTime.AddSeconds(requiredInterval);
+                    break;
+                case "Add Minutes":
+                    requiredDateTime = requiredDateTime.AddMinutes(requiredInterval);
+                    break;
+                case "Add Hours":
+                    requiredDateTime = requiredDateTime.AddHours(requiredInterval);
+                    break;
+                case "Add Days":
+                    requiredDateTime = requiredDateTime.AddDays(requiredInterval);
+                    break;
+                case "Add Years":
+                    requiredDateTime = requiredDateTime.AddYears((int)requiredInterval);
+                    break;
+                case "Subtract Seconds":
+                    requiredDateTime = requiredDateTime.AddSeconds((requiredInterval * -1));
+                    break;
+                case "Subtract Minutes":
+                    requiredDateTime = requiredDateTime.AddMinutes((requiredInterval * -1));
+                    break;
+                case "Subtract Hours":
+                    requiredDateTime = requiredDateTime.AddHours((requiredInterval * -1));
+                    break;
+                case "Subtract Days":
+                    requiredDateTime = requiredDateTime.AddDays((requiredInterval * -1));
+                    break;
+                case "Subtract Years":
+                    requiredDateTime = requiredDateTime.AddYears(((int)requiredInterval * -1));
+                    break;
+                default:
+                    break;
+            }
+
+            //handle if formatter is required     
+             var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
+             var stringDateFormatted = requiredDateTime.ToString(formatting);
+
+
+            //store string in variable
+            stringDateFormatted.StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            //if calculation method was selected
+            if (v_CalculationMethod != null)
+            {
+                //determine operand and interval
+                var operand = v_CalculationMethod.Split(' ')[0];
+                var interval = v_CalculationMethod.Split(' ')[1];
+
+                //additional language handling based on selection made
+                string operandLanguage;
+                if (operand == "Add")
+                {
+                    operandLanguage = " to ";
+                }
+                else
+                {
+                    operandLanguage = " from ";
+                }
+
+                //return value
+                return base.GetDisplayValue() + " [" + operand + " " + v_Increment + " " + interval + operandLanguage + v_InputValue + ", Apply Result to Variable '" + v_applyToVariableName + "']";
+            }
+            else
+            {
+                return base.GetDisplayValue();
+            }
+        
         }
     }
     [Serializable]
