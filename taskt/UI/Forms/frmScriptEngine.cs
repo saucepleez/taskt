@@ -202,19 +202,17 @@ namespace taskt.UI.Forms
             }
             else
             {
-                //MethodInvoker inv = delegate {
-                //    this.lblAction.Text = text;
-                //    lstSteppingCommands.Items.Add(text + "..");
-                //    lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
-                //};
-
-                //this.Invoke(inv);
-
-
-
+               //update status
                 lblAction.Text = text + "..";
                 lstSteppingCommands.Items.Add(text + "..");
                 lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
+
+                //quick handler for resume
+                if (text == "[Please select 'Resume' when ready]")
+                {
+                    uiBtnPause_Click(null, null);
+                }
+
             }
 
         }
