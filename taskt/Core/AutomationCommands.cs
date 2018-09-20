@@ -3071,7 +3071,7 @@ namespace taskt.Core.AutomationCommands
             this.CommandEnabled = true;
 
             this.v_InputValue = "[DateTime.Now]";
-            this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss.mmm";
+            this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
 
         }
 
