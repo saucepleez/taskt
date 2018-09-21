@@ -18,9 +18,9 @@ namespace taskt.Core
             if (str == null)
                 return string.Empty;
 
-            var engineForm = (UI.Forms.frmScriptEngine)sender; ;
+            var engine = (Core.AutomationEngineInstance)sender;
 
-            var variableList = engineForm.variableList;
+            var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
 
             var searchList = new List<Core.Script.ScriptVariable>();
@@ -32,7 +32,7 @@ namespace taskt.Core
             foreach (var potentialVariable in potentialVariables)
             {
                 var varCheck = (from vars in searchList
-                                where vars.variableName == potentialVariable
+                                where vars.VariableName == potentialVariable
                                 select vars).FirstOrDefault();
 
                 // break here; //todo -- this needs to resolve a variable with the name Row.Item(0);
@@ -59,12 +59,12 @@ namespace taskt.Core
                     string datasetName = splitVariable[1];
                     string columnRequired = splitVariable[2];
 
-                    var datasetVariable = variableList.Where(f => f.variableName == datasetName).FirstOrDefault();
+                    var datasetVariable = variableList.Where(f => f.VariableName == datasetName).FirstOrDefault();
 
                     if (datasetVariable == null)
                         continue;
 
-                    DataTable dataTable = (DataTable)datasetVariable.variableValue;
+                    DataTable dataTable = (DataTable)datasetVariable.VariableValue;
 
                     if (datasetVariable == null)
                         continue;
@@ -72,12 +72,12 @@ namespace taskt.Core
                     if ((dsleading == "ds") && (int.TryParse(columnRequired, out int columnNumber)))
                     {
                         //get by column index
-                        str = (string)dataTable.Rows[datasetVariable.currentPosition][columnNumber];
+                        str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnNumber];
                     }
                     else if (dsleading == "ds")
                     {
                         //get by column index
-                        str = (string)dataTable.Rows[datasetVariable.currentPosition][columnRequired];
+                        str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnRequired];
                     }
 
 
@@ -85,6 +85,14 @@ namespace taskt.Core
                 }
 
 
+            }
+
+
+            //bypass math for types that are dates
+            DateTime dateTest;
+            if (DateTime.TryParse(str, out dateTest))
+            {
+                return str;
             }
 
             //test if math is required

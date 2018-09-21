@@ -22,8 +22,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using log4net;
-using log4net.Appender;
 using taskt.Core;
 using static taskt.Core.AutomationCommands.User32Functions;
 
@@ -31,47 +29,35 @@ namespace taskt.UI.Forms
 {
     public partial class frmScriptEngine : UIForm
     {
-        #region Form Events
+        //all variables used by this form
+        #region Form Variables
         public Core.EngineSettings engineSettings;
         public string filePath { get; set; }
-        public string xmlInfo { get; set; }
-        private System.Diagnostics.Stopwatch sw;
         public frmScriptBuilder callBackForm { get; set; }
-        public List<Core.Script.ScriptVariable> variableList { get; set; }
         private bool advancedDebug { get; set; }
-        public bool createMissingVariables { get; set; }
-        public Dictionary<string, object> appInstances { get; set; }
-        private bool isPaused { get; set; }
-        public Core.AutomationCommands.ErrorHandlingCommand errorHandling;
+        private Core.AutomationEngineInstance engineInstance { get; set; }
 
-     
+        #endregion
+
+        //events and methods
+        #region Form Events/Methods
         public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm)
         {
-            Core.Client.EngineBusy = true;
-
-            filePath = pathToFile;
-            callBackForm = builderForm;
             InitializeComponent();
+
+            //set callback form
+            callBackForm = builderForm;
+
+            //set file
+            this.filePath = pathToFile;
 
             //get engine settings
             engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
-           
-       
-
-            createMissingVariables = engineSettings.CreateMissingVariablesDuringExecution;
-
-
-
-       
-
-            LogInfo("taskt Engine Loaded");
-            LogInfo("Selected Script: " + pathToFile);
-
-            
-
+            //determine whether to show listbox or not
             advancedDebug = engineSettings.ShowAdvancedDebugOutput;
 
+            //if listbox should be shown
             if (advancedDebug)
             {
                 lstSteppingCommands.Show();
@@ -95,6 +81,9 @@ namespace taskt.UI.Forms
                 this.Opacity = 0;
             }
 
+            //add hooks for hot key cancellation
+            GlobalHook.HookStopped += new EventHandler(OnHookStopped);
+            GlobalHook.StartEngineCancellationHook();
 
 
 
@@ -102,336 +91,207 @@ namespace taskt.UI.Forms
 
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
-
+            //move engine form to bottom right and bring to front
             if (engineSettings.ShowDebugWindow)
             {
                 this.BringToFront();
                 MoveFormToBottomRight(this);
             }
 
-
-            GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-            GlobalHook.StartEngineCancellationHook();
-
-            bgwRunScript.RunWorkerAsync();
+            //start running
+            engineInstance = new Core.AutomationEngineInstance();
+            engineInstance.ReportProgressEvent += Engine_ReportProgress;
+            engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
+            engineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
+            engineInstance.ExecuteScriptAsync(this, filePath);
         }
+
+     
+
+        /// <summary>
+        /// Triggers the automation engine to stop based on a hooked key press
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void OnHookStopped(object sender, EventArgs e)
         {
             uiBtnCancel_Click(null, null);
             GlobalHook.HookStopped -= new EventHandler(OnHookStopped);
-            bgwRunScript.CancelAsync();
+            engineInstance.CancelScript();
 
         }
+      
+        #endregion
 
-
-        public bool ShowMessage(string message, string title, UI.Forms.Supplemental.frmDialog.DialogType dialogType, int closeAfter)
+        //engine event handlers
+        #region Engine Event Handlers
+        /// <summary>
+        /// Handles Progress Updates raised by Automation Engine
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Engine_ReportProgress(object sender, ReportProgressEventArgs e)
         {
-            var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter);
-            return confirmationForm.ShowDialog() == DialogResult.OK;
+            AddStatus(e.ProgressUpdate);
         }
-
-        #endregion Form Events
-
-        #region BackgroundWorker
-        private void LogInfo(string logText)
+        /// <summary>
+        /// Handles Script Finished Event raised by Automation Engine
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Engine_ScriptFinishedEvent(object sender, ScriptFinishedEventArgs e)
         {
-            if (engineSettings.EnableDiagnosticLogging)
-                             Logging.log.Info(logText);
-        }
-        private void bgwRunScript_DoWork(object sender, DoWorkEventArgs e)
-        {
-           
-            sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
 
-            //bgwRunScript.ReportProgress(0, new object[] { 0, "Bot Engine Started: " + DateTime.Now.ToString() });
-            LogInfo("Starting Execution");
-            bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = 0, UpdateText = "Bot Engine Started: " + DateTime.Now.ToString() });
-
-            Core.Script.Script automationScript;
-
-            //parse file or streamed XML from tasktServer
-            if (filePath != "")
+            switch (e.Result)
             {
-                LogInfo("Deserializing File");
-                automationScript = Core.Script.Script.DeserializeFile(filePath);
-            }
-            else
-            {
-                LogInfo("Deserializing XML");
-                automationScript = Core.Script.Script.DeserializeXML(xmlInfo);
-            }
+                case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
+                    AddStatus("Script Completed Successfully");
+                    UpdateUI("debug info (success)");
+                
+                    break;
+                case ScriptFinishedEventArgs.ScriptFinishedResult.Error:
+                    AddStatus("Error: " + e.Error);
+                    AddStatus("Script Completed With Errors!");
+                    UpdateUI("debug info (error)");
 
-            //track variables and app instances
-            LogInfo("Creating Variable List");
-            variableList = automationScript.Variables;
-
-            LogInfo("Creating App Instance Tracker");
-            appInstances = new Dictionary<string, object>();
-
-
-
-            //create execution
-            foreach (var executionCommand in automationScript.Commands)
-            {
-                if (bgwRunScript.CancellationPending)
-                {
-                    LogInfo("Stopping Script");
-                    e.Cancel = true;
-                    return;
-                }
-
-                ExecuteCommand(executionCommand, bgwRunScript);
-            }
-        }
-
-        public void ExecuteCommand(Core.Script.ScriptAction command, BackgroundWorker bgw)
-        {
-            //get command
-            Core.AutomationCommands.ScriptCommand parentCommand = command.ScriptCommand;
-
-            //handle pause request
-            if (parentCommand.PauseBeforeExeucution)
-            {
-                LogInfo("Pausing Before Execution");
-                bgwRunScript.ReportProgress(0, new PauseRequest());
-                isPaused = true;
-            }
-
-            //handle pause
-            bool isFirstWait = true;
-            while (isPaused)
-            {
-                //only show pause first loop
-                if (isFirstWait)
-                {
-                    LogInfo("Paused at Line " + parentCommand.LineNumber + " - " + parentCommand.GetDisplayValue());
-                    bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = parentCommand.LineNumber, UpdateText = "Paused on Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue() });
-                    bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = parentCommand.LineNumber, UpdateText = "[Please select 'Resume' when ready]" });
-                    isFirstWait = false;
-                }
-
-                //wait
-                System.Threading.Thread.Sleep(2000);
-            }
-
-
-
-
-
-
-            //bypass comments
-            if (parentCommand is Core.AutomationCommands.CommentCommand || parentCommand.IsCommented)
-            {
-              
-                LogInfo("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
-                // bgwRunScript.ReportProgress(0, new object[] { parentCommand.LineNumber, "Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue() });
-                bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = parentCommand.LineNumber, UpdateText = "Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue() });
-                return;
-            }
-
-            //update listbox
-            //bgwRunScript.ReportProgress(0, new object[] { parentCommand.LineNumber, "Running Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue() });
-            LogInfo("Running Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
-            bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = parentCommand.LineNumber, UpdateText = "Running Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue() });
-
-
-            //handle any errors
-            try
-            {
-                //determine type of command
-                if ((parentCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.AutomationCommands.BeginListLoopCommand) || (parentCommand is Core.AutomationCommands.BeginIfCommand) || parentCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand)
-                {
-                    //run the command and pass bgw/command as this command will recursively call this method for sub commands
-                    parentCommand.RunCommand(this, command, bgw);
-                }
-                else if(parentCommand is Core.AutomationCommands.SequenceCommand)
-                {
-                    parentCommand.RunCommand(this, command, bgw);
-                }
-                else if(parentCommand is Core.AutomationCommands.StopTaskCommand)
-                {
-                    bgw.CancelAsync();
-                    return;
-                }
-                else
-                {
-                    //run the command
-                    parentCommand.RunCommand(this);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.log.Error("Exception Occured:" + ex.ToString());
-                //error occuured so decide what user selected
-                if (errorHandling != null)
-                {
-                    switch (errorHandling.v_ErrorHandlingAction)
+                    if (!advancedDebug)
                     {
-                        case "Continue Processing":
-                            Logging.log.Warn("User set continue processing");
-                            //bgwRunScript.ReportProgress(0, new object[] { parentCommand.LineNumber, "Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString() });
-                            //bgwRunScript.ReportProgress(0, new object[] { parentCommand.LineNumber, "Continuing Per Error Handling" });
-                            bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = parentCommand.LineNumber, UpdateText = "Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString() });
-                            bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber = parentCommand.LineNumber, UpdateText = "Continuing Per Error Handling" });
-
-                            break;
-
-                        default:
-                            Logging.log.Warn("User did not handle Exception");
-                          throw new Exception(ex.ToString());
+                        pbBotIcon.Image = Properties.Resources.robot_error;
                     }
-                }
-                else
-                {
-                    Logging.log.Error("User did not handle Exception");
-                    throw new Exception(ex.ToString());
-                }
+
+                    break;
+                case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
+                    AddStatus("Script Cancelled By User");
+                    UpdateUI("debug info (cancelled)");
+                    break;
+                default:
+                    break;
             }
+
+
+       
+            AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
+
         }
 
-        private void bgwRunScript_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void EngineInstance_LineNumberChangedEvent(object sender, LineNumberChangedEventArgs e)
         {
-
-            if (e.UserState is ProgressUpdate)
-            {
-                ProgressUpdate currentProgress = (ProgressUpdate)e.UserState;
-
-                if (callBackForm != null)
-                {
-                    callBackForm.DebugLine = currentProgress.LineNumber;
-                }
-
-                AddStatus(currentProgress.UpdateText);
-
-            }
-            else if (e.UserState is PauseRequest)
-            {
-                lstSteppingCommands.Items.Add("[Script Requested Pause]");
-                uiBtnPause.Image = Properties.Resources.logo;
-                uiBtnPause.DisplayText = "Resume";
-            }
-
-            //object[] progressUpdate = (object[])e.UserState;
-
-            //if ((callBackForm != null) && (progressUpdate[0] != null))
-            //    callBackForm.DebugLine = (int)progressUpdate[0];
-
-
+            UpdateLineNumber(e.CurrentLineNumber);
         }
+        #endregion
 
+        //delegates to marshal changes to UI
+        #region Engine Delegates
+        /// <summary>
+        /// Delegate for adding progress reports
+        /// </summary>
+        /// <param name="message">The progress report string from Automation Engine</param>
+        public delegate void AddStatusDelegate(string message);
+        /// <summary>
+        /// Adds a status to the listbox for debugging and display purposes
+        /// </summary>
+        /// <param name="text"></param>
         private void AddStatus(string text)
         {
-            lblAction.Text = text + "..";
-            lstSteppingCommands.Items.Add(text + "..");
-            lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
-
-
-            //Core.Sockets.SocketClient.SendMessage("ENGINE=" + text);
-           
-
-        }
-
-        private void bgwRunScript_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            sw.Stop();
-            LogInfo("Execution Complete");
-
-            //dispose of any unnecessary application instances
-            CleanUpMemory();
-
-            //reset debug line
-            if (callBackForm != null)
-                callBackForm.DebugLine = 0;
-
-            uiBtnPause.Visible = false;
-            uiBtnCancel.DisplayText = "Close";
-            uiBtnCancel.Visible = true;
-
-            if ((e.Error == null) && (!e.Cancelled))
+            if (InvokeRequired)
             {
-                LogInfo("Task Ran Successfully");
-                lblMainLogo.Text = "debug info (success)";
-                lstSteppingCommands.Items.Add("Bot Finished Task Successfully");
-                if (callBackForm != null)
-                    callBackForm.Notify("Task Execution Completed Successfully!");
-
-                if (engineSettings.AutoCloseDebugWindow)
-                                     tmrNotify.Enabled = true;
-            
-           
-            }
-            else if ((e.Error == null) && (e.Cancelled))
-            {
-                LogInfo("Task Stopped");
-                lblMainLogo.Text = "debug info (stopped)";
-                lstSteppingCommands.Items.Add("Task Stopped");
-                if (callBackForm != null)
-                    callBackForm.Notify("Task Execution Stopped!");
+                var d = new AddStatusDelegate(AddStatus);
+                Invoke(d, new object[] { text });
             }
             else
             {
-                if (!advancedDebug)
+               //update status
+                lblAction.Text = text + "..";
+                lstSteppingCommands.Items.Add(text + "..");
+                lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
+
+                //quick handler for resume
+                if (text == "[Please select 'Resume' when ready]")
                 {
-                    pbBotIcon.Image = Properties.Resources.robot_error;
+                    uiBtnPause_Click(null, null);
                 }
 
-                Logging.log.Error("Task Failed: " + e.Error.Message);
-                lblMainLogo.Text = "debug info (error)";
-                lstSteppingCommands.Items.Add("Bot Had A Problem: " + e.Error.Message);
-                if (callBackForm != null)
-                    callBackForm.Notify("Task Execution Encountered an Error!");
             }
 
-            if (!advancedDebug)
+        }
+        /// <summary>
+        /// Delegate for updating UI after Automation Engine finishes
+        /// </summary>
+        /// <param name="message"></param>
+        public delegate void UpdateUIDelegate(string message);
+        /// <summary>
+        /// Standard UI updates after automation is finished running
+        /// </summary>
+        /// <param name="mainLogoText"></param>
+        private void UpdateUI(string mainLogoText)
+        {
+
+            if (InvokeRequired)
             {
-                tmrNotify.Enabled = true;
+                var d = new UpdateUIDelegate(UpdateUI);
+                Invoke(d, new object[] { mainLogoText });
+            }
+            else
+            {
+
+                //set main logo text
+                lblMainLogo.Text = mainLogoText;
+
+                //hide and change buttons not required
+                uiBtnPause.Visible = false;
+                uiBtnCancel.DisplayText = "Close";
+                uiBtnCancel.Visible = true;
+
+                //reset debug line
+                if (callBackForm != null)
+                    callBackForm.DebugLine = 0;
+
+                //begin auto close
+                if (engineSettings.AutoCloseDebugWindow)
+                    tmrNotify.Enabled = true;
+
             }
 
-            AddStatus("Bot Engine Finished: " + DateTime.Now.ToString());
-            AddStatus("Total Run Time: " + sw.Elapsed.ToString());
-
-            LogInfo("Total Execution Time: " + sw.Elapsed.ToString());
-            lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
-
-  
-            Core.Client.EngineBusy = false;
-
-
-
         }
-
-        private void CleanUpMemory()
+        /// <summary>
+        /// Delegate for showing message box
+        /// </summary>
+        /// <param name="message"></param>
+        public delegate void ShowMessageDelegate(string message, string title, UI.Forms.Supplemental.frmDialog.DialogType dialogType, int closeAfter);
+        /// <summary>
+        /// Used by the automation engine to show a message to the user on-screen. If UI is not available, a standard messagebox will be invoked instead.
+        /// </summary>
+        public void ShowMessage(string message, string title, UI.Forms.Supplemental.frmDialog.DialogType dialogType, int closeAfter)
         {
-            //close out app sessions here eventually
-
-            //foreach (var kvp in appInstances)
-            //{
-            //    try
-            //    {
-            //        if (kvp.Value is OpenQA.Selenium.Chrome.ChromeDriver)
-            //        {
-            //            OpenQA.Selenium.Chrome.ChromeDriver driver = (OpenQA.Selenium.Chrome.ChromeDriver)kvp.Value;
-            //            driver.Quit();
-            //            driver.Dispose();
-            //        }
-            //    }
-            //    catch (Exception)
-            //    {
-            //        //should we throw an exception?
-            //    }
-
-            //}
+            if (InvokeRequired)
+            {
+                var d = new ShowMessageDelegate(ShowMessage);
+                Invoke(d, new object[] { message, title, dialogType, closeAfter });
+            }
+            else
+            {
+                var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter);
+                confirmationForm.ShowDialog();
+            }
+         
         }
 
-        public void ReportProgress(string progressToReport)
+        public delegate void SetLineNumber(int lineNumber);
+        public void UpdateLineNumber(int lineNumber)
         {
-            //bgwRunScript.ReportProgress(0, new object[] { null, "Command Report: " + progressToReport });
-            bgwRunScript.ReportProgress(0, new ProgressUpdate() { LineNumber =  0, UpdateText = "Command Report: " + progressToReport });
+            if (InvokeRequired)
+            {
+                var d = new SetLineNumber(UpdateLineNumber);
+                Invoke(d, new object[] { lineNumber });
+            }
+            else
+            {
+                callBackForm.DebugLine = lineNumber;               
+            }
         }
+        #endregion
 
-        #endregion BackgroundWorker
-
+        //various small UI methods
         #region UI Elements
 
         private void lblClose_MouseEnter(object sender, EventArgs e)
@@ -460,39 +320,33 @@ namespace taskt.UI.Forms
             uiBtnPause.Visible = false;
             uiBtnCancel.Visible = false;
             lblKillProcNote.Text = "Cancelling...";
-            isPaused = false;
+            engineInstance.ResumeScript();
             lstSteppingCommands.Items.Add("[User Requested Cancellation]");
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
             lblMainLogo.Text = "debug info (cancelling)";
-            bgwRunScript.CancelAsync();
+            engineInstance.CancelScript();
         }
 
         private void uiBtnPause_Click(object sender, EventArgs e)
         {
-            isPaused = !isPaused;
+           
 
-            if (isPaused)
+            if (uiBtnPause.DisplayText == "Pause")
             {
                 lstSteppingCommands.Items.Add("[User Requested Pause]");
                 uiBtnPause.Image = Properties.Resources.action_bar_run;
                 uiBtnPause.DisplayText = "Resume";
+                engineInstance.PauseScript();
             }
             else
             {
                 lstSteppingCommands.Items.Add("[User Requested Resume]");
                 uiBtnPause.Image = Properties.Resources.command_pause;
                 uiBtnPause.DisplayText = "Pause";
+                engineInstance.ResumeScript();
             }
 
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
-        }
-
-        #endregion UI Elements
-
-        private void frmScriptEngine_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //dispose of any unnecessary application instances
-            CleanUpMemory();
         }
 
         private void pbBotIcon_Click(object sender, EventArgs e)
@@ -500,15 +354,11 @@ namespace taskt.UI.Forms
             //show debug if user clicks
             lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
+
+        #endregion UI Elements
+
     }
 
-    public class ProgressUpdate
-    {
-        public int LineNumber { get; set; }
-        public string UpdateText { get; set; }
-    }
-
-    public class PauseRequest { }
 
 
 }

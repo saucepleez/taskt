@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptEngine));
-            this.bgwRunScript = new System.ComponentModel.BackgroundWorker();
             this.lstSteppingCommands = new System.Windows.Forms.ListBox();
             this.tmrNotify = new System.Windows.Forms.Timer(this.components);
             this.lblCloseTimer = new System.Windows.Forms.Label();
@@ -44,14 +43,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBotIcon)).BeginInit();
             this.SuspendLayout();
-            // 
-            // bgwRunScript
-            // 
-            this.bgwRunScript.WorkerReportsProgress = true;
-            this.bgwRunScript.WorkerSupportsCancellation = true;
-            this.bgwRunScript.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwRunScript_DoWork);
-            this.bgwRunScript.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwRunScript_ProgressChanged);
-            this.bgwRunScript.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwRunScript_RunWorkerCompleted);
             // 
             // lstSteppingCommands
             // 
@@ -180,7 +171,7 @@
             this.Name = "frmScriptEngine";
             this.Text = "Bot Engine";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmScriptEngine_FormClosing);
+  
             this.Load += new System.EventHandler(this.frmProcessingStatus_Load);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnPause)).EndInit();
@@ -191,7 +182,6 @@
         }
 
         #endregion
-        private System.ComponentModel.BackgroundWorker bgwRunScript;
         private System.Windows.Forms.ListBox lstSteppingCommands;
         private System.Windows.Forms.Timer tmrNotify;
         private System.Windows.Forms.Label lblCloseTimer;

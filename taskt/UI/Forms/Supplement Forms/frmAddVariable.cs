@@ -17,12 +17,12 @@ namespace taskt.UI.Forms.Supplement_Forms
             InitializeComponent();
         }
 
-        public frmAddVariable(string variableName, string variableValue)
+        public frmAddVariable(string VariableName, string variableValue)
         {
             InitializeComponent();
             this.Text = "edit variable";
             lblHeader.Text = "edit variable";
-            txtVariableName.Text = variableName;
+            txtVariableName.Text = VariableName;
             txtDefaultValue.Text = variableValue;
         }
 

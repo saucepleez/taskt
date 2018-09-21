@@ -51,7 +51,7 @@ namespace taskt.UI.Forms
             //add each item to parent
             foreach (var item in variables)
             {
-                AddUserVariableNode(parentNode, item.variableName, (string)item.variableValue);
+                AddUserVariableNode(parentNode, item.VariableName, (string)item.VariableValue);
             }
 
             //add parent to treeview
@@ -74,11 +74,11 @@ namespace taskt.UI.Forms
             for (int i = 0; i < userVariableParentNode.Nodes.Count; i++)
             {
                 //get name and value
-                var variableName = userVariableParentNode.Nodes[i].Text;
-                var variableValue = userVariableParentNode.Nodes[i].Nodes[0].Text.Replace(leadingValue, "").Replace(emptyValue, "");
+                var VariableName = userVariableParentNode.Nodes[i].Text;
+                var VariableValue = userVariableParentNode.Nodes[i].Nodes[0].Text.Replace(leadingValue, "").Replace(emptyValue, "");
 
                 //add to list
-                scriptVariables.Add(new Core.Script.ScriptVariable() { variableName = variableName, variableValue = variableValue });
+                scriptVariables.Add(new Core.Script.ScriptVariable() { VariableName = VariableName, VariableValue = VariableValue });
         
 
             }
@@ -139,23 +139,23 @@ namespace taskt.UI.Forms
                 return;
             }
 
-            string variableName, variableValue;
+            string VariableName, VariableValue;
             TreeNode parentNode;
             if(tvScriptVariables.SelectedNode.Nodes.Count == 0)
             {
                 parentNode = tvScriptVariables.SelectedNode.Parent;
-                variableName = tvScriptVariables.SelectedNode.Parent.Text;
-                variableValue = tvScriptVariables.SelectedNode.Text.Replace(leadingValue, "").Replace(emptyValue, "");
+                VariableName = tvScriptVariables.SelectedNode.Parent.Text;
+                VariableValue = tvScriptVariables.SelectedNode.Text.Replace(leadingValue, "").Replace(emptyValue, "");
             }
             else
             {
                 parentNode = tvScriptVariables.SelectedNode;
-                variableName = tvScriptVariables.SelectedNode.Text;
-                variableValue = tvScriptVariables.SelectedNode.Nodes[0].Text.Replace(leadingValue, "").Replace(emptyValue, "");
+                VariableName = tvScriptVariables.SelectedNode.Text;
+                VariableValue = tvScriptVariables.SelectedNode.Nodes[0].Text.Replace(leadingValue, "").Replace(emptyValue, "");
             }
 
             //create variable editing form
-            Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable(variableName, variableValue);
+            Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable(VariableName, VariableValue);
             ExpandUserVariableNode();
 
             //validate if user added variable
@@ -169,10 +169,10 @@ namespace taskt.UI.Forms
             }
 
         }
-        private void AddUserVariableNode(TreeNode parentNode, string variableName, string variableText)
+        private void AddUserVariableNode(TreeNode parentNode, string VariableName, string variableText)
         {
             //add new node and sort
-            var childNode = new TreeNode(variableName);
+            var childNode = new TreeNode(VariableName);
 
             if (variableText == string.Empty)
             {

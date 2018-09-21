@@ -103,15 +103,16 @@ namespace taskt.Core
         public static List<Core.Script.ScriptVariable> GenerateSystemVariables()
         {
             List<Core.Script.ScriptVariable> systemVariableList = new List<Core.Script.ScriptVariable>();
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "Folder.Desktop", variableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "Folder.Documents", variableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "Folder.AppData", variableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "Folder.ScriptPath", variableValue = Core.Common.GetScriptFolderPath() });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "DateTime.Now", variableValue = DateTime.Now.ToString() });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "DateTime.Now.FileSafe", variableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "PC.MachineName", variableValue = Environment.MachineName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "PC.UserName", variableValue = Environment.UserName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { variableName = "PC.DomainName", variableValue = Environment.UserDomainName });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Common.GetScriptFolderPath() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.AutomationCommands.User32Functions.GetActiveWindowTitle() });
             return systemVariableList;
         }
         public static string ImageToBase64(Image image)
