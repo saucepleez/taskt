@@ -25,8 +25,13 @@ namespace taskt.Core
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
         public event EventHandler<LineNumberChangedEventArgs> LineNumberChangedEvent;
 
+        public Serilog.Core.Logger engineLogger;
         public AutomationEngineInstance()
         {
+            //initialize logger
+            engineLogger = new Logging().CreateLogger("Engine");
+            engineLogger.Information("Engine Class has been initialized");
+
             //set to initialized
             CurrentStatus = EngineStatus.Loaded;
 
@@ -36,6 +41,8 @@ namespace taskt.Core
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath)
         {
+            engineLogger.Information("Client requesting to execute script using frmEngine");
+
             tasktEngineUI = scriptEngine;
             new Thread(() =>
             {
@@ -45,6 +52,8 @@ namespace taskt.Core
         }
         public void ExecuteScriptAsync(string filePath)
         {
+            engineLogger.Information("Client requesting to execute script independently");
+
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -58,6 +67,8 @@ namespace taskt.Core
 
             try
             {
+                engineLogger.Information("Script Path: " + filePath);
+
                 //create stopwatch for metrics tracking
                 sw = new System.Diagnostics.Stopwatch();
                 sw.Start();
@@ -189,27 +200,27 @@ namespace taskt.Core
             }
             catch (Exception ex)
             {
-                Logging.log.Error("Exception Occured:" + ex.ToString());
+              
                 //error occuured so decide what user selected
                 if (ErrorHandler != null)
                 {
                     switch (ErrorHandler.v_ErrorHandlingAction)
                     {
                         case "Continue Processing":
-                           Logging.log.Warn("User set continue processing");
+                        
                            ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString());
                            ReportProgress("Continuing Per Error Handling");
 
                             break;
 
                         default:
-                            Logging.log.Warn("User did not handle Exception");
+                        
                             throw new Exception(ex.ToString());
                     }
                 }
                 else
                 {
-                    Logging.log.Error("User did not handle Exception");
+                
                     throw new Exception(ex.ToString());
                 }
             }
@@ -232,12 +243,26 @@ namespace taskt.Core
 
         public virtual void ReportProgress(string progress)
         {
+            engineLogger.Information(progress);
             ReportProgressEventArgs args = new ReportProgressEventArgs();
             args.ProgressUpdate = progress;
             ReportProgressEvent?.Invoke(this, args);
         }
         public virtual void ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult result, string error = null)
         {
+            engineLogger.Information("Result Code: " + result.ToString());
+
+            if (error == null)
+            {
+                engineLogger.Information("Error: None");
+            }
+            else
+            {
+                engineLogger.Information("Error: " + error);
+            }
+
+            engineLogger.Dispose();
+
             CurrentStatus = EngineStatus.Finished;
             ScriptFinishedEventArgs args = new ScriptFinishedEventArgs();
             args.Result = result;

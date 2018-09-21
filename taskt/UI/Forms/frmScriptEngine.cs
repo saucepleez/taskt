@@ -22,8 +22,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using log4net;
-using log4net.Appender;
 using taskt.Core;
 using static taskt.Core.AutomationCommands.User32Functions;
 
