@@ -289,6 +289,7 @@ namespace taskt.UI
             uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
             uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);

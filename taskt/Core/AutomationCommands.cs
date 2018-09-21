@@ -29,6 +29,7 @@ using System.IO;
 using System.Drawing;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
+using System.Text.RegularExpressions;
 
 namespace taskt.Core.AutomationCommands
 {
@@ -106,6 +107,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(WaitForFileToExistCommand))]
     [XmlInclude(typeof(RunCustomCodeCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]
+    [XmlInclude(typeof(RegExExtractorCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -3275,6 +3277,77 @@ namespace taskt.Core.AutomationCommands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Split '" + v_userVariableName + "' by '" + v_splitCharacter + "' and apply to '" + v_applyConvertToUserVariableName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to perform advanced string formatting using RegEx.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class RegExExtractorCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. [vSomeVariable])")]
+        public string v_InputValue { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Input the RegEx Extractor Pattern")]
+        public string v_RegExExtractor { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Select Matching Group Index")]
+        public string v_MatchGroupIndex { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the RegEx result")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_applyToVariableName { get; set; }
+
+        public RegExExtractorCommand()
+        {
+            this.CommandName = "RegExExtractorCommand";
+            this.SelectionName = "RegEx Extraction";
+            this.CommandEnabled = true;
+
+            //apply default
+            v_MatchGroupIndex = "0";
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get variablized strings
+            var variableInput = v_InputValue.ConvertToUserVariable(sender);
+            var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(sender);
+            var variableMatchGroup = v_MatchGroupIndex.ConvertToUserVariable(sender);
+
+            //create regex matcher
+            Regex regex = new Regex(variableExtractorPattern);
+            Match match = regex.Match(variableInput);
+
+            int matchGroup = 0;
+            if (!int.TryParse(variableMatchGroup, out matchGroup))
+            {
+                matchGroup = 0;
+            }
+
+            if (!match.Success)
+            {
+                //throw exception if no match found
+                throw new Exception("RegEx Match was not found! Input: " + variableInput + ", Pattern: " + variableExtractorPattern);
+            }
+            else
+            {
+                //store string in variable
+                string matchedValue = match.Groups[matchGroup].Value;
+                matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
+            }
+
+        
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
         }
     }
     #endregion Variable Commands
