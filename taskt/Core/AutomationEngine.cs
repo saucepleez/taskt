@@ -115,6 +115,9 @@ namespace taskt.Core
             //get command
             Core.AutomationCommands.ScriptCommand parentCommand = command.ScriptCommand;
 
+           //update execution line numbers
+            LineNumberChanged(parentCommand.LineNumber);
+
             //handle pause request
             if (parentCommand.PauseBeforeExeucution)
             {
@@ -158,7 +161,7 @@ namespace taskt.Core
 
             //report intended execution
             ReportProgress("Running Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
-            LineNumberChanged(parentCommand.LineNumber);
+        
 
             //handle any errors
             try
