@@ -597,6 +597,37 @@ namespace taskt.UI.Forms
                     InputControl.DataSource = cmd.v_WebSearchTable;
                     InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                 }
+                else if (inputField.Name == "v_TextExtractionType")
+                {
+                    InputControl = new ComboBox();
+                    InputControl.Height = 30;
+                    InputControl.Width = 300;
+
+  
+                    ComboBox extractionTypeBox = (ComboBox)InputControl;
+                    extractionTypeBox.Items.Add("Extract All After Text");
+                    extractionTypeBox.Items.Add("Extract All Before Text");
+                    extractionTypeBox.Items.Add("Extract All Between Text");
+
+                    extractionTypeBox.SelectedIndexChanged += textExtraction_SelectionChangeCommitted;
+                }
+                else if (inputField.Name == "v_TextExtractionTable")
+                {
+                    InputControl = new DataGridView();
+
+                    InputControl.Name = inputField.Name;
+                    InputControl.Width = 400;
+                    InputControl.Height = 180;
+
+                    InputControl.AllowUserToAddRows = false;
+                  
+                    InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+
+                    //set datasource
+                    var cmd = (Core.AutomationCommands.TextExtractorCommand)currentCommand;
+                    InputControl.DataSource = cmd.v_TextExtractionTable;
+                    InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
+                }
                 else if(inputField.Name == "v_ImageCapture")
                 {
 
@@ -647,6 +678,41 @@ namespace taskt.UI.Forms
         #region ComboBox Events
 
         //handles all combobox events
+        private void textExtraction_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox extractionAction = (ComboBox)sender;
+            DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_TextExtractionTable"];
+            Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_TextExtractionTable"];
+
+            if ((webActionParameterBox == null) || (extractionAction == null) || (webActionParameterBox.DataSource == null))
+                return;
+
+            Core.AutomationCommands.TextExtractorCommand cmd = (Core.AutomationCommands.TextExtractorCommand)selectedCommand;
+            DataTable actionParameters = cmd.v_TextExtractionTable;
+            actionParameters.Rows.Clear();
+
+
+            switch (extractionAction.Text)
+            {
+                case "Extract All After Text":
+                    actionParameters.Rows.Add("Leading Text", "");
+                    actionParameters.Rows.Add("Skip Past Occurences", "0");
+                    break;
+                case "Extract All Before Text":
+                    actionParameters.Rows.Add("Trailing Text", "");
+                    actionParameters.Rows.Add("Skip Past Occurences", "0");
+                    break;
+                case "Extract All Between Text":
+                    actionParameters.Rows.Add("Leading Text", "");
+                    actionParameters.Rows.Add("Trailing Text", "");
+                    actionParameters.Rows.Add("Skip Past Occurences", "0");
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
         private void webAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
             ComboBox webAction = (ComboBox)sender;

@@ -108,6 +108,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(RunCustomCodeCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]
     [XmlInclude(typeof(RegExExtractorCommand))]
+    [XmlInclude(typeof(TextExtractorCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -3352,6 +3353,158 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to perform advanced string extraction.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class TextExtractorCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputValue { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select text extraction type")]
+        public string v_TextExtractionType { get; set; }
+
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("Extraction Parameters")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public DataTable v_TextExtractionTable { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted text")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_applyToVariableName { get; set; }
+
+        public TextExtractorCommand()
+        {
+            this.CommandName = "TextExtractorCommand";
+            this.SelectionName = "Text Extraction";
+            this.CommandEnabled = true;
+            //define parameter table
+            this.v_TextExtractionTable = new System.Data.DataTable
+            {
+                TableName = DateTime.Now.ToString("TextExtractorParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
+            };
+
+            this.v_TextExtractionTable.Columns.Add("Parameter Name");
+            this.v_TextExtractionTable.Columns.Add("Parameter Value");
+
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get variablized input
+            var variableInput = v_InputValue.ConvertToUserVariable(sender);
+
+
+            string variableLeading, variableTrailing, skipOccurences, extractedText;
+ 
+            //handle extraction cases
+            switch (v_TextExtractionType)
+            {
+                case "Extract All After Text":
+                    //extract trailing texts            
+                    variableLeading = GetParameterValue("Leading Text").ConvertToUserVariable(sender);
+                    skipOccurences = GetParameterValue("Skip Past Occurences").ConvertToUserVariable(sender);
+                    extractedText = ExtractLeadingText(variableInput, variableLeading, skipOccurences);
+                    break;
+                case "Extract All Before Text":
+                    //extract leading text
+                    variableTrailing = GetParameterValue("Trailing Text").ConvertToUserVariable(sender);
+                    skipOccurences = GetParameterValue("Skip Past Occurences").ConvertToUserVariable(sender);
+                    extractedText = ExtractTrailingText(variableInput, variableTrailing, skipOccurences);
+                    break;
+                case "Extract All Between Text":
+                    //extract leading and then trailing which gives the items between
+                    variableLeading = GetParameterValue("Leading Text").ConvertToUserVariable(sender);
+                    variableTrailing = GetParameterValue("Trailing Text").ConvertToUserVariable(sender);
+                    skipOccurences = GetParameterValue("Skip Past Occurences").ConvertToUserVariable(sender);
+
+                    //extract leading
+                    extractedText = ExtractLeadingText(variableInput, variableLeading, skipOccurences);
+
+                    //extract trailing -- assume we will take to the first item
+                    extractedText = ExtractTrailingText(extractedText, variableTrailing, "0");
+
+                    break;
+                default:
+                    throw new NotImplementedException("Extraction Type Not Implemented: " + v_TextExtractionType);
+            }
+
+            //store variable
+            extractedText.StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+
+        private string GetParameterValue(string parameterName)
+        {
+             return ((from rw in v_TextExtractionTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == parameterName
+                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+     
+        }
+        private string ExtractLeadingText(string input, string substring, string occurences)
+        {
+            
+            //verify the occurence index
+            int leadingOccurenceIndex = 0;
+
+            if (!int.TryParse(occurences, out leadingOccurenceIndex))
+            {
+                throw new Exception("Invalid Index For Extraction - " + occurences);
+            }
+
+            //find index matches
+            var leadingOccurencesFound = Regex.Matches(input, substring).Cast<Match>().Select(m => m.Index).ToList();
+
+            //handle if we are searching beyond what was found
+            if (leadingOccurenceIndex >= leadingOccurencesFound.Count)
+            {
+                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + leadingOccurencesFound.Count + " instances exist.");
+            }
+
+            //declare start position
+            var startPosition = leadingOccurencesFound[leadingOccurenceIndex] + substring.Length;
+
+            //substring and apply to variable
+            return input.Substring(startPosition);
+
+
+        }
+        private string ExtractTrailingText(string input, string substring, string occurences)
+        {
+            //verify the occurence index
+            int leadingOccurenceIndex = 0;
+            if (!int.TryParse(occurences, out leadingOccurenceIndex))
+            {
+                throw new Exception("Invalid Index For Extraction - " + occurences);
+            }
+
+            //find index matches
+            var trailingOccurencesFound = Regex.Matches(input, substring).Cast<Match>().Select(m => m.Index).ToList();
+
+            //handle if we are searching beyond what was found
+            if (leadingOccurenceIndex >= trailingOccurencesFound.Count)
+            {
+                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + trailingOccurencesFound.Count + " instances exist.");
+            }
+
+            //declare start position
+            var endPosition = trailingOccurencesFound[leadingOccurenceIndex];
+
+            //substring
+            return input.Substring(0, endPosition);
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
+        }
+    }
+
+
     #endregion Variable Commands
 
     #region If Commands
