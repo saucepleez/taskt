@@ -52,27 +52,33 @@ namespace taskt.Core
                 return (T)formatter.Deserialize(stream);
             }
         }
-        /// <summary>
-        /// Returns a path to the underlying Script folder where script file objects are loaded and saved. Used when saved or loading files.
-        /// </summary>
-        public static string GetScriptFolderPath()
-        {
-            return GetAppFolderPath() + "My Scripts\\";
-        }
-        /// <summary>
-        /// Returns a path to the storage path for taskt objects. Used when accessing the base storage path.
-        /// </summary>
-        public static string GetAppFolderPath()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\taskt\\";
-        }
-        /// <summary>
-        /// Returns a path to the storage path for log objects. Used when accessing the base storage path.
-        /// </summary>
-        public static string GetLogFolderPath()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\taskt\\Logs";
-        }
+        ///// <summary>
+        ///// Returns a path to the underlying Script folder where script file objects are loaded and saved. Used when saved or loading files.
+        ///// </summary>
+        //public static string GetScriptFolderPath()
+        //{
+        //    return GetAppFolderPath() + "My Scripts\\";
+        //}
+        ///// <summary>
+        ///// Returns a path to the storage path for taskt objects. Used when accessing the base storage path.
+        ///// </summary>
+        //public static string GetAppFolderPath()
+        //{
+        //    return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\taskt\\";
+        //}
+        ///// <summary>
+        ///// Returns a path to the storage path for log objects. Used when accessing the base storage path.
+        ///// </summary>
+        //public static string GetLogFolderPath()
+        //{
+        //    return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\taskt\\Logs";
+        //}
+
+        //public static string GetAppDataPath()
+        //{
+        //    return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\taskt\\";
+        //}
+
         /// <summary>
         /// Returns commands from the AutomationCommands.cs file grouped by Custom 'Group' attribute.
         /// </summary>
@@ -106,7 +112,7 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Common.GetScriptFolderPath() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });

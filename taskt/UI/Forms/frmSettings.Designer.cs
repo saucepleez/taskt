@@ -62,6 +62,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
+            this.txtAppFolderPath = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -290,7 +292,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(7, 64);
+            this.btnUpdates.Location = new System.Drawing.Point(5, 131);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 27);
             this.btnUpdates.TabIndex = 22;
@@ -340,6 +342,8 @@
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.label5);
+            this.tabAppSettings.Controls.Add(this.txtAppFolderPath);
             this.tabAppSettings.Controls.Add(this.lblApplicationSettings);
             this.tabAppSettings.Controls.Add(this.chkAntiIdle);
             this.tabAppSettings.Controls.Add(this.btnUpdates);
@@ -473,6 +477,25 @@
             this.tmrGetSocketStatus.Interval = 250;
             this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
             // 
+            // txtAppFolderPath
+            // 
+            this.txtAppFolderPath.Location = new System.Drawing.Point(10, 82);
+            this.txtAppFolderPath.Name = "txtAppFolderPath";
+            this.txtAppFolderPath.Size = new System.Drawing.Size(490, 29);
+            this.txtAppFolderPath.TabIndex = 23;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.SlateGray;
+            this.label5.Location = new System.Drawing.Point(12, 63);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 16);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "taskt Data Folder";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -533,5 +556,7 @@
         private System.Windows.Forms.Button btnCloseConnection;
         private System.Windows.Forms.Timer tmrGetSocketStatus;
         private System.Windows.Forms.CheckBox chkBypassValidation;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtAppFolderPath;
     }
 }

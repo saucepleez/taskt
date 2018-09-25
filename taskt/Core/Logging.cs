@@ -15,7 +15,7 @@ namespace taskt.Core
         public Serilog.Core.Logger CreateLogger(string componentName)
         {
             return new LoggerConfiguration()
-            .WriteTo.File(Core.Common.GetLogFolderPath() + "\\taskt " + componentName + " Logs .txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.File(Folders.GetFolder(Core.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs .txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
         }

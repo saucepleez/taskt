@@ -25,8 +25,21 @@ namespace taskt.Core
 
         public void Save(ApplicationSettings appSettings)
         {
-            var savePath = Core.Common.GetAppFolderPath() + "AppSettings.xml";
-            var fileStream = System.IO.File.Create(savePath);
+            //create settings directory
+           
+            var settingsDir = Core.Folders.GetFolder(Folders.FolderType.SettingsFolder);
+
+            //if directory does not exist then create directory
+            if (!System.IO.Directory.Exists(settingsDir))
+            {
+                System.IO.Directory.CreateDirectory(settingsDir);
+            }
+
+            //create file path
+            var filePath =  System.IO.Path.Combine(settingsDir, "AppSettings.xml");
+
+            //create filestream
+            var fileStream = System.IO.File.Create(filePath);
 
             //output to xml file
             XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
@@ -35,13 +48,17 @@ namespace taskt.Core
         }
         public ApplicationSettings GetOrCreateApplicationSettings()
         {
-            var savePath = Core.Common.GetAppFolderPath() + "AppSettings.xml";
+            //create settings directory
+            var settingsDir = Core.Folders.GetFolder(Folders.FolderType.SettingsFolder);
+
+            //create file path
+            var filePath = System.IO.Path.Combine(settingsDir, "AppSettings.xml");
 
             ApplicationSettings appSettings;
-            if (System.IO.File.Exists(savePath))
+            if (System.IO.File.Exists(filePath))
             {
                 //open file and return it or return new settings on error
-                var fileStream = System.IO.File.Open(savePath, FileMode.Open);
+                var fileStream = System.IO.File.Open(filePath, FileMode.Open);
 
                 try
                 {
@@ -103,10 +120,11 @@ namespace taskt.Core
     public class ClientSettings
     {
         public bool AntiIdleWhileOpen { get; set; }
-
+        public string RootFolder { get; set; }
         public ClientSettings()
         {
             AntiIdleWhileOpen = false;
+            RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
         }
     }
 }

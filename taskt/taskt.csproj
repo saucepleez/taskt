@@ -144,6 +144,7 @@
     <Compile Include="Core\DatasetCommands.cs" />
     <Compile Include="Core\AutomationEngine.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="Core\Folders.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\Logging.cs" />
     <Compile Include="Core\WebSocketClient.cs" />

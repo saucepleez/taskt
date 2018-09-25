@@ -21,6 +21,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
+using taskt.Core;
+
 namespace taskt.UI.Forms
 {
     public partial class frmScheduleManagement : UIForm
@@ -39,7 +41,7 @@ namespace taskt.UI.Forms
             txtAppPath.Text = System.Reflection.Assembly.GetEntryAssembly().Location;
 
             //get path to scripts folder
-            rpaScriptsFolder = Core.Common.GetScriptFolderPath();
+            rpaScriptsFolder = Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
 
             var files = System.IO.Directory.GetFiles(rpaScriptsFolder);
 
