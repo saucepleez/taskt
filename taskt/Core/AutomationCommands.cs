@@ -2965,9 +2965,9 @@ namespace taskt.Core.AutomationCommands
 
     #endregion Excel Commands
 
-    #region Variable Commands
+    #region Data Commands
     [Serializable]
-    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class VariableCommand : ScriptCommand
@@ -3032,7 +3032,7 @@ namespace taskt.Core.AutomationCommands
         }
     }
     [Serializable]
-    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class DateCalculationCommand : ScriptCommand
@@ -3180,7 +3180,7 @@ namespace taskt.Core.AutomationCommands
         }
     }
     [Serializable]
-    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to apply formatting to a string")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class FormatDataCommand : ScriptCommand
@@ -3268,7 +3268,7 @@ namespace taskt.Core.AutomationCommands
 
 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to trim a string")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
     public class StringSubstringCommand : ScriptCommand
@@ -3314,7 +3314,7 @@ namespace taskt.Core.AutomationCommands
         }
     }
     [Serializable]
-    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to split a string")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Split method to achieve automation.")]
     public class StringSplitCommand : ScriptCommand
@@ -3371,7 +3371,7 @@ namespace taskt.Core.AutomationCommands
         }
     }
     [Serializable]
-    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string formatting using RegEx.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class RegExExtractorCommand : ScriptCommand
@@ -3443,7 +3443,7 @@ namespace taskt.Core.AutomationCommands
         }
     }
     [Serializable]
-    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string extraction.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class TextExtractorCommand : ScriptCommand
@@ -3594,7 +3594,7 @@ namespace taskt.Core.AutomationCommands
     }
 
 
-    #endregion Variable Commands
+    #endregion Data Commands
 
     #region If Commands
 
