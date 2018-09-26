@@ -109,6 +109,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(DateCalculationCommand))]
     [XmlInclude(typeof(RegExExtractorCommand))]
     [XmlInclude(typeof(TextExtractorCommand))]
+    [XmlInclude(typeof(FormatDataCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -3178,6 +3179,94 @@ namespace taskt.Core.AutomationCommands
 
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to apply formatting to a string")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class FormatDataCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. [DateTime.Now]")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputValue { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select format type")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Date")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Number")]
+
+        public string v_FormatType { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify String Format")]
+        public string v_ToStringFormat { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the date calculation")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_applyToVariableName { get; set; }
+
+        public FormatDataCommand()
+        {
+            this.CommandName = "FormatDataCommand";
+            this.SelectionName = "Format Data";
+            this.CommandEnabled = true;
+
+            this.v_InputValue = "[DateTime.Now]";
+            this.v_FormatType = "Date";
+            this.v_ToStringFormat = "MM/dd/yyyy";
+
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get variablized string
+            var variableString = v_InputValue.ConvertToUserVariable(sender);
+            
+            //get formatting
+            var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
+
+            string formattedString = "";
+            switch (v_FormatType)
+            {
+                case "Date":
+                    if (DateTime.TryParse(variableString, out var parsedDate))
+                    {
+                        formattedString = parsedDate.ToString(formatting);
+                    }
+                    break;
+                case "Number":
+                    if (Decimal.TryParse(variableString, out var parsedDecimal))
+                    {
+                        formattedString = parsedDecimal.ToString(formatting);
+                    }
+                    break;
+                default:
+                    throw new Exception("Formatter Type Not Supported: " + v_FormatType);
+            }
+
+            if (formattedString == "")
+            {
+                throw new InvalidDataException("Unable to convert '" + variableString + "' to type '" + v_FormatType + "'");
+            }
+            else
+            {
+                formattedString.StoreInUserVariable(sender, v_applyToVariableName);
+            }
+
+          
+
+        }
+
+        public override string GetDisplayValue()
+        {
+                return base.GetDisplayValue() + " [Format '" + v_InputValue + "' and Apply Result to Variable '" + v_applyToVariableName + "']";
+        }
+    }
+
+
+
+
     [Serializable]
     [Attributes.ClassAttributes.Group("Variable Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to trim a string")]
