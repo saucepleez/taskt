@@ -3186,23 +3186,23 @@ namespace taskt.Core.AutomationCommands
     public class FormatDataCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. [DateTime.Now]")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. [DateTime.Now]")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select format type")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the type of data")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Date")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Number")]
 
         public string v_FormatType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify String Format")]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify required output format")]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the date calculation")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive output")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_applyToVariableName { get; set; }
 
