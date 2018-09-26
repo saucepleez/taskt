@@ -53,6 +53,9 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblMetrics = new System.Windows.Forms.Label();
+            this.tvExecutionTimes = new System.Windows.Forms.TreeView();
             this.btnSelectFolder = new System.Windows.Forms.Button();
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
@@ -65,6 +68,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
+            this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -343,6 +347,9 @@
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.label5);
+            this.tabAppSettings.Controls.Add(this.lblMetrics);
+            this.tabAppSettings.Controls.Add(this.tvExecutionTimes);
             this.tabAppSettings.Controls.Add(this.btnSelectFolder);
             this.tabAppSettings.Controls.Add(this.lblRootFolder);
             this.tabAppSettings.Controls.Add(this.txtAppFolderPath);
@@ -355,6 +362,36 @@
             this.tabAppSettings.Size = new System.Drawing.Size(555, 329);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.SlateGray;
+            this.label5.Location = new System.Drawing.Point(11, 162);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(149, 16);
+            this.label5.TabIndex = 28;
+            this.label5.Text = "Script Execution Metrics";
+            // 
+            // lblMetrics
+            // 
+            this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
+            this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblMetrics.Location = new System.Drawing.Point(10, 181);
+            this.lblMetrics.Name = "lblMetrics";
+            this.lblMetrics.Size = new System.Drawing.Size(534, 127);
+            this.lblMetrics.TabIndex = 27;
+            this.lblMetrics.Text = "Getting Metrics...";
+            // 
+            // tvExecutionTimes
+            // 
+            this.tvExecutionTimes.Location = new System.Drawing.Point(10, 181);
+            this.tvExecutionTimes.Name = "tvExecutionTimes";
+            this.tvExecutionTimes.Size = new System.Drawing.Size(534, 127);
+            this.tvExecutionTimes.TabIndex = 26;
+            this.tvExecutionTimes.Visible = false;
             // 
             // btnSelectFolder
             // 
@@ -508,6 +545,11 @@
             this.tmrGetSocketStatus.Interval = 250;
             this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
             // 
+            // bgwMetrics
+            // 
+            this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
+            this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -571,5 +613,9 @@
         private System.Windows.Forms.Label lblRootFolder;
         private System.Windows.Forms.TextBox txtAppFolderPath;
         private System.Windows.Forms.Button btnSelectFolder;
+        private System.Windows.Forms.TreeView tvExecutionTimes;
+        private System.ComponentModel.BackgroundWorker bgwMetrics;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblMetrics;
     }
 }

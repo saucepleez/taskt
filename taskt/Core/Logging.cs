@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Serilog;
+using Serilog.Formatting.Compact;
 
 namespace taskt.Core
 {
@@ -12,10 +13,17 @@ namespace taskt.Core
     /// </summary>
     public class Logging
     {
-        public Serilog.Core.Logger CreateLogger(string componentName)
+        public Serilog.Core.Logger CreateLogger(string componentName, RollingInterval logInterval)
         {
             return new LoggerConfiguration()
-            .WriteTo.File(Folders.GetFolder(Core.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs .txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.File(Folders.GetFolder(Core.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+            .CreateLogger();
+
+        }
+        public Serilog.Core.Logger CreateJsonLogger(string componentName, RollingInterval logInterval)
+        {
+            return new LoggerConfiguration()
+            .WriteTo.File(new CompactJsonFormatter(), Folders.GetFolder(Core.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
             .CreateLogger();
 
         }

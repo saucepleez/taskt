@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,6 +63,9 @@ namespace taskt.UI.Forms
             txtAppFolderPath.DataBindings.Add("Text", clientSettings, "RootFolder", false, DataSourceUpdateMode.OnPropertyChanged);
 
 
+            //get metrics
+            bgwMetrics.RunWorkerAsync();
+          
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -234,6 +238,57 @@ namespace taskt.UI.Forms
 
                 }
             }
+        }
+
+        private void bgwMetrics_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = new Core.Metrics().ExecutionMetricsSummary();
+        }
+
+        private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+
+
+        {
+
+            if (e.Error != null)
+            {
+                if (e.Error is System.IO.FileNotFoundException)
+                {
+                    lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
+                }
+                else
+                {
+                    lblMetrics.Text = "Metrics Unavailable: " + e.Error.ToString();
+                }
+
+              
+            }
+            else
+            {
+                lblMetrics.Hide();
+                tvExecutionTimes.Show();
+
+                var metricsSummary = (List<Core.ExecutionMetric>)(e.Result);
+
+                foreach (var metric in metricsSummary)
+                {
+                    var rootNode = new TreeNode();
+                    rootNode.Text = metric.FileName + " [" + metric.AverageExecutionTime + " avg.]";
+
+                    foreach (var metricItem in metric.ExecutionData)
+                    {
+                        var subNode = new TreeNode();
+                        subNode.Text = string.Join(" - ", metricItem.LoggedOn.ToString("MM/dd/yy hh:mm"), metricItem.ExecutionTime);
+                        rootNode.Nodes.Add(subNode);
+                    }
+
+                    tvExecutionTimes.Nodes.Add(rootNode);
+
+                }
+            }
+
+
+            
         }
     }
 }
