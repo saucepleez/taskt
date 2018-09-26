@@ -371,9 +371,9 @@
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
             this.label5.Location = new System.Drawing.Point(11, 162);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(149, 16);
+            this.label5.Size = new System.Drawing.Size(262, 16);
             this.label5.TabIndex = 28;
-            this.label5.Text = "Script Execution Metrics";
+            this.label5.Text = "Script Execution Metrics (Last 10 per Script)";
             // 
             // lblMetrics
             // 
