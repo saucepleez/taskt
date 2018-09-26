@@ -144,14 +144,7 @@ namespace taskt.UI.Forms
                     string taskName = (string)dgvScheduledTasks.Rows[row].Cells["colTaskName"].Value;
                     var updateTask = ts.FindTask(taskName);
                     updateTask.Enabled = !updateTask.Enabled;
-                }
-
-                using (TaskService ts = new TaskService())
-                {
-                    //disable task
-                    var taskToDisable = ts.FindTask("Some_Task_Name");
-                    taskToDisable.Enabled = false;
-                }
+                }  
             }
         }
 
