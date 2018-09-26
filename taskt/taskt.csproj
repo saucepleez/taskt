@@ -102,6 +102,9 @@
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.7.1\lib\net45\Serilog.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
@@ -147,6 +150,7 @@
     <Compile Include="Core\Folders.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\Logging.cs" />
+    <Compile Include="Core\Metrics.cs" />
     <Compile Include="Core\WebSocketClient.cs" />
     <Compile Include="Core\Win32Commands.cs" />
     <Compile Include="Core\Script.cs" />
