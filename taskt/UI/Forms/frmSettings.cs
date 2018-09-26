@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -163,6 +164,75 @@ namespace taskt.UI.Forms
             if (chkBypassValidation.Checked)
             {
                 MessageBox.Show("Bypassing SSL Certificate Validation procedures is inherently insecure as the client will trust any server certificate.  Please consider issuing proper SSL Certificates.", "Warning - Insecure", MessageBoxButtons.OK);
+            }
+        }
+
+        private void btnSelectFolder_Click(object sender, EventArgs e)
+        {
+         
+            //prompt user to confirm they want to select a new folder
+            var updateFolderRequest = MessageBox.Show("Would you like to change the default root folder that taskt uses to store tasks and information? " + Environment.NewLine + Environment.NewLine +
+                "Current Root Folder: " + txtAppFolderPath.Text, "Change Default Root Folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            //if user does not want to update folder then exit
+            if (updateFolderRequest == DialogResult.No)
+                return;
+
+            //user folder browser to let user select top level folder
+            using (var fbd = new FolderBrowserDialog())
+            {
+         
+                //check if user selected a folder
+                if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    //create references to old and new root folders
+                    var oldRootFolder = txtAppFolderPath.Text;
+                    var newRootFolder = System.IO.Path.Combine(fbd.SelectedPath, "taskt");
+
+                    //ask user to confirm
+                    var confirmNewFolderSelection = MessageBox.Show("Please confirm the changes below:" + Environment.NewLine + Environment.NewLine +
+                    "Old Root Folder: " + oldRootFolder + Environment.NewLine + Environment.NewLine +
+                    "New Root Folder: " + newRootFolder, "Change Default Root Folder", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                    //handle if user decides to cancel
+                    if (confirmNewFolderSelection == DialogResult.Cancel)
+                        return;
+
+                    //ask if we should migrate the data
+                    var migrateCopyData = MessageBox.Show("Would you like to attempt to move the data from the old folder to the new folder?  Please note, depending on how many files you have, this could take a few minutes.", "Migrate Data?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    //check if user wants to migrate data
+                    if (migrateCopyData == DialogResult.Yes)
+                    {
+
+                        try
+                        {
+                            //find and copy files
+                            foreach (string dirPath in System.IO.Directory.GetDirectories(oldRootFolder, "*", SearchOption.AllDirectories))
+                            {
+                                System.IO.Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
+                            }
+                            foreach (string newPath in Directory.GetFiles(oldRootFolder, "*.*", SearchOption.AllDirectories))
+                            {
+                                System.IO.File.Copy(newPath, newPath.Replace(oldRootFolder, newRootFolder), true);
+                            }
+
+                            MessageBox.Show("Data Migration Complete", "Data Migration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            //handle any unexpected errors
+                            MessageBox.Show("An Error Occured during Data Migration Copy: " + ex.ToString());
+                        }
+                      
+                    }
+
+                    //update textbox which will be updated once user selects "Ok"
+                    txtAppFolderPath.Text = newRootFolder;
+
+
+                }
             }
         }
     }
