@@ -265,10 +265,24 @@ namespace taskt.UI.Forms
             }
             else
             {
-                lblMetrics.Hide();
-                tvExecutionTimes.Show();
+
 
                 var metricsSummary = (List<Core.ExecutionMetric>)(e.Result);
+
+                if (metricsSummary.Count == 0)
+                {
+                    lblMetrics.Text = "No Metrics Found";
+                    lblMetrics.Show();
+                    tvExecutionTimes.Hide();
+                    btnClearMetrics.Hide();
+                }
+                else
+                {
+                    lblMetrics.Hide();
+                    tvExecutionTimes.Show();
+                    btnClearMetrics.Show();
+                }
+
 
                 foreach (var metric in metricsSummary)
                 {
@@ -289,6 +303,12 @@ namespace taskt.UI.Forms
 
 
             
+        }
+
+        private void btnClearMetrics_Click(object sender, EventArgs e)
+        {
+            new Core.Metrics().ClearExecutionMetrics();
+            bgwMetrics.RunWorkerAsync();
         }
     }
 }

@@ -69,6 +69,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.btnClearMetrics = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -238,7 +239,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 442);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 461);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -341,12 +342,13 @@
             this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(563, 363);
+            this.uiSettingTabs.Size = new System.Drawing.Size(563, 382);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.btnClearMetrics);
             this.tabAppSettings.Controls.Add(this.label5);
             this.tabAppSettings.Controls.Add(this.lblMetrics);
             this.tabAppSettings.Controls.Add(this.tvExecutionTimes);
@@ -359,7 +361,7 @@
             this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppSettings.Size = new System.Drawing.Size(555, 329);
+            this.tabAppSettings.Size = new System.Drawing.Size(555, 348);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
@@ -524,7 +526,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(569, 499);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(569, 518);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -550,12 +552,24 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // btnClearMetrics
+            // 
+            this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClearMetrics.Location = new System.Drawing.Point(9, 313);
+            this.btnClearMetrics.Name = "btnClearMetrics";
+            this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
+            this.btnClearMetrics.TabIndex = 29;
+            this.btnClearMetrics.Text = "Clear Metrics";
+            this.btnClearMetrics.UseVisualStyleBackColor = true;
+            this.btnClearMetrics.Visible = false;
+            this.btnClearMetrics.Click += new System.EventHandler(this.btnClearMetrics_Click);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(569, 499);
+            this.ClientSize = new System.Drawing.Size(569, 518);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -617,5 +631,6 @@
         private System.ComponentModel.BackgroundWorker bgwMetrics;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblMetrics;
+        private System.Windows.Forms.Button btnClearMetrics;
     }
 }

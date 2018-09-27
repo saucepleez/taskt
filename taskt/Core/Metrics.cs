@@ -90,6 +90,11 @@ namespace taskt.Core
 
         }
 
+        public void ClearExecutionMetrics()
+        {
+            var filePath = System.IO.Path.Combine(Core.Folders.GetFolder(Core.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            System.IO.File.WriteAllText(filePath, string.Empty);
+        }
     }
 
     public class ExecutionMetric
