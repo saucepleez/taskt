@@ -20,6 +20,7 @@ namespace taskt.Core
         private System.Diagnostics.Stopwatch sw { get; set; }
         public EngineStatus CurrentStatus { get; set; }
         public EngineSettings engineSettings { get; set; }
+        public string FileName { get; set; }
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -29,7 +30,7 @@ namespace taskt.Core
         public AutomationEngineInstance()
         {
             //initialize logger
-            engineLogger = new Logging().CreateLogger("Engine");
+            engineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
             engineLogger.Information("Engine Class has been initialized");
 
             //set to initialized
@@ -64,6 +65,7 @@ namespace taskt.Core
         public void ExecuteScript(string filePath)
         {
             CurrentStatus = EngineStatus.Running;
+            FileName = filePath;
 
             try
             {
@@ -265,9 +267,24 @@ namespace taskt.Core
 
             CurrentStatus = EngineStatus.Finished;
             ScriptFinishedEventArgs args = new ScriptFinishedEventArgs();
+            args.LoggedOn = DateTime.Now;
             args.Result = result;
             args.Error = error;
             args.ExecutionTime = sw.Elapsed;
+            args.FileName = FileName;
+
+            //convert to json
+            var serializedArguments = Newtonsoft.Json.JsonConvert.SerializeObject(args);
+
+            //write execution metrics
+            if (engineSettings.TrackExecutionMetrics)
+            {
+                var summaryLogger = new Logging().CreateJsonLogger("Execution Summary", Serilog.RollingInterval.Infinite);
+                summaryLogger.Information(serializedArguments);
+                summaryLogger.Dispose();
+            }
+       
+
             ScriptFinishedEvent?.Invoke(this, args);
         }
         public virtual void LineNumberChanged(int lineNumber)
@@ -289,9 +306,11 @@ namespace taskt.Core
     }
     public class ScriptFinishedEventArgs : EventArgs
     {
+        public DateTime LoggedOn { get; set; }
         public ScriptFinishedResult Result { get; set; }
         public string Error { get; set; }
         public TimeSpan ExecutionTime { get; set; }
+        public string FileName { get; set; }
         public enum ScriptFinishedResult
         {
             Successful, Error, Cancelled

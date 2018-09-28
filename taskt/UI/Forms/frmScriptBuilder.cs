@@ -110,8 +110,9 @@ namespace taskt.UI.Forms
 
             Core.Sockets.SocketClient.Initialize();
             Core.Sockets.SocketClient.associatedBuilder = this;
+            
             //get scripts folder
-            var rpaScriptsFolder = Core.Common.GetScriptFolderPath();
+            var rpaScriptsFolder = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
 
             if (!System.IO.Directory.Exists(rpaScriptsFolder))
             {
@@ -180,7 +181,7 @@ namespace taskt.UI.Forms
             flwRecentFiles.Controls.Clear();
 
 
-            var scriptPath = Core.Common.GetScriptFolderPath();
+            var scriptPath = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
 
             if (!System.IO.Directory.Exists(scriptPath))
             {
@@ -996,7 +997,7 @@ namespace taskt.UI.Forms
         {
             //show ofd
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Core.Common.GetScriptFolderPath();
+            openFileDialog.InitialDirectory = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Filter = "Xml (*.xml)|*.xml";
 
@@ -1141,7 +1142,7 @@ namespace taskt.UI.Forms
             if ((this.ScriptFilePath == null) || (saveAs))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.InitialDirectory = Core.Common.GetScriptFolderPath();
+                saveFileDialog.InitialDirectory = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
                 saveFileDialog.RestoreDirectory = true;
                 saveFileDialog.Filter = "Xml (*.xml)|*.xml";
 
@@ -1372,7 +1373,7 @@ namespace taskt.UI.Forms
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel senderLink = (LinkLabel)sender;
-            OpenFile(Core.Common.GetScriptFolderPath() + senderLink.Text);
+            OpenFile(Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder) + senderLink.Text);
         }
 
         #endregion

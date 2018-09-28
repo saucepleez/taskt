@@ -21,6 +21,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
+using taskt.Core;
+
 namespace taskt.UI.Forms
 {
     public partial class frmScheduleManagement : UIForm
@@ -39,7 +41,7 @@ namespace taskt.UI.Forms
             txtAppPath.Text = System.Reflection.Assembly.GetEntryAssembly().Location;
 
             //get path to scripts folder
-            rpaScriptsFolder = Core.Common.GetScriptFolderPath();
+            rpaScriptsFolder = Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
 
             var files = System.IO.Directory.GetFiles(rpaScriptsFolder);
 
@@ -142,14 +144,7 @@ namespace taskt.UI.Forms
                     string taskName = (string)dgvScheduledTasks.Rows[row].Cells["colTaskName"].Value;
                     var updateTask = ts.FindTask(taskName);
                     updateTask.Enabled = !updateTask.Enabled;
-                }
-
-                using (TaskService ts = new TaskService())
-                {
-                    //disable task
-                    var taskToDisable = ts.FindTask("Some_Task_Name");
-                    taskToDisable.Enabled = false;
-                }
+                }  
             }
         }
 

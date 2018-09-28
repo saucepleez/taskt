@@ -25,7 +25,7 @@ namespace taskt.Core.Sockets
         public static Serilog.Core.Logger socketLogger;
         static SocketClient()
         {
-            socketLogger = new Core.Logging().CreateLogger("Socket");
+            socketLogger = new Core.Logging().CreateLogger("Socket", Serilog.RollingInterval.Day);
         }
         /// <summary>
         /// Initializes the Socket Client
