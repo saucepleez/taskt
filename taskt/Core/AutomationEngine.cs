@@ -276,9 +276,14 @@ namespace taskt.Core
             //convert to json
             var serializedArguments = Newtonsoft.Json.JsonConvert.SerializeObject(args);
 
-            //write summary logs
-            var summaryLogger = new Logging().CreateJsonLogger("Execution Summary", Serilog.RollingInterval.Infinite);
-            summaryLogger.Information(serializedArguments);
+            //write execution metrics
+            if (engineSettings.TrackExecutionMetrics)
+            {
+                var summaryLogger = new Logging().CreateJsonLogger("Execution Summary", Serilog.RollingInterval.Infinite);
+                summaryLogger.Information(serializedArguments);
+                summaryLogger.Dispose();
+            }
+       
 
             ScriptFinishedEvent?.Invoke(this, args);
         }

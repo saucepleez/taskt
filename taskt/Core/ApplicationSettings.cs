@@ -104,6 +104,7 @@ namespace taskt.Core
         public bool EnableDiagnosticLogging { get; set; }
         public bool ShowAdvancedDebugOutput { get; set; }
         public bool CreateMissingVariablesDuringExecution { get; set; }
+        public bool TrackExecutionMetrics { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -111,6 +112,7 @@ namespace taskt.Core
             EnableDiagnosticLogging = true;
             ShowAdvancedDebugOutput = false;
             CreateMissingVariablesDuringExecution = true;
+            TrackExecutionMetrics = true;
     }
     }
     /// <summary>

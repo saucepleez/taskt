@@ -53,6 +53,7 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.btnClearMetrics = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.lblMetrics = new System.Windows.Forms.Label();
             this.tvExecutionTimes = new System.Windows.Forms.TreeView();
@@ -69,7 +70,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.btnClearMetrics = new System.Windows.Forms.Button();
+            this.chkTrackMetrics = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -266,9 +267,9 @@
             this.lblOptions.ForeColor = System.Drawing.Color.SteelBlue;
             this.lblOptions.Location = new System.Drawing.Point(6, 9);
             this.lblOptions.Name = "lblOptions";
-            this.lblOptions.Size = new System.Drawing.Size(152, 24);
+            this.lblOptions.Size = new System.Drawing.Size(188, 24);
             this.lblOptions.TabIndex = 15;
-            this.lblOptions.Text = "Debug Settings";
+            this.lblOptions.Text = "Automation Engine";
             // 
             // lblApplicationSettings
             // 
@@ -365,6 +366,18 @@
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
+            // btnClearMetrics
+            // 
+            this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClearMetrics.Location = new System.Drawing.Point(9, 313);
+            this.btnClearMetrics.Name = "btnClearMetrics";
+            this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
+            this.btnClearMetrics.TabIndex = 29;
+            this.btnClearMetrics.Text = "Clear Metrics";
+            this.btnClearMetrics.UseVisualStyleBackColor = true;
+            this.btnClearMetrics.Visible = false;
+            this.btnClearMetrics.Click += new System.EventHandler(this.btnClearMetrics_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -427,6 +440,7 @@
             // tabDebugSettings
             // 
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.chkTrackMetrics);
             this.tabDebugSettings.Controls.Add(this.lblOptions);
             this.tabDebugSettings.Controls.Add(this.chkCreateMissingVariables);
             this.tabDebugSettings.Controls.Add(this.chkShowDebug);
@@ -436,9 +450,9 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(555, 329);
+            this.tabDebugSettings.Size = new System.Drawing.Size(555, 348);
             this.tabDebugSettings.TabIndex = 1;
-            this.tabDebugSettings.Text = "Debug";
+            this.tabDebugSettings.Text = "Automation Engine";
             // 
             // tabServerSettings
             // 
@@ -459,7 +473,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(555, 329);
+            this.tabServerSettings.Size = new System.Drawing.Size(555, 348);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -552,17 +566,18 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // btnClearMetrics
+            // chkTrackMetrics
             // 
-            this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(9, 313);
-            this.btnClearMetrics.Name = "btnClearMetrics";
-            this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
-            this.btnClearMetrics.TabIndex = 29;
-            this.btnClearMetrics.Text = "Clear Metrics";
-            this.btnClearMetrics.UseVisualStyleBackColor = true;
-            this.btnClearMetrics.Visible = false;
-            this.btnClearMetrics.Click += new System.EventHandler(this.btnClearMetrics_Click);
+            this.chkTrackMetrics.AutoSize = true;
+            this.chkTrackMetrics.BackColor = System.Drawing.Color.Transparent;
+            this.chkTrackMetrics.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkTrackMetrics.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkTrackMetrics.Location = new System.Drawing.Point(11, 157);
+            this.chkTrackMetrics.Name = "chkTrackMetrics";
+            this.chkTrackMetrics.Size = new System.Drawing.Size(182, 24);
+            this.chkTrackMetrics.TabIndex = 25;
+            this.chkTrackMetrics.Text = "Track Execution Metrics";
+            this.chkTrackMetrics.UseVisualStyleBackColor = false;
             // 
             // frmSettings
             // 
@@ -632,5 +647,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblMetrics;
         private System.Windows.Forms.Button btnClearMetrics;
+        private System.Windows.Forms.CheckBox chkTrackMetrics;
     }
 }
