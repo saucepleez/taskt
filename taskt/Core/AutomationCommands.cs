@@ -878,6 +878,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
         public string v_SeleniumSearchType { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Parameter")]
@@ -1108,7 +1109,9 @@ namespace taskt.Core.AutomationCommands
                 case "Find Element By Class Name":
                     element = seleniumInstance.FindElementByClassName(v_SeleniumSearchParameter);
                     break;
-
+                case "Find Element By CSS Selector":
+                    element = seleniumInstance.FindElementByCssSelector(v_SeleniumSearchParameter);
+                    break;
                 default:
                     throw new Exception("Search Type was not found");
             }
