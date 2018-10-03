@@ -46,6 +46,7 @@ namespace taskt.UI.Forms
         private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
         private int reqdIndex;
+        private int selectedIndex = -1;
 
         public frmScriptBuilder()
         {
@@ -266,6 +267,24 @@ namespace taskt.UI.Forms
         {
             Supplemental.frmAbout aboutForm = new Supplemental.frmAbout();
             aboutForm.Show();
+        }
+        private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!appSettings.ClientSettings.InsertCommandsInline)
+                return;
+
+            //check to see if an item has been selected last
+            if (lstScriptActions.SelectedItems.Count > 0)
+            {
+                selectedIndex = lstScriptActions.SelectedItems[0].Index;
+                FormatCommandListView();
+            }
+            else
+            {
+                //nothing is selected
+                selectedIndex = -1;
+            }
+
         }
         #endregion
 
@@ -690,9 +709,23 @@ namespace taskt.UI.Forms
         public void AddCommandToListView(Core.AutomationCommands.ScriptCommand selectedCommand)
         {
 
-            //add command
-            lstScriptActions.Items.Add(CreateScriptCommandListViewItem(selectedCommand));
 
+            var command = CreateScriptCommandListViewItem(selectedCommand);
+
+            //verify setting to insert inline is selected and if an item is currently selected
+            if ((appSettings.ClientSettings.InsertCommandsInline) && (lstScriptActions.SelectedItems.Count > 0))
+            {
+                //insert inline
+                lstScriptActions.Items.Insert(lstScriptActions.SelectedItems[0].Index + 1, command);
+            }
+            else
+            {
+                //add to end of script
+                lstScriptActions.Items.Add(command);
+            }
+               
+      
+          
             //special types also get a following command and comment
             if ((selectedCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginListLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
             {
@@ -791,9 +824,11 @@ namespace taskt.UI.Forms
                     lstScriptActions.Items[DebugLine - 1].ForeColor = Color.White;
                 }
 
-
-
-
+                if (selectedIndex >= 0)
+                {
+                    lstScriptActions.Items[selectedIndex].BackColor = Color.MediumPurple;
+                    lstScriptActions.Items[selectedIndex].ForeColor = Color.White;
+                }
 
             }
         }
@@ -1229,6 +1264,9 @@ namespace taskt.UI.Forms
                 return;
             }
 
+            //clear selected items
+            lstScriptActions.SelectedItems.Clear();
+
             Notify("Running Script..");
 
 
@@ -1487,12 +1525,12 @@ namespace taskt.UI.Forms
             this.Cursor = Cursors.Arrow;
         }
 
+
         #endregion
 
         #region Automation Engine Delegate
 
         #endregion
-
 
     }
 

@@ -34,9 +34,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblCoordinatorInfo = new System.Windows.Forms.Label();
             this.pnlStatus = new System.Windows.Forms.Panel();
+            this.pnlControlContainer = new System.Windows.Forms.Panel();
             this.tmrNotify = new System.Windows.Forms.Timer(this.components);
             this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,9 +47,6 @@
             this.pauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pnlControlContainer = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
@@ -89,10 +89,10 @@
             this.tlpControls.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            this.lstContextStrip.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.pnlControlContainer.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.lstContextStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -180,6 +180,27 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(961, 44);
             this.flowLayoutPanel1.TabIndex = 14;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.pictureBox2);
+            this.panel2.Controls.Add(this.lblMainLogo);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 44);
+            this.panel2.TabIndex = 2;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::taskt.Properties.Resources.robot_source;
+            this.pictureBox2.Location = new System.Drawing.Point(2, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
             // lblMainLogo
             // 
             this.lblMainLogo.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -218,6 +239,24 @@
             this.pnlStatus.Size = new System.Drawing.Size(909, 31);
             this.pnlStatus.TabIndex = 3;
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
+            // 
+            // pnlControlContainer
+            // 
+            this.pnlControlContainer.BackColor = System.Drawing.Color.SteelBlue;
+            this.pnlControlContainer.BackgroundImage = global::taskt.Properties.Resources.header_backing_dark;
+            this.tlpControls.SetColumnSpan(this.pnlControlContainer, 3);
+            this.pnlControlContainer.Controls.Add(this.grpSearch);
+            this.pnlControlContainer.Controls.Add(this.grpSaveClose);
+            this.pnlControlContainer.Controls.Add(this.grpFileActions);
+            this.pnlControlContainer.Controls.Add(this.grpRecordRun);
+            this.pnlControlContainer.Controls.Add(this.grpVariable);
+            this.pnlControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlControlContainer.Location = new System.Drawing.Point(0, 44);
+            this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlControlContainer.Name = "pnlControlContainer";
+            this.pnlControlContainer.Size = new System.Drawing.Size(909, 79);
+            this.pnlControlContainer.TabIndex = 7;
+            this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
             // 
             // tmrNotify
             // 
@@ -272,45 +311,6 @@
             this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(249, 24);
             this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action";
             this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::taskt.Properties.Resources.robot_source;
-            this.pictureBox2.Location = new System.Drawing.Point(2, 4);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pnlControlContainer
-            // 
-            this.pnlControlContainer.BackColor = System.Drawing.Color.SteelBlue;
-            this.pnlControlContainer.BackgroundImage = global::taskt.Properties.Resources.header_backing_dark;
-            this.tlpControls.SetColumnSpan(this.pnlControlContainer, 3);
-            this.pnlControlContainer.Controls.Add(this.grpSearch);
-            this.pnlControlContainer.Controls.Add(this.grpSaveClose);
-            this.pnlControlContainer.Controls.Add(this.grpFileActions);
-            this.pnlControlContainer.Controls.Add(this.grpRecordRun);
-            this.pnlControlContainer.Controls.Add(this.grpVariable);
-            this.pnlControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlControlContainer.Location = new System.Drawing.Point(0, 44);
-            this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlControlContainer.Name = "pnlControlContainer";
-            this.pnlControlContainer.Size = new System.Drawing.Size(909, 79);
-            this.pnlControlContainer.TabIndex = 7;
-            this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.pictureBox2);
-            this.panel2.Controls.Add(this.lblMainLogo);
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 44);
-            this.panel2.TabIndex = 2;
             // 
             // splitContainer1
             // 
@@ -369,7 +369,6 @@
             this.pnlCommandHelper.Name = "pnlCommandHelper";
             this.pnlCommandHelper.Size = new System.Drawing.Size(661, 393);
             this.pnlCommandHelper.TabIndex = 7;
-         
             // 
             // flwRecentFiles
             // 
@@ -544,6 +543,7 @@
             this.lstScriptActions.UseCompatibleStateImageBehavior = false;
             this.lstScriptActions.View = System.Windows.Forms.View.Details;
             this.lstScriptActions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lstScriptActions_ItemDrag);
+            this.lstScriptActions.SelectedIndexChanged += new System.EventHandler(this.lstScriptActions_SelectedIndexChanged);
             this.lstScriptActions.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstScriptActions_DragDrop);
             this.lstScriptActions.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstScriptActions_DragEnter);
             this.lstScriptActions.DoubleClick += new System.EventHandler(this.lstScriptActions_DoubleClick);
@@ -897,11 +897,11 @@
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.lstContextStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.pnlControlContainer.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.pnlControlContainer.ResumeLayout(false);
+            this.lstContextStrip.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
