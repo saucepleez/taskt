@@ -15,6 +15,7 @@ namespace taskt.Core
         public Dictionary<string, object> AppInstances { get; set; }
         public Core.AutomationCommands.ErrorHandlingCommand ErrorHandler;
         public bool IsCancellationPending { get; set; }
+        public bool CurrentLoopCancelled { get; set; }
         private bool IsScriptPaused { get; set; }
         public UI.Forms.frmScriptEngine tasktEngineUI { get; set; }
         private System.Diagnostics.Stopwatch sw { get; set; }
@@ -193,6 +194,10 @@ namespace taskt.Core
                 {
                    // bgw.CancelAsync();
                     return;
+                }
+                else if (parentCommand is Core.AutomationCommands.ExitLoopCommand)
+                {
+                    CurrentLoopCancelled = true;
                 }
                 else
                 {

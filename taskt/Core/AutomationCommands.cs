@@ -58,6 +58,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(IEBrowserFindBrowserCommand))]
     [XmlInclude(typeof(SetWindowStateCommand))]
     [XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
+    [XmlInclude(typeof(ExitLoopCommand))]
     [XmlInclude(typeof(EndLoopCommand))]
     [XmlInclude(typeof(ClipboardGetTextCommand))]
     [XmlInclude(typeof(ScreenshotCommand))]
@@ -2278,7 +2279,16 @@ namespace taskt.Core.AutomationCommands
                 {
                     if (engine.IsCancellationPending)
                         return;
+
                     engine.ExecuteCommand(cmd);
+
+                    if (engine.CurrentLoopCancelled)
+                    {
+                        engine.ReportProgress("Exiting Loop From Line " + loopCommand.LineNumber);
+                        engine.CurrentLoopCancelled = false;
+                        return;
+                    }
+                    
                 }
 
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
@@ -2445,7 +2455,25 @@ namespace taskt.Core.AutomationCommands
             return "End Loop";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Loop Commands")]
+    [Attributes.ClassAttributes.Description("This command signifies the current loop should exit and resume work past the point of the current loop.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command is used by the engine to exit a loop")]
+    public class ExitLoopCommand : ScriptCommand
+    {
+        public ExitLoopCommand()
+        {
+            this.DefaultPause = 0;
+            this.CommandName = "ExitLoopCommand";
+            this.SelectionName = "Exit Loop";
+            this.CommandEnabled = true;
+        }
 
+        public override string GetDisplayValue()
+        {
+            return "Exit Loop";
+        }
+    }
     #endregion Loop Commands
 
     #region Excel Commands
@@ -3839,8 +3867,9 @@ namespace taskt.Core.AutomationCommands
 
                 for (int i = startIndex; i < endIndex; i++)
                 {
-                    if (engine.IsCancellationPending)
+                    if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled))
                         return;
+
                     engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
                 }
             

@@ -377,6 +377,7 @@
     <None Include="Resources\robot-error.png" />
     <None Include="Resources\robot-error1.png" />
     <None Include="Resources\robot source.png" />
+    <None Include="Resources\command-exitloop.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
