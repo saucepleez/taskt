@@ -192,7 +192,7 @@ namespace taskt.Core
                 }
                 else if (parentCommand is Core.AutomationCommands.StopTaskCommand)
                 {
-                   // bgw.CancelAsync();
+                    IsCancellationPending = true;
                     return;
                 }
                 else if (parentCommand is Core.AutomationCommands.ExitLoopCommand)
