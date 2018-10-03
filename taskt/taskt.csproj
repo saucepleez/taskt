@@ -141,6 +141,7 @@
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation Command Attributes\Automation Command Attributes.cs" />
     <Compile Include="Core\AutomationCommands.cs" />
+    <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />

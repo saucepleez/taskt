@@ -608,10 +608,15 @@ namespace taskt.Core.AutomationCommands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Instance Tracking (after task ends)")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Forget Instance")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Keep Instance Alive")]
+        public string v_InstanceTracking { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select a Window State")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Normal")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Maximize")]
-
         public string v_BrowserWindowOption { get; set; }
 
         public SeleniumBrowserCreateCommand()
@@ -627,9 +632,10 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources");
             OpenQA.Selenium.Chrome.ChromeDriverService driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-            //driverService.HideCommandPromptWindow = true;
-
+         
             var newSeleniumSession = new OpenQA.Selenium.Chrome.ChromeDriver(driverService, new OpenQA.Selenium.Chrome.ChromeOptions());
+
+            var instanceName = v_InstanceName.ConvertToUserVariable(sender);
 
             if (engine.AppInstances.ContainsKey(v_InstanceName))
             {
@@ -637,7 +643,16 @@ namespace taskt.Core.AutomationCommands
                 engine.AppInstances.Remove(v_InstanceName);
             }
 
+            //add to engine
             engine.AppInstances.Add(v_InstanceName, newSeleniumSession);
+
+
+
+            //handle app instance tracking
+            if (v_InstanceTracking == "Keep Instance Alive")
+            {
+                GlobalAppInstances.AddInstance(instanceName, newSeleniumSession);             
+            }
 
             //handle window type on startup - https://github.com/saucepleez/taskt/issues/22
             switch (v_BrowserWindowOption)
@@ -656,7 +671,7 @@ namespace taskt.Core.AutomationCommands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "', Instance Tracking: " + v_InstanceTracking + "]";
         }
     }
 
@@ -685,6 +700,7 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
+
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;

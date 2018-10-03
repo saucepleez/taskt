@@ -87,9 +87,10 @@ namespace taskt.Core
                 ReportProgress("Creating Variable List");
                 VariableList = automationScript.Variables;
                 ReportProgress("Creating App Instance Tracking List");
-                AppInstances = new Dictionary<string, object>();
 
-
+                //create app instances and merge in global instances
+                AppInstances = GlobalAppInstances.GetInstances();
+              
                 //execute commands
                 foreach (var executionCommand in automationScript.Commands)
                 {
