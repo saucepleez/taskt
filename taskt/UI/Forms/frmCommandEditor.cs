@@ -848,6 +848,7 @@ namespace taskt.UI.Forms
                     comparisonComboBox.Items.Add("Find Element By Name");
                     comparisonComboBox.Items.Add("Find Element By Tag Name");
                     comparisonComboBox.Items.Add("Find Element By Class Name");
+                    comparisonComboBox.Items.Add("Find Element By CSS Selector");
 
                     //assign cell as a combobox
                     ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
