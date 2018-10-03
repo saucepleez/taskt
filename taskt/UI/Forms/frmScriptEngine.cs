@@ -286,7 +286,11 @@ namespace taskt.UI.Forms
             }
             else
             {
-                callBackForm.DebugLine = lineNumber;               
+                if (callBackForm != null)
+                {
+                    callBackForm.DebugLine = lineNumber;
+                }
+                        
             }
         }
         #endregion
