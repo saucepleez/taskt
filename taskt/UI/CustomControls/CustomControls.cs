@@ -342,6 +342,7 @@ namespace taskt.UI
             uiImages.Add("HTTPRequestCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("HTTPQueryResultCommand", taskt.Properties.Resources.command_search);
             uiImages.Add("BeginListLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginContinousLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("ExitLoopCommand", taskt.Properties.Resources.command_exitloop);

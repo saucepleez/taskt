@@ -727,7 +727,7 @@ namespace taskt.UI.Forms
       
           
             //special types also get a following command and comment
-            if ((selectedCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginListLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
+            if ((selectedCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginListLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginContinousLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
             {
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.EndLoopCommand()));
@@ -759,7 +759,7 @@ namespace taskt.UI.Forms
             foreach (ListViewItem rowItem in lstScriptActions.Items)
             {
 
-                if ((rowItem.Tag is Core.AutomationCommands.BeginIfCommand) || (rowItem.Tag is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.AutomationCommands.BeginListLoopCommand) || (rowItem.Tag is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
+                if ((rowItem.Tag is Core.AutomationCommands.BeginIfCommand) || (rowItem.Tag is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.AutomationCommands.BeginListLoopCommand) || (rowItem.Tag is Core.AutomationCommands.BeginContinousLoopCommand) || (rowItem.Tag is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
@@ -1123,7 +1123,7 @@ namespace taskt.UI.Forms
             int beginIfValidationCount = 0;
             foreach (ListViewItem item in lstScriptActions.Items)
             {
-                if ((item.Tag is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (item.Tag is Core.AutomationCommands.BeginListLoopCommand) || (item.Tag is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
+                if ((item.Tag is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (item.Tag is Core.AutomationCommands.BeginListLoopCommand) || (item.Tag is Core.AutomationCommands.BeginContinousLoopCommand) ||(item.Tag is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
                 {
                     beginLoopValidationCount++;
                 }
