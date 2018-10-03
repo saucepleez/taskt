@@ -712,31 +712,33 @@ namespace taskt.UI.Forms
 
             var command = CreateScriptCommandListViewItem(selectedCommand);
 
+            //insert to end by default
+            var insertionIndex = lstScriptActions.Items.Count;
+
             //verify setting to insert inline is selected and if an item is currently selected
             if ((appSettings.ClientSettings.InsertCommandsInline) && (lstScriptActions.SelectedItems.Count > 0))
             {
                 //insert inline
-                lstScriptActions.Items.Insert(lstScriptActions.SelectedItems[0].Index + 1, command);
+                insertionIndex = lstScriptActions.SelectedItems[0].Index + 1;            
             }
-            else
-            {
-                //add to end of script
-                lstScriptActions.Items.Add(command);
-            }
-               
-      
-          
+
+
+            //insert command
+            lstScriptActions.Items.Insert(insertionIndex, command);
+
             //special types also get a following command and comment
             if ((selectedCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginListLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginContinousLoopCommand) || (selectedCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand))
             {
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.EndLoopCommand()));
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.AutomationCommands.EndLoopCommand()));
             }
             else if (selectedCommand is Core.AutomationCommands.BeginIfCommand)
             {
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.EndIfCommand()));
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.AutomationCommands.EndIfCommand()));
             }
+
+
 
             CreateUndoSnapshot();
 
