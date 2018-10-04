@@ -37,7 +37,7 @@ namespace taskt.UI.Forms
     //Features ability to add, drag/drop reorder commands
     {
         #region Instance and Form Events
-        private ListViewItem rowSelectedForCopy { get; set; }
+        private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
         bool editMode { get; set; }
         private ImageList uiImages; 
@@ -398,28 +398,17 @@ namespace taskt.UI.Forms
                 CreateUndoSnapshot();
                 FormatCommandListView();
             }
+            else if ((e.Control) && (e.KeyCode == Keys.X))
+            {     
+                CutRows();
+            }
             else if ((e.Control) && (e.KeyCode == Keys.C))
             {
-                //if (lstScriptActions.SelectedItems.Count == 1)
-                //{
-                //    rowSelectedForCopy = lstScriptActions.SelectedItems[0];
-                //}
-
-                CopyRow();
-
+                CopyRows();
             }
             else if ((e.Control) && (e.KeyCode == Keys.V))
-            {
-
-                //if (rowSelectedForCopy != null)
-                //{
-                //    Core.AutomationCommands.ScriptCommand duplicatedCommand = (Core.AutomationCommands.ScriptCommand)Core.Common.Clone(rowSelectedForCopy.Tag);
-                //    lstScriptActions.Items.Insert(lstScriptActions.SelectedIndices[0], CreateScriptCommandListViewItem(duplicatedCommand));
-                //    FormatCommandListView();
-                //}
-
-                PasteRow();
-
+            {        
+                PasteRows();
             }
             else if ((e.Control) && (e.KeyCode == Keys.Z))
             {
@@ -447,26 +436,62 @@ namespace taskt.UI.Forms
 
         }
 
-        private void CopyRow()
+        private void CutRows()
         {
-            if (lstScriptActions.SelectedItems.Count == 1)
+
+            //initialize list of items to copy
+            rowsSelectedForCopy = new List<ListViewItem>();
+
+            //copy into list for all selected            
+            if (lstScriptActions.SelectedItems.Count >= 1)
             {
-                rowSelectedForCopy = lstScriptActions.SelectedItems[0];
+                foreach (ListViewItem item in lstScriptActions.SelectedItems)
+                {
+                    rowsSelectedForCopy.Add(item);
+                    lstScriptActions.Items.Remove(item);
+                }
             }
         }
 
-        private void PasteRow()
+        private void CopyRows()
         {
 
+            //initialize list of items to copy
+            rowsSelectedForCopy = new List<ListViewItem>();
 
-            if (rowSelectedForCopy != null)
+            //copy into list for all selected            
+            if (lstScriptActions.SelectedItems.Count >= 1)
             {
-                Core.AutomationCommands.ScriptCommand duplicatedCommand = (Core.AutomationCommands.ScriptCommand)Core.Common.Clone(rowSelectedForCopy.Tag);
-                lstScriptActions.Items.Insert(lstScriptActions.SelectedIndices[0], CreateScriptCommandListViewItem(duplicatedCommand));
-                FormatCommandListView();
+                foreach (ListViewItem item in lstScriptActions.SelectedItems)
+                {
+                    rowsSelectedForCopy.Add(item);
+                }
+            }
+        }
+
+        private void PasteRows()
+        {
+
+            if (rowsSelectedForCopy != null)
+            {
+
+                if (lstScriptActions.SelectedItems.Count == 0)
+                {
+                    MessageBox.Show("In order to paste, you must first select a command to paste under.", "Select Command To Paste Under");
+                }
+
+                int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
+                
+                foreach (ListViewItem item in rowsSelectedForCopy)
+                {
+                    Core.AutomationCommands.ScriptCommand duplicatedCommand = (Core.AutomationCommands.ScriptCommand)Core.Common.Clone(item.Tag);
+                    lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
+                    destinationIndex += 1;
+                    FormatCommandListView();
+                }
             }
 
-            CreateUndoSnapshot();
+         
 
         }
 
@@ -928,13 +953,17 @@ namespace taskt.UI.Forms
         {
             SetPauseBeforeExecution();
         }
+        private void cutSelectedActionssToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CutRows();
+        }
         private void copySelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CopyRow();
+            CopyRows();
         }
         private void pasteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PasteRow();
+            PasteRows();
         }
         #endregion
 
@@ -1554,6 +1583,12 @@ namespace taskt.UI.Forms
 
         #endregion
 
+        private void lstContextStrip_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+      
     }
 
 }
