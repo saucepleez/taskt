@@ -112,6 +112,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(RegExExtractorCommand))]
     [XmlInclude(typeof(TextExtractorCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
+    [XmlInclude(typeof(LogDataCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -3695,7 +3696,73 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time in milliseconds.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    public class LogDataCommand : ScriptCommand
+    {
 
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Select existing log file or enter a custom name.")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Logs")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_LogFile { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the text to log.")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_LogText { get; set; }
+
+        public LogDataCommand()
+        {
+            this.CommandName = "LogDataCommand";
+            this.SelectionName = "Log Data";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get text to log and log file name       
+            var textToLog = v_LogText.ConvertToUserVariable(sender);
+            var logFile = v_LogFile.ConvertToUserVariable(sender);
+
+            //determine log file
+            if (v_LogFile == "Engine Logs")
+            {
+                //log to the standard engine logs
+                var engine = (Core.AutomationEngineInstance)sender;
+                engine.engineLogger.Information(textToLog);
+            }
+            else
+            {
+                //create new logger and log to custom file
+                using (var logger = new Core.Logging().CreateLogger(logFile, Serilog.RollingInterval.Infinite))
+                {
+                    logger.Information(textToLog);
+                }
+            }
+
+           
+        }
+
+        public override string GetDisplayValue()
+        {
+            string logFileName;
+            if (v_LogFile == "Engine Logs")
+            {
+                logFileName = "taskt Engine Logs.txt";
+            }
+            else
+            {
+                logFileName = "taskt " + v_LogFile + " Logs.txt";
+            }
+
+
+            return base.GetDisplayValue() + " [Write Log to 'taskt\\Logs\\" + logFileName + "']";
+        }
+    }
 
     #endregion Data Commands
 
