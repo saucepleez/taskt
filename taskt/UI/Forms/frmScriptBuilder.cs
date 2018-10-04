@@ -439,8 +439,15 @@ namespace taskt.UI.Forms
         private void CutRows()
         {
 
-            //initialize list of items to copy
-            rowsSelectedForCopy = new List<ListViewItem>();
+            //initialize list of items to copy   
+            if (rowsSelectedForCopy == null)
+            {
+                rowsSelectedForCopy = new List<ListViewItem>();
+            }
+            else
+            {
+                rowsSelectedForCopy.Clear();
+            }
 
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
@@ -450,14 +457,23 @@ namespace taskt.UI.Forms
                     rowsSelectedForCopy.Add(item);
                     lstScriptActions.Items.Remove(item);
                 }
+
+                Notify(rowsSelectedForCopy.Count + " item(s) cut to clipboard!");
             }
         }
 
         private void CopyRows()
         {
 
-            //initialize list of items to copy
-            rowsSelectedForCopy = new List<ListViewItem>();
+            //initialize list of items to copy   
+            if (rowsSelectedForCopy == null)
+            {
+                rowsSelectedForCopy = new List<ListViewItem>();
+            }
+            else
+            {
+                rowsSelectedForCopy.Clear();
+            }
 
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
@@ -466,6 +482,9 @@ namespace taskt.UI.Forms
                 {
                     rowsSelectedForCopy.Add(item);
                 }
+
+                Notify(rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
+
             }
         }
 
@@ -489,6 +508,8 @@ namespace taskt.UI.Forms
                     destinationIndex += 1;
                     FormatCommandListView();
                 }
+
+                Notify(rowsSelectedForCopy.Count + " item(s) pasted!");
             }
 
          
@@ -994,7 +1015,7 @@ namespace taskt.UI.Forms
             {
                 var itemToDisplay = notificationList[0];
                 notificationList.RemoveAt(0);
-                notificationExpires = DateTime.Now.AddSeconds(3);
+                notificationExpires = DateTime.Now.AddSeconds(2);
                 ShowNotification(itemToDisplay);
             }
 
