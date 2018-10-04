@@ -170,7 +170,7 @@ namespace taskt.Core
             //bypass comments
             if (parentCommand is Core.AutomationCommands.CommentCommand || parentCommand.IsCommented)
             {
-                ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
+                ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue().ConvertToUserVariable(this));
                 return;
             }
 
