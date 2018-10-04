@@ -2064,6 +2064,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_AutomationWindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Appropriate Item")]
@@ -2083,9 +2084,12 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+
+            var variableWindowName = v_AutomationWindowName.ConvertToUserVariable(sender);
+
             var searchItem = AutomationElement.RootElement.FindFirst
             (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
-            v_AutomationWindowName));
+            variableWindowName));
 
             if (searchItem == null)
             {
@@ -2097,7 +2101,7 @@ namespace taskt.Core.AutomationCommands
 
             var newActivateWindow = new ActivateWindowCommand
             {
-                v_WindowName = v_AutomationWindowName
+                v_WindowName = variableWindowName
             };
             newActivateWindow.RunCommand(sender);
 
@@ -2144,6 +2148,7 @@ namespace taskt.Core.AutomationCommands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
     public class ThickAppGetTextCommand : ScriptCommand
     {
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
         public string v_AutomationWindowName { get; set; }
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Appropriate Item")]
@@ -2162,9 +2167,11 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+            var variableWindowName = v_AutomationWindowName.ConvertToUserVariable(sender);
+
             var searchItem = AutomationElement.RootElement.FindFirst
             (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
-            v_AutomationWindowName));
+            variableWindowName));
 
             if (searchItem == null)
             {
