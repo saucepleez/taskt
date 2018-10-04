@@ -1102,13 +1102,23 @@ namespace taskt.UI.Forms
 
 
         }
+        private void ClearSelectedListViewItems()
+        {
+            lstScriptActions.SelectedItems.Clear();
+            selectedIndex = -1;
+            FormatCommandListView();
+        }
 
         private void uiBtnSave_Click(object sender, EventArgs e)
         {
+            //clear selected items
+            ClearSelectedListViewItems();
             SaveToFile(false);
         }
         private void uiBtnSaveAs_Click(object sender, EventArgs e)
         {
+            //clear selected items
+            ClearSelectedListViewItems();
             SaveToFile(true);
         }
 
@@ -1267,7 +1277,7 @@ namespace taskt.UI.Forms
             }
 
             //clear selected items
-            lstScriptActions.SelectedItems.Clear();
+            ClearSelectedListViewItems();
 
             Notify("Running Script..");
 
