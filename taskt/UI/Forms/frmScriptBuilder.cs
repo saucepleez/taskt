@@ -818,20 +818,30 @@ namespace taskt.UI.Forms
                 {
                     rowItem.BackColor = Color.LightYellow;
                     rowItem.ForeColor = Color.SteelBlue;
-                }
+                }         
 
-                if (DebugLine > 0)
-                {
-                    lstScriptActions.Items[DebugLine - 1].BackColor = Color.OrangeRed;
-                    lstScriptActions.Items[DebugLine - 1].ForeColor = Color.White;
-                }
+            }
 
+            //highlight debug line
+            if (DebugLine > 0)
+            {
+                lstScriptActions.Items[DebugLine - 1].BackColor = Color.OrangeRed;
+                lstScriptActions.Items[DebugLine - 1].ForeColor = Color.White;
+            }
+
+            //highlight selected item
+            try
+            {
                 if (selectedIndex >= 0)
                 {
+
                     lstScriptActions.Items[selectedIndex].BackColor = Color.MediumPurple;
                     lstScriptActions.Items[selectedIndex].ForeColor = Color.White;
                 }
-
+            }
+            catch (Exception)
+            {
+                //exception occured in builder for some reason TODO: Add Logging
             }
         }
 
