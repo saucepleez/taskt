@@ -1143,6 +1143,63 @@ namespace taskt.UI.Forms
                 Notify("An Error Occured: " + ex.Message);
             }
         }
+        private void uiBtnImport_Click(object sender, EventArgs e)
+        {
+
+    
+            //show ofd
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+
+            //if user selected file
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //import
+                Import(openFileDialog.FileName);
+
+            }
+        }
+        private void Import(string filePath)
+        {
+
+            try
+            {
+                //deserialize file      
+                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
+
+                if (deserializedScript.Commands.Count == 0)
+                {
+                    Notify("Error Parsing File: Commands not found!");
+                }
+
+                //variables for comments
+                var fileName = new System.IO.FileInfo(filePath).Name;
+                var dateTimeNow = DateTime.Now.ToString();
+
+                //comment
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
+
+                //import
+                PopulateExecutionCommands(deserializedScript.Commands);
+
+                //comment
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.AutomationCommands.CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
+
+
+                //format listview
+                FormatCommandListView();
+
+                //notify
+                Notify("Script Imported Successfully!");
+            }
+            catch (Exception ex)
+            {
+                //signal an error has happened
+                Notify("An Error Occured: " + ex.Message);
+            }
+        }
         private void btnClose_Click(object sender, EventArgs e)
         {
             for (int i = 30; i > 0; i--)
@@ -1153,6 +1210,7 @@ namespace taskt.UI.Forms
 
         public void PopulateExecutionCommands(List<Core.Script.ScriptAction> commandDetails)
         {
+            
 
             foreach (Core.Script.ScriptAction item in commandDetails)
             {
@@ -1609,7 +1667,7 @@ namespace taskt.UI.Forms
 
         }
 
-      
+       
     }
 
 }
