@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -140,6 +141,25 @@ namespace taskt.Core
             ms.Write(imageBytes, 0, imageBytes.Length);
             System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
             return image;
+        }
+
+        public static List<string> GetAvailableWindowNames()
+        {
+            List<string> windowList = new List<string>();
+            //get all running processes
+            Process[] processlist = Process.GetProcesses();
+            //pull the main window title for each
+            foreach (Process process in processlist)
+            {
+                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                {
+                    //add to the control list of available windows
+                    windowList.Add(process.MainWindowTitle);
+                }
+            }
+            windowList.Sort();
+
+            return windowList;
         }
 
     }

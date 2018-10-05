@@ -72,7 +72,8 @@ namespace taskt.Core.AutomationCommands.Attributes.PropertyAttributes
             ShowVariableHelper,
             ShowFileSelectionHelper,
             ShowImageRecogitionHelper,
-            ShowCodeBuilder
+            ShowCodeBuilder,
+            ShowElementRecorder
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]

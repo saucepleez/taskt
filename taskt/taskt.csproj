@@ -205,6 +205,12 @@
     <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.Designer.cs">
+      <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -332,6 +338,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.resx">
+      <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
       <DependentUpon>frmVariableSelector.cs</DependentUpon>

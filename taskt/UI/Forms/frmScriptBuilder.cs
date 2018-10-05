@@ -1609,7 +1609,11 @@ namespace taskt.UI.Forms
 
         }
 
-      
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder();
+            recorder.ShowDialog();
+        }
     }
 
 }

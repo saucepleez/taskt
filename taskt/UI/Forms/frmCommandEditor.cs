@@ -244,24 +244,21 @@ namespace taskt.UI.Forms
                                 variableInsertion.Click += ShowCodeBuilder;
                                 flw_InputVariables.Controls.Add(variableInsertion);
                                 break;
+                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
+                                //show variable selector
+                                variableInsertion.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+                                variableInsertion.CommandDisplay = "Element Recorder";
+
+                                variableInsertion.Click += ShowElementRecorder;
+                                flw_InputVariables.Controls.Add(variableInsertion);
+                                break;
 
                             default:
                                 break;
                         }
                     }
 
-                    //var attribute = (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper)propertyAllowsVars[0];
-                    //if (attribute.propertyAllowsVariables)
-                    //{
-                    //    //show variable selector
-                    //    taskt.UI.CustomControls.CommandItemControl variableInsertion = new taskt.UI.CustomControls.CommandItemControl();
-                    //    variableInsertion.CommandImage = UI.Images.GetUIImage("VariableCommand");
-                    //    variableInsertion.CommandDisplay = "Insert Variable";
-                    //    variableInsertion.ForeColor = Color.Black;
-                    //    variableInsertion.Tag = inputControl;
-                    //    variableInsertion.Click += ShowVariableSelector;
-                    //    flw_InputVariables.Controls.Add(variableInsertion);
-                    //}
+                  
                 }
 
                 //these types get a helper button to launch another form
@@ -595,6 +592,37 @@ namespace taskt.UI.Forms
                     //set datasource
                     var cmd = (Core.AutomationCommands.IEBrowserElementCommand)currentCommand;
                     InputControl.DataSource = cmd.v_WebSearchTable;
+                    InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
+                }
+                else if (inputField.Name == "v_UIASearchParameters")
+                {
+                    InputControl = new DataGridView();
+
+                    InputControl.Name = inputField.Name;
+                    InputControl.Width = 400;
+                    InputControl.Height = 180;
+
+                    InputControl.AutoGenerateColumns = false;
+                    DataGridViewCheckBoxColumn enabledColumn = new DataGridViewCheckBoxColumn();
+                    enabledColumn.HeaderText = "Enabled";
+                    enabledColumn.DataPropertyName = "Enabled";
+                    InputControl.Columns.Add(enabledColumn);
+
+                    DataGridViewTextBoxColumn propertyName = new DataGridViewTextBoxColumn();
+                    propertyName.HeaderText = "Property Name";
+                    propertyName.DataPropertyName = "Property Name";
+                    InputControl.Columns.Add(propertyName);
+
+                    DataGridViewTextBoxColumn propertyValue = new DataGridViewTextBoxColumn();
+                    propertyValue.HeaderText = "Property Value";
+                    propertyValue.DataPropertyName = "Property Value";
+                    InputControl.Columns.Add(propertyValue);
+
+                    InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+
+                    //set datasource
+                    var cmd = (Core.AutomationCommands.UIAutomationCommand)currentCommand;
+                    InputControl.DataSource = cmd.v_UIASearchParameters;
                     InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                 }
                 else if (inputField.Name == "v_TextExtractionType")
@@ -1158,6 +1186,26 @@ namespace taskt.UI.Forms
 
             }
         }
+        private void ShowElementRecorder(object sender, EventArgs e)
+        {
+
+            //get command reference
+            Core.AutomationCommands.UIAutomationCommand cmd = (Core.AutomationCommands.UIAutomationCommand)selectedCommand;
+           
+            //create recorder
+            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Supplemental.frmThickAppElementRecorder();
+            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
+
+            //show form
+            newElementRecorder.ShowDialog();
+
+            ComboBox txtWindowName = (ComboBox)flw_InputVariables.Controls["v_AutomationWindowName"];
+            txtWindowName.Text = newElementRecorder.cboWindowTitle.Text;
+
+            // DataGridView dgvSearchView = (DataGridView)flw_InputVariables.Controls["v_WebSearchTable"];
+
+        }
+
         private void ShowFileSelector(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();

@@ -43,6 +43,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(CommentCommand))]
     [XmlInclude(typeof(ThickAppClickItemCommand))]
     [XmlInclude(typeof(ThickAppGetTextCommand))]
+    [XmlInclude(typeof(UIAutomationCommand))]
     [XmlInclude(typeof(ResizeWindowCommand))]
     [XmlInclude(typeof(WaitForWindowCommand))]
     [XmlInclude(typeof(MessageBoxCommand))]
@@ -1912,8 +1913,9 @@ namespace taskt.Core.AutomationCommands
                 activateWindow.RunCommand(sender);
             }
 
-            v_TextToSend = v_TextToSend.ConvertToUserVariable(sender);
-            System.Windows.Forms.SendKeys.SendWait(v_TextToSend);
+           string varTextToSend = v_TextToSend.ConvertToUserVariable(sender);
+
+            System.Windows.Forms.SendKeys.SendWait(varTextToSend);
 
             System.Threading.Thread.Sleep(500);
         }
@@ -2206,6 +2208,73 @@ namespace taskt.Core.AutomationCommands
         }
     }
 
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Description("This command gets text from a Thick Application window and assigns it to a variable.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
+    public class UIAutomationCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the action")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Click Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
+        public string v_AutomationType { get; set; }
+
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
+        public string v_AutomationWindowName { get; set; }
+
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder)]
+        [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
+        public DataTable v_UIASearchParameters { get; set; }
+
+        [Attributes.PropertyAttributes.PropertyDescription("Set Action Parameters")]
+        public DataTable v_UIAActionParameters { get; set; }
+
+        public UIAutomationCommand()
+        {
+            this.CommandName = "UIAutomationCommand";
+            this.SelectionName = "UI Automation";
+            this.CommandEnabled = true;
+
+            //set up search parameter table
+            this.v_UIASearchParameters = new DataTable();
+            this.v_UIASearchParameters.Columns.Add("Enabled");
+            this.v_UIASearchParameters.Columns.Add("Property Name");
+            this.v_UIASearchParameters.Columns.Add("Property Value");
+            this.v_UIASearchParameters.TableName = DateTime.Now.ToString("ThickAppSearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //var variableWindowName = v_AutomationWindowName.ConvertToUserVariable(sender);
+
+            //var searchItem = AutomationElement.RootElement.FindFirst
+            //(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
+            //variableWindowName));
+
+            //if (searchItem == null)
+            //{
+            //    throw new Exception("Window not found");
+            //}
+
+            //var requiredItem = searchItem.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.AutomationIdProperty, v_AutomationID));
+
+            //var newVariableCommand = new Core.AutomationCommands.VariableCommand
+            //{
+            //    v_userVariableName = v_userVariableName,
+            //    v_Input = requiredItem.Current.Name
+            //};
+            //newVariableCommand.RunCommand(sender);
+        }
+
+       
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue();
+        }
+    }
     #endregion Input Commands
 
     #region Database Commands
