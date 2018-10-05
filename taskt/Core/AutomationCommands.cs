@@ -1912,8 +1912,8 @@ namespace taskt.Core.AutomationCommands
                 activateWindow.RunCommand(sender);
             }
 
-            v_TextToSend = v_TextToSend.ConvertToUserVariable(sender);
-            System.Windows.Forms.SendKeys.SendWait(v_TextToSend);
+            string textToSend = v_TextToSend.ConvertToUserVariable(sender);
+            System.Windows.Forms.SendKeys.SendWait(textToSend);
 
             System.Threading.Thread.Sleep(500);
         }
@@ -1923,6 +1923,7 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Send '" + v_TextToSend + "' to '" + v_WindowName + "']";
         }
     }
+
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
     [Attributes.ClassAttributes.Description("Use this command to simulate mouse movement and click the mouse on coordinates.")]
