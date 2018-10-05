@@ -39,6 +39,7 @@ namespace taskt.UI.Forms
         #region Instance and Form Events
         private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
+      
         bool editMode { get; set; }
         private ImageList uiImages; 
         public Core.ApplicationSettings appSettings;
@@ -47,6 +48,9 @@ namespace taskt.UI.Forms
         private int undoIndex = -1;
         private int reqdIndex;
         private int selectedIndex = -1;
+
+        private List<int> matchingSearchIndex = new List<int>();
+        private int currentIndex = -1;
 
         public frmScriptBuilder()
         {
@@ -143,9 +147,8 @@ namespace taskt.UI.Forms
             lstScriptActions.SmallImageList = uiImages;
 
 
-
-            // tvCommands.ImageList = uiImages;
-            // tvCommands.ImageList.Images.Add(new Bitmap(1,1));
+            //set listview column size
+            frmScriptBuilder_SizeChanged(null, null);
 
             //get commands
             var groupedCommands = Core.Common.GetGroupedCommands();
@@ -270,6 +273,7 @@ namespace taskt.UI.Forms
         }
         private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (!appSettings.ClientSettings.InsertCommandsInline)
                 return;
 
@@ -277,7 +281,7 @@ namespace taskt.UI.Forms
             if (lstScriptActions.SelectedItems.Count > 0)
             {
                 selectedIndex = lstScriptActions.SelectedItems[0].Index;
-                FormatCommandListView();
+                //FormatCommandListView();
             }
             else
             {
@@ -377,7 +381,8 @@ namespace taskt.UI.Forms
                 //Removes the item from the initial location while
                 //the item is moved to the new location.
                 lstScriptActions.Items.Remove(dragItem);
-                FormatCommandListView();
+                //FormatCommandListView();
+                lstScriptActions.Invalidate();
             }
 
         }
@@ -396,7 +401,8 @@ namespace taskt.UI.Forms
                 }
 
                 CreateUndoSnapshot();
-                FormatCommandListView();
+                lstScriptActions.Invalidate();
+                //FormatCommandListView();
             }
             else if ((e.Control) && (e.KeyCode == Keys.X))
             {     
@@ -497,6 +503,7 @@ namespace taskt.UI.Forms
                 if (lstScriptActions.SelectedItems.Count == 0)
                 {
                     MessageBox.Show("In order to paste, you must first select a command to paste under.", "Select Command To Paste Under");
+                    return;
                 }
 
                 int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
@@ -505,9 +512,10 @@ namespace taskt.UI.Forms
                 {
                     Core.AutomationCommands.ScriptCommand duplicatedCommand = (Core.AutomationCommands.ScriptCommand)Core.Common.Clone(item.Tag);
                     lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
-                    destinationIndex += 1;
-                    FormatCommandListView();
+                    destinationIndex += 1;                  
                 }
+
+                lstScriptActions.Invalidate();
 
                 Notify(rowsSelectedForCopy.Count + " item(s) pasted!");
             }
@@ -537,7 +545,7 @@ namespace taskt.UI.Forms
 
                 undoIndex--;
 
-                FormatCommandListView();
+                lstScriptActions.Invalidate();
 
             }
 
@@ -565,7 +573,7 @@ namespace taskt.UI.Forms
                 }
 
 
-                FormatCommandListView();
+                lstScriptActions.Invalidate();
 
 
             }
@@ -707,7 +715,7 @@ namespace taskt.UI.Forms
             this.Text = "edit sequence";
             lblMainLogo.Text = "edit sequence";
 
-            FormatCommandListView();
+            lstScriptActions.Invalidate();
             pnlCommandHelper.Hide();
 
 
@@ -743,7 +751,8 @@ namespace taskt.UI.Forms
         private ListViewItem CreateScriptCommandListViewItem(Core.AutomationCommands.ScriptCommand cmdDetails)
         {
             ListViewItem newCommand = new ListViewItem();
-            newCommand.Text = cmdDetails.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
+            newCommand.Text = cmdDetails.GetDisplayValue();
+            newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
             newCommand.Tag = cmdDetails;
             newCommand.ForeColor = cmdDetails.DisplayForeColor;
@@ -754,7 +763,10 @@ namespace taskt.UI.Forms
 
         public void AddCommandToListView(Core.AutomationCommands.ScriptCommand selectedCommand)
         {
-
+            if (pnlCommandHelper.Visible)
+            {
+                pnlCommandHelper.Hide();
+            }
 
             var command = CreateScriptCommandListViewItem(selectedCommand);
 
@@ -784,25 +796,21 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.AutomationCommands.EndIfCommand()));
             }
 
-
+           
 
             CreateUndoSnapshot();
 
-            FormatCommandListView();
+            lstScriptActions.Invalidate();
+
+            AutoSizeLineNumberColumn();
+
         }
 
         #endregion
 
         #region ListView Comment, Coloring, ToolStrip
-        private void FormatCommandListView()
+        private void IndentListViewItems()
         {
-
-
-
-            if (pnlCommandHelper.Visible)
-                pnlCommandHelper.Hide();
-
-
             int indent = 0;
             foreach (ListViewItem rowItem in lstScriptActions.Items)
             {
@@ -834,61 +842,125 @@ namespace taskt.UI.Forms
                     rowItem.IndentCount = indent;
                 }
 
-
-
-
-                //mod 2 to color alt rows
-                if (rowItem.Index % 2 == 0)
-                {
-                    rowItem.BackColor = Color.WhiteSmoke;
-                }
-                else
-                {
-                    rowItem.BackColor = Color.WhiteSmoke;
-                }
-
-                //if code is commented change back color
-                var selectedCommand = (Core.AutomationCommands.ScriptCommand)rowItem.Tag;
-
-                if ((selectedCommand.IsCommented) || (selectedCommand is Core.AutomationCommands.CommentCommand))
-                {
-                    rowItem.ForeColor = Color.Green;
-                }
-                else
-                {
-                    rowItem.ForeColor = selectedCommand.DisplayForeColor;
-                }
-
-                //handle pause before execution items
-                if (selectedCommand.PauseBeforeExeucution)
-                {
-                    rowItem.BackColor = Color.LightYellow;
-                    rowItem.ForeColor = Color.SteelBlue;
-                }         
-
             }
+        }
+        private void AutoSizeLineNumberColumn()
+        {
+            //auto adjust column width based on # of commands
+            int columnWidth = (14 * lstScriptActions.Items.Count.ToString().Length);
+            lstScriptActions.Columns[0].Width = columnWidth;
+        }
 
-            //highlight debug line
-            if (DebugLine > 0)
+        private void lstScriptActions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+
+            //handle indents
+            IndentListViewItems();
+
+            //auto size line numbers based on command count
+            AutoSizeLineNumberColumn();
+
+
+            //get listviewitem
+            ListViewItem item = e.Item;
+
+            //get script command reference
+            var command = (Core.AutomationCommands.ScriptCommand)item.Tag;
+
+
+            //create modified bounds
+            var modifiedBounds = e.Bounds;
+            //modifiedBounds.Y += 2;
+
+            //switch between column index
+            switch (e.ColumnIndex)
             {
-                lstScriptActions.Items[DebugLine - 1].BackColor = Color.OrangeRed;
-                lstScriptActions.Items[DebugLine - 1].ForeColor = Color.White;
+                case 0:
+                    //draw row number
+                    e.Graphics.DrawString((e.ItemIndex + 1).ToString(),
+                        lstScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
+
+                    break;
+                case 1:
+                    //draw command icon
+                    var img = uiImages.Images[command.GetType().Name];
+                    if (img != null)
+                    {
+                        e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
+                    }
+
+                    break;
+
+                case 2:
+                    //write command text
+                    Brush commandNameBrush, commandBackgroundBrush;
+                    if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
+                    {
+                        //debugging coloring
+                        commandNameBrush = Brushes.White;
+                        commandBackgroundBrush = Brushes.OrangeRed;
+                    }
+                    else if ((currentIndex >= 0) && (e.ItemIndex == currentIndex))
+                    {
+                        //search primary item coloring
+                        commandNameBrush = Brushes.Black;
+                        commandBackgroundBrush = Brushes.Goldenrod;
+                    }
+                    else if (matchingSearchIndex.Contains(e.ItemIndex))
+                    {
+                        //search match item coloring
+                        commandNameBrush = Brushes.Black;
+                        commandBackgroundBrush = Brushes.LightYellow;
+                    }
+                    else if ((e.Item.Focused) || (e.Item.Selected))
+                    {
+                        //selected item coloring
+                        commandNameBrush = Brushes.White;
+                        commandBackgroundBrush = Brushes.DodgerBlue;
+                    }
+                    else if (command.PauseBeforeExeucution)
+                    {
+                        //pause before execution coloring
+                        commandNameBrush = Brushes.MediumPurple;
+                        commandBackgroundBrush = Brushes.Lavender;
+                    }
+                    else if ((command is Core.AutomationCommands.CommentCommand) || (command.IsCommented))
+                    {
+                        //comments and commented command coloring
+                        commandNameBrush = Brushes.ForestGreen;
+                        commandBackgroundBrush = Brushes.WhiteSmoke;
+                    }
+                    else
+                    {
+                        //standard coloring
+                        commandNameBrush = Brushes.SteelBlue;
+                        commandBackgroundBrush = Brushes.WhiteSmoke;
+                    }
+
+                    //fille with background color
+                    e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
+
+
+
+                    //get indent count
+                    var indentPixels = (item.IndentCount * 15);
+
+                    //set indented X position
+                    modifiedBounds.X += indentPixels;
+
+                    //draw string
+                    e.Graphics.DrawString(command.GetDisplayValue(),
+                                   lstScriptActions.Font, commandNameBrush, modifiedBounds);
+
+                    break;
             }
 
-            //highlight selected item
-            try
-            {
-                if (selectedIndex >= 0)
-                {
 
-                    lstScriptActions.Items[selectedIndex].BackColor = Color.MediumPurple;
-                    lstScriptActions.Items[selectedIndex].ForeColor = Color.White;
-                }
-            }
-            catch (Exception)
-            {
-                //exception occured in builder for some reason TODO: Add Logging
-            }
+        }
+
+        private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
+        {
+            lstScriptActions.Invalidate();
         }
 
         private int debugLine;
@@ -913,12 +985,15 @@ namespace taskt.UI.Forms
                     }
   
                 }
-             
-                FormatCommandListView();
+
+                lstScriptActions.Invalidate();
+
+                //FormatCommandListView();
             }
         }
         private void lstScriptActions_MouseClick(object sender, MouseEventArgs e)
         {
+       
             if (e.Button == MouseButtons.Right)
             {
                 if (lstScriptActions.FocusedItem.Bounds.Contains(e.Location) == true)
@@ -946,7 +1021,7 @@ namespace taskt.UI.Forms
             }
 
             //recolor
-            FormatCommandListView();
+            lstScriptActions.Invalidate();
 
             //clear selection
             lstScriptActions.SelectedIndices.Clear();
@@ -969,7 +1044,9 @@ namespace taskt.UI.Forms
             }
 
             //recolor
-            FormatCommandListView();
+            //FormatCommandListView();
+
+            lstScriptActions.Invalidate();
 
             //clear selection
             lstScriptActions.SelectedIndices.Clear();
@@ -1098,7 +1175,7 @@ namespace taskt.UI.Forms
 
         private void frmScriptBuilder_SizeChanged(object sender, EventArgs e)
         {
-            lstScriptActions.Columns[0].Width = -2;
+            lstScriptActions.Columns[2].Width = this.Width - 340;
         }
         #endregion
 
@@ -1145,7 +1222,7 @@ namespace taskt.UI.Forms
                 PopulateExecutionCommands(deserializedScript.Commands);
 
                 //format listview
-                FormatCommandListView();
+               
 
                 //notify
                 Notify("Script Loaded Successfully!");
@@ -1202,7 +1279,7 @@ namespace taskt.UI.Forms
 
 
                 //format listview
-                FormatCommandListView();
+     
 
                 //notify
                 Notify("Script Imported Successfully!");
@@ -1231,13 +1308,17 @@ namespace taskt.UI.Forms
                 if (item.AdditionalScriptCommands.Count > 0) PopulateExecutionCommands(item.AdditionalScriptCommands);
             }
 
+            if (pnlCommandHelper.Visible)
+            {
+                pnlCommandHelper.Hide();
+            }
 
         }
         private void ClearSelectedListViewItems()
         {
             lstScriptActions.SelectedItems.Clear();
             selectedIndex = -1;
-            FormatCommandListView();
+            lstScriptActions.Invalidate();
         }
 
         private void uiBtnSave_Click(object sender, EventArgs e)
@@ -1390,7 +1471,6 @@ namespace taskt.UI.Forms
 
         private void uiBtnRunScript_Click(object sender, EventArgs e)
         {
-
 
             if (lstScriptActions.Items.Count == 0)
             {
@@ -1564,20 +1644,33 @@ namespace taskt.UI.Forms
         private void txtCommandSearch_TextChanged(object sender, EventArgs e)
         {
 
+   
+
             if (lstScriptActions.Items.Count == 0)
                 return;
 
+            reqdIndex = 0;
 
             if (txtCommandSearch.Text == "")
             {
+                //hide info
                 HideSearchInfo();
-                FormatCommandListView();
+
+                //clear indexes
+                matchingSearchIndex.Clear();
+                currentIndex = -1;
+
+                //repaint
+                lstScriptActions.Invalidate();
             }
             else
             {
                 lblCurrentlyViewing.Show();
                 lblTotalResults.Show();
                 SearchForItemInListView();
+
+                //repaint
+                lstScriptActions.Invalidate();
             }
 
         }
@@ -1601,9 +1694,7 @@ namespace taskt.UI.Forms
         private void SearchForItemInListView()
         {
 
-            FormatCommandListView();
-
-
+ 
             var matchingItems = (from ListViewItem itm in lstScriptActions.Items
                                  where itm.Text.Contains(txtCommandSearch.Text)
                                  select itm).ToList();
@@ -1613,7 +1704,7 @@ namespace taskt.UI.Forms
             int totalMatches = matchCount ?? 0;
 
 
-            if (reqdIndex == matchingItems.Count)
+            if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
             {
                 reqdIndex = 0;
             }
@@ -1622,9 +1713,13 @@ namespace taskt.UI.Forms
 
             if (totalMatches == 0)
             {
-                reqdIndex = 0;
+                reqdIndex = -1;
                 lblTotalResults.Text = "No Matches Found";
                 lblCurrentlyViewing.Hide();
+                //clear indexes
+                matchingSearchIndex.Clear();
+                reqdIndex = -1;
+                lstScriptActions.Invalidate();
                 return;
             }
             else
@@ -1637,20 +1732,24 @@ namespace taskt.UI.Forms
 
 
 
-
+            matchingSearchIndex = new List<int>();
             foreach (ListViewItem itm in matchingItems)
             {
+                matchingSearchIndex.Add(itm.Index);
                 itm.BackColor = Color.LightGoldenrodYellow;
             }
 
+           
 
-            var reqdItem = matchingItems[reqdIndex];
-            reqdItem.BackColor = Color.Orange;
-
-
+            currentIndex = matchingItems[reqdIndex].Index;
 
 
-            lstScriptActions.EnsureVisible(reqdItem.Index);
+            lstScriptActions.Invalidate();
+
+
+
+
+            lstScriptActions.EnsureVisible(currentIndex);
 
 
 
@@ -1675,10 +1774,6 @@ namespace taskt.UI.Forms
 
         #endregion
 
-        private void lstContextStrip_Opening(object sender, CancelEventArgs e)
-        {
-
-        }
 
        
     }
