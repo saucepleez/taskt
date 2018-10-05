@@ -901,6 +901,19 @@ namespace taskt.UI.Forms
             set
             {
                 debugLine = value;
+                if (debugLine > 0)
+                {
+                    try
+                    {
+                        lstScriptActions.EnsureVisible(debugLine - 1);
+                    }
+                    catch (Exception)
+                    {
+                        //log exception?
+                    }
+  
+                }
+             
                 FormatCommandListView();
             }
         }
