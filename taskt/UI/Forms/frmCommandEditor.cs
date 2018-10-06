@@ -913,10 +913,7 @@ namespace taskt.UI.Forms
             var selectedCommandItem = cboSelectedCommand.Text;
             selectedCommand = commandList.Where(itm => itm.DisplayValue == selectedCommandItem).FirstOrDefault().CommandInstance;
             GenerateUIInputElements(selectedCommand);
-        }
-        private void cboSelectedCommand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
+        }      
         private void AutomationWindowName_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             var senderBox = (ComboBox)sender;
@@ -960,10 +957,6 @@ namespace taskt.UI.Forms
                     cmd.v_AutomationID = AutomationID;
                 }
             }
-        }
-
-        private void SetComboBox()
-        {
         }
 
         #endregion ComboBox Events
