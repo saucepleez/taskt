@@ -263,56 +263,57 @@ namespace taskt.UI.Forms
                                 MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                                 break;
                         }
-                    
 
 
-                }
 
-                //add to flow layout
-                flw_InputVariables.Controls.Add(inputControl);
+                    }
 
-                //handle edit mode to add combobox data
-                if ((creationMode == CreationMode.Edit) && (currentCommand is Core.AutomationCommands.BeginIfCommand) && (inputControl is DataGridView))
-                {
-                    Core.AutomationCommands.BeginIfCommand ifCmd = (Core.AutomationCommands.BeginIfCommand)currentCommand;
-                    if (ifCmd.v_IfActionType == "Value")
+                    //add to flow layout
+                    flw_InputVariables.Controls.Add(inputControl);
+
+                    //handle edit mode to add combobox data
+                    if ((creationMode == CreationMode.Edit) && (currentCommand is Core.AutomationCommands.BeginIfCommand) && (inputControl is DataGridView))
                     {
-                        DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-                        comparisonComboBox.Items.Add("is equal to");
-                        comparisonComboBox.Items.Add("is greater than");
-                        comparisonComboBox.Items.Add("is greater than or equal to");
-                        comparisonComboBox.Items.Add("is less than");
-                        comparisonComboBox.Items.Add("is less than or equal to");
-                        comparisonComboBox.Items.Add("is not equal to");
+                        Core.AutomationCommands.BeginIfCommand ifCmd = (Core.AutomationCommands.BeginIfCommand)currentCommand;
+                        if (ifCmd.v_IfActionType == "Value")
+                        {
+                            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+                            comparisonComboBox.Items.Add("is equal to");
+                            comparisonComboBox.Items.Add("is greater than");
+                            comparisonComboBox.Items.Add("is greater than or equal to");
+                            comparisonComboBox.Items.Add("is less than");
+                            comparisonComboBox.Items.Add("is less than or equal to");
+                            comparisonComboBox.Items.Add("is not equal to");
 
-                        //assign cell as a combobox
-                        DataGridView inputCtrl = (DataGridView)inputControl;
-                        inputCtrl.Rows[1].Cells[1] = comparisonComboBox;
+                            //assign cell as a combobox
+                            DataGridView inputCtrl = (DataGridView)inputControl;
+                            inputCtrl.Rows[1].Cells[1] = comparisonComboBox;
+                        }
                     }
                 }
-            }
 
-            if ((currentCommand is Core.AutomationCommands.IEBrowserElementCommand) && (creationMode == CreationMode.Edit))
-            {
-                Core.AutomationCommands.IEBrowserElementCommand webCommand = (Core.AutomationCommands.IEBrowserElementCommand)currentCommand;
-
-                if (webCommand.v_WebAction == "Invoke Click")
+                if ((currentCommand is Core.AutomationCommands.IEBrowserElementCommand) && (creationMode == CreationMode.Edit))
                 {
-                    DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
-                    Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
-                    CustomControls.CommandItemControl variableHelper = (CustomControls.CommandItemControl)flw_InputVariables.Controls["lbl_v_WebActionParameterTable_helper"];
-                    additionalParameterLabel.Visible = false;
-                    webActionParameterBox.Visible = false;
-                    variableHelper.Visible = false;
-                }
-                else
-                {
+                    Core.AutomationCommands.IEBrowserElementCommand webCommand = (Core.AutomationCommands.IEBrowserElementCommand)currentCommand;
 
+                    if (webCommand.v_WebAction == "Invoke Click")
+                    {
+                        DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
+                        Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
+                        CustomControls.CommandItemControl variableHelper = (CustomControls.CommandItemControl)flw_InputVariables.Controls["lbl_v_WebActionParameterTable_helper"];
+                        additionalParameterLabel.Visible = false;
+                        webActionParameterBox.Visible = false;
+                        variableHelper.Visible = false;
+                    }
+                    else
+                    {
+
+                    }
                 }
+
+                //add additional offset
+                this.Height = formHeight + 200;
             }
-
-            //add additional offset
-            this.Height = formHeight + 200;
         }
 
         private Control GenerateInputControl(PropertyInfo inputField, Core.AutomationCommands.ScriptCommand currentCommand)
