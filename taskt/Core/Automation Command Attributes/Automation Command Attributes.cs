@@ -73,6 +73,7 @@ namespace taskt.Core.AutomationCommands.Attributes.PropertyAttributes
             ShowFileSelectionHelper,
             ShowImageRecogitionHelper,
             ShowCodeBuilder,
+            ShowMouseCaptureHelper
             ShowElementRecorder
         }
     }

@@ -187,41 +187,40 @@ namespace taskt.UI.Forms
                 {
                     foreach (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper attrib in propertyAllowsVars)
                     {
-                        taskt.UI.CustomControls.CommandItemControl variableInsertion = new taskt.UI.CustomControls.CommandItemControl();
-                        variableInsertion.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-                        variableInsertion.ForeColor = Color.AliceBlue;
-                        variableInsertion.Name = inputLabel.Name + "_helper";
-                        variableInsertion.Tag = inputControl;
+                        taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
+                        helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+                        helperControl.ForeColor = Color.AliceBlue;
+                        helperControl.Name = inputLabel.Name + "_helper";
+                        helperControl.Tag = inputControl;
 
                         switch (attrib.additionalHelper)
                         {
                             case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
                                 //show variable selector
-                                variableInsertion.CommandImage = UI.Images.GetUIImage("VariableCommand");
-                                variableInsertion.CommandDisplay = "Insert Variable";
-                 
-                                variableInsertion.Click += ShowVariableSelector;
-                                flw_InputVariables.Controls.Add(variableInsertion);
+                                helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+                                helperControl.CommandDisplay = "Insert Variable";
+                                helperControl.Click += ShowVariableSelector;
+                                flw_InputVariables.Controls.Add(helperControl);
                                 break;
 
                             case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
                                 //show file selector
-                                variableInsertion.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-                                variableInsertion.CommandDisplay = "Select a File";
-                                variableInsertion.ForeColor = Color.AliceBlue;
-                                variableInsertion.Tag = inputControl;
-                                variableInsertion.Click += ShowFileSelector;
-                                flw_InputVariables.Controls.Add(variableInsertion);
+                                helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+                                helperControl.CommandDisplay = "Select a File";
+                                helperControl.ForeColor = Color.AliceBlue;
+                                helperControl.Tag = inputControl;
+                                helperControl.Click += ShowFileSelector;
+                                flw_InputVariables.Controls.Add(helperControl);
                                 break;
 
                             case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
                                 //show file selector
-                                variableInsertion.CommandImage = UI.Images.GetUIImage("OCRCommand");
-                                variableInsertion.CommandDisplay = "Capture Reference Image";
-                                variableInsertion.ForeColor = Color.AliceBlue;
-                                variableInsertion.Tag = inputControl;
-                                variableInsertion.Click += ShowImageCapture;
-                                flw_InputVariables.Controls.Add(variableInsertion);
+                                helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
+                                helperControl.CommandDisplay = "Capture Reference Image";
+                                helperControl.ForeColor = Color.AliceBlue;
+                                helperControl.Tag = inputControl;
+                                helperControl.Click += ShowImageCapture;
+                                flw_InputVariables.Controls.Add(helperControl);
 
 
                                 taskt.UI.CustomControls.CommandItemControl testRun = new taskt.UI.CustomControls.CommandItemControl();
@@ -234,54 +233,39 @@ namespace taskt.UI.Forms
                                 testRun.Tag = inputControl;
                                 testRun.Click += RunImageCapture;
                                 flw_InputVariables.Controls.Add(testRun);
-
-
                                 break;
+
                             case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
                                 //show variable selector
-                                variableInsertion.CommandImage = UI.Images.GetUIImage("RunScriptCommand");
-                                variableInsertion.CommandDisplay = "Code Builder";
-                                variableInsertion.Click += ShowCodeBuilder;
-                                flw_InputVariables.Controls.Add(variableInsertion);
+                                helperControl.CommandImage = UI.Images.GetUIImage("RunScriptCommand");
+                                helperControl.CommandDisplay = "Code Builder";
+                                helperControl.Click += ShowCodeBuilder;
+                                flw_InputVariables.Controls.Add(helperControl);
+                                break;
+
+                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
+                                helperControl.CommandImage = UI.Images.GetUIImage("SendMouseMoveCommand");
+                                helperControl.CommandDisplay = "Capture Mouse Position";
+                                helperControl.ForeColor = Color.AliceBlue;
+                                helperControl.Click += ShowMouseCaptureForm;
+                                flw_InputVariables.Controls.Add(helperControl);
                                 break;
                             case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
                                 //show variable selector
-                                variableInsertion.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-                                variableInsertion.CommandDisplay = "Element Recorder";
+                                helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+                                helperControl.CommandDisplay = "Element Recorder";
 
-                                variableInsertion.Click += ShowElementRecorder;
-                                flw_InputVariables.Controls.Add(variableInsertion);
+                                helperControl.Click += ShowElementRecorder;
+                                flw_InputVariables.Controls.Add(helperControl);
                                 break;
 
                             default:
+                                MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                                 break;
                         }
-                    }
+                    
 
-                  
-                }
 
-                //these types get a helper button to launch another form
-                if (inputField.Name == "v_WebSearchTable")
-                {
-                    Core.AutomationCommands.IEBrowserElementCommand webCommand = (Core.AutomationCommands.IEBrowserElementCommand)currentCommand;
-                    taskt.UI.CustomControls.CommandItemControl newitm = new taskt.UI.CustomControls.CommandItemControl();
-
-                    newitm.CommandImage = UI.Images.GetUIImage(webCommand.CommandName);
-                    newitm.CommandDisplay = "Click here to Capture Web Element";
-                    newitm.ForeColor = Color.AliceBlue;
-                    newitm.Click += ShowElementCaptureForm;
-                    flw_InputVariables.Controls.Add(newitm);
-                }
-                else if (inputField.Name == "v_XMousePosition")
-                {
-                    Core.AutomationCommands.SendMouseMoveCommand mouseCommand = (Core.AutomationCommands.SendMouseMoveCommand)currentCommand;
-                    taskt.UI.CustomControls.CommandItemControl newitm = new taskt.UI.CustomControls.CommandItemControl();
-                    newitm.CommandImage = UI.Images.GetUIImage(mouseCommand.CommandName);
-                    newitm.CommandDisplay = "Click here to Capture Mouse Position";
-                    newitm.ForeColor = Color.AliceBlue;
-                    newitm.Click += ShowMouseCaptureForm;
-                    flw_InputVariables.Controls.Add(newitm);
                 }
 
                 //add to flow layout
@@ -969,10 +953,7 @@ namespace taskt.UI.Forms
             var selectedCommandItem = cboSelectedCommand.Text;
             selectedCommand = commandList.Where(itm => itm.DisplayValue == selectedCommandItem).FirstOrDefault().CommandInstance;
             GenerateUIInputElements(selectedCommand);
-        }
-        private void cboSelectedCommand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
+        }      
         private void AutomationWindowName_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             var senderBox = (ComboBox)sender;
@@ -1016,10 +997,6 @@ namespace taskt.UI.Forms
                     cmd.v_AutomationID = AutomationID;
                 }
             }
-        }
-
-        private void SetComboBox()
-        {
         }
 
         #endregion ComboBox Events

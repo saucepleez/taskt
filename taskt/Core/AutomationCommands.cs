@@ -1913,9 +1913,8 @@ namespace taskt.Core.AutomationCommands
                 activateWindow.RunCommand(sender);
             }
 
-           string varTextToSend = v_TextToSend.ConvertToUserVariable(sender);
-
-            System.Windows.Forms.SendKeys.SendWait(varTextToSend);
+            string textToSend = v_TextToSend.ConvertToUserVariable(sender);
+            System.Windows.Forms.SendKeys.SendWait(textToSend);
 
             System.Threading.Thread.Sleep(500);
         }
@@ -1925,6 +1924,7 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Send '" + v_TextToSend + "' to '" + v_WindowName + "']";
         }
     }
+
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
     [Attributes.ClassAttributes.Description("Use this command to simulate mouse movement and click the mouse on coordinates.")]
@@ -1933,9 +1933,11 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the X position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         public int v_XMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         public int v_YMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
@@ -2016,10 +2018,6 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [" + v_scriptActions.Count() + " embedded commands]";
         }
     }
-
-
-
-
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
