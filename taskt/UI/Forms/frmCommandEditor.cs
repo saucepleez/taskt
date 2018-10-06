@@ -233,9 +233,8 @@ namespace taskt.UI.Forms
                                 testRun.Tag = inputControl;
                                 testRun.Click += RunImageCapture;
                                 flw_InputVariables.Controls.Add(testRun);
-
-
                                 break;
+
                             case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
                                 //show variable selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("RunScriptCommand");
@@ -251,7 +250,9 @@ namespace taskt.UI.Forms
                                 helperControl.Click += ShowMouseCaptureForm;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
+
                             default:
+                                MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                                 break;
                         }
                     }
