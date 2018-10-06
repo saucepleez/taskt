@@ -1932,9 +1932,11 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the X position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         public int v_XMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         public int v_YMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
@@ -2015,10 +2017,6 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [" + v_scriptActions.Count() + " embedded commands]";
         }
     }
-
-
-
-
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
