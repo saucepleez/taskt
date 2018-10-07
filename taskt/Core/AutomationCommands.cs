@@ -115,6 +115,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(TextExtractorCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
     [XmlInclude(typeof(LogDataCommand))]
+    [XmlInclude(typeof(StringReplaceCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -3732,6 +3733,58 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Split '" + v_userVariableName + "' by '" + v_splitCharacter + "' and apply to '" + v_applyConvertToUserVariableName + "']";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to replace text within a string")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
+    public class StringReplaceCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify")]
+        public string v_userVariableName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("indicate the text to be replaced")]
+        public string v_replacementText { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("indicate the replacement value")]
+        public string v_replacementValue { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
+        public string v_applyToVariableName { get; set; }
+        public StringReplaceCommand()
+        {
+            this.CommandName = "StringReplaceCommand";
+            this.SelectionName = "Replace";
+            this.CommandEnabled = true;
+   
+        }
+        public override void RunCommand(object sender)
+        {
+            //get full text
+            string replacementVariable = v_userVariableName.ConvertToUserVariable(sender);
+
+            //get replacement text and value
+            string replacementText = v_replacementText.ConvertToUserVariable(sender);
+            string replacementValue = v_replacementValue.ConvertToUserVariable(sender);
+
+            //perform replacement
+            replacementVariable = replacementVariable.Replace(replacementText, replacementValue);
+
+            //store in variable
+            replacementVariable.StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Replace '" + v_replacementText + "' with '" + v_replacementValue + "', apply to '" + v_userVariableName + "']";
+        }
+    }
+
+
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string formatting using RegEx.")]

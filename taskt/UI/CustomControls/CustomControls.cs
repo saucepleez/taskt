@@ -350,6 +350,7 @@ namespace taskt.UI
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
             uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
+            uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("BeginIfCommand", taskt.Properties.Resources.command_begin_if);
             uiImages.Add("EndIfCommand", taskt.Properties.Resources.command_end_if);
             uiImages.Add("ElseCommand", taskt.Properties.Resources.command_else);
