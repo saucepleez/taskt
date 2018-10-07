@@ -53,7 +53,6 @@
             this.cboSelectedCommand.Name = "cboSelectedCommand";
             this.cboSelectedCommand.Size = new System.Drawing.Size(535, 28);
             this.cboSelectedCommand.TabIndex = 2;
-            this.cboSelectedCommand.SelectedIndexChanged += new System.EventHandler(this.cboSelectedCommand_SelectedIndexChanged);
             this.cboSelectedCommand.SelectionChangeCommitted += new System.EventHandler(this.cboSelectedCommand_SelectionChangeCommitted);
             // 
             // flw_InputVariables

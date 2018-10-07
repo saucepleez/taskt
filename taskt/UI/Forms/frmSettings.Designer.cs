@@ -53,6 +53,7 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.chkInsertCommandsInline = new System.Windows.Forms.CheckBox();
             this.btnClearMetrics = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.lblMetrics = new System.Windows.Forms.Label();
@@ -61,6 +62,7 @@
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
+            this.chkTrackMetrics = new System.Windows.Forms.CheckBox();
             this.tabServerSettings = new System.Windows.Forms.TabPage();
             this.chkBypassValidation = new System.Windows.Forms.CheckBox();
             this.btnCloseConnection = new System.Windows.Forms.Button();
@@ -70,7 +72,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.chkTrackMetrics = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -240,7 +241,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 461);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 482);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -299,7 +300,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(10, 117);
+            this.btnUpdates.Location = new System.Drawing.Point(10, 142);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 27);
             this.btnUpdates.TabIndex = 22;
@@ -343,12 +344,13 @@
             this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(563, 382);
+            this.uiSettingTabs.Size = new System.Drawing.Size(568, 403);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.chkInsertCommandsInline);
             this.tabAppSettings.Controls.Add(this.btnClearMetrics);
             this.tabAppSettings.Controls.Add(this.label5);
             this.tabAppSettings.Controls.Add(this.lblMetrics);
@@ -362,14 +364,27 @@
             this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppSettings.Size = new System.Drawing.Size(555, 348);
+            this.tabAppSettings.Size = new System.Drawing.Size(560, 369);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // chkInsertCommandsInline
+            // 
+            this.chkInsertCommandsInline.AutoSize = true;
+            this.chkInsertCommandsInline.BackColor = System.Drawing.Color.Transparent;
+            this.chkInsertCommandsInline.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkInsertCommandsInline.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkInsertCommandsInline.Location = new System.Drawing.Point(9, 61);
+            this.chkInsertCommandsInline.Name = "chkInsertCommandsInline";
+            this.chkInsertCommandsInline.Size = new System.Drawing.Size(356, 24);
+            this.chkInsertCommandsInline.TabIndex = 30;
+            this.chkInsertCommandsInline.Text = "New Commands Insert Below Selected Command";
+            this.chkInsertCommandsInline.UseVisualStyleBackColor = false;
             // 
             // btnClearMetrics
             // 
             this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(9, 313);
+            this.btnClearMetrics.Location = new System.Drawing.Point(9, 338);
             this.btnClearMetrics.Name = "btnClearMetrics";
             this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
             this.btnClearMetrics.TabIndex = 29;
@@ -384,7 +399,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
-            this.label5.Location = new System.Drawing.Point(11, 162);
+            this.label5.Location = new System.Drawing.Point(11, 187);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(262, 16);
             this.label5.TabIndex = 28;
@@ -394,7 +409,7 @@
             // 
             this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
             this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMetrics.Location = new System.Drawing.Point(10, 181);
+            this.lblMetrics.Location = new System.Drawing.Point(10, 206);
             this.lblMetrics.Name = "lblMetrics";
             this.lblMetrics.Size = new System.Drawing.Size(534, 127);
             this.lblMetrics.TabIndex = 27;
@@ -402,7 +417,7 @@
             // 
             // tvExecutionTimes
             // 
-            this.tvExecutionTimes.Location = new System.Drawing.Point(10, 181);
+            this.tvExecutionTimes.Location = new System.Drawing.Point(10, 206);
             this.tvExecutionTimes.Name = "tvExecutionTimes";
             this.tvExecutionTimes.Size = new System.Drawing.Size(534, 127);
             this.tvExecutionTimes.TabIndex = 26;
@@ -410,7 +425,7 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(502, 82);
+            this.btnSelectFolder.Location = new System.Drawing.Point(502, 107);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(42, 30);
             this.btnSelectFolder.TabIndex = 25;
@@ -424,7 +439,7 @@
             this.lblRootFolder.BackColor = System.Drawing.Color.Transparent;
             this.lblRootFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRootFolder.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblRootFolder.Location = new System.Drawing.Point(7, 63);
+            this.lblRootFolder.Location = new System.Drawing.Point(7, 88);
             this.lblRootFolder.Name = "lblRootFolder";
             this.lblRootFolder.Size = new System.Drawing.Size(110, 16);
             this.lblRootFolder.TabIndex = 24;
@@ -432,7 +447,7 @@
             // 
             // txtAppFolderPath
             // 
-            this.txtAppFolderPath.Location = new System.Drawing.Point(10, 82);
+            this.txtAppFolderPath.Location = new System.Drawing.Point(10, 107);
             this.txtAppFolderPath.Name = "txtAppFolderPath";
             this.txtAppFolderPath.Size = new System.Drawing.Size(490, 29);
             this.txtAppFolderPath.TabIndex = 23;
@@ -450,9 +465,22 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(555, 348);
+            this.tabDebugSettings.Size = new System.Drawing.Size(560, 369);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
+            // 
+            // chkTrackMetrics
+            // 
+            this.chkTrackMetrics.AutoSize = true;
+            this.chkTrackMetrics.BackColor = System.Drawing.Color.Transparent;
+            this.chkTrackMetrics.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkTrackMetrics.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkTrackMetrics.Location = new System.Drawing.Point(11, 157);
+            this.chkTrackMetrics.Name = "chkTrackMetrics";
+            this.chkTrackMetrics.Size = new System.Drawing.Size(182, 24);
+            this.chkTrackMetrics.TabIndex = 25;
+            this.chkTrackMetrics.Text = "Track Execution Metrics";
+            this.chkTrackMetrics.UseVisualStyleBackColor = false;
             // 
             // tabServerSettings
             // 
@@ -473,7 +501,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(555, 348);
+            this.tabServerSettings.Size = new System.Drawing.Size(560, 369);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -540,7 +568,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(569, 518);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(574, 539);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -552,7 +580,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(569, 70);
+            this.panel1.Size = new System.Drawing.Size(574, 70);
             this.panel1.TabIndex = 26;
             // 
             // tmrGetSocketStatus
@@ -566,25 +594,12 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // chkTrackMetrics
-            // 
-            this.chkTrackMetrics.AutoSize = true;
-            this.chkTrackMetrics.BackColor = System.Drawing.Color.Transparent;
-            this.chkTrackMetrics.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkTrackMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkTrackMetrics.Location = new System.Drawing.Point(11, 157);
-            this.chkTrackMetrics.Name = "chkTrackMetrics";
-            this.chkTrackMetrics.Size = new System.Drawing.Size(182, 24);
-            this.chkTrackMetrics.TabIndex = 25;
-            this.chkTrackMetrics.Text = "Track Execution Metrics";
-            this.chkTrackMetrics.UseVisualStyleBackColor = false;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(569, 518);
+            this.ClientSize = new System.Drawing.Size(574, 539);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -648,5 +663,6 @@
         private System.Windows.Forms.Label lblMetrics;
         private System.Windows.Forms.Button btnClearMetrics;
         private System.Windows.Forms.CheckBox chkTrackMetrics;
+        private System.Windows.Forms.CheckBox chkInsertCommandsInline;
     }
 }

@@ -32,21 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblMainLogo = new System.Windows.Forms.Label();
-            this.lblCoordinatorInfo = new System.Windows.Forms.Label();
-            this.pnlStatus = new System.Windows.Forms.Panel();
-            this.tmrNotify = new System.Windows.Forms.Timer(this.components);
-            this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.disableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pnlControlContainer = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
@@ -64,7 +49,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblNote = new System.Windows.Forms.Label();
             this.lstScriptActions = new taskt.UI.CustomControls.UIListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.commandColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.lblMainLogo = new System.Windows.Forms.Label();
+            this.lblCoordinatorInfo = new System.Windows.Forms.Label();
+            this.pnlStatus = new System.Windows.Forms.Panel();
+            this.pnlControlContainer = new System.Windows.Forms.Panel();
             this.grpSearch = new taskt.UI.CustomControls.UIGroupBox();
             this.pbSearch = new System.Windows.Forms.PictureBox();
             this.lblCurrentlyViewing = new System.Windows.Forms.Label();
@@ -74,6 +69,7 @@
             this.uiBtnKeep = new taskt.UI.CustomControls.UIPictureButton();
             this.uiPictureButton3 = new taskt.UI.CustomControls.UIPictureButton();
             this.grpFileActions = new taskt.UI.CustomControls.UIGroupBox();
+            this.uiBtnImport = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnSaveAs = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnSave = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
@@ -86,13 +82,15 @@
             this.uiBtnClearAll = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnSettings = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
+            this.tmrNotify = new System.Windows.Forms.Timer(this.components);
+            this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutSelectedActionssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
-            this.pnlHeader.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.lstContextStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.pnlControlContainer.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -101,12 +99,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlHeader.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pnlControlContainer.SuspendLayout();
             this.grpSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
             this.grpSaveClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).BeginInit();
             this.grpFileActions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSaveAs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSave)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).BeginInit();
@@ -119,6 +123,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).BeginInit();
+            this.lstContextStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpControls
@@ -143,7 +148,7 @@
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpControls.Size = new System.Drawing.Size(909, 558);
+            this.tlpControls.Size = new System.Drawing.Size(979, 558);
             this.tlpControls.TabIndex = 2;
             // 
             // panel1
@@ -154,163 +159,8 @@
             this.panel1.Location = new System.Drawing.Point(0, 123);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(909, 5);
+            this.panel1.Size = new System.Drawing.Size(979, 5);
             this.panel1.TabIndex = 13;
-            // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.SteelBlue;
-            this.tlpControls.SetColumnSpan(this.pnlHeader, 3);
-            this.pnlHeader.Controls.Add(this.flowLayoutPanel1);
-            this.pnlHeader.Controls.Add(this.lblCoordinatorInfo);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(909, 44);
-            this.pnlHeader.TabIndex = 2;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.SteelBlue;
-            this.flowLayoutPanel1.Controls.Add(this.panel2);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(961, 44);
-            this.flowLayoutPanel1.TabIndex = 14;
-            // 
-            // lblMainLogo
-            // 
-            this.lblMainLogo.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblMainLogo.AutoSize = true;
-            this.lblMainLogo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMainLogo.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblMainLogo.Location = new System.Drawing.Point(34, -2);
-            this.lblMainLogo.Margin = new System.Windows.Forms.Padding(0);
-            this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(93, 45);
-            this.lblMainLogo.TabIndex = 0;
-            this.lblMainLogo.Text = "taskt";
-            this.lblMainLogo.Click += new System.EventHandler(this.lblMainLogo_Click);
-            // 
-            // lblCoordinatorInfo
-            // 
-            this.lblCoordinatorInfo.AutoSize = true;
-            this.lblCoordinatorInfo.BackColor = System.Drawing.Color.Transparent;
-            this.lblCoordinatorInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCoordinatorInfo.ForeColor = System.Drawing.Color.White;
-            this.lblCoordinatorInfo.Location = new System.Drawing.Point(228, 16);
-            this.lblCoordinatorInfo.Name = "lblCoordinatorInfo";
-            this.lblCoordinatorInfo.Size = new System.Drawing.Size(0, 20);
-            this.lblCoordinatorInfo.TabIndex = 3;
-            this.lblCoordinatorInfo.Visible = false;
-            // 
-            // pnlStatus
-            // 
-            this.pnlStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.tlpControls.SetColumnSpan(this.pnlStatus, 3);
-            this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlStatus.Location = new System.Drawing.Point(0, 527);
-            this.pnlStatus.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlStatus.Name = "pnlStatus";
-            this.pnlStatus.Size = new System.Drawing.Size(909, 31);
-            this.pnlStatus.TabIndex = 3;
-            this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
-            // 
-            // tmrNotify
-            // 
-            this.tmrNotify.Enabled = true;
-            this.tmrNotify.Interval = 500;
-            this.tmrNotify.Tick += new System.EventHandler(this.tmrNotify_Tick);
-            // 
-            // lstContextStrip
-            // 
-            this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstContextStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableSelectedCodeToolStripMenuItem,
-            this.disableSelectedCodeToolStripMenuItem,
-            this.pauseBeforeExecutionToolStripMenuItem,
-            this.copySelectedToolStripMenuItem,
-            this.pasteSelectedToolStripMenuItem});
-            this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(250, 124);
-            // 
-            // enableSelectedCodeToolStripMenuItem
-            // 
-            this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
-            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(249, 24);
-            this.enableSelectedCodeToolStripMenuItem.Text = "Enable Selected Code";
-            this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
-            // 
-            // disableSelectedCodeToolStripMenuItem
-            // 
-            this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
-            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(249, 24);
-            this.disableSelectedCodeToolStripMenuItem.Text = "Disable Selected Code";
-            this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
-            // 
-            // pauseBeforeExecutionToolStripMenuItem
-            // 
-            this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
-            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(249, 24);
-            this.pauseBeforeExecutionToolStripMenuItem.Text = "Pause Before Execution";
-            this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
-            // 
-            // copySelectedToolStripMenuItem
-            // 
-            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
-            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(249, 24);
-            this.copySelectedToolStripMenuItem.Text = "Copy Selected Action";
-            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
-            // 
-            // pasteSelectedToolStripMenuItem
-            // 
-            this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
-            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(249, 24);
-            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action";
-            this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::taskt.Properties.Resources.robot_source;
-            this.pictureBox2.Location = new System.Drawing.Point(2, 4);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pnlControlContainer
-            // 
-            this.pnlControlContainer.BackColor = System.Drawing.Color.SteelBlue;
-            this.pnlControlContainer.BackgroundImage = global::taskt.Properties.Resources.header_backing_dark;
-            this.tlpControls.SetColumnSpan(this.pnlControlContainer, 3);
-            this.pnlControlContainer.Controls.Add(this.grpSearch);
-            this.pnlControlContainer.Controls.Add(this.grpSaveClose);
-            this.pnlControlContainer.Controls.Add(this.grpFileActions);
-            this.pnlControlContainer.Controls.Add(this.grpRecordRun);
-            this.pnlControlContainer.Controls.Add(this.grpVariable);
-            this.pnlControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlControlContainer.Location = new System.Drawing.Point(0, 44);
-            this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlControlContainer.Name = "pnlControlContainer";
-            this.pnlControlContainer.Size = new System.Drawing.Size(909, 79);
-            this.pnlControlContainer.TabIndex = 7;
-            this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.pictureBox2);
-            this.panel2.Controls.Add(this.lblMainLogo);
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 44);
-            this.panel2.TabIndex = 2;
             // 
             // splitContainer1
             // 
@@ -330,7 +180,7 @@
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.splitContainer1.Panel2.Controls.Add(this.pnlCommandHelper);
             this.splitContainer1.Panel2.Controls.Add(this.lstScriptActions);
-            this.splitContainer1.Size = new System.Drawing.Size(903, 393);
+            this.splitContainer1.Size = new System.Drawing.Size(973, 393);
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -367,9 +217,8 @@
             this.pnlCommandHelper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCommandHelper.Location = new System.Drawing.Point(0, 0);
             this.pnlCommandHelper.Name = "pnlCommandHelper";
-            this.pnlCommandHelper.Size = new System.Drawing.Size(661, 393);
+            this.pnlCommandHelper.Size = new System.Drawing.Size(731, 393);
             this.pnlCommandHelper.TabIndex = 7;
-         
             // 
             // flwRecentFiles
             // 
@@ -533,27 +382,140 @@
             this.lstScriptActions.BackColor = System.Drawing.Color.WhiteSmoke;
             this.lstScriptActions.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lstScriptActions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
             this.commandColumn});
             this.lstScriptActions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstScriptActions.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstScriptActions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstScriptActions.FullRowSelect = true;
             this.lstScriptActions.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstScriptActions.Location = new System.Drawing.Point(0, 0);
+            this.lstScriptActions.Margin = new System.Windows.Forms.Padding(5);
             this.lstScriptActions.Name = "lstScriptActions";
-            this.lstScriptActions.Size = new System.Drawing.Size(661, 393);
+            this.lstScriptActions.OwnerDraw = true;
+            this.lstScriptActions.Size = new System.Drawing.Size(731, 393);
             this.lstScriptActions.TabIndex = 6;
             this.lstScriptActions.UseCompatibleStateImageBehavior = false;
             this.lstScriptActions.View = System.Windows.Forms.View.Details;
+            this.lstScriptActions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lstScriptActions_DrawSubItem);
             this.lstScriptActions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lstScriptActions_ItemDrag);
+            this.lstScriptActions.SelectedIndexChanged += new System.EventHandler(this.lstScriptActions_SelectedIndexChanged);
             this.lstScriptActions.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstScriptActions_DragDrop);
             this.lstScriptActions.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstScriptActions_DragEnter);
             this.lstScriptActions.DoubleClick += new System.EventHandler(this.lstScriptActions_DoubleClick);
             this.lstScriptActions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstScriptActions_KeyDown);
             this.lstScriptActions.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstScriptActions_MouseClick);
+            this.lstScriptActions.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lstScriptActions_MouseMove);
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 20;
             // 
             // commandColumn
             // 
             this.commandColumn.Text = "Script Commands";
-            this.commandColumn.Width = 771;
+            this.commandColumn.Width = 800;
+            // 
+            // pnlHeader
+            // 
+            this.pnlHeader.BackColor = System.Drawing.Color.SteelBlue;
+            this.tlpControls.SetColumnSpan(this.pnlHeader, 3);
+            this.pnlHeader.Controls.Add(this.flowLayoutPanel1);
+            this.pnlHeader.Controls.Add(this.lblCoordinatorInfo);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(979, 44);
+            this.pnlHeader.TabIndex = 2;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.flowLayoutPanel1.Controls.Add(this.panel2);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(961, 44);
+            this.flowLayoutPanel1.TabIndex = 14;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.pictureBox2);
+            this.panel2.Controls.Add(this.lblMainLogo);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(603, 44);
+            this.panel2.TabIndex = 2;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::taskt.Properties.Resources.robot_source;
+            this.pictureBox2.Location = new System.Drawing.Point(2, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // lblMainLogo
+            // 
+            this.lblMainLogo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblMainLogo.AutoSize = true;
+            this.lblMainLogo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMainLogo.ForeColor = System.Drawing.Color.AliceBlue;
+            this.lblMainLogo.Location = new System.Drawing.Point(34, -2);
+            this.lblMainLogo.Margin = new System.Windows.Forms.Padding(0);
+            this.lblMainLogo.Name = "lblMainLogo";
+            this.lblMainLogo.Size = new System.Drawing.Size(93, 45);
+            this.lblMainLogo.TabIndex = 0;
+            this.lblMainLogo.Text = "taskt";
+            this.lblMainLogo.Click += new System.EventHandler(this.lblMainLogo_Click);
+            // 
+            // lblCoordinatorInfo
+            // 
+            this.lblCoordinatorInfo.AutoSize = true;
+            this.lblCoordinatorInfo.BackColor = System.Drawing.Color.Transparent;
+            this.lblCoordinatorInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCoordinatorInfo.ForeColor = System.Drawing.Color.White;
+            this.lblCoordinatorInfo.Location = new System.Drawing.Point(228, 16);
+            this.lblCoordinatorInfo.Name = "lblCoordinatorInfo";
+            this.lblCoordinatorInfo.Size = new System.Drawing.Size(0, 20);
+            this.lblCoordinatorInfo.TabIndex = 3;
+            this.lblCoordinatorInfo.Visible = false;
+            // 
+            // pnlStatus
+            // 
+            this.pnlStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.tlpControls.SetColumnSpan(this.pnlStatus, 3);
+            this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlStatus.Location = new System.Drawing.Point(0, 527);
+            this.pnlStatus.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlStatus.Name = "pnlStatus";
+            this.pnlStatus.Size = new System.Drawing.Size(979, 31);
+            this.pnlStatus.TabIndex = 3;
+            this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
+            // 
+            // pnlControlContainer
+            // 
+            this.pnlControlContainer.BackColor = System.Drawing.Color.SteelBlue;
+            this.pnlControlContainer.BackgroundImage = global::taskt.Properties.Resources.header_backing_dark;
+            this.tlpControls.SetColumnSpan(this.pnlControlContainer, 3);
+            this.pnlControlContainer.Controls.Add(this.grpSearch);
+            this.pnlControlContainer.Controls.Add(this.grpSaveClose);
+            this.pnlControlContainer.Controls.Add(this.grpFileActions);
+            this.pnlControlContainer.Controls.Add(this.grpRecordRun);
+            this.pnlControlContainer.Controls.Add(this.grpVariable);
+            this.pnlControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlControlContainer.Location = new System.Drawing.Point(0, 44);
+            this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlControlContainer.Name = "pnlControlContainer";
+            this.pnlControlContainer.Size = new System.Drawing.Size(979, 79);
+            this.pnlControlContainer.TabIndex = 7;
+            this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
             // 
             // grpSearch
             // 
@@ -562,7 +524,7 @@
             this.grpSearch.Controls.Add(this.lblCurrentlyViewing);
             this.grpSearch.Controls.Add(this.lblTotalResults);
             this.grpSearch.Controls.Add(this.txtCommandSearch);
-            this.grpSearch.Location = new System.Drawing.Point(550, 5);
+            this.grpSearch.Location = new System.Drawing.Point(593, 6);
             this.grpSearch.Name = "grpSearch";
             this.grpSearch.Size = new System.Drawing.Size(198, 73);
             this.grpSearch.TabIndex = 20;
@@ -624,7 +586,7 @@
             this.grpSaveClose.BackColor = System.Drawing.Color.Transparent;
             this.grpSaveClose.Controls.Add(this.uiBtnKeep);
             this.grpSaveClose.Controls.Add(this.uiPictureButton3);
-            this.grpSaveClose.Location = new System.Drawing.Point(786, 3);
+            this.grpSaveClose.Location = new System.Drawing.Point(829, 4);
             this.grpSaveClose.Name = "grpSaveClose";
             this.grpSaveClose.Size = new System.Drawing.Size(114, 73);
             this.grpSaveClose.TabIndex = 19;
@@ -671,13 +633,14 @@
             // grpFileActions
             // 
             this.grpFileActions.BackColor = System.Drawing.Color.Transparent;
+            this.grpFileActions.Controls.Add(this.uiBtnImport);
             this.grpFileActions.Controls.Add(this.uiBtnSaveAs);
             this.grpFileActions.Controls.Add(this.uiBtnSave);
             this.grpFileActions.Controls.Add(this.uiBtnNew);
             this.grpFileActions.Controls.Add(this.uiBtnOpen);
             this.grpFileActions.Location = new System.Drawing.Point(2, 5);
             this.grpFileActions.Name = "grpFileActions";
-            this.grpFileActions.Size = new System.Drawing.Size(216, 73);
+            this.grpFileActions.Size = new System.Drawing.Size(255, 73);
             this.grpFileActions.TabIndex = 16;
             this.grpFileActions.TabStop = false;
             this.grpFileActions.Text = "File Actions";
@@ -685,6 +648,22 @@
             this.grpFileActions.TitleFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpFileActions.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpFileActions.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
+            // 
+            // uiBtnImport
+            // 
+            this.uiBtnImport.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnImport.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnImport.DisplayText = "Import";
+            this.uiBtnImport.DisplayTextBrush = System.Drawing.Color.AliceBlue;
+            this.uiBtnImport.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnImport.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.uiBtnImport.IsMouseOver = false;
+            this.uiBtnImport.Location = new System.Drawing.Point(100, 19);
+            this.uiBtnImport.Name = "uiBtnImport";
+            this.uiBtnImport.Size = new System.Drawing.Size(48, 50);
+            this.uiBtnImport.TabIndex = 14;
+            this.uiBtnImport.TabStop = false;
+            this.uiBtnImport.Click += new System.EventHandler(this.uiBtnImport_Click);
             // 
             // uiBtnSaveAs
             // 
@@ -695,7 +674,7 @@
             this.uiBtnSaveAs.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnSaveAs.Image = global::taskt.Properties.Resources.action_bar_save;
             this.uiBtnSaveAs.IsMouseOver = false;
-            this.uiBtnSaveAs.Location = new System.Drawing.Point(149, 19);
+            this.uiBtnSaveAs.Location = new System.Drawing.Point(198, 19);
             this.uiBtnSaveAs.Name = "uiBtnSaveAs";
             this.uiBtnSaveAs.Size = new System.Drawing.Size(48, 50);
             this.uiBtnSaveAs.TabIndex = 13;
@@ -711,7 +690,7 @@
             this.uiBtnSave.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnSave.Image = global::taskt.Properties.Resources.action_bar_save;
             this.uiBtnSave.IsMouseOver = false;
-            this.uiBtnSave.Location = new System.Drawing.Point(100, 19);
+            this.uiBtnSave.Location = new System.Drawing.Point(149, 19);
             this.uiBtnSave.Name = "uiBtnSave";
             this.uiBtnSave.Size = new System.Drawing.Size(48, 50);
             this.uiBtnSave.TabIndex = 11;
@@ -756,7 +735,7 @@
             this.grpRecordRun.Controls.Add(this.uiBtnRecordSequence);
             this.grpRecordRun.Controls.Add(this.uiBtnRunScript);
             this.grpRecordRun.Controls.Add(this.uiBtnScheduleManagement);
-            this.grpRecordRun.Location = new System.Drawing.Point(390, 5);
+            this.grpRecordRun.Location = new System.Drawing.Point(433, 6);
             this.grpRecordRun.Name = "grpRecordRun";
             this.grpRecordRun.Size = new System.Drawing.Size(162, 73);
             this.grpRecordRun.TabIndex = 18;
@@ -821,7 +800,7 @@
             this.grpVariable.Controls.Add(this.uiBtnClearAll);
             this.grpVariable.Controls.Add(this.uiBtnSettings);
             this.grpVariable.Controls.Add(this.uiBtnAddVariable);
-            this.grpVariable.Location = new System.Drawing.Point(214, 5);
+            this.grpVariable.Location = new System.Drawing.Point(257, 6);
             this.grpVariable.Name = "grpVariable";
             this.grpVariable.Size = new System.Drawing.Size(171, 73);
             this.grpVariable.TabIndex = 17;
@@ -880,11 +859,73 @@
             this.uiBtnAddVariable.TabStop = false;
             this.uiBtnAddVariable.Click += new System.EventHandler(this.uiBtnAddVariable_Click);
             // 
+            // tmrNotify
+            // 
+            this.tmrNotify.Enabled = true;
+            this.tmrNotify.Interval = 500;
+            this.tmrNotify.Tick += new System.EventHandler(this.tmrNotify_Tick);
+            // 
+            // lstContextStrip
+            // 
+            this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstContextStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableSelectedCodeToolStripMenuItem,
+            this.disableSelectedCodeToolStripMenuItem,
+            this.pauseBeforeExecutionToolStripMenuItem,
+            this.cutSelectedActionssToolStripMenuItem,
+            this.copySelectedToolStripMenuItem,
+            this.pasteSelectedToolStripMenuItem});
+            this.lstContextStrip.Name = "lstContextStrip";
+            this.lstContextStrip.Size = new System.Drawing.Size(254, 148);
+            // 
+            // enableSelectedCodeToolStripMenuItem
+            // 
+            this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
+            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.enableSelectedCodeToolStripMenuItem.Text = "Enable Selected Code";
+            this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
+            // 
+            // disableSelectedCodeToolStripMenuItem
+            // 
+            this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
+            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.disableSelectedCodeToolStripMenuItem.Text = "Disable Selected Code";
+            this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
+            // 
+            // pauseBeforeExecutionToolStripMenuItem
+            // 
+            this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
+            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.pauseBeforeExecutionToolStripMenuItem.Text = "Pause Before Execution";
+            this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
+            // 
+            // cutSelectedActionssToolStripMenuItem
+            // 
+            this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
+            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Actions(s)";
+            this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
+            // 
+            // copySelectedToolStripMenuItem
+            // 
+            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.copySelectedToolStripMenuItem.Text = "Copy Selected Action(s)";
+            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
+            // 
+            // pasteSelectedToolStripMenuItem
+            // 
+            this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
+            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s)";
+            this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(909, 558);
+            this.ClientSize = new System.Drawing.Size(979, 558);
             this.Controls.Add(this.tlpControls);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -894,14 +935,6 @@
             this.Shown += new System.EventHandler(this.frmScriptBuilder_Shown);
             this.SizeChanged += new System.EventHandler(this.frmScriptBuilder_SizeChanged);
             this.tlpControls.ResumeLayout(false);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.lstContextStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.pnlControlContainer.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -911,6 +944,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.pnlControlContainer.ResumeLayout(false);
             this.grpSearch.ResumeLayout(false);
             this.grpSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
@@ -918,6 +958,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).EndInit();
             this.grpFileActions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSaveAs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSave)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).EndInit();
@@ -930,6 +971,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).EndInit();
+            this.lstContextStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -991,6 +1033,10 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ToolStripMenuItem cutSelectedActionssToolStripMenuItem;
+        private CustomControls.UIPictureButton uiBtnImport;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 

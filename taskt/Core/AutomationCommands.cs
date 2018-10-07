@@ -30,6 +30,7 @@ using System.Drawing;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace taskt.Core.AutomationCommands
 {
@@ -43,6 +44,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(CommentCommand))]
     [XmlInclude(typeof(ThickAppClickItemCommand))]
     [XmlInclude(typeof(ThickAppGetTextCommand))]
+    [XmlInclude(typeof(UIAutomationCommand))]
     [XmlInclude(typeof(ResizeWindowCommand))]
     [XmlInclude(typeof(WaitForWindowCommand))]
     [XmlInclude(typeof(MessageBoxCommand))]
@@ -58,6 +60,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(IEBrowserFindBrowserCommand))]
     [XmlInclude(typeof(SetWindowStateCommand))]
     [XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
+    [XmlInclude(typeof(ExitLoopCommand))]
     [XmlInclude(typeof(EndLoopCommand))]
     [XmlInclude(typeof(ClipboardGetTextCommand))]
     [XmlInclude(typeof(ScreenshotCommand))]
@@ -96,6 +99,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(DatabaseRunQueryCommand))]
     [XmlInclude(typeof(BeginNumberOfTimesLoopCommand))]
     [XmlInclude(typeof(BeginListLoopCommand))]
+    [XmlInclude(typeof(BeginContinousLoopCommand))]
     [XmlInclude(typeof(SequenceCommand))]
     [XmlInclude(typeof(StopTaskCommand))]
     [XmlInclude(typeof(RunTaskCommand))]
@@ -110,6 +114,8 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(RegExExtractorCommand))]
     [XmlInclude(typeof(TextExtractorCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
+    [XmlInclude(typeof(LogDataCommand))]
+    [XmlInclude(typeof(StringReplaceCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -606,10 +612,15 @@ namespace taskt.Core.AutomationCommands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Instance Tracking (after task ends)")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Forget Instance")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Keep Instance Alive")]
+        public string v_InstanceTracking { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select a Window State")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Normal")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Maximize")]
-
         public string v_BrowserWindowOption { get; set; }
 
         public SeleniumBrowserCreateCommand()
@@ -625,9 +636,10 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources");
             OpenQA.Selenium.Chrome.ChromeDriverService driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-            //driverService.HideCommandPromptWindow = true;
-
+         
             var newSeleniumSession = new OpenQA.Selenium.Chrome.ChromeDriver(driverService, new OpenQA.Selenium.Chrome.ChromeOptions());
+
+            var instanceName = v_InstanceName.ConvertToUserVariable(sender);
 
             if (engine.AppInstances.ContainsKey(v_InstanceName))
             {
@@ -635,7 +647,16 @@ namespace taskt.Core.AutomationCommands
                 engine.AppInstances.Remove(v_InstanceName);
             }
 
+            //add to engine
             engine.AppInstances.Add(v_InstanceName, newSeleniumSession);
+
+
+
+            //handle app instance tracking
+            if (v_InstanceTracking == "Keep Instance Alive")
+            {
+                GlobalAppInstances.AddInstance(instanceName, newSeleniumSession);             
+            }
 
             //handle window type on startup - https://github.com/saucepleez/taskt/issues/22
             switch (v_BrowserWindowOption)
@@ -654,7 +675,7 @@ namespace taskt.Core.AutomationCommands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "', Instance Tracking: " + v_InstanceTracking + "]";
         }
     }
 
@@ -683,6 +704,7 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
+
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
@@ -878,6 +900,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
         public string v_SeleniumSearchType { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Parameter")]
@@ -1108,7 +1131,9 @@ namespace taskt.Core.AutomationCommands
                 case "Find Element By Class Name":
                     element = seleniumInstance.FindElementByClassName(v_SeleniumSearchParameter);
                     break;
-
+                case "Find Element By CSS Selector":
+                    element = seleniumInstance.FindElementByCssSelector(v_SeleniumSearchParameter);
+                    break;
                 default:
                     throw new Exception("Search Type was not found");
             }
@@ -1890,8 +1915,8 @@ namespace taskt.Core.AutomationCommands
                 activateWindow.RunCommand(sender);
             }
 
-            v_TextToSend = v_TextToSend.ConvertToUserVariable(sender);
-            System.Windows.Forms.SendKeys.SendWait(v_TextToSend);
+            string textToSend = v_TextToSend.ConvertToUserVariable(sender);
+            System.Windows.Forms.SendKeys.SendWait(textToSend);
 
             System.Threading.Thread.Sleep(500);
         }
@@ -1901,6 +1926,7 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Send '" + v_TextToSend + "' to '" + v_WindowName + "']";
         }
     }
+
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
     [Attributes.ClassAttributes.Description("Use this command to simulate mouse movement and click the mouse on coordinates.")]
@@ -1909,9 +1935,11 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the X position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         public int v_XMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         public int v_YMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
@@ -1993,10 +2021,6 @@ namespace taskt.Core.AutomationCommands
         }
     }
 
-
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
     [Attributes.ClassAttributes.Description("Use this command to simulate mouse click on coordinates.")]
@@ -2043,6 +2067,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_AutomationWindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Appropriate Item")]
@@ -2062,9 +2087,12 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+
+            var variableWindowName = v_AutomationWindowName.ConvertToUserVariable(sender);
+
             var searchItem = AutomationElement.RootElement.FindFirst
             (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
-            v_AutomationWindowName));
+            variableWindowName));
 
             if (searchItem == null)
             {
@@ -2076,7 +2104,7 @@ namespace taskt.Core.AutomationCommands
 
             var newActivateWindow = new ActivateWindowCommand
             {
-                v_WindowName = v_AutomationWindowName
+                v_WindowName = variableWindowName
             };
             newActivateWindow.RunCommand(sender);
 
@@ -2123,6 +2151,7 @@ namespace taskt.Core.AutomationCommands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
     public class ThickAppGetTextCommand : ScriptCommand
     {
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
         public string v_AutomationWindowName { get; set; }
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Appropriate Item")]
@@ -2141,9 +2170,11 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+            var variableWindowName = v_AutomationWindowName.ConvertToUserVariable(sender);
+
             var searchItem = AutomationElement.RootElement.FindFirst
             (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
-            v_AutomationWindowName));
+            variableWindowName));
 
             if (searchItem == null)
             {
@@ -2177,6 +2208,260 @@ namespace taskt.Core.AutomationCommands
         }
     }
 
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Description("This command gets text from a Thick Application window and assigns it to a variable.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
+    public class UIAutomationCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the action")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Click Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
+        public string v_AutomationType { get; set; }
+
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
+        public string v_WindowName { get; set; }
+
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder)]
+        [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
+        public DataTable v_UIASearchParameters { get; set; }
+
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyDescription("Set Action Parameters")]
+        public DataTable v_UIAActionParameters { get; set; }
+
+        public UIAutomationCommand()
+        {
+            this.CommandName = "UIAutomationCommand";
+            this.SelectionName = "UI Automation";
+            this.CommandEnabled = true;
+
+            //set up search parameter table
+            this.v_UIASearchParameters = new DataTable();
+            this.v_UIASearchParameters.Columns.Add("Enabled");
+            this.v_UIASearchParameters.Columns.Add("Parameter Name");
+            this.v_UIASearchParameters.Columns.Add("Parameter Value");
+            this.v_UIASearchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+
+            this.v_UIAActionParameters = new DataTable();
+            this.v_UIAActionParameters.Columns.Add("Parameter Name");
+            this.v_UIAActionParameters.Columns.Add("Parameter Value");
+            this.v_UIAActionParameters.TableName = DateTime.Now.ToString("UIAActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+
+        }
+
+        public PropertyCondition CreatePropertyCondition(string propertyName, string propertyValue)
+        {
+            string propName = propertyName + "Property";
+
+            switch (propertyName)
+            {
+                case "AcceleratorKey":
+                    return new PropertyCondition(AutomationElement.AcceleratorKeyProperty, propertyValue);
+                case "AccessKey":
+                    return new PropertyCondition(AutomationElement.AccessKeyProperty, propertyValue);
+                case "AutomationId":
+                    return new PropertyCondition(AutomationElement.AutomationIdProperty, propertyValue);
+                case "ClassName":
+                    return new PropertyCondition(AutomationElement.ClassNameProperty, propertyValue);
+                case "FrameworkId":
+                    return new PropertyCondition(AutomationElement.FrameworkIdProperty, propertyValue);
+                case "HasKeyboardFocus":
+                    return new PropertyCondition(AutomationElement.HasKeyboardFocusProperty, propertyValue);
+                case "HelpText":
+                    return new PropertyCondition(AutomationElement.HelpTextProperty, propertyValue);
+                case "IsContentElement":
+                    return new PropertyCondition(AutomationElement.IsContentElementProperty, propertyValue);
+                case "IsControlElement":
+                    return new PropertyCondition(AutomationElement.IsControlElementProperty, propertyValue);
+                case "IsEnabled":
+                    return new PropertyCondition(AutomationElement.IsEnabledProperty, propertyValue);
+                case "IsKeyboardFocusable":
+                    return new PropertyCondition(AutomationElement.IsKeyboardFocusableProperty, propertyValue);
+                case "IsOffscreen":
+                    return new PropertyCondition(AutomationElement.IsOffscreenProperty, propertyValue);
+                case "IsPassword":
+                    return new PropertyCondition(AutomationElement.IsPasswordProperty, propertyValue);
+                case "IsRequiredForForm":
+                    return new PropertyCondition(AutomationElement.IsRequiredForFormProperty, propertyValue);
+                case "ItemStatus":
+                    return new PropertyCondition(AutomationElement.ItemStatusProperty, propertyValue);
+                case "ItemType":
+                    return new PropertyCondition(AutomationElement.ItemTypeProperty, propertyValue);
+                case "LocalizedControlType":
+                    return new PropertyCondition(AutomationElement.LocalizedControlTypeProperty, propertyValue);
+                case "Name":
+                    return new PropertyCondition(AutomationElement.NameProperty, propertyValue);
+                case "NativeWindowHandle":
+                    return new PropertyCondition(AutomationElement.NativeWindowHandleProperty, propertyValue);
+                case "ProcessID":
+                    return new PropertyCondition(AutomationElement.ProcessIdProperty, propertyValue);
+                default:
+                    throw new NotImplementedException("Property Type '" + propertyName + "' not implemented");
+            }
+
+
+       
+
+
+        }
+   
+        public override void RunCommand(object sender)
+        {
+
+            //create variable window name
+            var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
+
+            //create search params
+            var searchParams = from rw in v_UIASearchParameters.AsEnumerable()
+                               where rw.Field<string>("Enabled") == "True"
+                               select rw;
+
+            //create and populate condition list
+            var conditionList = new List<Condition>();
+            foreach (var param in searchParams)
+            {
+              var parameterName =  (string)param["Parameter Name"];
+              var parameterValue = (string)param["Parameter Value"];
+
+                parameterName = parameterName.ConvertToUserVariable(sender);
+                parameterValue = parameterValue.ConvertToUserVariable(sender);
+
+                var propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                conditionList.Add(propCondition);
+            }
+
+            //concatenate or take first condition
+            Condition searchConditions;
+            if (conditionList.Count > 1)
+            {
+                 searchConditions = new AndCondition(conditionList.ToArray());
+
+            }
+            else
+            {
+                searchConditions = conditionList[0];
+            }
+  
+            //find window
+            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
+
+            //if window was not found
+            if (windowElement == null)
+                throw new Exception("Window named '" + variableWindowName + "' was not found!");
+
+            //find required handle based on specified conditions
+            var requiredHandle = windowElement.FindFirst(TreeScope.Descendants, searchConditions);
+
+            //if handle was not found
+            if (requiredHandle == null)
+                throw new Exception("Element was not found in window '" + variableWindowName + "'");
+
+            //determine element click type
+            if (v_AutomationType == "Click Element")
+            {
+
+                //create search params
+                var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Click Type"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //get x adjust
+                var xAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "X Adjustment"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //get y adjust
+                var yAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+                               where rw.Field<string>("Parameter Name") == "Y Adjustment"
+                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //convert potential variable
+                var xAdjustVariable = xAdjust.ConvertToUserVariable(sender);
+                var yAdjustVariable = yAdjust.ConvertToUserVariable(sender);
+
+                //parse to int
+                var xAdjustInt = int.Parse(xAdjustVariable);
+                var yAdjustInt = int.Parse(yAdjustVariable);
+
+                //get clickable point
+                var newPoint = requiredHandle.GetClickablePoint();
+
+                //send mousemove command
+                var newMouseMove = new SendMouseMoveCommand
+                {
+                    v_XMousePosition = (int)newPoint.X + xAdjustInt,
+                    v_YMousePosition = (int)newPoint.Y + yAdjustInt,
+                    v_MouseClick = clickType
+                };
+
+                //run commands
+                newMouseMove.RunCommand(sender);
+            }
+            else if (v_AutomationType == "Get Value From Element")
+            {
+                //get value from property
+                var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "Get Value From"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //remove brackets from variable
+                applyToVariable = applyToVariable.Replace("[", "").Replace("]", "");
+
+                //get required value
+                var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
+
+                //store into variable
+                requiredValue.StoreInUserVariable(sender, applyToVariable);
+      
+            }
+            else
+            {
+                throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
+            }
+
+       
+        }
+
+       
+        public override string GetDisplayValue()
+        {
+            if (v_AutomationType == "Click Element")
+            {
+                //create search params
+                var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "Click Type"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+                return base.GetDisplayValue() + " [" + clickType + " element in window '" + v_WindowName + "']";
+            }
+            else
+            {
+                //get value from property
+                var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
+                                    where rw.Field<string>("Parameter Name") == "Get Value From"
+                                    select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                return base.GetDisplayValue() + " [Get value from '" + propertyName + "' in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+            }
+
+
+
+        }
+    }
     #endregion Input Commands
 
     #region Database Commands
@@ -2231,7 +2516,55 @@ namespace taskt.Core.AutomationCommands
     #endregion
 
     #region Loop Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Loop Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to repeat actions continuously.  Any 'Begin Loop' command must have a following 'End Loop' command.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
+    public class BeginContinousLoopCommand : ScriptCommand
+    {
 
+        public BeginContinousLoopCommand()
+        {
+            this.CommandName = "BeginContinousLoopCommand";
+            this.SelectionName = "Loop Continuously";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        {
+            Core.AutomationCommands.BeginContinousLoopCommand loopCommand = (Core.AutomationCommands.BeginContinousLoopCommand)parentCommand.ScriptCommand;
+
+            var engine = (Core.AutomationEngineInstance)sender;
+
+
+            engine.ReportProgress("Starting Continous Loop From Line " + loopCommand.LineNumber);
+
+            while (true)
+            {
+       
+
+                foreach (var cmd in parentCommand.AdditionalScriptCommands)
+                {
+                    if (engine.IsCancellationPending)
+                        return;
+
+                    engine.ExecuteCommand(cmd);
+
+                    if (engine.CurrentLoopCancelled)
+                    {
+                        engine.ReportProgress("Exiting Loop From Line " + loopCommand.LineNumber);
+                        engine.CurrentLoopCancelled = false;
+                        return;
+                    }
+                }
+            }
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue();
+        }
+    }
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
@@ -2275,7 +2608,16 @@ namespace taskt.Core.AutomationCommands
                 {
                     if (engine.IsCancellationPending)
                         return;
+
                     engine.ExecuteCommand(cmd);
+
+                    if (engine.CurrentLoopCancelled)
+                    {
+                        engine.ReportProgress("Exiting Loop From Line " + loopCommand.LineNumber);
+                        engine.CurrentLoopCancelled = false;
+                        return;
+                    }
+                    
                 }
 
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
@@ -2442,7 +2784,25 @@ namespace taskt.Core.AutomationCommands
             return "End Loop";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Loop Commands")]
+    [Attributes.ClassAttributes.Description("This command signifies the current loop should exit and resume work past the point of the current loop.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command is used by the engine to exit a loop")]
+    public class ExitLoopCommand : ScriptCommand
+    {
+        public ExitLoopCommand()
+        {
+            this.DefaultPause = 0;
+            this.CommandName = "ExitLoopCommand";
+            this.SelectionName = "Exit Loop";
+            this.CommandEnabled = true;
+        }
 
+        public override string GetDisplayValue()
+        {
+            return "Exit Loop";
+        }
+    }
     #endregion Loop Commands
 
     #region Excel Commands
@@ -3226,6 +3586,9 @@ namespace taskt.Core.AutomationCommands
             //get formatting
             var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
 
+           var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
+
+             
             string formattedString = "";
             switch (v_FormatType)
             {
@@ -3251,7 +3614,7 @@ namespace taskt.Core.AutomationCommands
             }
             else
             {
-                formattedString.StoreInUserVariable(sender, v_applyToVariableName);
+                formattedString.StoreInUserVariable(sender, "");
             }
 
           
@@ -3370,6 +3733,58 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Split '" + v_userVariableName + "' by '" + v_splitCharacter + "' and apply to '" + v_applyConvertToUserVariableName + "']";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to replace text within a string")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
+    public class StringReplaceCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify")]
+        public string v_userVariableName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("indicate the text to be replaced")]
+        public string v_replacementText { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("indicate the replacement value")]
+        public string v_replacementValue { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
+        public string v_applyToVariableName { get; set; }
+        public StringReplaceCommand()
+        {
+            this.CommandName = "StringReplaceCommand";
+            this.SelectionName = "Replace";
+            this.CommandEnabled = true;
+   
+        }
+        public override void RunCommand(object sender)
+        {
+            //get full text
+            string replacementVariable = v_userVariableName.ConvertToUserVariable(sender);
+
+            //get replacement text and value
+            string replacementText = v_replacementText.ConvertToUserVariable(sender);
+            string replacementValue = v_replacementValue.ConvertToUserVariable(sender);
+
+            //perform replacement
+            replacementVariable = replacementVariable.Replace(replacementText, replacementValue);
+
+            //store in variable
+            replacementVariable.StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Replace '" + v_replacementText + "' with '" + v_replacementValue + "', apply to '" + v_userVariableName + "']";
+        }
+    }
+
+
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string formatting using RegEx.")]
@@ -3592,7 +4007,73 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time in milliseconds.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    public class LogDataCommand : ScriptCommand
+    {
 
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Select existing log file or enter a custom name.")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Logs")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_LogFile { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the text to log.")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_LogText { get; set; }
+
+        public LogDataCommand()
+        {
+            this.CommandName = "LogDataCommand";
+            this.SelectionName = "Log Data";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get text to log and log file name       
+            var textToLog = v_LogText.ConvertToUserVariable(sender);
+            var logFile = v_LogFile.ConvertToUserVariable(sender);
+
+            //determine log file
+            if (v_LogFile == "Engine Logs")
+            {
+                //log to the standard engine logs
+                var engine = (Core.AutomationEngineInstance)sender;
+                engine.engineLogger.Information(textToLog);
+            }
+            else
+            {
+                //create new logger and log to custom file
+                using (var logger = new Core.Logging().CreateLogger(logFile, Serilog.RollingInterval.Infinite))
+                {
+                    logger.Information(textToLog);
+                }
+            }
+
+           
+        }
+
+        public override string GetDisplayValue()
+        {
+            string logFileName;
+            if (v_LogFile == "Engine Logs")
+            {
+                logFileName = "taskt Engine Logs.txt";
+            }
+            else
+            {
+                logFileName = "taskt " + v_LogFile + " Logs.txt";
+            }
+
+
+            return base.GetDisplayValue() + " [Write Log to 'taskt\\Logs\\" + logFileName + "']";
+        }
+    }
 
     #endregion Data Commands
 
@@ -3612,6 +4093,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Folder Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Web Element Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
         public string v_IfActionType { get; set; }
 
         [XmlElement]
@@ -3697,6 +4179,36 @@ namespace taskt.Core.AutomationCommands
                         break;
                 }
             }
+            else if (v_IfActionType == "Error Occured")
+            {
+                //get line number
+                string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Line Number"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                //convert to variable
+                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+                //convert to int
+                int lineNumber = int.Parse(variableLineNumber);
+
+                //determine if error happened
+               if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
+                {
+
+                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
+                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
+                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
+
+                    ifResult = true;
+                }
+               else
+                {
+                    ifResult = false;
+                }
+
+            }
             else if (v_IfActionType == "Window Name Exists")
             {
                 //get user supplied name
@@ -3738,12 +4250,12 @@ namespace taskt.Core.AutomationCommands
             {
 
                 string fileName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "File Path"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                    where rw.Field<string>("Parameter Name") == "File Path"
+                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "True When"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                              where rw.Field<string>("Parameter Name") == "True When"
+                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 var userFileSelected = fileName.ConvertToUserVariable(sender);
 
@@ -3764,8 +4276,8 @@ namespace taskt.Core.AutomationCommands
             else if (v_IfActionType == "Folder Exists")
             {
                 string folderName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "Folder Path"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                      where rw.Field<string>("Parameter Name") == "Folder Path"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                               where rw.Field<string>("Parameter Name") == "True When"
@@ -3784,9 +4296,9 @@ namespace taskt.Core.AutomationCommands
                 {
                     ifResult = true;
                 }
-    
+
             }
-            else if(v_IfActionType == "Web Element Exists")
+            else if (v_IfActionType == "Web Element Exists")
             {
                 string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                          where rw.Field<string>("Parameter Name") == "Element Search Parameter"
@@ -3799,7 +4311,7 @@ namespace taskt.Core.AutomationCommands
                 SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
                 bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
                 ifResult = elementExists;
-              
+
             }
             else
             {
@@ -3836,8 +4348,9 @@ namespace taskt.Core.AutomationCommands
 
                 for (int i = startIndex; i < endIndex; i++)
                 {
-                    if (engine.IsCancellationPending)
+                    if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled))
                         return;
+
                     engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
                 }
             
@@ -3865,6 +4378,13 @@ namespace taskt.Core.AutomationCommands
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (" + value1 + " " + operand + " " + value2 + ")";
+                case "Error Occured":
+
+                    string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Line Number"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If (Error Occured on Line Number " + lineNumber + ")";
                 case "Window Name Exists":
                 case "Active Window Name Is":
 

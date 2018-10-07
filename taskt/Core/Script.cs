@@ -73,7 +73,7 @@ namespace taskt.Core.Script
                 var command = (Core.AutomationCommands.ScriptCommand)commandItem.Tag;
                 command.LineNumber = lineNumber;
 
-                if ((command is Core.AutomationCommands.BeginNumberOfTimesLoopCommand) || (command is Core.AutomationCommands.BeginListLoopCommand) || (command is Core.AutomationCommands.BeginIfCommand) || (command is Core.AutomationCommands.BeginExcelDatasetLoopCommand))
+                if ((command is Core.AutomationCommands.BeginNumberOfTimesLoopCommand) || (command is Core.AutomationCommands.BeginContinousLoopCommand) || (command is Core.AutomationCommands.BeginListLoopCommand) || (command is Core.AutomationCommands.BeginIfCommand) || (command is Core.AutomationCommands.BeginExcelDatasetLoopCommand))
                 {
                     if (subCommands.Count == 0)  //if this is the first loop
                     {

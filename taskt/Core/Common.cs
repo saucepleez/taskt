@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -115,6 +116,9 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Message", VariableValue = "An Error Occured!" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Line", VariableValue = "1" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "An Error Occured + StackTrace" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
@@ -140,6 +144,25 @@ namespace taskt.Core
             ms.Write(imageBytes, 0, imageBytes.Length);
             System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
             return image;
+        }
+
+        public static List<string> GetAvailableWindowNames()
+        {
+            List<string> windowList = new List<string>();
+            //get all running processes
+            Process[] processlist = Process.GetProcesses();
+            //pull the main window title for each
+            foreach (Process process in processlist)
+            {
+                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                {
+                    //add to the control list of available windows
+                    windowList.Add(process.MainWindowTitle);
+                }
+            }
+            windowList.Sort();
+
+            return windowList;
         }
 
     }

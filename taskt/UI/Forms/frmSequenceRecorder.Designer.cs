@@ -99,13 +99,13 @@
             // 
             this.lblRecording.AutoSize = true;
             this.lblRecording.BackColor = System.Drawing.Color.Transparent;
-            this.lblRecording.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecording.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecording.ForeColor = System.Drawing.Color.DarkOrange;
             this.lblRecording.Location = new System.Drawing.Point(12, 9);
             this.lblRecording.Name = "lblRecording";
-            this.lblRecording.Size = new System.Drawing.Size(505, 45);
+            this.lblRecording.Size = new System.Drawing.Size(531, 37);
             this.lblRecording.TabIndex = 6;
-            this.lblRecording.Text = "Press \'END\' Key to stop recording!";
+            this.lblRecording.Text = "Press \'PAUSE/BREAK\' Key to stop recording!";
             this.lblRecording.Visible = false;
             // 
             // pnlOptions
@@ -301,7 +301,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 1000;
-            this.ClientSize = new System.Drawing.Size(527, 393);
+            this.ClientSize = new System.Drawing.Size(556, 393);
             this.Controls.Add(this.uiBtnRecord);
             this.Controls.Add(this.pnlOptions);
             this.Controls.Add(this.lblRecording);

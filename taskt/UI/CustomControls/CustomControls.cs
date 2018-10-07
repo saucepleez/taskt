@@ -204,6 +204,22 @@ namespace taskt.UI.CustomControls
         {
             this.DoubleBuffered = true;
         }
+        public event ScrollEventHandler Scroll;
+        protected virtual void OnScroll(ScrollEventArgs e)
+        {
+            ScrollEventHandler handler = this.Scroll;
+            if (handler != null) handler(this, e);
+        }
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == 0x115)
+            { // Trap WM_VSCROLL
+                OnScroll(new ScrollEventArgs((ScrollEventType)(m.WParam.ToInt32() & 0xffff), 0));
+            }
+        }
+
+
     }
 
     public class UISplitContainer : SplitContainer
@@ -281,6 +297,7 @@ namespace taskt.UI
             uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
             uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("UIAutomationCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
             uiImages.Add("ResizeWindowCommand", taskt.Properties.Resources.command_window);
@@ -333,6 +350,7 @@ namespace taskt.UI
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
             uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
+            uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("BeginIfCommand", taskt.Properties.Resources.command_begin_if);
             uiImages.Add("EndIfCommand", taskt.Properties.Resources.command_end_if);
             uiImages.Add("ElseCommand", taskt.Properties.Resources.command_else);
@@ -342,8 +360,10 @@ namespace taskt.UI
             uiImages.Add("HTTPRequestCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("HTTPQueryResultCommand", taskt.Properties.Resources.command_search);
             uiImages.Add("BeginListLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginContinousLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("ExitLoopCommand", taskt.Properties.Resources.command_exitloop);
             uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
             uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("WriteTextFileCommand", taskt.Properties.Resources.command_files);
@@ -351,6 +371,7 @@ namespace taskt.UI
             uiImages.Add("DeleteFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("RenameFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
             return uiImages;
         }
         public static ImageList UIImageList()

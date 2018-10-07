@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vStringValue" v_Input="HELLO WORLD!" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StringReplaceCommand" CommandName="StringReplaceCommand" IsCommented="false" SelectionName="Replace String" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vStringValue" v_replacementText="L" v_replacementValue="1" v_applyToVariableName="vStringValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vStringValue]" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vStringValue</VariableName>
+      <VariableValue xsi:type="xsd:string">HELLO!</VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

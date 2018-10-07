@@ -63,7 +63,7 @@ namespace taskt.UI.Forms
             var clientSettings = newAppSettings.ClientSettings;
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAppFolderPath.DataBindings.Add("Text", clientSettings, "RootFolder", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics
             bgwMetrics.RunWorkerAsync();

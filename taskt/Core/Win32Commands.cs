@@ -55,6 +55,9 @@ namespace taskt.Core.AutomationCommands
             return hWnd;
         }
 
+        [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
+        public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+
         [DllImport("User32.dll", EntryPoint = "SetForegroundWindow")]
         private static extern IntPtr SetForegroundWindowNative(IntPtr hWnd);
         public static void SetForegroundWindow(IntPtr hWnd)
@@ -274,6 +277,12 @@ namespace taskt.Core.AutomationCommands
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern IntPtr GetDesktopWindow();
 
+        private delegate bool EnumWindowProc(IntPtr hwnd, IntPtr lParam);
+
+        [DllImport("user32")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);
+
         public static Bitmap CaptureWindow(string windowName)
         {
             IntPtr hWnd;
@@ -311,6 +320,7 @@ namespace taskt.Core.AutomationCommands
             private const int WM_KEYDOWN = 0x0100;
             private static readonly LowLevelKeyboardProc _kbProc = KeyboardHookEvent;
             private static readonly LowLevelMouseProc _mouseProc = MouseHookEvent;
+            private static readonly LowLevelMouseProc _mouseLeftUpProc = MouseHookForLeftClickUpEvent;
             private static IntPtr _keyboardHookID = IntPtr.Zero;
             private static IntPtr _mouseHookID = IntPtr.Zero;
             private static Stopwatch sw;
@@ -335,8 +345,12 @@ namespace taskt.Core.AutomationCommands
                 //set hook for engine cancellation
                 _keyboardHookID = SetKeyboardHook(_kbProc);
             }
+            public static void StartElementCaptureHook()
+            {
+                //set hook for engine cancellation
+                _mouseHookID = SetMouseHook(_mouseLeftUpProc);
+            }
 
-       
             public static void StartScreenRecordingHook(bool captureClick, bool captureMouse, bool groupMouseMoves, bool captureKeyboard, bool captureWindow, bool activateTopLeft, bool trackActivatedWindowSize, bool trackWindowsOpenLocation, int eventResolution)
             {
                 //create new list for commands generated
@@ -412,6 +426,30 @@ namespace taskt.Core.AutomationCommands
                 return CallNextHookEx(_keyboardHookID, nCode, wParam, lParam);
 
             }
+            public static event EventHandler<MouseCoordinateEventArgs> MouseEvent;
+            private static IntPtr MouseHookForLeftClickUpEvent(int nCode, IntPtr wParam, IntPtr lParam)
+
+            {
+
+                if (nCode >= 0)
+                {
+                    var message = (MouseMessages)wParam;
+
+                    if (message == MouseMessages.WM_LBUTTONDOWN)
+                    {
+                        UnhookWindowsHookEx(_mouseHookID);
+
+                        MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                        System.Windows.Point point = new System.Windows.Point(hookStruct.pt.x, hookStruct.pt.y);
+                        MouseEvent?.Invoke(null, new MouseCoordinateEventArgs() { MouseCoordinates = point });
+                    }
+
+                }
+
+                return CallNextHookEx(_mouseHookID, nCode, wParam, lParam);
+
+            }
+
             private static IntPtr MouseHookEvent(int nCode, IntPtr wParam, IntPtr lParam)
 
             {
@@ -856,6 +894,9 @@ namespace taskt.Core.AutomationCommands
             [DllImport("user32.dll")]
             static extern IntPtr WindowFromPoint(POINT Point);
 
+            [DllImport("user32.dll")]
+            static extern IntPtr ChildWindowFromPoint(IntPtr hWndParent, POINT Point);
+
             [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             public static extern int ToUnicode(uint virtualKeyCode,uint scanCode, byte[] keyboardState, StringBuilder receivingBuffer, int bufferSize, uint flags);
 
@@ -953,5 +994,59 @@ namespace taskt.Core.AutomationCommands
         }
 
       
+    }
+    public class WindowHandleInfo
+    {
+        private delegate bool EnumWindowProc(IntPtr hwnd, IntPtr lParam);
+
+        [DllImport("user32")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);
+
+        private IntPtr _MainHandle;
+
+        public WindowHandleInfo(IntPtr handle)
+        {
+            this._MainHandle = handle;
+        }
+
+        public List<IntPtr> GetAllChildHandles()
+        {
+            List<IntPtr> childHandles = new List<IntPtr>();
+
+            GCHandle gcChildhandlesList = GCHandle.Alloc(childHandles);
+            IntPtr pointerChildHandlesList = GCHandle.ToIntPtr(gcChildhandlesList);
+
+            try
+            {
+                EnumWindowProc childProc = new EnumWindowProc(EnumWindow);
+                EnumChildWindows(this._MainHandle, childProc, pointerChildHandlesList);
+            }
+            finally
+            {
+                gcChildhandlesList.Free();
+            }
+
+            return childHandles;
+        }
+
+        private bool EnumWindow(IntPtr hWnd, IntPtr lParam)
+        {
+            GCHandle gcChildhandlesList = GCHandle.FromIntPtr(lParam);
+
+            if (gcChildhandlesList == null || gcChildhandlesList.Target == null)
+            {
+                return false;
+            }
+
+            List<IntPtr> childHandles = gcChildhandlesList.Target as List<IntPtr>;
+            childHandles.Add(hWnd);
+
+            return true;
+        }
+    }
+    public class MouseCoordinateEventArgs : EventArgs
+    {
+        public System.Windows.Point MouseCoordinates { get; set; }
     }
 }

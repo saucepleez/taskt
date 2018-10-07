@@ -141,6 +141,7 @@
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation Command Attributes\Automation Command Attributes.cs" />
     <Compile Include="Core\AutomationCommands.cs" />
+    <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />
@@ -203,6 +204,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.Designer.cs">
+      <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
       <SubType>Form</SubType>
@@ -332,6 +339,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.resx">
+      <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
       <DependentUpon>frmVariableSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -377,6 +387,7 @@
     <None Include="Resources\robot-error.png" />
     <None Include="Resources\robot-error1.png" />
     <None Include="Resources\robot source.png" />
+    <None Include="Resources\command-exitloop.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
