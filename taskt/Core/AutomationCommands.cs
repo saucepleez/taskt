@@ -4093,6 +4093,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Folder Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Web Element Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
         public string v_IfActionType { get; set; }
 
         [XmlElement]
@@ -4178,6 +4179,36 @@ namespace taskt.Core.AutomationCommands
                         break;
                 }
             }
+            else if (v_IfActionType == "Error Occured")
+            {
+                //get line number
+                string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Line Number"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                //convert to variable
+                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+                //convert to int
+                int lineNumber = int.Parse(variableLineNumber);
+
+                //determine if error happened
+               if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
+                {
+
+                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
+                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
+                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
+
+                    ifResult = true;
+                }
+               else
+                {
+                    ifResult = false;
+                }
+
+            }
             else if (v_IfActionType == "Window Name Exists")
             {
                 //get user supplied name
@@ -4219,12 +4250,12 @@ namespace taskt.Core.AutomationCommands
             {
 
                 string fileName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "File Path"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                    where rw.Field<string>("Parameter Name") == "File Path"
+                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "True When"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                              where rw.Field<string>("Parameter Name") == "True When"
+                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 var userFileSelected = fileName.ConvertToUserVariable(sender);
 
@@ -4245,8 +4276,8 @@ namespace taskt.Core.AutomationCommands
             else if (v_IfActionType == "Folder Exists")
             {
                 string folderName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "Folder Path"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                      where rw.Field<string>("Parameter Name") == "Folder Path"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                               where rw.Field<string>("Parameter Name") == "True When"
@@ -4265,9 +4296,9 @@ namespace taskt.Core.AutomationCommands
                 {
                     ifResult = true;
                 }
-    
+
             }
-            else if(v_IfActionType == "Web Element Exists")
+            else if (v_IfActionType == "Web Element Exists")
             {
                 string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                          where rw.Field<string>("Parameter Name") == "Element Search Parameter"
@@ -4280,7 +4311,7 @@ namespace taskt.Core.AutomationCommands
                 SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
                 bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
                 ifResult = elementExists;
-              
+
             }
             else
             {
@@ -4347,6 +4378,13 @@ namespace taskt.Core.AutomationCommands
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (" + value1 + " " + operand + " " + value2 + ")";
+                case "Error Occured":
+
+                    string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Line Number"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If (Error Occured on Line Number " + lineNumber + ")";
                 case "Window Name Exists":
                 case "Active Window Name Is":
 

@@ -116,6 +116,9 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Message", VariableValue = "An Error Occured!" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Line", VariableValue = "1" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "An Error Occured + StackTrace" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });

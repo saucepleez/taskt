@@ -14,6 +14,7 @@ namespace taskt.Core
         public List<Core.Script.ScriptVariable> VariableList { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
         public Core.AutomationCommands.ErrorHandlingCommand ErrorHandler;
+        public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
         private bool IsScriptPaused { get; set; }
@@ -33,6 +34,9 @@ namespace taskt.Core
             //initialize logger
             engineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
             engineLogger.Information("Engine Class has been initialized");
+
+            //initialize error tracking list
+            ErrorsOccured = new List<ScriptError>();
 
             //set to initialized
             CurrentStatus = EngineStatus.Loaded;
@@ -208,7 +212,8 @@ namespace taskt.Core
             }
             catch (Exception ex)
             {
-              
+                ErrorsOccured.Add(new ScriptError() { LineNumber = parentCommand.LineNumber, ErrorMessage = ex.Message, StackTrace = ex.ToString() });
+
                 //error occuured so decide what user selected
                 if (ErrorHandler != null)
                 {
@@ -326,4 +331,13 @@ namespace taskt.Core
     {
        public int CurrentLineNumber { get; set; }
     }
+
+    public class ScriptError
+    {
+        public int LineNumber { get; set; }
+        public string StackTrace { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+
+
 }
