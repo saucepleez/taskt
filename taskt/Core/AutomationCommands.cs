@@ -30,6 +30,7 @@ using System.Drawing;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace taskt.Core.AutomationCommands
 {
@@ -2220,12 +2221,13 @@ namespace taskt.Core.AutomationCommands
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
-        public string v_AutomationWindowName { get; set; }
+        public string v_WindowName { get; set; }
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder)]
         [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
         public DataTable v_UIASearchParameters { get; set; }
 
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Set Action Parameters")]
         public DataTable v_UIAActionParameters { get; set; }
 
@@ -2238,39 +2240,225 @@ namespace taskt.Core.AutomationCommands
             //set up search parameter table
             this.v_UIASearchParameters = new DataTable();
             this.v_UIASearchParameters.Columns.Add("Enabled");
-            this.v_UIASearchParameters.Columns.Add("Property Name");
-            this.v_UIASearchParameters.Columns.Add("Property Value");
-            this.v_UIASearchParameters.TableName = DateTime.Now.ToString("ThickAppSearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+            this.v_UIASearchParameters.Columns.Add("Parameter Name");
+            this.v_UIASearchParameters.Columns.Add("Parameter Value");
+            this.v_UIASearchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+
+            this.v_UIAActionParameters = new DataTable();
+            this.v_UIAActionParameters.Columns.Add("Parameter Name");
+            this.v_UIAActionParameters.Columns.Add("Parameter Value");
+            this.v_UIAActionParameters.TableName = DateTime.Now.ToString("UIAActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
         }
 
+        public PropertyCondition CreatePropertyCondition(string propertyName, string propertyValue)
+        {
+            string propName = propertyName + "Property";
+
+            switch (propertyName)
+            {
+                case "AcceleratorKey":
+                    return new PropertyCondition(AutomationElement.AcceleratorKeyProperty, propertyValue);
+                case "AccessKey":
+                    return new PropertyCondition(AutomationElement.AccessKeyProperty, propertyValue);
+                case "AutomationId":
+                    return new PropertyCondition(AutomationElement.AutomationIdProperty, propertyValue);
+                case "ClassName":
+                    return new PropertyCondition(AutomationElement.ClassNameProperty, propertyValue);
+                case "FrameworkId":
+                    return new PropertyCondition(AutomationElement.FrameworkIdProperty, propertyValue);
+                case "HasKeyboardFocus":
+                    return new PropertyCondition(AutomationElement.HasKeyboardFocusProperty, propertyValue);
+                case "HelpText":
+                    return new PropertyCondition(AutomationElement.HelpTextProperty, propertyValue);
+                case "IsContentElement":
+                    return new PropertyCondition(AutomationElement.IsContentElementProperty, propertyValue);
+                case "IsControlElement":
+                    return new PropertyCondition(AutomationElement.IsControlElementProperty, propertyValue);
+                case "IsEnabled":
+                    return new PropertyCondition(AutomationElement.IsEnabledProperty, propertyValue);
+                case "IsKeyboardFocusable":
+                    return new PropertyCondition(AutomationElement.IsKeyboardFocusableProperty, propertyValue);
+                case "IsOffscreen":
+                    return new PropertyCondition(AutomationElement.IsOffscreenProperty, propertyValue);
+                case "IsPassword":
+                    return new PropertyCondition(AutomationElement.IsPasswordProperty, propertyValue);
+                case "IsRequiredForForm":
+                    return new PropertyCondition(AutomationElement.IsRequiredForFormProperty, propertyValue);
+                case "ItemStatus":
+                    return new PropertyCondition(AutomationElement.ItemStatusProperty, propertyValue);
+                case "ItemType":
+                    return new PropertyCondition(AutomationElement.ItemTypeProperty, propertyValue);
+                case "LocalizedControlType":
+                    return new PropertyCondition(AutomationElement.LocalizedControlTypeProperty, propertyValue);
+                case "Name":
+                    return new PropertyCondition(AutomationElement.NameProperty, propertyValue);
+                case "NativeWindowHandle":
+                    return new PropertyCondition(AutomationElement.NativeWindowHandleProperty, propertyValue);
+                case "ProcessID":
+                    return new PropertyCondition(AutomationElement.ProcessIdProperty, propertyValue);
+                default:
+                    throw new NotImplementedException("Property Type '" + propertyName + "' not implemented");
+            }
+
+
+       
+
+
+        }
+   
         public override void RunCommand(object sender)
         {
-            //var variableWindowName = v_AutomationWindowName.ConvertToUserVariable(sender);
 
-            //var searchItem = AutomationElement.RootElement.FindFirst
-            //(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
-            //variableWindowName));
+            //create variable window name
+            var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
 
-            //if (searchItem == null)
-            //{
-            //    throw new Exception("Window not found");
-            //}
+            //create search params
+            var searchParams = from rw in v_UIASearchParameters.AsEnumerable()
+                               where rw.Field<string>("Enabled") == "True"
+                               select rw;
 
-            //var requiredItem = searchItem.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.AutomationIdProperty, v_AutomationID));
+            //create and populate condition list
+            var conditionList = new List<Condition>();
+            foreach (var param in searchParams)
+            {
+              var parameterName =  (string)param["Parameter Name"];
+              var parameterValue = (string)param["Parameter Value"];
 
-            //var newVariableCommand = new Core.AutomationCommands.VariableCommand
-            //{
-            //    v_userVariableName = v_userVariableName,
-            //    v_Input = requiredItem.Current.Name
-            //};
-            //newVariableCommand.RunCommand(sender);
+                parameterName = parameterName.ConvertToUserVariable(sender);
+                parameterValue = parameterValue.ConvertToUserVariable(sender);
+
+                var propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                conditionList.Add(propCondition);
+            }
+
+            //concatenate or take first condition
+            Condition searchConditions;
+            if (conditionList.Count > 1)
+            {
+                 searchConditions = new AndCondition(conditionList.ToArray());
+
+            }
+            else
+            {
+                searchConditions = conditionList[0];
+            }
+  
+            //find window
+            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
+
+            //if window was not found
+            if (windowElement == null)
+                throw new Exception("Window named '" + variableWindowName + "' was not found!");
+
+            //find required handle based on specified conditions
+            var requiredHandle = windowElement.FindFirst(TreeScope.Descendants, searchConditions);
+
+            //if handle was not found
+            if (requiredHandle == null)
+                throw new Exception("Element was not found in window '" + variableWindowName + "'");
+
+            //determine element click type
+            if (v_AutomationType == "Click Element")
+            {
+
+                //create search params
+                var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Click Type"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //get x adjust
+                var xAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "X Adjustment"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //get y adjust
+                var yAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+                               where rw.Field<string>("Parameter Name") == "Y Adjustment"
+                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //convert potential variable
+                var xAdjustVariable = xAdjust.ConvertToUserVariable(sender);
+                var yAdjustVariable = yAdjust.ConvertToUserVariable(sender);
+
+                //parse to int
+                var xAdjustInt = int.Parse(xAdjustVariable);
+                var yAdjustInt = int.Parse(yAdjustVariable);
+
+                //get clickable point
+                var newPoint = requiredHandle.GetClickablePoint();
+
+                //send mousemove command
+                var newMouseMove = new SendMouseMoveCommand
+                {
+                    v_XMousePosition = (int)newPoint.X + xAdjustInt,
+                    v_YMousePosition = (int)newPoint.Y + yAdjustInt,
+                    v_MouseClick = clickType
+                };
+
+                //run commands
+                newMouseMove.RunCommand(sender);
+            }
+            else if (v_AutomationType == "Get Value From Element")
+            {
+                //get value from property
+                var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "Get Value From"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //remove brackets from variable
+                applyToVariable = applyToVariable.Replace("[", "").Replace("]", "");
+
+                //get required value
+                var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
+
+                //store into variable
+                requiredValue.StoreInUserVariable(sender, applyToVariable);
+      
+            }
+            else
+            {
+                throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
+            }
+
+       
         }
 
        
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            if (v_AutomationType == "Click Element")
+            {
+                //create search params
+                var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "Click Type"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+                return base.GetDisplayValue() + " [" + clickType + " element in window '" + v_WindowName + "']";
+            }
+            else
+            {
+                //get value from property
+                var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
+                                    where rw.Field<string>("Parameter Name") == "Get Value From"
+                                    select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                return base.GetDisplayValue() + " [Get value from '" + propertyName + "' in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+            }
+
+
+
         }
     }
     #endregion Input Commands
@@ -3397,6 +3585,9 @@ namespace taskt.Core.AutomationCommands
             //get formatting
             var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
 
+           var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
+
+             
             string formattedString = "";
             switch (v_FormatType)
             {
@@ -3422,7 +3613,7 @@ namespace taskt.Core.AutomationCommands
             }
             else
             {
-                formattedString.StoreInUserVariable(sender, v_applyToVariableName);
+                formattedString.StoreInUserVariable(sender, "");
             }
 
           

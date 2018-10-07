@@ -33,6 +33,8 @@ namespace taskt.UI.Forms.Supplemental
         private void pbRecord_Click(object sender, EventArgs e)
         {
 
+            this.WindowState = FormWindowState.Minimized;
+
             //clear all
             searchParameters.Rows.Clear();
 
@@ -60,27 +62,35 @@ namespace taskt.UI.Forms.Supplemental
             //mouse down has occured
 
             //invoke UIA
-            System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
-            System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
-
-            //get properties from class via reflection
-            System.Reflection.PropertyInfo[] properties = typeof(System.Windows.Automation.AutomationElement.AutomationElementInformation).GetProperties();
-            Array.Sort(properties, (x, y) => String.Compare(x.Name, y.Name));
-
-            //loop through each property and get value from the element
-            foreach (System.Reflection.PropertyInfo property in properties)
+            try
             {
-                var propName = property.Name;
-                var propValue = property.GetValue(elementProperties, null);
+                System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
+                System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
 
-                //if property is a basic type then display
-                if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
+                //get properties from class via reflection
+                System.Reflection.PropertyInfo[] properties = typeof(System.Windows.Automation.AutomationElement.AutomationElementInformation).GetProperties();
+                Array.Sort(properties, (x, y) => String.Compare(x.Name, y.Name));
+
+                //loop through each property and get value from the element
+                foreach (System.Reflection.PropertyInfo property in properties)
                 {
-                    searchParameters.Rows.Add(false, propName, propValue);           
-                }
+                    var propName = property.Name;
+                    var propValue = property.GetValue(elementProperties, null);
 
+                    //if property is a basic type then display
+                    if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
+                    {
+                        searchParameters.Rows.Add(false, propName, propValue);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error in recording, please try again!");
             }
 
+            this.WindowState = FormWindowState.Normal;
             this.Close();
 
            
