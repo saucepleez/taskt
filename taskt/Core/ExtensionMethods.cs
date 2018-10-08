@@ -95,6 +95,23 @@ namespace taskt.Core
                 return str;
             }
 
+            //track math chars
+            var mathChars = new List<Char>();
+            mathChars.Add('*');
+            mathChars.Add('+');
+            mathChars.Add('-');
+            mathChars.Add('=');
+            mathChars.Add('/');
+
+            //if the string matches the char then return
+            //as the user does not want to do math
+            if (mathChars.Any( f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
+            {
+                return str;
+            }
+
+           
+
             //test if math is required
             try
             {
