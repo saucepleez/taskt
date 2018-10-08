@@ -35,6 +35,10 @@ namespace taskt.Core
                                 where vars.VariableName == potentialVariable
                                 select vars).FirstOrDefault();
 
+
+                if (potentialVariable.Length == 0)
+                                    continue; 
+          
                 // break here; //todo -- this needs to resolve a variable with the name Row.Item(0);
 
                 if (varCheck != null)
@@ -46,8 +50,8 @@ namespace taskt.Core
                         str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
                     }
                     else if (str.Contains(potentialVariable))
-                    {
-                        str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());
+                    {                
+                         str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());                                 
                     }
                 }
 
