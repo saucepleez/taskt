@@ -3657,19 +3657,21 @@ namespace taskt.Core.AutomationCommands
         }
         public override void RunCommand(object sender)
         {
-            v_userVariableName = v_userVariableName.ConvertToUserVariable(sender);
+
+
+           var variableName = v_userVariableName.ConvertToUserVariable(sender);
 
             //apply substring
             if (v_stringLength >= 0)
             {
-                v_userVariableName = v_userVariableName.Substring(v_startIndex, v_stringLength);
+                variableName = variableName.Substring(v_startIndex, v_stringLength);
             }
             else
             {
-                v_userVariableName = v_userVariableName.Substring(v_startIndex);
+                variableName = variableName.Substring(v_startIndex);
             }
 
-            v_userVariableName.StoreInUserVariable(sender, v_applyToVariableName);
+            variableName.StoreInUserVariable(sender, v_applyToVariableName);
         }
         public override string GetDisplayValue()
         {
