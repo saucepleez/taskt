@@ -59,7 +59,7 @@ namespace taskt.Core
 
                     //pull attributes from property
                     var commandLabel = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.PropertyDescription));
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.HelpfulExplanation));
+                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.InputSpecification));
                     var sampleUsage = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.SampleUsage));
                     var remarks = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.Remarks));
 
@@ -117,10 +117,10 @@ namespace taskt.Core
                     var processedAttribute = (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyDescription)attributeFound;
                     return processedAttribute.propertyDescription;
                 }
-                else if (attributeFound is Core.AutomationCommands.Attributes.PropertyAttributes.HelpfulExplanation)
+                else if (attributeFound is Core.AutomationCommands.Attributes.PropertyAttributes.InputSpecification)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.PropertyAttributes.HelpfulExplanation)attributeFound;
-                    return processedAttribute.helpfulExplanation;
+                    var processedAttribute = (Core.AutomationCommands.Attributes.PropertyAttributes.InputSpecification)attributeFound;
+                    return processedAttribute.inputSpecification;
                 }
                 else if (attributeFound is Core.AutomationCommands.Attributes.PropertyAttributes.SampleUsage)
                 {

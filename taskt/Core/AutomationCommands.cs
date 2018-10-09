@@ -3539,20 +3539,15 @@ namespace taskt.Core.AutomationCommands
 
         }
     }
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to apply formatting to a string")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you have a date or number (either free text or in a variable) that is required to be in a specific format. For example, you may want a date without the time 8/6/17 instead of 8/6/17 12:34:52PM. You may also want to add decimal places to a number, convert a number into a percentage, or convert a number into currency.")]
     public class FormatDataCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. [DateTime.Now]")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select a variable (or enter text) which will contain the value of that is required to be formatted.")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable** or text **12/31/2018 12:34:56PM**")]
-        [Attributes.PropertyAttributes.Remarks("None")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
