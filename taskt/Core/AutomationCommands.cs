@@ -3614,7 +3614,7 @@ namespace taskt.Core.AutomationCommands
             }
             else
             {
-                formattedString.StoreInUserVariable(sender, "");
+                formattedString.StoreInUserVariable(sender, v_applyToVariableName);
             }
 
           

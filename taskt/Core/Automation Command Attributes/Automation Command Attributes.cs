@@ -46,10 +46,46 @@ namespace taskt.Core.AutomationCommands.Attributes.ClassAttributes
             this.commandImplementationDescription = desc;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class UsesDescription : System.Attribute
+    {
+        public string usesDescription;
+        public UsesDescription(string desc)
+        {
+            this.usesDescription = desc;
+        }
+    }
 }
 
 namespace taskt.Core.AutomationCommands.Attributes.PropertyAttributes
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class InputSpecification : System.Attribute
+    {
+        public string inputSpecification;
+        public InputSpecification(string desc)
+        {
+            this.inputSpecification = desc;
+        }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class SampleUsage : System.Attribute
+    {
+        public string sampleUsage;
+        public SampleUsage(string desc)
+        {
+            this.sampleUsage = desc;
+        }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class Remarks : System.Attribute
+    {
+        public string remarks;
+        public Remarks(string desc)
+        {
+            this.remarks = desc;
+        }
+    }
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyDescription : System.Attribute
     {
