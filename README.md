@@ -15,7 +15,7 @@ Depicted below is an example of a completed task (script). Note that scripts can
 ![Sample](https://i.imgur.com/fbi8JrB.png)
 
 ## Documentation
-Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic documenation surrounding the application and the available commands
+Please check out the [Wiki](https://wiki.taskt.net) for basic documenation surrounding the application and the available commands
 
 ## Getting Started For Script Building
 - Click [HERE](https://github.com/saucepleez/taskt/releases/) to download the latest from the releases page and extract the taskt project to any folder.  Double-click 'taskt.exe' to launch the application. Note, until the code signing certificate becomes trusted, you may need to click-through SmartScreen.
