@@ -4077,7 +4077,7 @@ namespace taskt.Core.AutomationCommands
     public class StringSubstringCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text to modify")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -4138,7 +4138,7 @@ namespace taskt.Core.AutomationCommands
     public class StringSplitCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to split")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select variable or text to split")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -4159,7 +4159,7 @@ namespace taskt.Core.AutomationCommands
         public StringSplitCommand()
         {
             this.CommandName = "StringSplitCommand";
-            this.SelectionName = "Split";
+            this.SelectionName = "Split Text";
             this.CommandEnabled = true;
         }
         public override void RunCommand(object sender)
@@ -4234,7 +4234,7 @@ namespace taskt.Core.AutomationCommands
         public StringReplaceCommand()
         {
             this.CommandName = "StringReplaceCommand";
-            this.SelectionName = "Replace";
+            this.SelectionName = "Replace Text";
             this.CommandEnabled = true;
 
         }
