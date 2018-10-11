@@ -312,5 +312,12 @@ namespace taskt.UI.Forms
             new Core.Metrics().ClearExecutionMetrics();
             bgwMetrics.RunWorkerAsync();
         }
+
+        private void btnGenerateWikiDocs_Click(object sender, EventArgs e)
+        {
+            Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
+            var docsRoot = docGeneration.GenerateMarkdownFiles();
+            System.Diagnostics.Process.Start(docsRoot);
+        }
     }
 }

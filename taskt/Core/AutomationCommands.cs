@@ -649,7 +649,7 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources");
             OpenQA.Selenium.Chrome.ChromeDriverService driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-         
+
             var newSeleniumSession = new OpenQA.Selenium.Chrome.ChromeDriver(driverService, new OpenQA.Selenium.Chrome.ChromeOptions());
 
             var instanceName = v_InstanceName.ConvertToUserVariable(sender);
@@ -668,7 +668,7 @@ namespace taskt.Core.AutomationCommands
             //handle app instance tracking
             if (v_InstanceTracking == "Keep Instance Alive")
             {
-                GlobalAppInstances.AddInstance(instanceName, newSeleniumSession);             
+                GlobalAppInstances.AddInstance(instanceName, newSeleniumSession);
             }
 
             //handle window type on startup - https://github.com/saucepleez/taskt/issues/22
@@ -861,7 +861,7 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.AutomationEngineInstance)sender; 
+            var engine = (Core.AutomationEngineInstance)sender;
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
@@ -995,7 +995,7 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             //convert to user variable -- https://github.com/saucepleez/taskt/issues/22
             var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
-      
+
 
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
@@ -1007,8 +1007,8 @@ namespace taskt.Core.AutomationCommands
                 {
 
                     var timeoutText = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Timeout (Seconds)"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                       where rw.Field<string>("Parameter Name") == "Timeout (Seconds)"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                     timeoutText = timeoutText.ConvertToUserVariable(sender);
 
@@ -1079,9 +1079,9 @@ namespace taskt.Core.AutomationCommands
                                             where rw.Field<string>("Parameter Name") == "Text To Set"
                                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                        
+
                         string clearElement = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                            where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
+                                               where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                         if (clearElement == null)
@@ -1218,7 +1218,7 @@ namespace taskt.Core.AutomationCommands
                 throw new Exception("Session Instance was not found");
             }
 
-  
+
         }
 
         public override string GetDisplayValue()
@@ -1352,7 +1352,7 @@ namespace taskt.Core.AutomationCommands
             if (engine.tasktEngineUI == null)
             {
                 engine.ReportProgress("Complex Messagebox Supported With UI Only");
-                System.Windows.Forms.MessageBox.Show(variableMessage, "Message Box Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);        
+                System.Windows.Forms.MessageBox.Show(variableMessage, "Message Box Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
                 return;
             }
 
@@ -1362,7 +1362,7 @@ namespace taskt.Core.AutomationCommands
             }
 
             ));
-            
+
         }
 
         public override string GetDisplayValue()
@@ -1553,7 +1553,7 @@ namespace taskt.Core.AutomationCommands
 
             if (hWnd != IntPtr.Zero)
             {
-                
+
                 var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);
                 var variableYPosition = v_YWindowPosition.ConvertToUserVariable(sender);
 
@@ -1972,7 +1972,7 @@ namespace taskt.Core.AutomationCommands
         {
             this.CommandName = "RunCustomCodeCommand";
             this.SelectionName = "Run Custom Code";
-            this.CommandEnabled = true;       
+            this.CommandEnabled = true;
         }
 
         public override void RunCommand(object sender)
@@ -2162,8 +2162,8 @@ namespace taskt.Core.AutomationCommands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements many commands in a list.")]
     public class SequenceCommand : ScriptCommand
     {
-      public List<ScriptCommand> v_scriptActions = new List<ScriptCommand>();
-       
+        public List<ScriptCommand> v_scriptActions = new List<ScriptCommand>();
+
 
         public SequenceCommand()
         {
@@ -2189,11 +2189,11 @@ namespace taskt.Core.AutomationCommands
                 //only run if not commented
                 if (!item.IsCommented)
                     item.RunCommand(sender);
-           
-             
-           
+
+
+
             }
-  
+
         }
 
         public override string GetDisplayValue()
@@ -2244,7 +2244,7 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Click Type: " + v_MouseClick + "]";
         }
     }
-        [Serializable]
+    [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
     [Attributes.ClassAttributes.Description("This command clicks an item in a Thick Application window.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to click a specific item within an application by a window handle.")]
@@ -2530,11 +2530,11 @@ namespace taskt.Core.AutomationCommands
             }
 
 
-       
+
 
 
         }
-   
+
         public override void RunCommand(object sender)
         {
 
@@ -2550,8 +2550,8 @@ namespace taskt.Core.AutomationCommands
             var conditionList = new List<Condition>();
             foreach (var param in searchParams)
             {
-              var parameterName =  (string)param["Parameter Name"];
-              var parameterValue = (string)param["Parameter Value"];
+                var parameterName = (string)param["Parameter Name"];
+                var parameterValue = (string)param["Parameter Value"];
 
                 parameterName = parameterName.ConvertToUserVariable(sender);
                 parameterValue = parameterValue.ConvertToUserVariable(sender);
@@ -2564,14 +2564,14 @@ namespace taskt.Core.AutomationCommands
             Condition searchConditions;
             if (conditionList.Count > 1)
             {
-                 searchConditions = new AndCondition(conditionList.ToArray());
+                searchConditions = new AndCondition(conditionList.ToArray());
 
             }
             else
             {
                 searchConditions = conditionList[0];
             }
-  
+
             //find window
             var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
 
@@ -2592,13 +2592,13 @@ namespace taskt.Core.AutomationCommands
 
                 //create search params
                 var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Click Type"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                 where rw.Field<string>("Parameter Name") == "Click Type"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                 //get x adjust
                 var xAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
-                                 where rw.Field<string>("Parameter Name") == "X Adjustment"
-                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                               where rw.Field<string>("Parameter Name") == "X Adjustment"
+                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                 //get y adjust
                 var yAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
@@ -2631,13 +2631,13 @@ namespace taskt.Core.AutomationCommands
             {
                 //get value from property
                 var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
-                                 where rw.Field<string>("Parameter Name") == "Get Value From"
-                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                    where rw.Field<string>("Parameter Name") == "Get Value From"
+                                    select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                 //apply to variable
                 var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                 where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                 //remove brackets from variable
                 applyToVariable = applyToVariable.Replace("[", "").Replace("]", "");
@@ -2647,17 +2647,17 @@ namespace taskt.Core.AutomationCommands
 
                 //store into variable
                 requiredValue.StoreInUserVariable(sender, applyToVariable);
-      
+
             }
             else
             {
                 throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
             }
 
-       
+
         }
 
-       
+
         public override string GetDisplayValue()
         {
             if (v_AutomationType == "Click Element")
@@ -2779,7 +2779,7 @@ namespace taskt.Core.AutomationCommands
 
             while (true)
             {
-       
+
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
@@ -2859,7 +2859,7 @@ namespace taskt.Core.AutomationCommands
                         engine.CurrentLoopCancelled = false;
                         return;
                     }
-                    
+
                 }
 
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
@@ -2868,7 +2868,7 @@ namespace taskt.Core.AutomationCommands
 
         public override string GetDisplayValue()
         {
-                return "Loop " + v_LoopParameter + " Times";
+            return "Loop " + v_LoopParameter + " Times";
         }
     }
     [Serializable]
@@ -2902,7 +2902,7 @@ namespace taskt.Core.AutomationCommands
             Script.ScriptVariable complexVariable = null;
 
 
-           //get variable by regular name
+            //get variable by regular name
             complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
 
 
@@ -2919,8 +2919,8 @@ namespace taskt.Core.AutomationCommands
             }
 
 
-                var listToLoop = (List<string>)complexVariable.VariableValue;
-                loopTimes = listToLoop.Count();
+            var listToLoop = (List<string>)complexVariable.VariableValue;
+            loopTimes = listToLoop.Count();
 
 
             for (int i = 0; i < loopTimes; i++)
@@ -2943,7 +2943,7 @@ namespace taskt.Core.AutomationCommands
 
         public override string GetDisplayValue()
         {
-                return "Loop List Variable '" + v_LoopParameter + "'";
+            return "Loop List Variable '" + v_LoopParameter + "'";
         }
     }
     [Serializable]
@@ -2980,10 +2980,10 @@ namespace taskt.Core.AutomationCommands
 
 
 
-                DataTable excelTable = (DataTable)dataSetVariable.VariableValue;
+            DataTable excelTable = (DataTable)dataSetVariable.VariableValue;
 
 
-                var loopTimes = excelTable.Rows.Count;
+            var loopTimes = excelTable.Rows.Count;
 
             for (int i = 0; i < excelTable.Rows.Count; i++)
             {
@@ -3246,8 +3246,8 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
-              var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
-              var targetText = v_TextToSet.ConvertToUserVariable(sender);
+                var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
+                var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
@@ -3393,7 +3393,7 @@ namespace taskt.Core.AutomationCommands
                 var excelSheet = excelInstance.ActiveSheet;
                 var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, "A").End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
-         
+
                 lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
 
 
@@ -3478,7 +3478,7 @@ namespace taskt.Core.AutomationCommands
                 string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
                 Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.Sheets[sheetToDelete];
                 workSheet.Select();
-              
+
 
 
             }
@@ -3527,23 +3527,23 @@ namespace taskt.Core.AutomationCommands
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
             {
 
-                
+
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
 
                 string rowToDelete = v_RowNumber.ConvertToUserVariable(sender);
 
-               var cells = workSheet.Range["A" + rowToDelete, Type.Missing];
+                var cells = workSheet.Range["A" + rowToDelete, Type.Missing];
                 var entireRow = cells.EntireRow;
                 if (v_ShiftUp == "Yes")
-                {          
+                {
                     entireRow.Delete();
                 }
                 else
                 {
                     entireRow.Clear();
                 }
-           
+
 
             }
         }
@@ -3601,14 +3601,14 @@ namespace taskt.Core.AutomationCommands
 
 
                 if (v_ShiftUp == "Yes")
-                {  
+                {
                     cells.Delete();
                 }
                 else
                 {
                     cells.Clear();
                 }
-             
+
 
 
             }
@@ -3657,8 +3657,8 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
 
-           DatasetCommands dataSetCommand = new DatasetCommands();
-           DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=No;IMEX=1""", "Select * From [" + v_SheetName + "$]");
+            DatasetCommands dataSetCommand = new DatasetCommands();
+            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=No;IMEX=1""", "Select * From [" + v_SheetName + "$]");
 
             var engine = (Core.AutomationEngineInstance)sender;
 
@@ -3674,7 +3674,7 @@ namespace taskt.Core.AutomationCommands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() +  " [Get '" + v_SheetName + "' from '" + v_FilePath + "' and apply to '" + v_DataSetName + "']";
+            return base.GetDisplayValue() + " [Get '" + v_SheetName + "' from '" + v_FilePath + "' and apply to '" + v_DataSetName + "']";
         }
     }
 
@@ -3971,13 +3971,13 @@ namespace taskt.Core.AutomationCommands
         {
             //get variablized string
             var variableString = v_InputValue.ConvertToUserVariable(sender);
-            
+
             //get formatting
             var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
 
-           var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
+            var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
 
-             
+
             string formattedString = "";
             switch (v_FormatType)
             {
@@ -4006,13 +4006,13 @@ namespace taskt.Core.AutomationCommands
                 formattedString.StoreInUserVariable(sender, v_applyToVariableName);
             }
 
-          
+
 
         }
 
         public override string GetDisplayValue()
         {
-                return base.GetDisplayValue() + " [Format '" + v_InputValue + "' and Apply Result to Variable '" + v_applyToVariableName + "']";
+            return base.GetDisplayValue() + " [Format '" + v_InputValue + "' and Apply Result to Variable '" + v_applyToVariableName + "']";
         }
     }
     [Serializable]
@@ -4057,7 +4057,7 @@ namespace taskt.Core.AutomationCommands
         {
 
 
-           var variableName = v_userVariableName.ConvertToUserVariable(sender);
+            var variableName = v_userVariableName.ConvertToUserVariable(sender);
 
             //apply substring
             if (v_stringLength >= 0)
@@ -4182,7 +4182,7 @@ namespace taskt.Core.AutomationCommands
             this.CommandName = "StringReplaceCommand";
             this.SelectionName = "Replace";
             this.CommandEnabled = true;
-   
+
         }
         public override void RunCommand(object sender)
         {
@@ -4282,7 +4282,7 @@ namespace taskt.Core.AutomationCommands
                 matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
             }
 
-        
+
 
         }
 
@@ -4352,7 +4352,7 @@ namespace taskt.Core.AutomationCommands
 
 
             string variableLeading, variableTrailing, skipOccurences, extractedText;
- 
+
             //handle extraction cases
             switch (v_TextExtractionType)
             {
@@ -4392,14 +4392,14 @@ namespace taskt.Core.AutomationCommands
 
         private string GetParameterValue(string parameterName)
         {
-             return ((from rw in v_TextExtractionTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == parameterName
-                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
-     
+            return ((from rw in v_TextExtractionTable.AsEnumerable()
+                     where rw.Field<string>("Parameter Name") == parameterName
+                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
         }
         private string ExtractLeadingText(string input, string substring, string occurences)
         {
-            
+
             //verify the occurence index
             int leadingOccurenceIndex = 0;
 
@@ -4509,7 +4509,7 @@ namespace taskt.Core.AutomationCommands
                 }
             }
 
-           
+
         }
 
         public override string GetDisplayValue()
@@ -4535,7 +4535,8 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("If Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true.  Any 'BeginIf' command must have a following 'EndIf' command.")]
+    [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently take an action based on either condition. Any 'BeginIf' command must have a following 'EndIf' command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
     public class BeginIfCommand : ScriptCommand
     {
@@ -4548,11 +4549,17 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Folder Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Web Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_IfActionType { get; set; }
 
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select the required comparison parameters.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public DataTable v_IfActionParameterTable { get; set; }
 
         public BeginIfCommand()
@@ -4637,8 +4644,8 @@ namespace taskt.Core.AutomationCommands
             {
                 //get line number
                 string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Line Number"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                          where rw.Field<string>("Parameter Name") == "Line Number"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 //convert to variable
                 string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
@@ -4647,7 +4654,7 @@ namespace taskt.Core.AutomationCommands
                 int lineNumber = int.Parse(variableLineNumber);
 
                 //determine if error happened
-               if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
+                if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
                 {
 
                     var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
@@ -4657,7 +4664,7 @@ namespace taskt.Core.AutomationCommands
 
                     ifResult = true;
                 }
-               else
+                else
                 {
                     ifResult = false;
                 }
@@ -4771,43 +4778,43 @@ namespace taskt.Core.AutomationCommands
             {
                 throw new Exception("If type not recognized!");
             }
-  
 
 
-                int startIndex, endIndex, elseIndex;
-                if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.AutomationCommands.ElseCommand))
-                {
-                    elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is Core.AutomationCommands.ElseCommand);
 
-                    if (ifResult)
-                    {
-                        startIndex = 0;
-                        endIndex = elseIndex;
-                    }
-                    else
-                    {
-                        startIndex = elseIndex + 1;
-                        endIndex = parentCommand.AdditionalScriptCommands.Count;
-                    }
-                }
-                else if (ifResult)
+            int startIndex, endIndex, elseIndex;
+            if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.AutomationCommands.ElseCommand))
+            {
+                elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is Core.AutomationCommands.ElseCommand);
+
+                if (ifResult)
                 {
                     startIndex = 0;
-                    endIndex = parentCommand.AdditionalScriptCommands.Count;
+                    endIndex = elseIndex;
                 }
                 else
                 {
+                    startIndex = elseIndex + 1;
+                    endIndex = parentCommand.AdditionalScriptCommands.Count;
+                }
+            }
+            else if (ifResult)
+            {
+                startIndex = 0;
+                endIndex = parentCommand.AdditionalScriptCommands.Count;
+            }
+            else
+            {
+                return;
+            }
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled))
                     return;
-                }
 
-                for (int i = startIndex; i < endIndex; i++)
-                {
-                    if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled))
-                        return;
+                engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
+            }
 
-                    engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
-                }
-            
 
 
 
@@ -4835,40 +4842,40 @@ namespace taskt.Core.AutomationCommands
                 case "Error Occured":
 
                     string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Line Number"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                          where rw.Field<string>("Parameter Name") == "Line Number"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Error Occured on Line Number " + lineNumber + ")";
                 case "Window Name Exists":
                 case "Active Window Name Is":
 
                     string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Window Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                          where rw.Field<string>("Parameter Name") == "Window Name"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If " + v_IfActionType + " [Name: " + windowName + "]";
                 case "File Exists":
 
                     string filePath = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "File Path"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                        where rw.Field<string>("Parameter Name") == "File Path"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     string fileCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "True When"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                               where rw.Field<string>("Parameter Name") == "True When"
+                                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
                     return "If " + v_IfActionType + " [File: " + filePath + "]";
-                 
+
                 case "Folder Exists":
 
                     string folderPath = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Folder Path"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                          where rw.Field<string>("Parameter Name") == "Folder Path"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     string folderCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                               where rw.Field<string>("Parameter Name") == "True When"
-                                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                                 where rw.Field<string>("Parameter Name") == "True When"
+                                                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
                     return "If " + v_IfActionType + " [Folder: " + folderPath + "]";
@@ -4877,17 +4884,17 @@ namespace taskt.Core.AutomationCommands
 
 
                     string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                    string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                             where rw.Field<string>("Parameter Name") == "Element Search Method"
+                                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
+                    string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Element Search Method"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If Web Element Exists [" + searchMethod +": " + parameterName + "]";
 
-          
+                    return "If Web Element Exists [" + searchMethod + ": " + parameterName + "]";
+
+
                 default:
 
                     return "If .... ";
@@ -4898,6 +4905,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("If Commands")]
     [Attributes.ClassAttributes.Description("This command signifies the exit point of If actions.  Required for all Begin Ifs.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to signify the exit point of your if scenario")]
     [Attributes.ClassAttributes.ImplementationDescription("This command is used by the serializer to signify the end point of an if.")]
     public class EndIfCommand : ScriptCommand
     {
@@ -4916,7 +4924,8 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("If Commands")]
-    [Attributes.ClassAttributes.Description("TBD")]
+    [Attributes.ClassAttributes.Description("This command declares the seperation between the actions based on the 'true' or 'false' condition.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to signify the exit point of your if scenario")]
     [Attributes.ClassAttributes.ImplementationDescription("TBD")]
     public class ElseCommand : ScriptCommand
     {
@@ -4941,6 +4950,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Image Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to covert an image file into text for parsing.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert an image into text.  You can then use additional commands to parse the data.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command has a dependency on and implements OneNote OCR to achieve automation.")]
     public class OCRCommand : ScriptCommand
     {
@@ -4948,9 +4958,15 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Select Image to OCR")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the image file.")]
+        [Attributes.PropertyAttributes.SampleUsage(@"**c:\temp\myimages.png")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Apply OCR Result To Variable")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
         public OCRCommand()
         {
@@ -4985,11 +5001,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Image Commands")]
     [Attributes.ClassAttributes.Description("This command takes a screenshot and saves it to a location")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to take and save a screenshot.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements User32 CaptureWindow to achieve automation")]
     public class ScreenshotCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to take a screenshot of.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ScreenshotWindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to save the image")]
@@ -5019,6 +5039,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Image Commands")]
     [Attributes.ClassAttributes.Description("This command attempts to find an existing image on screen.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to attempt to locate an image on screen.  You can subsequently take actions such as move the mouse to the location or perform a click.  This command generates a fingerprint from the comparison image and searches for it in on the desktop.")]
     [Attributes.ClassAttributes.ImplementationDescription("TBD")]
     public class ImageRecognitionCommand : ScriptCommand
     {
@@ -5026,12 +5047,21 @@ namespace taskt.Core.AutomationCommands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Capture the search image")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Use the tool to capture an image")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("The image will be used as the image to be found on screen.")]
         public string v_ImageCapture { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Offset X Coordinate - Optional")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify if an offset is required.")]
+        [Attributes.PropertyAttributes.SampleUsage("0 or 100")]
+        [Attributes.PropertyAttributes.Remarks("This will move the mouse X pixels to the right of the location of the image")]
         public int v_xOffsetAdjustment { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Offset Y Coordinate - Optional")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify if an offset is required.")]
+        [Attributes.PropertyAttributes.SampleUsage("0 or 100")]
+        [Attributes.PropertyAttributes.Remarks("This will move the mouse X pixels down from the top of the location of the image")]
         public int v_YOffsetAdjustment { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
@@ -5046,9 +5076,15 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Up")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Up")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the type of click required")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
+        [Attributes.PropertyAttributes.Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
         public string v_MouseClick { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Timeout (seconds, 0 for unlimited search time)")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a timeout length if required.")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("Search times become excessive for colors such as white. For best results, capture a large color variance on screen, not just a white block.")]
         public double v_TimeoutSeconds { get; set; }
         public ImageRecognitionCommand()
         {
@@ -5260,8 +5296,8 @@ namespace taskt.Core.AutomationCommands
             {
                 //screenShotUpdate.FillRectangle(Brushes.White, 5, 20, 275, 105);
                 //screenShotUpdate.DrawString("Blue = Matching Point", new Font("Arial", 12, FontStyle.Bold), Brushes.SteelBlue, 5, 20);
-               // screenShotUpdate.DrawString("OrangeRed = Mismatched Point", new Font("Arial", 12, FontStyle.Bold), Brushes.SteelBlue, 5, 60);
-               // screenShotUpdate.DrawString("Green Rectangle = Match Area", new Font("Arial", 12, FontStyle.Bold), Brushes.SteelBlue, 5, 100);
+                // screenShotUpdate.DrawString("OrangeRed = Mismatched Point", new Font("Arial", 12, FontStyle.Bold), Brushes.SteelBlue, 5, 60);
+                // screenShotUpdate.DrawString("Green Rectangle = Match Area", new Font("Arial", 12, FontStyle.Bold), Brushes.SteelBlue, 5, 100);
 
                 //screenShotUpdate.DrawImage(sampleOut, desktopOutput.Width - sampleOut.Width, 0);
 
@@ -5300,15 +5336,22 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("WebAPI Commands")]
     [Attributes.ClassAttributes.Description("This command downloads the HTML source of a web page for parsing")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to retrieve HTML of a web page without using browser automation.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements System.Web to achieve automation")]
     public class HTTPRequestCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a valid URL that you want to collect data from.")]
+        [Attributes.PropertyAttributes.SampleUsage("http://mycompany.com/news or [vCompany]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WebRequestURL { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Apply Result To Variable")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
 
         public HTTPRequestCommand()
@@ -5340,33 +5383,40 @@ namespace taskt.Core.AutomationCommands
 
     }
 
-        [Serializable]
-        [Attributes.ClassAttributes.Group("WebAPI Commands")]
-        [Attributes.ClassAttributes.Description("This command processes an HTML source object")]
-        [Attributes.ClassAttributes.ImplementationDescription("TBD")]
-        public class HTTPQueryResultCommand : ScriptCommand
+    [Serializable]
+    [Attributes.ClassAttributes.Group("WebAPI Commands")]
+    [Attributes.ClassAttributes.Description("This command processes an HTML source object")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to parse and extract data from a successful **HTTP Request Command**")]
+    [Attributes.ClassAttributes.ImplementationDescription("TBD")]
+    public class HTTPQueryResultCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Select variable containing HTML")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_userVariableName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("XPath Query")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the XPath Query and the item will be extracted.")]
+        [Attributes.PropertyAttributes.SampleUsage("@//*[@id=\"aso_search_form_anchor\"]/div/input")]
+        [Attributes.PropertyAttributes.Remarks("You can use Chrome Dev Tools to click an element and copy the XPath.")]
+        public string v_xPathQuery { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Apply Query Result To Variable")]
+        public string v_applyToVariableName { get; set; }
+
+        public HTTPQueryResultCommand()
         {
-            [XmlAttribute]
-            [Attributes.PropertyAttributes.PropertyDescription("Select variable containing HTML")]
-            public string v_userVariableName { get; set; }
+            this.CommandName = "HTTPRequestQueryCommand";
+            this.SelectionName = "HTTP Result Query";
+            this.CommandEnabled = true;
+        }
 
-            [XmlAttribute]
-            [Attributes.PropertyAttributes.PropertyDescription("XPath Query")]
-            public string v_xPathQuery { get; set; }
-
-            [XmlAttribute]
-            [Attributes.PropertyAttributes.PropertyDescription("Apply Query Result To Variable")]
-            public string v_applyToVariableName { get; set; }
-
-            public HTTPQueryResultCommand()
-            {
-                this.CommandName = "HTTPRequestQueryCommand";
-                this.SelectionName = "HTTP Result Query";
-                this.CommandEnabled = true;
-            }
-
-            public override void RunCommand(object sender)
-            {
+        public override void RunCommand(object sender)
+        {
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(v_userVariableName.ConvertToUserVariable(sender));
 
@@ -5378,18 +5428,19 @@ namespace taskt.Core.AutomationCommands
 
         }
 
-            public override string GetDisplayValue()
-            {
-                return base.GetDisplayValue() + " [Query Variable '" + v_userVariableName + "' and apply result to '" + v_applyToVariableName + "']";
-            }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Query Variable '" + v_userVariableName + "' and apply result to '" + v_applyToVariableName + "']";
         }
+    }
 
     #endregion
 
     #region Task Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Task Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to stop the script from executing.")]
+    [Attributes.ClassAttributes.Description("This command stops the current task.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to stop the current running task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class StopTaskCommand : ScriptCommand
     {
@@ -5414,13 +5465,17 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Task Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to stop the script from executing.")]
+    [Attributes.ClassAttributes.Description("This command runs tasks.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run another task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class RunTaskCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Select a Task")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the valid path to the file.")]
+        [Attributes.PropertyAttributes.SampleUsage("c:\\temp\\mytask.xml or [vScriptPath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_taskPath { get; set; }
 
         public RunTaskCommand()
@@ -5441,7 +5496,7 @@ namespace taskt.Core.AutomationCommands
 
             //start process
             var p = System.Diagnostics.Process.Start(assembly, startFile);
-            
+
             //wait for exit
             p.WaitForExit();
 
@@ -5460,23 +5515,33 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text File Commands")]
     [Attributes.ClassAttributes.Description("This command writes specified data to a text file")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to write data to text files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     public class WriteTextFileCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the text to be written")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the text should be written to files.")]
+        [Attributes.PropertyAttributes.SampleUsage("**[vText]** or **Hello World!**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_TextToWrite { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select overwrite option")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Append")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Overwrite")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate whether this command should append the text to or overwrite all existing text in the file")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Append** or **Overwrite**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_Overwrite { get; set; }
         public WriteTextFileCommand()
         {
@@ -5511,6 +5576,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text File Commands")]
     [Attributes.ClassAttributes.Description("This command reads text data into a variable")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to read data from text files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     public class ReadTextFileCommand : ScriptCommand
     {
@@ -5518,10 +5584,16 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please define where the text should be stored")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
 
 
@@ -5539,7 +5611,7 @@ namespace taskt.Core.AutomationCommands
             //read text from file
             var textFromFile = System.IO.File.ReadAllText(filePath);
             //assign text to user variable
-            textFromFile.StoreInUserVariable(sender, v_userVariableName);              
+            textFromFile.StoreInUserVariable(sender, v_userVariableName);
         }
 
         public override string GetDisplayValue()
@@ -5560,29 +5632,44 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to move or copy the file")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Move File")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Copy File")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to move the file or copy the file.  Moving will remove the file from the original path while Copying will not.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select either **Move File** or **Copy File**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_OperationType { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFilePath { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to copy to")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the new path to the file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\new path\\ or [vTextFolderPath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Create folder if destination does not exist")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify whether the directory should be created if it does not already exist.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Delete file if it already exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify whether the file should be deleted first if it is already found to exist.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_DeleteExisting { get; set; }
 
 
@@ -5602,7 +5689,7 @@ namespace taskt.Core.AutomationCommands
 
             if ((v_CreateDirectory == "Yes") && (!System.IO.Directory.Exists(destinationFolder)))
             {
-                System.IO.Directory.CreateDirectory(destinationFolder); 
+                System.IO.Directory.CreateDirectory(destinationFolder);
             }
 
             //get source file name and info
@@ -5627,8 +5714,8 @@ namespace taskt.Core.AutomationCommands
                 //copy file
                 System.IO.File.Copy(sourceFile, destinationPath);
             }
-         
-           
+
+
         }
 
         public override string GetDisplayValue()
@@ -5648,6 +5735,9 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFilePath { get; set; }
 
 
@@ -5664,14 +5754,14 @@ namespace taskt.Core.AutomationCommands
 
             //apply variable logic
             var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
-   
-             //delete file
-             System.IO.File.Delete(sourceFile);
 
-            }
+            //delete file
+            System.IO.File.Delete(sourceFile);
+
+        }
 
 
-        
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [delete " + v_SourceFilePath + "']";
@@ -5689,14 +5779,20 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFilePath { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new file name (with extension)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify the new file name including the extension.")]
+        [Attributes.PropertyAttributes.SampleUsage("newfile.txt or newfile.png")]
+        [Attributes.PropertyAttributes.Remarks("Changing the file extension will not automatically convert files.")]
         public string v_NewName { get; set; }
 
-       
+
         public RenameFileCommand()
         {
             this.CommandName = "RenameFileCommand";
@@ -5707,18 +5803,18 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
 
-         //apply variable logic
-         var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
-         var newFileName = v_NewName.ConvertToUserVariable(sender);
-            
-         //get source file name and info
-         System.IO.FileInfo sourceFileInfo = new FileInfo(sourceFile);
+            //apply variable logic
+            var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
+            var newFileName = v_NewName.ConvertToUserVariable(sender);
 
-          //create destination
-          var destinationPath = System.IO.Path.Combine(sourceFileInfo.DirectoryName, newFileName);
-       
-          //rename file
-          System.IO.File.Move(sourceFile, destinationPath);
+            //get source file name and info
+            System.IO.FileInfo sourceFileInfo = new FileInfo(sourceFile);
+
+            //create destination
+            var destinationPath = System.IO.Path.Combine(sourceFileInfo.DirectoryName, newFileName);
+
+            //rename file
+            System.IO.File.Move(sourceFile, destinationPath);
 
         }
 
@@ -5739,12 +5835,18 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_FileName { get; set; }
 
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait for the file to exist")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify how long to wait before an error will occur because the file is not found.")]
+        [Attributes.PropertyAttributes.SampleUsage("**10** or **20**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WaitTime { get; set; }
 
         public WaitForFileToExistCommand()
@@ -5787,7 +5889,7 @@ namespace taskt.Core.AutomationCommands
                 //put thread to sleep before iterating
                 System.Threading.Thread.Sleep(100);
             }
-           
+
 
 
 

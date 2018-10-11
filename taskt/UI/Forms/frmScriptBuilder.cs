@@ -1629,7 +1629,7 @@ namespace taskt.UI.Forms
         }
         private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/wiki");
+            System.Diagnostics.Process.Start("https://wiki.taskt.net/");
         }
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
