@@ -7,11 +7,24 @@ using System.Threading.Tasks;
 using taskt.Core.AutomationCommands.Attributes;
 namespace taskt.Core
 {
- 
+ /// <summary>
+ /// This class generates markdown files for use in the official taskt wiki
+ /// </summary>
  public class DocumentationGeneration
     {
-     public void GenerateMarkdownFiles()
+        /// <summary>
+        /// Returns a path that contains the generated markdown files
+        /// </summary>
+        /// <returns></returns>
+     public string GenerateMarkdownFiles()
      {
+
+            //create directory if required
+            var docsFolderName = "docs";
+            if (!System.IO.Directory.Exists(docsFolderName))
+            {
+                System.IO.Directory.CreateDirectory(docsFolderName);
+            }
 
             //get all commands
             var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
@@ -20,6 +33,11 @@ namespace taskt.Core
                       .Where(t => t.IsAbstract == false)
                       .Where(t => t.BaseType.Name == "ScriptCommand")
                       .ToList();
+
+
+            var highLevelCommandInfo = new List<CommandMetaData>();
+            StringBuilder sb;
+            string fullFileName;
 
             //loop each command
             foreach (var commandClass in commandClasses)
@@ -31,10 +49,15 @@ namespace taskt.Core
                 var usesDescription = GetClassValue(commandClass, typeof(Core.AutomationCommands.Attributes.ClassAttributes.UsesDescription));
                 var commandName = instantiatedCommand.SelectionName;
 
+                sb = new StringBuilder();
+
                 //create string builder to build markdown document and append data
-                StringBuilder sb = new StringBuilder();
                 sb.AppendLine("<!--TITLE: " + commandName + " Command -->");
-                sb.AppendLine("<!-- SUBTITLE: a command in the " + groupName + " group -->");
+                sb.AppendLine("<!-- SUBTITLE: a command in the " + groupName + " group. -->");
+
+                sb.AppendLine("[Go To Automation Commands Overview](/automation-commands)");
+
+                sb.AppendLine(Environment.NewLine);
                 sb.AppendLine("# " + commandName + " Command");
                 sb.AppendLine(Environment.NewLine);
 
@@ -70,12 +93,26 @@ namespace taskt.Core
 
                 sb.AppendLine(Environment.NewLine);
 
-                //create directory if required
-                var docsFolderName = "docs";
-                if (!System.IO.Directory.Exists(docsFolderName))
-                {
-                    System.IO.Directory.CreateDirectory(docsFolderName);
-                }
+
+
+
+                sb.AppendLine("## Developer/Additional Reference");
+                sb.AppendLine("Automation Class Name: " + commandClass.Name);
+                sb.AppendLine("Parent Namespace: " + commandClass.Namespace);
+                sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt"));
+
+
+                sb.AppendLine(Environment.NewLine);
+
+                sb.AppendLine("## Help");
+                sb.AppendLine("[Open/Report an issue on GitHub](https://github.com/saucepleez/taskt/issues/new)");
+                sb.AppendLine("[Ask a question on Gitter](https://gitter.im/taskt-rpa/Lobby)");
+
+
+
+
+
+              
 
                 //create kebob destination and command file nmae
                 var kebobDestination = groupName.Replace(" ", "-").Replace("/", "-").ToLower();
@@ -89,13 +126,43 @@ namespace taskt.Core
                 }
 
                 //write file
-                var fullFileName = System.IO.Path.Combine(destinationdirectory, kebobFileName);
+                fullFileName = System.IO.Path.Combine(destinationdirectory, kebobFileName);
                 System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
+                //add to high level
+                var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName.Replace(".md", "");
+                highLevelCommandInfo.Add(new CommandMetaData() { Group = groupName, Description = classDescription, Name = commandName, Location = serverPath });
 
             }
 
+            sb = new StringBuilder();
+            sb.AppendLine("<!--TITLE: Automation Commands -->");
+            sb.AppendLine("<!-- SUBTITLE: an overview of available commands in taskt. -->");
+            sb.AppendLine("## Automation Commands");
+            sb.AppendLine("| Command Group   	| Command Name 	|  Command Description	|");
+            sb.AppendLine("| ---                | ---           | ---                   |");
 
+
+            foreach (var cmd in highLevelCommandInfo)
+            {
+                sb.AppendLine("|" + cmd.Group + "|[" + cmd.Name + "](" + cmd.Location + ")|" + cmd.Description + "|");
+            }
+
+            sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt"));
+
+            sb.AppendLine(Environment.NewLine);
+
+
+            sb.AppendLine("## Help");
+            sb.AppendLine("[Open/Report an issue on GitHub](https://github.com/saucepleez/taskt/issues/new)");
+            sb.AppendLine("[Ask a question on Gitter](https://gitter.im/taskt-rpa/Lobby)");
+
+            //write file
+            fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
+            System.IO.File.WriteAllText(fullFileName, sb.ToString());
+
+
+            return docsFolderName;
 
         }
         public string GetPropertyValue(PropertyInfo prop, Type attributeType)
@@ -186,4 +253,13 @@ namespace taskt.Core
         }
 
     }
+
+    public class CommandMetaData
+    {
+        public string Group { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Location { get; set; }
+    }
+
 }
