@@ -83,6 +83,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(SeleniumBrowserRefreshCommand))]
     [XmlInclude(typeof(SeleniumBrowserCloseCommand))]
     [XmlInclude(typeof(SeleniumBrowserElementActionCommand))]
+    [XmlInclude(typeof(SeleniumBrowserExecuteScriptCommand))]
     [XmlInclude(typeof(SMTPSendEmailCommand))]
     [XmlInclude(typeof(ErrorHandlingCommand))]
     [XmlInclude(typeof(StringSubstringCommand))]
@@ -1227,6 +1228,57 @@ namespace taskt.Core.AutomationCommands
         }
     }
 
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Web Browser Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to execute a script in a Selenium web browser session.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    public class SeleniumBrowserExecuteScriptCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the script code")]
+        public string v_ScriptCode { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Supply Arguments")]
+        public string v_Args { get; set; }
+        public SeleniumBrowserExecuteScriptCommand()
+        {
+            this.CommandName = "SeleniumBrowserExecuteScriptCommand";
+            this.SelectionName = "Execute Script";
+            this.v_InstanceName = "default";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.AutomationEngineInstance)sender;
+            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
+            {
+                var script = v_ScriptCode.ConvertToUserVariable(sender);
+                var args = v_Args.ConvertToUserVariable(sender);
+                var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+                if (String.IsNullOrEmpty(args))
+                {
+                    seleniumInstance.ExecuteScript(script);
+                }
+                else
+                {
+                    seleniumInstance.ExecuteScript(script, args);
+                }
+
+            }
+            else
+            {
+                throw new Exception("Session Instance was not found");
+            }
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+
     #endregion Web Selenium
 
     #region Misc Commands
@@ -1464,6 +1516,37 @@ namespace taskt.Core.AutomationCommands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [To Address: '" + v_SMTPToEmail + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to get text from the clipboard.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy the data from the clipboard and apply it to a variable.  You can then use the variable to extract the value.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against the VariableList from the scripting engine using System.Windows.Forms.Clipboard.")]
+    public class ClipboardGetTextCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to set clipboard contents")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_userVariableName { get; set; }
+
+        public ClipboardGetTextCommand()
+        {
+            this.CommandName = "ClipboardCommand";
+            this.SelectionName = "Get Text";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            User32Functions.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Get Text From Clipboard and Apply to Variable: " + v_userVariableName + "]";
         }
     }
     #endregion Misc Commands
@@ -2010,40 +2093,6 @@ namespace taskt.Core.AutomationCommands
     }
     #endregion Program/Process Commands
 
-    #region Clipboard Commands
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Clipboard Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get text from the clipboard.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy the data from the clipboard and apply it to a variable.  You can then use the variable to extract the value.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against the VariableList from the scripting engine using System.Windows.Forms.Clipboard.")]
-    public class ClipboardGetTextCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to set clipboard contents")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_userVariableName { get; set; }
-
-        public ClipboardGetTextCommand()
-        {
-            this.CommandName = "ClipboardCommand";
-            this.SelectionName = "Get Text";
-            this.CommandEnabled = true;
-        }
-
-        public override void RunCommand(object sender)
-        {
-            User32Functions.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Get Text From Clipboard and Apply to Variable: " + v_userVariableName + "]";
-        }
-    }
-    #endregion Clipboard Commands
-
     #region Input Commands
 
     [Serializable]
@@ -2540,6 +2589,11 @@ namespace taskt.Core.AutomationCommands
 
             //create variable window name
             var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
+
+            if (variableWindowName == "Current Window")
+            {
+                variableWindowName = User32Functions.GetActiveWindowTitle();
+            }
 
             //create search params
             var searchParams = from rw in v_UIASearchParameters.AsEnumerable()
@@ -5625,6 +5679,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
     [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to move a file to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     public class MoveFileCommand : ScriptCommand
     {
@@ -5727,6 +5782,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
     [Attributes.ClassAttributes.Description("This command deletes a file from a specified destination")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to detete a file from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     public class DeleteFileCommand : ScriptCommand
     {
@@ -5770,7 +5826,8 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
-    [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
+    [Attributes.ClassAttributes.Description("This command renames a file at a specified destination")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to rename an existing file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     public class RenameFileCommand : ScriptCommand
     {
@@ -5827,6 +5884,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
     [Attributes.ClassAttributes.Description("This command waits for a file to exist at a specified destination")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to wait for a file to exist before proceeding.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     public class WaitForFileToExistCommand : ScriptCommand
     {
