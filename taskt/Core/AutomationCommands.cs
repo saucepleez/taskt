@@ -2344,7 +2344,13 @@ namespace taskt.Core.AutomationCommands
             {
                 searchConditions = conditionList[0];
             }
-  
+
+
+            if (variableWindowName == "Current Window")
+            {
+                variableWindowName = User32Functions.GetActiveWindowTitle();
+            }
+
             //find window
             var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
 
