@@ -134,6 +134,9 @@ namespace taskt.Core.AutomationCommands
         public Color DisplayForeColor { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Comment Field (Optional)")]
+        [Attributes.PropertyAttributes.InputSpecification("Optional field to enter a custom comment which could potentially describe this command or the need for this command, if required")]
+        [Attributes.PropertyAttributes.SampleUsage("I am using this command to ...")]
+        [Attributes.PropertyAttributes.Remarks("Optional")]
         public string v_Comment { get; set; }
         [XmlAttribute]
         public bool CommandEnabled { get; set; }
@@ -603,24 +606,34 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session.")]
+    [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserCreateCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("**myInstance** or **seleniumInstance**")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Instance Tracking (after task ends)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Forget Instance")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Keep Instance Alive")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Forget Instance** to forget the instance or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
+        [Attributes.PropertyAttributes.Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
         public string v_InstanceTracking { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select a Window State")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Normal")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Maximize")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the window state that the browser should start up with.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Normal** to start the browser in normal mode or **Maximize** to start the browser in maximized mode.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_BrowserWindowOption { get; set; }
 
         public SeleniumBrowserCreateCommand()
@@ -681,15 +694,22 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to navigate a Selenium web browser session.")]
+    [Attributes.ClassAttributes.Description("This command allows you to navigate a Selenium web browser session to a given URL or resource.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to navigate an existing Selenium instance to a known URL or web resource")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserNavigateURLCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the destination URL that you want the selenium instance to navigate to")]
+        [Attributes.PropertyAttributes.SampleUsage("https://mycompany.com/orders")]
+        [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_URL { get; set; }
 
@@ -737,11 +757,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to navigate forward a Selenium web browser session.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to simulate a forward click in the web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserNavigateForwardCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserNavigateForwardCommand()
@@ -775,11 +799,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to navigate backwards in a Selenium web browser session.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to simulate a back click in the web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserNavigateBackCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserNavigateBackCommand()
@@ -812,11 +840,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to refresh a Selenium web browser session.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to simulate a browser refresh click in the web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserRefreshCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserRefreshCommand()
@@ -849,11 +881,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to close a Selenium web browser session.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close and end a web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserCloseCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserCloseCommand()
@@ -887,11 +923,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to close a Selenium web browser session.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate, set, or get data on a webpage within the web browser.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserElementActionCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Method")]
@@ -901,9 +941,15 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_SeleniumSearchType { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Parameter")]
+        [Attributes.PropertyAttributes.InputSpecification("Specifies the parameter text that matches to the element based on the previously selected search type.")]
+        [Attributes.PropertyAttributes.SampleUsage("If search type **Find Element By ID** was specified, for example, given <div id='name'></div>, the value of this field would be **name**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_SeleniumSearchParameter { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Element Action")]
@@ -917,9 +963,15 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**")]
+        [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
         public string v_SeleniumElementAction { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Additioal Parameters will be required based on the action settings selected.")]
+        [Attributes.PropertyAttributes.SampleUsage("Additional Parameters range from adding offset coordinates to specifying a variable to apply element text to.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_WebActionParameterTable { get; set; }
 
@@ -1181,12 +1233,16 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time in milliseconds.")]
+    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time specified in milliseconds.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to pause your script for a specific amount of time.  After the specified time is finished, the script will resume execution.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
     public class PauseCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Amount of time to pause for (in milliseconds).")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
+        [Attributes.PropertyAttributes.SampleUsage("**8000** or **[vVariableWaitTime]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public int v_PauseLength { get; set; }
 
         public PauseCommand()
@@ -1208,7 +1264,8 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time in milliseconds.")]
+    [Attributes.ClassAttributes.Description("This command specifies what to do  after an error is encountered.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define how your script should behave when an error is encountered.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
     public class ErrorHandlingCommand : ScriptCommand
     {
@@ -1216,6 +1273,9 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Action On Error")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Processing")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Processing")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the action you want to take when you come across an error.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Stop Processing** to end the script if an error is encountered or **Continue Processing** to continue running the script")]
+        [Attributes.PropertyAttributes.Remarks("**If Command** allows you to specify and test if a line number encountered an error. In order to use that functionality, you must specify **Continue Processing**")]
         public string v_ErrorHandlingAction { get; set; }
 
         public ErrorHandlingCommand()
@@ -1238,7 +1298,8 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to add an in-line comment to the configuration.")]
+    [Attributes.ClassAttributes.Description("This command allows you to add an in-line comment to the script.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add code comments or document code.  Usage of variables (ex. [vVar]) within the comment block will be parsed and displayed when running the script.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command is for visual purposes only")]
     public class CommentCommand : ScriptCommand
     {
@@ -1257,16 +1318,23 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to show a MessageBox and supports variables.")]
+    [Attributes.ClassAttributes.Description("This command allows you to show a message to the user.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to present or display a value on screen to the user.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'MessageBox' and invokes VariableCommand to find variable data.")]
     public class MessageBoxCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the message to be displayed.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify any text that should be displayed on screen.  You may also include variables for display purposes.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello World** or **[vMyText]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_Message { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Close After X (Seconds) - 0 to bypass")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to display on screen. After the amount of seconds passes, the message box will be automatically closed and script will resume execution.")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** to remain open indefinitely or **5** to stay open for 5 seconds.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public int v_AutoCloseAfter { get; set; }
         public MessageBoxCommand()
         {
@@ -1303,14 +1371,117 @@ namespace taskt.Core.AutomationCommands
         }
     }
     [Serializable]
+    [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to send email using SMTP protocol.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an email and have access to SMTP server credentials to generate an email.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements the System.Net Namespace to achieve automation")]
+    public class SMTPSendEmailCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Host Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Define the host/service name that the script should use")]
+        [Attributes.PropertyAttributes.SampleUsage("**smtp.gmail.com**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPHost { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Port")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Define the port number that should be used when contacting the SMTP service")]
+        [Attributes.PropertyAttributes.SampleUsage("**587**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public int v_SMTPPort { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Username")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Define the username to use when contacting the SMTP service")]
+        [Attributes.PropertyAttributes.SampleUsage("**username**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPUserName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Password")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Define the password to use when contacting the SMTP service")]
+        [Attributes.PropertyAttributes.SampleUsage("**password**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPPassword { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("From Email")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify how the 'From' field should appear.")]
+        [Attributes.PropertyAttributes.SampleUsage("myRobot@company.com")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPFromEmail { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("To Email")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify the destination email that should be addressed.")]
+        [Attributes.PropertyAttributes.SampleUsage("jason@company.com")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPToEmail { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Subject")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Define the text subject (or variable) that the email should have.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Alert!** or **[vStatus]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPSubject { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Body")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify the message that should be sent.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Everything ran ok at [DateTime.Now]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPBody { get; set; }
+        public SMTPSendEmailCommand()
+        {
+            this.CommandName = "SMTPCommand";
+            this.SelectionName = "Send SMTP Email";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            string varSMTPHost = v_SMTPHost.ConvertToUserVariable(sender);
+            string varSMTPPort = v_SMTPPort.ToString().ConvertToUserVariable(sender);
+            string varSMTPUserName = v_SMTPUserName.ConvertToUserVariable(sender);
+            string varSMTPPassword = v_SMTPPassword.ConvertToUserVariable(sender);
+
+            string varSMTPFromEmail = v_SMTPFromEmail.ConvertToUserVariable(sender);
+            string varSMTPToEmail = v_SMTPToEmail.ConvertToUserVariable(sender);
+            string varSMTPSubject = v_SMTPSubject.ConvertToUserVariable(sender);
+            string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
+
+            var client = new SmtpClient(varSMTPHost, int.Parse(varSMTPPort))
+            {
+                Credentials = new System.Net.NetworkCredential(varSMTPUserName, varSMTPPassword),
+                EnableSsl = true
+            };
+
+            client.Send(varSMTPFromEmail, varSMTPToEmail, varSMTPSubject, varSMTPBody);
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [To Address: '" + v_SMTPToEmail + "']";
+        }
+    }
+    #endregion Misc Commands
+
+    #region Window Commands
+    [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.Description("This command activates a window and brings it to the front.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to active a window by name or bring it to attention.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetForegroundWindow', 'ShowWindow' from user32.dll to achieve automation.")]
     public class ActivateWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
 
         public ActivateWindowCommand()
@@ -1341,20 +1512,30 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.Description("This command moves a window to a specified location on screen.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move an existing window by name to a certain point on the screen.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetWindowPos' from user32.dll to achieve automation.")]
     public class MoveWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to move.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the X position to move the window to.")]
+        [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes to the right")]
+        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
         public string v_XWindowPosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Y position to move the window to.")]
+        [Attributes.PropertyAttributes.InputSpecification("Input the new vertical coordinate of the window, 0 starts at the top and goes downwards")]
+        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         public string v_YWindowPosition { get; set; }
 
         public MoveWindowCommand()
@@ -1402,20 +1583,30 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.Description("This command resizes a window to a specified size.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reize a window by name to a specific size on screen.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetWindowPos' from user32.dll to achieve automation.")]
     public class ResizeWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window name")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to resize.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new window width")]
+        [Attributes.PropertyAttributes.InputSpecification("Input the new width size of the window")]
+        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid width range could be 0-1920")]
         public string v_XWindowSize { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new window height")]
+        [Attributes.PropertyAttributes.InputSpecification("Input the new heiht size of the window")]
+        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid height range could be 0-1080")]
         public string v_YWindowSize { get; set; }
 
         public ResizeWindowCommand()
@@ -1458,12 +1649,16 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.Description("This command closes an open window.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an existing window by name.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SendMessage' from user32.dll to achieve automation.")]
     public class CloseWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to close.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
 
         public CloseWindowCommand()
@@ -1494,19 +1689,26 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
-    [Attributes.ClassAttributes.Description("This command sets a target windows state (minimize, maximize, restore)")]
+    [Attributes.ClassAttributes.Description("This command sets a target window's state.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change a window's state to minimized, maximized, or restored state")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'ShowWindow' from user32.dll to achieve automation.")]
     public class SetWindowStateCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to change.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select a Window State")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Maximize")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Minimize")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Restore")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate window state required")]
+        [Attributes.PropertyAttributes.SampleUsage("Choose from **Minimize**, **Maximize** and **Restore**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowState { get; set; }
 
         public SetWindowStateCommand()
@@ -1556,17 +1758,24 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
-    [Attributes.ClassAttributes.Description("This command waits for a window to exist")]
+    [Attributes.ClassAttributes.Description("This command waits for a window to exist.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to explicitly wait for a window to exist before continuing script execution.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'ShowWindow' from user32.dll to achieve automation.")]
     public class WaitForWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to wait to exist.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Seconds To Wait")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to wait before an error should be invoked")]
+        [Attributes.PropertyAttributes.SampleUsage("**5**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_LengthToWait { get; set; }
 
         public WaitForWindowCommand()
@@ -1611,10 +1820,13 @@ namespace taskt.Core.AutomationCommands
         }
 
     }
+    #endregion Window Commands
 
+    #region Program/Process Command
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to start a program or a process. You can use short names 'chrome.exe' or fully qualified names 'c:/some.exe'")]
+    [Attributes.ClassAttributes.Description("This command allows you to start a program or a process.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to start applications by entering their name such as 'chrome.exe' or a fully qualified path to a file 'c:/some.exe'")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start'.")]
     public class StartProcessCommand : ScriptCommand
     {
@@ -1622,10 +1834,16 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the name or path to the program (ex. notepad, calc)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Provide a valid program name or enter a full path to the script/executable including the extension")]
+        [Attributes.PropertyAttributes.SampleUsage("**notepad**, **calc**, **c:\\temp\\myapp.exe**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ProgramName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter any arguments (if applicable)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter any arguments or flags if applicable.")]
+        [Attributes.PropertyAttributes.SampleUsage(" **-a** or **-version**")]
+        [Attributes.PropertyAttributes.Remarks("You will need to consult documentation to determine if your executable supports arguments or flags on startup.")]
         public string v_ProgramArgs { get; set; }
 
         public StartProcessCommand()
@@ -1660,13 +1878,17 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process. You can use the name of the process 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
+    [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
     public class StopProcessCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Enter the process name to be stopped (calc, notepad)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Provide the program process name as it appears as a process in Windows Task Manager")]
+        [Attributes.PropertyAttributes.SampleUsage("**notepad**, **calc**")]
+        [Attributes.PropertyAttributes.Remarks("The program name may vary from the actual process name.  You can use Thick App commands instead to close an application window.")]
         public string v_ProgramShortName { get; set; }
 
         public StopProcessCommand()
@@ -1693,11 +1915,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to run a script or program and wait for it to exit before proceeding.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a script (such as vbScript, javascript, or executable) but wait for it to close before taskt continues executing.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
     public class RunScriptCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Enter the path to the script")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a fully qualified path to the script, including the script extension.")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myscript.vbs**")]
+        [Attributes.PropertyAttributes.Remarks("This command differs from **Start Process** because this command blocks execution until the script has completed.  If you do not want to stop while the script executes, consider using **Start Process** instead.")]
         public string v_ScriptPath { get; set; }
 
         public RunScriptCommand()
@@ -1730,12 +1956,16 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to run C# code from the input")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run custom C# code commands.  The code in this command is compiled and run at runtime when this command is invoked.  This command only supports the standard framework classes.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
     public class RunCustomCodeCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Paste the C# code to execute")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the code to be executed or use the builder to create your custom C# code.  The builder contains a Hello World template that you can use to build from.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_Code { get; set; }
 
         public RunCustomCodeCommand()
@@ -1778,15 +2008,21 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue();
         }
     }
-    
+    #endregion Program/Process Commands
+
+    #region Clipboard Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Clipboard Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to get text from the clipboard.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy the data from the clipboard and apply it to a variable.  You can then use the variable to extract the value.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against the VariableList from the scripting engine using System.Windows.Forms.Clipboard.")]
     public class ClipboardGetTextCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to set clipboard contents")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
 
         public ClipboardGetTextCommand()
@@ -1806,95 +2042,29 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Get Text From Clipboard and Apply to Variable: " + v_userVariableName + "]";
         }
     }
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to send email using SMTP.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements the System.Net Namespace to achieve automation")]
-    public class SMTPSendEmailCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Host Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SMTPHost { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Port")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public int v_SMTPPort { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Username")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SMTPUserName { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Password")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SMTPPassword { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("From Email")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SMTPFromEmail { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("To Email")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SMTPToEmail { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Subject")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SMTPSubject { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Body")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SMTPBody { get; set; }
-        public SMTPSendEmailCommand()
-        {
-            this.CommandName = "SMTPCommand";
-            this.SelectionName = "Send SMTP Email";
-            this.CommandEnabled = true;
-        }
-
-        public override void RunCommand(object sender)
-        {
-            string varSMTPHost = v_SMTPHost.ConvertToUserVariable(sender);
-            string varSMTPPort = v_SMTPPort.ToString().ConvertToUserVariable(sender);
-            string varSMTPUserName = v_SMTPUserName.ConvertToUserVariable(sender);
-            string varSMTPPassword = v_SMTPPassword.ConvertToUserVariable(sender);
-
-            string varSMTPFromEmail = v_SMTPFromEmail.ConvertToUserVariable(sender);
-            string varSMTPToEmail = v_SMTPToEmail.ConvertToUserVariable(sender);
-            string varSMTPSubject = v_SMTPSubject.ConvertToUserVariable(sender);
-            string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
-
-            var client = new SmtpClient(varSMTPHost, int.Parse(varSMTPPort))
-            {
-                Credentials = new System.Net.NetworkCredential(varSMTPUserName, varSMTPPassword),
-                EnableSsl = true
-            };
-
-            client.Send(varSMTPFromEmail, varSMTPToEmail, varSMTPSubject, varSMTPBody);
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [To Address: '" + v_SMTPToEmail + "']";
-        }
-    }
-
-
-    #endregion Misc Commands
+    #endregion Clipboard Commands
 
     #region Input Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.Description("Use this command to send key strokes to the current or a targeted window.")]
+    [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows.Forms.SendKeys' method to achieve automation.")]
     public class SendKeysCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the text that should be sent to the specified window.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **[vEntryText]**")]
+        [Attributes.PropertyAttributes.Remarks("This command supports sending variables within brackets [vVariable]")]
         public string v_TextToSend { get; set; }
 
         public SendKeysCommand()
@@ -1929,17 +2099,24 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.Description("Use this command to simulate mouse movement and click the mouse on coordinates.")]
+    [Attributes.ClassAttributes.Description("Simulates mouse movements")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to simulate the movement of the mouse, additionally, this command also allows you to perform a click after movement has completed.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'SetCursorPos' function from user32.dll to achieve automation.")]
     public class SendMouseMoveCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the X position to move the mouse to")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the mouse, 0 starts at the left and goes to the right")]
+        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
         public int v_XMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes down")]
+        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         public int v_YMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
@@ -1954,6 +2131,9 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Up")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Up")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Up")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the type of click required")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
+        [Attributes.PropertyAttributes.Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
         public string v_MouseClick { get; set; }
 
         public SendMouseMoveCommand()
@@ -1978,6 +2158,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
     [Attributes.ClassAttributes.Description("Command that groups multiple actions")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to group multiple commands together.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements many commands in a list.")]
     public class SequenceCommand : ScriptCommand
     {
@@ -2023,7 +2204,8 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.Description("Use this command to simulate mouse click on coordinates.")]
+    [Attributes.ClassAttributes.Description("Simulates mouse clicks.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to simulate multiple types of mouse clicks.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'SetCursorPos' function from user32.dll to achieve automation.")]
     public class SendMouseClickCommand : ScriptCommand
     {
@@ -2039,6 +2221,9 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Up")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Up")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the type of click required")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
+        [Attributes.PropertyAttributes.Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
         public string v_MouseClick { get; set; }
 
         public SendMouseClickCommand()
@@ -2062,19 +2247,39 @@ namespace taskt.Core.AutomationCommands
         [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
     [Attributes.ClassAttributes.Description("This command clicks an item in a Thick Application window.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to click a specific item within an application by a window handle.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a SendMouseMove Command to click and achieve automation")]
     public class ThickAppClickItemCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_AutomationWindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Appropriate Item")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select one of the valid handles from the window")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("This list is populated after you select which window is required")]
         public string v_AutomationHandleName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Down")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Down")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Down")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Up")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Up")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Up")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the type of click required")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
+        [Attributes.PropertyAttributes.Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
         public string v_MouseClick { get; set; }
 
         public ThickAppClickItemCommand()
@@ -2147,18 +2352,31 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.Description("This command gets text from a Thick Application window and assigns it to a variable.")]
+    [Attributes.ClassAttributes.Description("This command gets text from a Thick Application window")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get text from a specific handle in a window.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
     public class ThickAppGetTextCommand : ScriptCommand
     {
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_AutomationWindowName { get; set; }
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Appropriate Item")]
+        [Attributes.PropertyAttributes.InputSpecification("Select one of the valid handles from the window")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("This list is populated after you select which window is required")]
         public string v_AutomationHandleDisplayName { get; set; }
         [Attributes.PropertyAttributes.PropertyDescription("Automation ID of the Item")]
+        [Attributes.PropertyAttributes.InputSpecification("n/a")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("This item is populated after you select which window handle name is required")]
         public string v_AutomationID { get; set; }
         [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
 
         public ThickAppGetTextCommand()
@@ -2210,7 +2428,7 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.Description("This command gets text from a Thick Application window and assigns it to a variable.")]
+    [Attributes.ClassAttributes.Description("Combined implementation of the ThickAppClick/GetText command but includes an advanced Window Recorder to record the required element.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
     public class UIAutomationCommand : ScriptCommand
     {
@@ -2222,14 +2440,23 @@ namespace taskt.Core.AutomationCommands
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder)]
         [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Use the Element Recorder to generate a listing of potential search parameters.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("Once you have clicked on a valid window the search parameters will be populated.  Enable only the ones required to be a match at runtime.")]
         public DataTable v_UIASearchParameters { get; set; }
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Set Action Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the parameters for the actions.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("Parameters change depending on the Automation Type selected.")]
         public DataTable v_UIAActionParameters { get; set; }
 
         public UIAutomationCommand()
@@ -2468,19 +2695,29 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Database Commands")]
     [Attributes.ClassAttributes.Description("This command selects data from a database and applies it against a dataset")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to select data from a database.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'OLEDB' to achieve automation.")]
     public class DatabaseRunQueryCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please create a dataset variable name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a custom name that references the dataset.")]
+        [Attributes.PropertyAttributes.SampleUsage("**MyData**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataSetName { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the connection string")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a valid connection string to be used by the database.")]
+        [Attributes.PropertyAttributes.SampleUsage(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\myFolder\myAccessFile.accdb;Persist Security Info = False;")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ConnectionString { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please provide the query to run")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the query as text that should be executed.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Select * From [table]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_UserQuery { get; set; }
         public DatabaseRunQueryCommand()
         {
@@ -2519,6 +2756,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to repeat actions continuously.  Any 'Begin Loop' command must have a following 'End Loop' command.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a series of commands an endless amount of times.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
     public class BeginContinousLoopCommand : ScriptCommand
     {
@@ -2569,12 +2807,16 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to repeat actions several times (loop).  Any 'Begin Loop' command must have a following 'End Loop' command.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a series of commands a specified amount of times.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
     public class BeginNumberOfTimesLoopCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Enter how many times to perform the loop")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the amount of times you would like to perform the encased commands.")]
+        [Attributes.PropertyAttributes.SampleUsage("**5** or **10**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_LoopParameter { get; set; }
 
         public BeginNumberOfTimesLoopCommand()
@@ -2632,12 +2874,16 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to repeat actions several times (loop).  Any 'Begin Loop' command must have a following 'End Loop' command.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over each item in a list, or a series of items.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
     public class BeginListLoopCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please input the list variable to be looped")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a variable which contains a list of items")]
+        [Attributes.PropertyAttributes.SampleUsage("[vMyList]")]
+        [Attributes.PropertyAttributes.Remarks("Use this command to iterate over the results of the Split command.")]
         public string v_LoopParameter { get; set; }
 
         public BeginListLoopCommand()
@@ -2703,11 +2949,15 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]
     public class BeginExcelDatasetLoopCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Excel DataSet Name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataSetName { get; set; }
 
         public BeginExcelDatasetLoopCommand()
@@ -2768,6 +3018,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command signifies the exit point of looped (repeated) actions.  Required for all loops.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to signify the end point of a loop command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command is used by the serializer to signify the end point of a loop.")]
     public class EndLoopCommand : ScriptCommand
     {
@@ -2787,6 +3038,7 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command signifies the current loop should exit and resume work past the point of the current loop.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to signify that looping should end and commands outside the loop should resume execution.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command is used by the engine to exit a loop")]
     public class ExitLoopCommand : ScriptCommand
     {
@@ -2809,12 +3061,16 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to open the Excel Application.")]
+    [Attributes.ClassAttributes.Description("This command opens the Excel Application.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelCreateApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_InstanceName { get; set; }
 
         public ExcelCreateApplicationCommand()
@@ -2839,16 +3095,24 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to open an existing Excel Workbook.")]
+    [Attributes.ClassAttributes.Description("This command opens an Excel Workbook.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to open an existing Excel Workbook.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelOpenWorkbookCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
+        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or [vFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
         public ExcelOpenWorkbookCommand()
         {
@@ -2872,12 +3136,16 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to add a new Excel Workbook.")]
+    [Attributes.ClassAttributes.Description("This command adds a new Excel Workbook.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new workbook to an Exel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelAddWorkbookCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
 
         public ExcelAddWorkbookCommand()
@@ -2902,15 +3170,22 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to move to a specific cell.")]
+    [Attributes.ClassAttributes.Description("This command moves to a specific cell.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move to a new cell from your currently selected cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelGoToCellCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1 or B2)")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_CellLocation { get; set; }
         public ExcelGoToCellCommand()
         {
@@ -2935,20 +3210,30 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to set the value of a specific cell.")]
+    [Attributes.ClassAttributes.Description("This command sets the value of a cell.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelSetCellCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello World or [vText]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_TextToSet { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1 or B2)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress { get; set; }
         public ExcelSetCellCommand()
         {
@@ -2976,19 +3261,29 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Cell and assigns it to a variable.")]
+    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Cell.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
     public class ExcelGetCellCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1 or B2)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
 
         public ExcelGetCellCommand()
@@ -3020,15 +3315,22 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to run a macro in an Excel Workbook.")]
+    [Attributes.ClassAttributes.Description("This command runs a macro.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a run a specific macro in the Excel workbook.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelRunMacroCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the macro name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the name of the macro as it exists in the spreadsheet")]
+        [Attributes.PropertyAttributes.SampleUsage("Macro1")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_MacroName { get; set; }
         public ExcelRunMacroCommand()
         {
@@ -3053,17 +3355,27 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to find the last row in a used range in an Excel Workbook.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to determine how many rows have been used in the Excel Workbook.  You can use this value in a **Number Of Times** Loop to get data.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelGetLastRowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter Letter of the Column to check (ex. A, B, C)")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a valid column letter")]
+        [Attributes.PropertyAttributes.SampleUsage("A, B, AA, etc.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ColumnLetter { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the row number")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
         public ExcelGetLastRowCommand()
         {
@@ -3095,14 +3407,21 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to close Excel.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelCloseApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate if the Workbook should be saved")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a TRUE or FALSE value")]
+        [Attributes.PropertyAttributes.SampleUsage("'TRUE' or 'FALSE'")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public bool v_ExcelSaveOnExit { get; set; }
         public ExcelCloseApplicationCommand()
         {
@@ -3125,18 +3444,24 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Save On Close: " + v_ExcelSaveOnExit + ", Instance Name: '" + v_InstanceName + "']";
         }
     }
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to switch worksheet tabs")]
+    [Attributes.ClassAttributes.Description("This command allows you to activate a specific worksheet in a workbook")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelActivateSheetCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
+        [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheetName, [vSheet]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_SheetName { get; set; }
         public ExcelActivateSheetCommand()
         {
@@ -3166,19 +3491,29 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to delete a specified row in Excel")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete an entire row from the current sheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelDeleteRowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the row number to delete")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the number of the row that should be deleted.")]
+        [Attributes.PropertyAttributes.SampleUsage("1, 5, [vNumber]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_RowNumber { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate whether the row below will be shifted up to replace the old row.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select 'Yes' or 'No'")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ShiftUp { get; set; }
         public ExcelDeleteRowCommand()
         {
@@ -3219,21 +3554,31 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to delete a specified row in Excel")]
+    [Attributes.ClassAttributes.Description("This command allows you to delete a specified cell in Excel")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a specific cell from the current sheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelDeleteCellCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the range to delete ex. A1 or A1:C1")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_Range { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Should the cells below shift upward after deletion?")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate whether the row below will be shifted up to replace the old row.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select 'Yes' or 'No'")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ShiftUp { get; set; }
         public ExcelDeleteCellCommand()
         {
@@ -3276,20 +3621,30 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.Description("This command gets a range of cells and applies them against a dataset")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to quickly iterate over Excel as a dataset.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'OLEDB' to achieve automation.")]
     public class ExcelCreateDataSetCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please create a DataSet name")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
+        [Attributes.PropertyAttributes.SampleUsage("vMyDataset")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataSetName { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the workbook file")]
+        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx")]
+        [Attributes.PropertyAttributes.Remarks("This command does not require Excel to be opened.  A snapshot will be taken of the workbook as it exists at the time this command runs.")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the sheet name")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the specific sheet that should be retrieved.")]
+        [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheet, [vSheet]")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_SheetName { get; set; }
 
         public ExcelCreateDataSetCommand()
@@ -3329,15 +3684,22 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class VariableCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
         public string v_Input { get; set; }
         public VariableCommand()
         {
@@ -3394,12 +3756,16 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a date calculation.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class DateCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. [DateTime.Now]")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains the start date.")]
+        [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now] or 1/1/2000")]
+        [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
@@ -3414,19 +3780,30 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Hours")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Days")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Years")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the necessary operation")]
+        [Attributes.PropertyAttributes.SampleUsage("Select From Add Seconds, Add Minutes, Add Hours, Add Days, Add Years, Subtract Seconds, Subtract Minutes, Subtract Hours, Subtract Days, Subtract Years ")]
         public string v_CalculationMethod { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter how many units to increment by")]
+        [Attributes.PropertyAttributes.SampleUsage("15, [vIncrement]")]
+        [Attributes.PropertyAttributes.Remarks("You can use negative numbers which will do the opposite, ex. Subtract Days and an increment of -5 will Add Days.")]
         public string v_Increment { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify String Format")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
+        [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, etc.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the date calculation")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
         public DateCalculationCommand()
@@ -3542,28 +3919,40 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to apply formatting to a string")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to apply specific formatting to text or a variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class FormatDataCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. [DateTime.Now]")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains a date or number requiring formatting")]
+        [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now], 1/1/2000, 2500")]
+        [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the type of data")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Date")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Number")]
-
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the source type")]
+        [Attributes.PropertyAttributes.SampleUsage("Choose **Date** or **Number**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_FormatType { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Specify required output format")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
+        [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, C2, D2, etc.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive output")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
         public FormatDataCommand()
@@ -3626,27 +4015,36 @@ namespace taskt.Core.AutomationCommands
                 return base.GetDisplayValue() + " [Format '" + v_InputValue + "' and Apply Result to Variable '" + v_applyToVariableName + "']";
         }
     }
-
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to trim a string")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
     public class StringSubstringCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Start from Position")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the starting position within the string")]
+        [Attributes.PropertyAttributes.SampleUsage("0 for beginning, 1 for first character, etc.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public int v_startIndex { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Length (-1 to keep remainder)")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
+        [Attributes.PropertyAttributes.SampleUsage("-1 to keep remainder, 1 for 1 position after start index, etc.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public int v_stringLength { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
         public StringSubstringCommand()
         {
@@ -3681,18 +4079,28 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to split a string")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to split a single text or variable into multiple items")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Split method to achieve automation.")]
     public class StringSplitCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to split")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Input Delimiter")]
+        [Attributes.PropertyAttributes.InputSpecification("Declare the character that will be used to seperate. [crLF] can be used for line breaks and [chars] can be used to split each digit/letter")]
+        [Attributes.PropertyAttributes.SampleUsage("[crLF], [chars], ',' (comma - with no single quote wrapper)")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_splitCharacter { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the list variable which will contain the results")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyConvertToUserVariableName { get; set; }
         public StringSplitCommand()
         {
@@ -3737,24 +4145,37 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to replace text within a string")]
+    [Attributes.ClassAttributes.Description("This command allows you to replace text")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to replace existing text within text or a variable with new text")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
     public class StringReplaceCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("indicate the text to be replaced")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the old value of the text that will be replaced")]
+        [Attributes.PropertyAttributes.SampleUsage("H")]
+        [Attributes.PropertyAttributes.Remarks("H in Hello would be targeted for replacement")]
         public string v_replacementText { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("indicate the replacement value")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the new value after replacement")]
+        [Attributes.PropertyAttributes.SampleUsage("J")]
+        [Attributes.PropertyAttributes.Remarks("H would be replaced with J to create 'Jello'")]
         public string v_replacementValue { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
         public StringReplaceCommand()
         {
@@ -3785,30 +4206,41 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Replace '" + v_replacementText + "' with '" + v_replacementValue + "', apply to '" + v_userVariableName + "']";
         }
     }
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string formatting using RegEx.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform an advanced RegEx extraction from a text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class RegExExtractorCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. [vSomeVariable])")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Input the RegEx Extractor Pattern")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the RegEx extractor pattern that should be used to extract the text")]
+        [Attributes.PropertyAttributes.SampleUsage(@"^([\w\-]+)")]
+        [Attributes.PropertyAttributes.Remarks("If an extractor splits each word in a sentence, for example, you will need to specify the associated index of the word that is required.")]
         public string v_RegExExtractor { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Select Matching Group Index")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the index of the result")]
+        [Attributes.PropertyAttributes.SampleUsage("1")]
+        [Attributes.PropertyAttributes.Remarks("The extractor will split multiple patterns found into multiple indexes.  Test which index is required to retrieve the value or create a better/more define extractor.")]
         public string v_MatchGroupIndex { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the RegEx result")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
         public RegExExtractorCommand()
@@ -3862,26 +4294,39 @@ namespace taskt.Core.AutomationCommands
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string extraction.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract a piece of text from a larger text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class TextExtractorCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. [vSomeVariable])")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select text extraction type")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the type of extraction that is required.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from Before Text, After Text, Between Text")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_TextExtractionType { get; set; }
 
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Extraction Parameters")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Define the required extraction parameters, which is dependent on the type of extraction.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted text")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
         public TextExtractorCommand()
@@ -4011,7 +4456,8 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time in milliseconds.")]
+    [Attributes.ClassAttributes.Description("This command logs data to files.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to log custom data to a file for debugging or analytical purposes.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
     public class LogDataCommand : ScriptCommand
     {
@@ -4021,11 +4467,17 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Select existing log file or enter a custom name.")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Logs")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the file name where logs should be appended to")]
+        [Attributes.PropertyAttributes.SampleUsage("Select 'Engine Logs' or specify your own file")]
+        [Attributes.PropertyAttributes.Remarks("Date and Time will be automatically appended to the file name.  Logs are all saved in taskt Root\\Logs folder")]
         public string v_LogFile { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the text to log.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate the value of the text to be saved.")]
+        [Attributes.PropertyAttributes.SampleUsage("Third Step Complete, [vVariable], etc.")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_LogText { get; set; }
 
         public LogDataCommand()

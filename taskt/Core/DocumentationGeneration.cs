@@ -70,6 +70,26 @@ namespace taskt.Core
 
                 sb.AppendLine(Environment.NewLine);
 
+
+
+
+                sb.AppendLine("## Developer/Additional Reference");
+                sb.AppendLine("Automation Class Name: " + commandClass.Name);
+                sb.AppendLine("Parent Namespace: " + commandClass.Namespace);
+                sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt"));
+
+
+                sb.AppendLine(Environment.NewLine);
+
+                sb.AppendLine("## Help");
+                sb.AppendLine("[Report this document for inaccuracy](/#)");
+                sb.AppendLine("[Open/Report an issue on GitHub](/#)");
+                sb.AppendLine("[Ask a question on Gitter](/#)");
+
+
+
+
+
                 //create directory if required
                 var docsFolderName = "docs";
                 if (!System.IO.Directory.Exists(docsFolderName))
