@@ -726,6 +726,13 @@ namespace taskt.UI.Forms
                     InputControl.SizeMode = PictureBoxSizeMode.AutoSize;
 
                 }
+                else if(inputField.Name == "v_ScriptCode")
+                {
+                    InputControl = new TextBox();
+                    InputControl.Height = 100;
+                    InputControl.Width = 300;
+                    InputControl.Multiline = true;
+                }
                 else
                 {
                     //variable is simply a standard variable

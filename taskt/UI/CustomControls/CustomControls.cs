@@ -346,6 +346,7 @@ namespace taskt.UI
             uiImages.Add("SeleniumBrowserRefreshCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SeleniumBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
             uiImages.Add("SeleniumBrowserElementActionCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserExecuteScriptCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
             uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
