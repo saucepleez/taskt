@@ -1201,9 +1201,7 @@ namespace taskt.Core.AutomationCommands
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
-                v_SeleniumSearchType = searchType.ConvertToUserVariable(sender);
-                v_SeleniumSearchParameter = elementName.ConvertToUserVariable(sender);
-
+               
                 try
                 {
                     var element = FindElement(seleniumInstance);
