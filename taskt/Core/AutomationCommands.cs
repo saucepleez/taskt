@@ -2483,6 +2483,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the action")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Click Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Check If Element Exists")]
         public string v_AutomationType { get; set; }
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -2582,16 +2583,8 @@ namespace taskt.Core.AutomationCommands
 
         }
 
-        public override void RunCommand(object sender)
+        public AutomationElement SearchForGUIElement(object sender, string variableWindowName)
         {
-
-            //create variable window name
-            var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
-
-            if (variableWindowName == "Current Window")
-            {
-                variableWindowName = User32Functions.GetActiveWindowTitle();
-            }
 
             //create search params
             var searchParams = from rw in v_UIASearchParameters.AsEnumerable()
@@ -2632,15 +2625,61 @@ namespace taskt.Core.AutomationCommands
                 throw new Exception("Window named '" + variableWindowName + "' was not found!");
 
             //find required handle based on specified conditions
-            var requiredHandle = windowElement.FindFirst(TreeScope.Descendants, searchConditions);
+            var element = windowElement.FindFirst(TreeScope.Descendants, searchConditions);
+            return element;
 
-            //if handle was not found
-            if (requiredHandle == null)
-                throw new Exception("Element was not found in window '" + variableWindowName + "'");
+        }
+        public override void RunCommand(object sender)
+        {
+
+            //create variable window name
+            var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
+
+            if (variableWindowName == "Current Window")
+            {
+                variableWindowName = User32Functions.GetActiveWindowTitle();
+            }
+
+            var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
+
+
+            //if element exists type
+            if (v_AutomationType == "Check If Element Exists")
+            {
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                //remove brackets from variable
+                applyToVariable = applyToVariable.Replace("[", "").Replace("]", "");
+
+                //declare search result
+                string searchResult;
+
+                //determine search result
+                if (requiredHandle == null)
+                {
+                    searchResult = "FALSE";
+  
+                }
+                else
+                {
+                    searchResult = "TRUE";
+                }
+
+              //store data
+                searchResult.StoreInUserVariable(sender, applyToVariable);
+
+            }
 
             //determine element click type
-            if (v_AutomationType == "Click Element")
+           else if (v_AutomationType == "Click Element")
             {
+
+                //if handle was not found
+                if (requiredHandle == null)
+                    throw new Exception("Element was not found in window '" + variableWindowName + "'");
 
                 //create search params
                 var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
@@ -2681,6 +2720,10 @@ namespace taskt.Core.AutomationCommands
             }
             else if (v_AutomationType == "Get Value From Element")
             {
+
+                //if handle was not found
+                if (requiredHandle == null)
+                    throw new Exception("Element was not found in window '" + variableWindowName + "'");
                 //get value from property
                 var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
                                     where rw.Field<string>("Parameter Name") == "Get Value From"
@@ -2705,8 +2748,6 @@ namespace taskt.Core.AutomationCommands
             {
                 throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
             }
-
-
         }
 
 
@@ -2721,6 +2762,16 @@ namespace taskt.Core.AutomationCommands
 
 
                 return base.GetDisplayValue() + " [" + clickType + " element in window '" + v_WindowName + "']";
+            }
+            else if(v_AutomationType == "Check If Element Exists")
+            {
+
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                return base.GetDisplayValue() + " [Check for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
             }
             else
             {
@@ -4600,6 +4651,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Folder Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Web Element Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("GUI Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
@@ -4826,6 +4878,37 @@ namespace taskt.Core.AutomationCommands
                 ifResult = elementExists;
 
             }
+            else if (v_IfActionType == "GUI Element Exists")
+            {
+                string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                         where rw.Field<string>("Parameter Name") == "Window Name"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                string elementSearchParam = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                string elementSearchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                              where rw.Field<string>("Parameter Name") == "Element Search Method"
+                                              select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+
+                UIAutomationCommand newUIACommand = new UIAutomationCommand();
+                newUIACommand.v_WindowName = windowName;
+                newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
+                var handle = newUIACommand.SearchForGUIElement(sender, windowName);
+
+                if (handle is null)
+                {
+                    ifResult = false;
+                }
+                else
+                {
+                    ifResult = true;
+                }
+                
+
+            }
             else
             {
                 throw new Exception("If type not recognized!");
@@ -4945,6 +5028,22 @@ namespace taskt.Core.AutomationCommands
 
 
                     return "If Web Element Exists [" + searchMethod + ": " + parameterName + "]";
+
+                case "GUI Element Exists":
+
+
+                    string guiWindowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                         where rw.Field<string>("Parameter Name") == "Window Name"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    string guiSearch = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+
+
+
+                    return "If GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
 
 
                 default:

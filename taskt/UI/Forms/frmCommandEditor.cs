@@ -872,6 +872,17 @@ namespace taskt.UI.Forms
             actionParameters.Rows.Clear();
             DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
 
+            //recorder control
+            Control recorderControl = (Control)flw_InputVariables.Controls["guirecorder_helper"];
+
+            //remove if exists            
+            if (!(recorderControl is null))
+            {
+                flw_InputVariables.Controls.Remove(recorderControl);
+
+            }
+
+
             switch (ifAction.Text)
             {
                 case "Value":
@@ -953,6 +964,54 @@ namespace taskt.UI.Forms
                     ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
 
                     break;
+                case "GUI Element Exists":
+
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Window Name", "Current Window");
+                    actionParameters.Rows.Add("Element Search Method", "");
+                    actionParameters.Rows.Add("Element Search Parameter", "");
+
+                    var parameterName = new DataGridViewComboBoxCell();
+                    parameterName.Items.Add("AcceleratorKey");
+                    parameterName.Items.Add("AccessKey");
+                    parameterName.Items.Add("AutomationId");
+                    parameterName.Items.Add("ClassName");
+                    parameterName.Items.Add("FrameworkId");
+                    parameterName.Items.Add("HasKeyboardFocus");
+                    parameterName.Items.Add("HelpText");
+                    parameterName.Items.Add("IsContentElement");
+                    parameterName.Items.Add("IsControlElement");
+                    parameterName.Items.Add("IsEnabled");
+                    parameterName.Items.Add("IsKeyboardFocusable");
+                    parameterName.Items.Add("IsOffscreen");
+                    parameterName.Items.Add("IsPassword");
+                    parameterName.Items.Add("IsRequiredForForm");
+                    parameterName.Items.Add("ItemStatus");
+                    parameterName.Items.Add("ItemType");
+                    parameterName.Items.Add("LocalizedControlType");
+                    parameterName.Items.Add("Name");
+                    parameterName.Items.Add("NativeWindowHandle");
+                    parameterName.Items.Add("ProcessID");
+
+                    //assign cell as a combobox
+                    ifActionParameterBox.Rows[1].Cells[1] = parameterName;
+
+                    taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
+                    helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+                    helperControl.ForeColor = Color.AliceBlue;
+                    helperControl.Name = "guirecorder_helper";
+                    helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+                    helperControl.CommandDisplay = "Element Recorder";
+                    helperControl.Click += ShowIfElementRecorder;
+
+                    var ifBoxIndex = flw_InputVariables.Controls.IndexOf(ifActionParameterBox);
+                    flw_InputVariables.Controls.Add(helperControl);
+                    flw_InputVariables.Controls.SetChildIndex(helperControl, ifBoxIndex);
+
+
+                    break;
+
                 default:
                     break;
             }
@@ -1075,6 +1134,13 @@ namespace taskt.UI.Forms
 
                 actionParameterView.Rows[0].Cells[1] = mouseClickBox;
 
+            }
+            else if(selectedAction.Text == "Check If Element Exists")
+            {
+
+                actionParameters.Rows.Add("Apply To Variable", "");
+
+               
             }
             else
             {
@@ -1418,6 +1484,44 @@ namespace taskt.UI.Forms
 
             this.WindowState = FormWindowState.Normal;
             this.BringToFront();
+
+
+
+        }
+        private void ShowIfElementRecorder(object sender, EventArgs e)
+        {
+
+            //get command reference
+            Core.AutomationCommands.UIAutomationCommand cmd = new Core.AutomationCommands.UIAutomationCommand();
+
+            //create recorder
+            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Supplemental.frmThickAppElementRecorder();
+            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
+
+            //show form
+            newElementRecorder.ShowDialog();
+
+            this.WindowState = FormWindowState.Normal;
+            this.BringToFront();
+
+            var sb = new StringBuilder();
+            sb.AppendLine("Element Properties Found!");
+            sb.AppendLine(Environment.NewLine);
+            sb.AppendLine("Element Search Method - Element Search Parameter");
+            foreach (DataRow rw in cmd.v_UIASearchParameters.Rows)
+            {
+                if (rw.ItemArray[2].ToString().Trim() == string.Empty)
+                    continue;
+
+                sb.AppendLine(rw.ItemArray[1].ToString() + " - " + rw.ItemArray[2].ToString());
+            }
+
+            DataGridView ifActionBox = (DataGridView)flw_InputVariables.Controls["v_IfActionParameterTable"];
+            ifActionBox.Rows[0].Cells[1].Value = newElementRecorder.cboWindowTitle.Text;
+
+
+            MessageBox.Show(sb.ToString());
+
 
 
 
