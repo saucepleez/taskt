@@ -3189,7 +3189,21 @@ namespace taskt.Core.AutomationCommands
             {
                 Visible = true
             };
-            engine.AppInstances.Add(v_InstanceName, newExcelSession);
+
+            try
+            {
+                engine.AppInstances.Add(v_InstanceName, newExcelSession);
+            }
+            catch (ArgumentException)
+            {
+                throw new Exception("You cannot share application instance names. Ensure that Instance ID being used are unique.");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+           
         }
         public override string GetDisplayValue()
         {
