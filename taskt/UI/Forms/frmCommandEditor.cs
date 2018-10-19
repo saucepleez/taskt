@@ -482,6 +482,8 @@ namespace taskt.UI.Forms
                             InputControl.Items.Add(scriptVariable.VariableName);
                     }
 
+                    InputControl.Width = 350;
+
                     //if (scriptVariables.Count == 0)
                     //{
                     //    MessageBox.Show("The selected command requires a user variable but no user variables were found! To create a user variable, please select the 'Variables' button on the main form to define a new variable!", "No User-Defined Variables Found");
