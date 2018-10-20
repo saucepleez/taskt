@@ -341,7 +341,7 @@ namespace taskt.UI.Forms
                 InputControl.Height = 30;
                 InputControl.Width = 250;
                 InputControl.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-
+                InputControl.Name = inputField.Name;
                 //loop through options
                 foreach (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUISelectionOption option in selectionOptions)
                 {
@@ -361,6 +361,10 @@ namespace taskt.UI.Forms
                 else if (inputField.Name == "v_AutomationType")
                 {
                     control.SelectedIndexChanged += UIAType_SelectionChangeCommitted;
+                }
+                else if(inputField.Name == "v_SeleniumSearchType")
+                {
+                    control.SelectedIndexChanged += seleniumSearchType_SelectionChangeCommitted;
                 }
             }
             else
@@ -853,7 +857,7 @@ namespace taskt.UI.Forms
                     actionParameters.Rows.Add("Variable Name");
 
                     break;
-
+            
                 default:
                     break;
             }
@@ -1018,6 +1022,36 @@ namespace taskt.UI.Forms
                     break;
             }
         }
+        private void seleniumSearchType_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox seleniumSearchType = (ComboBox)sender;
+
+            ComboBox seleniumActionBox = (ComboBox)flw_InputVariables.Controls["v_SeleniumElementAction"];
+
+            if (seleniumActionBox == null)
+                return;
+
+            seleniumActionBox.Items.Clear();
+
+            if (seleniumSearchType.Text.Contains("Elements"))
+            {
+                seleniumActionBox.Items.Add("Get Matching Elements");
+            }
+            else
+            {
+                seleniumActionBox.Items.Add("Invoke Click");
+                seleniumActionBox.Items.Add("Left Click");
+                seleniumActionBox.Items.Add("Right Click");
+                seleniumActionBox.Items.Add("Middle Click");
+                seleniumActionBox.Items.Add("Double Left Click");
+                seleniumActionBox.Items.Add("Clear Element");
+                seleniumActionBox.Items.Add("Set Text");
+                seleniumActionBox.Items.Add("Get Text");
+                seleniumActionBox.Items.Add("Wait For Element To Exist");
+
+            }
+        }
+
         private void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
             ComboBox webAction = (ComboBox)sender;
@@ -1070,6 +1104,7 @@ namespace taskt.UI.Forms
                     break;
 
                 case "Get Text":
+                case "Get Matching Elements":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
                     variableHelper.Show();
@@ -1386,8 +1421,8 @@ namespace taskt.UI.Forms
 
                 //find current command and add to underlying class
                 Core.AutomationCommands.SendMouseMoveCommand cmd = (Core.AutomationCommands.SendMouseMoveCommand)selectedCommand;
-                cmd.v_XMousePosition = frmShowCursorPos.xPos;
-                cmd.v_YMousePosition = frmShowCursorPos.yPos;
+                cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
+                cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
             }
         }
         private void ShowCodeBuilder(object sender, EventArgs e)

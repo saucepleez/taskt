@@ -219,7 +219,7 @@ namespace taskt.Core.Script
         /// <summary>
         /// retrieve value of the variable
         /// </summary>
-        public string GetDisplayValue()
+        public string GetDisplayValue(string requiredProperty = "")
         {
             if (VariableValue is string)
             {
@@ -230,6 +230,7 @@ namespace taskt.Core.Script
                 List<string> requiredValue = (List<string>)VariableValue;
                 return requiredValue[CurrentPosition];
             }
+           
         }
     }
 

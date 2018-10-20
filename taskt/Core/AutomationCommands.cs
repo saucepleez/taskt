@@ -31,6 +31,9 @@ using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using OpenQA.Selenium;
+using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace taskt.Core.AutomationCommands
 {
@@ -451,8 +454,8 @@ namespace taskt.Core.AutomationCommands
 
                         SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand
                         {
-                            v_XMousePosition = (elementXposition + ieClientLocation.left + 10) + userXAdjust, // + 10 gives extra padding
-                            v_YMousePosition = (elementYposition + ieClientLocation.top + 90) + userYAdjust, // +90 accounts for title bar height
+                            v_XMousePosition = ((elementXposition + ieClientLocation.left + 10) + userXAdjust).ToString(), // + 10 gives extra padding
+                            v_YMousePosition = ((elementYposition + ieClientLocation.top + 90) + userYAdjust).ToString(), // +90 accounts for title bar height
                             v_MouseClick = v_WebAction
                         };
                         newMouseMove.RunCommand(sender);
@@ -942,6 +945,12 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By XPath")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By ID")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Tag Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Class Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By CSS Selector")]
         [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -962,7 +971,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Matching Elements")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**")]
@@ -1002,7 +1011,7 @@ namespace taskt.Core.AutomationCommands
             {
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
 
-                OpenQA.Selenium.IWebElement element = null;
+                dynamic element = null;
 
                 if (v_SeleniumElementAction == "Wait For Element To Exist")
                 {
@@ -1043,6 +1052,17 @@ namespace taskt.Core.AutomationCommands
 
                     element = FindElement(seleniumInstance);
                 }
+
+
+                //if (element is OpenQA.Selenium.IWebElement)
+                //{
+                //    element = (OpenQA.Selenium.IWebElement)element;
+                //}
+                //else
+                //{
+                //    element = (List<OpenQA.Selenium.IWebElement>)element;
+                //}
+
 
 
                 switch (v_SeleniumElementAction)
@@ -1146,6 +1166,37 @@ namespace taskt.Core.AutomationCommands
                         elementValue.StoreInUserVariable(sender, VariableName);
 
                         break;
+                    case "Get Matching Elements":
+                        var variableName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                               where rw.Field<string>("Parameter Name") == "Variable Name"
+                                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                        var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+
+                        if (requiredComplexVariable == null)
+                        {
+                            engine.VariableList.Add(new Script.ScriptVariable() { VariableName = variableName, CurrentPosition = 0 });
+                            requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+                        }
+
+          
+                        //set json settings
+                        JsonSerializerSettings settings = new JsonSerializerSettings();
+                        settings.Error = (serializer, err) => {
+                            err.ErrorContext.Handled = true;
+                        };
+
+                        //create json list
+                        List<string> jsonList = new List<string>();
+                        foreach (OpenQA.Selenium.IWebElement item in element)
+                        {
+                            var json = Newtonsoft.Json.JsonConvert.SerializeObject(item, settings);
+                            jsonList.Add(json);          
+                        }
+
+                        requiredComplexVariable.VariableValue = jsonList;
+
+                        break;
                     case "Clear Element":
                         element.Clear();
                         break;
@@ -1159,9 +1210,9 @@ namespace taskt.Core.AutomationCommands
             }
         }
 
-        private OpenQA.Selenium.IWebElement FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance)
+        private object FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance)
         {
-            OpenQA.Selenium.IWebElement element = null;
+            object element = null;
 
             switch (v_SeleniumSearchType)
             {
@@ -1187,6 +1238,30 @@ namespace taskt.Core.AutomationCommands
                 case "Find Element By CSS Selector":
                     element = seleniumInstance.FindElementByCssSelector(v_SeleniumSearchParameter);
                     break;
+                case "Find Elements By XPath":
+                    element = seleniumInstance.FindElementsByXPath(v_SeleniumSearchParameter).ToList();
+                    break;
+
+                case "Find Elements By ID":
+                    element = seleniumInstance.FindElementsById(v_SeleniumSearchParameter).ToList();
+                    break;
+
+                case "Find Elements By Name":
+                    element = seleniumInstance.FindElementsByName(v_SeleniumSearchParameter).ToList();
+                    break;
+
+                case "Find Elements By Tag Name":
+                    element = seleniumInstance.FindElementsByTagName(v_SeleniumSearchParameter).ToList();
+                    break;
+
+                case "Find Elements By Class Name":
+                    element = seleniumInstance.FindElementsByClassName(v_SeleniumSearchParameter).ToList();
+                    break;
+
+                case "Find Elements By CSS Selector":
+                    element = seleniumInstance.FindElementsByCssSelector(v_SeleniumSearchParameter).ToList();
+                    break;
+
                 default:
                     throw new Exception("Search Type was not found");
             }
@@ -2157,14 +2232,14 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the mouse, 0 starts at the left and goes to the right")]
         [Attributes.PropertyAttributes.SampleUsage("0")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
-        public int v_XMousePosition { get; set; }
+        public string v_XMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes down")]
         [Attributes.PropertyAttributes.SampleUsage("0")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
-        public int v_YMousePosition { get; set; }
+        public string v_YMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("None")]
@@ -2192,8 +2267,12 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            User32Functions.SetCursorPosition(v_XMousePosition, v_YMousePosition);
-            User32Functions.SendMouseClick(v_MouseClick, v_XMousePosition, v_YMousePosition);
+
+            var intX = int.Parse(v_XMousePosition.ConvertToUserVariable(sender));
+            var intY = int.Parse(v_YMousePosition.ConvertToUserVariable(sender));
+
+            User32Functions.SetCursorPosition(intX, intY);
+            User32Functions.SendMouseClick(v_MouseClick, intX, intY);
         }
 
         public override string GetDisplayValue()
@@ -2366,8 +2445,8 @@ namespace taskt.Core.AutomationCommands
             //send mousemove command
             var newMouseMove = new SendMouseMoveCommand
             {
-                v_XMousePosition = (int)newPoint.X,
-                v_YMousePosition = (int)newPoint.Y,
+                v_XMousePosition = newPoint.X.ToString(),
+                v_YMousePosition = newPoint.Y.ToString(),
                 v_MouseClick = v_MouseClick
             };
             newMouseMove.RunCommand(sender);
@@ -2710,8 +2789,8 @@ namespace taskt.Core.AutomationCommands
                 //send mousemove command
                 var newMouseMove = new SendMouseMoveCommand
                 {
-                    v_XMousePosition = (int)newPoint.X + xAdjustInt,
-                    v_YMousePosition = (int)newPoint.Y + yAdjustInt,
+                    v_XMousePosition = (newPoint.X + xAdjustInt).ToString(),
+                    v_YMousePosition = (newPoint.Y + yAdjustInt).ToString(),
                     v_MouseClick = clickType
                 };
 
@@ -3021,9 +3100,22 @@ namespace taskt.Core.AutomationCommands
                 throw new Exception("Complex Variable '" + v_LoopParameter + "' or '" + v_LoopParameter.ApplyVariableFormatting() + "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
+            dynamic listToLoop;
+            if (complexVariable.VariableValue is List<string>)
+            {
+             listToLoop = (List<string>)complexVariable.VariableValue;
+            }
+            else if (complexVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
+            {
+              listToLoop = (List<OpenQA.Selenium.IWebElement>)complexVariable.VariableValue;
+            }
+            else
+            {
+                throw new Exception("Complex Variable List Type<T> Not Supported");
+            }
 
-            var listToLoop = (List<string>)complexVariable.VariableValue;
-            loopTimes = listToLoop.Count();
+
+            loopTimes = listToLoop.Count;
 
 
             for (int i = 0; i < loopTimes; i++)
@@ -3037,7 +3129,13 @@ namespace taskt.Core.AutomationCommands
                 {
                     if (engine.IsCancellationPending)
                         return;
+
+
                     engine.ExecuteCommand(cmd);
+
+
+                    if (engine.CurrentLoopCancelled)
+                        return;
                 }
 
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
@@ -5415,8 +5513,8 @@ namespace taskt.Core.AutomationCommands
                                 //move mouse to position
                                 var mouseMove = new SendMouseMoveCommand
                                 {
-                                    v_XMousePosition = topLeftX + (v_xOffsetAdjustment),
-                                    v_YMousePosition = topLeftY + (v_xOffsetAdjustment),
+                                    v_XMousePosition = (topLeftX + (v_xOffsetAdjustment)).ToString(),
+                                    v_YMousePosition = (topLeftY + (v_xOffsetAdjustment)).ToString(),
                                     v_MouseClick = v_MouseClick
                                 };
 
@@ -6070,6 +6168,9 @@ namespace taskt.Core.AutomationCommands
         }
     }
     #endregion
+
+
+   
 
 }
 
