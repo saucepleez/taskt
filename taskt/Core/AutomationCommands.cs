@@ -1186,6 +1186,8 @@ namespace taskt.Core.AutomationCommands
                             err.ErrorContext.Handled = true;
                         };
 
+                      settings.Formatting = Formatting.Indented;
+
                         //create json list
                         List<string> jsonList = new List<string>();
                         foreach (OpenQA.Selenium.IWebElement item in element)

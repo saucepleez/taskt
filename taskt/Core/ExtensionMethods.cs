@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -33,7 +34,7 @@ namespace taskt.Core
             foreach (var potentialVariable in potentialVariables)
             {
 
-                //advanced element handling
+                //complex variable handling
                 if (potentialVariable.Contains("=>"))
                 {
                     //split by json select token pointer
@@ -59,10 +60,10 @@ namespace taskt.Core
                             if (matchingVar != null)
                             {
                                 //get the value from the list
-                                var seleniumElementValue = matchingVar.GetDisplayValue();
+                                var complexJson = matchingVar.GetDisplayValue();
 
                                 //deserialize into json object
-                                JObject parsedObject = JObject.Parse(seleniumElementValue);
+                                JObject parsedObject = JObject.Parse(complexJson);
 
                                 //attempt to match based on user defined pattern
                                 var match = parsedObject.SelectToken(jsonPattern);
@@ -87,9 +88,21 @@ namespace taskt.Core
 
 
                 if (potentialVariable.Length == 0)
-                                    continue; 
-          
-                // break here; //todo -- this needs to resolve a variable with the name Row.Item(0);
+                                    continue;
+
+
+                if (potentialVariable == "taskt.EngineContext")
+                {
+                    //set json settings
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings.Error = (serializer, err) => {
+                        err.ErrorContext.Handled = true;
+                    };
+                    settings.Formatting = Formatting.Indented;
+
+                    varCheck.VariableValue = Newtonsoft.Json.JsonConvert.SerializeObject(engine, settings);
+                }
+
 
                 if (varCheck != null)
                 {

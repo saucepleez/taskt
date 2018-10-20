@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace taskt.Core
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
         private bool IsScriptPaused { get; set; }
+        [JsonIgnore]
         public UI.Forms.frmScriptEngine tasktEngineUI { get; set; }
         private System.Diagnostics.Stopwatch sw { get; set; }
         public EngineStatus CurrentStatus { get; set; }
