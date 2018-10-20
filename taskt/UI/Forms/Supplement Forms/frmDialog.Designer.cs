@@ -36,7 +36,7 @@
             this.lblAutoClose = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
-            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.txtMessage = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -90,7 +90,7 @@
             this.lblAutoClose.ForeColor = System.Drawing.Color.DarkOrange;
             this.lblAutoClose.Location = new System.Drawing.Point(3, 0);
             this.lblAutoClose.Name = "lblAutoClose";
-            this.lblAutoClose.Size = new System.Drawing.Size(660, 23);
+            this.lblAutoClose.Size = new System.Drawing.Size(662, 23);
             this.lblAutoClose.TabIndex = 19;
             this.lblAutoClose.Text = "auto close label";
             this.lblAutoClose.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -111,7 +111,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(666, 243);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(668, 373);
             this.tableLayoutPanel1.TabIndex = 20;
             // 
             // pnlControlContainer
@@ -120,34 +120,30 @@
             this.pnlControlContainer.Controls.Add(this.uiBtnOk);
             this.pnlControlContainer.Controls.Add(this.uiBtnCancel);
             this.pnlControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlControlContainer.Location = new System.Drawing.Point(0, 181);
+            this.pnlControlContainer.Location = new System.Drawing.Point(0, 311);
             this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
             this.pnlControlContainer.Name = "pnlControlContainer";
-            this.pnlControlContainer.Size = new System.Drawing.Size(666, 62);
+            this.pnlControlContainer.Size = new System.Drawing.Size(668, 62);
             this.pnlControlContainer.TabIndex = 19;
             // 
             // txtMessage
             // 
-            this.txtMessage.BackColor = System.Drawing.Color.White;
             this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtMessage.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMessage.ForeColor = System.Drawing.Color.SteelBlue;
             this.txtMessage.Location = new System.Drawing.Point(3, 26);
-            this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.ReadOnly = true;
-            this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMessage.Size = new System.Drawing.Size(660, 152);
+            this.txtMessage.Size = new System.Drawing.Size(662, 282);
             this.txtMessage.TabIndex = 20;
-            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMessage_KeyDown);
+            this.txtMessage.Text = "";
             // 
             // frmDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(666, 243);
+            this.ClientSize = new System.Drawing.Size(668, 373);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDialog";
@@ -172,6 +168,6 @@
         private System.Windows.Forms.Label lblAutoClose;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel pnlControlContainer;
-        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.RichTextBox txtMessage;
     }
 }
