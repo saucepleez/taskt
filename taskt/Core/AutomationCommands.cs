@@ -4758,6 +4758,7 @@ namespace taskt.Core.AutomationCommands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Active Window Name Is")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
@@ -4855,6 +4856,24 @@ namespace taskt.Core.AutomationCommands
                         ifResult = (cdecValue1 <= cdecValue2);
                         break;
                 }
+            }
+            else if (v_IfActionType == "Variable Has Value")
+            {
+                string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Variable Name"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
+
+                if (!string.IsNullOrEmpty(actualVariable))
+                {
+                    ifResult = true;
+                }
+                else
+                {
+                    ifResult = false;
+                }
+
             }
             else if (v_IfActionType == "Error Occured")
             {
@@ -5086,6 +5105,14 @@ namespace taskt.Core.AutomationCommands
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (" + value1 + " " + operand + " " + value2 + ")";
+
+                case "Variable Has Value":
+                    string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Variable Name"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If (Variable " + variableName + " Has Value)";
+
                 case "Error Occured":
 
                     string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()

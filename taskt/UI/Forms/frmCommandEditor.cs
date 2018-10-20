@@ -911,6 +911,14 @@ namespace taskt.UI.Forms
                     ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
 
                     break;
+                case "Variable Has Value":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Variable Name", "");
+
+
+
+                    break;
                 case "Error Occured":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
