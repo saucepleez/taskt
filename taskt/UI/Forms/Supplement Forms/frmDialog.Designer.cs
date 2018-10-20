@@ -30,52 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDialog));
-            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.autoCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.lblAutoClose = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
             this.txtMessage = new System.Windows.Forms.RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
+            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.SuspendLayout();
-            // 
-            // uiBtnOk
-            // 
-            this.uiBtnOk.BackColor = System.Drawing.Color.Transparent;
-            this.uiBtnOk.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiBtnOk.DisplayText = "Ok";
-            this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
-            this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOk.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOk.Image")));
-            this.uiBtnOk.IsMouseOver = false;
-            this.uiBtnOk.Location = new System.Drawing.Point(1, 3);
-            this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.uiBtnOk.Name = "uiBtnOk";
-            this.uiBtnOk.Size = new System.Drawing.Size(88, 49);
-            this.uiBtnOk.TabIndex = 16;
-            this.uiBtnOk.TabStop = false;
-            this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
-            // 
-            // uiBtnCancel
-            // 
-            this.uiBtnCancel.BackColor = System.Drawing.Color.Transparent;
-            this.uiBtnCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiBtnCancel.DisplayText = "Cancel";
-            this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.White;
-            this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
-            this.uiBtnCancel.IsMouseOver = false;
-            this.uiBtnCancel.Location = new System.Drawing.Point(95, 3);
-            this.uiBtnCancel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.uiBtnCancel.Name = "uiBtnCancel";
-            this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
-            this.uiBtnCancel.TabIndex = 17;
-            this.uiBtnCancel.TabStop = false;
-            this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // autoCloseTimer
             // 
@@ -137,6 +103,41 @@
             this.txtMessage.Size = new System.Drawing.Size(662, 282);
             this.txtMessage.TabIndex = 20;
             this.txtMessage.Text = "";
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMessage_KeyDown);
+            // 
+            // uiBtnOk
+            // 
+            this.uiBtnOk.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnOk.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnOk.DisplayText = "Ok";
+            this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnOk.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOk.Image")));
+            this.uiBtnOk.IsMouseOver = false;
+            this.uiBtnOk.Location = new System.Drawing.Point(1, 3);
+            this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.uiBtnOk.Name = "uiBtnOk";
+            this.uiBtnOk.Size = new System.Drawing.Size(88, 49);
+            this.uiBtnOk.TabIndex = 16;
+            this.uiBtnOk.TabStop = false;
+            this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
+            // 
+            // uiBtnCancel
+            // 
+            this.uiBtnCancel.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnCancel.DisplayText = "Cancel";
+            this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
+            this.uiBtnCancel.IsMouseOver = false;
+            this.uiBtnCancel.Location = new System.Drawing.Point(95, 3);
+            this.uiBtnCancel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.uiBtnCancel.Name = "uiBtnCancel";
+            this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
+            this.uiBtnCancel.TabIndex = 17;
+            this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // frmDialog
             // 
@@ -151,11 +152,11 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmDialog_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmDialog_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.pnlControlContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.ResumeLayout(false);
 
         }
