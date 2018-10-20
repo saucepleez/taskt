@@ -54,6 +54,8 @@
             this.lstSteppingCommands.Name = "lstSteppingCommands";
             this.lstSteppingCommands.Size = new System.Drawing.Size(605, 123);
             this.lstSteppingCommands.TabIndex = 0;
+
+            this.lstSteppingCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstSteppingCommands_MouseDoubleClick);
             // 
             // tmrNotify
             // 
@@ -171,7 +173,6 @@
             this.Name = "frmScriptEngine";
             this.Text = "Bot Engine";
             this.TopMost = true;
-  
             this.Load += new System.EventHandler(this.frmProcessingStatus_Load);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnPause)).EndInit();
