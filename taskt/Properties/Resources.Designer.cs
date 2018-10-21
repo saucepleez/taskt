@@ -73,6 +73,26 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap action_bar_clear {
+            get {
+                object obj = ResourceManager.GetObject("action_bar_clear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap action_bar_import {
+            get {
+                object obj = ResourceManager.GetObject("action-bar-import", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap action_bar_new {
             get {
                 object obj = ResourceManager.GetObject("action_bar_new", resourceCulture);
@@ -126,6 +146,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap action_bar_save {
             get {
                 object obj = ResourceManager.GetObject("action_bar_save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap action_bar_saveas {
+            get {
+                object obj = ResourceManager.GetObject("action-bar-saveas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
