@@ -1553,11 +1553,20 @@ namespace taskt.UI.Forms
                 //get parameters
                 var reqdParams = m.GetParameters();
 
-                cmd.v_MethodParameters.Rows.Clear();
-                foreach (var param in reqdParams)
+                if (reqdParams.Length > 0)
                 {
-                    cmd.v_MethodParameters.Rows.Add(param.Name, "");
+                    cmd.v_MethodParameters.Rows.Clear();
+                    foreach (var param in reqdParams)
+                    {
+                        cmd.v_MethodParameters.Rows.Add(param.Name, "");
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required");
+                      
+                }
+             
             }
             catch (Exception ex)
             {
