@@ -265,6 +265,13 @@ namespace taskt.UI.Forms
                                 helperControl.Click += GenerateDLLParameters;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
+                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
+                                //show variable selector
+                                helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
+                                helperControl.CommandDisplay = "Launch DLL Explorer";
+                                helperControl.Click += ShowDLLExplorer;
+                                flw_InputVariables.Controls.Add(helperControl);
+                                break;
                             default:
                                 MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                                 break;
@@ -1559,6 +1566,11 @@ namespace taskt.UI.Forms
         
 
 
+        }
+           private void ShowDLLExplorer(object sender, EventArgs e)
+        {
+            Supplemental.frmDLLExplorer dllExplorer = new Supplemental.frmDLLExplorer();
+            dllExplorer.Show();
         }
         private void ShowElementRecorder(object sender, EventArgs e)
         {

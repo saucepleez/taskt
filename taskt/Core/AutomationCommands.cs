@@ -5740,6 +5740,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the DLL File")]
         [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.dll or [vDLLFilePath]")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer)]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]

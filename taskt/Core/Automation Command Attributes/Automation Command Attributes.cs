@@ -111,7 +111,8 @@ namespace taskt.Core.AutomationCommands.Attributes.PropertyAttributes
             ShowCodeBuilder,
             ShowMouseCaptureHelper,
             ShowElementRecorder,
-            GenerateDLLParameters
+            GenerateDLLParameters,
+            ShowDLLExplorer
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
