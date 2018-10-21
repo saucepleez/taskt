@@ -1539,6 +1539,9 @@ namespace taskt.UI.Forms
             var methodName = flw_InputVariables.Controls["v_MethodName"].Text;
             DataGridView parameterBox = (DataGridView)flw_InputVariables.Controls["v_MethodParameters"];
 
+            //clear all rows
+            cmd.v_MethodParameters.Rows.Clear();
+
             //Load Assembly
             try
             {
