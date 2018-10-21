@@ -1539,6 +1539,9 @@ namespace taskt.UI.Forms
             var methodName = flw_InputVariables.Controls["v_MethodName"].Text;
             DataGridView parameterBox = (DataGridView)flw_InputVariables.Controls["v_MethodParameters"];
 
+            //clear all rows
+            cmd.v_MethodParameters.Rows.Clear();
+
             //Load Assembly
             try
             {
@@ -1570,7 +1573,7 @@ namespace taskt.UI.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error generating the parameters.  Please ensure the properties are valid.");
+                MessageBox.Show("There was an error generating the parameters: " + ex.ToString());
             }
         
 
