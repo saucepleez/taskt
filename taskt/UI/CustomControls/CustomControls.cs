@@ -373,6 +373,7 @@ namespace taskt.UI
             uiImages.Add("RenameFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
             return uiImages;
         }
         public static ImageList UIImageList()

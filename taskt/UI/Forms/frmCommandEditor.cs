@@ -258,7 +258,13 @@ namespace taskt.UI.Forms
                                 helperControl.Click += ShowElementRecorder;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
-
+                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
+                                //show variable selector
+                                helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
+                                helperControl.CommandDisplay = "Generate Parameters";
+                                helperControl.Click += GenerateDLLParameters;
+                                flw_InputVariables.Controls.Add(helperControl);
+                                break;
                             default:
                                 MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                                 break;
@@ -495,7 +501,7 @@ namespace taskt.UI.Forms
 
 
                 }
-                else if ((inputField.Name == "v_WebActionParameterTable") || (inputField.Name == "v_IfActionParameterTable"))
+                else if ((inputField.Name == "v_WebActionParameterTable") || (inputField.Name == "v_IfActionParameterTable") || (inputField.Name == "v_MethodParameters"))
                 {
                     InputControl = new DataGridView();
 
@@ -535,6 +541,12 @@ namespace taskt.UI.Forms
                     {
                         var cmd = (Core.AutomationCommands.BeginIfCommand)currentCommand;
                         InputControl.DataSource = cmd.v_IfActionParameterTable;
+                        InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
+                    }
+                    else if (currentCommand is Core.AutomationCommands.ExecuteDLLCommand)
+                    {
+                        var cmd = (Core.AutomationCommands.ExecuteDLLCommand)currentCommand;
+                        InputControl.DataSource = cmd.v_MethodParameters;
                         InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                     }
                 }
@@ -1510,6 +1522,43 @@ namespace taskt.UI.Forms
            
 
             }
+        }
+        private void GenerateDLLParameters(object sender, EventArgs e)
+        {
+            Core.AutomationCommands.ExecuteDLLCommand cmd = (Core.AutomationCommands.ExecuteDLLCommand)selectedCommand;
+
+            var filePath = flw_InputVariables.Controls["v_FilePath"].Text;
+            var className = flw_InputVariables.Controls["v_ClassName"].Text;
+            var methodName = flw_InputVariables.Controls["v_MethodName"].Text;
+            DataGridView parameterBox = (DataGridView)flw_InputVariables.Controls["v_MethodParameters"];
+
+            //Load Assembly
+            try
+            {
+                Assembly requiredAssembly = Assembly.LoadFrom(filePath);
+
+                //get type
+                Type t = requiredAssembly.GetType(className);
+
+                //get method
+                MethodInfo m = t.GetMethod(methodName);
+
+                //get parameters
+                var reqdParams = m.GetParameters();
+
+                cmd.v_MethodParameters.Rows.Clear();
+                foreach (var param in reqdParams)
+                {
+                    cmd.v_MethodParameters.Rows.Add(param.Name, "");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("There was an error generating the parameters.  Please ensure the properties are valid.");
+            }
+        
+
+
         }
         private void ShowElementRecorder(object sender, EventArgs e)
         {
