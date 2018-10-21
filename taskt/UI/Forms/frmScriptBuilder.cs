@@ -1547,8 +1547,8 @@ namespace taskt.UI.Forms
 
             lastAntiIdleEvent = DateTime.Now;
             var mouseMove = new Core.AutomationCommands.SendMouseMoveCommand();
-            mouseMove.v_XMousePosition = Cursor.Position.X + 1;
-            mouseMove.v_YMousePosition = Cursor.Position.Y + 1;
+            mouseMove.v_XMousePosition = (Cursor.Position.X + 1).ToString();
+            mouseMove.v_YMousePosition = (Cursor.Position.Y + 1).ToString();
             Notify("Anti-Idle Triggered");
         }
 
@@ -1629,7 +1629,7 @@ namespace taskt.UI.Forms
         }
         private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/wiki");
+            System.Diagnostics.Process.Start("https://wiki.taskt.net/");
         }
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

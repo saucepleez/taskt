@@ -110,7 +110,9 @@ namespace taskt.Core.AutomationCommands.Attributes.PropertyAttributes
             ShowImageRecogitionHelper,
             ShowCodeBuilder,
             ShowMouseCaptureHelper,
-            ShowElementRecorder
+            ShowElementRecorder,
+            GenerateDLLParameters,
+            ShowDLLExplorer
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]

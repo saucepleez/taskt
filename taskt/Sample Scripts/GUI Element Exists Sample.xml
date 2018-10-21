@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Declare Variables" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vWindowName" v_Input="Calculator" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vHandleName" v_Input="num9Button" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Launch Calculator" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="calc.exe" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Method #1 - UIA Check (Advanced Filtering)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Run UI Automation Command to check if UI Element Exists" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationCommand" CommandName="UIAutomationCommand" IsCommented="false" SelectionName="UI Automation" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_AutomationType="Check If Element Exists">
+        <v_WindowName>[vWindowName]</v_WindowName>
+        <v_UIASearchParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="UIASearc9Para30Table101118.093025">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Enabled" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIASearc9Para30Table101118.093025" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="UIASearc9Para30Table101118.093025" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930251" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>AcceleratorKey</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930252" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>AccessKey</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930253" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Enabled>True</Enabled>
+                <Parameter_x0020_Name>AutomationId</Parameter_x0020_Name>
+                <Parameter_x0020_Value>[vHandleName]</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930254" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>ClassName</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Button</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930255" msdata:rowOrder="4" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>FrameworkId</Parameter_x0020_Name>
+                <Parameter_x0020_Value>XAML</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930256" msdata:rowOrder="5" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>HasKeyboardFocus</Parameter_x0020_Name>
+                <Parameter_x0020_Value>False</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930257" msdata:rowOrder="6" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>HelpText</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930258" msdata:rowOrder="7" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>IsContentElement</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.0930259" msdata:rowOrder="8" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>IsControlElement</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302510" msdata:rowOrder="9" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>IsEnabled</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302511" msdata:rowOrder="10" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>IsKeyboardFocusable</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302512" msdata:rowOrder="11" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>IsOffscreen</Parameter_x0020_Name>
+                <Parameter_x0020_Value>False</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302513" msdata:rowOrder="12" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>IsPassword</Parameter_x0020_Name>
+                <Parameter_x0020_Value>False</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302514" msdata:rowOrder="13" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>IsRequiredForForm</Parameter_x0020_Name>
+                <Parameter_x0020_Value>False</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302515" msdata:rowOrder="14" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>ItemStatus</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302516" msdata:rowOrder="15" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>ItemType</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302517" msdata:rowOrder="16" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>LocalizedControlType</Parameter_x0020_Name>
+                <Parameter_x0020_Value>button</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302518" msdata:rowOrder="17" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Five</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302519" msdata:rowOrder="18" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>NativeWindowHandle</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+              <UIASearc9Para30Table101118.093025 diffgr:id="UIASearc9Para30Table101118.09302520" msdata:rowOrder="19" diffgr:hasChanges="inserted">
+                <Enabled>False</Enabled>
+                <Parameter_x0020_Name>ProcessId</Parameter_x0020_Name>
+                <Parameter_x0020_Value>17196</Parameter_x0020_Value>
+              </UIASearc9Para30Table101118.093025>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_UIASearchParameters>
+        <v_UIAActionParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="UIAAcPionPara30Table101118.093025">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAAcPionPara30Table101118.093025" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="UIAAcPionPara30Table101118.093025" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <UIAAcPionPara30Table101118.093025 diffgr:id="UIAAcPionPara30Table101118.0930251" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Apply To Variable</Parameter_x0020_Name>
+                <Parameter_x0020_Value>[vResult]</Parameter_x0020_Value>
+              </UIAAcPionPara30Table101118.093025>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_UIAActionParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Show Result" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The search for '[vHandleName]' in window '[vWindowName]' resulted in a [vResult] result." v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara31Table101118.093102">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara31Table101118.093102" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara31Table101118.093102" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara31Table101118.093102 diffgr:id="I7AcPionPara31Table101118.0931021" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>[vResult]</Parameter_x0020_Value>
+              </I7AcPionPara31Table101118.093102>
+              <I7AcPionPara31Table101118.093102 diffgr:id="I7AcPionPara31Table101118.0931022" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+              </I7AcPionPara31Table101118.093102>
+              <I7AcPionPara31Table101118.093102 diffgr:id="I7AcPionPara31Table101118.0931023" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>TRUE</Parameter_x0020_Value>
+              </I7AcPionPara31Table101118.093102>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" v_Comment="It was found" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Element Exists! Do something now you know it exists!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" v_Comment="It was not found" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Element Does Not Exist! Do something else since it does not exist!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="18" PauseBeforeExeucution="false" v_Comment="Method #2 - If Check (Basic GUI Check)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="GUI Element Exists">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I5AcPionPara41Table101118.084156">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I5AcPionPara41Table101118.084156" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I5AcPionPara41Table101118.084156" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I5AcPionPara41Table101118.084156 diffgr:id="I5AcPionPara41Table101118.0841561" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Window Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>[vWindowName]</Parameter_x0020_Value>
+              </I5AcPionPara41Table101118.084156>
+              <I5AcPionPara41Table101118.084156 diffgr:id="I5AcPionPara41Table101118.0841562" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Element Search Method</Parameter_x0020_Name>
+                <Parameter_x0020_Value>AutomationId</Parameter_x0020_Value>
+              </I5AcPionPara41Table101118.084156>
+              <I5AcPionPara41Table101118.084156 diffgr:id="I5AcPionPara41Table101118.0841563" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Element Search Parameter</Parameter_x0020_Name>
+                <Parameter_x0020_Value>[vHandleName]</Parameter_x0020_Value>
+              </I5AcPionPara41Table101118.084156>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" v_Comment="It was found" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Element Exists! Do something now you know it exists!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="23" PauseBeforeExeucution="false" v_Comment="It was not found" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Element Does Not Exist! Do something else since it does not exist!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="25" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vHandleName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vWindowName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

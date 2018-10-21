@@ -30,18 +30,80 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDialog));
-            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.autoCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.lblAutoClose = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
-            this.txtMessage = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
+            this.txtMessage = new System.Windows.Forms.RichTextBox();
+            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.SuspendLayout();
+            // 
+            // autoCloseTimer
+            // 
+            this.autoCloseTimer.Tick += new System.EventHandler(this.autoCloseTimer_Tick);
+            // 
+            // lblAutoClose
+            // 
+            this.lblAutoClose.AutoSize = true;
+            this.lblAutoClose.BackColor = System.Drawing.Color.Transparent;
+            this.lblAutoClose.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblAutoClose.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAutoClose.ForeColor = System.Drawing.Color.DarkOrange;
+            this.lblAutoClose.Location = new System.Drawing.Point(3, 0);
+            this.lblAutoClose.Name = "lblAutoClose";
+            this.lblAutoClose.Size = new System.Drawing.Size(662, 23);
+            this.lblAutoClose.TabIndex = 19;
+            this.lblAutoClose.Text = "auto close label";
+            this.lblAutoClose.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAutoClose.Visible = false;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.pnlControlContainer, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblAutoClose, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.txtMessage, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(668, 373);
+            this.tableLayoutPanel1.TabIndex = 20;
+            // 
+            // pnlControlContainer
+            // 
+            this.pnlControlContainer.BackColor = System.Drawing.Color.SteelBlue;
+            this.pnlControlContainer.Controls.Add(this.uiBtnOk);
+            this.pnlControlContainer.Controls.Add(this.uiBtnCancel);
+            this.pnlControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlControlContainer.Location = new System.Drawing.Point(0, 311);
+            this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlControlContainer.Name = "pnlControlContainer";
+            this.pnlControlContainer.Size = new System.Drawing.Size(668, 62);
+            this.pnlControlContainer.TabIndex = 19;
+            // 
+            // txtMessage
+            // 
+            this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMessage.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMessage.ForeColor = System.Drawing.Color.SteelBlue;
+            this.txtMessage.Location = new System.Drawing.Point(3, 26);
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(662, 282);
+            this.txtMessage.TabIndex = 20;
+            this.txtMessage.Text = "";
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMessage_KeyDown);
             // 
             // uiBtnOk
             // 
@@ -77,77 +139,12 @@
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
-            // autoCloseTimer
-            // 
-            this.autoCloseTimer.Tick += new System.EventHandler(this.autoCloseTimer_Tick);
-            // 
-            // lblAutoClose
-            // 
-            this.lblAutoClose.AutoSize = true;
-            this.lblAutoClose.BackColor = System.Drawing.Color.Transparent;
-            this.lblAutoClose.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblAutoClose.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAutoClose.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lblAutoClose.Location = new System.Drawing.Point(3, 0);
-            this.lblAutoClose.Name = "lblAutoClose";
-            this.lblAutoClose.Size = new System.Drawing.Size(660, 23);
-            this.lblAutoClose.TabIndex = 19;
-            this.lblAutoClose.Text = "auto close label";
-            this.lblAutoClose.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblAutoClose.Visible = false;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.pnlControlContainer, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblAutoClose, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtMessage, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(666, 243);
-            this.tableLayoutPanel1.TabIndex = 20;
-            // 
-            // pnlControlContainer
-            // 
-            this.pnlControlContainer.BackColor = System.Drawing.Color.SteelBlue;
-            this.pnlControlContainer.Controls.Add(this.uiBtnOk);
-            this.pnlControlContainer.Controls.Add(this.uiBtnCancel);
-            this.pnlControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlControlContainer.Location = new System.Drawing.Point(0, 181);
-            this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlControlContainer.Name = "pnlControlContainer";
-            this.pnlControlContainer.Size = new System.Drawing.Size(666, 62);
-            this.pnlControlContainer.TabIndex = 19;
-            // 
-            // txtMessage
-            // 
-            this.txtMessage.BackColor = System.Drawing.Color.White;
-            this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMessage.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMessage.ForeColor = System.Drawing.Color.SteelBlue;
-            this.txtMessage.Location = new System.Drawing.Point(3, 26);
-            this.txtMessage.Multiline = true;
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.ReadOnly = true;
-            this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMessage.Size = new System.Drawing.Size(660, 152);
-            this.txtMessage.TabIndex = 20;
-            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMessage_KeyDown);
-            // 
             // frmDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(666, 243);
+            this.ClientSize = new System.Drawing.Size(668, 373);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDialog";
@@ -155,11 +152,11 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmDialog_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmDialog_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.pnlControlContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -172,6 +169,6 @@
         private System.Windows.Forms.Label lblAutoClose;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel pnlControlContainer;
-        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.RichTextBox txtMessage;
     }
 }

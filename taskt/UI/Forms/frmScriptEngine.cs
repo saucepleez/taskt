@@ -358,8 +358,12 @@ namespace taskt.UI.Forms
             //show debug if user clicks
             lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
-
+        private void lstSteppingCommands_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show(lstSteppingCommands.SelectedItem.ToString(), "Item Status");
+        }
         #endregion UI Elements
+
 
     }
 

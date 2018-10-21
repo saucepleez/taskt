@@ -671,8 +671,8 @@ namespace taskt.Core.AutomationCommands
 
                 var mouseMove = new Core.AutomationCommands.SendMouseMoveCommand
                 {
-                    v_XMousePosition = hookStruct.pt.x,
-                    v_YMousePosition = hookStruct.pt.y,
+                    v_XMousePosition = hookStruct.pt.x.ToString(),
+                    v_YMousePosition = hookStruct.pt.y.ToString(),
                     v_MouseClick = mouseEventClickType
             };
 

@@ -105,8 +105,7 @@ namespace taskt.UI.Forms.Supplemental
             {
                 this.Close();
             }
-        }
-
+        }      
         private void txtMessage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
