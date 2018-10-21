@@ -5765,6 +5765,10 @@ namespace taskt.Core.AutomationCommands
         public string v_applyToVariableName { get; set; }
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters)]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the parameters (if required)")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the 'Generate Parameters' button once you have indicated a file, class, and method.")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public DataTable v_MethodParameters { get; set; }
       
 
