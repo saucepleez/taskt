@@ -249,7 +249,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="30" PauseBeforeExeucution="false" v_Comment="Call method that requires multiple params (in string, in string, out string)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="31" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="C:\Users\JASON\source\repos\ConsoleApp4\ClassLibrary1\bin\Debug\netstandard2.0\Sample.dll" v_ClassName="tasktTesting.RobotWorker" v_MethodName="ReturnAppendedString" v_applyToVariableName="vResult">
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="31" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="[vSampleDLLFilePath]" v_ClassName="tasktTesting.RobotWorker" v_MethodName="ReturnAppendedString" v_applyToVariableName="vResult">
         <v_MethodParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
