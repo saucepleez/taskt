@@ -1573,7 +1573,7 @@ namespace taskt.UI.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error generating the parameters.  Please ensure the properties are valid.");
+                MessageBox.Show("There was an error generating the parameters: " + ex.ToString());
             }
         
 
