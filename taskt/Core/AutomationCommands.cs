@@ -5829,8 +5829,9 @@ namespace taskt.Core.AutomationCommands
                     //get parameter value
                     var requiredParameterValue = (from rws in v_MethodParameters.AsEnumerable()
                                                  where rws.Field<string>("Parameter Name") == paramName
-                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault();
+                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
+              
                     //get type of parameter
                     var paramType = param.GetType();
 
