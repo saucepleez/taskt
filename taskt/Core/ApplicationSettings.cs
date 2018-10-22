@@ -105,6 +105,8 @@ namespace taskt.Core
         public bool ShowAdvancedDebugOutput { get; set; }
         public bool CreateMissingVariablesDuringExecution { get; set; }
         public bool TrackExecutionMetrics { get; set; }
+        public string VariableStartMarker { get; set; }
+        public string VariableEndMarker { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -113,6 +115,8 @@ namespace taskt.Core
             ShowAdvancedDebugOutput = false;
             CreateMissingVariablesDuringExecution = true;
             TrackExecutionMetrics = true;
+            VariableStartMarker = "[";
+            VariableEndMarker = "]";
     }
     }
     /// <summary>

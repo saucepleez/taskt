@@ -58,7 +58,8 @@ namespace taskt.UI.Forms
             chkAdvancedDebug.DataBindings.Add("Checked", engineSettings, "ShowAdvancedDebugOutput", false, DataSourceUpdateMode.OnPropertyChanged);
             chkCreateMissingVariables.DataBindings.Add("Checked", engineSettings, "CreateMissingVariablesDuringExecution", false, DataSourceUpdateMode.OnPropertyChanged);
             chkTrackMetrics.DataBindings.Add("Checked", engineSettings, "TrackExecutionMetrics", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            txtVariableStartMarker.DataBindings.Add("Text", engineSettings, "VariableStartMarker", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtVariableEndMarker.DataBindings.Add("Text", engineSettings, "VariableEndMarker", false, DataSourceUpdateMode.OnPropertyChanged);
 
             var clientSettings = newAppSettings.ClientSettings;
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -318,6 +319,11 @@ namespace taskt.UI.Forms
             Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
             var docsRoot = docGeneration.GenerateMarkdownFiles();
             System.Diagnostics.Process.Start(docsRoot);
+        }
+
+        private void txtVariableStartMarker_TextChanged(object sender, EventArgs e)
+        {
+            lblVariableDisplay.Text = txtVariableStartMarker.Text + "myVariable" + txtVariableEndMarker.Text;
         }
     }
 }

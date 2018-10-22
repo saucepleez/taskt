@@ -53,6 +53,7 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.btnGenerateWikiDocs = new System.Windows.Forms.Button();
             this.chkInsertCommandsInline = new System.Windows.Forms.CheckBox();
             this.btnClearMetrics = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,6 +63,13 @@
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblVariableDisplay = new System.Windows.Forms.Label();
+            this.txtVariableEndMarker = new System.Windows.Forms.TextBox();
+            this.txtVariableStartMarker = new System.Windows.Forms.TextBox();
             this.chkTrackMetrics = new System.Windows.Forms.CheckBox();
             this.tabServerSettings = new System.Windows.Forms.TabPage();
             this.chkBypassValidation = new System.Windows.Forms.CheckBox();
@@ -72,7 +80,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.btnGenerateWikiDocs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -370,6 +377,17 @@
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
+            // btnGenerateWikiDocs
+            // 
+            this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(10, 175);
+            this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
+            this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 27);
+            this.btnGenerateWikiDocs.TabIndex = 31;
+            this.btnGenerateWikiDocs.Text = "Generate Documentation";
+            this.btnGenerateWikiDocs.UseVisualStyleBackColor = true;
+            this.btnGenerateWikiDocs.Click += new System.EventHandler(this.btnGenerateWikiDocs_Click);
+            // 
             // chkInsertCommandsInline
             // 
             this.chkInsertCommandsInline.AutoSize = true;
@@ -457,6 +475,13 @@
             // tabDebugSettings
             // 
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.label10);
+            this.tabDebugSettings.Controls.Add(this.label9);
+            this.tabDebugSettings.Controls.Add(this.label8);
+            this.tabDebugSettings.Controls.Add(this.label7);
+            this.tabDebugSettings.Controls.Add(this.lblVariableDisplay);
+            this.tabDebugSettings.Controls.Add(this.txtVariableEndMarker);
+            this.tabDebugSettings.Controls.Add(this.txtVariableStartMarker);
             this.tabDebugSettings.Controls.Add(this.chkTrackMetrics);
             this.tabDebugSettings.Controls.Add(this.lblOptions);
             this.tabDebugSettings.Controls.Add(this.chkCreateMissingVariables);
@@ -467,9 +492,85 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(560, 369);
+            this.tabDebugSettings.Size = new System.Drawing.Size(560, 423);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label10.Location = new System.Drawing.Point(15, 332);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(93, 21);
+            this.label10.TabIndex = 32;
+            this.label10.Text = "End Marker:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label9.Location = new System.Drawing.Point(12, 298);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(99, 21);
+            this.label9.TabIndex = 31;
+            this.label9.Text = "Start Marker:";
+            // 
+            // label8
+            // 
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label8.Location = new System.Drawing.Point(12, 222);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(410, 72);
+            this.label8.TabIndex = 30;
+            this.label8.Text = "Indicate the start and end markers for variables.  When the engine runs, it will " +
+    "automatically replace the variable with the stored value.";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label7.Location = new System.Drawing.Point(6, 198);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(158, 24);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Variable Pattern";
+            // 
+            // lblVariableDisplay
+            // 
+            this.lblVariableDisplay.AutoSize = true;
+            this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
+            this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 313);
+            this.lblVariableDisplay.Name = "lblVariableDisplay";
+            this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
+            this.lblVariableDisplay.TabIndex = 28;
+            this.lblVariableDisplay.Text = "VariableName";
+            // 
+            // txtVariableEndMarker
+            // 
+            this.txtVariableEndMarker.Location = new System.Drawing.Point(114, 328);
+            this.txtVariableEndMarker.Name = "txtVariableEndMarker";
+            this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
+            this.txtVariableEndMarker.TabIndex = 27;
+            this.txtVariableEndMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
+            // 
+            // txtVariableStartMarker
+            // 
+            this.txtVariableStartMarker.Location = new System.Drawing.Point(114, 295);
+            this.txtVariableStartMarker.Name = "txtVariableStartMarker";
+            this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
+            this.txtVariableStartMarker.TabIndex = 26;
+            this.txtVariableStartMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
             // 
             // chkTrackMetrics
             // 
@@ -503,7 +604,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(560, 369);
+            this.tabServerSettings.Size = new System.Drawing.Size(560, 423);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -596,17 +697,6 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // btnGenerateWikiDocs
-            // 
-            this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(10, 175);
-            this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
-            this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 27);
-            this.btnGenerateWikiDocs.TabIndex = 31;
-            this.btnGenerateWikiDocs.Text = "Generate Documentation";
-            this.btnGenerateWikiDocs.UseVisualStyleBackColor = true;
-            this.btnGenerateWikiDocs.Click += new System.EventHandler(this.btnGenerateWikiDocs_Click);
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -678,5 +768,12 @@
         private System.Windows.Forms.CheckBox chkTrackMetrics;
         private System.Windows.Forms.CheckBox chkInsertCommandsInline;
         private System.Windows.Forms.Button btnGenerateWikiDocs;
+        private System.Windows.Forms.TextBox txtVariableStartMarker;
+        private System.Windows.Forms.Label lblVariableDisplay;
+        private System.Windows.Forms.TextBox txtVariableEndMarker;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
     }
 }
