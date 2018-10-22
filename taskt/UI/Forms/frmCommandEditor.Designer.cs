@@ -150,6 +150,7 @@
             this.Text = "Add New Command";
             this.Load += new System.EventHandler(this.frmNewCommand_Load);
             this.Shown += new System.EventHandler(this.frmCommandEditor_Shown);
+            this.Resize += new System.EventHandler(this.frmCommandEditor_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).EndInit();

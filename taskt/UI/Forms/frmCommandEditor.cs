@@ -1721,9 +1721,18 @@ namespace taskt.UI.Forms
 
 
         }
+        private void frmCommandEditor_Resize(object sender, EventArgs e)
+        {
+            foreach (Control item in flw_InputVariables.Controls)
+            {
+                item.Width = this.Width - 50;
+            }
 
+        }
 
         #endregion Assitance Forms Events
+
+
     }
     /// <summary>
     /// Helper class for tracking command names and instances of the associated class
