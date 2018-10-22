@@ -21,7 +21,7 @@ namespace taskt.Core
                 return string.Empty;
 
             var engine = (Core.AutomationEngineInstance)sender;
-
+            
             var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
 
@@ -29,7 +29,13 @@ namespace taskt.Core
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
 
-            string[] potentialVariables = str.Split('[', ']');
+
+            //custom variable markers
+            var startVariableMarker = engine.engineSettings.VariableStartMarker;
+            var endVariableMarker = engine.engineSettings.VariableEndMarker;
+
+            //split by custom markers
+            string[] potentialVariables = str.Split(new string[] { startVariableMarker, endVariableMarker }, StringSplitOptions.None);
 
             foreach (var potentialVariable in potentialVariables)
             {
@@ -72,7 +78,7 @@ namespace taskt.Core
                                 if (match != null)
                                 {
                                     //replace with value
-                                    str = str.Replace("[" + potentialVariable + "]", match.ToString());
+                                    str = str.Replace(startVariableMarker + potentialVariable + endVariableMarker, match.ToString());
                                     continue;
                                 }
 
@@ -106,7 +112,7 @@ namespace taskt.Core
 
                 if (varCheck != null)
                 {
-                    var searchVariable = "[" + potentialVariable + "]";
+                    var searchVariable = startVariableMarker + potentialVariable + endVariableMarker;
 
                     if (str.Contains(searchVariable))
                     {
@@ -211,7 +217,9 @@ namespace taskt.Core
         /// <param name="str">The string to be wrapped as a variable</param>
         public static string ApplyVariableFormatting(this String str)
         {
-            return str.Insert(0, "[").Insert(str.Length + 1, "]");
+            var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+           
+            return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
         }
     }
 }

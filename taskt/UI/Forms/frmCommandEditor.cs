@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using taskt.Core.AutomationCommands.Attributes;
 using System.IO;
+using taskt.Core;
 
 namespace taskt.UI.Forms
 {
@@ -1496,17 +1497,20 @@ namespace taskt.UI.Forms
                 CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
                 //currently variable insertion is only available for simply textboxes
 
+                //load settings
+                var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+
                 if (inputBox.Tag is TextBox)
                 {
                     TextBox targetTextbox = (TextBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = targetTextbox.Text + string.Concat("[", newVariableSelector.lstVariables.SelectedItem.ToString(), "]");
+                    targetTextbox.Text = targetTextbox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
                 }
                 else if(inputBox.Tag is ComboBox)
                 {
                     ComboBox targetCombobox = (ComboBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetCombobox.Text = targetCombobox.Text + string.Concat("[", newVariableSelector.lstVariables.SelectedItem.ToString(), "]");
+                    targetCombobox.Text = targetCombobox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
                 }
                 else if(inputBox.Tag is DataGridView)
                 {
@@ -1524,7 +1528,7 @@ namespace taskt.UI.Forms
                         return;
                     }
 
-                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat("[", newVariableSelector.lstVariables.SelectedItem.ToString(), "]");
+                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
                 }
            
 

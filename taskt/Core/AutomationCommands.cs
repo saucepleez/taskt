@@ -2714,6 +2714,8 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
 
+            var engine = (Core.AutomationEngineInstance)sender;
+
             //create variable window name
             var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
 
@@ -2733,8 +2735,9 @@ namespace taskt.Core.AutomationCommands
                                        where rw.Field<string>("Parameter Name") == "Apply To Variable"
                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
+                
                 //remove brackets from variable
-                applyToVariable = applyToVariable.Replace("[", "").Replace("]", "");
+                applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
 
                 //declare search result
                 string searchResult;
@@ -2817,7 +2820,7 @@ namespace taskt.Core.AutomationCommands
                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                 //remove brackets from variable
-                applyToVariable = applyToVariable.Replace("[", "").Replace("]", "");
+                applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
 
                 //get required value
                 var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
@@ -3956,10 +3959,10 @@ namespace taskt.Core.AutomationCommands
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_userVariableName.StartsWith("[")) && (v_userVariableName.EndsWith("]")))
+            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
-                var reformattedVariable = v_userVariableName.Replace("[", "").Replace("]", "");
+                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 
@@ -4351,7 +4354,8 @@ namespace taskt.Core.AutomationCommands
             }
 
             var engine = (Core.AutomationEngineInstance)sender;
-            var v_receivingVariable = v_applyConvertToUserVariableName.Replace("[", "").Replace("]", "");
+            
+            var v_receivingVariable = v_applyConvertToUserVariableName.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
             //get complex variable from engine and assign
             var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
             requiredComplexVariable.VariableValue = splitString;
