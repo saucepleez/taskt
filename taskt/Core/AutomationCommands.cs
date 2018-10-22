@@ -961,6 +961,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Specifies the parameter text that matches to the element based on the previously selected search type.")]
         [Attributes.PropertyAttributes.SampleUsage("If search type **Find Element By ID** was specified, for example, given <div id='name'></div>, the value of this field would be **name**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SeleniumSearchParameter { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Element Action")]
@@ -1004,7 +1005,7 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            //convert to user variable -- https://github.com/saucepleez/taskt/issues/22
+            //convert to user variable -- https://github.com/saucepleez/taskt/issues/66
             var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
 
 
@@ -1031,7 +1032,7 @@ namespace taskt.Core.AutomationCommands
                     {
                         try
                         {
-                            element = FindElement(seleniumInstance);
+                            element = FindElement(seleniumInstance, seleniumSearchParam);
                             break;
                         }
                         catch (Exception)
@@ -1051,7 +1052,7 @@ namespace taskt.Core.AutomationCommands
                 else
                 {
 
-                    element = FindElement(seleniumInstance);
+                    element = FindElement(seleniumInstance, seleniumSearchParam);
                 }
 
 
@@ -1213,56 +1214,56 @@ namespace taskt.Core.AutomationCommands
             }
         }
 
-        private object FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance)
+        private object FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance, string searchParameter)
         {
             object element = null;
 
             switch (v_SeleniumSearchType)
             {
                 case "Find Element By XPath":
-                    element = seleniumInstance.FindElementByXPath(v_SeleniumSearchParameter);
+                    element = seleniumInstance.FindElementByXPath(searchParameter);
                     break;
 
                 case "Find Element By ID":
-                    element = seleniumInstance.FindElementById(v_SeleniumSearchParameter);
+                    element = seleniumInstance.FindElementById(searchParameter);
                     break;
 
                 case "Find Element By Name":
-                    element = seleniumInstance.FindElementByName(v_SeleniumSearchParameter);
+                    element = seleniumInstance.FindElementByName(searchParameter);
                     break;
 
                 case "Find Element By Tag Name":
-                    element = seleniumInstance.FindElementByTagName(v_SeleniumSearchParameter);
+                    element = seleniumInstance.FindElementByTagName(searchParameter);
                     break;
 
                 case "Find Element By Class Name":
-                    element = seleniumInstance.FindElementByClassName(v_SeleniumSearchParameter);
+                    element = seleniumInstance.FindElementByClassName(searchParameter);
                     break;
                 case "Find Element By CSS Selector":
-                    element = seleniumInstance.FindElementByCssSelector(v_SeleniumSearchParameter);
+                    element = seleniumInstance.FindElementByCssSelector(searchParameter);
                     break;
                 case "Find Elements By XPath":
-                    element = seleniumInstance.FindElementsByXPath(v_SeleniumSearchParameter).ToList();
+                    element = seleniumInstance.FindElementsByXPath(searchParameter).ToList();
                     break;
 
                 case "Find Elements By ID":
-                    element = seleniumInstance.FindElementsById(v_SeleniumSearchParameter).ToList();
+                    element = seleniumInstance.FindElementsById(searchParameter).ToList();
                     break;
 
                 case "Find Elements By Name":
-                    element = seleniumInstance.FindElementsByName(v_SeleniumSearchParameter).ToList();
+                    element = seleniumInstance.FindElementsByName(searchParameter).ToList();
                     break;
 
                 case "Find Elements By Tag Name":
-                    element = seleniumInstance.FindElementsByTagName(v_SeleniumSearchParameter).ToList();
+                    element = seleniumInstance.FindElementsByTagName(searchParameter).ToList();
                     break;
 
                 case "Find Elements By Class Name":
-                    element = seleniumInstance.FindElementsByClassName(v_SeleniumSearchParameter).ToList();
+                    element = seleniumInstance.FindElementsByClassName(searchParameter).ToList();
                     break;
 
                 case "Find Elements By CSS Selector":
-                    element = seleniumInstance.FindElementsByCssSelector(v_SeleniumSearchParameter).ToList();
+                    element = seleniumInstance.FindElementsByCssSelector(searchParameter).ToList();
                     break;
 
                 default:
@@ -1275,6 +1276,7 @@ namespace taskt.Core.AutomationCommands
         public bool ElementExists(object sender, string searchType, string elementName)
         {
             var engine = (Core.AutomationEngineInstance)sender;
+            var seleniumSearchParam = elementName.ConvertToUserVariable(sender);
 
             if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
             {
@@ -1282,7 +1284,7 @@ namespace taskt.Core.AutomationCommands
                
                 try
                 {
-                    var element = FindElement(seleniumInstance);
+                    var element = FindElement(seleniumInstance, seleniumSearchParam);
                     return true;
                 }
                 catch (Exception)
@@ -5012,6 +5014,7 @@ namespace taskt.Core.AutomationCommands
                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
+                newElementActionCommand.v_SeleniumSearchType = searchMethod;
                 bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
                 ifResult = elementExists;
 
