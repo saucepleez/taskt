@@ -4313,7 +4313,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Input Delimiter")]
+        [Attributes.PropertyAttributes.PropertyDescription("Input Delimiter (ex. [crLF] for new line, [chars] for each char, ',')")]
         [Attributes.PropertyAttributes.InputSpecification("Declare the character that will be used to seperate. [crLF] can be used for line breaks and [chars] can be used to split each digit/letter")]
         [Attributes.PropertyAttributes.SampleUsage("[crLF], [chars], ',' (comma - with no single quote wrapper)")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -4360,6 +4360,13 @@ namespace taskt.Core.AutomationCommands
             var v_receivingVariable = v_applyConvertToUserVariableName.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
             //get complex variable from engine and assign
             var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
+
+            if (requiredComplexVariable == null)
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_receivingVariable, CurrentPosition = 0 });
+                requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
+            }
+
             requiredComplexVariable.VariableValue = splitString;
         }
         public override string GetDisplayValue()
