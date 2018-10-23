@@ -1554,8 +1554,22 @@ namespace taskt.UI.Forms
                 //get type
                 Type t = requiredAssembly.GetType(className);
 
+                //verify type was found
+                if (t == null)
+                {
+                    MessageBox.Show("The class '" + className + "' was not found in assembly loaded at '" + filePath + "'", "Class Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
                 //get method
                 MethodInfo m = t.GetMethod(methodName);
+
+                //verify method found
+                if (m == null)
+                {
+                    MessageBox.Show("The method '" + methodName + "' was not found in assembly loaded at '" + filePath + "'", "Method Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
 
                 //get parameters
                 var reqdParams = m.GetParameters();
@@ -1570,7 +1584,7 @@ namespace taskt.UI.Forms
                 }
                 else
                 {
-                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required");
+                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
                       
                 }
              
@@ -1585,8 +1599,47 @@ namespace taskt.UI.Forms
         }
            private void ShowDLLExplorer(object sender, EventArgs e)
         {
+            //create form
             Supplemental.frmDLLExplorer dllExplorer = new Supplemental.frmDLLExplorer();
-            dllExplorer.Show();
+
+            //show dialog
+            if (dllExplorer.ShowDialog() == DialogResult.OK)
+            {
+                //user accepted the selections
+                //declare command
+                Core.AutomationCommands.ExecuteDLLCommand cmd = (Core.AutomationCommands.ExecuteDLLCommand)selectedCommand;
+
+                //add file name
+                if (!string.IsNullOrEmpty(dllExplorer.FileName))
+                {
+                    flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
+                }
+
+                //add class name
+                if (dllExplorer.lstClasses.SelectedItem != null)
+                {
+                    flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
+                }
+
+                //add method name
+                if (dllExplorer.lstMethods.SelectedItem != null)
+                {
+                    flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
+                }
+
+                //add parameters
+                if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
+                {
+                    foreach (var param in dllExplorer.SelectedParameters)
+                    {
+                        cmd.v_MethodParameters.Rows.Add(param, "");
+                    }
+                }
+
+           
+
+            }
+
         }
         private void ShowElementRecorder(object sender, EventArgs e)
         {
