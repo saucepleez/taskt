@@ -402,6 +402,7 @@
     <None Include="Resources\action-bar-saveas.png" />
     <None Include="Resources\action-bar-clear.png" />
     <None Include="Resources\action-bar-import.png" />
+    <None Include="Resources\command-parse.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
