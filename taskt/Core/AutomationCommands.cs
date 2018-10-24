@@ -6527,20 +6527,18 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
         [Attributes.PropertyAttributes.SampleUsage("**250** or **[vVariableSpeed]**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_EngineSpeed { get; set; }
 
         public SetEngineDelayCommand()
         {
-            this.CommandName = "SetEngineSpeedCommand";
+            this.CommandName = "SetEngineDelayCommand";
             this.SelectionName = "Set Engine Delay";
             this.CommandEnabled = true;
             this.v_EngineSpeed = "250";
         }
 
-        public override void RunCommand(object sender)
-        {
-
-        }
+      
 
         public override string GetDisplayValue()
         {
