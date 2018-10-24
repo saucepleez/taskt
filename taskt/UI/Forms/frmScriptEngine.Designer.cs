@@ -50,7 +50,7 @@
             this.lstSteppingCommands.ForeColor = System.Drawing.Color.SteelBlue;
             this.lstSteppingCommands.FormattingEnabled = true;
             this.lstSteppingCommands.ItemHeight = 17;
-            this.lstSteppingCommands.Location = new System.Drawing.Point(7, 51);
+            this.lstSteppingCommands.Location = new System.Drawing.Point(7, 54);
             this.lstSteppingCommands.Name = "lstSteppingCommands";
             this.lstSteppingCommands.Size = new System.Drawing.Size(675, 123);
             this.lstSteppingCommands.TabIndex = 0;
@@ -117,7 +117,7 @@
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
             this.uiBtnCancel.IsMouseOver = false;
-            this.uiBtnCancel.Location = new System.Drawing.Point(561, 0);
+            this.uiBtnCancel.Location = new System.Drawing.Point(633, 3);
             this.uiBtnCancel.Name = "uiBtnCancel";
             this.uiBtnCancel.Size = new System.Drawing.Size(48, 48);
             this.uiBtnCancel.TabIndex = 14;
@@ -133,7 +133,7 @@
             this.uiBtnPause.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnPause.Image = global::taskt.Properties.Resources.command_pause;
             this.uiBtnPause.IsMouseOver = false;
-            this.uiBtnPause.Location = new System.Drawing.Point(507, 0);
+            this.uiBtnPause.Location = new System.Drawing.Point(579, 3);
             this.uiBtnPause.Name = "uiBtnPause";
             this.uiBtnPause.Size = new System.Drawing.Size(48, 48);
             this.uiBtnPause.TabIndex = 15;
