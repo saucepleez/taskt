@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -91,19 +92,13 @@ namespace taskt.UI.Forms
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
 
-   
-
-            //detect latest release
-            //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/saucepleez/taskt/releases");
-            //myHttpWebRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2;)";
-            //HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-
-            //StreamReader reader = new StreamReader(myHttpWebResponse.GetResponseStream(), Encoding.UTF8);
-            //String responseString = reader.ReadToEnd();
-
-            //Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.Linq.JArray.Parse(responseString);
-            //dynamic data = Newtonsoft.Json.Linq.JObject.Parse(jsonArray[0].ToString());
-
+            //set controls double buffered
+            foreach (Control control in Controls)
+            {
+                typeof(Control).InvokeMember("DoubleBuffered",
+                    BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                    null, control, new object[] { true });
+            }
 
 
             //create undo list

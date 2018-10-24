@@ -180,6 +180,16 @@ namespace taskt.UI.CustomControls
             this.MouseEnter += UIPictureButton_MouseEnter;
             this.MouseLeave += UIPictureButton1_MouseLeave;
         }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var parms = base.CreateParams;
+                parms.Style &= ~0x02000000;  // Turn off WS_CLIPCHILDREN
+                return parms;
+            }
+        }
+
 
         private void UIPictureButton_MouseEnter(object sender, System.EventArgs e)
         {

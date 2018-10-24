@@ -37,6 +37,9 @@
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
             this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
             this.lblFilesMissing = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblRecentFiles = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lnkGitWiki = new System.Windows.Forms.LinkLabel();
@@ -52,21 +55,10 @@
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblCoordinatorInfo = new System.Windows.Forms.Label();
             this.pnlStatus = new System.Windows.Forms.Panel();
-            this.tmrNotify = new System.Windows.Forms.Timer(this.components);
-            this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.disableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cutSelectedActionssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
             this.grpSearch = new taskt.UI.CustomControls.UIGroupBox();
             this.pbSearch = new System.Windows.Forms.PictureBox();
@@ -90,19 +82,26 @@
             this.uiBtnClearAll = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnSettings = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
+            this.tmrNotify = new System.Windows.Forms.Timer(this.components);
+            this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutSelectedActionssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.pnlCommandHelper.SuspendLayout();
-            this.pnlHeader.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.lstContextStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlHeader.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.pnlControlContainer.SuspendLayout();
             this.grpSearch.SuspendLayout();
@@ -124,6 +123,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).BeginInit();
+            this.lstContextStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpControls
@@ -241,6 +241,36 @@
             this.lblFilesMissing.TabIndex = 16;
             this.lblFilesMissing.Text = "there were no script files found in your script directory.";
             this.lblFilesMissing.Visible = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(12, 210);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(84, 84);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 15;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::taskt.Properties.Resources.links_header;
+            this.pictureBox3.Location = new System.Drawing.Point(12, 108);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(84, 84);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 14;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::taskt.Properties.Resources.item_header;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 8);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(84, 84);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
             // 
             // lblRecentFiles
             // 
@@ -419,6 +449,17 @@
             this.panel2.Size = new System.Drawing.Size(603, 44);
             this.panel2.TabIndex = 2;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::taskt.Properties.Resources.robot_source;
+            this.pictureBox2.Location = new System.Drawing.Point(2, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
             // lblMainLogo
             // 
             this.lblMainLogo.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -458,113 +499,9 @@
             this.pnlStatus.TabIndex = 3;
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
             // 
-            // tmrNotify
-            // 
-            this.tmrNotify.Enabled = true;
-            this.tmrNotify.Interval = 500;
-            this.tmrNotify.Tick += new System.EventHandler(this.tmrNotify_Tick);
-            // 
-            // lstContextStrip
-            // 
-            this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstContextStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableSelectedCodeToolStripMenuItem,
-            this.disableSelectedCodeToolStripMenuItem,
-            this.pauseBeforeExecutionToolStripMenuItem,
-            this.cutSelectedActionssToolStripMenuItem,
-            this.copySelectedToolStripMenuItem,
-            this.pasteSelectedToolStripMenuItem});
-            this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(254, 148);
-            // 
-            // enableSelectedCodeToolStripMenuItem
-            // 
-            this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
-            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.enableSelectedCodeToolStripMenuItem.Text = "Enable Selected Code";
-            this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
-            // 
-            // disableSelectedCodeToolStripMenuItem
-            // 
-            this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
-            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.disableSelectedCodeToolStripMenuItem.Text = "Disable Selected Code";
-            this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
-            // 
-            // pauseBeforeExecutionToolStripMenuItem
-            // 
-            this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
-            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.pauseBeforeExecutionToolStripMenuItem.Text = "Pause Before Execution";
-            this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
-            // 
-            // cutSelectedActionssToolStripMenuItem
-            // 
-            this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
-            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Actions(s)";
-            this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
-            // 
-            // copySelectedToolStripMenuItem
-            // 
-            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
-            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.copySelectedToolStripMenuItem.Text = "Copy Selected Action(s)";
-            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
-            // 
-            // pasteSelectedToolStripMenuItem
-            // 
-            this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
-            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s)";
-            this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(12, 210);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 15;
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::taskt.Properties.Resources.links_header;
-            this.pictureBox3.Location = new System.Drawing.Point(12, 108);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::taskt.Properties.Resources.item_header;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::taskt.Properties.Resources.robot_source;
-            this.pictureBox2.Location = new System.Drawing.Point(2, 4);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            // 
             // pnlControlContainer
             // 
-            this.pnlControlContainer.BackColor = System.Drawing.Color.SteelBlue;
-            this.pnlControlContainer.BackgroundImage = global::taskt.Properties.Resources.header_backing_dark;
+            this.pnlControlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.tlpControls.SetColumnSpan(this.pnlControlContainer, 3);
             this.pnlControlContainer.Controls.Add(this.grpSearch);
             this.pnlControlContainer.Controls.Add(this.grpSaveClose);
@@ -921,6 +858,68 @@
             this.uiBtnAddVariable.TabStop = false;
             this.uiBtnAddVariable.Click += new System.EventHandler(this.uiBtnAddVariable_Click);
             // 
+            // tmrNotify
+            // 
+            this.tmrNotify.Enabled = true;
+            this.tmrNotify.Interval = 500;
+            this.tmrNotify.Tick += new System.EventHandler(this.tmrNotify_Tick);
+            // 
+            // lstContextStrip
+            // 
+            this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstContextStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableSelectedCodeToolStripMenuItem,
+            this.disableSelectedCodeToolStripMenuItem,
+            this.pauseBeforeExecutionToolStripMenuItem,
+            this.cutSelectedActionssToolStripMenuItem,
+            this.copySelectedToolStripMenuItem,
+            this.pasteSelectedToolStripMenuItem});
+            this.lstContextStrip.Name = "lstContextStrip";
+            this.lstContextStrip.Size = new System.Drawing.Size(254, 148);
+            // 
+            // enableSelectedCodeToolStripMenuItem
+            // 
+            this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
+            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.enableSelectedCodeToolStripMenuItem.Text = "Enable Selected Code";
+            this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
+            // 
+            // disableSelectedCodeToolStripMenuItem
+            // 
+            this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
+            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.disableSelectedCodeToolStripMenuItem.Text = "Disable Selected Code";
+            this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
+            // 
+            // pauseBeforeExecutionToolStripMenuItem
+            // 
+            this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
+            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.pauseBeforeExecutionToolStripMenuItem.Text = "Pause Before Execution";
+            this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
+            // 
+            // cutSelectedActionssToolStripMenuItem
+            // 
+            this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
+            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Actions(s)";
+            this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
+            // 
+            // copySelectedToolStripMenuItem
+            // 
+            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.copySelectedToolStripMenuItem.Text = "Copy Selected Action(s)";
+            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
+            // 
+            // pasteSelectedToolStripMenuItem
+            // 
+            this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
+            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s)";
+            this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -941,15 +940,14 @@
             this.splitContainer1.ResumeLayout(false);
             this.pnlCommandHelper.ResumeLayout(false);
             this.pnlCommandHelper.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.lstContextStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.pnlControlContainer.ResumeLayout(false);
             this.grpSearch.ResumeLayout(false);
@@ -972,6 +970,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).EndInit();
+            this.lstContextStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
