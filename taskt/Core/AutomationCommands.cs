@@ -122,6 +122,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(StringReplaceCommand))]
     [XmlInclude(typeof(ExecuteDLLCommand))]
     [XmlInclude(typeof(ParseJsonCommand))]
+    [XmlInclude(typeof(SetEngineDelayCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -151,7 +152,7 @@ namespace taskt.Core.AutomationCommands
         {
             this.DisplayForeColor = System.Drawing.Color.SteelBlue;
             this.CommandEnabled = false;
-            this.DefaultPause = 250;
+            this.DefaultPause = 0;
             this.IsCommented = false;
         }
 
@@ -6513,8 +6514,41 @@ namespace taskt.Core.AutomationCommands
     }
     #endregion
 
+    #region Engine Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to set delays between execution of commands in a running instance.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change the execution speed between commands.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class SetEngineDelayCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Set Delay between commands (in milliseconds).")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
+        [Attributes.PropertyAttributes.SampleUsage("**250** or **[vVariableSpeed]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_EngineSpeed { get; set; }
 
-   
+        public SetEngineDelayCommand()
+        {
+            this.CommandName = "SetEngineSpeedCommand";
+            this.SelectionName = "Set Engine Delay";
+            this.CommandEnabled = true;
+            this.v_EngineSpeed = "250";
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";
+        }
+    }
+    #endregion
+
 
 }
 

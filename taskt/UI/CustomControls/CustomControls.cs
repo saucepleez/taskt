@@ -294,6 +294,7 @@ namespace taskt.UI
         {
             var uiImages = new Dictionary<string, Image>();
             uiImages.Add("PauseCommand", taskt.Properties.Resources.command_pause);
+            uiImages.Add("SetEngineDelayCommand", taskt.Properties.Resources.command_pause);
             uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
             uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);

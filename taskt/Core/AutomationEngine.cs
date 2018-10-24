@@ -206,8 +206,21 @@ namespace taskt.Core
                 {
                     CurrentLoopCancelled = true;
                 }
+                else if(parentCommand is Core.AutomationCommands.SetEngineDelayCommand)
+                {
+                    //get variable
+                    var setEngineCommand = (Core.AutomationCommands.SetEngineDelayCommand)parentCommand;                    
+                    var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
+                    var delay = int.Parse(engineDelay);
+
+                    //update delay setting
+                    this.engineSettings.DelayBetweenCommands = delay;
+                }
                 else
                 {
+                    //sleep required time
+                    System.Threading.Thread.Sleep(engineSettings.DelayBetweenCommands);
+
                     //run the command
                     parentCommand.RunCommand(this);
                 }

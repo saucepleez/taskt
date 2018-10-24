@@ -107,6 +107,7 @@ namespace taskt.Core
         public bool TrackExecutionMetrics { get; set; }
         public string VariableStartMarker { get; set; }
         public string VariableEndMarker { get; set; }
+        public int DelayBetweenCommands { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -117,6 +118,7 @@ namespace taskt.Core
             TrackExecutionMetrics = true;
             VariableStartMarker = "[";
             VariableEndMarker = "]";
+            DelayBetweenCommands = 250;
     }
     }
     /// <summary>

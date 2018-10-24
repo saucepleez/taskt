@@ -63,6 +63,8 @@
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
+            this.lblDelay = new System.Windows.Forms.Label();
+            this.txtCommandDelay = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -475,6 +477,8 @@
             // tabDebugSettings
             // 
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.lblDelay);
+            this.tabDebugSettings.Controls.Add(this.txtCommandDelay);
             this.tabDebugSettings.Controls.Add(this.label10);
             this.tabDebugSettings.Controls.Add(this.label9);
             this.tabDebugSettings.Controls.Add(this.label8);
@@ -496,13 +500,32 @@
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
             // 
+            // lblDelay
+            // 
+            this.lblDelay.AutoSize = true;
+            this.lblDelay.BackColor = System.Drawing.Color.Transparent;
+            this.lblDelay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDelay.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblDelay.Location = new System.Drawing.Point(6, 182);
+            this.lblDelay.Name = "lblDelay";
+            this.lblDelay.Size = new System.Drawing.Size(353, 21);
+            this.lblDelay.TabIndex = 34;
+            this.lblDelay.Text = "Default delay between executing commands (ms):";
+            // 
+            // txtCommandDelay
+            // 
+            this.txtCommandDelay.Location = new System.Drawing.Point(359, 180);
+            this.txtCommandDelay.Name = "txtCommandDelay";
+            this.txtCommandDelay.Size = new System.Drawing.Size(77, 29);
+            this.txtCommandDelay.TabIndex = 33;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label10.Location = new System.Drawing.Point(15, 332);
+            this.label10.Location = new System.Drawing.Point(15, 345);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(93, 21);
             this.label10.TabIndex = 32;
@@ -514,7 +537,7 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label9.Location = new System.Drawing.Point(12, 298);
+            this.label9.Location = new System.Drawing.Point(12, 311);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(99, 21);
             this.label9.TabIndex = 31;
@@ -525,7 +548,7 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label8.Location = new System.Drawing.Point(12, 222);
+            this.label8.Location = new System.Drawing.Point(12, 235);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(410, 72);
             this.label8.TabIndex = 30;
@@ -538,7 +561,7 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label7.Location = new System.Drawing.Point(6, 198);
+            this.label7.Location = new System.Drawing.Point(6, 211);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(158, 24);
             this.label7.TabIndex = 29;
@@ -550,7 +573,7 @@
             this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 313);
+            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 326);
             this.lblVariableDisplay.Name = "lblVariableDisplay";
             this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
             this.lblVariableDisplay.TabIndex = 28;
@@ -558,7 +581,7 @@
             // 
             // txtVariableEndMarker
             // 
-            this.txtVariableEndMarker.Location = new System.Drawing.Point(114, 328);
+            this.txtVariableEndMarker.Location = new System.Drawing.Point(114, 341);
             this.txtVariableEndMarker.Name = "txtVariableEndMarker";
             this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableEndMarker.TabIndex = 27;
@@ -566,7 +589,7 @@
             // 
             // txtVariableStartMarker
             // 
-            this.txtVariableStartMarker.Location = new System.Drawing.Point(114, 295);
+            this.txtVariableStartMarker.Location = new System.Drawing.Point(114, 308);
             this.txtVariableStartMarker.Name = "txtVariableStartMarker";
             this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableStartMarker.TabIndex = 26;
@@ -775,5 +798,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblDelay;
+        private System.Windows.Forms.TextBox txtCommandDelay;
     }
 }
