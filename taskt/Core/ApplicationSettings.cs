@@ -108,6 +108,8 @@ namespace taskt.Core
         public string VariableStartMarker { get; set; }
         public string VariableEndMarker { get; set; }
         public int DelayBetweenCommands { get; set; }
+        public bool OverrideExistingAppInstances { get; set; }
+
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -119,6 +121,7 @@ namespace taskt.Core
             VariableStartMarker = "[";
             VariableEndMarker = "]";
             DelayBetweenCommands = 250;
+            OverrideExistingAppInstances = false;
     }
     }
     /// <summary>

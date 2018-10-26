@@ -259,6 +259,68 @@ namespace taskt.Core
                 }
             }
         }
+        public void AddAppInstance(string instanceName, object appObject) {
+
+            if (AppInstances.ContainsKey(instanceName) && engineSettings.OverrideExistingAppInstances)
+            {
+                ReportProgress("Overriding Existing Instance: " + instanceName);
+                AppInstances.Remove(instanceName);
+            }
+            else if (AppInstances.ContainsKey(instanceName) && !engineSettings.OverrideExistingAppInstances)
+            {
+                throw new Exception("App Instance already exists and override has been disabled in engine settings! Enable override existing app instances or use unique instance names!");
+            }
+
+            try
+            {
+                this.AppInstances.Add(instanceName, appObject);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public object GetAppInstance(string instanceName)
+        {
+            try
+            {
+                if (AppInstances.TryGetValue(instanceName, out object appObject))
+                {
+                    return appObject;
+                }
+                else
+                {
+                    throw new Exception("App Instance '" + instanceName + "' not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
+        }
+        public void RemoveAppInstance(string instanceName)
+        {
+            try
+            {
+                if (AppInstances.ContainsKey(instanceName))
+                {
+                    AppInstances.Remove(instanceName);
+                    
+                }
+                else
+                {
+                    throw new Exception("App Instance '" + instanceName + "' not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
 
         public void CancelScript()
         {

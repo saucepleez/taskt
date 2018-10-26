@@ -3310,18 +3310,8 @@ namespace taskt.Core.AutomationCommands
                 Visible = true
             };
 
-            try
-            {
-                engine.AppInstances.Add(vInstance, newExcelSession);
-            }
-            catch (ArgumentException)
-            {
-                throw new Exception("You cannot share application instance names. Ensure that Instance ID being used are unique.");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            engine.AddAppInstance(vInstance, newExcelSession);
+
 
            
         }
@@ -3364,11 +3354,11 @@ namespace taskt.Core.AutomationCommands
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                excelInstance.Workbooks.Open(v_FilePath);
-            }
+           var excelObject = engine.GetAppInstance(vInstance);
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            excelInstance.Workbooks.Open(v_FilePath);
+
+           
         }
         public override string GetDisplayValue()
         {
@@ -3400,12 +3390,12 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Workbooks.Add();
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3443,12 +3433,13 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+            var excelObject = engine.GetAppInstance(vInstance);
+
+ 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
                 excelSheet.Range[v_CellLocation].Select();
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3494,15 +3485,16 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+            var excelObject = engine.GetAppInstance(vInstance);
+
+           
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
                 var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
                 excelSheet.Range[targetAddress].Value = targetText;
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3548,9 +3540,9 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+           
 
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
 
@@ -3558,7 +3550,7 @@ namespace taskt.Core.AutomationCommands
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
                 var cellValue = (string)excelSheet.Range[targetAddress].Text;
                 cellValue.StoreInUserVariable(sender, v_userVariableName);
-            }
+            
         }
 
         public override string GetDisplayValue()
@@ -3596,12 +3588,12 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+           
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Run(v_MacroName);
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3645,10 +3637,9 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+            var excelObject = engine.GetAppInstance(vInstance);
 
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 var excelSheet = excelInstance.ActiveSheet;
                 var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, "A").End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
@@ -3656,7 +3647,7 @@ namespace taskt.Core.AutomationCommands
                 lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
 
 
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3694,16 +3685,16 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+          
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.ActiveWorkbook.Close(v_ExcelSaveOnExit);
                 excelInstance.Quit();
 
-                //remove instance
-                engine.AppInstances.Remove(vInstance);
-            }
+            //remove instance
+            engine.RemoveAppInstance(vInstance);
+            
         }
         public override string GetDisplayValue()
         {
@@ -3741,16 +3732,16 @@ namespace taskt.Core.AutomationCommands
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            var excelObject = engine.GetAppInstance(vInstance);
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
                 Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.Sheets[sheetToDelete];
                 workSheet.Select();
 
 
 
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3795,9 +3786,9 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
+          
 
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
@@ -3817,7 +3808,7 @@ namespace taskt.Core.AutomationCommands
                 }
 
 
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3863,10 +3854,9 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
 
-            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
-            {
-
+           
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
@@ -3886,7 +3876,7 @@ namespace taskt.Core.AutomationCommands
 
 
 
-            }
+          
         }
         public override string GetDisplayValue()
         {
