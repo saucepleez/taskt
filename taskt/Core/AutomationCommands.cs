@@ -2826,7 +2826,7 @@ namespace taskt.Core.AutomationCommands
                 var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
                                     where rw.Field<string>("Parameter Name") == "Get Value From"
                                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
+               
                 //apply to variable
                 var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
                                        where rw.Field<string>("Parameter Name") == "Apply To Variable"
@@ -3291,6 +3291,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public ExcelCreateApplicationCommand()
@@ -3302,6 +3303,8 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
                 Visible = true
@@ -3309,7 +3312,7 @@ namespace taskt.Core.AutomationCommands
 
             try
             {
-                engine.AppInstances.Add(v_InstanceName, newExcelSession);
+                engine.AppInstances.Add(vInstance, newExcelSession);
             }
             catch (ArgumentException)
             {
@@ -3339,6 +3342,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -3357,7 +3361,10 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Workbooks.Open(v_FilePath);
@@ -3380,6 +3387,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public ExcelAddWorkbookCommand()
@@ -3391,7 +3399,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Workbooks.Add();
@@ -3414,6 +3424,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1 or B2)")]
@@ -3430,7 +3441,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
@@ -3454,6 +3467,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set")]
@@ -3478,7 +3492,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
                 var targetText = v_TextToSet.ConvertToUserVariable(sender);
@@ -3505,6 +3521,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1 or B2)")]
@@ -3530,7 +3547,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
 
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
@@ -3559,6 +3578,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the macro name")]
@@ -3575,7 +3595,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Run(v_MacroName);
@@ -3598,6 +3620,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter Letter of the Column to check (ex. A, B, C)")]
@@ -3620,7 +3643,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
@@ -3650,6 +3675,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate if the Workbook should be saved")]
@@ -3666,11 +3692,17 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.ActiveWorkbook.Close(v_ExcelSaveOnExit);
                 excelInstance.Quit();
+
+                //remove instance
+                engine.AppInstances.Remove(vInstance);
             }
         }
         public override string GetDisplayValue()
@@ -3690,6 +3722,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
@@ -3706,7 +3739,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
@@ -3734,6 +3769,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -3758,7 +3794,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
 
 
@@ -3798,6 +3836,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -3823,7 +3862,9 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            if (engine.AppInstances.TryGetValue(vInstance, out object excelObject))
             {
 
 

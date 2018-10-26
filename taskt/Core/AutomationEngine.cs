@@ -95,7 +95,13 @@ namespace taskt.Core
                 ReportProgress("Creating App Instance Tracking List");
 
                 //create app instances and merge in global instances
-                AppInstances = GlobalAppInstances.GetInstances();
+                this.AppInstances = new Dictionary<string, object>();
+                var GlobalInstances = GlobalAppInstances.GetInstances();
+                foreach (var instance in GlobalInstances)
+                {
+                    this.AppInstances.Add(instance.Key, instance.Value);
+                }
+              
               
                 //execute commands
                 foreach (var executionCommand in automationScript.Commands)
