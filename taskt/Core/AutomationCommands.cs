@@ -623,6 +623,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -661,15 +662,7 @@ namespace taskt.Core.AutomationCommands
 
             var instanceName = v_InstanceName.ConvertToUserVariable(sender);
 
-            if (engine.AppInstances.ContainsKey(v_InstanceName))
-            {
-                //need to figure out how to handle multiple potential session names
-                engine.AppInstances.Remove(v_InstanceName);
-            }
-
-            //add to engine
-            engine.AppInstances.Add(v_InstanceName, newSeleniumSession);
-
+            engine.AddAppInstance(instanceName, newSeleniumSession);
 
 
             //handle app instance tracking
@@ -711,6 +704,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
@@ -732,15 +726,14 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
 
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+   
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+
         }
 
         public override string GetDisplayValue()
@@ -773,6 +766,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserNavigateForwardCommand()
@@ -786,15 +780,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+     
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Forward();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+           
         }
 
         public override string GetDisplayValue()
@@ -815,6 +809,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserNavigateBackCommand()
@@ -828,15 +823,14 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+            
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Back();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+          
         }
 
         public override string GetDisplayValue()
@@ -856,6 +850,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserRefreshCommand()
@@ -869,15 +864,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Refresh();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+            
         }
 
         public override string GetDisplayValue()
@@ -897,6 +892,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserCloseCommand()
@@ -910,16 +906,18 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+          
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Quit();
                 seleniumInstance.Dispose();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+
+            engine.RemoveAppInstance(vInstance);
+           
         }
 
         public override string GetDisplayValue()
@@ -939,6 +937,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Method")]
@@ -1012,9 +1011,11 @@ namespace taskt.Core.AutomationCommands
             var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
 
 
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
-                var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
 
                 dynamic element = null;
 
@@ -1058,15 +1059,6 @@ namespace taskt.Core.AutomationCommands
                     element = FindElement(seleniumInstance, seleniumSearchParam);
                 }
 
-
-                //if (element is OpenQA.Selenium.IWebElement)
-                //{
-                //    element = (OpenQA.Selenium.IWebElement)element;
-                //}
-                //else
-                //{
-                //    element = (List<OpenQA.Selenium.IWebElement>)element;
-                //}
 
 
 
@@ -1210,11 +1202,8 @@ namespace taskt.Core.AutomationCommands
                     default:
                         throw new Exception("Element Action was not found");
                 }
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+            
+          
         }
 
         private object FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance, string searchParameter)
@@ -1317,6 +1306,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the script code")]
@@ -1334,8 +1324,12 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+           
                 var script = v_ScriptCode.ConvertToUserVariable(sender);
                 var args = v_Args.ConvertToUserVariable(sender);
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
@@ -1348,11 +1342,7 @@ namespace taskt.Core.AutomationCommands
                     seleniumInstance.ExecuteScript(script, args);
                 }
 
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+           
         }
         public override string GetDisplayValue()
         {
