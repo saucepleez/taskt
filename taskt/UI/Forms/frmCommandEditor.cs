@@ -1075,6 +1075,7 @@ namespace taskt.UI.Forms
                 seleniumActionBox.Items.Add("Clear Element");
                 seleniumActionBox.Items.Add("Set Text");
                 seleniumActionBox.Items.Add("Get Text");
+                seleniumActionBox.Items.Add("Get Attribute");
                 seleniumActionBox.Items.Add("Wait For Element To Exist");
 
             }
