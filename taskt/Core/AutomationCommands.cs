@@ -2265,19 +2265,31 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
-            int intX, intY;
+  
+
+            var mouseX = v_XMousePosition.ConvertToUserVariable(sender);
+            var mouseY = v_YMousePosition.ConvertToUserVariable(sender);
+
+
+
             try
             {
-                intX = Convert.ToInt32(v_XMousePosition.ConvertToUserVariable(sender));
-                intY = Convert.ToInt32(v_YMousePosition.ConvertToUserVariable(sender));               
+                var xLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseX)));
+                var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
+
+                User32Functions.SetCursorPosition(xLocation, yLocation);
+                User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
+
+
             }
             catch (Exception ex)
             {
                 throw new Exception("Error parsing input to int type (X: " + v_XMousePosition + ", Y:" + v_YMousePosition + ") " + ex.ToString());
             }
 
-            User32Functions.SetCursorPosition(intX, intY);
-            User32Functions.SendMouseClick(v_MouseClick, intX, intY);
+          
+
+
 
         }
 
