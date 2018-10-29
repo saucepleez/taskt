@@ -131,7 +131,11 @@ namespace taskt.UI.Forms
             HideNotificationRow();
 
             //instantiate for script variables
-            scriptVariables = new List<Core.Script.ScriptVariable>();
+            if (!editMode)
+            {
+                scriptVariables = new List<Core.Script.ScriptVariable>();
+            }
+
 
             //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
 
@@ -635,6 +639,15 @@ namespace taskt.UI.Forms
                 Core.AutomationCommands.SequenceCommand sequence = (Core.AutomationCommands.SequenceCommand)currentCommand;
                 frmScriptBuilder newBuilder = new frmScriptBuilder();
 
+                //add variables
+
+                newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
+
+                foreach (var variable in this.scriptVariables)
+                {
+                    newBuilder.scriptVariables.Add(variable);
+                }
+
                 //append to new builder
                 foreach (var cmd in sequence.v_scriptActions)
                 {
@@ -644,7 +657,7 @@ namespace taskt.UI.Forms
 
                 //apply editor style format
                 newBuilder.ApplyEditorFormat();
-
+                
                 //if data has been changed
                 if (newBuilder.ShowDialog() == DialogResult.OK)
                 {
@@ -667,9 +680,12 @@ namespace taskt.UI.Forms
 
                 }
 
+             
+
             }
             else
             {
+
                 //create new command editor form
                 UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor();
 
@@ -1083,6 +1099,10 @@ namespace taskt.UI.Forms
 
         private void tmrNotify_Tick(object sender, EventArgs e)
         {
+            if (appSettings ==  null)
+            {
+                return;
+            }
 
             if ((notificationExpires < DateTime.Now) && (isDisplaying))
             {
