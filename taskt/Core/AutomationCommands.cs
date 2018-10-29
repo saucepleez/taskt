@@ -2268,8 +2268,8 @@ namespace taskt.Core.AutomationCommands
             int intX, intY;
             try
             {
-                intX = int.Parse(v_XMousePosition.ConvertToUserVariable(sender));
-                intY = int.Parse(v_YMousePosition.ConvertToUserVariable(sender));               
+                intX = Convert.ToInt32(v_XMousePosition.ConvertToUserVariable(sender));
+                intY = Convert.ToInt32(v_YMousePosition.ConvertToUserVariable(sender));               
             }
             catch (Exception ex)
             {
