@@ -2122,6 +2122,14 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Code { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply Arguments (optional)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter arguments that the custom code will receive during execution")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_Args { get; set; }
+
         public RunCustomCodeCommand()
         {
             this.CommandName = "RunCustomCodeCommand";
@@ -2147,9 +2155,13 @@ namespace taskt.Core.AutomationCommands
             }
             else
             {
+
+                var arguments = v_Args.ConvertToUserVariable(sender);
+            
                 //run code, taskt will wait for the app to exit before resuming
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
+                scriptProc.StartInfo.Arguments = arguments;
                 scriptProc.Start();
                 scriptProc.WaitForExit();
                 scriptProc.Close();
