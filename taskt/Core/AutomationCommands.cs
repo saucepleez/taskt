@@ -3701,14 +3701,22 @@ namespace taskt.Core.AutomationCommands
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
 
-          
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+
+
+            //check if workbook exists and save
+            if (excelInstance.ActiveWorkbook != null)
+            {
                 excelInstance.ActiveWorkbook.Close(v_ExcelSaveOnExit);
-                excelInstance.Quit();
+            }
+
+            //close excel
+            excelInstance.Quit();
 
             //remove instance
             engine.RemoveAppInstance(vInstance);
-            
+
         }
         public override string GetDisplayValue()
         {
