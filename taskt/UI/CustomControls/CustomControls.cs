@@ -344,11 +344,11 @@ namespace taskt.UI
             uiImages.Add("ExcelSetCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGetCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelRunMacroCommand", taskt.Properties.Resources.command_spreadsheet);
-
+            uiImages.Add("ExcelSaveAsCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelDeleteRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelDeleteCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
-
+            uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("SeleniumBrowserCreateCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SeleniumBrowserNavigateURLCommand", taskt.Properties.Resources.command_web);
