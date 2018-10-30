@@ -53,6 +53,7 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.chkSequenceDragDrop = new System.Windows.Forms.CheckBox();
             this.btnGenerateWikiDocs = new System.Windows.Forms.Button();
             this.chkInsertCommandsInline = new System.Windows.Forms.CheckBox();
             this.btnClearMetrics = new System.Windows.Forms.Button();
@@ -63,6 +64,7 @@
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
+            this.chkOverrideInstances = new System.Windows.Forms.CheckBox();
             this.lblDelay = new System.Windows.Forms.Label();
             this.txtCommandDelay = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -82,7 +84,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.chkOverrideInstances = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -95,10 +96,9 @@
             // btnConnect
             // 
             this.btnConnect.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnConnect.Location = new System.Drawing.Point(24, 427);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnConnect.Location = new System.Drawing.Point(12, 222);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(150, 63);
+            this.btnConnect.Size = new System.Drawing.Size(75, 33);
             this.btnConnect.TabIndex = 17;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
@@ -110,10 +110,9 @@
             this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblStatus.Location = new System.Drawing.Point(26, 496);
-            this.lblStatus.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblStatus.Location = new System.Drawing.Point(13, 258);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 37);
+            this.lblStatus.Size = new System.Drawing.Size(0, 20);
             this.lblStatus.TabIndex = 16;
             // 
             // chkRetryOnDisconnect
@@ -122,10 +121,9 @@
             this.chkRetryOnDisconnect.BackColor = System.Drawing.Color.Transparent;
             this.chkRetryOnDisconnect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkRetryOnDisconnect.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkRetryOnDisconnect.Location = new System.Drawing.Point(22, 144);
-            this.chkRetryOnDisconnect.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkRetryOnDisconnect.Location = new System.Drawing.Point(11, 75);
             this.chkRetryOnDisconnect.Name = "chkRetryOnDisconnect";
-            this.chkRetryOnDisconnect.Size = new System.Drawing.Size(304, 36);
+            this.chkRetryOnDisconnect.Size = new System.Drawing.Size(154, 19);
             this.chkRetryOnDisconnect.TabIndex = 15;
             this.chkRetryOnDisconnect.Text = "Retry If Connection Fails";
             this.chkRetryOnDisconnect.UseVisualStyleBackColor = false;
@@ -135,10 +133,9 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.SlateGray;
-            this.label1.Location = new System.Drawing.Point(12, 73);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label1.Location = new System.Drawing.Point(6, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(904, 54);
+            this.label1.Size = new System.Drawing.Size(452, 28);
             this.label1.TabIndex = 14;
             this.label1.Text = "Manage settings used by the application";
             // 
@@ -148,10 +145,9 @@
             this.chkAutomaticallyConnect.BackColor = System.Drawing.Color.Transparent;
             this.chkAutomaticallyConnect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAutomaticallyConnect.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkAutomaticallyConnect.Location = new System.Drawing.Point(20, 106);
-            this.chkAutomaticallyConnect.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkAutomaticallyConnect.Location = new System.Drawing.Point(10, 55);
             this.chkAutomaticallyConnect.Name = "chkAutomaticallyConnect";
-            this.chkAutomaticallyConnect.Size = new System.Drawing.Size(406, 36);
+            this.chkAutomaticallyConnect.Size = new System.Drawing.Size(206, 19);
             this.chkAutomaticallyConnect.TabIndex = 13;
             this.chkAutomaticallyConnect.Text = "Automatically Connect on Startup";
             this.chkAutomaticallyConnect.UseVisualStyleBackColor = false;
@@ -162,10 +158,9 @@
             this.chkServerEnabled.BackColor = System.Drawing.Color.Transparent;
             this.chkServerEnabled.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkServerEnabled.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkServerEnabled.Location = new System.Drawing.Point(20, 69);
-            this.chkServerEnabled.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkServerEnabled.Location = new System.Drawing.Point(10, 36);
             this.chkServerEnabled.Name = "chkServerEnabled";
-            this.chkServerEnabled.Size = new System.Drawing.Size(336, 36);
+            this.chkServerEnabled.Size = new System.Drawing.Size(168, 19);
             this.chkServerEnabled.TabIndex = 12;
             this.chkServerEnabled.Text = "Server Connection Enabled";
             this.chkServerEnabled.UseVisualStyleBackColor = false;
@@ -173,10 +168,9 @@
             // txtServerURL
             // 
             this.txtServerURL.ForeColor = System.Drawing.Color.SteelBlue;
-            this.txtServerURL.Location = new System.Drawing.Point(20, 271);
-            this.txtServerURL.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtServerURL.Location = new System.Drawing.Point(10, 141);
             this.txtServerURL.Name = "txtServerURL";
-            this.txtServerURL.Size = new System.Drawing.Size(738, 50);
+            this.txtServerURL.Size = new System.Drawing.Size(371, 29);
             this.txtServerURL.TabIndex = 11;
             // 
             // label3
@@ -185,20 +179,18 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.SlateGray;
-            this.label3.Location = new System.Drawing.Point(14, 229);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label3.Location = new System.Drawing.Point(7, 119);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(448, 30);
+            this.label3.Size = new System.Drawing.Size(232, 16);
             this.label3.TabIndex = 9;
             this.label3.Text = "Server URL ex. ws://localhost:port/ws)\r";
             // 
             // txtPublicKey
             // 
             this.txtPublicKey.ForeColor = System.Drawing.Color.SteelBlue;
-            this.txtPublicKey.Location = new System.Drawing.Point(22, 365);
-            this.txtPublicKey.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtPublicKey.Location = new System.Drawing.Point(11, 190);
             this.txtPublicKey.Name = "txtPublicKey";
-            this.txtPublicKey.Size = new System.Drawing.Size(738, 50);
+            this.txtPublicKey.Size = new System.Drawing.Size(371, 29);
             this.txtPublicKey.TabIndex = 19;
             // 
             // label2
@@ -207,10 +199,9 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.SlateGray;
-            this.label2.Location = new System.Drawing.Point(18, 331);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label2.Location = new System.Drawing.Point(9, 172);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(166, 30);
+            this.label2.Size = new System.Drawing.Size(86, 16);
             this.label2.TabIndex = 18;
             this.label2.Text = "Connect Key:";
             // 
@@ -220,10 +211,9 @@
             this.chkEnableLogging.BackColor = System.Drawing.Color.Transparent;
             this.chkEnableLogging.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkEnableLogging.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkEnableLogging.Location = new System.Drawing.Point(20, 167);
-            this.chkEnableLogging.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkEnableLogging.Location = new System.Drawing.Point(10, 76);
             this.chkEnableLogging.Name = "chkEnableLogging";
-            this.chkEnableLogging.Size = new System.Drawing.Size(404, 45);
+            this.chkEnableLogging.Size = new System.Drawing.Size(207, 24);
             this.chkEnableLogging.TabIndex = 14;
             this.chkEnableLogging.Text = "Enable Diagnostic Logging";
             this.chkEnableLogging.UseVisualStyleBackColor = false;
@@ -234,10 +224,9 @@
             this.chkAutoCloseWindow.BackColor = System.Drawing.Color.Transparent;
             this.chkAutoCloseWindow.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAutoCloseWindow.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkAutoCloseWindow.Location = new System.Drawing.Point(20, 119);
-            this.chkAutoCloseWindow.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkAutoCloseWindow.Location = new System.Drawing.Point(10, 56);
             this.chkAutoCloseWindow.Name = "chkAutoCloseWindow";
-            this.chkAutoCloseWindow.Size = new System.Drawing.Size(527, 45);
+            this.chkAutoCloseWindow.Size = new System.Drawing.Size(268, 24);
             this.chkAutoCloseWindow.TabIndex = 13;
             this.chkAutoCloseWindow.Text = "Automatically Close Debug Window";
             this.chkAutoCloseWindow.UseVisualStyleBackColor = false;
@@ -248,10 +237,9 @@
             this.chkShowDebug.BackColor = System.Drawing.Color.Transparent;
             this.chkShowDebug.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkShowDebug.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkShowDebug.Location = new System.Drawing.Point(20, 69);
-            this.chkShowDebug.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkShowDebug.Location = new System.Drawing.Point(10, 36);
             this.chkShowDebug.Name = "chkShowDebug";
-            this.chkShowDebug.Size = new System.Drawing.Size(339, 45);
+            this.chkShowDebug.Size = new System.Drawing.Size(172, 24);
             this.chkShowDebug.TabIndex = 12;
             this.chkShowDebug.Text = "Show Debug Window";
             this.chkShowDebug.UseVisualStyleBackColor = false;
@@ -265,10 +253,9 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(6, 1031);
-            this.uiBtnOpen.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 551);
             this.uiBtnOpen.Name = "uiBtnOpen";
-            this.uiBtnOpen.Size = new System.Drawing.Size(96, 92);
+            this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
             this.uiBtnOpen.TabStop = false;
             this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
@@ -279,10 +266,9 @@
             this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
             this.lblMainLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMainLogo.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblMainLogo.Location = new System.Drawing.Point(6, 8);
-            this.lblMainLogo.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblMainLogo.Location = new System.Drawing.Point(3, 4);
             this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(262, 73);
+            this.lblMainLogo.Size = new System.Drawing.Size(135, 37);
             this.lblMainLogo.TabIndex = 14;
             this.lblMainLogo.Text = "settings";
             // 
@@ -292,10 +278,9 @@
             this.lblOptions.BackColor = System.Drawing.Color.Transparent;
             this.lblOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOptions.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblOptions.Location = new System.Drawing.Point(12, 17);
-            this.lblOptions.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblOptions.Location = new System.Drawing.Point(6, 9);
             this.lblOptions.Name = "lblOptions";
-            this.lblOptions.Size = new System.Drawing.Size(359, 44);
+            this.lblOptions.Size = new System.Drawing.Size(188, 24);
             this.lblOptions.TabIndex = 15;
             this.lblOptions.Text = "Automation Engine";
             // 
@@ -305,10 +290,9 @@
             this.lblApplicationSettings.BackColor = System.Drawing.Color.Transparent;
             this.lblApplicationSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblApplicationSettings.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblApplicationSettings.Location = new System.Drawing.Point(12, 17);
-            this.lblApplicationSettings.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblApplicationSettings.Location = new System.Drawing.Point(6, 9);
             this.lblApplicationSettings.Name = "lblApplicationSettings";
-            this.lblApplicationSettings.Size = new System.Drawing.Size(375, 44);
+            this.lblApplicationSettings.Size = new System.Drawing.Size(194, 24);
             this.lblApplicationSettings.TabIndex = 21;
             this.lblApplicationSettings.Text = "Application Settings";
             // 
@@ -318,10 +302,9 @@
             this.chkAntiIdle.BackColor = System.Drawing.Color.Transparent;
             this.chkAntiIdle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAntiIdle.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkAntiIdle.Location = new System.Drawing.Point(20, 69);
-            this.chkAntiIdle.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkAntiIdle.Location = new System.Drawing.Point(10, 36);
             this.chkAntiIdle.Name = "chkAntiIdle";
-            this.chkAntiIdle.Size = new System.Drawing.Size(423, 45);
+            this.chkAntiIdle.Size = new System.Drawing.Size(217, 24);
             this.chkAntiIdle.TabIndex = 20;
             this.chkAntiIdle.Text = "Anti-Idle (while app is open)";
             this.chkAntiIdle.UseVisualStyleBackColor = false;
@@ -329,10 +312,9 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(20, 273);
-            this.btnUpdates.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnUpdates.Location = new System.Drawing.Point(10, 157);
             this.btnUpdates.Name = "btnUpdates";
-            this.btnUpdates.Size = new System.Drawing.Size(414, 52);
+            this.btnUpdates.Size = new System.Drawing.Size(207, 27);
             this.btnUpdates.TabIndex = 22;
             this.btnUpdates.Text = "Check For Updates";
             this.btnUpdates.UseVisualStyleBackColor = true;
@@ -344,10 +326,9 @@
             this.chkAdvancedDebug.BackColor = System.Drawing.Color.Transparent;
             this.chkAdvancedDebug.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAdvancedDebug.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkAdvancedDebug.Location = new System.Drawing.Point(22, 213);
-            this.chkAdvancedDebug.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkAdvancedDebug.Location = new System.Drawing.Point(10, 96);
             this.chkAdvancedDebug.Name = "chkAdvancedDebug";
-            this.chkAdvancedDebug.Size = new System.Drawing.Size(665, 45);
+            this.chkAdvancedDebug.Size = new System.Drawing.Size(335, 24);
             this.chkAdvancedDebug.TabIndex = 23;
             this.chkAdvancedDebug.Text = "Show Advanced Debug Logs During Execution";
             this.chkAdvancedDebug.UseVisualStyleBackColor = false;
@@ -358,10 +339,9 @@
             this.chkCreateMissingVariables.BackColor = System.Drawing.Color.Transparent;
             this.chkCreateMissingVariables.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkCreateMissingVariables.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkCreateMissingVariables.Location = new System.Drawing.Point(22, 256);
-            this.chkCreateMissingVariables.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkCreateMissingVariables.Location = new System.Drawing.Point(10, 116);
             this.chkCreateMissingVariables.Name = "chkCreateMissingVariables";
-            this.chkCreateMissingVariables.Size = new System.Drawing.Size(606, 45);
+            this.chkCreateMissingVariables.Size = new System.Drawing.Size(306, 24);
             this.chkCreateMissingVariables.TabIndex = 24;
             this.chkCreateMissingVariables.Text = "Create Missing Variables During Execution";
             this.chkCreateMissingVariables.UseVisualStyleBackColor = false;
@@ -373,16 +353,16 @@
             this.uiSettingTabs.Controls.Add(this.tabServerSettings);
             this.uiSettingTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiSettingTabs.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSettingTabs.Location = new System.Drawing.Point(6, 141);
-            this.uiSettingTabs.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(1136, 878);
+            this.uiSettingTabs.Size = new System.Drawing.Size(577, 472);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.chkSequenceDragDrop);
             this.tabAppSettings.Controls.Add(this.btnGenerateWikiDocs);
             this.tabAppSettings.Controls.Add(this.chkInsertCommandsInline);
             this.tabAppSettings.Controls.Add(this.btnClearMetrics);
@@ -395,21 +375,32 @@
             this.tabAppSettings.Controls.Add(this.lblApplicationSettings);
             this.tabAppSettings.Controls.Add(this.chkAntiIdle);
             this.tabAppSettings.Controls.Add(this.btnUpdates);
-            this.tabAppSettings.Location = new System.Drawing.Point(8, 59);
-            this.tabAppSettings.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
-            this.tabAppSettings.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tabAppSettings.Size = new System.Drawing.Size(1120, 811);
+            this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAppSettings.Size = new System.Drawing.Size(569, 438);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // chkSequenceDragDrop
+            // 
+            this.chkSequenceDragDrop.AutoSize = true;
+            this.chkSequenceDragDrop.BackColor = System.Drawing.Color.Transparent;
+            this.chkSequenceDragDrop.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkSequenceDragDrop.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkSequenceDragDrop.Location = new System.Drawing.Point(10, 76);
+            this.chkSequenceDragDrop.Name = "chkSequenceDragDrop";
+            this.chkSequenceDragDrop.Size = new System.Drawing.Size(347, 24);
+            this.chkSequenceDragDrop.TabIndex = 32;
+            this.chkSequenceDragDrop.Text = "Allow Drag and Drop into Sequence Commands";
+            this.chkSequenceDragDrop.UseVisualStyleBackColor = false;
             // 
             // btnGenerateWikiDocs
             // 
             this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(20, 337);
-            this.btnGenerateWikiDocs.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(10, 190);
             this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
-            this.btnGenerateWikiDocs.Size = new System.Drawing.Size(414, 52);
+            this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 27);
             this.btnGenerateWikiDocs.TabIndex = 31;
             this.btnGenerateWikiDocs.Text = "Generate Documentation";
             this.btnGenerateWikiDocs.UseVisualStyleBackColor = true;
@@ -421,10 +412,9 @@
             this.chkInsertCommandsInline.BackColor = System.Drawing.Color.Transparent;
             this.chkInsertCommandsInline.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkInsertCommandsInline.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkInsertCommandsInline.Location = new System.Drawing.Point(18, 117);
-            this.chkInsertCommandsInline.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkInsertCommandsInline.Location = new System.Drawing.Point(10, 56);
             this.chkInsertCommandsInline.Name = "chkInsertCommandsInline";
-            this.chkInsertCommandsInline.Size = new System.Drawing.Size(708, 45);
+            this.chkInsertCommandsInline.Size = new System.Drawing.Size(356, 24);
             this.chkInsertCommandsInline.TabIndex = 30;
             this.chkInsertCommandsInline.Text = "New Commands Insert Below Selected Command";
             this.chkInsertCommandsInline.UseVisualStyleBackColor = false;
@@ -432,10 +422,9 @@
             // btnClearMetrics
             // 
             this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(18, 712);
-            this.btnClearMetrics.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnClearMetrics.Location = new System.Drawing.Point(9, 385);
             this.btnClearMetrics.Name = "btnClearMetrics";
-            this.btnClearMetrics.Size = new System.Drawing.Size(216, 48);
+            this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
             this.btnClearMetrics.TabIndex = 29;
             this.btnClearMetrics.Text = "Clear Metrics";
             this.btnClearMetrics.UseVisualStyleBackColor = true;
@@ -448,10 +437,9 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
-            this.label5.Location = new System.Drawing.Point(22, 421);
-            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label5.Location = new System.Drawing.Point(11, 234);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(513, 30);
+            this.label5.Size = new System.Drawing.Size(262, 16);
             this.label5.TabIndex = 28;
             this.label5.Text = "Script Execution Metrics (Last 10 per Script)";
             // 
@@ -459,28 +447,25 @@
             // 
             this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
             this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMetrics.Location = new System.Drawing.Point(20, 458);
-            this.lblMetrics.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblMetrics.Location = new System.Drawing.Point(10, 253);
             this.lblMetrics.Name = "lblMetrics";
-            this.lblMetrics.Size = new System.Drawing.Size(1068, 244);
+            this.lblMetrics.Size = new System.Drawing.Size(534, 127);
             this.lblMetrics.TabIndex = 27;
             this.lblMetrics.Text = "Getting Metrics...";
             // 
             // tvExecutionTimes
             // 
-            this.tvExecutionTimes.Location = new System.Drawing.Point(20, 458);
-            this.tvExecutionTimes.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tvExecutionTimes.Location = new System.Drawing.Point(10, 253);
             this.tvExecutionTimes.Name = "tvExecutionTimes";
-            this.tvExecutionTimes.Size = new System.Drawing.Size(1064, 241);
+            this.tvExecutionTimes.Size = new System.Drawing.Size(534, 127);
             this.tvExecutionTimes.TabIndex = 26;
             this.tvExecutionTimes.Visible = false;
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(1004, 206);
-            this.btnSelectFolder.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnSelectFolder.Location = new System.Drawing.Point(502, 122);
             this.btnSelectFolder.Name = "btnSelectFolder";
-            this.btnSelectFolder.Size = new System.Drawing.Size(84, 58);
+            this.btnSelectFolder.Size = new System.Drawing.Size(42, 30);
             this.btnSelectFolder.TabIndex = 25;
             this.btnSelectFolder.Text = "...";
             this.btnSelectFolder.UseVisualStyleBackColor = true;
@@ -492,19 +477,17 @@
             this.lblRootFolder.BackColor = System.Drawing.Color.Transparent;
             this.lblRootFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRootFolder.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblRootFolder.Location = new System.Drawing.Point(14, 169);
-            this.lblRootFolder.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblRootFolder.Location = new System.Drawing.Point(7, 103);
             this.lblRootFolder.Name = "lblRootFolder";
-            this.lblRootFolder.Size = new System.Drawing.Size(208, 30);
+            this.lblRootFolder.Size = new System.Drawing.Size(110, 16);
             this.lblRootFolder.TabIndex = 24;
             this.lblRootFolder.Text = "taskt Root Folder";
             // 
             // txtAppFolderPath
             // 
-            this.txtAppFolderPath.Location = new System.Drawing.Point(20, 206);
-            this.txtAppFolderPath.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtAppFolderPath.Location = new System.Drawing.Point(10, 122);
             this.txtAppFolderPath.Name = "txtAppFolderPath";
-            this.txtAppFolderPath.Size = new System.Drawing.Size(976, 50);
+            this.txtAppFolderPath.Size = new System.Drawing.Size(490, 29);
             this.txtAppFolderPath.TabIndex = 23;
             // 
             // tabDebugSettings
@@ -527,13 +510,26 @@
             this.tabDebugSettings.Controls.Add(this.chkAdvancedDebug);
             this.tabDebugSettings.Controls.Add(this.chkAutoCloseWindow);
             this.tabDebugSettings.Controls.Add(this.chkEnableLogging);
-            this.tabDebugSettings.Location = new System.Drawing.Point(8, 59);
-            this.tabDebugSettings.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
-            this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tabDebugSettings.Size = new System.Drawing.Size(1120, 811);
+            this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDebugSettings.Size = new System.Drawing.Size(569, 438);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
+            // 
+            // chkOverrideInstances
+            // 
+            this.chkOverrideInstances.AutoSize = true;
+            this.chkOverrideInstances.BackColor = System.Drawing.Color.Transparent;
+            this.chkOverrideInstances.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkOverrideInstances.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkOverrideInstances.Location = new System.Drawing.Point(10, 156);
+            this.chkOverrideInstances.Name = "chkOverrideInstances";
+            this.chkOverrideInstances.Size = new System.Drawing.Size(181, 24);
+            this.chkOverrideInstances.TabIndex = 35;
+            this.chkOverrideInstances.Text = "Override App Instances";
+            this.chkOverrideInstances.UseVisualStyleBackColor = false;
+            this.chkOverrideInstances.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // lblDelay
             // 
@@ -541,19 +537,17 @@
             this.lblDelay.BackColor = System.Drawing.Color.Transparent;
             this.lblDelay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDelay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblDelay.Location = new System.Drawing.Point(12, 350);
-            this.lblDelay.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblDelay.Location = new System.Drawing.Point(6, 192);
             this.lblDelay.Name = "lblDelay";
-            this.lblDelay.Size = new System.Drawing.Size(728, 45);
+            this.lblDelay.Size = new System.Drawing.Size(353, 21);
             this.lblDelay.TabIndex = 34;
             this.lblDelay.Text = "Default delay between executing commands (ms):";
             // 
             // txtCommandDelay
             // 
-            this.txtCommandDelay.Location = new System.Drawing.Point(718, 346);
-            this.txtCommandDelay.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtCommandDelay.Location = new System.Drawing.Point(359, 190);
             this.txtCommandDelay.Name = "txtCommandDelay";
-            this.txtCommandDelay.Size = new System.Drawing.Size(150, 50);
+            this.txtCommandDelay.Size = new System.Drawing.Size(77, 29);
             this.txtCommandDelay.TabIndex = 33;
             // 
             // label10
@@ -562,10 +556,9 @@
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label10.Location = new System.Drawing.Point(30, 663);
-            this.label10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label10.Location = new System.Drawing.Point(15, 355);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(189, 45);
+            this.label10.Size = new System.Drawing.Size(93, 21);
             this.label10.TabIndex = 32;
             this.label10.Text = "End Marker:";
             // 
@@ -575,10 +568,9 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label9.Location = new System.Drawing.Point(24, 598);
-            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label9.Location = new System.Drawing.Point(12, 321);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(201, 45);
+            this.label9.Size = new System.Drawing.Size(99, 21);
             this.label9.TabIndex = 31;
             this.label9.Text = "Start Marker:";
             // 
@@ -587,10 +579,9 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label8.Location = new System.Drawing.Point(24, 452);
-            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label8.Location = new System.Drawing.Point(12, 245);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(820, 138);
+            this.label8.Size = new System.Drawing.Size(410, 72);
             this.label8.TabIndex = 30;
             this.label8.Text = "Indicate the start and end markers for variables.  When the engine runs, it will " +
     "automatically replace the variable with the stored value.";
@@ -601,10 +592,9 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label7.Location = new System.Drawing.Point(12, 406);
-            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label7.Location = new System.Drawing.Point(6, 221);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(309, 44);
+            this.label7.Size = new System.Drawing.Size(158, 24);
             this.label7.TabIndex = 29;
             this.label7.Text = "Variable Pattern";
             // 
@@ -614,28 +604,25 @@
             this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableDisplay.Location = new System.Drawing.Point(326, 627);
-            this.lblVariableDisplay.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 336);
             this.lblVariableDisplay.Name = "lblVariableDisplay";
-            this.lblVariableDisplay.Size = new System.Drawing.Size(263, 51);
+            this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
             this.lblVariableDisplay.TabIndex = 28;
             this.lblVariableDisplay.Text = "VariableName";
             // 
             // txtVariableEndMarker
             // 
-            this.txtVariableEndMarker.Location = new System.Drawing.Point(228, 656);
-            this.txtVariableEndMarker.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtVariableEndMarker.Location = new System.Drawing.Point(114, 351);
             this.txtVariableEndMarker.Name = "txtVariableEndMarker";
-            this.txtVariableEndMarker.Size = new System.Drawing.Size(48, 50);
+            this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableEndMarker.TabIndex = 27;
             this.txtVariableEndMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
             // 
             // txtVariableStartMarker
             // 
-            this.txtVariableStartMarker.Location = new System.Drawing.Point(228, 592);
-            this.txtVariableStartMarker.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtVariableStartMarker.Location = new System.Drawing.Point(114, 318);
             this.txtVariableStartMarker.Name = "txtVariableStartMarker";
-            this.txtVariableStartMarker.Size = new System.Drawing.Size(48, 50);
+            this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableStartMarker.TabIndex = 26;
             this.txtVariableStartMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
             // 
@@ -645,10 +632,9 @@
             this.chkTrackMetrics.BackColor = System.Drawing.Color.Transparent;
             this.chkTrackMetrics.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkTrackMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkTrackMetrics.Location = new System.Drawing.Point(22, 302);
-            this.chkTrackMetrics.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkTrackMetrics.Location = new System.Drawing.Point(10, 136);
             this.chkTrackMetrics.Name = "chkTrackMetrics";
-            this.chkTrackMetrics.Size = new System.Drawing.Size(358, 45);
+            this.chkTrackMetrics.Size = new System.Drawing.Size(182, 24);
             this.chkTrackMetrics.TabIndex = 25;
             this.chkTrackMetrics.Text = "Track Execution Metrics";
             this.chkTrackMetrics.UseVisualStyleBackColor = false;
@@ -669,11 +655,10 @@
             this.tabServerSettings.Controls.Add(this.chkAutomaticallyConnect);
             this.tabServerSettings.Controls.Add(this.chkRetryOnDisconnect);
             this.tabServerSettings.Controls.Add(this.lblStatus);
-            this.tabServerSettings.Location = new System.Drawing.Point(8, 59);
-            this.tabServerSettings.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
-            this.tabServerSettings.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tabServerSettings.Size = new System.Drawing.Size(1120, 812);
+            this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabServerSettings.Size = new System.Drawing.Size(569, 438);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -683,10 +668,9 @@
             this.chkBypassValidation.BackColor = System.Drawing.Color.Transparent;
             this.chkBypassValidation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkBypassValidation.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkBypassValidation.Location = new System.Drawing.Point(22, 187);
-            this.chkBypassValidation.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkBypassValidation.Location = new System.Drawing.Point(11, 97);
             this.chkBypassValidation.Name = "chkBypassValidation";
-            this.chkBypassValidation.Size = new System.Drawing.Size(275, 36);
+            this.chkBypassValidation.Size = new System.Drawing.Size(138, 19);
             this.chkBypassValidation.TabIndex = 23;
             this.chkBypassValidation.Text = "Bypass SSL Validation";
             this.chkBypassValidation.UseVisualStyleBackColor = false;
@@ -695,10 +679,9 @@
             // btnCloseConnection
             // 
             this.btnCloseConnection.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnCloseConnection.Location = new System.Drawing.Point(180, 427);
-            this.btnCloseConnection.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnCloseConnection.Location = new System.Drawing.Point(90, 222);
             this.btnCloseConnection.Name = "btnCloseConnection";
-            this.btnCloseConnection.Size = new System.Drawing.Size(150, 63);
+            this.btnCloseConnection.Size = new System.Drawing.Size(75, 33);
             this.btnCloseConnection.TabIndex = 22;
             this.btnCloseConnection.Text = "Close";
             this.btnCloseConnection.UseVisualStyleBackColor = true;
@@ -710,10 +693,9 @@
             this.lblSocketException.BackColor = System.Drawing.Color.Transparent;
             this.lblSocketException.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSocketException.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblSocketException.Location = new System.Drawing.Point(26, 535);
-            this.lblSocketException.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblSocketException.Location = new System.Drawing.Point(13, 278);
             this.lblSocketException.Name = "lblSocketException";
-            this.lblSocketException.Size = new System.Drawing.Size(0, 37);
+            this.lblSocketException.Size = new System.Drawing.Size(0, 20);
             this.lblSocketException.TabIndex = 21;
             // 
             // label4
@@ -722,10 +704,9 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label4.Location = new System.Drawing.Point(12, 17);
-            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label4.Location = new System.Drawing.Point(6, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(295, 44);
+            this.label4.Size = new System.Drawing.Size(151, 24);
             this.label4.TabIndex = 20;
             this.label4.Text = "Server Settings";
             // 
@@ -739,13 +720,12 @@
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 135F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 115F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1148, 1140);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(583, 608);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -757,7 +737,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1148, 135);
+            this.panel1.Size = new System.Drawing.Size(583, 70);
             this.panel1.TabIndex = 26;
             // 
             // tmrGetSocketStatus
@@ -771,31 +751,15 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // chkOverrideInstances
-            // 
-            this.chkOverrideInstances.AutoSize = true;
-            this.chkOverrideInstances.BackColor = System.Drawing.Color.Transparent;
-            this.chkOverrideInstances.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkOverrideInstances.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkOverrideInstances.Location = new System.Drawing.Point(606, 69);
-            this.chkOverrideInstances.Margin = new System.Windows.Forms.Padding(6);
-            this.chkOverrideInstances.Name = "chkOverrideInstances";
-            this.chkOverrideInstances.Size = new System.Drawing.Size(358, 45);
-            this.chkOverrideInstances.TabIndex = 35;
-            this.chkOverrideInstances.Text = "Override App Instances";
-            this.chkOverrideInstances.UseVisualStyleBackColor = false;
-            this.chkOverrideInstances.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // frmSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(1148, 1140);
+            this.ClientSize = new System.Drawing.Size(583, 608);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "frmSettings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
@@ -868,5 +832,6 @@
         private System.Windows.Forms.Label lblDelay;
         private System.Windows.Forms.TextBox txtCommandDelay;
         internal System.Windows.Forms.CheckBox chkOverrideInstances;
+        private System.Windows.Forms.CheckBox chkSequenceDragDrop;
     }
 }

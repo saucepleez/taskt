@@ -52,6 +52,7 @@ namespace taskt.UI.Forms
 
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndex = -1;
+        private frmScriptBuilder parentBuilder { get; set; }
 
         public frmScriptBuilder()
         {
@@ -332,6 +333,33 @@ namespace taskt.UI.Forms
             {
                 return;
             }
+
+            //drag and drop for sequence
+            if ((dragToItem.Tag is Core.AutomationCommands.SequenceCommand) && (appSettings.ClientSettings.EnableSequenceDragDrop))
+            {
+                //sequence command for drag drop
+                var sequence = (Core.AutomationCommands.SequenceCommand)dragToItem.Tag;
+
+                //add command to script actions
+                for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
+                {
+                    var command = (Core.AutomationCommands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
+                    sequence.v_scriptActions.Add(command);
+                }
+
+                //remove originals
+                for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0 ; i--)
+                {
+                    lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+                }
+
+                //return back
+                return;
+            }
+
+
+
+
             //Obtain the index of the item at the mouse pointer.
             int dragIndex = dragToItem.Index;
 
@@ -657,7 +685,8 @@ namespace taskt.UI.Forms
 
                 //apply editor style format
                 newBuilder.ApplyEditorFormat();
-                
+                newBuilder.parentBuilder = this;
+
                 //if data has been changed
                 if (newBuilder.ShowDialog() == DialogResult.OK)
                 {
@@ -739,7 +768,8 @@ namespace taskt.UI.Forms
 
             grpSearch.Left = grpSaveClose.Right + 20;
 
-            //tlpControls.RowStyles[1].Height = 0;
+            moveToParentToolStripMenuItem.Visible = true;
+            
         }
 
 
@@ -1250,8 +1280,10 @@ namespace taskt.UI.Forms
         }
         private void uiBtnImport_Click(object sender, EventArgs e)
         {
-
-    
+            BeginImportProcess();
+        }
+        private void BeginImportProcess()
+        {
             //show ofd
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
@@ -1265,6 +1297,7 @@ namespace taskt.UI.Forms
                 Import(openFileDialog.FileName);
 
             }
+
         }
         private void Import(string filePath)
         {
@@ -1794,6 +1827,29 @@ namespace taskt.UI.Forms
         {
             UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder();
             recorder.ShowDialog();
+        }
+
+        private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            //add command to script actions
+            for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
+            {
+                var command = (Core.AutomationCommands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
+                parentBuilder.AddCommandToListView(command);
+            }
+
+            //remove originals
+            for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+            }
+
+        }
+
+        private void btnSequenceImport_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
         }
     }
 

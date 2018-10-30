@@ -133,11 +133,13 @@ namespace taskt.Core
         public bool AntiIdleWhileOpen { get; set; }
         public string RootFolder { get; set; }
         public bool InsertCommandsInline { get; set; }
+        public bool EnableSequenceDragDrop { get; set; }
         public ClientSettings()
         {
             AntiIdleWhileOpen = false;
             InsertCommandsInline = false;
             RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
+            EnableSequenceDragDrop = true;
         }
     }
 }
