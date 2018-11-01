@@ -944,6 +944,11 @@ namespace taskt.UI.Forms
                     ifActionParameterBox.Visible = true;
                     actionParameters.Rows.Add("Line Number", "");
                     break;
+                case "Error Did Not Occur":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Line Number", "");
+                    break;
                 case "Window Name Exists":
                 case "Active Window Name Is":
                     additionalParameterLabel.Visible = true;

@@ -5050,6 +5050,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Web Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("GUI Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -5185,6 +5186,35 @@ namespace taskt.Core.AutomationCommands
                 }
                 else
                 {
+                    ifResult = false;
+                }
+
+            }
+            else if (v_IfActionType == "Error Did Not Occur")
+            {
+                //get line number
+                string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                          where rw.Field<string>("Parameter Name") == "Line Number"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                //convert to variable
+                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+                //convert to int
+                int lineNumber = int.Parse(variableLineNumber);
+
+                //determine if error happened
+                if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() == 0)
+                {
+                    ifResult = true;
+                }
+                else
+                {
+                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
+                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
+                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
+
                     ifResult = false;
                 }
 
@@ -5405,6 +5435,13 @@ namespace taskt.Core.AutomationCommands
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Error Occured on Line Number " + lineNumber + ")";
+                case "Error Did Not Occur":
+
+                    string lineNum = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                          where rw.Field<string>("Parameter Name") == "Line Number"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If (Error Did Not Occur on Line Number " + lineNum + ")";
                 case "Window Name Exists":
                 case "Active Window Name Is":
 
