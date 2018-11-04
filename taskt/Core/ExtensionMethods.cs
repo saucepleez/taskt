@@ -161,12 +161,7 @@ namespace taskt.Core
             }
 
 
-            //bypass math for types that are dates
-            DateTime dateTest;
-            if (DateTime.TryParse(str, out dateTest))
-            {
-                return str;
-            }
+
 
             //track math chars
             var mathChars = new List<Char>();
