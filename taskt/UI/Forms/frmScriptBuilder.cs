@@ -1832,18 +1832,26 @@ namespace taskt.UI.Forms
         private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            //add command to script actions
-            for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
-            {
-                var command = (Core.AutomationCommands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
-                parentBuilder.AddCommandToListView(command);
-            }
+            //create command list
+            var commandList = new List<Core.AutomationCommands.ScriptCommand>();
 
-            //remove originals
+           //loop each
             for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
             {
+                //add to list and remove existing
+                commandList.Add((Core.AutomationCommands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
                 lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
             }
+
+            //reverse commands only if not inserting inline
+            if (!appSettings.ClientSettings.InsertCommandsInline)
+            {
+                commandList.Reverse();
+            }
+         
+            //add to parent
+            commandList.ForEach(x => parentBuilder.AddCommandToListView(x));
+
 
         }
 
