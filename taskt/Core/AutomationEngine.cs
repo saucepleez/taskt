@@ -95,7 +95,13 @@ namespace taskt.Core
                 ReportProgress("Creating App Instance Tracking List");
 
                 //create app instances and merge in global instances
-                AppInstances = GlobalAppInstances.GetInstances();
+                this.AppInstances = new Dictionary<string, object>();
+                var GlobalInstances = GlobalAppInstances.GetInstances();
+                foreach (var instance in GlobalInstances)
+                {
+                    this.AppInstances.Add(instance.Key, instance.Value);
+                }
+              
               
                 //execute commands
                 foreach (var executionCommand in automationScript.Commands)
@@ -206,8 +212,21 @@ namespace taskt.Core
                 {
                     CurrentLoopCancelled = true;
                 }
+                else if(parentCommand is Core.AutomationCommands.SetEngineDelayCommand)
+                {
+                    //get variable
+                    var setEngineCommand = (Core.AutomationCommands.SetEngineDelayCommand)parentCommand;                    
+                    var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
+                    var delay = int.Parse(engineDelay);
+
+                    //update delay setting
+                    this.engineSettings.DelayBetweenCommands = delay;
+                }
                 else
                 {
+                    //sleep required time
+                    System.Threading.Thread.Sleep(engineSettings.DelayBetweenCommands);
+
                     //run the command
                     parentCommand.RunCommand(this);
                 }
@@ -239,6 +258,68 @@ namespace taskt.Core
                     throw new Exception(ex.ToString());
                 }
             }
+        }
+        public void AddAppInstance(string instanceName, object appObject) {
+
+            if (AppInstances.ContainsKey(instanceName) && engineSettings.OverrideExistingAppInstances)
+            {
+                ReportProgress("Overriding Existing Instance: " + instanceName);
+                AppInstances.Remove(instanceName);
+            }
+            else if (AppInstances.ContainsKey(instanceName) && !engineSettings.OverrideExistingAppInstances)
+            {
+                throw new Exception("App Instance already exists and override has been disabled in engine settings! Enable override existing app instances or use unique instance names!");
+            }
+
+            try
+            {
+                this.AppInstances.Add(instanceName, appObject);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public object GetAppInstance(string instanceName)
+        {
+            try
+            {
+                if (AppInstances.TryGetValue(instanceName, out object appObject))
+                {
+                    return appObject;
+                }
+                else
+                {
+                    throw new Exception("App Instance '" + instanceName + "' not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
+        }
+        public void RemoveAppInstance(string instanceName)
+        {
+            try
+            {
+                if (AppInstances.ContainsKey(instanceName))
+                {
+                    AppInstances.Remove(instanceName);
+                    
+                }
+                else
+                {
+                    throw new Exception("App Instance '" + instanceName + "' not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public void CancelScript()

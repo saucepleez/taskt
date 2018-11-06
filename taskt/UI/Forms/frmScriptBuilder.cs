@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -51,6 +52,7 @@ namespace taskt.UI.Forms
 
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndex = -1;
+        private frmScriptBuilder parentBuilder { get; set; }
 
         public frmScriptBuilder()
         {
@@ -91,19 +93,13 @@ namespace taskt.UI.Forms
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
 
-   
-
-            //detect latest release
-            //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.github.com/repos/saucepleez/taskt/releases");
-            //myHttpWebRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2;)";
-            //HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-
-            //StreamReader reader = new StreamReader(myHttpWebResponse.GetResponseStream(), Encoding.UTF8);
-            //String responseString = reader.ReadToEnd();
-
-            //Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.Linq.JArray.Parse(responseString);
-            //dynamic data = Newtonsoft.Json.Linq.JObject.Parse(jsonArray[0].ToString());
-
+            //set controls double buffered
+            foreach (Control control in Controls)
+            {
+                typeof(Control).InvokeMember("DoubleBuffered",
+                    BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                    null, control, new object[] { true });
+            }
 
 
             //create undo list
@@ -136,7 +132,11 @@ namespace taskt.UI.Forms
             HideNotificationRow();
 
             //instantiate for script variables
-            scriptVariables = new List<Core.Script.ScriptVariable>();
+            if (!editMode)
+            {
+                scriptVariables = new List<Core.Script.ScriptVariable>();
+            }
+
 
             //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
 
@@ -333,6 +333,33 @@ namespace taskt.UI.Forms
             {
                 return;
             }
+
+            //drag and drop for sequence
+            if ((dragToItem.Tag is Core.AutomationCommands.SequenceCommand) && (appSettings.ClientSettings.EnableSequenceDragDrop))
+            {
+                //sequence command for drag drop
+                var sequence = (Core.AutomationCommands.SequenceCommand)dragToItem.Tag;
+
+                //add command to script actions
+                for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
+                {
+                    var command = (Core.AutomationCommands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
+                    sequence.v_scriptActions.Add(command);
+                }
+
+                //remove originals
+                for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0 ; i--)
+                {
+                    lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+                }
+
+                //return back
+                return;
+            }
+
+
+
+
             //Obtain the index of the item at the mouse pointer.
             int dragIndex = dragToItem.Index;
 
@@ -640,6 +667,15 @@ namespace taskt.UI.Forms
                 Core.AutomationCommands.SequenceCommand sequence = (Core.AutomationCommands.SequenceCommand)currentCommand;
                 frmScriptBuilder newBuilder = new frmScriptBuilder();
 
+                //add variables
+
+                newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
+
+                foreach (var variable in this.scriptVariables)
+                {
+                    newBuilder.scriptVariables.Add(variable);
+                }
+
                 //append to new builder
                 foreach (var cmd in sequence.v_scriptActions)
                 {
@@ -649,6 +685,7 @@ namespace taskt.UI.Forms
 
                 //apply editor style format
                 newBuilder.ApplyEditorFormat();
+                newBuilder.parentBuilder = this;
 
                 //if data has been changed
                 if (newBuilder.ShowDialog() == DialogResult.OK)
@@ -672,9 +709,12 @@ namespace taskt.UI.Forms
 
                 }
 
+             
+
             }
             else
             {
+
                 //create new command editor form
                 UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor();
 
@@ -728,7 +768,8 @@ namespace taskt.UI.Forms
 
             grpSearch.Left = grpSaveClose.Right + 20;
 
-            //tlpControls.RowStyles[1].Height = 0;
+            moveToParentToolStripMenuItem.Visible = true;
+            
         }
 
 
@@ -1088,6 +1129,10 @@ namespace taskt.UI.Forms
 
         private void tmrNotify_Tick(object sender, EventArgs e)
         {
+            if (appSettings ==  null)
+            {
+                return;
+            }
 
             if ((notificationExpires < DateTime.Now) && (isDisplaying))
             {
@@ -1235,8 +1280,10 @@ namespace taskt.UI.Forms
         }
         private void uiBtnImport_Click(object sender, EventArgs e)
         {
-
-    
+            BeginImportProcess();
+        }
+        private void BeginImportProcess()
+        {
             //show ofd
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
@@ -1250,6 +1297,7 @@ namespace taskt.UI.Forms
                 Import(openFileDialog.FileName);
 
             }
+
         }
         private void Import(string filePath)
         {
@@ -1779,6 +1827,37 @@ namespace taskt.UI.Forms
         {
             UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder();
             recorder.ShowDialog();
+        }
+
+        private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            //create command list
+            var commandList = new List<Core.AutomationCommands.ScriptCommand>();
+
+           //loop each
+            for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                //add to list and remove existing
+                commandList.Add((Core.AutomationCommands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
+                lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+            }
+
+            //reverse commands only if not inserting inline
+            if (!appSettings.ClientSettings.InsertCommandsInline)
+            {
+                commandList.Reverse();
+            }
+         
+            //add to parent
+            commandList.ForEach(x => parentBuilder.AddCommandToListView(x));
+
+
+        }
+
+        private void btnSequenceImport_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
         }
     }
 

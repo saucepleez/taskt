@@ -107,6 +107,9 @@ namespace taskt.Core
         public bool TrackExecutionMetrics { get; set; }
         public string VariableStartMarker { get; set; }
         public string VariableEndMarker { get; set; }
+        public int DelayBetweenCommands { get; set; }
+        public bool OverrideExistingAppInstances { get; set; }
+
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -117,6 +120,8 @@ namespace taskt.Core
             TrackExecutionMetrics = true;
             VariableStartMarker = "[";
             VariableEndMarker = "]";
+            DelayBetweenCommands = 250;
+            OverrideExistingAppInstances = false;
     }
     }
     /// <summary>
@@ -128,11 +133,13 @@ namespace taskt.Core
         public bool AntiIdleWhileOpen { get; set; }
         public string RootFolder { get; set; }
         public bool InsertCommandsInline { get; set; }
+        public bool EnableSequenceDragDrop { get; set; }
         public ClientSettings()
         {
             AntiIdleWhileOpen = false;
             InsertCommandsInline = false;
             RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
+            EnableSequenceDragDrop = true;
         }
     }
 }

@@ -60,12 +60,15 @@ namespace taskt.UI.Forms
             chkTrackMetrics.DataBindings.Add("Checked", engineSettings, "TrackExecutionMetrics", false, DataSourceUpdateMode.OnPropertyChanged);
             txtVariableStartMarker.DataBindings.Add("Text", engineSettings, "VariableStartMarker", false, DataSourceUpdateMode.OnPropertyChanged);
             txtVariableEndMarker.DataBindings.Add("Text", engineSettings, "VariableEndMarker", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtCommandDelay.DataBindings.Add("Text", engineSettings, "DelayBetweenCommands", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkOverrideInstances.DataBindings.Add("Checked", engineSettings, "OverrideExistingAppInstances", false, DataSourceUpdateMode.OnPropertyChanged);
 
             var clientSettings = newAppSettings.ClientSettings;
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAppFolderPath.DataBindings.Add("Text", clientSettings, "RootFolder", false, DataSourceUpdateMode.OnPropertyChanged);
             chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
+           
             //get metrics
             bgwMetrics.RunWorkerAsync();
           
@@ -324,6 +327,11 @@ namespace taskt.UI.Forms
         private void txtVariableStartMarker_TextChanged(object sender, EventArgs e)
         {
             lblVariableDisplay.Text = txtVariableStartMarker.Text + "myVariable" + txtVariableEndMarker.Text;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

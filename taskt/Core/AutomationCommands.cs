@@ -79,6 +79,8 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(ExcelDeleteRowCommand))]
     [XmlInclude(typeof(ExcelDeleteCellCommand))]
     [XmlInclude(typeof(ExcelGetLastRowCommand))]
+    [XmlInclude(typeof(ExcelSaveAsCommand))]
+    [XmlInclude(typeof(ExcelSaveCommand))]
     [XmlInclude(typeof(SeleniumBrowserCreateCommand))]
     [XmlInclude(typeof(SeleniumBrowserNavigateURLCommand))]
     [XmlInclude(typeof(SeleniumBrowserNavigateForwardCommand))]
@@ -121,6 +123,8 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(LogDataCommand))]
     [XmlInclude(typeof(StringReplaceCommand))]
     [XmlInclude(typeof(ExecuteDLLCommand))]
+    [XmlInclude(typeof(ParseJsonCommand))]
+    [XmlInclude(typeof(SetEngineDelayCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -150,7 +154,7 @@ namespace taskt.Core.AutomationCommands
         {
             this.DisplayForeColor = System.Drawing.Color.SteelBlue;
             this.CommandEnabled = false;
-            this.DefaultPause = 250;
+            this.DefaultPause = 0;
             this.IsCommented = false;
         }
 
@@ -621,6 +625,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -659,15 +664,7 @@ namespace taskt.Core.AutomationCommands
 
             var instanceName = v_InstanceName.ConvertToUserVariable(sender);
 
-            if (engine.AppInstances.ContainsKey(v_InstanceName))
-            {
-                //need to figure out how to handle multiple potential session names
-                engine.AppInstances.Remove(v_InstanceName);
-            }
-
-            //add to engine
-            engine.AppInstances.Add(v_InstanceName, newSeleniumSession);
-
+            engine.AddAppInstance(instanceName, newSeleniumSession);
 
 
             //handle app instance tracking
@@ -709,6 +706,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
@@ -730,15 +728,14 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
 
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+   
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+
         }
 
         public override string GetDisplayValue()
@@ -771,6 +768,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserNavigateForwardCommand()
@@ -784,15 +782,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+     
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Forward();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+           
         }
 
         public override string GetDisplayValue()
@@ -813,6 +811,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserNavigateBackCommand()
@@ -826,15 +825,14 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+            
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Back();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+          
         }
 
         public override string GetDisplayValue()
@@ -854,6 +852,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserRefreshCommand()
@@ -867,15 +866,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Navigate().Refresh();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+            
         }
 
         public override string GetDisplayValue()
@@ -895,6 +894,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public SeleniumBrowserCloseCommand()
@@ -908,16 +908,18 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+          
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
                 seleniumInstance.Quit();
                 seleniumInstance.Dispose();
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+
+            engine.RemoveAppInstance(vInstance);
+           
         }
 
         public override string GetDisplayValue()
@@ -937,6 +939,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Method")]
@@ -973,6 +976,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Matching Elements")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
@@ -1009,9 +1013,11 @@ namespace taskt.Core.AutomationCommands
             var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
 
 
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
-                var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
 
                 dynamic element = null;
 
@@ -1055,15 +1061,6 @@ namespace taskt.Core.AutomationCommands
                     element = FindElement(seleniumInstance, seleniumSearchParam);
                 }
 
-
-                //if (element is OpenQA.Selenium.IWebElement)
-                //{
-                //    element = (OpenQA.Selenium.IWebElement)element;
-                //}
-                //else
-                //{
-                //    element = (List<OpenQA.Selenium.IWebElement>)element;
-                //}
 
 
 
@@ -1207,11 +1204,8 @@ namespace taskt.Core.AutomationCommands
                     default:
                         throw new Exception("Element Action was not found");
                 }
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+            
+          
         }
 
         private object FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance, string searchParameter)
@@ -1314,6 +1308,7 @@ namespace taskt.Core.AutomationCommands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the script code")]
@@ -1331,8 +1326,12 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+           
                 var script = v_ScriptCode.ConvertToUserVariable(sender);
                 var args = v_Args.ConvertToUserVariable(sender);
                 var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
@@ -1345,11 +1344,7 @@ namespace taskt.Core.AutomationCommands
                     seleniumInstance.ExecuteScript(script, args);
                 }
 
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+           
         }
         public override string GetDisplayValue()
         {
@@ -2129,6 +2124,14 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Code { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply Arguments (optional)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter arguments that the custom code will receive during execution")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_Args { get; set; }
+
         public RunCustomCodeCommand()
         {
             this.CommandName = "RunCustomCodeCommand";
@@ -2154,9 +2157,13 @@ namespace taskt.Core.AutomationCommands
             }
             else
             {
+
+                var arguments = v_Args.ConvertToUserVariable(sender);
+            
                 //run code, taskt will wait for the app to exit before resuming
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
+                scriptProc.StartInfo.Arguments = arguments;
                 scriptProc.Start();
                 scriptProc.WaitForExit();
                 scriptProc.Close();
@@ -2272,12 +2279,32 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+  
 
-            var intX = int.Parse(v_XMousePosition.ConvertToUserVariable(sender));
-            var intY = int.Parse(v_YMousePosition.ConvertToUserVariable(sender));
+            var mouseX = v_XMousePosition.ConvertToUserVariable(sender);
+            var mouseY = v_YMousePosition.ConvertToUserVariable(sender);
 
-            User32Functions.SetCursorPosition(intX, intY);
-            User32Functions.SendMouseClick(v_MouseClick, intX, intY);
+
+
+            try
+            {
+                var xLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseX)));
+                var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
+
+                User32Functions.SetCursorPosition(xLocation, yLocation);
+                User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error parsing input to int type (X: " + v_XMousePosition + ", Y:" + v_YMousePosition + ") " + ex.ToString());
+            }
+
+          
+
+
+
         }
 
         public override string GetDisplayValue()
@@ -2815,7 +2842,7 @@ namespace taskt.Core.AutomationCommands
                 var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
                                     where rw.Field<string>("Parameter Name") == "Get Value From"
                                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
+               
                 //apply to variable
                 var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
                                        where rw.Field<string>("Parameter Name") == "Apply To Variable"
@@ -3280,6 +3307,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public ExcelCreateApplicationCommand()
@@ -3291,23 +3319,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
                 Visible = true
             };
 
-            try
-            {
-                engine.AppInstances.Add(v_InstanceName, newExcelSession);
-            }
-            catch (ArgumentException)
-            {
-                throw new Exception("You cannot share application instance names. Ensure that Instance ID being used are unique.");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            engine.AddAppInstance(vInstance, newExcelSession);
+
 
            
         }
@@ -3328,6 +3348,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -3346,11 +3367,14 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                excelInstance.Workbooks.Open(v_FilePath);
-            }
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+
+           var excelObject = engine.GetAppInstance(vInstance);
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            excelInstance.Workbooks.Open(v_FilePath);
+
+           
         }
         public override string GetDisplayValue()
         {
@@ -3369,6 +3393,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public ExcelAddWorkbookCommand()
@@ -3380,11 +3405,13 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
+
+
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Workbooks.Add();
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3403,6 +3430,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1 or B2)")]
@@ -3419,12 +3447,15 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var excelObject = engine.GetAppInstance(vInstance);
+
+ 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
                 excelSheet.Range[v_CellLocation].Select();
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3443,6 +3474,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set")]
@@ -3467,15 +3499,18 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var excelObject = engine.GetAppInstance(vInstance);
+
+           
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
                 var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
                 excelSheet.Range[targetAddress].Value = targetText;
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3494,6 +3529,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1 or B2)")]
@@ -3519,8 +3555,10 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
+
+           
 
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
 
@@ -3528,7 +3566,7 @@ namespace taskt.Core.AutomationCommands
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
                 var cellValue = (string)excelSheet.Range[targetAddress].Text;
                 cellValue.StoreInUserVariable(sender, v_userVariableName);
-            }
+            
         }
 
         public override string GetDisplayValue()
@@ -3548,6 +3586,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the macro name")]
@@ -3564,11 +3603,13 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
+
+           
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Run(v_MacroName);
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3587,6 +3628,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter Letter of the Column to check (ex. A, B, C)")]
@@ -3609,10 +3651,11 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            var excelObject = engine.GetAppInstance(vInstance);
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 var excelSheet = excelInstance.ActiveSheet;
                 var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, "A").End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
@@ -3620,7 +3663,7 @@ namespace taskt.Core.AutomationCommands
                 lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
 
 
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3639,6 +3682,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate if the Workbook should be saved")]
@@ -3649,22 +3693,135 @@ namespace taskt.Core.AutomationCommands
         public ExcelCloseApplicationCommand()
         {
             this.CommandName = "ExcelCloseApplicationCommand";
-            this.SelectionName = "Close Application";
+            this.SelectionName = "Close Excel Application";
             this.CommandEnabled = true;
         }
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
+
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+
+
+            //check if workbook exists and save
+            if (excelInstance.ActiveWorkbook != null)
             {
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.ActiveWorkbook.Close(v_ExcelSaveOnExit);
-                excelInstance.Quit();
             }
+
+            //close excel
+            excelInstance.Quit();
+
+            //remove instance
+            engine.RemoveAppInstance(vInstance);
+
         }
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Save On Close: " + v_ExcelSaveOnExit + ", Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to save an Excel workbook.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a workbook to a file.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    public class ExcelSaveAsCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.xlsx or [vExcelFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_FileName { get; set; }
+
+        public ExcelSaveAsCommand()
+        {
+            this.CommandName = "ExcelSaveAsCommand";
+            this.SelectionName = "Save Workbook As";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            //get engine context
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            //convert variables
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var fileName = v_FileName.ConvertToUserVariable(engine);
+
+            //get excel app object
+            var excelObject = engine.GetAppInstance(vInstance);
+
+            //convert object
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+
+            //overwrite and save
+            excelInstance.DisplayAlerts = false;
+            excelInstance.ActiveWorkbook.SaveAs(fileName);
+            excelInstance.DisplayAlerts = true;
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Save To '" + v_FileName + "', Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to save an Excel workbook.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save changes to a workbook.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    public class ExcelSaveCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InstanceName { get; set; }
+
+        public ExcelSaveCommand()
+        {
+            this.CommandName = "ExcelSaveCommand";
+            this.SelectionName = "Save Workbook";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            //get engine context
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            //convert variables
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            //get excel app object
+            var excelObject = engine.GetAppInstance(vInstance);
+
+            //convert object
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+
+            //save
+            excelInstance.ActiveWorkbook.Save();
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue();
         }
     }
     [Serializable]
@@ -3679,6 +3836,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
@@ -3695,16 +3853,18 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var excelObject = engine.GetAppInstance(vInstance);
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
                 Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.Sheets[sheetToDelete];
                 workSheet.Select();
 
 
 
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3723,6 +3883,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -3747,8 +3908,10 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
+
+          
 
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
@@ -3768,7 +3931,7 @@ namespace taskt.Core.AutomationCommands
                 }
 
 
-            }
+            
         }
         public override string GetDisplayValue()
         {
@@ -3787,6 +3950,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -3812,9 +3976,10 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             var engine = (Core.AutomationEngineInstance)sender;
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object excelObject))
-            {
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var excelObject = engine.GetAppInstance(vInstance);
 
+           
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
@@ -3834,7 +3999,7 @@ namespace taskt.Core.AutomationCommands
 
 
 
-            }
+          
         }
         public override string GetDisplayValue()
         {
@@ -4313,7 +4478,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Input Delimiter")]
+        [Attributes.PropertyAttributes.PropertyDescription("Input Delimiter (ex. [crLF] for new line, [chars] for each char, ',')")]
         [Attributes.PropertyAttributes.InputSpecification("Declare the character that will be used to seperate. [crLF] can be used for line breaks and [chars] can be used to split each digit/letter")]
         [Attributes.PropertyAttributes.SampleUsage("[crLF], [chars], ',' (comma - with no single quote wrapper)")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -4360,6 +4525,13 @@ namespace taskt.Core.AutomationCommands
             var v_receivingVariable = v_applyConvertToUserVariableName.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
             //get complex variable from engine and assign
             var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
+
+            if (requiredComplexVariable == null)
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_receivingVariable, CurrentPosition = 0 });
+                requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
+            }
+
             requiredComplexVariable.VariableValue = splitString;
         }
         public override string GetDisplayValue()
@@ -4680,6 +4852,109 @@ namespace taskt.Core.AutomationCommands
     }
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class ParseJsonCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputValue { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify a JSON extractor")]
+        [Attributes.PropertyAttributes.InputSpecification("Input a JSON token extractor")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from Before Text, After Text, Between Text")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_JsonExtractor { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted json")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+
+        public ParseJsonCommand()
+        {
+            this.CommandName = "ParseJsonCommand";
+            this.SelectionName = "Parse JSON";
+            this.CommandEnabled = true;
+          
+        }
+
+        public override void RunCommand(object sender)
+        {
+            var engine = (AutomationEngineInstance)sender;
+
+            //get variablized input
+            var variableInput = v_InputValue.ConvertToUserVariable(sender);
+
+            //get variablized token
+            var jsonSearchToken = v_JsonExtractor.ConvertToUserVariable(sender);
+
+            //create objects
+            Newtonsoft.Json.Linq.JObject o;
+            IEnumerable<Newtonsoft.Json.Linq.JToken> searchResults;
+            List<string> resultList = new List<string>();
+
+            //parse json
+            try
+            {
+                 o = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
+            }
+ 
+
+            //select results
+            try
+            {
+                searchResults = o.SelectTokens(jsonSearchToken);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
+            }
+        
+
+            //add results to result list since list<string> is supported
+            foreach (var result in searchResults)
+            {
+                resultList.Add(result.ToString());
+            }
+
+            //get variable
+            var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
+
+            //create if var does not exist
+            if (requiredComplexVariable == null)
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_applyToVariableName, CurrentPosition = 0 });
+                requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
+            }
+
+            //assign value to variable
+            requiredComplexVariable.VariableValue = resultList;
+
+        }
+
+      
+       
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply Result(s) To Variable: " + v_applyToVariableName + "]";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command logs data to files.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to log custom data to a file for debugging or analytical purposes.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
@@ -4775,6 +5050,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Web Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("GUI Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -4910,6 +5186,35 @@ namespace taskt.Core.AutomationCommands
                 }
                 else
                 {
+                    ifResult = false;
+                }
+
+            }
+            else if (v_IfActionType == "Error Did Not Occur")
+            {
+                //get line number
+                string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                          where rw.Field<string>("Parameter Name") == "Line Number"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                //convert to variable
+                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+                //convert to int
+                int lineNumber = int.Parse(variableLineNumber);
+
+                //determine if error happened
+                if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() == 0)
+                {
+                    ifResult = true;
+                }
+                else
+                {
+                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
+                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
+                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
+
                     ifResult = false;
                 }
 
@@ -5130,6 +5435,13 @@ namespace taskt.Core.AutomationCommands
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Error Occured on Line Number " + lineNumber + ")";
+                case "Error Did Not Occur":
+
+                    string lineNum = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                          where rw.Field<string>("Parameter Name") == "Line Number"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If (Error Did Not Occur on Line Number " + lineNum + ")";
                 case "Window Name Exists":
                 case "Active Window Name Is":
 
@@ -6402,8 +6714,39 @@ namespace taskt.Core.AutomationCommands
     }
     #endregion
 
+    #region Engine Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to set delays between execution of commands in a running instance.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change the execution speed between commands.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class SetEngineDelayCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Set Delay between commands (in milliseconds).")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
+        [Attributes.PropertyAttributes.SampleUsage("**250** or **[vVariableSpeed]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_EngineSpeed { get; set; }
 
-   
+        public SetEngineDelayCommand()
+        {
+            this.CommandName = "SetEngineDelayCommand";
+            this.SelectionName = "Set Engine Delay";
+            this.CommandEnabled = true;
+            this.v_EngineSpeed = "250";
+        }
+
+      
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";
+        }
+    }
+    #endregion
+
 
 }
 

@@ -37,7 +37,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.uiPictureButton1 = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
             this.SuspendLayout();
             // 
             // lstClasses
@@ -131,17 +133,35 @@
             this.uiPictureButton1.IsMouseOver = false;
             this.uiPictureButton1.Location = new System.Drawing.Point(12, 37);
             this.uiPictureButton1.Name = "uiPictureButton1";
-            this.uiPictureButton1.Size = new System.Drawing.Size(48, 48);
+            this.uiPictureButton1.Size = new System.Drawing.Size(55, 48);
             this.uiPictureButton1.TabIndex = 8;
             this.uiPictureButton1.TabStop = false;
             this.uiPictureButton1.Click += new System.EventHandler(this.uiPictureButton1_Click);
+            // 
+            // uiBtnOk
+            // 
+            this.uiBtnOk.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnOk.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnOk.DisplayText = "Ok";
+            this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnOk.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOk.Image")));
+            this.uiBtnOk.IsMouseOver = false;
+            this.uiBtnOk.Location = new System.Drawing.Point(11, 464);
+            this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.uiBtnOk.Name = "uiBtnOk";
+            this.uiBtnOk.Size = new System.Drawing.Size(48, 49);
+            this.uiBtnOk.TabIndex = 17;
+            this.uiBtnOk.TabStop = false;
+            this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // frmDLLExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 247;
-            this.ClientSize = new System.Drawing.Size(543, 462);
+            this.ClientSize = new System.Drawing.Size(543, 519);
+            this.Controls.Add(this.uiBtnOk);
             this.Controls.Add(this.uiPictureButton1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -154,20 +174,21 @@
             this.Name = "frmDLLExplorer";
             this.Text = "DLL Explorer";
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lstClasses;
-        private System.Windows.Forms.ListBox lstMethods;
-        private System.Windows.Forms.ListBox lstParameters;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private CustomControls.UIPictureButton uiPictureButton1;
+        private CustomControls.UIPictureButton uiBtnOk;
+        public System.Windows.Forms.ListBox lstClasses;
+        public System.Windows.Forms.ListBox lstMethods;
+        public System.Windows.Forms.ListBox lstParameters;
     }
 }

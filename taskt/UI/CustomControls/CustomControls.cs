@@ -180,6 +180,16 @@ namespace taskt.UI.CustomControls
             this.MouseEnter += UIPictureButton_MouseEnter;
             this.MouseLeave += UIPictureButton1_MouseLeave;
         }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var parms = base.CreateParams;
+                parms.Style &= ~0x02000000;  // Turn off WS_CLIPCHILDREN
+                return parms;
+            }
+        }
+
 
         private void UIPictureButton_MouseEnter(object sender, System.EventArgs e)
         {
@@ -294,6 +304,7 @@ namespace taskt.UI
         {
             var uiImages = new Dictionary<string, Image>();
             uiImages.Add("PauseCommand", taskt.Properties.Resources.command_pause);
+            uiImages.Add("SetEngineDelayCommand", taskt.Properties.Resources.command_pause);
             uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
             uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);
@@ -333,11 +344,11 @@ namespace taskt.UI
             uiImages.Add("ExcelSetCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGetCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelRunMacroCommand", taskt.Properties.Resources.command_spreadsheet);
-
+            uiImages.Add("ExcelSaveAsCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelDeleteRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelDeleteCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
-
+            uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("SeleniumBrowserCreateCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SeleniumBrowserNavigateURLCommand", taskt.Properties.Resources.command_web);
@@ -374,6 +385,7 @@ namespace taskt.UI
             uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
+            uiImages.Add("ParseJsonCommand", taskt.Properties.Resources.command_parse);
             return uiImages;
         }
         public static ImageList UIImageList()

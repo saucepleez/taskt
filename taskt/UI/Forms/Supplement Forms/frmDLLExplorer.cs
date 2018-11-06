@@ -14,6 +14,8 @@ namespace taskt.UI.Forms.Supplemental
     public partial class frmDLLExplorer : UIForm
     {
         public List<Class> Classes { get; set; } = new List<Class>();
+        public string FileName { get; set; }
+        public List<string> SelectedParameters { get; set;}
         public frmDLLExplorer()
         {
             InitializeComponent();
@@ -47,9 +49,11 @@ namespace taskt.UI.Forms.Supplemental
             }
             else
             {
+                SelectedParameters = new List<string>();
                 foreach (var param in method.Parameters)
                 {
-                    lstParameters.Items.Add(param.ParameterName);
+                    lstParameters.Items.Add("Parameter: " + param.ParameterName + "<" + param.ParameterType + ">");
+                    SelectedParameters.Add(param.ParameterName);
                 }
             }
 
@@ -62,10 +66,22 @@ namespace taskt.UI.Forms.Supplemental
                 OpenFileDialog ofd = new OpenFileDialog();
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
+
+                    if (!ofd.FileName.ToLower().Contains(".dll"))
+                    {
+                        MessageBox.Show("Please select a valid DLL file!", "Invalid File Extension Selected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+
+                    //track filename
+                    FileName = ofd.FileName;
+
+
+                    //add class list
                     Classes = new List<Class>();
 
                     //load assembly
-                    Assembly requiredAssembly = Assembly.LoadFrom(ofd.FileName);
+                    Assembly requiredAssembly = Assembly.LoadFrom(FileName);
 
                     //get classes
                     var ClassTypes = requiredAssembly.GetTypes();
@@ -75,7 +91,7 @@ namespace taskt.UI.Forms.Supplemental
                     foreach (var classType in ClassTypes)
                     {
                         var newClass = new Class();
-                        newClass.ClassName = classType.Name;
+                        newClass.ClassName = classType.FullName;
 
                         var methods = classType.GetMethods();
                         foreach (var method in methods)
@@ -88,7 +104,8 @@ namespace taskt.UI.Forms.Supplemental
                             foreach (var param in reqdParams)
                             {
                                 var newParam = new Parameter();
-                                newParam.ParameterName = "Parameter Type: " + param.ParameterType.FullName + ", Parameter Name: " + param.Name;
+                                newParam.ParameterName = param.Name;
+                                newParam.ParameterType = param.ParameterType.FullName;
                                 newMethod.Parameters.Add(newParam);
                             }
 
@@ -117,6 +134,10 @@ namespace taskt.UI.Forms.Supplemental
             }
         }
 
+        private void uiBtnOk_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+        }
     }
 
     public class Class
@@ -132,5 +153,6 @@ namespace taskt.UI.Forms.Supplemental
     public class Parameter
     {
         public string ParameterName { get; set; }
+        public string ParameterType { get; set; }
     }
 }

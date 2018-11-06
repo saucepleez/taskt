@@ -202,15 +202,10 @@ namespace taskt.UI.Forms
             {
                //update status
                 lblAction.Text = text + "..";
-                lstSteppingCommands.Items.Add(text + "..");
+                lstSteppingCommands.Items.Add(DateTime.Now.ToString("MM/dd/yy hh:mm:ss.fff") + " | " + text + "..");
                 lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
 
-                //quick handler for resume
-                if (text == "[Please select 'Resume' when ready]")
-                {
-                    uiBtnPause_Click(null, null);
-                }
-
+           
             }
 
         }

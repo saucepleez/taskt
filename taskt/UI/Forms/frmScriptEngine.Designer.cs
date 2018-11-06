@@ -50,11 +50,10 @@
             this.lstSteppingCommands.ForeColor = System.Drawing.Color.SteelBlue;
             this.lstSteppingCommands.FormattingEnabled = true;
             this.lstSteppingCommands.ItemHeight = 17;
-            this.lstSteppingCommands.Location = new System.Drawing.Point(7, 51);
+            this.lstSteppingCommands.Location = new System.Drawing.Point(7, 54);
             this.lstSteppingCommands.Name = "lstSteppingCommands";
-            this.lstSteppingCommands.Size = new System.Drawing.Size(605, 123);
+            this.lstSteppingCommands.Size = new System.Drawing.Size(675, 123);
             this.lstSteppingCommands.TabIndex = 0;
-
             this.lstSteppingCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstSteppingCommands_MouseDoubleClick);
             // 
             // tmrNotify
@@ -118,7 +117,7 @@
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
             this.uiBtnCancel.IsMouseOver = false;
-            this.uiBtnCancel.Location = new System.Drawing.Point(561, 0);
+            this.uiBtnCancel.Location = new System.Drawing.Point(633, 3);
             this.uiBtnCancel.Name = "uiBtnCancel";
             this.uiBtnCancel.Size = new System.Drawing.Size(48, 48);
             this.uiBtnCancel.TabIndex = 14;
@@ -134,7 +133,7 @@
             this.uiBtnPause.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnPause.Image = global::taskt.Properties.Resources.command_pause;
             this.uiBtnPause.IsMouseOver = false;
-            this.uiBtnPause.Location = new System.Drawing.Point(507, 0);
+            this.uiBtnPause.Location = new System.Drawing.Point(579, 3);
             this.uiBtnPause.Name = "uiBtnPause";
             this.uiBtnPause.Size = new System.Drawing.Size(48, 48);
             this.uiBtnPause.TabIndex = 15;
@@ -147,7 +146,7 @@
             this.pbBotIcon.Image = global::taskt.Properties.Resources.robot_bouncing_transparent;
             this.pbBotIcon.Location = new System.Drawing.Point(7, 5);
             this.pbBotIcon.Name = "pbBotIcon";
-            this.pbBotIcon.Size = new System.Drawing.Size(605, 191);
+            this.pbBotIcon.Size = new System.Drawing.Size(675, 191);
             this.pbBotIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbBotIcon.TabIndex = 18;
             this.pbBotIcon.TabStop = false;
@@ -159,7 +158,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.BackgroundChangeIndex = 92;
-            this.ClientSize = new System.Drawing.Size(615, 224);
+            this.ClientSize = new System.Drawing.Size(694, 224);
             this.Controls.Add(this.lblAction);
             this.Controls.Add(this.lblKillProcNote);
             this.Controls.Add(this.uiBtnCancel);
