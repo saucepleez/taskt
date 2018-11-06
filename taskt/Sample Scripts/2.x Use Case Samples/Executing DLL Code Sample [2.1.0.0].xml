@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Testing DLL functionality" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="This command uses sample DLL from the repo: Sample Scripts\Sample.dll" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Note: To generate parameters within the command, you must first use a valid file path (not variable), valid class and valid method name from DLL" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vSampleDLLFilePath" v_Input="D:\Dropbox\Environment Folders\Documents\Visual Studio 2015\Projects\taskt\taskt\Sample Scripts\Sample.dll" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Call basic method that returns a string" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="SaySomething" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The sample string returned was: {vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Call basic method that returns an integer (whole number)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="FilesProcessed" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The sample int returned was: {vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Call basic method that returns a double" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="EstimatedTimeRemaining" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="the sample double returned was: {vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Call basic method that returns a decimal" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="AccountBalance" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The sample decimal returned was: {vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" v_Comment="Call complex method that returns custom class" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="ReturnComplexItem" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" v_Comment="Show complex class values" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The complex object returned was: {vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="21" PauseBeforeExeucution="false" v_Comment="sample for parsing complex value out" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Sample parsed result: {vResult =&gt; $.SomeName}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="23" PauseBeforeExeucution="false" v_Comment="Call method that requires parameters" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="24" PauseBeforeExeucution="false" v_Comment="Note: Parameters are automagically converted to expected types for the DLL call" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="25" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="DoMath" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <_x0031_0eP9o20Para48ePerTable102018.094803 diffgr:id="10eP9o20Para48ePerTable102018.0948031" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>number</Parameter_x0020_Name>
+                <Parameter_x0020_Value>20</Parameter_x0020_Value>
+              </_x0031_0eP9o20Para48ePerTable102018.094803>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="26" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="27" PauseBeforeExeucution="false" v_Comment="Call method that requires boolean parameter" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="ReturnOpposite" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <_x0031_0eP9o20Para48ePerTable102018.094803 diffgr:id="10eP9o20Para48ePerTable102018.0948031" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>boolean</Parameter_x0020_Name>
+                <Parameter_x0020_Value>False</Parameter_x0020_Value>
+              </_x0031_0eP9o20Para48ePerTable102018.094803>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="29" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="30" PauseBeforeExeucution="false" v_Comment="Call method that requires multiple params (in string, in string, out string)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="250" LineNumber="31" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{vSampleDLLFilePath}" v_ClassName="tasktTesting.RobotWorker" v_MethodName="ReturnAppendedString" v_applyToVariableName="vResult">
+        <v_MethodParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0031_0eP9o20Para48ePerTable102018.094803">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0031_0eP9o20Para48ePerTable102018.094803" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0031_0eP9o20Para48ePerTable102018.094803" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <_x0031_0eP9o20Para48ePerTable102018.094803 diffgr:id="10eP9o20Para48ePerTable102018.0948031" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>userValue</Parameter_x0020_Name>
+                <Parameter_x0020_Value>This is the first value</Parameter_x0020_Value>
+              </_x0031_0eP9o20Para48ePerTable102018.094803>
+              <_x0031_0eP9o20Para48ePerTable102018.094803 diffgr:id="10eP9o20Para48ePerTable102018.0948032" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>anotherValue</Parameter_x0020_Name>
+                <Parameter_x0020_Value>This is the second value</Parameter_x0020_Value>
+              </_x0031_0eP9o20Para48ePerTable102018.094803>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_MethodParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="32" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vResult}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vSampleDLLFilePath</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
