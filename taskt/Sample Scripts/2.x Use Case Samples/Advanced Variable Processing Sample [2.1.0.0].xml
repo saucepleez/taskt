@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Show Message" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vGreetings}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Split Into List" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StringSplitCommand" CommandName="StringSplitCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vGreetings" v_splitCharacter="," v_applyConvertToUserVariableName="{vGreetingList}" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Loop List" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{vGreetingList}" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Show Individual Output" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vGreetingList}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Apply Current Context to Variable" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vContext" v_Input="{taskt.EngineContext}" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Show Variable List" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vContext =&gt; $.VariableList}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Show Specific Variable Value, Item 0 (hi)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vContext =&gt; $.VariableList[?(@.VariableName == 'vGreetingList')].VariableValue[0]}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Show Specific Variable Value, Item 1 (hello)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vContext =&gt; $.VariableList[?(@.VariableName == 'vGreetingList')].VariableValue[1]}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="18" PauseBeforeExeucution="false" v_Comment="Show Specific Variable Value, Item 1 (hey)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vContext =&gt; $.VariableList[?(@.VariableName == 'vGreetingList')].VariableValue[2]}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vContext</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vGreetingList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vGreetings</VariableName>
+      <VariableValue xsi:type="xsd:string">Hi, Hello, Hey</VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

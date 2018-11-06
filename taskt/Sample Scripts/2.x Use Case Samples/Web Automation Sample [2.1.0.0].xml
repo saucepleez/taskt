@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Selenium Example with Multi-Element Support" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCreateCommand" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Create Browser" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_InstanceTracking="Forget Instance" v_BrowserWindowOption="Maximize" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Navigate to URL" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_URL="https://wiki.taskt.net/" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Find Elements and Apply To Variable for Processing" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="In this example, we will find and process h1 tags" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserElementActionCommand" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Element Action" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_SeleniumSearchType="Find Elements By Tag Name" v_SeleniumSearchParameter="h1">
+        <v_SeleniumElementAction>Get Matching Elements</v_SeleniumElementAction>
+        <v_WebActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="WebAcPionPara51Table101918.045135">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebAcPionPara51Table101918.045135" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="WebAcPionPara51Table101918.045135" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <WebAcPionPara51Table101918.045135 diffgr:id="WebAcPionPara51Table101918.0451351" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>vElements</Parameter_x0020_Value>
+              </WebAcPionPara51Table101918.045135>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_WebActionParameterTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Loop List vElements which contains Element Data" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{vElements}" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Show Full Complex Variable WARNING: SLOW TO PARSE" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="true" SelectionName="Show Message" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vElements]" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" v_Comment="To call a complex variable property use the pattern [VariableName =&gt; $.Property]" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" v_Comment="To call a complex variable use the pattern [VariableName =&gt; $.PropertyName]" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The text of the element is '{vElements =&gt; $.Text}'" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Test to see if a value was found" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Has Value">
+          <v_IfActionParameterTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="I9AcPionPara55Table101918.085551">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                    <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9AcPionPara55Table101918.085551" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="I9AcPionPara55Table101918.085551" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <I9AcPionPara55Table101918.085551 diffgr:id="I9AcPionPara55Table101918.0855511" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>{vElements =&gt;$.Text}</Parameter_x0020_Value>
+                </I9AcPionPara55Table101918.085551>
+              </DocumentElement>
+            </diffgr:diffgram>
+          </v_IfActionParameterTable>
+        </ScriptCommand>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Element has Value" v_AutoCloseAfter="0" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The size of the element is '{vElements =&gt; $.Size}'" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Example for how to call nested property" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The approximate coordinate location of the element is at '{vElements =&gt; $.Coordinates.LocationInViewport}'. Lets move the mouse to that location!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="22" PauseBeforeExeucution="false" v_Comment="Extract Coordinates From Element" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="TextExtractorCommand" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="{vElements =&gt; $.Coordinates.LocationInViewport}" v_TextExtractionType="Extract All Before Text" v_applyToVariableName="vXLoc">
+          <v_TextExtractionTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="TexPExPracPorPara39Table101918.073919">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                    <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara39Table101918.073919" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="TexPExPracPorPara39Table101918.073919" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>,</Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>0</Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+              </DocumentElement>
+            </diffgr:diffgram>
+          </v_TextExtractionTable>
+        </ScriptCommand>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="TextExtractorCommand" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="{vElements =&gt; $.Coordinates.LocationInViewport}" v_TextExtractionType="Extract All After Text" v_applyToVariableName="vYLoc">
+          <v_TextExtractionTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="TexPExPracPorPara39Table101918.073919">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                    <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara39Table101918.073919" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="TexPExPracPorPara39Table101918.073919" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>, </Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>0</Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+              </DocumentElement>
+            </diffgr:diffgram>
+          </v_TextExtractionTable>
+        </ScriptCommand>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="25" PauseBeforeExeucution="false" v_Comment="Move Mouse to Coordinates" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="26" PauseBeforeExeucution="false" v_Comment="+50 and + 130 offsets due to difference in DOM vs On-Screen (Nav Bar, etc)" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="SendMouseMoveCommand" CommandName="SendMouseMoveCommand" IsCommented="false" SelectionName="Send Mouse Move" DefaultPause="250" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" v_XMousePosition="{vXLoc} + 50" v_YMousePosition="{vYLoc} + 130" v_MouseClick="None" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCloseCommand" CommandName="SeleniumBrowserCloseCommand" IsCommented="false" SelectionName="Close Browser" DefaultPause="0" LineNumber="29" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vElements</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vXLoc</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vYLoc</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
