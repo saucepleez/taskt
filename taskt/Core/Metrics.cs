@@ -62,25 +62,33 @@ namespace taskt.Core
             //loop through each group
             foreach (var task in groupedTasks)
             {
-                //select recent 10
-                var filteredItems = task.OrderByDescending(f => f.LoggedOn).Take(10).ToList();
-
-                //get info around file
-                var fullFileName = task.FirstOrDefault().FileName;
-                string parentFolder = new DirectoryInfo(fullFileName).Parent.Name;
-                string fileName = new System.IO.FileInfo(fullFileName).Name;
-
-                //create metric
-                var metric = new ExecutionMetric()
+                try
                 {
-                    FileName = string.Join("\\", parentFolder, fileName),
-                    AverageExecutionTime = new TimeSpan((long)filteredItems.Select(f => f.ExecutionTime.Ticks).Average()),
-                    ExecutionData = filteredItems
-                };
+                    //select recent 10
+                    var filteredItems = task.OrderByDescending(f => f.LoggedOn).Take(10).ToList();
 
-                //add metric to list
-                executionMetrics.Add(metric);
+                    //get info around file
+                    var fullFileName = task.FirstOrDefault().FileName;
+                    string parentFolder = new DirectoryInfo(fullFileName).Parent.Name;
+                    string fileName = new System.IO.FileInfo(fullFileName).Name;
 
+                    //create metric
+                    var metric = new ExecutionMetric()
+                    {
+                        FileName = string.Join("\\", parentFolder, fileName),
+                        AverageExecutionTime = new TimeSpan((long)filteredItems.Select(f => f.ExecutionTime.Ticks).Average()),
+                        ExecutionData = filteredItems
+                    };
+
+                    //add metric to list
+                    executionMetrics.Add(metric);
+
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
+                
 
 
             }

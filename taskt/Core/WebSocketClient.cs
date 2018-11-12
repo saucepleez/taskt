@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -135,7 +137,7 @@ namespace taskt.Core.Sockets
             socketLogger.Information("Socket Client Sending Connection Opened Successfully");
             connectionOpened = DateTime.Now;
             SendMessage("CONN_REQUEST");
-            reconnectTimer.Enabled = false;
+            reconnectTimer.Enabled = true;
 
                           
         }
@@ -221,6 +223,34 @@ namespace taskt.Core.Sockets
            
 
         }
+        public static void SendExecutionLog(string executionLog)
+        {
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+
+
+                using (WebClient client = new WebClient())
+                {
+                    try
+                    {
+
+                        client.QueryString.Add("ClientName", System.Environment.MachineName);
+                        client.QueryString.Add("LogData", executionLog);
+                        byte[] responsebytes = client.UploadValues("https://localhost:44389/api/WriteLog", "POST", client.QueryString);
+                        string responsebody = Encoding.UTF8.GetString(responsebytes);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+
+
+            }).Start();
+
+        }
 
         public static void SendMessage(string message)
         {
@@ -287,8 +317,8 @@ namespace taskt.Core.Sockets
 
             associatedBuilder.Invoke(new MethodInvoker(delegate ()
             {
-                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine("", null);
-               // newEngine.xmlInfo = scriptData;
+                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                newEngine.xmlData = scriptData;
                 newEngine.callBackForm = null;
                 newEngine.Show();
             }));            
