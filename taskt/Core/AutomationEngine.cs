@@ -377,6 +377,8 @@ namespace taskt.Core
         {
             engineLogger.Information("Result Code: " + result.ToString());
 
+       
+
             if (error == null)
             {
                 engineLogger.Information("Error: None");
@@ -396,6 +398,10 @@ namespace taskt.Core
             args.Error = error;
             args.ExecutionTime = sw.Elapsed;
             args.FileName = FileName;
+
+            Core.Sockets.SocketClient.SendExecutionLog("Result Code: " + result.ToString());
+            Core.Sockets.SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
+
 
             //convert to json
             var serializedArguments = Newtonsoft.Json.JsonConvert.SerializeObject(args);

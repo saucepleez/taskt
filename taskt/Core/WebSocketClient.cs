@@ -201,7 +201,7 @@ namespace taskt.Core.Sockets
             //server wants the client status
             else if (e.Message.Contains("CLIENT_STATUS"))
             {
-                SendMessage("CLIENT_STATUS=" + Client.ClientStatus);
+                SendMessage("CLIENT_STATUS=Ping Request Received, " + Client.ClientStatus);
             }
             //server send a new public key
             else if (e.Message.Contains("ACCEPT_KEY"))
@@ -225,20 +225,26 @@ namespace taskt.Core.Sockets
         }
         public static void SendExecutionLog(string executionLog)
         {
-            new Thread(() =>
+            //new Thread(() =>
+            //{
+            //    Thread.CurrentThread.IsBackground = true;
+
+            if (SocketClient.webSocket.State == WebSocket4Net.WebSocketState.Open)
             {
-                Thread.CurrentThread.IsBackground = true;
-
-
-
                 using (WebClient client = new WebClient())
                 {
                     try
                     {
 
-                        client.QueryString.Add("ClientName", System.Environment.MachineName);
+                        client.QueryString.Add("ClientName", SocketClient.publicKey);
                         client.QueryString.Add("LogData", executionLog);
-                        byte[] responsebytes = client.UploadValues("https://localhost:44389/api/WriteLog", "POST", client.QueryString);
+
+                        //create server uri for logging
+                        var apiUri = SocketClient.serverURI;
+                        apiUri = apiUri.Replace("wss://", "https://").Replace("/ws", "/api/WriteLog");
+
+
+                        byte[] responsebytes = client.UploadValues(apiUri, "POST", client.QueryString);
                         string responsebody = Encoding.UTF8.GetString(responsebytes);
                     }
                     catch (Exception)
@@ -246,9 +252,12 @@ namespace taskt.Core.Sockets
 
                     }
                 }
+            }
+
+                
 
 
-            }).Start();
+            //}).Start();
 
         }
 
