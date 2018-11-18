@@ -1269,28 +1269,32 @@ namespace taskt.Core.AutomationCommands
 
         public bool ElementExists(object sender, string searchType, string elementName)
         {
+            //get engine reference
             var engine = (Core.AutomationEngineInstance)sender;
             var seleniumSearchParam = elementName.ConvertToUserVariable(sender);
 
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
-                var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
-               
-                try
-                {
-                    var element = FindElement(seleniumInstance, seleniumSearchParam);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+            //get instance name
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
+            //get stored app object
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            //get selenium instance driver
+            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+
+            try
+            {
+                //search for element
+                var element = FindElement(seleniumInstance, seleniumSearchParam);
+
+                //element exists
+                return true;
+            }
+            catch (Exception)
+            {
+                //element does not exist
+                return false;
+            }
 
         }
 
