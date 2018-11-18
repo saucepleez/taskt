@@ -3372,7 +3372,7 @@ namespace taskt.Core.AutomationCommands
 
            var excelObject = engine.GetAppInstance(vInstance);
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            excelInstance.Workbooks.Open(v_FilePath);
+            excelInstance.Workbooks.Open(vFilePath);
 
            
         }
