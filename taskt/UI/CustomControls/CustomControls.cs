@@ -325,6 +325,7 @@ namespace taskt.UI
             uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);
             uiImages.Add("StopTaskCommand", taskt.Properties.Resources.command_stop_process);
+            uiImages.Add("UserInputCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("CloseWindowCommand", taskt.Properties.Resources.command_window_close);
             uiImages.Add("IEBrowserCreateCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("IEBrowserNavigateCommand", taskt.Properties.Resources.command_web);

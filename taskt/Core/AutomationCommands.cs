@@ -127,6 +127,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(ParseJsonCommand))]
     [XmlInclude(typeof(SetEngineDelayCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
+    [XmlInclude(typeof(UserInputCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -2910,6 +2911,120 @@ namespace taskt.Core.AutomationCommands
 
 
 
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows.Forms.SendKeys' method to achieve automation.")]
+    public class UserInputCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify a heading name")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the header to be displayed on the input form.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputHeader { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify input directions")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the directions you want to give the user.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputDirections { get; set; }
+
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("User Input Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the required input parameters.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.AddInputParameter)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public DataTable v_UserInputConfig { get; set; }
+
+        public UserInputCommand()
+        {
+            this.CommandName = "UserInputCommand";
+            this.SelectionName = "Prompt for User Input";
+            this.CommandEnabled = true;
+
+            v_UserInputConfig = new DataTable();
+            v_UserInputConfig.TableName = DateTime.Now.ToString("UserInputParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+            v_UserInputConfig.Columns.Add("Type");
+            v_UserInputConfig.Columns.Add("Label");
+            v_UserInputConfig.Columns.Add("Size");
+            v_UserInputConfig.Columns.Add("DefaultValue");
+            v_UserInputConfig.Columns.Add("UserInput");
+            v_UserInputConfig.Columns.Add("ApplyToVariable");
+
+            v_InputHeader = "Please Provide Input";
+            v_InputDirections = "Directions: Please fill in the following fields";
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+
+            var engine = (Core.AutomationEngineInstance)sender;
+
+                        
+            if (engine.tasktEngineUI == null)
+            {
+                engine.ReportProgress("UserInput Supported With UI Only");
+                System.Windows.Forms.MessageBox.Show("UserInput Supported With UI Only", "UserInput Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                return;
+            }
+
+
+            //create clone of original
+            var clonedCommand = taskt.Core.Common.Clone(this);
+
+            //translate variable
+            clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ConvertToUserVariable(sender);
+            clonedCommand.v_InputDirections = clonedCommand.v_InputDirections.ConvertToUserVariable(sender);
+
+            //translate variables for each label
+            foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)
+            {
+                rw["Label"] = rw["Label"].ToString().ConvertToUserVariable(sender);
+           }
+
+
+            //invoke ui for data collection
+            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            {
+
+                //get input from user
+              var userInputs =  engine.tasktEngineUI.ShowInput(clonedCommand);
+
+                //check if user provided input
+                if (userInputs != null)
+                {
+
+                    //loop through each input and assign
+                    for (int i = 0; i < userInputs.Count; i++)
+                    {
+                        //get target variable
+                        var targetVariable = v_UserInputConfig.Rows[i]["ApplyToVariable"] as string;
+
+                        //store user data in variable
+                        userInputs[i].StoreInUserVariable(sender, targetVariable);
+                    }
+
+
+                }
+
+            }
+
+            ));
+
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [" + v_InputHeader + "]";
         }
     }
     #endregion Input Commands

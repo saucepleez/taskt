@@ -229,30 +229,38 @@ namespace taskt.Core.Sockets
             //{
             //    Thread.CurrentThread.IsBackground = true;
 
-            if (SocketClient.webSocket.State == WebSocket4Net.WebSocketState.Open)
+            try
             {
-                using (WebClient client = new WebClient())
+                if (SocketClient.webSocket.State == WebSocket4Net.WebSocketState.Open)
                 {
-                    try
+                    using (WebClient client = new WebClient())
                     {
+                        try
+                        {
 
-                        client.QueryString.Add("ClientName", SocketClient.publicKey);
-                        client.QueryString.Add("LogData", executionLog);
+                            client.QueryString.Add("ClientName", SocketClient.publicKey);
+                            client.QueryString.Add("LogData", executionLog);
 
-                        //create server uri for logging
-                        var apiUri = SocketClient.serverURI;
-                        apiUri = apiUri.Replace("wss://", "https://").Replace("/ws", "/api/WriteLog");
+                            //create server uri for logging
+                            var apiUri = SocketClient.serverURI;
+                            apiUri = apiUri.Replace("wss://", "https://").Replace("/ws", "/api/WriteLog");
 
 
-                        byte[] responsebytes = client.UploadValues(apiUri, "POST", client.QueryString);
-                        string responsebody = Encoding.UTF8.GetString(responsebytes);
-                    }
-                    catch (Exception)
-                    {
-
+                            byte[] responsebytes = client.UploadValues(apiUri, "POST", client.QueryString);
+                            string responsebody = Encoding.UTF8.GetString(responsebytes);
+                        }
+                        catch (Exception)
+                        {
+                            //throw
+                        }
                     }
                 }
             }
+            catch (Exception)
+            {
+                //throw;
+            }
+
 
                 
 

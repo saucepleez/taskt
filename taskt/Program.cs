@@ -77,7 +77,7 @@ namespace taskt
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show("An unhandled exception occured: " + (e.ExceptionObject as Exception).Message, "Oops");
+            MessageBox.Show("An unhandled exception occured: " + (e.ExceptionObject as Exception).ToString(), "Oops");
         }
     }
 }

@@ -326,6 +326,38 @@ namespace taskt.UI.Forms
          
         }
 
+        public delegate List<string> ShowInputDelegate(Core.AutomationCommands.UserInputCommand inputs);
+        public List<string> ShowInput(Core.AutomationCommands.UserInputCommand inputs)
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowInputDelegate(ShowInput);
+                Invoke(d, new object[] { inputs });
+                return null;
+            }
+            else
+            {
+                var inputForm = new Supplemental.frmUserInput();
+                inputForm.InputCommand = inputs;
+
+
+                var dialogResult = inputForm.ShowDialog();
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    return inputForm.InputControls.Select(x => x.Text).ToList();
+                }
+                else
+                {
+                    return null;
+                }
+        
+
+           
+            }
+
+        }
+
         public delegate void SetLineNumber(int lineNumber);
         public void UpdateLineNumber(int lineNumber)
         {
