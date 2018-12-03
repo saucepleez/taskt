@@ -581,9 +581,8 @@ namespace taskt.UI.Forms
 
                    var typefield = new DataGridViewComboBoxColumn();
                     typefield.Items.Add("TextBox");
-                    //add support for more types
-                    //typefield.Items.Add("CheckBox");
-                    //typefield.Items.Add("ComboBox");
+                    typefield.Items.Add("CheckBox");
+                    typefield.Items.Add("ComboBox");
                     typefield.HeaderText = "Input Type";
                     typefield.DataPropertyName = "Type";
                     InputControl.Columns.Add(typefield);
@@ -1007,9 +1006,11 @@ namespace taskt.UI.Forms
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
                     actionParameters.Rows.Add("Variable Name", "");
-
-
-
+                    break;
+                case "Variable Is Numeric":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Variable Name", "");
                     break;
                 case "Error Occured":
                     additionalParameterLabel.Visible = true;

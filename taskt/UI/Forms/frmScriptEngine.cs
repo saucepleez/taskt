@@ -345,7 +345,24 @@ namespace taskt.UI.Forms
 
                 if (dialogResult == DialogResult.OK)
                 {
-                    return inputForm.InputControls.Select(x => x.Text).ToList();
+
+                    var responses = new List<string>();
+                    foreach (var ctrl in inputForm.InputControls)
+                    {
+                        if (ctrl is CheckBox)
+                        {
+                            var checkboxCtrl = (CheckBox)ctrl;
+                            responses.Add(checkboxCtrl.Checked.ToString());
+                        }
+                        else
+                        {
+                            responses.Add(ctrl.Text);
+                        }
+
+
+                    }
+
+                    return responses;
                 }
                 else
                 {

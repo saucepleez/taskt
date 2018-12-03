@@ -128,6 +128,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(SetEngineDelayCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
     [XmlInclude(typeof(UserInputCommand))]
+    [XmlInclude(typeof(GetWordCountCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -1480,6 +1481,8 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
             string variableMessage = v_Message.ConvertToUserVariable(sender);
+
+            variableMessage = variableMessage.Replace("\\n", Environment.NewLine);
 
             if (engine.tasktEngineUI == null)
             {
@@ -2988,7 +2991,17 @@ namespace taskt.Core.AutomationCommands
             foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)
             {
                 rw["Label"] = rw["Label"].ToString().ConvertToUserVariable(sender);
-           }
+
+                var targetVariable = rw["ApplyToVariable"] as string;
+
+                if (string.IsNullOrEmpty(targetVariable))
+                {
+                    var newMessage = new MessageBoxCommand();
+                    newMessage.v_Message = "User Input question '" + rw["Label"] + "' is missing variables to apply results to! Results for the item will not be tracked.  To fix this, assign a variable in the designer!";
+                    newMessage.v_AutoCloseAfter = 10;
+                    newMessage.RunCommand(sender);
+                }
+            }
 
 
             //invoke ui for data collection
@@ -3008,8 +3021,32 @@ namespace taskt.Core.AutomationCommands
                         //get target variable
                         var targetVariable = v_UserInputConfig.Rows[i]["ApplyToVariable"] as string;
 
+
+                        //if engine is expected to create variables, the user will not expect them to contain start/end markers
+                        //ex. {vAge} should not be created, vAge should be created and then called by doing {vAge}
+                        if ((!string.IsNullOrEmpty(targetVariable)) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+                        {
+                            //remove start markers
+                            if (targetVariable.StartsWith(engine.engineSettings.VariableStartMarker))
+                            {
+                                targetVariable = targetVariable.TrimStart(engine.engineSettings.VariableStartMarker.ToCharArray());
+                            }
+
+                            //remove end markers
+                            if (targetVariable.EndsWith(engine.engineSettings.VariableEndMarker))
+                            {
+                                targetVariable = targetVariable.TrimEnd(engine.engineSettings.VariableEndMarker.ToCharArray());
+                            }
+                        }
+
+                       
                         //store user data in variable
-                        userInputs[i].StoreInUserVariable(sender, targetVariable);
+                        if (!string.IsNullOrEmpty(targetVariable))
+                        {
+                            userInputs[i].StoreInUserVariable(sender, targetVariable);
+                        }
+
+                                  
                     }
 
 
@@ -5148,9 +5185,7 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Write Log to 'taskt\\Logs\\" + logFileName + "']";
         }
     }
-
-
-    [Serializable]
+        [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("")]
     [Attributes.ClassAttributes.UsesDescription("")]
@@ -5203,7 +5238,61 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Extract From '" + v_FilePath + "' and apply result to '" + v_applyToVariableName + "'" ;
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class GetWordCountCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputValue { get; set; }
 
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted json")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+
+        public GetWordCountCommand()
+        {
+            this.CommandName = "GetWordCountCommand";
+            this.SelectionName = "Get Word Count";
+            this.CommandEnabled = true;
+
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get engine
+            var engine = (AutomationEngineInstance)sender;
+
+            //get input value
+            var stringRequiringCount = v_InputValue.ConvertToUserVariable(sender);
+
+            //count number of words
+            var wordCount = stringRequiringCount.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries).Length;
+
+            //store word count into variable
+            wordCount.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+
+
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply Result to: '" + v_applyToVariableName + "']";
+        }
+    }
     #endregion Data Commands
 
     #region If Commands
@@ -5219,6 +5308,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Is Numeric")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Active Window Name Is")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
@@ -5327,6 +5417,26 @@ namespace taskt.Core.AutomationCommands
                 var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
 
                 if (!string.IsNullOrEmpty(actualVariable))
+                {
+                    ifResult = true;
+                }
+                else
+                {
+                    ifResult = false;
+                }
+
+            }
+            else if (v_IfActionType == "Variable Is Numeric")
+            {
+                string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Variable Name"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
+
+                var numericTest = decimal.TryParse(actualVariable, out decimal parsedResult);
+
+                if (numericTest)
                 {
                     ifResult = true;
                 }
@@ -5603,6 +5713,12 @@ namespace taskt.Core.AutomationCommands
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Variable " + variableName + " Has Value)";
+                case "Variable Is Numeric":
+                    string varName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Variable Name"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If (Variable " + varName + " Is Numeric)";
 
                 case "Error Occured":
 

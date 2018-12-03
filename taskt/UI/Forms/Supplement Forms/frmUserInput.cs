@@ -59,24 +59,94 @@ namespace taskt.UI.Forms.Supplemental
                 //get default value
                 var defaultFieldValue = rw["DefaultValue"] as string;
 
+                var labelingFont = new Font("Segoe UI Bold", 12);
+
                 var label = new Label();
-                label.AutoSize = true;
-                label.ForeColor = Color.SteelBlue;
-                label.Font = lblDirections.Font;
-                label.Text = fieldLabel;
-                flwInputControls.Controls.Add(label);
 
                 switch (fieldType)
                 {
                     //add more cases here
+                    case "ComboBox":
+
+                        //add label
+                        label.AutoSize = true;
+                        label.ForeColor = Color.SteelBlue;
+                        label.Font = labelingFont;
+                        label.Text = fieldLabel;
+                        flwInputControls.Controls.Add(label);
+
+
+                        var combobox = new ComboBox();
+
+                        try
+                        {
+                            var items = defaultFieldValue.Split(',');
+                            foreach (var comboItem in items)
+                            {
+                                combobox.Items.Add(comboItem.Trim());
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error Generating Control: " + ex.ToString());
+                            return;
+                        }
+
+              
+                        combobox.Width = fieldWidth;
+                        combobox.Height = fieldHeight;
+                        combobox.Margin = new Padding(10, 5, 0, 0);
+                        combobox.DropDownStyle = ComboBoxStyle.DropDownList;
+                        combobox.SelectedIndex = -1;
+                        combobox.Font = labelingFont;
+                        combobox.ForeColor = Color.SteelBlue;
+                        InputControls.Add(combobox);
+                        flwInputControls.Controls.Add(combobox);
+
+                        break;
+                    case "CheckBox":
+                        var checkBox = new CheckBox();
+
+
+                        try
+                        {
+                            checkBox.Checked = bool.Parse(defaultFieldValue);
+                        }
+                        catch (Exception)
+                        {
+                            checkBox.Checked = false;
+                        }
+
+
+                        checkBox.Width = fieldWidth;
+                        checkBox.Height = fieldHeight;
+                        checkBox.Margin = new Padding(10, 5, 0, 0);
+                        checkBox.Text = fieldLabel;
+                        checkBox.Font = labelingFont;
+                        checkBox.ForeColor = Color.SteelBlue;
+                        checkBox.AutoSize = true;
+
+                        InputControls.Add(checkBox);
+                        flwInputControls.Controls.Add(checkBox);
+
+                        break;
                     default:
+
+                        //add label 
+                        label.AutoSize = true;
+                        label.ForeColor = Color.SteelBlue;
+                        label.Font = labelingFont;
+                        label.Text = fieldLabel;
+                        flwInputControls.Controls.Add(label);
+
+                        //add textbox
                         var textBox = new TextBox();
                         textBox.Multiline = true;
                         textBox.Width = fieldWidth;
                         textBox.Height = fieldHeight;
                         textBox.Margin = new Padding(10,5,0,0);
                         textBox.Text = defaultFieldValue;
-                        textBox.Font = label.Font;
+                        textBox.Font = labelingFont;
                         textBox.ForeColor = Color.SteelBlue;
                         InputControls.Add(textBox);
                         flwInputControls.Controls.Add(textBox);

@@ -150,6 +150,7 @@
             this.BackgroundChangeIndex = 153;
             this.ClientSize = new System.Drawing.Size(534, 509);
             this.Controls.Add(this.tlpInputs);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmUserInput";
             this.Text = "User Input";
             this.Load += new System.EventHandler(this.frmUserInput_Load);
