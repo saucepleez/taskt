@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -135,7 +137,7 @@ namespace taskt.Core.Sockets
             socketLogger.Information("Socket Client Sending Connection Opened Successfully");
             connectionOpened = DateTime.Now;
             SendMessage("CONN_REQUEST");
-            reconnectTimer.Enabled = false;
+            reconnectTimer.Enabled = true;
 
                           
         }
@@ -199,7 +201,7 @@ namespace taskt.Core.Sockets
             //server wants the client status
             else if (e.Message.Contains("CLIENT_STATUS"))
             {
-                SendMessage("CLIENT_STATUS=" + Client.ClientStatus);
+                SendMessage("CLIENT_STATUS=Ping Request Received, " + Client.ClientStatus);
             }
             //server send a new public key
             else if (e.Message.Contains("ACCEPT_KEY"))
@@ -219,6 +221,51 @@ namespace taskt.Core.Sockets
             }
 
            
+
+        }
+        public static void SendExecutionLog(string executionLog)
+        {
+            //new Thread(() =>
+            //{
+            //    Thread.CurrentThread.IsBackground = true;
+
+            try
+            {
+                if (SocketClient.webSocket.State == WebSocket4Net.WebSocketState.Open)
+                {
+                    using (WebClient client = new WebClient())
+                    {
+                        try
+                        {
+
+                            client.QueryString.Add("ClientName", SocketClient.publicKey);
+                            client.QueryString.Add("LogData", executionLog);
+
+                            //create server uri for logging
+                            var apiUri = SocketClient.serverURI;
+                            apiUri = apiUri.Replace("wss://", "https://").Replace("/ws", "/api/WriteLog");
+
+
+                            byte[] responsebytes = client.UploadValues(apiUri, "POST", client.QueryString);
+                            string responsebody = Encoding.UTF8.GetString(responsebytes);
+                        }
+                        catch (Exception)
+                        {
+                            //throw
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+
+
+                
+
+
+            //}).Start();
 
         }
 
@@ -287,8 +334,8 @@ namespace taskt.Core.Sockets
 
             associatedBuilder.Invoke(new MethodInvoker(delegate ()
             {
-                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine("", null);
-               // newEngine.xmlInfo = scriptData;
+                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                newEngine.xmlData = scriptData;
                 newEngine.callBackForm = null;
                 newEngine.Show();
             }));            

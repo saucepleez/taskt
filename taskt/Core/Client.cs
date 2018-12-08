@@ -30,11 +30,11 @@ namespace taskt.Core
             {
                 if (EngineBusy)
                 {
-                    return "Busy";
+                    return "Client is Busy";
                 }
                 else
                 {
-                    return "Available";
+                    return "Client is Available";
                 }
             }
         }

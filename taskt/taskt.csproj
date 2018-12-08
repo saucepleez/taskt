@@ -151,6 +151,7 @@
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\Folders.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
+    <Compile Include="Core\JavaInterface.cs" />
     <Compile Include="Core\Logging.cs" />
     <Compile Include="Core\Metrics.cs" />
     <Compile Include="Core\WebSocketClient.cs" />
@@ -217,6 +218,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.Designer.cs">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmUserInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
+      <DependentUpon>frmUserInput.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
       <SubType>Form</SubType>
@@ -352,6 +359,9 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.resx">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
+      <DependentUpon>frmUserInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
       <DependentUpon>frmVariableSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -372,6 +382,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="AcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="MSHTML">
       <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
       <VersionMajor>4</VersionMajor>
@@ -403,6 +422,9 @@
     <None Include="Resources\action-bar-clear.png" />
     <None Include="Resources\action-bar-import.png" />
     <None Include="Resources\command-parse.png" />
+    <Content Include="Resources\taskt-ExtractPDFText.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

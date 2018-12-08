@@ -84,6 +84,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.chkMinimizeToTray = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -253,7 +254,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 551);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 548);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -312,7 +313,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(10, 157);
+            this.btnUpdates.Location = new System.Drawing.Point(12, 173);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 27);
             this.btnUpdates.TabIndex = 22;
@@ -356,12 +357,13 @@
             this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(577, 472);
+            this.uiSettingTabs.Size = new System.Drawing.Size(577, 469);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.chkMinimizeToTray);
             this.tabAppSettings.Controls.Add(this.chkSequenceDragDrop);
             this.tabAppSettings.Controls.Add(this.btnGenerateWikiDocs);
             this.tabAppSettings.Controls.Add(this.chkInsertCommandsInline);
@@ -378,7 +380,7 @@
             this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppSettings.Size = new System.Drawing.Size(569, 438);
+            this.tabAppSettings.Size = new System.Drawing.Size(569, 435);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
@@ -398,7 +400,7 @@
             // btnGenerateWikiDocs
             // 
             this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(10, 190);
+            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 206);
             this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
             this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 27);
             this.btnGenerateWikiDocs.TabIndex = 31;
@@ -422,7 +424,7 @@
             // btnClearMetrics
             // 
             this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(9, 385);
+            this.btnClearMetrics.Location = new System.Drawing.Point(11, 401);
             this.btnClearMetrics.Name = "btnClearMetrics";
             this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
             this.btnClearMetrics.TabIndex = 29;
@@ -437,7 +439,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
-            this.label5.Location = new System.Drawing.Point(11, 234);
+            this.label5.Location = new System.Drawing.Point(13, 250);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(262, 16);
             this.label5.TabIndex = 28;
@@ -447,7 +449,7 @@
             // 
             this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
             this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMetrics.Location = new System.Drawing.Point(10, 253);
+            this.lblMetrics.Location = new System.Drawing.Point(12, 269);
             this.lblMetrics.Name = "lblMetrics";
             this.lblMetrics.Size = new System.Drawing.Size(534, 127);
             this.lblMetrics.TabIndex = 27;
@@ -455,7 +457,7 @@
             // 
             // tvExecutionTimes
             // 
-            this.tvExecutionTimes.Location = new System.Drawing.Point(10, 253);
+            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 269);
             this.tvExecutionTimes.Name = "tvExecutionTimes";
             this.tvExecutionTimes.Size = new System.Drawing.Size(534, 127);
             this.tvExecutionTimes.TabIndex = 26;
@@ -463,7 +465,7 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(502, 122);
+            this.btnSelectFolder.Location = new System.Drawing.Point(502, 149);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(42, 30);
             this.btnSelectFolder.TabIndex = 25;
@@ -477,7 +479,7 @@
             this.lblRootFolder.BackColor = System.Drawing.Color.Transparent;
             this.lblRootFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRootFolder.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblRootFolder.Location = new System.Drawing.Point(7, 103);
+            this.lblRootFolder.Location = new System.Drawing.Point(9, 119);
             this.lblRootFolder.Name = "lblRootFolder";
             this.lblRootFolder.Size = new System.Drawing.Size(110, 16);
             this.lblRootFolder.TabIndex = 24;
@@ -485,7 +487,7 @@
             // 
             // txtAppFolderPath
             // 
-            this.txtAppFolderPath.Location = new System.Drawing.Point(10, 122);
+            this.txtAppFolderPath.Location = new System.Drawing.Point(12, 138);
             this.txtAppFolderPath.Name = "txtAppFolderPath";
             this.txtAppFolderPath.Size = new System.Drawing.Size(490, 29);
             this.txtAppFolderPath.TabIndex = 23;
@@ -725,7 +727,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(583, 608);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(583, 605);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -751,12 +753,25 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // chkMinimizeToTray
+            // 
+            this.chkMinimizeToTray.AutoSize = true;
+            this.chkMinimizeToTray.BackColor = System.Drawing.Color.Transparent;
+            this.chkMinimizeToTray.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkMinimizeToTray.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(10, 96);
+            this.chkMinimizeToTray.Name = "chkMinimizeToTray";
+            this.chkMinimizeToTray.Size = new System.Drawing.Size(189, 24);
+            this.chkMinimizeToTray.TabIndex = 33;
+            this.chkMinimizeToTray.Text = "Minimize to System Tray";
+            this.chkMinimizeToTray.UseVisualStyleBackColor = false;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(583, 608);
+            this.ClientSize = new System.Drawing.Size(583, 605);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -833,5 +848,6 @@
         private System.Windows.Forms.TextBox txtCommandDelay;
         internal System.Windows.Forms.CheckBox chkOverrideInstances;
         private System.Windows.Forms.CheckBox chkSequenceDragDrop;
+        private System.Windows.Forms.CheckBox chkMinimizeToTray;
     }
 }

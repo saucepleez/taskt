@@ -55,7 +55,7 @@ namespace taskt.Core
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                ExecuteScript(filePath);
+                ExecuteScript(filePath, true);
             }).Start();
         }
         public void ExecuteScriptAsync(string filePath)
@@ -65,18 +65,29 @@ namespace taskt.Core
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                ExecuteScript(filePath);
+                ExecuteScript(filePath, true);
+            }).Start();
+        }
+        public void ExecuteScriptXML(string xmlData)
+        {
+            engineLogger.Information("Client requesting to execute script independently");
+
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                ExecuteScript(xmlData, false);
             }).Start();
         }
 
-        public void ExecuteScript(string filePath)
+        public void ExecuteScript(string data, bool dataIsFile)
         {
-            CurrentStatus = EngineStatus.Running;
-            FileName = filePath;
+            Core.Client.EngineBusy = true;
+
 
             try
             {
-                engineLogger.Information("Script Path: " + filePath);
+ 
+                CurrentStatus = EngineStatus.Running;
 
                 //create stopwatch for metrics tracking
                 sw = new System.Diagnostics.Stopwatch();
@@ -85,9 +96,23 @@ namespace taskt.Core
                 //log starting
                 ReportProgress("Bot Engine Started: " + DateTime.Now.ToString());
 
-                //parse file or streamed XML from tasktServer
-                ReportProgress("Deserializing File");
-                var automationScript = Core.Script.Script.DeserializeFile(filePath);
+                //get automation script
+                Core.Script.Script automationScript;
+                if (dataIsFile)
+                {
+                    ReportProgress("Deserializing File");
+                    engineLogger.Information("Script Path: " + data);
+                    FileName = data;
+                    automationScript = Core.Script.Script.DeserializeFile(data);
+                }
+                else
+                {
+                    ReportProgress("Deserializing XML");
+                    automationScript = Core.Script.Script.DeserializeXML(data);
+                }
+
+
+
 
                 //track variables and app instances
                 ReportProgress("Creating Variable List");
@@ -128,14 +153,14 @@ namespace taskt.Core
                 }
 
 
-
             }
             catch (Exception ex)
             {
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
 
-           
+            Core.Client.EngineBusy = false;
+
         }
         public void ExecuteCommand(Core.Script.ScriptAction command)
         {
@@ -342,11 +367,17 @@ namespace taskt.Core
             engineLogger.Information(progress);
             ReportProgressEventArgs args = new ReportProgressEventArgs();
             args.ProgressUpdate = progress;
+            //send log to server
+            Core.Sockets.SocketClient.SendExecutionLog(progress);
+
+            //invoke event
             ReportProgressEvent?.Invoke(this, args);
         }
         public virtual void ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult result, string error = null)
         {
             engineLogger.Information("Result Code: " + result.ToString());
+
+       
 
             if (error == null)
             {
@@ -359,6 +390,7 @@ namespace taskt.Core
 
             engineLogger.Dispose();
 
+
             CurrentStatus = EngineStatus.Finished;
             ScriptFinishedEventArgs args = new ScriptFinishedEventArgs();
             args.LoggedOn = DateTime.Now;
@@ -367,11 +399,15 @@ namespace taskt.Core
             args.ExecutionTime = sw.Elapsed;
             args.FileName = FileName;
 
+            Core.Sockets.SocketClient.SendExecutionLog("Result Code: " + result.ToString());
+            Core.Sockets.SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
+
+
             //convert to json
             var serializedArguments = Newtonsoft.Json.JsonConvert.SerializeObject(args);
 
             //write execution metrics
-            if (engineSettings.TrackExecutionMetrics)
+            if ((engineSettings.TrackExecutionMetrics) && (FileName != null))
             {
                 var summaryLogger = new Logging().CreateJsonLogger("Execution Summary", Serilog.RollingInterval.Infinite);
                 summaryLogger.Information(serializedArguments);

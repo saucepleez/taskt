@@ -1859,6 +1859,27 @@ namespace taskt.UI.Forms
         {
             BeginImportProcess();
         }
+
+        private void frmScriptBuilder_Resize(object sender, EventArgs e)
+        {
+            if ((this.WindowState == FormWindowState.Minimized) && (appSettings.ClientSettings.MinimizeToTray))
+            {
+                notifyTray.Visible = true;
+                notifyTray.ShowBalloonTip(3000);
+                this.ShowInTaskbar = false;
+            }
+
+        }
+
+        private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (appSettings.ClientSettings.MinimizeToTray)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyTray.Visible = false;
+            }        
+        }
     }
 
 }

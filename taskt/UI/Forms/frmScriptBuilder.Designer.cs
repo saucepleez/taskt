@@ -49,6 +49,7 @@
             this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
@@ -75,6 +76,7 @@
             this.lblTotalResults = new System.Windows.Forms.Label();
             this.txtCommandSearch = new System.Windows.Forms.TextBox();
             this.grpSaveClose = new taskt.UI.CustomControls.UIGroupBox();
+            this.btnSequenceImport = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnKeep = new taskt.UI.CustomControls.UIPictureButton();
             this.uiPictureButton3 = new taskt.UI.CustomControls.UIPictureButton();
             this.grpFileActions = new taskt.UI.CustomControls.UIGroupBox();
@@ -91,7 +93,6 @@
             this.uiBtnClearAll = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnSettings = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
-            this.btnSequenceImport = new taskt.UI.CustomControls.UIPictureButton();
             this.tlpControls.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -110,6 +111,7 @@
             this.grpSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
             this.grpSaveClose.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).BeginInit();
             this.grpFileActions.SuspendLayout();
@@ -126,7 +128,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpControls
@@ -335,6 +336,16 @@
             this.moveToParentToolStripMenuItem.Text = "Move Out To Parent";
             this.moveToParentToolStripMenuItem.Visible = false;
             this.moveToParentToolStripMenuItem.Click += new System.EventHandler(this.moveToParentToolStripMenuItem_Click);
+            // 
+            // notifyTray
+            // 
+            this.notifyTray.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyTray.BalloonTipText = "taskt is still running in your system tray. Double-click to restore taskt to full" +
+    " size!\r\n";
+            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyTray.Icon")));
+            this.notifyTray.Text = "taskt, free and open-source process automation";
+            this.notifyTray.Visible = true;
+            this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
             // 
             // splitContainer1
             // 
@@ -672,6 +683,22 @@
             this.grpSaveClose.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             this.grpSaveClose.Visible = false;
             // 
+            // btnSequenceImport
+            // 
+            this.btnSequenceImport.BackColor = System.Drawing.Color.Transparent;
+            this.btnSequenceImport.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnSequenceImport.DisplayText = "Import";
+            this.btnSequenceImport.DisplayTextBrush = System.Drawing.Color.AliceBlue;
+            this.btnSequenceImport.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnSequenceImport.Image = global::taskt.Properties.Resources.action_bar_import;
+            this.btnSequenceImport.IsMouseOver = false;
+            this.btnSequenceImport.Location = new System.Drawing.Point(110, 18);
+            this.btnSequenceImport.Name = "btnSequenceImport";
+            this.btnSequenceImport.Size = new System.Drawing.Size(48, 50);
+            this.btnSequenceImport.TabIndex = 20;
+            this.btnSequenceImport.TabStop = false;
+            this.btnSequenceImport.Click += new System.EventHandler(this.btnSequenceImport_Click);
+            // 
             // uiBtnKeep
             // 
             this.uiBtnKeep.BackColor = System.Drawing.Color.Transparent;
@@ -933,22 +960,6 @@
             this.uiBtnAddVariable.TabStop = false;
             this.uiBtnAddVariable.Click += new System.EventHandler(this.uiBtnAddVariable_Click);
             // 
-            // btnSequenceImport
-            // 
-            this.btnSequenceImport.BackColor = System.Drawing.Color.Transparent;
-            this.btnSequenceImport.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnSequenceImport.DisplayText = "Import";
-            this.btnSequenceImport.DisplayTextBrush = System.Drawing.Color.AliceBlue;
-            this.btnSequenceImport.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnSequenceImport.Image = global::taskt.Properties.Resources.action_bar_import;
-            this.btnSequenceImport.IsMouseOver = false;
-            this.btnSequenceImport.Location = new System.Drawing.Point(110, 18);
-            this.btnSequenceImport.Name = "btnSequenceImport";
-            this.btnSequenceImport.Size = new System.Drawing.Size(48, 50);
-            this.btnSequenceImport.TabIndex = 20;
-            this.btnSequenceImport.TabStop = false;
-            this.btnSequenceImport.Click += new System.EventHandler(this.btnSequenceImport_Click);
-            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -962,6 +973,7 @@
             this.Load += new System.EventHandler(this.frmScriptBuilder_Load);
             this.Shown += new System.EventHandler(this.frmScriptBuilder_Shown);
             this.SizeChanged += new System.EventHandler(this.frmScriptBuilder_SizeChanged);
+            this.Resize += new System.EventHandler(this.frmScriptBuilder_Resize);
             this.tlpControls.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
@@ -984,6 +996,7 @@
             this.grpSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
             this.grpSaveClose.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).EndInit();
             this.grpFileActions.ResumeLayout(false);
@@ -1000,7 +1013,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1068,6 +1080,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ToolStripMenuItem moveToParentToolStripMenuItem;
         private CustomControls.UIPictureButton btnSequenceImport;
+        private System.Windows.Forms.NotifyIcon notifyTray;
     }
 }
 

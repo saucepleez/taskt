@@ -33,6 +33,7 @@ namespace taskt.UI.Forms
         #region Form Variables
         public Core.EngineSettings engineSettings;
         public string filePath { get; set; }
+        public string xmlData { get; set; }
         public frmScriptBuilder callBackForm { get; set; }
         private bool advancedDebug { get; set; }
         private Core.AutomationEngineInstance engineInstance { get; set; }
@@ -88,7 +89,51 @@ namespace taskt.UI.Forms
 
 
         }
+        public frmScriptEngine()
+        {
+            InitializeComponent();
 
+           
+            //set file
+            this.filePath = null;
+
+            //get engine settings
+            engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+
+            //determine whether to show listbox or not
+            advancedDebug = engineSettings.ShowAdvancedDebugOutput;
+
+            //if listbox should be shown
+            if (advancedDebug)
+            {
+                lstSteppingCommands.Show();
+                lblMainLogo.Show();
+                pbBotIcon.Hide();
+                lblAction.Hide();
+            }
+            else
+            {
+                lstSteppingCommands.Hide();
+                lblMainLogo.Hide();
+                pbBotIcon.Show();
+                lblAction.Show();
+            }
+
+
+            //apply debug window setting
+            if (!engineSettings.ShowDebugWindow)
+            {
+                this.Visible = false;
+                this.Opacity = 0;
+            }
+
+            //add hooks for hot key cancellation
+            GlobalHook.HookStopped += new EventHandler(OnHookStopped);
+            GlobalHook.StartEngineCancellationHook();
+
+    
+
+        }
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
             //move engine form to bottom right and bring to front
@@ -103,7 +148,17 @@ namespace taskt.UI.Forms
             engineInstance.ReportProgressEvent += Engine_ReportProgress;
             engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
             engineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
-            engineInstance.ExecuteScriptAsync(this, filePath);
+
+            if (xmlData == null)
+            {
+                engineInstance.ExecuteScriptAsync(this, filePath);
+            }
+            else
+            {
+                engineInstance.ExecuteScriptXML(xmlData);
+            }
+
+   
         }
 
      
@@ -269,6 +324,55 @@ namespace taskt.UI.Forms
                 confirmationForm.ShowDialog();
             }
          
+        }
+
+        public delegate List<string> ShowInputDelegate(Core.AutomationCommands.UserInputCommand inputs);
+        public List<string> ShowInput(Core.AutomationCommands.UserInputCommand inputs)
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowInputDelegate(ShowInput);
+                Invoke(d, new object[] { inputs });
+                return null;
+            }
+            else
+            {
+                var inputForm = new Supplemental.frmUserInput();
+                inputForm.InputCommand = inputs;
+
+
+                var dialogResult = inputForm.ShowDialog();
+
+                if (dialogResult == DialogResult.OK)
+                {
+
+                    var responses = new List<string>();
+                    foreach (var ctrl in inputForm.InputControls)
+                    {
+                        if (ctrl is CheckBox)
+                        {
+                            var checkboxCtrl = (CheckBox)ctrl;
+                            responses.Add(checkboxCtrl.Checked.ToString());
+                        }
+                        else
+                        {
+                            responses.Add(ctrl.Text);
+                        }
+
+
+                    }
+
+                    return responses;
+                }
+                else
+                {
+                    return null;
+                }
+        
+
+           
+            }
+
         }
 
         public delegate void SetLineNumber(int lineNumber);

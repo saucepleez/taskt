@@ -134,8 +134,10 @@ namespace taskt.Core
         public string RootFolder { get; set; }
         public bool InsertCommandsInline { get; set; }
         public bool EnableSequenceDragDrop { get; set; }
+        public bool MinimizeToTray { get; set; }
         public ClientSettings()
         {
+            MinimizeToTray = false;
             AntiIdleWhileOpen = false;
             InsertCommandsInline = false;
             RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");

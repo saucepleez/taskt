@@ -273,6 +273,13 @@ namespace taskt.UI.Forms
                                 helperControl.Click += ShowDLLExplorer;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
+                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
+                                //show variable selector
+                                helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
+                                helperControl.CommandDisplay = "Add Input Parameter";
+                                helperControl.Click += AddInputParameter;
+                                flw_InputVariables.Controls.Add(helperControl);
+                                break;
                             default:
                                 MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                                 break;
@@ -558,6 +565,59 @@ namespace taskt.UI.Forms
                         InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                     }
                 }
+                else if(inputField.Name == "v_UserInputConfig")
+                {
+                                          
+                    InputControl = new DataGridView();
+                    var dgv = (DataGridView)InputControl;
+                    dgv.KeyDown += UserInputDataGridView_KeyDown;
+
+                    InputControl.AllowUserToDeleteRows = true;
+                    InputControl.AutoGenerateColumns = false;
+                    InputControl.Name = inputField.Name;
+                    InputControl.Width = 500;
+                    InputControl.Height = 140;
+                    
+
+                   var typefield = new DataGridViewComboBoxColumn();
+                    typefield.Items.Add("TextBox");
+                    typefield.Items.Add("CheckBox");
+                    typefield.Items.Add("ComboBox");
+                    typefield.HeaderText = "Input Type";
+                    typefield.DataPropertyName = "Type";
+                    InputControl.Columns.Add(typefield);
+
+                  var field = new DataGridViewTextBoxColumn();
+                    field.HeaderText = "Input Label";
+                    field.DataPropertyName = "Label";
+                    InputControl.Columns.Add(field);
+
+
+                    field = new DataGridViewTextBoxColumn();
+                    field.HeaderText = "Input Size (X,Y)";
+                    field.DataPropertyName = "Size";
+                    InputControl.Columns.Add(field);
+
+                    field = new DataGridViewTextBoxColumn();
+                    field.HeaderText = "Default Value";
+                    field.DataPropertyName = "DefaultValue";
+                    InputControl.Columns.Add(field);
+
+                    field = new DataGridViewTextBoxColumn();
+                    field.HeaderText = "Assigned Variable";
+                    field.DataPropertyName = "ApplyToVariable";                
+                    InputControl.Columns.Add(field);
+
+
+                    InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+                    InputControl.AllowUserToAddRows = false;
+                    InputControl.AllowUserToDeleteRows = false;
+
+
+                    var cmd = (Core.AutomationCommands.UserInputCommand)currentCommand;
+                    InputControl.DataSource = cmd.v_UserInputConfig;
+
+                }
                 else if(inputField.Name == "v_UIAActionParameters")
                 {
                     InputControl = new DataGridView();
@@ -793,6 +853,17 @@ namespace taskt.UI.Forms
             return InputControl;
         }
 
+        private void UserInputDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            DataGridView inputControl = (DataGridView)flw_InputVariables.Controls["v_UserInputConfig"];
+
+            if (inputControl.SelectedRows.Count > 0)
+            {
+                inputControl.Rows.RemoveAt(inputControl.SelectedCells[0].RowIndex);
+            }
+
+        }
+
         #endregion Command UI Field Generation
 
         #region ComboBox Events
@@ -935,9 +1006,11 @@ namespace taskt.UI.Forms
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
                     actionParameters.Rows.Add("Variable Name", "");
-
-
-
+                    break;
+                case "Variable Is Numeric":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+                    actionParameters.Rows.Add("Variable Name", "");
                     break;
                 case "Error Occured":
                     additionalParameterLabel.Visible = true;
@@ -1601,6 +1674,16 @@ namespace taskt.UI.Forms
             }
         
 
+
+        }
+        private void AddInputParameter(object sender, EventArgs e)
+        {
+
+            DataGridView inputControl = (DataGridView)flw_InputVariables.Controls["v_UserInputConfig"];
+            var inputTable = (DataTable)inputControl.DataSource;
+            var newRow = inputTable.NewRow();
+            newRow["Size"] = "500,100";
+            inputTable.Rows.Add(newRow);
 
         }
            private void ShowDLLExplorer(object sender, EventArgs e)

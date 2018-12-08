@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UserInputCommand" CommandName="UserInputCommand" IsCommented="false" SelectionName="User Input" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InputHeader="Please Provide Input for {vFieldCount} fields" v_InputDirections="Directions: Please fill in the following fields">
+        <v_UserInputConfig>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="U8erInpuPPara6Table120118.070608">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Type" type="xs:string" minOccurs="0" />
+                  <xs:element name="Label" type="xs:string" minOccurs="0" />
+                  <xs:element name="Size" type="xs:string" minOccurs="0" />
+                  <xs:element name="DefaultValue" type="xs:string" minOccurs="0" />
+                  <xs:element name="UserInput" type="xs:string" minOccurs="0" />
+                  <xs:element name="ApplyToVariable" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="U8erInpuPPara6Table120118.070608" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="U8erInpuPPara6Table120118.070608" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706081" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Type>TextBox</Type>
+                <Label>Enter your age</Label>
+                <Size>500,30</Size>
+                <ApplyToVariable>{vAge}</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706082" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Type>TextBox</Type>
+                <Label>Enter your name</Label>
+                <Size>500,30</Size>
+                <ApplyToVariable>{vName}</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_UserInputConfig>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Name Entered: {vName}; Age Entered: {vAge}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vAge</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vFieldCount</VariableName>
+      <VariableValue xsi:type="xsd:string">2</VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

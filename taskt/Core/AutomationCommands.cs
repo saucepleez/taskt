@@ -34,6 +34,7 @@ using System.Reflection;
 using OpenQA.Selenium;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
+using AcroPDFLib;
 
 namespace taskt.Core.AutomationCommands
 {
@@ -125,6 +126,9 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(ExecuteDLLCommand))]
     [XmlInclude(typeof(ParseJsonCommand))]
     [XmlInclude(typeof(SetEngineDelayCommand))]
+    [XmlInclude(typeof(PDFTextExtractionCommand))]
+    [XmlInclude(typeof(UserInputCommand))]
+    [XmlInclude(typeof(GetWordCountCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -1269,28 +1273,32 @@ namespace taskt.Core.AutomationCommands
 
         public bool ElementExists(object sender, string searchType, string elementName)
         {
+            //get engine reference
             var engine = (Core.AutomationEngineInstance)sender;
             var seleniumSearchParam = elementName.ConvertToUserVariable(sender);
 
-            if (engine.AppInstances.TryGetValue(v_InstanceName, out object browserObject))
-            {
-                var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
-               
-                try
-                {
-                    var element = FindElement(seleniumInstance, seleniumSearchParam);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                throw new Exception("Session Instance was not found");
-            }
+            //get instance name
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
+            //get stored app object
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            //get selenium instance driver
+            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+
+            try
+            {
+                //search for element
+                var element = FindElement(seleniumInstance, seleniumSearchParam);
+
+                //element exists
+                return true;
+            }
+            catch (Exception)
+            {
+                //element does not exist
+                return false;
+            }
 
         }
 
@@ -1473,6 +1481,8 @@ namespace taskt.Core.AutomationCommands
         {
             var engine = (Core.AutomationEngineInstance)sender;
             string variableMessage = v_Message.ConvertToUserVariable(sender);
+
+            variableMessage = variableMessage.Replace("\\n", Environment.NewLine);
 
             if (engine.tasktEngineUI == null)
             {
@@ -2906,6 +2916,154 @@ namespace taskt.Core.AutomationCommands
 
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows.Forms.SendKeys' method to achieve automation.")]
+    public class UserInputCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify a heading name")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the header to be displayed on the input form.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputHeader { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify input directions")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the directions you want to give the user.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputDirections { get; set; }
+
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("User Input Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the required input parameters.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.AddInputParameter)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public DataTable v_UserInputConfig { get; set; }
+
+        public UserInputCommand()
+        {
+            this.CommandName = "UserInputCommand";
+            this.SelectionName = "Prompt for User Input";
+            this.CommandEnabled = true;
+
+            v_UserInputConfig = new DataTable();
+            v_UserInputConfig.TableName = DateTime.Now.ToString("UserInputParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+            v_UserInputConfig.Columns.Add("Type");
+            v_UserInputConfig.Columns.Add("Label");
+            v_UserInputConfig.Columns.Add("Size");
+            v_UserInputConfig.Columns.Add("DefaultValue");
+            v_UserInputConfig.Columns.Add("UserInput");
+            v_UserInputConfig.Columns.Add("ApplyToVariable");
+
+            v_InputHeader = "Please Provide Input";
+            v_InputDirections = "Directions: Please fill in the following fields";
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+
+            var engine = (Core.AutomationEngineInstance)sender;
+
+                        
+            if (engine.tasktEngineUI == null)
+            {
+                engine.ReportProgress("UserInput Supported With UI Only");
+                System.Windows.Forms.MessageBox.Show("UserInput Supported With UI Only", "UserInput Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                return;
+            }
+
+
+            //create clone of original
+            var clonedCommand = taskt.Core.Common.Clone(this);
+
+            //translate variable
+            clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ConvertToUserVariable(sender);
+            clonedCommand.v_InputDirections = clonedCommand.v_InputDirections.ConvertToUserVariable(sender);
+
+            //translate variables for each label
+            foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)
+            {
+                rw["Label"] = rw["Label"].ToString().ConvertToUserVariable(sender);
+
+                var targetVariable = rw["ApplyToVariable"] as string;
+
+                if (string.IsNullOrEmpty(targetVariable))
+                {
+                    var newMessage = new MessageBoxCommand();
+                    newMessage.v_Message = "User Input question '" + rw["Label"] + "' is missing variables to apply results to! Results for the item will not be tracked.  To fix this, assign a variable in the designer!";
+                    newMessage.v_AutoCloseAfter = 10;
+                    newMessage.RunCommand(sender);
+                }
+            }
+
+
+            //invoke ui for data collection
+            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            {
+
+                //get input from user
+              var userInputs =  engine.tasktEngineUI.ShowInput(clonedCommand);
+
+                //check if user provided input
+                if (userInputs != null)
+                {
+
+                    //loop through each input and assign
+                    for (int i = 0; i < userInputs.Count; i++)
+                    {
+                        //get target variable
+                        var targetVariable = v_UserInputConfig.Rows[i]["ApplyToVariable"] as string;
+
+
+                        //if engine is expected to create variables, the user will not expect them to contain start/end markers
+                        //ex. {vAge} should not be created, vAge should be created and then called by doing {vAge}
+                        if ((!string.IsNullOrEmpty(targetVariable)) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+                        {
+                            //remove start markers
+                            if (targetVariable.StartsWith(engine.engineSettings.VariableStartMarker))
+                            {
+                                targetVariable = targetVariable.TrimStart(engine.engineSettings.VariableStartMarker.ToCharArray());
+                            }
+
+                            //remove end markers
+                            if (targetVariable.EndsWith(engine.engineSettings.VariableEndMarker))
+                            {
+                                targetVariable = targetVariable.TrimEnd(engine.engineSettings.VariableEndMarker.ToCharArray());
+                            }
+                        }
+
+                       
+                        //store user data in variable
+                        if (!string.IsNullOrEmpty(targetVariable))
+                        {
+                            userInputs[i].StoreInUserVariable(sender, targetVariable);
+                        }
+
+                                  
+                    }
+
+
+                }
+
+            }
+
+            ));
+
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [" + v_InputHeader + "]";
+        }
+    }
     #endregion Input Commands
 
     #region Database Commands
@@ -3372,7 +3530,7 @@ namespace taskt.Core.AutomationCommands
 
            var excelObject = engine.GetAppInstance(vInstance);
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            excelInstance.Workbooks.Open(v_FilePath);
+            excelInstance.Workbooks.Open(vFilePath);
 
            
         }
@@ -5027,7 +5185,114 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Write Log to 'taskt\\Logs\\" + logFileName + "']";
         }
     }
+        [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("")]
+    [Attributes.ClassAttributes.UsesDescription("")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class PDFTextExtractionCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file.")]
+        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.pdf or [vFilePath]")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_FilePath { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the PDF text")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+
+        public PDFTextExtractionCommand()
+        {
+            this.CommandName = "PDFTextExtractionCommand";
+            this.SelectionName = "PDF Extraction";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+            //get variable path to source file
+            var vSourceFilePath = v_FilePath.ConvertToUserVariable(sender);
+
+            //create process interface
+            JavaInterface javaInterface = new JavaInterface();
+
+            //get output from process
+            var result = javaInterface.ExtractPDFText(vSourceFilePath);
+
+            //apply to variable
+            result.StoreInUserVariable(sender, v_applyToVariableName);
+
+
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Extract From '" + v_FilePath + "' and apply result to '" + v_applyToVariableName + "'" ;
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class GetWordCountCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputValue { get; set; }
+
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted json")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+
+        public GetWordCountCommand()
+        {
+            this.CommandName = "GetWordCountCommand";
+            this.SelectionName = "Get Word Count";
+            this.CommandEnabled = true;
+
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get engine
+            var engine = (AutomationEngineInstance)sender;
+
+            //get input value
+            var stringRequiringCount = v_InputValue.ConvertToUserVariable(sender);
+
+            //count number of words
+            var wordCount = stringRequiringCount.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries).Length;
+
+            //store word count into variable
+            wordCount.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+
+
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply Result to: '" + v_applyToVariableName + "']";
+        }
+    }
     #endregion Data Commands
 
     #region If Commands
@@ -5043,6 +5308,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Is Numeric")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Active Window Name Is")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Exists")]
@@ -5151,6 +5417,26 @@ namespace taskt.Core.AutomationCommands
                 var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
 
                 if (!string.IsNullOrEmpty(actualVariable))
+                {
+                    ifResult = true;
+                }
+                else
+                {
+                    ifResult = false;
+                }
+
+            }
+            else if (v_IfActionType == "Variable Is Numeric")
+            {
+                string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Variable Name"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
+
+                var numericTest = decimal.TryParse(actualVariable, out decimal parsedResult);
+
+                if (numericTest)
                 {
                     ifResult = true;
                 }
@@ -5427,6 +5713,12 @@ namespace taskt.Core.AutomationCommands
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Variable " + variableName + " Has Value)";
+                case "Variable Is Numeric":
+                    string varName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Variable Name"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    return "If (Variable " + varName + " Is Numeric)";
 
                 case "Error Occured":
 
@@ -6746,6 +7038,7 @@ namespace taskt.Core.AutomationCommands
         }
     }
     #endregion
+
 
 
 }
