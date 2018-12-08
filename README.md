@@ -44,7 +44,7 @@ If you would like an officially-signed build of a specific or latest version, pl
 ## Known Issues
 - Screen Recording requires Windows scale settings to be at 100%.
 
-### Support? Questions? Feature Request?
+### Support? Questions? Feature Request? Want to say Hi?
  [Create a new issue!](https://github.com/saucepleez/taskt/issues/new)
  
  [Chat with us on Gitter!](https://gitter.im/taskt-rpa/Lobby)
