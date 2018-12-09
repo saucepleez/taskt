@@ -5,13 +5,16 @@ taskt (pronounced 'tasked', formerly sharpRPA) is the first truly free, easy to 
 ![Main App Window](http://www.taskt.net/assets/images/RPAsample.gif)
 
 ## How does taskt work?
-taskt works by essentially building and executing XML command instructions.  Each automation command has an independent definition and parameters that are required for command execution.  Bot Developers chain the commands together using a rich user interface to create an automation script.
+taskt typically works by replicating the processes that a person performs to achieve automation. The underlying concept in taskt is to build and execute script configurations.  Each automation command has an independent definition and parameters that are required for command execution.  Bot Developers chain the commands together using a rich user interface to create an automation script.
 
 ## What can taskt do?
-taskt can perform automation on both web and desktop applications, simulating the actions a person would do. Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
+taskt can perform both attended (user present) and unattended (user not present) automation.  taskt can perform automation on both web and desktop applications simulating the actions a person would take. Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and automate thick and web applications among many other functions.  You can review all the automation commands by clicking [here](https://wiki.taskt.net/automation-commands).
+
+## Why use taskt?
+Whether you want to run automted processes or simply speed up business processes with a robot, use taskt to develop and deploy automation without needing to explicitly write code.  Want to include code or integrate an API? taskt supports DLL integration so you can include and execute existing libraries.  taskt is also open source so you can extend the existing functionality to integrate into other applications where required.
 
 ## What does a completed task look like?
-Depicted below is an example of a completed task (script). Note that scripts can be simple or they can be complex, its all up to you!
+Automation tasks can be as simple or complex as you like, its all up to you!
 ![Sample](https://i.imgur.com/fbi8JrB.png)
 
 ## Documentation
@@ -26,12 +29,13 @@ Please check out the [Wiki](https://wiki.taskt.net) for basic documenation surro
 - Excel Commands require Microsoft Excel to be installed and configured.
 - OCR Command requires Microsoft One Note to be installed and configured.
 - Web Browser Command requires Selenium `chromedriver.exe` to function properly.
+- PDF Extraction requires Java 1.8
 
 ## License
 This project is licensed under the Apache License - see the LICENSE.md file for details.  This project is free for personal or commercial use.
 
 ## Releases and Updates
-Officially-signed builds are released generally once per week assuming there are updates.  Each officially-signed build contains all updated features since the last officially signed release.  Otherwise, source code is constantly updated 'daily' as required and is the always the latest.
+Officially-signed builds are released generally once per week assuming there are updates.  Each officially-signed build contains all updated features since the last officially signed release.  Otherwise, source code in the development-branch is constantly updated 'daily' as required and is the always the latest.
 
 Version Number Strategy (as of 1.1.0.0):
 - Major - Breaking Changes or Incompatability
@@ -43,6 +47,7 @@ If you would like an officially-signed build of a specific or latest version, pl
 
 ## Known Issues
 - Screen Recording requires Windows scale settings to be at 100%.
+- Some commands (that use Windows API) may require a display driver to be invoked (Windows limitation requiring a connected screen or active display driver to render a window).  This presents a problem for infrastructure such as VDI which may stop outputting to a screen. 
 
 ### Support? Questions? Feature Request? Want to say Hi?
  [Create a new issue!](https://github.com/saucepleez/taskt/issues/new)
