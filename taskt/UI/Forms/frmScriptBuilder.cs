@@ -178,6 +178,15 @@ namespace taskt.UI.Forms
 
             //tvCommands.ImageList = uiImages;
 
+            //start attended mode if selected
+            if (appSettings.ClientSettings.StartupMode == "Attended Task Mode")
+            {
+
+                this.WindowState = FormWindowState.Minimized;
+                var frmAttended = new frmAttendedMode();
+                frmAttended.Show();
+
+            }
 
         }
         private void GenerateRecentFiles()
@@ -239,8 +248,6 @@ namespace taskt.UI.Forms
 
                 }
             }
-
-
         }
         private void frmScriptBuilder_Shown(object sender, EventArgs e)
         {

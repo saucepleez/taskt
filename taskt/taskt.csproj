@@ -177,6 +177,12 @@
     <Compile Include="UI\CustomControls\CustomControls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Forms\frmAttendedMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmAttendedMode.Designer.cs">
+      <DependentUpon>frmAttendedMode.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\frmSequenceRecorder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -304,6 +310,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControls\CustomControls.resx">
       <DependentUpon>CustomControls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmAttendedMode.resx">
+      <DependentUpon>frmAttendedMode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>

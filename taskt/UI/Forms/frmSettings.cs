@@ -49,7 +49,7 @@ namespace taskt.UI.Forms
             chkBypassValidation.DataBindings.Add("Checked", serverSettings, "BypassCertificateValidation", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublicKey.DataBindings.Add("Text", serverSettings, "ServerPublicKey", false, DataSourceUpdateMode.OnPropertyChanged);
             txtServerURL.DataBindings.Add("Text", serverSettings, "ServerURL", false, DataSourceUpdateMode.OnPropertyChanged);
-           
+
 
             var engineSettings = newAppSettings.EngineSettings;
             chkShowDebug.DataBindings.Add("Checked", engineSettings, "ShowDebugWindow", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -66,13 +66,15 @@ namespace taskt.UI.Forms
             var clientSettings = newAppSettings.ClientSettings;
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAppFolderPath.DataBindings.Add("Text", clientSettings, "RootFolder", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtAttendedTaskFolder.DataBindings.Add("Text", clientSettings, "AttendedTasksFolder", false, DataSourceUpdateMode.OnPropertyChanged);
             chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
             chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
             chkMinimizeToTray.DataBindings.Add("Checked", clientSettings, "MinimizeToTray", false, DataSourceUpdateMode.OnPropertyChanged);
+            cboStartUpMode.DataBindings.Add("Text", clientSettings, "StartupMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics
             bgwMetrics.RunWorkerAsync();
-          
+
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -104,14 +106,14 @@ namespace taskt.UI.Forms
             Core.UpdateManifest manifest = new Core.UpdateManifest();
             try
             {
-                 manifest = updater.GetManifest();
+                manifest = updater.GetManifest();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error getting manifest: " + ex.ToString());
                 return;
             }
-         
+
 
             if (manifest.RemoteVersionNewer)
             {
@@ -120,7 +122,7 @@ namespace taskt.UI.Forms
                 {
 
                     //move update exe to root folder for execution
-                    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";                
+                    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
                     var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
 
 
@@ -144,10 +146,11 @@ namespace taskt.UI.Forms
                 }
 
             }
-            else {
-                MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);         
+            else
+            {
+                MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
             }
-            
+
         }
 
         private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
@@ -162,7 +165,7 @@ namespace taskt.UI.Forms
             {
                 lblSocketException.Hide();
             }
-        
+
         }
 
         private void btnCloseConnection_Click(object sender, EventArgs e)
@@ -180,7 +183,7 @@ namespace taskt.UI.Forms
 
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
-         
+
             //prompt user to confirm they want to select a new folder
             var updateFolderRequest = MessageBox.Show("Would you like to change the default root folder that taskt uses to store tasks and information? " + Environment.NewLine + Environment.NewLine +
                 "Current Root Folder: " + txtAppFolderPath.Text, "Change Default Root Folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -192,7 +195,7 @@ namespace taskt.UI.Forms
             //user folder browser to let user select top level folder
             using (var fbd = new FolderBrowserDialog())
             {
-         
+
                 //check if user selected a folder
                 if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
@@ -236,7 +239,7 @@ namespace taskt.UI.Forms
                             //handle any unexpected errors
                             MessageBox.Show("An Error Occured during Data Migration Copy: " + ex.ToString());
                         }
-                      
+
                     }
 
                     //update textbox which will be updated once user selects "Ok"
@@ -268,7 +271,7 @@ namespace taskt.UI.Forms
                     lblMetrics.Text = "Metrics Unavailable: " + e.Error.ToString();
                 }
 
-              
+
             }
             else
             {
@@ -309,7 +312,7 @@ namespace taskt.UI.Forms
             }
 
 
-            
+
         }
 
         private void btnClearMetrics_Click(object sender, EventArgs e)
@@ -333,6 +336,25 @@ namespace taskt.UI.Forms
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnLaunchAttendedMode_Click(object sender, EventArgs e)
+        {
+            var frmAttended = new frmAttendedMode();
+            frmAttended.Show();
+            this.Close();
+        }
+
+        private void btnSelectAttendedTaskFolder_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);
+                    txtAttendedTaskFolder.Text = newAttendedTaskFolder;
+                }
+            }
         }
     }
 }
