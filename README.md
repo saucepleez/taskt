@@ -50,6 +50,8 @@ If you would like an officially-signed build of a specific or latest version, pl
 - Some commands (that use Windows API) may require a display driver to be invoked (Windows limitation requiring a connected screen or active display driver to render a window).  This presents a problem for infrastructure such as VDI which may stop outputting to a screen. 
 
 ### Support? Questions? Feature Request? Want to say Hi?
- [Create a new issue!](https://github.com/saucepleez/taskt/issues/new)
+New features and bug fixes are based on valuable community feedback, feel free to tell us what you think or how we can improve this project.
+
+ [Request a feature enhancement or report a bug!](https://github.com/saucepleez/taskt/issues/new)
  
  [Chat with us on Gitter!](https://gitter.im/taskt-rpa/Lobby)
