@@ -374,6 +374,41 @@ namespace taskt.UI.Forms
             }
 
         }
+        public delegate List<Core.Script.ScriptVariable> ShowHTMLInputDelegate(string htmlTemplate);
+        public List<Core.Script.ScriptVariable> ShowHTMLInput(string htmlTemplate)
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowHTMLInputDelegate(ShowHTMLInput);
+                Invoke(d, new object[] { htmlTemplate });
+                return null;
+            }
+            else
+            {
+                var inputForm = new Supplemental.frmHTMLDisplayForm();
+                inputForm.TemplateHTML = htmlTemplate;
+
+
+                var dialogResult = inputForm.ShowDialog();
+
+                if (inputForm.Result == DialogResult.OK)
+                {
+                    var variables = inputForm.GetVariablesFromHTML("input");
+
+                    variables.AddRange(inputForm.GetVariablesFromHTML("select"));
+
+                    return variables;
+                }
+                else
+                {
+                    return null;
+                }
+
+
+
+            }
+
+        }
 
         public delegate void SetLineNumber(int lineNumber);
         public void UpdateLineNumber(int lineNumber)

@@ -101,7 +101,6 @@ namespace taskt.UI.Forms
                     null, control, new object[] { true });
             }
 
-
             //create undo list
             undoList = new List<List<ListViewItem>>();
 
