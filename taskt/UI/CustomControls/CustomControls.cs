@@ -308,6 +308,7 @@ namespace taskt.UI
             uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
             uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("HTMLInputCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("UIAutomationCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);

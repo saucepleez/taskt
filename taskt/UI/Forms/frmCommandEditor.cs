@@ -280,6 +280,12 @@ namespace taskt.UI.Forms
                                 helperControl.Click += AddInputParameter;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
+                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
+                                helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
+                                helperControl.CommandDisplay = "Launch HTML Builder";
+                                helperControl.Click += ShowHTMLBuilder;
+                                flw_InputVariables.Controls.Add(helperControl);
+                                break;
                             default:
                                 MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                                 break;
@@ -428,6 +434,10 @@ namespace taskt.UI.Forms
                             InputControl.Items.Add(process.MainWindowTitle);
                         }
                     }
+                }
+                else if(inputField.Name == "v_InputHTML")
+                {
+                    InputControl = new RichTextBox();
                 }
                 else if (inputField.Name == "v_AutomationWindowName")
                 {
@@ -1674,6 +1684,19 @@ namespace taskt.UI.Forms
             }
         
 
+
+        }
+        private void ShowHTMLBuilder(object sender, EventArgs e)
+        {
+            var htmlForm = new Supplemental.frmHTMLBuilder();
+
+            RichTextBox inputControl = (RichTextBox)flw_InputVariables.Controls["v_InputHTML"];
+            htmlForm.rtbHTML.Text = inputControl.Text;
+
+            if (htmlForm.ShowDialog() == DialogResult.OK)
+            {
+                inputControl.Text = htmlForm.rtbHTML.Text;
+            }
 
         }
         private void AddInputParameter(object sender, EventArgs e)

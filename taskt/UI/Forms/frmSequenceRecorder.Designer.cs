@@ -47,6 +47,8 @@
             this.chkGroupIntoSequence = new System.Windows.Forms.CheckBox();
             this.chkCaptureClicks = new System.Windows.Forms.CheckBox();
             this.uiBtnRecord = new taskt.UI.CustomControls.UIPictureButton();
+            this.txtHookStop = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.pnlOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnRecord)).BeginInit();
             this.SuspendLayout();
@@ -58,7 +60,7 @@
             this.chkGroupMovesIntoSequences.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkGroupMovesIntoSequences.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkGroupMovesIntoSequences.ForeColor = System.Drawing.Color.AliceBlue;
-            this.chkGroupMovesIntoSequences.Location = new System.Drawing.Point(11, 189);
+            this.chkGroupMovesIntoSequences.Location = new System.Drawing.Point(9, 223);
             this.chkGroupMovesIntoSequences.Name = "chkGroupMovesIntoSequences";
             this.chkGroupMovesIntoSequences.Size = new System.Drawing.Size(281, 19);
             this.chkGroupMovesIntoSequences.TabIndex = 2;
@@ -103,14 +105,16 @@
             this.lblRecording.ForeColor = System.Drawing.Color.DarkOrange;
             this.lblRecording.Location = new System.Drawing.Point(12, 9);
             this.lblRecording.Name = "lblRecording";
-            this.lblRecording.Size = new System.Drawing.Size(531, 37);
+            this.lblRecording.Size = new System.Drawing.Size(394, 37);
             this.lblRecording.TabIndex = 6;
-            this.lblRecording.Text = "Press \'PAUSE/BREAK\' Key to stop recording!";
+            this.lblRecording.Text = "Press \'F2\' Key to stop recording!";
             this.lblRecording.Visible = false;
             // 
             // pnlOptions
             // 
             this.pnlOptions.BackColor = System.Drawing.Color.Transparent;
+            this.pnlOptions.Controls.Add(this.label6);
+            this.pnlOptions.Controls.Add(this.txtHookStop);
             this.pnlOptions.Controls.Add(this.chkTrackWindowsOpenLocation);
             this.pnlOptions.Controls.Add(this.label5);
             this.pnlOptions.Controls.Add(this.label4);
@@ -126,9 +130,9 @@
             this.pnlOptions.Controls.Add(this.chkGroupMovesIntoSequences);
             this.pnlOptions.Controls.Add(this.chkCaptureMouse);
             this.pnlOptions.Controls.Add(this.chkCaptureKeyboard);
-            this.pnlOptions.Location = new System.Drawing.Point(11, 7);
+            this.pnlOptions.Location = new System.Drawing.Point(13, 6);
             this.pnlOptions.Name = "pnlOptions";
-            this.pnlOptions.Size = new System.Drawing.Size(506, 320);
+            this.pnlOptions.Size = new System.Drawing.Size(506, 348);
             this.pnlOptions.TabIndex = 7;
             // 
             // chkTrackWindowsOpenLocation
@@ -138,7 +142,7 @@
             this.chkTrackWindowsOpenLocation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTrackWindowsOpenLocation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkTrackWindowsOpenLocation.ForeColor = System.Drawing.Color.White;
-            this.chkTrackWindowsOpenLocation.Location = new System.Drawing.Point(11, 250);
+            this.chkTrackWindowsOpenLocation.Location = new System.Drawing.Point(9, 284);
             this.chkTrackWindowsOpenLocation.Name = "chkTrackWindowsOpenLocation";
             this.chkTrackWindowsOpenLocation.Size = new System.Drawing.Size(200, 19);
             this.chkTrackWindowsOpenLocation.TabIndex = 16;
@@ -151,7 +155,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.label5.Location = new System.Drawing.Point(8, 230);
+            this.label5.Location = new System.Drawing.Point(6, 264);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 21);
             this.label5.TabIndex = 15;
@@ -162,7 +166,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.label4.Location = new System.Drawing.Point(6, 165);
+            this.label4.Location = new System.Drawing.Point(4, 199);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(212, 21);
             this.label4.TabIndex = 14;
@@ -198,7 +202,7 @@
             this.chkTrackWindowSize.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTrackWindowSize.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkTrackWindowSize.ForeColor = System.Drawing.Color.White;
-            this.chkTrackWindowSize.Location = new System.Drawing.Point(11, 290);
+            this.chkTrackWindowSize.Location = new System.Drawing.Point(9, 324);
             this.chkTrackWindowSize.Name = "chkTrackWindowSize";
             this.chkTrackWindowSize.Size = new System.Drawing.Size(182, 19);
             this.chkTrackWindowSize.TabIndex = 11;
@@ -210,7 +214,7 @@
             this.chkActivateTopLeft.AutoSize = true;
             this.chkActivateTopLeft.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkActivateTopLeft.ForeColor = System.Drawing.Color.White;
-            this.chkActivateTopLeft.Location = new System.Drawing.Point(11, 270);
+            this.chkActivateTopLeft.Location = new System.Drawing.Point(9, 304);
             this.chkActivateTopLeft.Name = "chkActivateTopLeft";
             this.chkActivateTopLeft.Size = new System.Drawing.Size(206, 19);
             this.chkActivateTopLeft.TabIndex = 10;
@@ -259,7 +263,7 @@
             this.chkGroupIntoSequence.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkGroupIntoSequence.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkGroupIntoSequence.ForeColor = System.Drawing.Color.AliceBlue;
-            this.chkGroupIntoSequence.Location = new System.Drawing.Point(11, 207);
+            this.chkGroupIntoSequence.Location = new System.Drawing.Point(9, 241);
             this.chkGroupIntoSequence.Name = "chkGroupIntoSequence";
             this.chkGroupIntoSequence.Size = new System.Drawing.Size(154, 19);
             this.chkGroupIntoSequence.TabIndex = 7;
@@ -289,19 +293,39 @@
             this.uiBtnRecord.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.uiBtnRecord.Image = global::taskt.Properties.Resources.various_record_button;
             this.uiBtnRecord.IsMouseOver = false;
-            this.uiBtnRecord.Location = new System.Drawing.Point(11, 333);
+            this.uiBtnRecord.Location = new System.Drawing.Point(11, 361);
             this.uiBtnRecord.Name = "uiBtnRecord";
             this.uiBtnRecord.Size = new System.Drawing.Size(48, 48);
             this.uiBtnRecord.TabIndex = 8;
             this.uiBtnRecord.TabStop = false;
             this.uiBtnRecord.Click += new System.EventHandler(this.uiBtnRecord_Click);
             // 
+            // txtHookStop
+            // 
+            this.txtHookStop.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtHookStop.Location = new System.Drawing.Point(160, 166);
+            this.txtHookStop.Name = "txtHookStop";
+            this.txtHookStop.Size = new System.Drawing.Size(52, 22);
+            this.txtHookStop.TabIndex = 17;
+            this.txtHookStop.Text = "F2";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.AliceBlue;
+            this.label6.Location = new System.Drawing.Point(10, 169);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(114, 13);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Stop Capture HotKey";
+            // 
             // frmSequenceRecorder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 1000;
-            this.ClientSize = new System.Drawing.Size(556, 393);
+            this.ClientSize = new System.Drawing.Size(556, 421);
             this.Controls.Add(this.uiBtnRecord);
             this.Controls.Add(this.pnlOptions);
             this.Controls.Add(this.lblRecording);
@@ -336,5 +360,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkTrackWindowsOpenLocation;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtHookStop;
     }
 }

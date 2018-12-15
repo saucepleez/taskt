@@ -53,6 +53,11 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.btnSelectAttendedTaskFolder = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtAttendedTaskFolder = new System.Windows.Forms.TextBox();
+            this.btnLaunchAttendedMode = new System.Windows.Forms.Button();
+            this.chkMinimizeToTray = new System.Windows.Forms.CheckBox();
             this.chkSequenceDragDrop = new System.Windows.Forms.CheckBox();
             this.btnGenerateWikiDocs = new System.Windows.Forms.Button();
             this.chkInsertCommandsInline = new System.Windows.Forms.CheckBox();
@@ -84,7 +89,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.chkMinimizeToTray = new System.Windows.Forms.CheckBox();
+            this.cboStartUpMode = new System.Windows.Forms.ComboBox();
+            this.lblStartupMode = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -254,7 +260,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 548);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 650);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -313,7 +319,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(12, 173);
+            this.btnUpdates.Location = new System.Drawing.Point(12, 279);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 27);
             this.btnUpdates.TabIndex = 22;
@@ -357,12 +363,18 @@
             this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(577, 469);
+            this.uiSettingTabs.Size = new System.Drawing.Size(628, 571);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.lblStartupMode);
+            this.tabAppSettings.Controls.Add(this.cboStartUpMode);
+            this.tabAppSettings.Controls.Add(this.btnSelectAttendedTaskFolder);
+            this.tabAppSettings.Controls.Add(this.label6);
+            this.tabAppSettings.Controls.Add(this.txtAttendedTaskFolder);
+            this.tabAppSettings.Controls.Add(this.btnLaunchAttendedMode);
             this.tabAppSettings.Controls.Add(this.chkMinimizeToTray);
             this.tabAppSettings.Controls.Add(this.chkSequenceDragDrop);
             this.tabAppSettings.Controls.Add(this.btnGenerateWikiDocs);
@@ -380,9 +392,62 @@
             this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppSettings.Size = new System.Drawing.Size(569, 435);
+            this.tabAppSettings.Size = new System.Drawing.Size(620, 537);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // btnSelectAttendedTaskFolder
+            // 
+            this.btnSelectAttendedTaskFolder.Location = new System.Drawing.Point(504, 189);
+            this.btnSelectAttendedTaskFolder.Name = "btnSelectAttendedTaskFolder";
+            this.btnSelectAttendedTaskFolder.Size = new System.Drawing.Size(42, 30);
+            this.btnSelectAttendedTaskFolder.TabIndex = 37;
+            this.btnSelectAttendedTaskFolder.Text = "...";
+            this.btnSelectAttendedTaskFolder.UseVisualStyleBackColor = true;
+            this.btnSelectAttendedTaskFolder.Click += new System.EventHandler(this.btnSelectAttendedTaskFolder_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.SlateGray;
+            this.label6.Location = new System.Drawing.Point(9, 171);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(145, 16);
+            this.label6.TabIndex = 36;
+            this.label6.Text = "Attended Tasks Folder";
+            // 
+            // txtAttendedTaskFolder
+            // 
+            this.txtAttendedTaskFolder.Location = new System.Drawing.Point(12, 190);
+            this.txtAttendedTaskFolder.Name = "txtAttendedTaskFolder";
+            this.txtAttendedTaskFolder.Size = new System.Drawing.Size(490, 29);
+            this.txtAttendedTaskFolder.TabIndex = 35;
+            // 
+            // btnLaunchAttendedMode
+            // 
+            this.btnLaunchAttendedMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLaunchAttendedMode.Location = new System.Drawing.Point(225, 279);
+            this.btnLaunchAttendedMode.Name = "btnLaunchAttendedMode";
+            this.btnLaunchAttendedMode.Size = new System.Drawing.Size(207, 27);
+            this.btnLaunchAttendedMode.TabIndex = 34;
+            this.btnLaunchAttendedMode.Text = "Launch Attended Mode";
+            this.btnLaunchAttendedMode.UseVisualStyleBackColor = true;
+            this.btnLaunchAttendedMode.Click += new System.EventHandler(this.btnLaunchAttendedMode_Click);
+            // 
+            // chkMinimizeToTray
+            // 
+            this.chkMinimizeToTray.AutoSize = true;
+            this.chkMinimizeToTray.BackColor = System.Drawing.Color.Transparent;
+            this.chkMinimizeToTray.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkMinimizeToTray.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(10, 96);
+            this.chkMinimizeToTray.Name = "chkMinimizeToTray";
+            this.chkMinimizeToTray.Size = new System.Drawing.Size(189, 24);
+            this.chkMinimizeToTray.TabIndex = 33;
+            this.chkMinimizeToTray.Text = "Minimize to System Tray";
+            this.chkMinimizeToTray.UseVisualStyleBackColor = false;
             // 
             // chkSequenceDragDrop
             // 
@@ -400,7 +465,7 @@
             // btnGenerateWikiDocs
             // 
             this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 206);
+            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 312);
             this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
             this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 27);
             this.btnGenerateWikiDocs.TabIndex = 31;
@@ -424,7 +489,7 @@
             // btnClearMetrics
             // 
             this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(11, 401);
+            this.btnClearMetrics.Location = new System.Drawing.Point(11, 506);
             this.btnClearMetrics.Name = "btnClearMetrics";
             this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
             this.btnClearMetrics.TabIndex = 29;
@@ -439,7 +504,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
-            this.label5.Location = new System.Drawing.Point(13, 250);
+            this.label5.Location = new System.Drawing.Point(13, 356);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(262, 16);
             this.label5.TabIndex = 28;
@@ -449,7 +514,7 @@
             // 
             this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
             this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMetrics.Location = new System.Drawing.Point(12, 269);
+            this.lblMetrics.Location = new System.Drawing.Point(12, 375);
             this.lblMetrics.Name = "lblMetrics";
             this.lblMetrics.Size = new System.Drawing.Size(534, 127);
             this.lblMetrics.TabIndex = 27;
@@ -457,7 +522,7 @@
             // 
             // tvExecutionTimes
             // 
-            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 269);
+            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 375);
             this.tvExecutionTimes.Name = "tvExecutionTimes";
             this.tvExecutionTimes.Size = new System.Drawing.Size(534, 127);
             this.tvExecutionTimes.TabIndex = 26;
@@ -465,7 +530,7 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(502, 149);
+            this.btnSelectFolder.Location = new System.Drawing.Point(504, 138);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(42, 30);
             this.btnSelectFolder.TabIndex = 25;
@@ -515,7 +580,7 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(569, 438);
+            this.tabDebugSettings.Size = new System.Drawing.Size(569, 501);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
             // 
@@ -660,7 +725,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(569, 438);
+            this.tabServerSettings.Size = new System.Drawing.Size(569, 501);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -727,7 +792,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(583, 605);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(634, 707);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -739,7 +804,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(583, 70);
+            this.panel1.Size = new System.Drawing.Size(634, 70);
             this.panel1.TabIndex = 26;
             // 
             // tmrGetSocketStatus
@@ -753,25 +818,36 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // chkMinimizeToTray
+            // cboStartUpMode
             // 
-            this.chkMinimizeToTray.AutoSize = true;
-            this.chkMinimizeToTray.BackColor = System.Drawing.Color.Transparent;
-            this.chkMinimizeToTray.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkMinimizeToTray.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkMinimizeToTray.Location = new System.Drawing.Point(10, 96);
-            this.chkMinimizeToTray.Name = "chkMinimizeToTray";
-            this.chkMinimizeToTray.Size = new System.Drawing.Size(189, 24);
-            this.chkMinimizeToTray.TabIndex = 33;
-            this.chkMinimizeToTray.Text = "Minimize to System Tray";
-            this.chkMinimizeToTray.UseVisualStyleBackColor = false;
+            this.cboStartUpMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStartUpMode.FormattingEnabled = true;
+            this.cboStartUpMode.Items.AddRange(new object[] {
+            "Builder Mode",
+            "Attended Task Mode"});
+            this.cboStartUpMode.Location = new System.Drawing.Point(13, 241);
+            this.cboStartUpMode.Name = "cboStartUpMode";
+            this.cboStartUpMode.Size = new System.Drawing.Size(219, 29);
+            this.cboStartUpMode.TabIndex = 38;
+            // 
+            // lblStartupMode
+            // 
+            this.lblStartupMode.AutoSize = true;
+            this.lblStartupMode.BackColor = System.Drawing.Color.Transparent;
+            this.lblStartupMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStartupMode.ForeColor = System.Drawing.Color.SlateGray;
+            this.lblStartupMode.Location = new System.Drawing.Point(10, 222);
+            this.lblStartupMode.Name = "lblStartupMode";
+            this.lblStartupMode.Size = new System.Drawing.Size(73, 16);
+            this.lblStartupMode.TabIndex = 39;
+            this.lblStartupMode.Text = "Start Mode";
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 300;
-            this.ClientSize = new System.Drawing.Size(583, 605);
+            this.ClientSize = new System.Drawing.Size(634, 707);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -849,5 +925,11 @@
         internal System.Windows.Forms.CheckBox chkOverrideInstances;
         private System.Windows.Forms.CheckBox chkSequenceDragDrop;
         private System.Windows.Forms.CheckBox chkMinimizeToTray;
+        private System.Windows.Forms.Button btnLaunchAttendedMode;
+        private System.Windows.Forms.Button btnSelectAttendedTaskFolder;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtAttendedTaskFolder;
+        private System.Windows.Forms.Label lblStartupMode;
+        private System.Windows.Forms.ComboBox cboStartUpMode;
     }
 }

@@ -334,6 +334,7 @@ namespace taskt.Core.AutomationCommands
             private static bool trackActivatedWindowSizes;
             private static bool trackWindowOpenLocations;
             private static int msResolution;
+            public static string stopHookKey;
             private static Stopwatch lastMouseMove;
 
             public static List<Core.AutomationCommands.ScriptCommand> generatedCommands;
@@ -351,7 +352,7 @@ namespace taskt.Core.AutomationCommands
                 _mouseHookID = SetMouseHook(_mouseLeftUpProc);
             }
 
-            public static void StartScreenRecordingHook(bool captureClick, bool captureMouse, bool groupMouseMoves, bool captureKeyboard, bool captureWindow, bool activateTopLeft, bool trackActivatedWindowSize, bool trackWindowsOpenLocation, int eventResolution)
+            public static void StartScreenRecordingHook(bool captureClick, bool captureMouse, bool groupMouseMoves, bool captureKeyboard, bool captureWindow, bool activateTopLeft, bool trackActivatedWindowSize, bool trackWindowsOpenLocation, int eventResolution, string stopHookHotKey)
             {
                 //create new list for commands generated
                 generatedCommands = new List<ScriptCommand>();
@@ -366,7 +367,7 @@ namespace taskt.Core.AutomationCommands
                 trackActivatedWindowSizes = trackActivatedWindowSize;
                 trackWindowOpenLocations = trackWindowsOpenLocation;
                 msResolution = eventResolution;
-
+                stopHookKey = stopHookHotKey;
                 //start hook
                 _mouseHookID = SetMouseHook(_mouseProc);
                 _keyboardHookID = SetKeyboardHook(_kbProc);
@@ -409,8 +410,7 @@ namespace taskt.Core.AutomationCommands
 
             //mouse and keyboard hook event triggers
             private static IntPtr KeyboardHookEvent(int nCode, IntPtr wParam, IntPtr lParam)
-
-            {
+           {
 
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
 
@@ -509,8 +509,9 @@ namespace taskt.Core.AutomationCommands
 
 
                 //translate key press to sendkeys identifier
-                if (selectedKey == "Pause")
+                if (selectedKey == stopHookKey)
                 {
+                    //STOP HOOK
                     StopHook();
                     return;
                 }

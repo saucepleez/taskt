@@ -135,12 +135,16 @@ namespace taskt.Core
         public bool InsertCommandsInline { get; set; }
         public bool EnableSequenceDragDrop { get; set; }
         public bool MinimizeToTray { get; set; }
+        public string AttendedTasksFolder { get; set; }
+        public string StartupMode { get; set; }
         public ClientSettings()
         {
             MinimizeToTray = false;
             AntiIdleWhileOpen = false;
             InsertCommandsInline = false;
             RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
+            StartupMode = "Builder Mode";
+            AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
             EnableSequenceDragDrop = true;
         }
     }

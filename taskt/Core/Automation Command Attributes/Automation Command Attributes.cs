@@ -113,8 +113,8 @@ namespace taskt.Core.AutomationCommands.Attributes.PropertyAttributes
             ShowElementRecorder,
             GenerateDLLParameters,
             ShowDLLExplorer,
-            AddInputParameter
-
+            AddInputParameter,
+            ShowHTMLBuilder
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
