@@ -404,6 +404,7 @@ namespace taskt.UI.Forms
                     InputControl.Width = 200;
                     //add an option for current window which is the window which is currently in the foreground
                     InputControl.Items.Add("Current Window");
+                    InputControl.Items.Add("All Windows");
                     //get all running processes
                     Process[] processlist = Process.GetProcesses();
                     //pull the main window title for each

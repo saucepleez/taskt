@@ -55,6 +55,50 @@ namespace taskt.Core.AutomationCommands
             return hWnd;
         }
 
+        public static List<IntPtr> FindTargetWindows(string windowName)
+        {
+            //create list of hwnds to target
+            List<IntPtr> targetWindows = new List<IntPtr>();
+            if (windowName == "All Windows")
+            {
+                //target each available window
+                foreach (var prc in System.Diagnostics.Process.GetProcesses())
+                {
+                    targetWindows.Add(prc.MainWindowHandle);
+                }
+            }
+            else
+            {
+                //target current or specific window
+                IntPtr hwnd;
+                if (windowName == "Current Window")
+                {
+                    //get active window
+                    hwnd = User32Functions.GetActiveWindow();
+                }
+                else
+                {
+                    //find window by name
+                    hwnd = User32Functions.FindWindow(windowName);
+                }
+
+                //check if hwnd was found
+                if (hwnd == null)
+                {
+                    //throw
+                    throw new Exception("Window not found");
+                }
+                else
+                {
+                    //add to list
+                    targetWindows.Add(User32Functions.GetActiveWindow());
+                }
+
+            }
+
+            return targetWindows;
+
+        }
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
@@ -273,6 +317,11 @@ namespace taskt.Core.AutomationCommands
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
+        public static IntPtr GetActiveWindow()
+        {
+            return GetForegroundWindow();
+        }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern IntPtr GetDesktopWindow();

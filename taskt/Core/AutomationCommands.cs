@@ -1887,10 +1887,13 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+            //convert window name
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero) //If found
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window and set the window state
+            foreach (var targetedWindow in targetWindows)
             {
                 User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SW_SHOWNORMAL;
                 switch (v_WindowState)
@@ -1911,12 +1914,11 @@ namespace taskt.Core.AutomationCommands
                         break;
                 }
 
-                User32Functions.SetWindowState(hWnd, WINDOW_STATE);
+                User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
             }
-            else
-            {
-                throw new Exception("Window not found");
-            }
+        
+
+
         }
         public override string GetDisplayValue()
         {
