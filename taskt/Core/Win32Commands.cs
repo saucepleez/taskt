@@ -91,7 +91,7 @@ namespace taskt.Core.AutomationCommands
                 else
                 {
                     //add to list
-                    targetWindows.Add(User32Functions.GetActiveWindow());
+                    targetWindows.Add(hwnd);
                 }
 
             }
@@ -158,13 +158,13 @@ namespace taskt.Core.AutomationCommands
         }
         public static void SetWindowSize(IntPtr hWnd, int newXSize, int newYSize)
         {
-            const short SWP_NOSIZE = 1;
+
             const short SWP_NOZORDER = 0X4;
             const int SWP_SHOWWINDOW = 0x0040;
 
             GetWindowRect(hWnd, out RECT windowRect);
 
-            SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+            SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_SHOWWINDOW);
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]

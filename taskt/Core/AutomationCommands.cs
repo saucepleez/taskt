@@ -1660,16 +1660,16 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
-            if (hWnd != IntPtr.Zero)
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window
+            foreach (var targetedWindow in targetWindows)
             {
-                User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
-                User32Functions.SetForegroundWindow(hWnd);
+                User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
+                User32Functions.SetForegroundWindow(targetedWindow);
             }
-            else
-            {
-                throw new Exception("Window not found. Expected to find: " + v_WindowName);
-            }
+
         }
         public override string GetDisplayValue()
         {
@@ -1716,11 +1716,12 @@ namespace taskt.Core.AutomationCommands
         {
 
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero)
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window
+            foreach (var targetedWindow in targetWindows)
             {
-
                 var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);
                 var variableYPosition = v_YWindowPosition.ConvertToUserVariable(sender);
 
@@ -1734,11 +1735,7 @@ namespace taskt.Core.AutomationCommands
                 }
 
 
-                User32Functions.SetWindowPosition(hWnd, xPos, yPos);
-            }
-            else
-            {
-                throw new Exception("Window not found");
+                User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
             }
         }
 
@@ -1788,9 +1785,11 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero)
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window and set the window state
+            foreach (var targetedWindow in targetWindows)
             {
                 var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
                 var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
@@ -1804,13 +1803,14 @@ namespace taskt.Core.AutomationCommands
                     throw new Exception("X Position Invalid - " + v_YWindowSize);
                 }
 
-                User32Functions.SetWindowSize(hWnd, xPos, yPos);
+                User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
             }
+
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Size (" + v_XWindowSize + "," + v_YWindowSize + "]";
+            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Size (" + v_XWindowSize + "," + v_YWindowSize + ")]";
         }
     }
     [Serializable]
@@ -1838,16 +1838,18 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero)
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window
+            foreach (var targetedWindow in targetWindows)
             {
-                User32Functions.CloseWindow(hWnd);
+                User32Functions.CloseWindow(targetedWindow);
             }
-            else
-            {
-                throw new Exception("Window not found");
-            }
+            
+
+           
         }
         public override string GetDisplayValue()
         {
