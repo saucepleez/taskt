@@ -83,7 +83,7 @@ namespace taskt.Core.AutomationCommands
                 }
 
                 //check if hwnd was found
-                if (hwnd == null)
+                if (hwnd == IntPtr.Zero)
                 {
                     //throw
                     throw new Exception("Window not found");
