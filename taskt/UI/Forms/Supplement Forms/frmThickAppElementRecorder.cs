@@ -74,6 +74,8 @@ namespace taskt.UI.Forms.Supplemental
                 //loop through each property and get value from the element
                 foreach (System.Reflection.PropertyInfo property in properties)
                 {
+                    try
+                    {         
                     var propName = property.Name;
                     var propValue = property.GetValue(elementProperties, null);
 
@@ -82,12 +84,17 @@ namespace taskt.UI.Forms.Supplemental
                     {
                         searchParameters.Rows.Add(false, propName, propValue);
                     }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error Iterating over properties in window: " + ex.ToString());
+                    }
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Error in recording, please try again!");
+                MessageBox.Show("Error in recording, please try again! " + ex.ToString());
             }
 
             this.WindowState = FormWindowState.Normal;

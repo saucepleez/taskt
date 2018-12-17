@@ -1431,8 +1431,20 @@ namespace taskt.UI.Forms
                 if (handleControl != null)
                 {
                     Core.AutomationCommands.ThickAppClickItemCommand newAppCommand = new Core.AutomationCommands.ThickAppClickItemCommand();
-                    var handleList = newAppCommand.FindHandleObjects(senderBox.Text);
-                    handleControl.DataSource = handleList;
+
+                    try
+                    {
+                        var handleList = newAppCommand.FindHandleObjects(senderBox.Text);
+                        handleControl.DataSource = handleList;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Error Occured: " + ex.ToString());
+                    }
+                   
+
+                   
+                    
                 }
             }
         }

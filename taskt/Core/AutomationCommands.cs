@@ -2505,13 +2505,34 @@ namespace taskt.Core.AutomationCommands
     (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
     windowTitle));
 
-            var searchItems = automationElement.FindAll(TreeScope.Descendants, PropertyCondition.TrueCondition);
+            if (automationElement == null)
+            {
+                throw new Exception("Unable to find the window named '" + windowTitle + "'");
+            }
+
+            AutomationElementCollection searchItems;
+            try
+            {
+                searchItems = automationElement.FindAll(TreeScope.Descendants, PropertyCondition.TrueCondition);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Unable to find any child controls in window '" + windowTitle + "'. " + ex.ToString());
+            }
 
             List<String> handleList = new List<String>();
             foreach (AutomationElement item in searchItems)
             {
-                if (item.Current.Name.Trim() != string.Empty)
-                    handleList.Add(item.Current.Name);
+                try
+                {
+                    if (item.Current.Name.Trim() != string.Empty)
+                        handleList.Add(item.Current.Name);
+                }
+                catch (Exception)
+                {
+                    //do not throw
+                }
+             
             }
             // handleList = handleList.OrderBy(x => x).ToList();
 
