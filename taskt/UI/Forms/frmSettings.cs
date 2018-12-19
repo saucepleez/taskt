@@ -356,5 +356,12 @@ namespace taskt.UI.Forms
                 }
             }
         }
+
+        private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
+        {
+            Supplemental.frmDisplayManager displayManager = new Supplemental.frmDisplayManager();
+            displayManager.Show();
+            this.Close();
+        }
     }
 }
