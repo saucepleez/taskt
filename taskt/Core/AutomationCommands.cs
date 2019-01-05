@@ -7025,10 +7025,11 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
         [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
         public string v_Input { get; set; }
+        [Attributes.PropertyAttributes.PropertyDescription("Define the action to take if the variable already exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Do Nothing If Variable Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error If Variable Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Replace If Variable Exists")]
-        [Attributes.PropertyAttributes.InputSpecification("Define the action to take if the variable already exists")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate handler from the list")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_IfExists { get; set; }
