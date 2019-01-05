@@ -54,6 +54,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(MessageBoxCommand))]
     [XmlInclude(typeof(StopProcessCommand))]
     [XmlInclude(typeof(StartProcessCommand))]
+    [XmlInclude(typeof(AddVariableCommand))]
     [XmlInclude(typeof(VariableCommand))]
     [XmlInclude(typeof(RunScriptCommand))]
     [XmlInclude(typeof(CloseWindowCommand))]
@@ -1365,71 +1366,6 @@ namespace taskt.Core.AutomationCommands
 
     #region Misc Commands
 
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time specified in milliseconds.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to pause your script for a specific amount of time.  After the specified time is finished, the script will resume execution.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
-    public class PauseCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Amount of time to pause for (in milliseconds).")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
-        [Attributes.PropertyAttributes.SampleUsage("**8000** or **[vVariableWaitTime]**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public int v_PauseLength { get; set; }
-
-        public PauseCommand()
-        {
-            this.CommandName = "PauseCommand";
-            this.SelectionName = "Pause Script";
-            this.CommandEnabled = true;
-        }
-
-        public override void RunCommand(object sender)
-        {
-            System.Threading.Thread.Sleep(v_PauseLength);
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Wait for " + v_PauseLength + "ms]";
-        }
-    }
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command specifies what to do  after an error is encountered.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define how your script should behave when an error is encountered.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
-    public class ErrorHandlingCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Action On Error")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Processing")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Processing")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the action you want to take when you come across an error.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Stop Processing** to end the script if an error is encountered or **Continue Processing** to continue running the script")]
-        [Attributes.PropertyAttributes.Remarks("**If Command** allows you to specify and test if a line number encountered an error. In order to use that functionality, you must specify **Continue Processing**")]
-        public string v_ErrorHandlingAction { get; set; }
-
-        public ErrorHandlingCommand()
-        {
-            this.CommandName = "ErrorHandlingCommand";
-            this.SelectionName = "Error Handling";
-            this.CommandEnabled = true;
-        }
-
-        public override void RunCommand(object sender)
-        {
-            var engine = (Core.AutomationEngineInstance)sender;
-            engine.ErrorHandler = this;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
-        }
-    }
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to add an in-line comment to the script.")]
@@ -4360,78 +4296,7 @@ namespace taskt.Core.AutomationCommands
     #endregion Excel Commands
 
     #region Data Commands
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
-    public class VariableCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_userVariableName { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
-        public string v_Input { get; set; }
-        public VariableCommand()
-        {
-            this.CommandName = "VariableCommand";
-            this.SelectionName = "Set Variable";
-            this.CommandEnabled = true;
-        }
 
-        public override void RunCommand(object sender)
-        {
-            //get sending instance
-            var engine = (Core.AutomationEngineInstance)sender;
-
-            var requiredVariable = LookupVariable(engine);
-
-            //if still not found and user has elected option, create variable at runtime
-            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-                requiredVariable = LookupVariable(engine);
-            }
-
-            if (requiredVariable != null)
-            {
-                requiredVariable.VariableValue = v_Input.ConvertToUserVariable(sender);
-            }
-            else
-            {
-                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
-            }
-        }
-
-        private Script.ScriptVariable LookupVariable(Core.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
-
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
-
-            return requiredVariable;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
-        }
-    }
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
@@ -7140,6 +7005,230 @@ namespace taskt.Core.AutomationCommands
     #endregion
 
     #region Engine Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to explicitly add a variable if you are not using **Set Variable* with the setting **Create Missing Variables** at runtime.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class AddVariableCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the name of the variable")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If the variable exists, the value of the old variable will be replaced with the new one")]
+        public string v_userVariableName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
+        public string v_Input { get; set; }
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Do Nothing If Variable Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error If Variable Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Replace If Variable Exists")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the action to take if the variable already exists")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_IfExists { get; set; }
+        public AddVariableCommand()
+        {
+            this.CommandName = "AddVariableCommand";
+            this.SelectionName = "Add Variable";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get sending instance
+            var engine = (Core.AutomationEngineInstance)sender;
+
+
+            if (!engine.VariableList.Any(f => f.VariableName == v_userVariableName))
+            {
+                //variable does not exist so add to the list
+                try
+                {
+
+                    var variableValue = v_Input.ConvertToUserVariable(engine);
+
+                    engine.VariableList.Add(new Script.ScriptVariable
+                    {
+                        VariableName = v_userVariableName,
+                        VariableValue = variableValue
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Encountered an error when adding variable '" + v_userVariableName + "': " + ex.ToString());
+                }
+            }
+            else
+            {
+                //variable exists so decide what to do
+                switch (v_IfExists)
+                {
+                    case "Replace If Variable Exists":
+                        v_Input.ConvertToUserVariable(sender).StoreInUserVariable(engine, v_userVariableName);
+                        break;
+                    case "Error If Variable Exists":
+                        throw new Exception("Attempted to create a variable that already exists! Use 'Set Variable' instead or change the Exception Setting in the 'Add Variable' Command.");
+                    default:
+                        break;
+                }
+               
+            }
+
+         
+         
+
+        }
+
+      
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Assign '" + v_Input + "' to New Variable '" + v_userVariableName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class VariableCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_userVariableName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
+        public string v_Input { get; set; }
+        public VariableCommand()
+        {
+            this.CommandName = "VariableCommand";
+            this.SelectionName = "Set Variable";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get sending instance
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            var requiredVariable = LookupVariable(engine);
+
+            //if still not found and user has elected option, create variable at runtime
+            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
+                requiredVariable = LookupVariable(engine);
+            }
+
+            if (requiredVariable != null)
+            {
+                requiredVariable.VariableValue = v_Input.ConvertToUserVariable(sender);
+            }
+            else
+            {
+                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
+            }
+        }
+
+        private Script.ScriptVariable LookupVariable(Core.AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time specified in milliseconds.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to pause your script for a specific amount of time.  After the specified time is finished, the script will resume execution.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    public class PauseCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Amount of time to pause for (in milliseconds).")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
+        [Attributes.PropertyAttributes.SampleUsage("**8000** or **[vVariableWaitTime]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public int v_PauseLength { get; set; }
+
+        public PauseCommand()
+        {
+            this.CommandName = "PauseCommand";
+            this.SelectionName = "Pause Script";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            System.Threading.Thread.Sleep(v_PauseLength);
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Wait for " + v_PauseLength + "ms]";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command specifies what to do  after an error is encountered.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define how your script should behave when an error is encountered.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    public class ErrorHandlingCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Action On Error")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Processing")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Processing")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the action you want to take when you come across an error.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Stop Processing** to end the script if an error is encountered or **Continue Processing** to continue running the script")]
+        [Attributes.PropertyAttributes.Remarks("**If Command** allows you to specify and test if a line number encountered an error. In order to use that functionality, you must specify **Continue Processing**")]
+        public string v_ErrorHandlingAction { get; set; }
+
+        public ErrorHandlingCommand()
+        {
+            this.CommandName = "ErrorHandlingCommand";
+            this.SelectionName = "Error Handling";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.AutomationEngineInstance)sender;
+            engine.ErrorHandler = this;
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
+        }
+    }
     [Serializable]
     [Attributes.ClassAttributes.Group("Engine Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to set delays between execution of commands in a running instance.")]
