@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2018 Jason Bayldon
+﻿//Copyright (c) 2019 Jason Bayldon
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -355,6 +355,13 @@ namespace taskt.UI.Forms
                     txtAttendedTaskFolder.Text = newAttendedTaskFolder;
                 }
             }
+        }
+
+        private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
+        {
+            Supplemental.frmDisplayManager displayManager = new Supplemental.frmDisplayManager();
+            displayManager.Show();
+            this.Close();
         }
     }
 }

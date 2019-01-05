@@ -53,6 +53,9 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.btnLaunchDisplayManager = new System.Windows.Forms.Button();
+            this.lblStartupMode = new System.Windows.Forms.Label();
+            this.cboStartUpMode = new System.Windows.Forms.ComboBox();
             this.btnSelectAttendedTaskFolder = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.txtAttendedTaskFolder = new System.Windows.Forms.TextBox();
@@ -89,8 +92,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.cboStartUpMode = new System.Windows.Forms.ComboBox();
-            this.lblStartupMode = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -369,6 +370,7 @@
             // tabAppSettings
             // 
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.btnLaunchDisplayManager);
             this.tabAppSettings.Controls.Add(this.lblStartupMode);
             this.tabAppSettings.Controls.Add(this.cboStartUpMode);
             this.tabAppSettings.Controls.Add(this.btnSelectAttendedTaskFolder);
@@ -395,6 +397,41 @@
             this.tabAppSettings.Size = new System.Drawing.Size(620, 537);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // btnLaunchDisplayManager
+            // 
+            this.btnLaunchDisplayManager.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLaunchDisplayManager.Location = new System.Drawing.Point(225, 312);
+            this.btnLaunchDisplayManager.Name = "btnLaunchDisplayManager";
+            this.btnLaunchDisplayManager.Size = new System.Drawing.Size(207, 27);
+            this.btnLaunchDisplayManager.TabIndex = 40;
+            this.btnLaunchDisplayManager.Text = "Display Manager for VMs";
+            this.btnLaunchDisplayManager.UseVisualStyleBackColor = true;
+            this.btnLaunchDisplayManager.Click += new System.EventHandler(this.btnLaunchDisplayManager_Click);
+            // 
+            // lblStartupMode
+            // 
+            this.lblStartupMode.AutoSize = true;
+            this.lblStartupMode.BackColor = System.Drawing.Color.Transparent;
+            this.lblStartupMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStartupMode.ForeColor = System.Drawing.Color.SlateGray;
+            this.lblStartupMode.Location = new System.Drawing.Point(10, 222);
+            this.lblStartupMode.Name = "lblStartupMode";
+            this.lblStartupMode.Size = new System.Drawing.Size(73, 16);
+            this.lblStartupMode.TabIndex = 39;
+            this.lblStartupMode.Text = "Start Mode";
+            // 
+            // cboStartUpMode
+            // 
+            this.cboStartUpMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStartUpMode.FormattingEnabled = true;
+            this.cboStartUpMode.Items.AddRange(new object[] {
+            "Builder Mode",
+            "Attended Task Mode"});
+            this.cboStartUpMode.Location = new System.Drawing.Point(13, 241);
+            this.cboStartUpMode.Name = "cboStartUpMode";
+            this.cboStartUpMode.Size = new System.Drawing.Size(219, 29);
+            this.cboStartUpMode.TabIndex = 38;
             // 
             // btnSelectAttendedTaskFolder
             // 
@@ -580,7 +617,7 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(569, 501);
+            this.tabDebugSettings.Size = new System.Drawing.Size(620, 537);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
             // 
@@ -725,7 +762,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(569, 501);
+            this.tabServerSettings.Size = new System.Drawing.Size(620, 537);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -818,30 +855,6 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // cboStartUpMode
-            // 
-            this.cboStartUpMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboStartUpMode.FormattingEnabled = true;
-            this.cboStartUpMode.Items.AddRange(new object[] {
-            "Builder Mode",
-            "Attended Task Mode"});
-            this.cboStartUpMode.Location = new System.Drawing.Point(13, 241);
-            this.cboStartUpMode.Name = "cboStartUpMode";
-            this.cboStartUpMode.Size = new System.Drawing.Size(219, 29);
-            this.cboStartUpMode.TabIndex = 38;
-            // 
-            // lblStartupMode
-            // 
-            this.lblStartupMode.AutoSize = true;
-            this.lblStartupMode.BackColor = System.Drawing.Color.Transparent;
-            this.lblStartupMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartupMode.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStartupMode.Location = new System.Drawing.Point(10, 222);
-            this.lblStartupMode.Name = "lblStartupMode";
-            this.lblStartupMode.Size = new System.Drawing.Size(73, 16);
-            this.lblStartupMode.TabIndex = 39;
-            this.lblStartupMode.Text = "Start Mode";
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -931,5 +944,6 @@
         private System.Windows.Forms.TextBox txtAttendedTaskFolder;
         private System.Windows.Forms.Label lblStartupMode;
         private System.Windows.Forms.ComboBox cboStartUpMode;
+        private System.Windows.Forms.Button btnLaunchDisplayManager;
     }
 }

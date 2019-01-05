@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2018 Jason Bayldon
+﻿//Copyright (c) 2019 Jason Bayldon
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -1660,16 +1660,16 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
-            if (hWnd != IntPtr.Zero)
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window
+            foreach (var targetedWindow in targetWindows)
             {
-                User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
-                User32Functions.SetForegroundWindow(hWnd);
+                User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
+                User32Functions.SetForegroundWindow(targetedWindow);
             }
-            else
-            {
-                throw new Exception("Window not found. Expected to find: " + v_WindowName);
-            }
+
         }
         public override string GetDisplayValue()
         {
@@ -1716,11 +1716,12 @@ namespace taskt.Core.AutomationCommands
         {
 
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero)
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window
+            foreach (var targetedWindow in targetWindows)
             {
-
                 var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);
                 var variableYPosition = v_YWindowPosition.ConvertToUserVariable(sender);
 
@@ -1734,11 +1735,7 @@ namespace taskt.Core.AutomationCommands
                 }
 
 
-                User32Functions.SetWindowPosition(hWnd, xPos, yPos);
-            }
-            else
-            {
-                throw new Exception("Window not found");
+                User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
             }
         }
 
@@ -1788,9 +1785,11 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero)
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window and set the window state
+            foreach (var targetedWindow in targetWindows)
             {
                 var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
                 var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
@@ -1804,13 +1803,14 @@ namespace taskt.Core.AutomationCommands
                     throw new Exception("X Position Invalid - " + v_YWindowSize);
                 }
 
-                User32Functions.SetWindowSize(hWnd, xPos, yPos);
+                User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
             }
+
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Size (" + v_XWindowSize + "," + v_YWindowSize + "]";
+            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Size (" + v_XWindowSize + "," + v_YWindowSize + ")]";
         }
     }
     [Serializable]
@@ -1838,16 +1838,18 @@ namespace taskt.Core.AutomationCommands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero)
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window
+            foreach (var targetedWindow in targetWindows)
             {
-                User32Functions.CloseWindow(hWnd);
+                User32Functions.CloseWindow(targetedWindow);
             }
-            else
-            {
-                throw new Exception("Window not found");
-            }
+            
+
+           
         }
         public override string GetDisplayValue()
         {
@@ -1887,10 +1889,13 @@ namespace taskt.Core.AutomationCommands
 
         public override void RunCommand(object sender)
         {
+            //convert window name
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
 
-            if (hWnd != IntPtr.Zero) //If found
+            var targetWindows = User32Functions.FindTargetWindows(windowName);
+
+            //loop each window and set the window state
+            foreach (var targetedWindow in targetWindows)
             {
                 User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SW_SHOWNORMAL;
                 switch (v_WindowState)
@@ -1911,12 +1916,11 @@ namespace taskt.Core.AutomationCommands
                         break;
                 }
 
-                User32Functions.SetWindowState(hWnd, WINDOW_STATE);
+                User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
             }
-            else
-            {
-                throw new Exception("Window not found");
-            }
+        
+
+
         }
         public override string GetDisplayValue()
         {
@@ -2501,13 +2505,34 @@ namespace taskt.Core.AutomationCommands
     (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty,
     windowTitle));
 
-            var searchItems = automationElement.FindAll(TreeScope.Descendants, PropertyCondition.TrueCondition);
+            if (automationElement == null)
+            {
+                throw new Exception("Unable to find the window named '" + windowTitle + "'");
+            }
+
+            AutomationElementCollection searchItems;
+            try
+            {
+                searchItems = automationElement.FindAll(TreeScope.Descendants, PropertyCondition.TrueCondition);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Unable to find any child controls in window '" + windowTitle + "'. " + ex.ToString());
+            }
 
             List<String> handleList = new List<String>();
             foreach (AutomationElement item in searchItems)
             {
-                if (item.Current.Name.Trim() != string.Empty)
-                    handleList.Add(item.Current.Name);
+                try
+                {
+                    if (item.Current.Name.Trim() != string.Empty)
+                        handleList.Add(item.Current.Name);
+                }
+                catch (Exception)
+                {
+                    //do not throw
+                }
+             
             }
             // handleList = handleList.OrderBy(x => x).ToList();
 
@@ -3294,6 +3319,12 @@ namespace taskt.Core.AutomationCommands
 
             var engine = (Core.AutomationEngineInstance)sender;
 
+            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            }
+
+
             int loopTimes;
             Script.ScriptVariable complexVarible = null;
 
@@ -3305,6 +3336,8 @@ namespace taskt.Core.AutomationCommands
             {
                 if (complexVarible != null)
                     complexVarible.CurrentPosition = i;
+
+                (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
@@ -3368,6 +3401,11 @@ namespace taskt.Core.AutomationCommands
             complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
 
 
+            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            }
+
             //user may potentially include brackets []
             if (complexVariable == null)
             {
@@ -3402,6 +3440,8 @@ namespace taskt.Core.AutomationCommands
             {
                 if (complexVariable != null)
                     complexVariable.CurrentPosition = i;
+
+                (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
@@ -3459,6 +3499,10 @@ namespace taskt.Core.AutomationCommands
             if (dataSetVariable == null)
                 throw new Exception("DataSet Name Not Found - " + v_DataSetName);
 
+            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            }
 
 
             DataTable excelTable = (DataTable)dataSetVariable.VariableValue;
@@ -3469,6 +3513,8 @@ namespace taskt.Core.AutomationCommands
             for (int i = 0; i < excelTable.Rows.Count; i++)
             {
                 dataSetVariable.CurrentPosition = i;
+
+                (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
@@ -3890,7 +3936,7 @@ namespace taskt.Core.AutomationCommands
         public ExcelGetLastRowCommand()
         {
             this.CommandName = "ExcelGetLastRowCommand";
-            this.SelectionName = "Get Last Row";
+            this.SelectionName = "Get Last Row Index";
             this.CommandEnabled = true;
         }
         public override void RunCommand(object sender)
@@ -3912,7 +3958,7 @@ namespace taskt.Core.AutomationCommands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply to '" + v_applyToVariableName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Column '" + v_ColumnLetter + "', Apply to '" + v_applyToVariableName + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
     [Serializable]

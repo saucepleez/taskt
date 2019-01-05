@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2018 Jason Bayldon
+﻿//Copyright (c) 2019 Jason Bayldon
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -308,6 +308,7 @@ namespace taskt.UI
             uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
             uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SetWindowStateCommand", taskt.Properties.Resources.command_window);            
             uiImages.Add("HTMLInputCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("UIAutomationCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);

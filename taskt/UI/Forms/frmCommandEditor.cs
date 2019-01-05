@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2018 Jason Bayldon
+﻿//Copyright (c) 2019 Jason Bayldon
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -404,6 +404,7 @@ namespace taskt.UI.Forms
                     InputControl.Width = 200;
                     //add an option for current window which is the window which is currently in the foreground
                     InputControl.Items.Add("Current Window");
+                    InputControl.Items.Add("All Windows");
                     //get all running processes
                     Process[] processlist = Process.GetProcesses();
                     //pull the main window title for each
@@ -1430,8 +1431,20 @@ namespace taskt.UI.Forms
                 if (handleControl != null)
                 {
                     Core.AutomationCommands.ThickAppClickItemCommand newAppCommand = new Core.AutomationCommands.ThickAppClickItemCommand();
-                    var handleList = newAppCommand.FindHandleObjects(senderBox.Text);
-                    handleControl.DataSource = handleList;
+
+                    try
+                    {
+                        var handleList = newAppCommand.FindHandleObjects(senderBox.Text);
+                        handleControl.DataSource = handleList;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Error Occured: " + ex.ToString());
+                    }
+                   
+
+                   
+                    
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2018 Jason Bayldon
+﻿//Copyright (c) 2019 Jason Bayldon
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
@@ -55,6 +55,50 @@ namespace taskt.Core.AutomationCommands
             return hWnd;
         }
 
+        public static List<IntPtr> FindTargetWindows(string windowName)
+        {
+            //create list of hwnds to target
+            List<IntPtr> targetWindows = new List<IntPtr>();
+            if (windowName == "All Windows")
+            {
+                //target each available window
+                foreach (var prc in System.Diagnostics.Process.GetProcesses())
+                {
+                    targetWindows.Add(prc.MainWindowHandle);
+                }
+            }
+            else
+            {
+                //target current or specific window
+                IntPtr hwnd;
+                if (windowName == "Current Window")
+                {
+                    //get active window
+                    hwnd = User32Functions.GetActiveWindow();
+                }
+                else
+                {
+                    //find window by name
+                    hwnd = User32Functions.FindWindow(windowName);
+                }
+
+                //check if hwnd was found
+                if (hwnd == IntPtr.Zero)
+                {
+                    //throw
+                    throw new Exception("Window not found");
+                }
+                else
+                {
+                    //add to list
+                    targetWindows.Add(hwnd);
+                }
+
+            }
+
+            return targetWindows;
+
+        }
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
@@ -114,13 +158,13 @@ namespace taskt.Core.AutomationCommands
         }
         public static void SetWindowSize(IntPtr hWnd, int newXSize, int newYSize)
         {
-            const short SWP_NOSIZE = 1;
+
             const short SWP_NOZORDER = 0X4;
             const int SWP_SHOWWINDOW = 0x0040;
 
             GetWindowRect(hWnd, out RECT windowRect);
 
-            SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+            SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_SHOWWINDOW);
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -273,6 +317,11 @@ namespace taskt.Core.AutomationCommands
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
+        public static IntPtr GetActiveWindow()
+        {
+            return GetForegroundWindow();
+        }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern IntPtr GetDesktopWindow();
