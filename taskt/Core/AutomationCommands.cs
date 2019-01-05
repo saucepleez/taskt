@@ -3936,7 +3936,7 @@ namespace taskt.Core.AutomationCommands
         public ExcelGetLastRowCommand()
         {
             this.CommandName = "ExcelGetLastRowCommand";
-            this.SelectionName = "Get Last Row";
+            this.SelectionName = "Get Last Row Index";
             this.CommandEnabled = true;
         }
         public override void RunCommand(object sender)
@@ -3958,7 +3958,7 @@ namespace taskt.Core.AutomationCommands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply to '" + v_applyToVariableName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Column '" + v_ColumnLetter + "', Apply to '" + v_applyToVariableName + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
     [Serializable]
