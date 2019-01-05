@@ -3319,6 +3319,12 @@ namespace taskt.Core.AutomationCommands
 
             var engine = (Core.AutomationEngineInstance)sender;
 
+            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            }
+
+
             int loopTimes;
             Script.ScriptVariable complexVarible = null;
 
@@ -3330,6 +3336,8 @@ namespace taskt.Core.AutomationCommands
             {
                 if (complexVarible != null)
                     complexVarible.CurrentPosition = i;
+
+                (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
@@ -3393,6 +3401,11 @@ namespace taskt.Core.AutomationCommands
             complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
 
 
+            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            }
+
             //user may potentially include brackets []
             if (complexVariable == null)
             {
@@ -3427,6 +3440,8 @@ namespace taskt.Core.AutomationCommands
             {
                 if (complexVariable != null)
                     complexVariable.CurrentPosition = i;
+
+                (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
@@ -3484,6 +3499,10 @@ namespace taskt.Core.AutomationCommands
             if (dataSetVariable == null)
                 throw new Exception("DataSet Name Not Found - " + v_DataSetName);
 
+            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            }
 
 
             DataTable excelTable = (DataTable)dataSetVariable.VariableValue;
@@ -3494,6 +3513,8 @@ namespace taskt.Core.AutomationCommands
             for (int i = 0; i < excelTable.Rows.Count; i++)
             {
                 dataSetVariable.CurrentPosition = i;
+
+                (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
