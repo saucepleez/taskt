@@ -1555,7 +1555,7 @@ namespace taskt.Core.AutomationCommands
         public ClipboardGetTextCommand()
         {
             this.CommandName = "ClipboardCommand";
-            this.SelectionName = "Get Text";
+            this.SelectionName = "Get Clipboard Text";
             this.CommandEnabled = true;
         }
 
