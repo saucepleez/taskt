@@ -324,6 +324,7 @@ namespace taskt.UI
             uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("TextExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("PDFTextExtractionCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
