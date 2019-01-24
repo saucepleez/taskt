@@ -264,6 +264,20 @@ namespace taskt.Core.AutomationCommands
             MOUSEEVENTF_MIDDLEUP = 0x40
         }
 
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
+        private const int KEYEVENTF_EXTENDEDKEY = 1;
+        private const int KEYEVENTF_KEYUP = 2;
+        public static void KeyDown(Keys vKey)
+        {
+            keybd_event((byte)vKey, 0, KEYEVENTF_EXTENDEDKEY, 0);
+        }
+
+        public static void KeyUp(Keys vKey)
+        {
+            keybd_event((byte)vKey, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+        }
+
         [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
         static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
         public static RECT GetWindowPosition(IntPtr hWnd)

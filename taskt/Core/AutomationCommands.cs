@@ -2207,7 +2207,40 @@ namespace taskt.Core.AutomationCommands
             }
 
             string textToSend = v_TextToSend.ConvertToUserVariable(sender);
-            System.Windows.Forms.SendKeys.SendWait(textToSend);
+
+
+            if (textToSend == "{WIN_KEY}")
+            {
+                User32Functions.KeyDown(System.Windows.Forms.Keys.LWin);
+                User32Functions.KeyUp(System.Windows.Forms.Keys.LWin);
+
+            }
+            else if (textToSend.Contains("{WIN_KEY+"))
+            {
+                User32Functions.KeyDown(System.Windows.Forms.Keys.LWin);
+                var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
+
+                foreach (var c in remainingText)
+                {
+                    System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), c.ToString());
+                    User32Functions.KeyDown(key);
+                }
+
+                User32Functions.KeyUp(System.Windows.Forms.Keys.LWin);
+
+                foreach (var c in remainingText)
+                {
+                    System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), c.ToString());
+                    User32Functions.KeyUp(key);
+                }
+            }
+            else
+            {
+                System.Windows.Forms.SendKeys.SendWait(textToSend);
+            }
+
+
+          
 
             System.Threading.Thread.Sleep(500);
         }
