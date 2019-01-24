@@ -343,6 +343,7 @@ namespace taskt.UI
             uiImages.Add("WebBrowserFindBrowserCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("EndLoopCommand", taskt.Properties.Resources.command_endloop);
             uiImages.Add("ClipboardGetTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExcelCreateApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelOpenWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
