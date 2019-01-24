@@ -1514,7 +1514,7 @@ namespace taskt.UI.Forms
             }
             catch (Exception ex)
             {
-                Notify("Error: " + ex.ToString());
+                Notify("Er ror: " + ex.ToString());
             }
 
 

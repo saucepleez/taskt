@@ -688,6 +688,38 @@ namespace taskt.UI.Forms
                     InputControl.DataSource = cmd.v_UIASearchParameters;
 
                 }
+                else if (inputField.Name == "v_KeyActions")
+                {
+                    InputControl = new DataGridView();
+
+                    InputControl.Name = inputField.Name;
+                    InputControl.Width = 500;
+                    InputControl.Height = 140;
+
+                   
+
+                    DataGridViewComboBoxColumn propertyName = new DataGridViewComboBoxColumn();
+                    propertyName.DataSource = Core.Common.GetAvailableKeys();
+                    propertyName.HeaderText = "Selected Key";
+                    propertyName.DataPropertyName = "Key";
+                    InputControl.Columns.Add(propertyName);
+
+                    DataGridViewComboBoxColumn propertyValue = new DataGridViewComboBoxColumn();
+                    propertyValue.DataSource = new List<string> { "Key Press (Down + Up)", "Key Down", "Key Up" };
+                    propertyValue.HeaderText = "Selected Action";
+                    propertyValue.DataPropertyName = "Action";
+                    InputControl.Columns.Add(propertyValue);
+
+                    InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+                    InputControl.AllowUserToAddRows = true;
+                    InputControl.AllowUserToDeleteRows = true;
+
+
+                    var cmd = (Core.AutomationCommands.SendAdvancedKeyStrokesCommand)currentCommand;
+                    InputControl.DataSource = cmd.v_KeyActions;
+
+
+                }
                 else if (inputField.Name == "v_IEBrowserName")
                 {
                     InputControl = new ComboBox();
