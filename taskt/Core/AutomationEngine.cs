@@ -25,6 +25,9 @@ namespace taskt.Core
         public EngineStatus CurrentStatus { get; set; }
         public EngineSettings engineSettings { get; set; }
         public string FileName { get; set; }
+
+        Core.Task taskModel { get; set; }
+
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -102,8 +105,9 @@ namespace taskt.Core
                 {
                     ReportProgress("Deserializing File");
                     engineLogger.Information("Script Path: " + data);
-                    FileName = data;
+                    FileName = data;              
                     automationScript = Core.Script.Script.DeserializeFile(data);
+                    taskModel = HttpServerClient.AddTask(data);
                 }
                 else
                 {
@@ -382,10 +386,22 @@ namespace taskt.Core
             if (error == null)
             {
                 engineLogger.Information("Error: None");
+
+                if (taskModel != null)
+                {
+                    HttpServerClient.UpdateTask(taskModel.TaskID, "Completed");
+                }
             }
+               
             else
             {
                 engineLogger.Information("Error: " + error);
+
+                if (taskModel != null)
+                {
+                    HttpServerClient.UpdateTask(taskModel.TaskID, "Error");
+                }
+               
             }
 
             engineLogger.Dispose();
