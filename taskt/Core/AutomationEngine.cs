@@ -24,6 +24,7 @@ namespace taskt.Core
         private System.Diagnostics.Stopwatch sw { get; set; }
         public EngineStatus CurrentStatus { get; set; }
         public EngineSettings engineSettings { get; set; }
+        public ServerSettings serverSettings { get; set; }
         public string FileName { get; set; }
 
         Core.Task taskModel { get; set; }
@@ -47,7 +48,10 @@ namespace taskt.Core
             CurrentStatus = EngineStatus.Loaded;
 
             //get engine settings
-            engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            engineSettings = settings.EngineSettings;
+            serverSettings = settings.ServerSettings;
+
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath)
@@ -107,7 +111,11 @@ namespace taskt.Core
                     engineLogger.Information("Script Path: " + data);
                     FileName = data;              
                     automationScript = Core.Script.Script.DeserializeFile(data);
-                    taskModel = HttpServerClient.AddTask(data);
+
+                    if (serverSettings.ServerConnectionEnabled)
+                               taskModel = HttpServerClient.AddTask(data);
+                  
+
                 }
                 else
                 {
@@ -387,7 +395,7 @@ namespace taskt.Core
             {
                 engineLogger.Information("Error: None");
 
-                if (taskModel != null)
+                if (taskModel != null && serverSettings.ServerConnectionEnabled)
                 {
                     HttpServerClient.UpdateTask(taskModel.TaskID, "Completed");
                 }
