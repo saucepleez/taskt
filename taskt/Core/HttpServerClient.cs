@@ -116,7 +116,7 @@ namespace taskt.Core
             catch (Exception ex)
             {
                 httpLogger.Information("Error Getting GUID: " + ex.ToString());
-                throw;
+                return false;
             }
 
 
