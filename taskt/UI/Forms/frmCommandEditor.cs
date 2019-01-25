@@ -1261,6 +1261,7 @@ namespace taskt.UI.Forms
                 case "Left Click":
                 case "Middle Click":
                 case "Right Click":
+                case "Double Left Click":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
                     variableHelper.Show();
