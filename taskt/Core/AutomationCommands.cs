@@ -7394,7 +7394,22 @@ namespace taskt.Core.AutomationCommands
 
             if (requiredVariable != null)
             {
-                requiredVariable.VariableValue = v_Input.ConvertToUserVariable(sender);
+
+
+                var variableInput = v_Input.ConvertToUserVariable(sender);
+
+
+                if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
+                {
+                    var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
+                    requiredVariable.VariableValue = itemList;
+                }
+                else
+                {
+                    requiredVariable.VariableValue = variableInput;
+                }
+
+    
             }
             else
             {
