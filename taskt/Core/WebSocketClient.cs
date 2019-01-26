@@ -35,8 +35,8 @@ namespace taskt.Core.Sockets
         public static void Initialize()
         {
           
-            socketLogger.Information("Socket Client Initialized");
-            LoadSettings();
+            //socketLogger.Information("Socket Client Initialized");
+            //LoadSettings();
         }
         /// <summary>
         /// Loads Settings used for the Socket Client

@@ -43,8 +43,31 @@ namespace taskt.Core
                 //complex variable handling
                 if (potentialVariable.Contains("=>"))
                 {
+                    var complexJsonVariable = potentialVariable;
+
+                    //detect potential variables and replace
+                    string[] potentialSubVariables = complexJsonVariable.Split(new string[] { "^" }, StringSplitOptions.None);
+
+                    foreach (var potentialSubVariable in potentialSubVariables)
+                    {
+                        var matchingVar = (from vars in searchList
+                                           where vars.VariableName == potentialSubVariable
+                                           select vars).FirstOrDefault();
+
+                        if (matchingVar != null)
+                        {
+                            //get the value from the list
+
+                            complexJsonVariable = complexJsonVariable.Replace("^" + potentialSubVariable + "^", matchingVar.GetDisplayValue());
+                                continue;
+                            }
+
+                        }
+
+         
+
                     //split by json select token pointer
-                    var element = potentialVariable.Split(new string[] { "=>" }, StringSplitOptions.None);
+                    var element = complexJsonVariable.Split(new string[] { "=>" }, StringSplitOptions.None);
 
                     //verify length
                     if (element.Length >= 2)

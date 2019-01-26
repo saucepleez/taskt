@@ -92,6 +92,14 @@ namespace taskt.Core
         public bool BypassCertificateValidation { get; set; }
         public string ServerURL { get; set; }
         public string ServerPublicKey { get; set; }
+
+        public string HTTPServerURL { get; set; }
+        public Guid HTTPGuid { get; set; }
+
+        public ServerSettings()
+        {
+            HTTPServerURL = "https://localhost:44377/";
+        }
     }
     /// <summary>
     /// Defines engine settings which can be managed by the user

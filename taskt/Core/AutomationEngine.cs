@@ -24,7 +24,11 @@ namespace taskt.Core
         private System.Diagnostics.Stopwatch sw { get; set; }
         public EngineStatus CurrentStatus { get; set; }
         public EngineSettings engineSettings { get; set; }
+        public ServerSettings serverSettings { get; set; }
         public string FileName { get; set; }
+
+        Core.Task taskModel { get; set; }
+
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -44,7 +48,10 @@ namespace taskt.Core
             CurrentStatus = EngineStatus.Loaded;
 
             //get engine settings
-            engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            engineSettings = settings.EngineSettings;
+            serverSettings = settings.ServerSettings;
+
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath)
@@ -102,8 +109,13 @@ namespace taskt.Core
                 {
                     ReportProgress("Deserializing File");
                     engineLogger.Information("Script Path: " + data);
-                    FileName = data;
+                    FileName = data;              
                     automationScript = Core.Script.Script.DeserializeFile(data);
+
+                    if (serverSettings.ServerConnectionEnabled)
+                               taskModel = HttpServerClient.AddTask(data);
+                  
+
                 }
                 else
                 {
@@ -382,10 +394,22 @@ namespace taskt.Core
             if (error == null)
             {
                 engineLogger.Information("Error: None");
+
+                if (taskModel != null && serverSettings.ServerConnectionEnabled)
+                {
+                    HttpServerClient.UpdateTask(taskModel.TaskID, "Completed");
+                }
             }
+               
             else
             {
                 engineLogger.Information("Error: " + error);
+
+                if (taskModel != null)
+                {
+                    HttpServerClient.UpdateTask(taskModel.TaskID, "Error");
+                }
+               
             }
 
             engineLogger.Dispose();

@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.btnConnect = new System.Windows.Forms.Button();
-            this.lblStatus = new System.Windows.Forms.Label();
             this.chkRetryOnDisconnect = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.chkAutomaticallyConnect = new System.Windows.Forms.CheckBox();
@@ -84,10 +83,19 @@
             this.txtVariableStartMarker = new System.Windows.Forms.TextBox();
             this.chkTrackMetrics = new System.Windows.Forms.CheckBox();
             this.tabServerSettings = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btnGetGUID = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtGUID = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtHttpsAddress = new System.Windows.Forms.TextBox();
             this.chkBypassValidation = new System.Windows.Forms.CheckBox();
             this.btnCloseConnection = new System.Windows.Forms.Button();
             this.lblSocketException = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
@@ -104,24 +112,14 @@
             // btnConnect
             // 
             this.btnConnect.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnConnect.Location = new System.Drawing.Point(12, 222);
+            this.btnConnect.Location = new System.Drawing.Point(312, 350);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 33);
             this.btnConnect.TabIndex = 17;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Visible = false;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblStatus.Location = new System.Drawing.Point(13, 258);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 20);
-            this.lblStatus.TabIndex = 16;
             // 
             // chkRetryOnDisconnect
             // 
@@ -129,12 +127,13 @@
             this.chkRetryOnDisconnect.BackColor = System.Drawing.Color.Transparent;
             this.chkRetryOnDisconnect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkRetryOnDisconnect.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkRetryOnDisconnect.Location = new System.Drawing.Point(11, 75);
+            this.chkRetryOnDisconnect.Location = new System.Drawing.Point(302, 364);
             this.chkRetryOnDisconnect.Name = "chkRetryOnDisconnect";
             this.chkRetryOnDisconnect.Size = new System.Drawing.Size(154, 19);
             this.chkRetryOnDisconnect.TabIndex = 15;
             this.chkRetryOnDisconnect.Text = "Retry If Connection Fails";
             this.chkRetryOnDisconnect.UseVisualStyleBackColor = false;
+            this.chkRetryOnDisconnect.Visible = false;
             // 
             // label1
             // 
@@ -153,11 +152,11 @@
             this.chkAutomaticallyConnect.BackColor = System.Drawing.Color.Transparent;
             this.chkAutomaticallyConnect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAutomaticallyConnect.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkAutomaticallyConnect.Location = new System.Drawing.Point(10, 55);
+            this.chkAutomaticallyConnect.Location = new System.Drawing.Point(196, 91);
             this.chkAutomaticallyConnect.Name = "chkAutomaticallyConnect";
-            this.chkAutomaticallyConnect.Size = new System.Drawing.Size(206, 19);
+            this.chkAutomaticallyConnect.Size = new System.Drawing.Size(132, 19);
             this.chkAutomaticallyConnect.TabIndex = 13;
-            this.chkAutomaticallyConnect.Text = "Automatically Connect on Startup";
+            this.chkAutomaticallyConnect.Text = "Check In On Startup";
             this.chkAutomaticallyConnect.UseVisualStyleBackColor = false;
             // 
             // chkServerEnabled
@@ -166,7 +165,7 @@
             this.chkServerEnabled.BackColor = System.Drawing.Color.Transparent;
             this.chkServerEnabled.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkServerEnabled.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkServerEnabled.Location = new System.Drawing.Point(10, 36);
+            this.chkServerEnabled.Location = new System.Drawing.Point(12, 91);
             this.chkServerEnabled.Name = "chkServerEnabled";
             this.chkServerEnabled.Size = new System.Drawing.Size(168, 19);
             this.chkServerEnabled.TabIndex = 12;
@@ -176,10 +175,11 @@
             // txtServerURL
             // 
             this.txtServerURL.ForeColor = System.Drawing.Color.SteelBlue;
-            this.txtServerURL.Location = new System.Drawing.Point(10, 141);
+            this.txtServerURL.Location = new System.Drawing.Point(275, 360);
             this.txtServerURL.Name = "txtServerURL";
             this.txtServerURL.Size = new System.Drawing.Size(371, 29);
             this.txtServerURL.TabIndex = 11;
+            this.txtServerURL.Visible = false;
             // 
             // label3
             // 
@@ -187,19 +187,21 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.SlateGray;
-            this.label3.Location = new System.Drawing.Point(7, 119);
+            this.label3.Location = new System.Drawing.Point(290, 364);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(232, 16);
             this.label3.TabIndex = 9;
             this.label3.Text = "Server URL ex. ws://localhost:port/ws)\r";
+            this.label3.Visible = false;
             // 
             // txtPublicKey
             // 
             this.txtPublicKey.ForeColor = System.Drawing.Color.SteelBlue;
-            this.txtPublicKey.Location = new System.Drawing.Point(11, 190);
+            this.txtPublicKey.Location = new System.Drawing.Point(275, 354);
             this.txtPublicKey.Name = "txtPublicKey";
             this.txtPublicKey.Size = new System.Drawing.Size(371, 29);
             this.txtPublicKey.TabIndex = 19;
+            this.txtPublicKey.Visible = false;
             // 
             // label2
             // 
@@ -207,11 +209,12 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.SlateGray;
-            this.label2.Location = new System.Drawing.Point(9, 172);
+            this.label2.Location = new System.Drawing.Point(310, 367);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 16);
             this.label2.TabIndex = 18;
             this.label2.Text = "Connect Key:";
+            this.label2.Visible = false;
             // 
             // chkEnableLogging
             // 
@@ -746,6 +749,14 @@
             // tabServerSettings
             // 
             this.tabServerSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabServerSettings.Controls.Add(this.label15);
+            this.tabServerSettings.Controls.Add(this.label14);
+            this.tabServerSettings.Controls.Add(this.label13);
+            this.tabServerSettings.Controls.Add(this.btnGetGUID);
+            this.tabServerSettings.Controls.Add(this.label12);
+            this.tabServerSettings.Controls.Add(this.txtGUID);
+            this.tabServerSettings.Controls.Add(this.label11);
+            this.tabServerSettings.Controls.Add(this.txtHttpsAddress);
             this.tabServerSettings.Controls.Add(this.chkBypassValidation);
             this.tabServerSettings.Controls.Add(this.btnCloseConnection);
             this.tabServerSettings.Controls.Add(this.lblSocketException);
@@ -766,29 +777,117 @@
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label15.Location = new System.Drawing.Point(12, 243);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(408, 16);
+            this.label15.TabIndex = 32;
+            this.label15.Text = "Indicates the GUID the client will use when connecting to taskt server";
+            // 
+            // label14
+            // 
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.SlateGray;
+            this.label14.Location = new System.Drawing.Point(10, 33);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(587, 55);
+            this.label14.TabIndex = 30;
+            this.label14.Text = resources.GetString("label14.Text");
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label13.Location = new System.Drawing.Point(9, 137);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(371, 16);
+            this.label13.TabIndex = 29;
+            this.label13.Text = "Enter the location of the taskt server ex. https://localhost:60281";
+            // 
+            // btnGetGUID
+            // 
+            this.btnGetGUID.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btnGetGUID.Location = new System.Drawing.Point(11, 189);
+            this.btnGetGUID.Name = "btnGetGUID";
+            this.btnGetGUID.Size = new System.Drawing.Size(147, 33);
+            this.btnGetGUID.TabIndex = 28;
+            this.btnGetGUID.Text = "Test Connection";
+            this.btnGetGUID.UseVisualStyleBackColor = true;
+            this.btnGetGUID.Click += new System.EventHandler(this.btnGetGUID_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.SlateGray;
+            this.label12.Location = new System.Drawing.Point(12, 228);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 16);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Client GUID";
+            // 
+            // txtGUID
+            // 
+            this.txtGUID.ForeColor = System.Drawing.Color.SteelBlue;
+            this.txtGUID.Location = new System.Drawing.Point(13, 262);
+            this.txtGUID.Name = "txtGUID";
+            this.txtGUID.Size = new System.Drawing.Size(371, 29);
+            this.txtGUID.TabIndex = 27;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.SlateGray;
+            this.label11.Location = new System.Drawing.Point(10, 118);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(127, 16);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "HTTPS Server URL";
+            // 
+            // txtHttpsAddress
+            // 
+            this.txtHttpsAddress.ForeColor = System.Drawing.Color.SteelBlue;
+            this.txtHttpsAddress.Location = new System.Drawing.Point(12, 156);
+            this.txtHttpsAddress.Name = "txtHttpsAddress";
+            this.txtHttpsAddress.Size = new System.Drawing.Size(371, 29);
+            this.txtHttpsAddress.TabIndex = 25;
+            // 
             // chkBypassValidation
             // 
             this.chkBypassValidation.AutoSize = true;
             this.chkBypassValidation.BackColor = System.Drawing.Color.Transparent;
             this.chkBypassValidation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkBypassValidation.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkBypassValidation.Location = new System.Drawing.Point(11, 97);
+            this.chkBypassValidation.Location = new System.Drawing.Point(337, 360);
             this.chkBypassValidation.Name = "chkBypassValidation";
             this.chkBypassValidation.Size = new System.Drawing.Size(138, 19);
             this.chkBypassValidation.TabIndex = 23;
             this.chkBypassValidation.Text = "Bypass SSL Validation";
             this.chkBypassValidation.UseVisualStyleBackColor = false;
+            this.chkBypassValidation.Visible = false;
             this.chkBypassValidation.CheckedChanged += new System.EventHandler(this.chkBypassValidation_CheckedChanged);
             // 
             // btnCloseConnection
             // 
             this.btnCloseConnection.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnCloseConnection.Location = new System.Drawing.Point(90, 222);
+            this.btnCloseConnection.Location = new System.Drawing.Point(313, 350);
             this.btnCloseConnection.Name = "btnCloseConnection";
             this.btnCloseConnection.Size = new System.Drawing.Size(75, 33);
             this.btnCloseConnection.TabIndex = 22;
             this.btnCloseConnection.Text = "Close";
             this.btnCloseConnection.UseVisualStyleBackColor = true;
+            this.btnCloseConnection.Visible = false;
             this.btnCloseConnection.Click += new System.EventHandler(this.btnCloseConnection_Click);
             // 
             // lblSocketException
@@ -797,10 +896,11 @@
             this.lblSocketException.BackColor = System.Drawing.Color.Transparent;
             this.lblSocketException.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSocketException.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblSocketException.Location = new System.Drawing.Point(13, 278);
+            this.lblSocketException.Location = new System.Drawing.Point(79, 434);
             this.lblSocketException.Name = "lblSocketException";
             this.lblSocketException.Size = new System.Drawing.Size(0, 20);
             this.lblSocketException.TabIndex = 21;
+            this.lblSocketException.Visible = false;
             // 
             // label4
             // 
@@ -808,11 +908,23 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label4.Location = new System.Drawing.Point(6, 9);
+            this.label4.Location = new System.Drawing.Point(7, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(151, 24);
             this.label4.TabIndex = 20;
             this.label4.Text = "Server Settings";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblStatus.Location = new System.Drawing.Point(79, 396);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 20);
+            this.lblStatus.TabIndex = 16;
+            this.lblStatus.Visible = false;
             // 
             // tableLayoutPanel1
             // 
@@ -846,7 +958,6 @@
             // 
             // tmrGetSocketStatus
             // 
-            this.tmrGetSocketStatus.Enabled = true;
             this.tmrGetSocketStatus.Interval = 250;
             this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
             // 
@@ -888,7 +999,6 @@
         private System.Windows.Forms.CheckBox chkAutomaticallyConnect;
         private System.Windows.Forms.CheckBox chkServerEnabled;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.CheckBox chkRetryOnDisconnect;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TextBox txtPublicKey;
@@ -945,5 +1055,14 @@
         private System.Windows.Forms.Label lblStartupMode;
         private System.Windows.Forms.ComboBox cboStartUpMode;
         private System.Windows.Forms.Button btnLaunchDisplayManager;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtGUID;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtHttpsAddress;
+        private System.Windows.Forms.Button btnGetGUID;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label lblStatus;
     }
 }

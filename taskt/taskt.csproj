@@ -150,6 +150,7 @@
     <Compile Include="Core\AutomationEngine.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\Folders.cs" />
+    <Compile Include="Core\HttpServerClient.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\JavaInterface.cs" />
     <Compile Include="Core\Logging.cs" />
@@ -236,6 +237,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.Designer.cs">
+      <DependentUpon>frmKeysBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.cs">
       <SubType>Form</SubType>
@@ -389,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScriptVariables.resx">
       <DependentUpon>frmScriptVariables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmKeysBuilder.resx">
+      <DependentUpon>frmKeysBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>

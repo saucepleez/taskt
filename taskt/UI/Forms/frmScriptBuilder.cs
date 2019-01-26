@@ -93,6 +93,8 @@ namespace taskt.UI.Forms
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
 
+          
+
             //set controls double buffered
             foreach (Control control in Controls)
             {
@@ -108,8 +110,18 @@ namespace taskt.UI.Forms
             appSettings = new Core.ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
-            Core.Sockets.SocketClient.Initialize();
-            Core.Sockets.SocketClient.associatedBuilder = this;
+            if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
+            {
+                Core.HttpServerClient.GetGuid();
+            }
+            else if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid != Guid.Empty)
+            {
+                Core.HttpServerClient.CheckIn();
+            }
+           
+
+            //Core.Sockets.SocketClient.Initialize();
+            //Core.Sockets.SocketClient.associatedBuilder = this;
             
             //get scripts folder
             var rpaScriptsFolder = Core.Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
@@ -1502,7 +1514,7 @@ namespace taskt.UI.Forms
             }
             catch (Exception ex)
             {
-                Notify("Error: " + ex.ToString());
+                Notify("Er ror: " + ex.ToString());
             }
 
 
@@ -1590,6 +1602,8 @@ namespace taskt.UI.Forms
             appSettings = new Core.ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
+            //reinit
+            Core.HttpServerClient.Initialize();
 
 
 

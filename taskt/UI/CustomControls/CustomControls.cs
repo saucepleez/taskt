@@ -318,11 +318,13 @@ namespace taskt.UI
             uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process); 
             uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
             uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("TextExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("PDFTextExtractionCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
@@ -335,12 +337,14 @@ namespace taskt.UI
             uiImages.Add("IEBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
             uiImages.Add("IEBrowserElementCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SendKeysCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("SendAdvancedKeyStrokesCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendMouseMoveCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendMouseClickCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("WebBrowserFindBrowserCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("EndLoopCommand", taskt.Properties.Resources.command_endloop);
             uiImages.Add("ClipboardGetTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExcelCreateApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelOpenWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);

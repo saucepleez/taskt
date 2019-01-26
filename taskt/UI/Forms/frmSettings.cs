@@ -49,7 +49,8 @@ namespace taskt.UI.Forms
             chkBypassValidation.DataBindings.Add("Checked", serverSettings, "BypassCertificateValidation", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPublicKey.DataBindings.Add("Text", serverSettings, "ServerPublicKey", false, DataSourceUpdateMode.OnPropertyChanged);
             txtServerURL.DataBindings.Add("Text", serverSettings, "ServerURL", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            txtHttpsAddress.DataBindings.Add("Text", serverSettings, "HTTPServerURL", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtGUID.DataBindings.Add("Text", serverSettings, "HTTPGuid", false, DataSourceUpdateMode.OnPropertyChanged);
 
             var engineSettings = newAppSettings.EngineSettings;
             chkShowDebug.DataBindings.Add("Checked", engineSettings, "ShowDebugWindow", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -362,6 +363,41 @@ namespace taskt.UI.Forms
             Supplemental.frmDisplayManager displayManager = new Supplemental.frmDisplayManager();
             displayManager.Show();
             this.Close();
+        }
+
+        private void btnGetGUID_Click(object sender, EventArgs e)
+        {
+            var successfulConnection = Core.HttpServerClient.TestConnection(txtHttpsAddress.Text);
+
+            if (successfulConnection)
+            {
+                var pulledNewGUID = Core.HttpServerClient.GetGuid();
+
+                if (pulledNewGUID)
+                {
+                    newAppSettings = new Core.ApplicationSettings();
+                    newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+                    txtHttpsAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
+                    MessageBox.Show("Connected Successfully! GUID will be reloaded automatically the next time settings is loaded!");
+                }
+
+                MessageBox.Show("Connected Successfully!");
+
+
+
+            }
+            else
+            {
+                MessageBox.Show("Unable To Connect!");
+            }
+
+        }
+
+        private void btnGetBotGUID_Click(object sender, EventArgs e)
+        {
+            var newGUID = Core.HttpServerClient.GetGuid();
+
+
         }
     }
 }

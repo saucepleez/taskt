@@ -125,7 +125,31 @@ namespace taskt.UI.Forms
                 cboSelectedCommand.Text = selectedCommand.SelectionName;
                 GenerateUIInputElements(selectedCommand);
             }
+
+            //gracefully handle post initialization setups (drop downs, etc)
+            AfterFormInitialization();
+
         }
+
+        private void AfterFormInitialization()
+        {
+            if (creationMode == CreationMode.Edit && selectedCommand is Core.AutomationCommands.BeginIfCommand)
+            {
+              //load combo boxes
+              ifAction_SelectionChangeCommitted(null, null);
+            }
+            else if(creationMode == CreationMode.Edit && selectedCommand is Core.AutomationCommands.UIAutomationCommand)
+            {
+              //load UIA boxes
+              UIAType_SelectionChangeCommitted(null, null);
+            }
+            else if(creationMode == CreationMode.Edit && selectedCommand is Core.AutomationCommands.SeleniumBrowserElementActionCommand)
+            {
+                seleniumAction_SelectionChangeCommitted(null, null);
+            }
+
+        }
+
         private void frmCommandEditor_Shown(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -300,54 +324,6 @@ namespace taskt.UI.Forms
                 //add to flow layout
                 flw_InputVariables.Controls.Add(inputControl);
 
-                //handle edit mode to add combobox data
-                if ((creationMode == CreationMode.Edit) && (currentCommand is Core.AutomationCommands.BeginIfCommand) && (inputControl is DataGridView))
-                {
-
-                    Core.AutomationCommands.BeginIfCommand ifCmd = (Core.AutomationCommands.BeginIfCommand)currentCommand;
-                    if (ifCmd.v_IfActionType == "Value")
-                    {
-                        DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-
-
-                        comparisonComboBox.Items.Add("is equal to");
-                        comparisonComboBox.Items.Add("is greater than");
-                        comparisonComboBox.Items.Add("is greater than or equal to");
-                        comparisonComboBox.Items.Add("is less than");
-                        comparisonComboBox.Items.Add("is less than or equal to");
-                        comparisonComboBox.Items.Add("is not equal to");
-
-                        //assign cell as a combobox
-                        DataGridView inputCtrl = (DataGridView)inputControl;
-                        inputCtrl.Rows[1].Cells[1] = comparisonComboBox;
-
-
-                    }
-                }
-
-                if ((currentCommand is Core.AutomationCommands.IEBrowserElementCommand) && (creationMode == CreationMode.Edit))
-                {
-                    Core.AutomationCommands.IEBrowserElementCommand webCommand = (Core.AutomationCommands.IEBrowserElementCommand)currentCommand;
-
-                    if (webCommand.v_WebAction == "Invoke Click")
-                    {
-                        DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
-                        Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
-                        CustomControls.CommandItemControl variableHelper = (CustomControls.CommandItemControl)flw_InputVariables.Controls["lbl_v_WebActionParameterTable_helper"];
-                        additionalParameterLabel.Visible = false;
-                        webActionParameterBox.Visible = false;
-                        variableHelper.Visible = false;
-                    }
-                    else
-                    {
-
-                    }
-                }
-
-                if (currentCommand is Core.AutomationCommands.UIAutomationCommand && creationMode == CreationMode.Edit)
-                {
-                    UIAType_SelectionChangeCommitted(null,null);
-                }
 
                 //add additional offset
                 this.Height = formHeight + 200;
@@ -688,6 +664,38 @@ namespace taskt.UI.Forms
                     InputControl.DataSource = cmd.v_UIASearchParameters;
 
                 }
+                else if (inputField.Name == "v_KeyActions")
+                {
+                    InputControl = new DataGridView();
+
+                    InputControl.Name = inputField.Name;
+                    InputControl.Width = 500;
+                    InputControl.Height = 140;
+
+                   
+
+                    DataGridViewComboBoxColumn propertyName = new DataGridViewComboBoxColumn();
+                    propertyName.DataSource = Core.Common.GetAvailableKeys();
+                    propertyName.HeaderText = "Selected Key";
+                    propertyName.DataPropertyName = "Key";
+                    InputControl.Columns.Add(propertyName);
+
+                    DataGridViewComboBoxColumn propertyValue = new DataGridViewComboBoxColumn();
+                    propertyValue.DataSource = new List<string> { "Key Press (Down + Up)", "Key Down", "Key Up" };
+                    propertyValue.HeaderText = "Selected Action";
+                    propertyValue.DataPropertyName = "Action";
+                    InputControl.Columns.Add(propertyValue);
+
+                    InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+                    InputControl.AllowUserToAddRows = true;
+                    InputControl.AllowUserToDeleteRows = true;
+
+
+                    var cmd = (Core.AutomationCommands.SendAdvancedKeyStrokesCommand)currentCommand;
+                    InputControl.DataSource = cmd.v_KeyActions;
+
+
+                }
                 else if (inputField.Name == "v_IEBrowserName")
                 {
                     InputControl = new ComboBox();
@@ -968,7 +976,9 @@ namespace taskt.UI.Forms
         }
         private void ifAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ComboBox ifAction = (ComboBox)sender;
+  
+
+            ComboBox ifAction = (ComboBox)flw_InputVariables.Controls["v_IfActionType"];
             DataGridView ifActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_IfActionParameterTable"];
             Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_IfActionParameterTable"];
 
@@ -977,7 +987,11 @@ namespace taskt.UI.Forms
 
             Core.AutomationCommands.BeginIfCommand cmd = (Core.AutomationCommands.BeginIfCommand)selectedCommand;
             DataTable actionParameters = cmd.v_IfActionParameterTable;
-            actionParameters.Rows.Clear();
+
+            //sender is null when command is updating
+            if (sender != null)
+                        actionParameters.Rows.Clear();
+
             DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
 
             //recorder control
@@ -996,9 +1010,13 @@ namespace taskt.UI.Forms
                 case "Value":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Value1", "");
-                    actionParameters.Rows.Add("Operand", "");
-                    actionParameters.Rows.Add("Value2", "");
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Value1", "");
+                        actionParameters.Rows.Add("Operand", "");
+                        actionParameters.Rows.Add("Value2", "");
+                    }              
 
                     //combobox cell for Variable Name
                     comparisonComboBox = new DataGridViewComboBoxCell();
@@ -1016,34 +1034,59 @@ namespace taskt.UI.Forms
                 case "Variable Has Value":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Variable Name", "");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Variable Name", "");
+                    }
+                       
                     break;
                 case "Variable Is Numeric":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Variable Name", "");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Variable Name", "");
+                    }
+                      
                     break;
                 case "Error Occured":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Line Number", "");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Line Number", "");
+                    }
+                      
                     break;
                 case "Error Did Not Occur":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Line Number", "");
+  
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Line Number", "");
+                    }
+
                     break;
                 case "Window Name Exists":
                 case "Active Window Name Is":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Window Name", "");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Window Name", "");
+                    }
+              
                     break;
                 case "File Exists":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("File Path", "");
-                    actionParameters.Rows.Add("True When", "");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("File Path", "");
+                        actionParameters.Rows.Add("True When", "");
+                    }
+
 
                     //combobox cell for Variable Name
                     comparisonComboBox = new DataGridViewComboBoxCell();
@@ -1057,8 +1100,13 @@ namespace taskt.UI.Forms
                 case "Folder Exists":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Folder Path", "");
-                    actionParameters.Rows.Add("True When", "");
+
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Folder Path", "");
+                        actionParameters.Rows.Add("True When", "");
+                    }
 
                     //combobox cell for Variable Name
                     comparisonComboBox = new DataGridViewComboBoxCell();
@@ -1071,9 +1119,15 @@ namespace taskt.UI.Forms
                 case "Web Element Exists":
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Selenium Instance Name", "default");
-                    actionParameters.Rows.Add("Element Search Method", "");
-                    actionParameters.Rows.Add("Element Search Parameter", "");
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Selenium Instance Name", "default");
+                        actionParameters.Rows.Add("Element Search Method", "");
+                        actionParameters.Rows.Add("Element Search Parameter", "");
+                    }
+
+
 
                     comparisonComboBox = new DataGridViewComboBoxCell();
                     comparisonComboBox.Items.Add("Find Element By XPath");
@@ -1091,9 +1145,14 @@ namespace taskt.UI.Forms
 
                     additionalParameterLabel.Visible = true;
                     ifActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Window Name", "Current Window");
-                    actionParameters.Rows.Add("Element Search Method", "");
-                    actionParameters.Rows.Add("Element Search Parameter", "");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Window Name", "Current Window");
+                        actionParameters.Rows.Add("Element Search Method", "");
+                        actionParameters.Rows.Add("Element Search Parameter", "");
+                    }
+
+
 
                     var parameterName = new DataGridViewComboBoxCell();
                     parameterName.Items.Add("AcceleratorKey");
@@ -1172,7 +1231,8 @@ namespace taskt.UI.Forms
 
         private void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ComboBox webAction = (ComboBox)sender;
+
+            ComboBox webAction = (ComboBox)flw_InputVariables.Controls["v_SeleniumElementAction"];
             DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
             Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
             CustomControls.CommandItemControl variableHelper = (CustomControls.CommandItemControl)flw_InputVariables.Controls["lbl_v_WebActionParameterTable_helper"];
@@ -1182,7 +1242,12 @@ namespace taskt.UI.Forms
 
             Core.AutomationCommands.SeleniumBrowserElementActionCommand cmd = (Core.AutomationCommands.SeleniumBrowserElementActionCommand)selectedCommand;
             DataTable actionParameters = cmd.v_WebActionParameterTable;
-            actionParameters.Rows.Clear();
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Clear();
+            }
+         
 
             switch (webAction.Text)
             {
@@ -1196,26 +1261,36 @@ namespace taskt.UI.Forms
                 case "Left Click":
                 case "Middle Click":
                 case "Right Click":
+                case "Double Left Click":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
                     variableHelper.Show();
-                    actionParameters.Rows.Add("X Adjustment", 0);
-                    actionParameters.Rows.Add("Y Adjustment", 0);
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("X Adjustment", 0);
+                        actionParameters.Rows.Add("Y Adjustment", 0);
+                    }
                     break;
 
                 case "Set Text":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
                     variableHelper.Show();
-                    actionParameters.Rows.Add("Text To Set");
-                    actionParameters.Rows.Add("Clear Element Before Setting Text");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Text To Set");
+                        actionParameters.Rows.Add("Clear Element Before Setting Text");
+                    }
 
                     DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
                     comparisonComboBox.Items.Add("Yes");
                     comparisonComboBox.Items.Add("No");
 
                     //assign cell as a combobox
-                    webActionParameterBox.Rows[1].Cells[1].Value = "No";
+                    if (sender != null)
+                    {
+                        webActionParameterBox.Rows[1].Cells[1].Value = "No";
+                    }
                     webActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
 
 
@@ -1226,31 +1301,40 @@ namespace taskt.UI.Forms
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
                     variableHelper.Show();
-                    actionParameters.Rows.Add("Variable Name");
-                    break;
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Variable Name");
+                    }
+                        break;
 
                 case "Get Attribute":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
                     variableHelper.Show();
-                    actionParameters.Rows.Add("Attribute Name");
-                    actionParameters.Rows.Add("Variable Name");
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Attribute Name");
+                        actionParameters.Rows.Add("Variable Name");
+                    }
                     break;
 
                 case "Wait For Element To Exist":
                     webActionParameterBox.Show();
                     additionalParameterLabel.Show();
                     variableHelper.Show();
-                    actionParameters.Rows.Add("Timeout (Seconds)");
-                    break;
-
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Timeout (Seconds)");
+                    }
+                        break;
                 default:
                     break;
             }
         }
         private void UIAType_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ComboBox selectedAction = (ComboBox)sender;
+            //ComboBox selectedAction = (ComboBox)sender;
+            ComboBox selectedAction = (ComboBox)flw_InputVariables.Controls["v_AutomationType"];
 
             if (selectedAction == null)
                 return;
@@ -1262,11 +1346,14 @@ namespace taskt.UI.Forms
                 return;
 
 
-
-
             Core.AutomationCommands.UIAutomationCommand cmd = (Core.AutomationCommands.UIAutomationCommand)selectedCommand;
             DataTable actionParameters = cmd.v_UIAActionParameters;
-            actionParameters.Rows.Clear();
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Clear();
+            }
+
 
             if (selectedAction.Text == "Click Element")
             {
@@ -1283,18 +1370,22 @@ namespace taskt.UI.Forms
                 mouseClickBox.Items.Add("Right Up");
 
 
-                actionParameters.Rows.Add("Click Type", "");
-                actionParameters.Rows.Add("X Adjustment", 0);
-                actionParameters.Rows.Add("Y Adjustment", 0);
-
+                if (sender != null)
+                {
+                    actionParameters.Rows.Add("Click Type", "");
+                    actionParameters.Rows.Add("X Adjustment", 0);
+                    actionParameters.Rows.Add("Y Adjustment", 0);
+                }
                 actionParameterView.Rows[0].Cells[1] = mouseClickBox;
 
             }
             else if(selectedAction.Text == "Check If Element Exists")
             {
 
-                actionParameters.Rows.Add("Apply To Variable", "");
-
+                if (sender != null)
+                {
+                    actionParameters.Rows.Add("Apply To Variable", "");
+                }
                
             }
             else
@@ -1320,90 +1411,21 @@ namespace taskt.UI.Forms
                 parameterName.Items.Add("Name");
                 parameterName.Items.Add("NativeWindowHandle");
                 parameterName.Items.Add("ProcessID");
-              
 
-                actionParameters.Rows.Add("Get Value From", "");
-                actionParameters.Rows.Add("Apply To Variable", "");
 
+                if (sender != null)
+                {
+                    actionParameters.Rows.Add("Get Value From", "");
+                    actionParameters.Rows.Add("Apply To Variable", "");
+                }
+
+             
                 actionParameterView.Rows[0].Cells[1] = parameterName;
 
  
             }
 
 
-            //DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
-            //Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
-            //CustomControls.CommandItemControl variableHelper = (CustomControls.CommandItemControl)flw_InputVariables.Controls["lbl_v_WebActionParameterTable_helper"];
-
-            //if ((webActionParameterBox == null) || (webAction == null) || (webActionParameterBox.DataSource == null))
-            //    return;
-
-            //Core.AutomationCommands.SeleniumBrowserElementActionCommand cmd = (Core.AutomationCommands.SeleniumBrowserElementActionCommand)selectedCommand;
-            //DataTable actionParameters = cmd.v_WebActionParameterTable;
-            //actionParameters.Rows.Clear();
-
-            //switch (webAction.Text)
-            //{
-            //    case "Invoke Click":
-            //    case "Clear Element":
-            //        webActionParameterBox.Hide();
-            //        additionalParameterLabel.Hide();
-            //        variableHelper.Hide();
-            //        break;
-
-            //    case "Left Click":
-            //    case "Middle Click":
-            //    case "Right Click":
-            //        webActionParameterBox.Show();
-            //        additionalParameterLabel.Show();
-            //        variableHelper.Show();
-            //        actionParameters.Rows.Add("X Adjustment", 0);
-            //        actionParameters.Rows.Add("Y Adjustment", 0);
-            //        break;
-
-            //    case "Set Text":
-            //        webActionParameterBox.Show();
-            //        additionalParameterLabel.Show();
-            //        variableHelper.Show();
-            //        actionParameters.Rows.Add("Text To Set");
-            //        actionParameters.Rows.Add("Clear Element Before Setting Text");
-
-            //        DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-            //        comparisonComboBox.Items.Add("Yes");
-            //        comparisonComboBox.Items.Add("No");
-
-            //        //assign cell as a combobox
-            //        webActionParameterBox.Rows[1].Cells[1].Value = "No";
-            //        webActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-
-
-            //        break;
-
-            //    case "Get Text":
-            //        webActionParameterBox.Show();
-            //        additionalParameterLabel.Show();
-            //        variableHelper.Show();
-            //        actionParameters.Rows.Add("Variable Name");
-            //        break;
-
-            //    case "Get Attribute":
-            //        webActionParameterBox.Show();
-            //        additionalParameterLabel.Show();
-            //        variableHelper.Show();
-            //        actionParameters.Rows.Add("Attribute Name");
-            //        actionParameters.Rows.Add("Variable Name");
-            //        break;
-
-            //    case "Wait For Element To Exist":
-            //        webActionParameterBox.Show();
-            //        additionalParameterLabel.Show();
-            //        variableHelper.Show();
-            //        actionParameters.Rows.Add("Timeout (Seconds)");
-            //        break;
-
-            //    default:
-            //        break;
-            //}
         }
         private void cboSelectedCommand_SelectionChangeCommitted(object sender, EventArgs e)
         {

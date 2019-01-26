@@ -41,6 +41,7 @@ namespace taskt.Core.AutomationCommands
     #region Base Command
     [Serializable]
     [XmlInclude(typeof(SendKeysCommand))]
+    [XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]
     [XmlInclude(typeof(SendMouseMoveCommand))]
     [XmlInclude(typeof(PauseCommand))]
     [XmlInclude(typeof(ActivateWindowCommand))]
@@ -54,6 +55,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(MessageBoxCommand))]
     [XmlInclude(typeof(StopProcessCommand))]
     [XmlInclude(typeof(StartProcessCommand))]
+    [XmlInclude(typeof(AddVariableCommand))]
     [XmlInclude(typeof(VariableCommand))]
     [XmlInclude(typeof(RunScriptCommand))]
     [XmlInclude(typeof(CloseWindowCommand))]
@@ -67,6 +69,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(ExitLoopCommand))]
     [XmlInclude(typeof(EndLoopCommand))]
     [XmlInclude(typeof(ClipboardGetTextCommand))]
+    [XmlInclude(typeof(ClipboardSetTextCommand))]
     [XmlInclude(typeof(ScreenshotCommand))]
     [XmlInclude(typeof(ExcelOpenWorkbookCommand))]
     [XmlInclude(typeof(ExcelCreateApplicationCommand))]
@@ -129,6 +132,7 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(PDFTextExtractionCommand))]
     [XmlInclude(typeof(UserInputCommand))]
     [XmlInclude(typeof(GetWordCountCommand))]
+    [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(HTMLInputCommand))]
     public abstract class ScriptCommand
     {
@@ -1367,71 +1371,6 @@ namespace taskt.Core.AutomationCommands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time specified in milliseconds.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to pause your script for a specific amount of time.  After the specified time is finished, the script will resume execution.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
-    public class PauseCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Amount of time to pause for (in milliseconds).")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
-        [Attributes.PropertyAttributes.SampleUsage("**8000** or **[vVariableWaitTime]**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public int v_PauseLength { get; set; }
-
-        public PauseCommand()
-        {
-            this.CommandName = "PauseCommand";
-            this.SelectionName = "Pause Script";
-            this.CommandEnabled = true;
-        }
-
-        public override void RunCommand(object sender)
-        {
-            System.Threading.Thread.Sleep(v_PauseLength);
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Wait for " + v_PauseLength + "ms]";
-        }
-    }
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.Description("This command specifies what to do  after an error is encountered.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define how your script should behave when an error is encountered.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
-    public class ErrorHandlingCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Action On Error")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Processing")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Processing")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the action you want to take when you come across an error.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Stop Processing** to end the script if an error is encountered or **Continue Processing** to continue running the script")]
-        [Attributes.PropertyAttributes.Remarks("**If Command** allows you to specify and test if a line number encountered an error. In order to use that functionality, you must specify **Continue Processing**")]
-        public string v_ErrorHandlingAction { get; set; }
-
-        public ErrorHandlingCommand()
-        {
-            this.CommandName = "ErrorHandlingCommand";
-            this.SelectionName = "Error Handling";
-            this.CommandEnabled = true;
-        }
-
-        public override void RunCommand(object sender)
-        {
-            var engine = (Core.AutomationEngineInstance)sender;
-            engine.ErrorHandler = this;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
-        }
-    }
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to add an in-line comment to the script.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add code comments or document code.  Usage of variables (ex. [vVar]) within the comment block will be parsed and displayed when running the script.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command is for visual purposes only")]
@@ -1614,12 +1553,13 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_userVariableName { get; set; }
 
         public ClipboardGetTextCommand()
         {
             this.CommandName = "ClipboardCommand";
-            this.SelectionName = "Get Text";
+            this.SelectionName = "Get Clipboard Text";
             this.CommandEnabled = true;
         }
 
@@ -1631,6 +1571,39 @@ namespace taskt.Core.AutomationCommands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Get Text From Clipboard and Apply to Variable: " + v_userVariableName + "]";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to set text to the clipboard.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy the data from the clipboard and apply it to a variable.  You can then use the variable to extract the value.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against the VariableList from the scripting engine using System.Windows.Forms.Clipboard.")]
+    public class ClipboardSetTextCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a target variable or input a value")]
+        [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputValue { get; set; }
+
+        public ClipboardSetTextCommand()
+        {
+            this.CommandName = "ClipboardSetTextCommand";
+            this.SelectionName = "Set Clipboard Text";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            var input = v_InputValue.ConvertToUserVariable(sender);
+            User32Functions.SetClipboardText(input);
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply '" + v_InputValue + "' to Clipboard]";
         }
     }
     #endregion Misc Commands
@@ -2235,7 +2208,40 @@ namespace taskt.Core.AutomationCommands
             }
 
             string textToSend = v_TextToSend.ConvertToUserVariable(sender);
-            System.Windows.Forms.SendKeys.SendWait(textToSend);
+
+
+            if (textToSend == "{WIN_KEY}")
+            {
+                User32Functions.KeyDown(System.Windows.Forms.Keys.LWin);
+                User32Functions.KeyUp(System.Windows.Forms.Keys.LWin);
+
+            }
+            else if (textToSend.Contains("{WIN_KEY+"))
+            {
+                User32Functions.KeyDown(System.Windows.Forms.Keys.LWin);
+                var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
+
+                foreach (var c in remainingText)
+                {
+                    System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), c.ToString());
+                    User32Functions.KeyDown(key);
+                }
+
+                User32Functions.KeyUp(System.Windows.Forms.Keys.LWin);
+
+                foreach (var c in remainingText)
+                {
+                    System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), c.ToString());
+                    User32Functions.KeyUp(key);
+                }
+            }
+            else
+            {
+                System.Windows.Forms.SendKeys.SendWait(textToSend);
+            }
+
+
+          
 
             System.Threading.Thread.Sleep(500);
         }
@@ -2243,6 +2249,139 @@ namespace taskt.Core.AutomationCommands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Send '" + v_TextToSend + "' to '" + v_WindowName + "']";
+        }
+    }
+
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Description("Sends advanced keystrokes to a targeted window")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send advanced keystroke inputs to a window.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'User32' method to achieve automation.")]
+    public class SendAdvancedKeyStrokesCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_WindowName { get; set; }
+
+        [Attributes.PropertyAttributes.PropertyDescription("Set Keys and Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Define the parameters for the actions.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("Select Valid Options from the dropdowns")]
+        public DataTable v_KeyActions { get; set; }
+
+        [XmlElement]
+      
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Return all keys to 'UP' position after execution")]
+        [Attributes.PropertyAttributes.InputSpecification("Select either 'Yes' or 'No' as to a preference")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_KeyUpDefault { get; set; }
+
+        public SendAdvancedKeyStrokesCommand()
+        {
+            this.CommandName = "SendAdvancedKeyStrokesCommand";
+            this.SelectionName = "Send Advanced Keystrokes";
+            this.CommandEnabled = true;
+            this.v_KeyActions = new DataTable();
+            this.v_KeyActions.Columns.Add("Key");
+            this.v_KeyActions.Columns.Add("Action");
+            this.v_KeyActions.TableName = "SendAdvancedKeyStrokesCommand" + DateTime.Now.ToString("MMddyy.hhmmss");
+            v_KeyUpDefault = "Yes";
+        }
+
+        public override void RunCommand(object sender)
+        {
+
+            //activate anything except current window
+            if (v_WindowName != "Current Window")
+            {
+                ActivateWindowCommand activateWindow = new ActivateWindowCommand
+                {
+                    v_WindowName = v_WindowName
+                };
+                activateWindow.RunCommand(sender);
+            }
+
+
+            //track all keys down
+            var keysDown = new List<System.Windows.Forms.Keys>();
+
+            //run each selected item
+            foreach (DataRow rw in v_KeyActions.Rows)
+            {
+                //get key name
+                var keyName = rw.Field<string>("Key");
+
+                //get key action
+                var action = rw.Field<string>("Action");
+
+                //parse OEM key name
+                string oemKeyString = keyName.Split('[', ']')[1];
+
+                var oemKeyName = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), oemKeyString);
+
+            
+                //"Key Press (Down + Up)", "Key Down", "Key Up"
+                switch (action)
+                {
+                    case "Key Press (Down + Up)":
+                        //simulate press
+                        User32Functions.KeyDown(oemKeyName);
+                        User32Functions.KeyUp(oemKeyName);
+                        
+                        //key returned to UP position so remove if we added it to the keys down list
+                        if (keysDown.Contains(oemKeyName))
+                        {
+                            keysDown.Remove(oemKeyName);
+                        }
+                        break;
+                    case "Key Down":
+                        //simulate down
+                        User32Functions.KeyDown(oemKeyName);
+
+                        //track via keys down list
+                        if (!keysDown.Contains(oemKeyName))
+                        {
+                            keysDown.Add(oemKeyName);
+                        }
+                    
+                        break;
+                    case "Key Up":
+                        //simulate up
+                        User32Functions.KeyUp(oemKeyName);
+
+                        //remove from key down
+                        if (keysDown.Contains(oemKeyName))
+                        {
+                            keysDown.Remove(oemKeyName);
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            //return key to up position if requested
+            if (v_KeyUpDefault.ConvertToUserVariable(sender) == "Yes")
+            {
+                foreach (var key in keysDown)
+                {
+                    User32Functions.KeyUp(key);
+                }
+            }
+        
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Send To Window '" + v_WindowName + "']";
         }
     }
 
@@ -4360,78 +4499,7 @@ namespace taskt.Core.AutomationCommands
     #endregion Excel Commands
 
     #region Data Commands
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
-    public class VariableCommand : ScriptCommand
-    {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_userVariableName { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
-        public string v_Input { get; set; }
-        public VariableCommand()
-        {
-            this.CommandName = "VariableCommand";
-            this.SelectionName = "Set Variable";
-            this.CommandEnabled = true;
-        }
 
-        public override void RunCommand(object sender)
-        {
-            //get sending instance
-            var engine = (Core.AutomationEngineInstance)sender;
-
-            var requiredVariable = LookupVariable(engine);
-
-            //if still not found and user has elected option, create variable at runtime
-            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-                requiredVariable = LookupVariable(engine);
-            }
-
-            if (requiredVariable != null)
-            {
-                requiredVariable.VariableValue = v_Input.ConvertToUserVariable(sender);
-            }
-            else
-            {
-                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
-            }
-        }
-
-        private Script.ScriptVariable LookupVariable(Core.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
-
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
-
-            return requiredVariable;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
-        }
-    }
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
@@ -5416,6 +5484,61 @@ namespace taskt.Core.AutomationCommands
 
             //store word count into variable
             wordCount.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+
+
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply Result to: '" + v_applyToVariableName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to retrieve the length of a string or variable.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find the length of a string or variable")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class GetWordLengthCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. {vSomeVariable})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_InputValue { get; set; }
+
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the length")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+
+        public GetWordLengthCommand()
+        {
+            this.CommandName = "GetLengthCommand";
+            this.SelectionName = "Get Word Length";
+            this.CommandEnabled = true;
+
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get engine
+            var engine = (AutomationEngineInstance)sender;
+
+            //get input value
+            var stringRequiringLength = v_InputValue.ConvertToUserVariable(sender);
+
+            //count number of words
+            var stringLength = stringRequiringLength.Length;
+
+            //store word count into variable
+            stringLength.ToString().StoreInUserVariable(sender, v_applyToVariableName);
 
         }
 
@@ -7140,6 +7263,246 @@ namespace taskt.Core.AutomationCommands
     #endregion
 
     #region Engine Commands
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to explicitly add a variable if you are not using **Set Variable* with the setting **Create Missing Variables** at runtime.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class AddVariableCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the name of the variable")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If the variable exists, the value of the old variable will be replaced with the new one")]
+        public string v_userVariableName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
+        public string v_Input { get; set; }
+        [Attributes.PropertyAttributes.PropertyDescription("Define the action to take if the variable already exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Do Nothing If Variable Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error If Variable Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Replace If Variable Exists")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate handler from the list")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_IfExists { get; set; }
+        public AddVariableCommand()
+        {
+            this.CommandName = "AddVariableCommand";
+            this.SelectionName = "Add Variable";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get sending instance
+            var engine = (Core.AutomationEngineInstance)sender;
+
+
+            if (!engine.VariableList.Any(f => f.VariableName == v_userVariableName))
+            {
+                //variable does not exist so add to the list
+                try
+                {
+
+                    var variableValue = v_Input.ConvertToUserVariable(engine);
+
+                    engine.VariableList.Add(new Script.ScriptVariable
+                    {
+                        VariableName = v_userVariableName,
+                        VariableValue = variableValue
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Encountered an error when adding variable '" + v_userVariableName + "': " + ex.ToString());
+                }
+            }
+            else
+            {
+                //variable exists so decide what to do
+                switch (v_IfExists)
+                {
+                    case "Replace If Variable Exists":
+                        v_Input.ConvertToUserVariable(sender).StoreInUserVariable(engine, v_userVariableName);
+                        break;
+                    case "Error If Variable Exists":
+                        throw new Exception("Attempted to create a variable that already exists! Use 'Set Variable' instead or change the Exception Setting in the 'Add Variable' Command.");
+                    default:
+                        break;
+                }
+               
+            }
+
+         
+         
+
+        }
+
+      
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Assign '" + v_Input + "' to New Variable '" + v_userVariableName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    public class VariableCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_userVariableName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
+        public string v_Input { get; set; }
+        public VariableCommand()
+        {
+            this.CommandName = "VariableCommand";
+            this.SelectionName = "Set Variable";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            //get sending instance
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            var requiredVariable = LookupVariable(engine);
+
+            //if still not found and user has elected option, create variable at runtime
+            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
+                requiredVariable = LookupVariable(engine);
+            }
+
+            if (requiredVariable != null)
+            {
+
+
+                var variableInput = v_Input.ConvertToUserVariable(sender);
+
+
+                if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
+                {
+                    var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
+                    requiredVariable.VariableValue = itemList;
+                }
+                else
+                {
+                    requiredVariable.VariableValue = variableInput;
+                }
+
+    
+            }
+            else
+            {
+                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
+            }
+        }
+
+        private Script.ScriptVariable LookupVariable(Core.AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time specified in milliseconds.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to pause your script for a specific amount of time.  After the specified time is finished, the script will resume execution.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    public class PauseCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Amount of time to pause for (in milliseconds).")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
+        [Attributes.PropertyAttributes.SampleUsage("**8000** or **[vVariableWaitTime]**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public int v_PauseLength { get; set; }
+
+        public PauseCommand()
+        {
+            this.CommandName = "PauseCommand";
+            this.SelectionName = "Pause Script";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            System.Threading.Thread.Sleep(v_PauseLength);
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Wait for " + v_PauseLength + "ms]";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command specifies what to do  after an error is encountered.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define how your script should behave when an error is encountered.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    public class ErrorHandlingCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Action On Error")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Processing")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Processing")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the action you want to take when you come across an error.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Stop Processing** to end the script if an error is encountered or **Continue Processing** to continue running the script")]
+        [Attributes.PropertyAttributes.Remarks("**If Command** allows you to specify and test if a line number encountered an error. In order to use that functionality, you must specify **Continue Processing**")]
+        public string v_ErrorHandlingAction { get; set; }
+
+        public ErrorHandlingCommand()
+        {
+            this.CommandName = "ErrorHandlingCommand";
+            this.SelectionName = "Error Handling";
+            this.CommandEnabled = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.AutomationEngineInstance)sender;
+            engine.ErrorHandler = this;
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
+        }
+    }
     [Serializable]
     [Attributes.ClassAttributes.Group("Engine Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to set delays between execution of commands in a running instance.")]
