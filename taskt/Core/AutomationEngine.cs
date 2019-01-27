@@ -27,7 +27,7 @@ namespace taskt.Core
         public ServerSettings serverSettings { get; set; }
         public string FileName { get; set; }
 
-        Core.Task taskModel { get; set; }
+        public Core.Task taskModel { get; set; }
 
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
@@ -112,8 +112,15 @@ namespace taskt.Core
                     FileName = data;              
                     automationScript = Core.Script.Script.DeserializeFile(data);
 
-                    if (serverSettings.ServerConnectionEnabled)
-                               taskModel = HttpServerClient.AddTask(data);
+                    if (serverSettings.ServerConnectionEnabled && taskModel == null)
+                    {
+                        taskModel = HttpServerClient.AddTask(data);
+                    }
+                    else if (serverSettings.ServerConnectionEnabled && taskModel != null)
+                    {
+                        taskModel = HttpServerClient.UpdateTask(taskModel.TaskID, "Running");
+                    }
+                              
                   
 
                 }

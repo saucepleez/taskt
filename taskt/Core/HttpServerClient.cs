@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace taskt.Core
 {
@@ -13,8 +14,9 @@ namespace taskt.Core
     /// </summary>
     public static class HttpServerClient
     {
+        public static UI.Forms.frmScriptBuilder associatedBuilder;
         private static Serilog.Core.Logger httpLogger;
-        private static Timer heartbeatTimer { get; set; }
+        private static System.Timers.Timer heartbeatTimer { get; set; }
         private static ApplicationSettings appSettings { get; set; }
 
         static HttpServerClient()
@@ -146,9 +148,23 @@ namespace taskt.Core
                 {
                     httpLogger.Information("Requesting to check in with the server");
                     var client = new WebClient();
-                    var content = client.DownloadString("https://localhost:44377/api/Workers/CheckIn?workerID=" + workerID);
+                    var content = client.DownloadString("https://localhost:44377/api/Workers/CheckIn?workerID=" + workerID + "&engineBusy=" + Core.Client.EngineBusy);
                     httpLogger.Information("Received /api/Workers/CheckIn response: " + content);
-                    var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Worker>(content);
+                    var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<CheckInResponse>(content);
+
+                    if (deserialized.ScheduledTask != null)
+                    {
+
+                        associatedBuilder.Invoke(new MethodInvoker(delegate ()
+                        {
+                            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.ScheduledTask.TaskName, null);
+                            newEngine.remoteTask = deserialized.ScheduledTask;
+                            newEngine.Show();
+                        }));
+                 
+                    }
+
+
                     return true;
                 }
                 else
@@ -255,7 +271,7 @@ namespace taskt.Core
                 var machineName = Environment.MachineName;
 
                 var client = new WebClient();
-                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/Update?taskID=" + taskID + "&workerID=" + workerID + "&status=" + status);
+                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/Update?taskID=" + taskID + "&workerID=" + workerID + "&status=" + status + "&userName=" + userName + "&machineName=" + machineName);
                 httpLogger.Information("Received /api/Tasks/Update response: " + content);
                 var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Task>(content);
 
@@ -301,6 +317,12 @@ namespace taskt.Core
         public DateTime TaskStarted { get; set; }
         public DateTime TaskFinished { get; set; }
 
+    }
+
+    public class CheckInResponse
+    {
+        public Task ScheduledTask { get; set; }
+        public Worker Worker { get; set; }
     }
 
     #endregion

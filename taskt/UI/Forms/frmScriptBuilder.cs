@@ -111,14 +111,15 @@ namespace taskt.UI.Forms
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
             if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
-            {
+            {              
                 Core.HttpServerClient.GetGuid();
             }
             else if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid != Guid.Empty)
             {
                 Core.HttpServerClient.CheckIn();
             }
-           
+
+            Core.HttpServerClient.associatedBuilder = this;
 
             //Core.Sockets.SocketClient.Initialize();
             //Core.Sockets.SocketClient.associatedBuilder = this;

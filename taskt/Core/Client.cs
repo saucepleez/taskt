@@ -20,7 +20,7 @@ namespace taskt.Core
             set
             {
                 engineBusy = value;
-                Core.Sockets.SocketClient.SendMessage("CLIENT_STATUS=" + ClientStatus);
+               // Core.Sockets.SocketClient.SendMessage("CLIENT_STATUS=" + ClientStatus);
             }
         }
 
