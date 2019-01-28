@@ -178,7 +178,8 @@ namespace taskt.Core
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
 
-            Core.Client.EngineBusy = false;
+         
+
 
         }
         public void ExecuteCommand(Core.Script.ScriptAction command)
@@ -444,9 +445,20 @@ namespace taskt.Core
                 summaryLogger.Information(serializedArguments);
                 summaryLogger.Dispose();
             }
-       
+
+
+            Core.Client.EngineBusy = false;
+
+
+            if (serverSettings.ServerConnectionEnabled)
+            {
+                HttpServerClient.CheckIn();
+            }
+
 
             ScriptFinishedEvent?.Invoke(this, args);
+
+
         }
         public virtual void LineNumberChanged(int lineNumber)
         {

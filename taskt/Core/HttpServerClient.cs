@@ -44,7 +44,7 @@ namespace taskt.Core
 
                 //setup heartbeat to the server
                 heartbeatTimer = new System.Timers.Timer();
-                heartbeatTimer.Interval = 30000;
+                heartbeatTimer.Interval = 5000;
                 heartbeatTimer.Elapsed += Heartbeat_Elapsed;
                 heartbeatTimer.Enabled = true;
             }
@@ -59,7 +59,7 @@ namespace taskt.Core
         {
             try
             {
-                if (appSettings.ServerSettings.ServerConnectionEnabled)
+                if (appSettings.ServerSettings.ServerConnectionEnabled && associatedBuilder != null)
                 {
                     CheckIn();
                 }
@@ -136,7 +136,7 @@ namespace taskt.Core
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                if (!(appSettings.ServerSettings.ServerConnectionEnabled) || associatedBuilder == null)
                     return false;
 
                 httpLogger.Information("Client is attempting to check in with the server");
