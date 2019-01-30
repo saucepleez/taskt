@@ -117,6 +117,8 @@ namespace taskt.Core
         public string VariableEndMarker { get; set; }
         public int DelayBetweenCommands { get; set; }
         public bool OverrideExistingAppInstances { get; set; }
+        public bool AutoCloseMessagesOnServerExecution { get; set; }
+        public bool AutoCloseDebugWindowOnServerExecution { get; set; }
 
         public EngineSettings()
         {
@@ -130,6 +132,8 @@ namespace taskt.Core
             VariableEndMarker = "]";
             DelayBetweenCommands = 250;
             OverrideExistingAppInstances = false;
+            AutoCloseMessagesOnServerExecution = true;
+            AutoCloseDebugWindowOnServerExecution = true;
     }
     }
     /// <summary>

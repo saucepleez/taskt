@@ -120,13 +120,6 @@ namespace taskt.Core
                 httpLogger.Information("Error Getting GUID: " + ex.ToString());
                 return false;
             }
-
-
-
-
-
-
-
         }
         /// <summary>
         /// Checks in the client with the server
@@ -157,9 +150,25 @@ namespace taskt.Core
 
                         associatedBuilder.Invoke(new MethodInvoker(delegate ()
                         {
-                            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.ScheduledTask.TaskName, null);
-                            newEngine.remoteTask = deserialized.ScheduledTask;
-                            newEngine.Show();
+
+
+                            if (deserialized.ScheduledTask.ExecutionType == "Local")
+                            {
+                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
+                                newEngine.remoteTask = deserialized.ScheduledTask;
+                                newEngine.serverExecution = true;
+                                newEngine.Show();
+                            }
+                            else
+                            {
+                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                                newEngine.xmlData = deserialized.PublishedScript.ScriptData;
+                                newEngine.remoteTask = deserialized.ScheduledTask;
+                                newEngine.serverExecution = true;
+                                newEngine.Show();
+                            }
+        
+                           
                         }));
                  
                     }
@@ -256,7 +265,7 @@ namespace taskt.Core
         /// <param name="taskID">The ID of the previously created task</param>
         /// <param name="status">The result of the engine such as success or error</param>
         /// <returns></returns>
-        public static Task UpdateTask(Guid taskID, string status)
+        public static Task UpdateTask(Guid taskID, string status, string remark)
         {
             try
             {
@@ -271,7 +280,7 @@ namespace taskt.Core
                 var machineName = Environment.MachineName;
 
                 var client = new WebClient();
-                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/Update?taskID=" + taskID + "&workerID=" + workerID + "&status=" + status + "&userName=" + userName + "&machineName=" + machineName);
+                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/Update?taskID=" + taskID + "&workerID=" + workerID + "&status=" + status + "&userName=" + userName + "&machineName=" + machineName + "&remark=" + remark);
                 httpLogger.Information("Received /api/Tasks/Update response: " + content);
                 var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Task>(content);
 
@@ -286,6 +295,95 @@ namespace taskt.Core
 
         }
 
+        public static void PublishScript(string scriptPath, PublishedScript.PublishType publishType)
+        {
+            try
+            {
+                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                    return;
+
+                httpLogger.Information("Client is publishing a script to the server");
+
+
+                var script = new PublishedScript();
+                script.WorkerID = appSettings.ServerSettings.HTTPGuid;
+                script.ScriptType = publishType;
+                script.FriendlyName = new System.IO.FileInfo(scriptPath).Name;
+
+
+
+                WebClient webClient = new WebClient();
+                var content = webClient.DownloadString(appSettings.ServerSettings.HTTPServerURL + "api/Scripts/Exists?workerID=" + script.WorkerID + "&friendlyName=" + script.FriendlyName);
+
+                var scriptExists = Newtonsoft.Json.JsonConvert.DeserializeObject<bool>(content);
+
+                if (scriptExists)
+                {
+                    var overwritePreference = MessageBox.Show("It appears this task has already been published.  Should we overwrite the existing task on the server?", "Overwrite Existing Task?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (overwritePreference == DialogResult.Yes)
+                    {
+                        script.OverwriteExisting = true;
+                    }
+                    else
+                    {
+                        script.OverwriteExisting = false;
+                    }
+                   
+                }
+                else
+                {
+                    script.OverwriteExisting = false;
+                }
+
+
+                //based on publish type upload local reference or whole task
+                if (publishType == PublishedScript.PublishType.ClientReference)
+                {
+                    script.ScriptData = scriptPath;
+                }
+                else
+                {
+                    script.ScriptData = System.IO.File.ReadAllText(scriptPath);
+                }
+
+                var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(script);
+
+                httpLogger.Information("Posting Json to Publish API: " + scriptJson);
+                //create webclient and upload
+                webClient.Headers["Content-Type"] = "application/json";
+                webClient.UploadStringCompleted +=
+                    new UploadStringCompletedEventHandler(PublishTaskCompleted);
+               
+                var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Publish");
+
+                webClient.UploadStringAsync(api, "POST", scriptJson);
+
+
+                return;
+
+            }
+            catch (Exception ex)
+            {
+                httpLogger.Information("Publish Error: " + ex.ToString());
+            }
+
+
+        }
+       private static void PublishTaskCompleted(object sender, UploadStringCompletedEventArgs e)
+        {
+            try
+            {
+               var result = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(e.Result);
+                MessageBox.Show(result, "Task Published", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //e.result fetches you the response against your POST request.         
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Publish Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
     }
 
     #region tasktServer Models
@@ -312,7 +410,8 @@ namespace taskt.Core
         public string MachineName { get; set; }
         public string UserName { get; set; }
         public string IPAddress { get; set; }
-        public string TaskName { get; set; }
+        public string ExecutionType { get; set; }
+        public string Script { get; set; }
         public string Status { get; set; }
         public DateTime TaskStarted { get; set; }
         public DateTime TaskFinished { get; set; }
@@ -322,7 +421,22 @@ namespace taskt.Core
     public class CheckInResponse
     {
         public Task ScheduledTask { get; set; }
+        public PublishedScript PublishedScript { get; set; }
         public Worker Worker { get; set; }
+    }
+
+    public class PublishedScript
+    {
+        public Guid WorkerID { get; set; }
+        public PublishType ScriptType { get; set; }
+        public string ScriptData { get; set; }
+        public string FriendlyName { get; set; }
+        public bool OverwriteExisting { get; set; }
+        public enum PublishType
+        {
+            ClientReference,
+            ServerReference,
+        }
     }
 
     #endregion

@@ -399,5 +399,18 @@ namespace taskt.UI.Forms
 
 
         }
+
+        private void btnTaskPublish_Click(object sender, EventArgs e)
+        {
+            if (System.IO.File.Exists(scriptBuilderForm.ScriptFilePath))
+            {
+                Core.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.PublishedScript.PublishType.ServerReference);
+            }
+            else
+            {
+                MessageBox.Show("Please open the task in order to publish it.");
+            }
+          
+        }
     }
 }

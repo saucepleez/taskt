@@ -1431,6 +1431,12 @@ namespace taskt.Core.AutomationCommands
                 return;
             }
 
+            //automatically close messageboxes for server requests
+            if (engine.serverExecution && v_AutoCloseAfter <= 0)
+            {
+                v_AutoCloseAfter = 10;
+            }
+
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {
                 engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);

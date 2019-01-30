@@ -26,8 +26,8 @@ namespace taskt.Core
         public EngineSettings engineSettings { get; set; }
         public ServerSettings serverSettings { get; set; }
         public string FileName { get; set; }
-
         public Core.Task taskModel { get; set; }
+        public bool serverExecution { get; set; }
 
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
@@ -59,6 +59,7 @@ namespace taskt.Core
             engineLogger.Information("Client requesting to execute script using frmEngine");
 
             tasktEngineUI = scriptEngine;
+
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -111,18 +112,6 @@ namespace taskt.Core
                     engineLogger.Information("Script Path: " + data);
                     FileName = data;              
                     automationScript = Core.Script.Script.DeserializeFile(data);
-
-                    if (serverSettings.ServerConnectionEnabled && taskModel == null)
-                    {
-                        taskModel = HttpServerClient.AddTask(data);
-                    }
-                    else if (serverSettings.ServerConnectionEnabled && taskModel != null)
-                    {
-                        taskModel = HttpServerClient.UpdateTask(taskModel.TaskID, "Running");
-                    }
-                              
-                  
-
                 }
                 else
                 {
@@ -130,6 +119,14 @@ namespace taskt.Core
                     automationScript = Core.Script.Script.DeserializeXML(data);
                 }
 
+                if (serverSettings.ServerConnectionEnabled && taskModel == null)
+                {
+                    taskModel = HttpServerClient.AddTask(data);
+                }
+                else if (serverSettings.ServerConnectionEnabled && taskModel != null)
+                {
+                    taskModel = HttpServerClient.UpdateTask(taskModel.TaskID, "Running", "Running Server Assignment");
+                }
 
 
 
@@ -405,7 +402,7 @@ namespace taskt.Core
 
                 if (taskModel != null && serverSettings.ServerConnectionEnabled)
                 {
-                    HttpServerClient.UpdateTask(taskModel.TaskID, "Completed");
+                    HttpServerClient.UpdateTask(taskModel.TaskID, "Completed", "Script Completed Successfully");
                 }
             }
                
@@ -415,7 +412,7 @@ namespace taskt.Core
 
                 if (taskModel != null)
                 {
-                    HttpServerClient.UpdateTask(taskModel.TaskID, "Error");
+                    HttpServerClient.UpdateTask(taskModel.TaskID, "Error", error);
                 }
                
             }
