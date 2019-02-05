@@ -5569,6 +5569,7 @@ namespace taskt.Core.AutomationCommands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Date Compare")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Is Numeric")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
@@ -5667,6 +5668,53 @@ namespace taskt.Core.AutomationCommands
                         cdecValue1 = Convert.ToDecimal(value1);
                         cdecValue2 = Convert.ToDecimal(value2);
                         ifResult = (cdecValue1 <= cdecValue2);
+                        break;
+                }
+            }
+            else if (v_IfActionType == "Date Compare")
+            {
+                string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value1"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Operand"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value2"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                value1 = value1.ConvertToUserVariable(sender);
+                value2 = value2.ConvertToUserVariable(sender);
+
+
+
+                DateTime dt1, dt2;
+                dt1 = DateTime.Parse(value1);
+                dt2 = DateTime.Parse(value2);
+                switch (operand)
+                {
+                    case "is equal to":
+                        ifResult = (dt1 == dt2);
+                        break;
+
+                    case "is not equal to":
+                        ifResult = (dt1 != dt2);
+                        break;
+
+                    case "is greater than":                   
+                        ifResult = (dt1 > dt2);
+                        break;
+
+                    case "is greater than or equal to":
+                        ifResult = (dt1 >= dt2);
+                        break;
+
+                    case "is less than":        
+                        ifResult = (dt1 < dt2);
+                        break;
+
+                    case "is less than or equal to":
+                        ifResult = (dt1 <= dt2);
                         break;
                 }
             }
@@ -5956,7 +6004,7 @@ namespace taskt.Core.AutomationCommands
             switch (v_IfActionType)
             {
                 case "Value":
-
+                case "Date Compare":
                     string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Value1"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
