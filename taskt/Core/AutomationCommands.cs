@@ -2126,6 +2126,13 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Args { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Select the variable to receive the output")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+
         public RunCustomCodeCommand()
         {
             this.CommandName = "RunCustomCodeCommand";
@@ -2158,9 +2165,29 @@ namespace taskt.Core.AutomationCommands
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
                 scriptProc.StartInfo.Arguments = arguments;
+
+                if (v_applyToVariableName != "")
+                {
+                    //redirect output
+                    scriptProc.StartInfo.RedirectStandardOutput = true;
+                    scriptProc.StartInfo.UseShellExecute = false;
+                }
+             
+
                 scriptProc.Start();
+
                 scriptProc.WaitForExit();
+
+                if (v_applyToVariableName != "")
+                {
+                    var output = scriptProc.StandardOutput.ReadToEnd();
+                    output.StoreInUserVariable(sender, v_applyToVariableName);
+                }
+    
+
                 scriptProc.Close();
+
+
             }
 
 
