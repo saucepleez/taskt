@@ -5597,6 +5597,7 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Date Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Compare")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Is Numeric")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
@@ -5742,6 +5743,52 @@ namespace taskt.Core.AutomationCommands
 
                     case "is less than or equal to":
                         ifResult = (dt1 <= dt2);
+                        break;
+                }
+            }
+            else if (v_IfActionType == "Variable Compare")
+            {
+                string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value1"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Operand"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value2"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                string caseSensitive = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Case Sensitive"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                value1 = value1.ConvertToUserVariable(sender);
+                value2 = value2.ConvertToUserVariable(sender);
+
+                if (caseSensitive == "No")
+                {
+                    value1 = value1.ToUpper();
+                    value2 = value2.ToUpper();
+                }
+
+
+         
+                switch (operand)
+                {
+                    case "contains":
+                        ifResult = (value1.Contains(value2));
+                        break;
+
+                    case "does not contain":
+                        ifResult = (!value1.Contains(value2));
+                        break;
+
+                    case "is equal to":
+                        ifResult = (value1 == value2);
+                        break;
+
+                    case "is not equal to":
+                        ifResult = (value1 != value2);
                         break;
                 }
             }
@@ -6032,6 +6079,7 @@ namespace taskt.Core.AutomationCommands
             {
                 case "Value":
                 case "Date Compare":
+                case "Variable Compare":
                     string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Value1"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());

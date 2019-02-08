@@ -1032,6 +1032,36 @@ namespace taskt.UI.Forms
                     ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
 
                     break;
+                case "Variable Compare":
+                    additionalParameterLabel.Visible = true;
+                    ifActionParameterBox.Visible = true;
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Value1", "");
+                        actionParameters.Rows.Add("Operand", "");
+                        actionParameters.Rows.Add("Value2", "");
+                        actionParameters.Rows.Add("Case Sensitive", "No");
+                    }
+
+                    //combobox cell for Variable Name
+                    comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("contains");
+                    comparisonComboBox.Items.Add("does not contain");
+                    comparisonComboBox.Items.Add("is equal to");
+                    comparisonComboBox.Items.Add("is not equal to");
+
+                    //assign cell as a combobox
+                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+
+                    comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("Yes");
+                    comparisonComboBox.Items.Add("No");
+
+                    //assign cell as a combobox
+                    ifActionParameterBox.Rows[3].Cells[1] = comparisonComboBox;
+
+                    break;
 
                 case "Variable Has Value":
                     additionalParameterLabel.Visible = true;
