@@ -295,7 +295,7 @@ namespace taskt.Core
 
         }
 
-        public static void PublishScript(string scriptPath, PublishedScript.PublishType publishType)
+       public static void PublishScript(string scriptPath, PublishedScript.PublishType publishType)
         {
             try
             {
@@ -384,9 +384,52 @@ namespace taskt.Core
 
             }
         }
+
+        public static string UploadData(string key, string value)
+        {
+            var botStoreModel = new BotStoreModel();
+            botStoreModel.BotStoreName = key;
+            botStoreModel.BotStoreValue = value;
+            botStoreModel.LastUpdatedBy = appSettings.ServerSettings.HTTPGuid;
+            botStoreModel.LastUpdatedOn = DateTime.Now;
+
+            var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(botStoreModel);
+
+            httpLogger.Information("Posting Json to Upload API: " + scriptJson);
+            
+            //create webclient and upload
+            WebClient webClient = new WebClient();
+            webClient.Headers["Content-Type"] = "application/json";
+           var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Add");
+
+           return webClient.UploadString(api, "POST", scriptJson);
+
+        }
+        public static string GetData(string key, BotStoreRequest.RequestType requestType)
+        {
+            var botStoreRequest = new BotStoreRequest();
+            botStoreRequest.BotStoreName = key;
+            botStoreRequest.workerID = appSettings.ServerSettings.HTTPGuid;
+            botStoreRequest.requestType = requestType;
+
+            var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(botStoreRequest);
+
+            //create webclient and upload
+            WebClient webClient = new WebClient();
+            webClient.Headers["Content-Type"] = "application/json";
+            var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Get");
+
+            return webClient.UploadString(api, "POST", scriptJson);
+
+
+
+        }
+
+
     }
 
     #region tasktServer Models
+
     public class Worker
     {
         public Guid WorkerID { get; set; }
@@ -436,6 +479,27 @@ namespace taskt.Core
         {
             ClientReference,
             ServerReference,
+        }
+    }
+
+    public class BotStoreModel
+    {
+        public Guid StoreID { get; set; }
+        public string BotStoreName { get; set; }
+        public string BotStoreValue { get; set; }
+        public DateTime LastUpdatedOn { get; set; }
+        public Guid LastUpdatedBy { get; set; }
+    }
+
+    public class BotStoreRequest
+    {
+        public Guid workerID { get; set; }
+        public string BotStoreName { get; set; }
+        public RequestType requestType { get; set; }
+       public enum RequestType
+        {
+            BotStoreValue,
+            BotStoreModel
         }
     }
 

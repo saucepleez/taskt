@@ -353,6 +353,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_server {
+            get {
+                object obj = ResourceManager.GetObject("command_server", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_smtp {
             get {
                 object obj = ResourceManager.GetObject("command_smtp", resourceCulture);

@@ -494,6 +494,7 @@
     <None Include="Resources\action-bar-clear.png" />
     <None Include="Resources\action-bar-import.png" />
     <None Include="Resources\command-parse.png" />
+    <None Include="Resources\command-server.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

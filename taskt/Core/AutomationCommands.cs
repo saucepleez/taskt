@@ -134,6 +134,9 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(GetWordCountCommand))]
     [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(HTMLInputCommand))]
+    [XmlInclude(typeof(UploadDataCommand))]
+    [XmlInclude(typeof(GetDataCommand))]
+
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -7662,6 +7665,139 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to upload data to a local tasktServer bot store")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to upload or share data across bots.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class UploadDataCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate a name of the key to create")]
+        [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_KeyName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a target variable or input value to upload")]
+        [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputValue { get; set; }
+
+        public UploadDataCommand()
+        {
+            this.CommandName = "UploadDataCommand";
+            this.SelectionName = "Upload Data";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            var keyName = v_KeyName.ConvertToUserVariable(sender);
+            var keyValue = v_InputValue.ConvertToUserVariable(sender);
+
+            try
+            {
+                var result = HttpServerClient.UploadData(keyName, keyValue);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Upload Data to Key '" + v_KeyName + "' in tasktServer BotStore]";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to set delays between execution of commands in a running instance.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change the execution speed between commands.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class GetDataCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate a name of the key to create")]
+        [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_KeyName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to retrieve the whole record or just the value")]
+        [Attributes.PropertyAttributes.InputSpecification("Depending upon the option selected, the whole record with metadata may be required.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select one of the associated options")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Retrieve Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Retrieve Entire Record")]
+        public string v_DataOption { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Select the variable to receive the output")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+        public GetDataCommand()
+        {
+            this.CommandName = "GetDataCommand";
+            this.SelectionName = "Get Data";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            var keyName = v_KeyName.ConvertToUserVariable(sender);
+            var dataOption = v_DataOption.ConvertToUserVariable(sender);
+
+            BotStoreRequest.RequestType requestType;
+            if (dataOption == "Retrieve Entire Record")
+            {
+                requestType = BotStoreRequest.RequestType.BotStoreModel;
+            }
+            else
+            {
+                requestType = BotStoreRequest.RequestType.BotStoreValue;
+            }
+
+
+            try
+            {
+                var result = HttpServerClient.GetData(keyName, requestType);
+
+                if (requestType == BotStoreRequest.RequestType.BotStoreValue)
+                {
+                    result = JsonConvert.DeserializeObject<string>(result);
+                }
+
+
+                result.StoreInUserVariable(sender, v_applyToVariableName);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Get Key Data from Key '" + v_KeyName + "' in tasktServer BotStore]";
+        }
+    }
+
     #endregion
 
 
