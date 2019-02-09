@@ -7726,7 +7726,7 @@ namespace taskt.Core.AutomationCommands
     public class GetDataCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate a name of the key to create")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate a name of the key to retrieve")]
         [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -7743,7 +7743,7 @@ namespace taskt.Core.AutomationCommands
         public string v_DataOption { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Select the variable to receive the output")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select the variable to receive the output")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
