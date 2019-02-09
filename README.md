@@ -20,6 +20,8 @@ taskt can perform automation on both web and desktop applications, simulating th
 ![Manage Your Workforce](https://i.imgur.com/KQVqN9v.png)
 **CURRENTLY IN ALPHA** Manage and orchestrate your digital workforce with taskt's optional [server component](https://github.com/saucepleez/tasktServer) that allows you to publish and execute tasks remotely as well as monitor the overall health of your bots and discover metrics around your robot workers.
 
+![tasktServer](https://camo.githubusercontent.com/34e5fd47f19e4d93dcd44e38e3205d299a9d0827/68747470733a2f2f692e696d6775722e636f6d2f644649454d77792e706e67)
+
 ![How can I get started?](https://i.imgur.com/CkESBRT.png)
 Find and download the latest signed release by clicking [HERE](https://github.com/saucepleez/taskt/releases/). Extract to any folder and double-click 'taskt.exe'.  taskt will ask if you want to create a scripts folder to store your scripts as well as copy and deploy sample files.  You can also build directly from source -- take the latest from the master branch!
 
