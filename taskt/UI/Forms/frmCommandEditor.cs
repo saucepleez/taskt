@@ -392,6 +392,15 @@ namespace taskt.UI.Forms
                             InputControl.Items.Add(process.MainWindowTitle);
                         }
                     }
+
+                    SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+                    foreach (SHDocVw.InternetExplorer window in shellWindows)
+                    {
+                        InputControl.Items.Add("Windows Explorer - " + window.LocationName);                    
+                    }
+
+
                 }
                 else if (inputField.Name == "v_ScreenshotWindowName")
                 {

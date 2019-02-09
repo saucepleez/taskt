@@ -171,6 +171,16 @@ namespace taskt.Core
                     windowList.Add(process.MainWindowTitle);
                 }
             }
+
+
+            SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+            foreach (SHDocVw.InternetExplorer window in shellWindows)
+            {
+                windowList.Add("Windows Explorer - " + window.LocationName);
+            }
+
+
             windowList.Sort();
 
             return windowList;
