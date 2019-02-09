@@ -121,14 +121,14 @@
   <data name="command_camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-camera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="command_sequence" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\command-sequence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="command_begin_if" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-begin-if.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="command_start_process" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-start-process.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="action-bar-saveas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\action-bar-saveas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="links_header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\links-header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -138,6 +138,9 @@
   </data>
   <data name="command_pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_parse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-parse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="command_function" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-function.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,6 +178,9 @@
   <data name="header_backing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\header-backing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="action_bar_clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\action-bar-clear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="robot-error" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\robot-error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -204,6 +210,9 @@
   </data>
   <data name="action_bar_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\action-bar-new.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_string" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-string.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="command_endloop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-endloop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -238,6 +247,9 @@
   <data name="command_files" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-files.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="command_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-server.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="robot-bouncing-transparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\robot-bouncing-transparent.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -250,8 +262,8 @@
   <data name="various-question" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\various-question.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="command_string" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\command-string.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="command_sequence" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-sequence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="message" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\various-chat-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -259,16 +271,7 @@
   <data name="various_record_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\various-record-button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="action-bar-saveas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\action-bar-saveas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="action_bar_clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\action-bar-clear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="command_parse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\command-parse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="command_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\command-server.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="recent-files" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\recent-files.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

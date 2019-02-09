@@ -246,7 +246,7 @@ namespace taskt.UI.Forms
             {
                 foreach (var fil in recentFiles)
                 {
-                    if (flwRecentFiles.Controls.Count == 9)
+                    if (flwRecentFiles.Controls.Count == 7)
                         return;
 
                     LinkLabel newFileLink = new LinkLabel();
@@ -1900,6 +1900,17 @@ namespace taskt.UI.Forms
                 this.ShowInTaskbar = true;
                 notifyTray.Visible = false;
             }        
+        }
+
+        private void pnlMain_Paint(object sender, PaintEventArgs e)
+        {
+            //style panel
+            var tasktBlue = Color.FromArgb(20, 136, 204);
+            var tasktPurple = Color.FromArgb(43, 50, 178);
+            LinearGradientBrush linearGradientBrush =
+            new LinearGradientBrush(pnlMain.ClientRectangle, tasktPurple, tasktBlue, 180);
+            e.Graphics.FillRectangle(linearGradientBrush, pnlMain.ClientRectangle);
+
         }
     }
 

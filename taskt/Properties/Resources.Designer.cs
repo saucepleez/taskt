@@ -513,6 +513,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap recent_files {
+            get {
+                object obj = ResourceManager.GetObject("recent-files", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap robot_bouncing_transparent {
             get {
                 object obj = ResourceManager.GetObject("robot-bouncing-transparent", resourceCulture);
