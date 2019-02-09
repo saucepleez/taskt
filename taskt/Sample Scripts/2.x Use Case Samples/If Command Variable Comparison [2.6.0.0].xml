@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Perform Non-Case Sensitive Test - Contains" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>abc</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>contains</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>ABC</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>No</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Perform Case Sensitive Test - Contains" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>abc</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>contains</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>ABC</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Yes</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Perform Non Case Sensitive Test - Not Contains" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>abc</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>does not contain</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>ABC</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>No</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" v_Comment="Perform Case Sensitive Test - Not Contains" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>abc</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>does not contain</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>ABC</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Yes</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="25" PauseBeforeExeucution="false" v_Comment="Perform Non Case Sensitive Test - Equal To" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="26" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>abc</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>ABC</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>No</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="29" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="30" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="31" PauseBeforeExeucution="false" v_Comment="Perform Case Sensitive Test - Equal To" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="32" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>abc</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>ABC</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Yes</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="33" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="34" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="35" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="36" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="37" PauseBeforeExeucution="false" v_Comment="Test Variable Support" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="38" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="string1" v_Input="Robotic Process Automation" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="39" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="string2" v_Input="robot" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="40" PauseBeforeExeucution="false" v_Comment="Non-Case Sensitive" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="41" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{string1}</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>contains</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{string2}</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>No</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="42" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="43" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="44" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="45" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="46" PauseBeforeExeucution="false" v_Comment="Case Sensitive" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="47" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Compare">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I7AcPionPara12Table020819.071207">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I7AcPionPara12Table020819.071207" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I7AcPionPara12Table020819.071207" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712071" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{string1}</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712072" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>contains</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712073" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{string2}</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+              <I7AcPionPara12Table020819.071207 diffgr:id="I7AcPionPara12Table020819.0712074" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Case Sensitive</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Yes</Parameter_x0020_Value>
+              </I7AcPionPara12Table020819.071207>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="48" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up True" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="49" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="50" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="This ended up False" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="51" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>string1</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>string2</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

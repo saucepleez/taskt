@@ -134,6 +134,9 @@ namespace taskt.Core.AutomationCommands
     [XmlInclude(typeof(GetWordCountCommand))]
     [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(HTMLInputCommand))]
+    [XmlInclude(typeof(UploadDataCommand))]
+    [XmlInclude(typeof(GetDataCommand))]
+
     public abstract class ScriptCommand
     {
         [XmlAttribute]
@@ -1431,6 +1434,12 @@ namespace taskt.Core.AutomationCommands
                 return;
             }
 
+            //automatically close messageboxes for server requests
+            if (engine.serverExecution && v_AutoCloseAfter <= 0)
+            {
+                v_AutoCloseAfter = 10;
+            }
+
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {
                 engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
@@ -2120,6 +2129,13 @@ namespace taskt.Core.AutomationCommands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Args { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Select the variable to receive the output")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+
         public RunCustomCodeCommand()
         {
             this.CommandName = "RunCustomCodeCommand";
@@ -2152,9 +2168,29 @@ namespace taskt.Core.AutomationCommands
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
                 scriptProc.StartInfo.Arguments = arguments;
+
+                if (v_applyToVariableName != "")
+                {
+                    //redirect output
+                    scriptProc.StartInfo.RedirectStandardOutput = true;
+                    scriptProc.StartInfo.UseShellExecute = false;
+                }
+             
+
                 scriptProc.Start();
+
                 scriptProc.WaitForExit();
+
+                if (v_applyToVariableName != "")
+                {
+                    var output = scriptProc.StandardOutput.ReadToEnd();
+                    output.StoreInUserVariable(sender, v_applyToVariableName);
+                }
+    
+
                 scriptProc.Close();
+
+
             }
 
 
@@ -2813,7 +2849,7 @@ namespace taskt.Core.AutomationCommands
 
         }
 
-        public PropertyCondition CreatePropertyCondition(string propertyName, string propertyValue)
+        public PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
             string propName = propertyName + "Property";
 
@@ -2887,7 +2923,19 @@ namespace taskt.Core.AutomationCommands
                 parameterName = parameterName.ConvertToUserVariable(sender);
                 parameterValue = parameterValue.ConvertToUserVariable(sender);
 
-                var propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                PropertyCondition propCondition;
+                if (bool.TryParse(parameterValue, out bool bValue))
+                {
+                    propCondition = CreatePropertyCondition(parameterName, bValue);
+                }
+                else
+                {
+                    propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                }
+
+
+
+               
                 conditionList.Add(propCondition);
             }
 
@@ -5563,6 +5611,8 @@ namespace taskt.Core.AutomationCommands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Date Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Compare")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Is Numeric")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
@@ -5661,6 +5711,99 @@ namespace taskt.Core.AutomationCommands
                         cdecValue1 = Convert.ToDecimal(value1);
                         cdecValue2 = Convert.ToDecimal(value2);
                         ifResult = (cdecValue1 <= cdecValue2);
+                        break;
+                }
+            }
+            else if (v_IfActionType == "Date Compare")
+            {
+                string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value1"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Operand"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value2"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                value1 = value1.ConvertToUserVariable(sender);
+                value2 = value2.ConvertToUserVariable(sender);
+
+
+
+                DateTime dt1, dt2;
+                dt1 = DateTime.Parse(value1);
+                dt2 = DateTime.Parse(value2);
+                switch (operand)
+                {
+                    case "is equal to":
+                        ifResult = (dt1 == dt2);
+                        break;
+
+                    case "is not equal to":
+                        ifResult = (dt1 != dt2);
+                        break;
+
+                    case "is greater than":                   
+                        ifResult = (dt1 > dt2);
+                        break;
+
+                    case "is greater than or equal to":
+                        ifResult = (dt1 >= dt2);
+                        break;
+
+                    case "is less than":        
+                        ifResult = (dt1 < dt2);
+                        break;
+
+                    case "is less than or equal to":
+                        ifResult = (dt1 <= dt2);
+                        break;
+                }
+            }
+            else if (v_IfActionType == "Variable Compare")
+            {
+                string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value1"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Operand"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Value2"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                string caseSensitive = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Case Sensitive"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                value1 = value1.ConvertToUserVariable(sender);
+                value2 = value2.ConvertToUserVariable(sender);
+
+                if (caseSensitive == "No")
+                {
+                    value1 = value1.ToUpper();
+                    value2 = value2.ToUpper();
+                }
+
+
+         
+                switch (operand)
+                {
+                    case "contains":
+                        ifResult = (value1.Contains(value2));
+                        break;
+
+                    case "does not contain":
+                        ifResult = (!value1.Contains(value2));
+                        break;
+
+                    case "is equal to":
+                        ifResult = (value1 == value2);
+                        break;
+
+                    case "is not equal to":
+                        ifResult = (value1 != value2);
                         break;
                 }
             }
@@ -5950,7 +6093,8 @@ namespace taskt.Core.AutomationCommands
             switch (v_IfActionType)
             {
                 case "Value":
-
+                case "Date Compare":
+                case "Variable Compare":
                     string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Value1"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -7533,6 +7677,139 @@ namespace taskt.Core.AutomationCommands
             return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";
         }
     }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to upload data to a local tasktServer bot store")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to upload or share data across bots.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class UploadDataCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate a name of the key to create")]
+        [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_KeyName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a target variable or input value to upload")]
+        [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputValue { get; set; }
+
+        public UploadDataCommand()
+        {
+            this.CommandName = "UploadDataCommand";
+            this.SelectionName = "Upload Data";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            var keyName = v_KeyName.ConvertToUserVariable(sender);
+            var keyValue = v_InputValue.ConvertToUserVariable(sender);
+
+            try
+            {
+                var result = HttpServerClient.UploadData(keyName, keyValue);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Upload Data to Key '" + v_KeyName + "' in tasktServer BotStore]";
+        }
+    }
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to set delays between execution of commands in a running instance.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change the execution speed between commands.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    public class GetDataCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate a name of the key to retrieve")]
+        [Attributes.PropertyAttributes.InputSpecification("Select a variable or provide an input value")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_KeyName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to retrieve the whole record or just the value")]
+        [Attributes.PropertyAttributes.InputSpecification("Depending upon the option selected, the whole record with metadata may be required.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select one of the associated options")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Retrieve Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Retrieve Entire Record")]
+        public string v_DataOption { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Select the variable to receive the output")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_applyToVariableName { get; set; }
+        public GetDataCommand()
+        {
+            this.CommandName = "GetDataCommand";
+            this.SelectionName = "Get Data";
+            this.CommandEnabled = true;
+        }
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.AutomationEngineInstance)sender;
+
+            var keyName = v_KeyName.ConvertToUserVariable(sender);
+            var dataOption = v_DataOption.ConvertToUserVariable(sender);
+
+            BotStoreRequest.RequestType requestType;
+            if (dataOption == "Retrieve Entire Record")
+            {
+                requestType = BotStoreRequest.RequestType.BotStoreModel;
+            }
+            else
+            {
+                requestType = BotStoreRequest.RequestType.BotStoreValue;
+            }
+
+
+            try
+            {
+                var result = HttpServerClient.GetData(keyName, requestType);
+
+                if (requestType == BotStoreRequest.RequestType.BotStoreValue)
+                {
+                    result = JsonConvert.DeserializeObject<string>(result);
+                }
+
+
+                result.StoreInUserVariable(sender, v_applyToVariableName);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Get Data from Key '" + v_KeyName + "' in tasktServer BotStore]";
+        }
+    }
+
     #endregion
 
 

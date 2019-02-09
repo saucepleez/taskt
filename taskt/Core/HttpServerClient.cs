@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace taskt.Core
 {
@@ -13,8 +14,9 @@ namespace taskt.Core
     /// </summary>
     public static class HttpServerClient
     {
+        public static UI.Forms.frmScriptBuilder associatedBuilder;
         private static Serilog.Core.Logger httpLogger;
-        private static Timer heartbeatTimer { get; set; }
+        private static System.Timers.Timer heartbeatTimer { get; set; }
         private static ApplicationSettings appSettings { get; set; }
 
         static HttpServerClient()
@@ -42,7 +44,7 @@ namespace taskt.Core
 
                 //setup heartbeat to the server
                 heartbeatTimer = new System.Timers.Timer();
-                heartbeatTimer.Interval = 30000;
+                heartbeatTimer.Interval = 5000;
                 heartbeatTimer.Elapsed += Heartbeat_Elapsed;
                 heartbeatTimer.Enabled = true;
             }
@@ -57,7 +59,7 @@ namespace taskt.Core
         {
             try
             {
-                if (appSettings.ServerSettings.ServerConnectionEnabled)
+                if (appSettings.ServerSettings.ServerConnectionEnabled && associatedBuilder != null)
                 {
                     CheckIn();
                 }
@@ -118,13 +120,6 @@ namespace taskt.Core
                 httpLogger.Information("Error Getting GUID: " + ex.ToString());
                 return false;
             }
-
-
-
-
-
-
-
         }
         /// <summary>
         /// Checks in the client with the server
@@ -134,7 +129,7 @@ namespace taskt.Core
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                if (!(appSettings.ServerSettings.ServerConnectionEnabled) || associatedBuilder == null)
                     return false;
 
                 httpLogger.Information("Client is attempting to check in with the server");
@@ -146,9 +141,39 @@ namespace taskt.Core
                 {
                     httpLogger.Information("Requesting to check in with the server");
                     var client = new WebClient();
-                    var content = client.DownloadString("https://localhost:44377/api/Workers/CheckIn?workerID=" + workerID);
+                    var content = client.DownloadString("https://localhost:44377/api/Workers/CheckIn?workerID=" + workerID + "&engineBusy=" + Core.Client.EngineBusy);
                     httpLogger.Information("Received /api/Workers/CheckIn response: " + content);
-                    var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Worker>(content);
+                    var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<CheckInResponse>(content);
+
+                    if (deserialized.ScheduledTask != null)
+                    {
+
+                        associatedBuilder.Invoke(new MethodInvoker(delegate ()
+                        {
+
+
+                            if (deserialized.ScheduledTask.ExecutionType == "Local")
+                            {
+                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
+                                newEngine.remoteTask = deserialized.ScheduledTask;
+                                newEngine.serverExecution = true;
+                                newEngine.Show();
+                            }
+                            else
+                            {
+                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                                newEngine.xmlData = deserialized.PublishedScript.ScriptData;
+                                newEngine.remoteTask = deserialized.ScheduledTask;
+                                newEngine.serverExecution = true;
+                                newEngine.Show();
+                            }
+        
+                           
+                        }));
+                 
+                    }
+
+
                     return true;
                 }
                 else
@@ -240,7 +265,7 @@ namespace taskt.Core
         /// <param name="taskID">The ID of the previously created task</param>
         /// <param name="status">The result of the engine such as success or error</param>
         /// <returns></returns>
-        public static Task UpdateTask(Guid taskID, string status)
+        public static Task UpdateTask(Guid taskID, string status, string remark)
         {
             try
             {
@@ -255,7 +280,7 @@ namespace taskt.Core
                 var machineName = Environment.MachineName;
 
                 var client = new WebClient();
-                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/Update?taskID=" + taskID + "&workerID=" + workerID + "&status=" + status);
+                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/Update?taskID=" + taskID + "&workerID=" + workerID + "&status=" + status + "&userName=" + userName + "&machineName=" + machineName + "&remark=" + remark);
                 httpLogger.Information("Received /api/Tasks/Update response: " + content);
                 var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Task>(content);
 
@@ -270,9 +295,141 @@ namespace taskt.Core
 
         }
 
+       public static void PublishScript(string scriptPath, PublishedScript.PublishType publishType)
+        {
+            try
+            {
+                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                    return;
+
+                httpLogger.Information("Client is publishing a script to the server");
+
+
+                var script = new PublishedScript();
+                script.WorkerID = appSettings.ServerSettings.HTTPGuid;
+                script.ScriptType = publishType;
+                script.FriendlyName = new System.IO.FileInfo(scriptPath).Name;
+
+
+
+                WebClient webClient = new WebClient();
+                var content = webClient.DownloadString(appSettings.ServerSettings.HTTPServerURL + "api/Scripts/Exists?workerID=" + script.WorkerID + "&friendlyName=" + script.FriendlyName);
+
+                var scriptExists = Newtonsoft.Json.JsonConvert.DeserializeObject<bool>(content);
+
+                if (scriptExists)
+                {
+                    var overwritePreference = MessageBox.Show("It appears this task has already been published.  Should we overwrite the existing task on the server?", "Overwrite Existing Task?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (overwritePreference == DialogResult.Yes)
+                    {
+                        script.OverwriteExisting = true;
+                    }
+                    else
+                    {
+                        script.OverwriteExisting = false;
+                    }
+                   
+                }
+                else
+                {
+                    script.OverwriteExisting = false;
+                }
+
+
+                //based on publish type upload local reference or whole task
+                if (publishType == PublishedScript.PublishType.ClientReference)
+                {
+                    script.ScriptData = scriptPath;
+                }
+                else
+                {
+                    script.ScriptData = System.IO.File.ReadAllText(scriptPath);
+                }
+
+                var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(script);
+
+                httpLogger.Information("Posting Json to Publish API: " + scriptJson);
+                //create webclient and upload
+                webClient.Headers["Content-Type"] = "application/json";
+                webClient.UploadStringCompleted +=
+                    new UploadStringCompletedEventHandler(PublishTaskCompleted);
+               
+                var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Publish");
+
+                webClient.UploadStringAsync(api, "POST", scriptJson);
+
+
+                return;
+
+            }
+            catch (Exception ex)
+            {
+                httpLogger.Information("Publish Error: " + ex.ToString());
+            }
+
+
+        }
+       private static void PublishTaskCompleted(object sender, UploadStringCompletedEventArgs e)
+        {
+            try
+            {
+               var result = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(e.Result);
+                MessageBox.Show(result, "Task Published", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //e.result fetches you the response against your POST request.         
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Publish Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        public static string UploadData(string key, string value)
+        {
+            var botStoreModel = new BotStoreModel();
+            botStoreModel.BotStoreName = key;
+            botStoreModel.BotStoreValue = value;
+            botStoreModel.LastUpdatedBy = appSettings.ServerSettings.HTTPGuid;
+            botStoreModel.LastUpdatedOn = DateTime.Now;
+
+            var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(botStoreModel);
+
+            httpLogger.Information("Posting Json to Upload API: " + scriptJson);
+            
+            //create webclient and upload
+            WebClient webClient = new WebClient();
+            webClient.Headers["Content-Type"] = "application/json";
+           var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Add");
+
+           return webClient.UploadString(api, "POST", scriptJson);
+
+        }
+        public static string GetData(string key, BotStoreRequest.RequestType requestType)
+        {
+            var botStoreRequest = new BotStoreRequest();
+            botStoreRequest.BotStoreName = key;
+            botStoreRequest.workerID = appSettings.ServerSettings.HTTPGuid;
+            botStoreRequest.requestType = requestType;
+
+            var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(botStoreRequest);
+
+            //create webclient and upload
+            WebClient webClient = new WebClient();
+            webClient.Headers["Content-Type"] = "application/json";
+            var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Get");
+
+            return webClient.UploadString(api, "POST", scriptJson);
+
+
+
+        }
+
+
     }
 
     #region tasktServer Models
+
     public class Worker
     {
         public Guid WorkerID { get; set; }
@@ -296,11 +453,54 @@ namespace taskt.Core
         public string MachineName { get; set; }
         public string UserName { get; set; }
         public string IPAddress { get; set; }
-        public string TaskName { get; set; }
+        public string ExecutionType { get; set; }
+        public string Script { get; set; }
         public string Status { get; set; }
         public DateTime TaskStarted { get; set; }
         public DateTime TaskFinished { get; set; }
 
+    }
+
+    public class CheckInResponse
+    {
+        public Task ScheduledTask { get; set; }
+        public PublishedScript PublishedScript { get; set; }
+        public Worker Worker { get; set; }
+    }
+
+    public class PublishedScript
+    {
+        public Guid WorkerID { get; set; }
+        public PublishType ScriptType { get; set; }
+        public string ScriptData { get; set; }
+        public string FriendlyName { get; set; }
+        public bool OverwriteExisting { get; set; }
+        public enum PublishType
+        {
+            ClientReference,
+            ServerReference,
+        }
+    }
+
+    public class BotStoreModel
+    {
+        public Guid StoreID { get; set; }
+        public string BotStoreName { get; set; }
+        public string BotStoreValue { get; set; }
+        public DateTime LastUpdatedOn { get; set; }
+        public Guid LastUpdatedBy { get; set; }
+    }
+
+    public class BotStoreRequest
+    {
+        public Guid workerID { get; set; }
+        public string BotStoreName { get; set; }
+        public RequestType requestType { get; set; }
+       public enum RequestType
+        {
+            BotStoreValue,
+            BotStoreModel
+        }
     }
 
     #endregion

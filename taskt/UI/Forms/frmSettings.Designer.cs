@@ -100,6 +100,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.btnTaskPublish = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -749,6 +750,7 @@
             // tabServerSettings
             // 
             this.tabServerSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabServerSettings.Controls.Add(this.btnTaskPublish);
             this.tabServerSettings.Controls.Add(this.label15);
             this.tabServerSettings.Controls.Add(this.label14);
             this.tabServerSettings.Controls.Add(this.label13);
@@ -966,6 +968,17 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // btnTaskPublish
+            // 
+            this.btnTaskPublish.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btnTaskPublish.Location = new System.Drawing.Point(13, 297);
+            this.btnTaskPublish.Name = "btnTaskPublish";
+            this.btnTaskPublish.Size = new System.Drawing.Size(147, 33);
+            this.btnTaskPublish.TabIndex = 33;
+            this.btnTaskPublish.Text = "Publish Task";
+            this.btnTaskPublish.UseVisualStyleBackColor = true;
+            this.btnTaskPublish.Click += new System.EventHandler(this.btnTaskPublish_Click);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1064,5 +1077,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Button btnTaskPublish;
     }
 }

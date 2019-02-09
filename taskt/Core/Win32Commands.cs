@@ -31,28 +31,52 @@ namespace taskt.Core.AutomationCommands
         private static extern IntPtr FindWindowNative(string className, string windowName);
         public static IntPtr FindWindow(string windowName)
         {
-            //try to find exact window name
-            IntPtr hWnd = FindWindowNative(null, windowName);
-
-
-            if (hWnd == IntPtr.Zero)
+            if (windowName.Contains("Windows Explorer -"))
             {
-              //potentially wait for some additional initialization
-              System.Threading.Thread.Sleep(1000);
-              hWnd = FindWindowNative(null, windowName);
+                var windowLocationName = windowName.Split('-')[1].Trim();
+
+                SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+                foreach (SHDocVw.InternetExplorer window in shellWindows)
+                {
+                    
+                    if (window.LocationName.Contains(windowLocationName))
+                    {
+                        return new IntPtr(window.HWND);
+                    }
+                }
+
+                return IntPtr.Zero;
+
+            }
+            else
+            {
+                //try to find exact window name
+                IntPtr hWnd = FindWindowNative(null, windowName);
+
+
+                if (hWnd == IntPtr.Zero)
+                {
+                    //potentially wait for some additional initialization
+                    System.Threading.Thread.Sleep(1000);
+                    hWnd = FindWindowNative(null, windowName);
+                }
+
+
+                //if exact window was not found, try partial match
+                if (hWnd == IntPtr.Zero)
+                {
+                    var potentialWindow = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).FirstOrDefault();
+                    if (potentialWindow != null)
+                        hWnd = potentialWindow.MainWindowHandle;
+                }
+
+
+                //return hwnd
+                return hWnd;
             }
 
-
-            //if exact window was not found, try partial match
-            if (hWnd == IntPtr.Zero)
-            {
-                var potentialWindow = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).FirstOrDefault();
-                if (potentialWindow != null)
-                    hWnd = potentialWindow.MainWindowHandle;
-            }
-
-            //return hwnd
-            return hWnd;
+         
         }
 
         public static List<IntPtr> FindTargetWindows(string windowName)

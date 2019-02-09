@@ -115,7 +115,16 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM")});
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Year", VariableValue = DateTime.Now.ToString("yy") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.YearLong", VariableValue = DateTime.Now.ToString("yyyy") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Hour", VariableValue = DateTime.Now.ToString("HH") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Minute", VariableValue = DateTime.Now.ToString("mm") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Second", VariableValue = DateTime.Now.ToString("ss") });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "System.InputLanguage", VariableValue = InputLanguage.CurrentInputLanguage.Culture.Name });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "System.KeyboardLayout", VariableValue = InputLanguage.CurrentInputLanguage.LayoutName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Message", VariableValue = "An Error Occured!" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Line", VariableValue = "1" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "An Error Occured + StackTrace" });
@@ -162,6 +171,16 @@ namespace taskt.Core
                     windowList.Add(process.MainWindowTitle);
                 }
             }
+
+
+            SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+            foreach (SHDocVw.InternetExplorer window in shellWindows)
+            {
+                windowList.Add("Windows Explorer - " + window.LocationName);
+            }
+
+
             windowList.Sort();
 
             return windowList;

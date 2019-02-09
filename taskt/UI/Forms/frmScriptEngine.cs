@@ -34,6 +34,8 @@ namespace taskt.UI.Forms
         public Core.EngineSettings engineSettings;
         public string filePath { get; set; }
         public string xmlData { get; set; }
+        public Core.Task remoteTask { get; set; }
+        public bool serverExecution { get; set; }
         public frmScriptBuilder callBackForm { get; set; }
         private bool advancedDebug { get; set; }
         private Core.AutomationEngineInstance engineInstance { get; set; }
@@ -148,7 +150,9 @@ namespace taskt.UI.Forms
             engineInstance.ReportProgressEvent += Engine_ReportProgress;
             engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
             engineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
-
+            engineInstance.taskModel = remoteTask;
+            engineInstance.tasktEngineUI = this;
+            engineInstance.serverExecution = this.serverExecution;
             if (xmlData == null)
             {
                 engineInstance.ExecuteScriptAsync(this, filePath);
@@ -297,7 +301,7 @@ namespace taskt.UI.Forms
                     callBackForm.DebugLine = 0;
 
                 //begin auto close
-                if (engineSettings.AutoCloseDebugWindow)
+                if ((engineSettings.AutoCloseDebugWindow) || (serverExecution))
                     tmrNotify.Enabled = true;
 
             }
