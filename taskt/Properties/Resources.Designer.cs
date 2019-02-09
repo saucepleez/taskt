@@ -453,6 +453,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap executing {
+            get {
+                object obj = ResourceManager.GetObject("executing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap header_backing {
             get {
                 object obj = ResourceManager.GetObject("header_backing", resourceCulture);

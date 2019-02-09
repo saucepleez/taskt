@@ -494,6 +494,7 @@ namespace taskt.UI.Forms
         private void pbBotIcon_Click(object sender, EventArgs e)
         {
             //show debug if user clicks
+            lblMainLogo.Show();
             lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
         private void lstSteppingCommands_MouseDoubleClick(object sender, MouseEventArgs e)
