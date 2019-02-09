@@ -2849,7 +2849,7 @@ namespace taskt.Core.AutomationCommands
 
         }
 
-        public PropertyCondition CreatePropertyCondition(string propertyName, string propertyValue)
+        public PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
             string propName = propertyName + "Property";
 
@@ -2923,7 +2923,19 @@ namespace taskt.Core.AutomationCommands
                 parameterName = parameterName.ConvertToUserVariable(sender);
                 parameterValue = parameterValue.ConvertToUserVariable(sender);
 
-                var propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                PropertyCondition propCondition;
+                if (bool.TryParse(parameterValue, out bool bValue))
+                {
+                    propCondition = CreatePropertyCondition(parameterName, bValue);
+                }
+                else
+                {
+                    propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                }
+
+
+
+               
                 conditionList.Add(propCondition);
             }
 
