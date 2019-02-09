@@ -155,6 +155,7 @@
     <Compile Include="Core\JavaInterface.cs" />
     <Compile Include="Core\Logging.cs" />
     <Compile Include="Core\Metrics.cs" />
+    <Compile Include="Core\Theme.cs" />
     <Compile Include="Core\WebSocketClient.cs" />
     <Compile Include="Core\Win32Commands.cs" />
     <Compile Include="Core\Script.cs" />
@@ -273,6 +274,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmUpdate.Designer.cs">
       <DependentUpon>frmUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\ThemedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ThemedForm.Designer.cs">
+      <DependentUpon>ThemedForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\UIForm.cs">
       <SubType>Form</SubType>
@@ -422,6 +429,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUpdate.resx">
       <DependentUpon>frmUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\ThemedForm.resx">
+      <DependentUpon>ThemedForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>

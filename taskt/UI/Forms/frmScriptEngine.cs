@@ -27,7 +27,7 @@ using static taskt.Core.AutomationCommands.User32Functions;
 
 namespace taskt.UI.Forms
 {
-    public partial class frmScriptEngine : UIForm
+    public partial class frmScriptEngine : ThemedForm
     {
         //all variables used by this form
         #region Form Variables

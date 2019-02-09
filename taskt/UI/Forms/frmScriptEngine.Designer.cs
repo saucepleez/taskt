@@ -157,7 +157,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.BackgroundChangeIndex = 92;
             this.ClientSize = new System.Drawing.Size(694, 224);
             this.Controls.Add(this.lblAction);
             this.Controls.Add(this.lblKillProcNote);
