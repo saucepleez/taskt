@@ -1890,6 +1890,8 @@ namespace taskt.UI.Forms
                 this.ShowInTaskbar = false;
             }
 
+            pnlMain.Invalidate();
+
         }
 
         private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
