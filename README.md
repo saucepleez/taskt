@@ -10,6 +10,8 @@ taskt allows you to automate the boring stuff and create efficienies by giving y
 ![How does taskt work?](https://i.imgur.com/TxrH6YH.png)
 taskt works by allowing a bot developer to design a bot configuration known as a script.  The bot configuration is then intepreted by a script engine at run-time and executes against the bot developer's selected parameter inputs.  Each command contains the definitions for the required inputs as well as the required logic at run-time.  Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic documenation surrounding the application and the available commands
 
+![Configuring Tasks](https://i.imgur.com/ufvgfn2.gif)
+
 ![What can taskt do?](https://i.imgur.com/FTMRTi8.png)
 taskt can perform automation on both web and desktop applications, simulating the actions a person would do. Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
 
