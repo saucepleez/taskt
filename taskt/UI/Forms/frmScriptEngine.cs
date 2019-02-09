@@ -213,10 +213,7 @@ namespace taskt.UI.Forms
                     AddStatus("Script Completed With Errors!");
                     UpdateUI("debug info (error)");
 
-                    if (!advancedDebug)
-                    {
-                        pbBotIcon.Image = Properties.Resources.robot_error;
-                    }
+                   
 
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
@@ -295,6 +292,12 @@ namespace taskt.UI.Forms
                 uiBtnPause.Visible = false;
                 uiBtnCancel.DisplayText = "Close";
                 uiBtnCancel.Visible = true;
+
+
+                if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
+                {
+                    pbBotIcon.Image = Properties.Resources.error;
+                }
 
                 //reset debug line
                 if (callBackForm != null)

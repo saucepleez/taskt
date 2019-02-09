@@ -507,6 +507,7 @@
     <None Include="Resources\command-server.png" />
     <None Include="Resources\recent-files.png" />
     <None Include="Resources\executing.png" />
+    <None Include="Resources\error.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
