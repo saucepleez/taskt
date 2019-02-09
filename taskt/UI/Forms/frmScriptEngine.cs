@@ -27,7 +27,7 @@ using static taskt.Core.AutomationCommands.User32Functions;
 
 namespace taskt.UI.Forms
 {
-    public partial class frmScriptEngine : UIForm
+    public partial class frmScriptEngine : ThemedForm
     {
         //all variables used by this form
         #region Form Variables
@@ -213,10 +213,7 @@ namespace taskt.UI.Forms
                     AddStatus("Script Completed With Errors!");
                     UpdateUI("debug info (error)");
 
-                    if (!advancedDebug)
-                    {
-                        pbBotIcon.Image = Properties.Resources.robot_error;
-                    }
+                   
 
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
@@ -295,6 +292,12 @@ namespace taskt.UI.Forms
                 uiBtnPause.Visible = false;
                 uiBtnCancel.DisplayText = "Close";
                 uiBtnCancel.Visible = true;
+
+
+                if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
+                {
+                    pbBotIcon.Image = Properties.Resources.error;
+                }
 
                 //reset debug line
                 if (callBackForm != null)
@@ -494,6 +497,7 @@ namespace taskt.UI.Forms
         private void pbBotIcon_Click(object sender, EventArgs e)
         {
             //show debug if user clicks
+            lblMainLogo.Show();
             lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
         private void lstSteppingCommands_MouseDoubleClick(object sender, MouseEventArgs e)

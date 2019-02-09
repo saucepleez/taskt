@@ -23,7 +23,7 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms
 {
-    public partial class frmScriptVariables : UIForm
+    public partial class frmScriptVariables : ThemedForm
     {
         public List<Core.Script.ScriptVariable> scriptVariables { get; set; }
         TreeNode userVariableParentNode;
@@ -248,5 +248,11 @@ namespace taskt.UI.Forms
             return node;
         }
         #endregion
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            var brush = new Core.Theme().CreateGradient(panel2.ClientRectangle);
+            e.Graphics.FillRectangle(brush, panel2.ClientRectangle);
+        }
     }
 }

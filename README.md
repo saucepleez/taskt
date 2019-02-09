@@ -1,57 +1,39 @@
+![taskt](https://i.imgur.com/gBpKDg0.png)
 
-# taskt
-taskt (pronounced 'tasked', formerly sharpRPA) is the first truly free, easy to use, and open source process automation client built on the .NET Framework in C#.  taskt allows you to build a digital workforce and automate straight-forward and repetative actions with ease.  Included is a "what you see is what you get" designer with dozens of automation commands and options as well as a screen recorder that records and replays scripted automation. With taskt, you can spend less time writing code and more time building functionality.
 
-![Main App Window](http://www.taskt.net/assets/images/RPAsample.gif)
+taskt (formerly sharpRPA) is the first truly free, easy to use, and open-source process automation client built on the .NET Framework in C#.  
 
-## How does taskt work?
-taskt typically works by replicating the processes that a person performs to achieve automation. The underlying concept in taskt is to build and execute script configurations.  Each automation command has an independent definition and parameters that are required for command execution.  Bot Developers chain the commands together using a rich user interface to create an automation script.
+![taskt-main-screen](https://i.imgur.com/tHTy6eh.gif)
 
-## What can taskt do?
-taskt can perform both attended (user present) and unattended (user not present) automation.  taskt can perform automation on both web and desktop applications simulating the actions a person would take. Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and automate thick and web applications among many other functions.  You can review all the automation commands by clicking [here](https://wiki.taskt.net/automation-commands).
+![Click. Configure. Done.](https://i.imgur.com/gzYEdRG.png)
+taskt allows you to automate the boring stuff and create efficienies by giving you the power to craft a digital workforce that executes and performs rule-based automation.  No API? No Problem!  Included is a "what you see is what you get" bot designer with dozens of automation commands. An element recorder and screen recorder is also included that can record and replay scripted automation.
 
-## Why use taskt?
-Whether you want to run automted processes or simply speed up business processes with a robot, use taskt to develop and deploy automation without needing to explicitly write code.  Want to include code or integrate an API? taskt supports DLL integration so you can include and execute existing libraries.  taskt is also open source so you can extend the existing functionality to integrate into other applications where required.
+![Recorder](https://i.imgur.com/EpiwkPj.gif)
 
-## What does a completed task look like?
-Automation tasks can be as simple or complex as you like, its all up to you!
-![Sample](https://i.imgur.com/fbi8JrB.png)
+![How does taskt work?](https://i.imgur.com/TxrH6YH.png)
+taskt works by allowing a bot developer to design a bot configuration known as a script.  The bot configuration is then intepreted by a script engine at run-time and executes against the bot developer's selected parameter inputs.  Each command contains the definitions for the required inputs as well as the required logic at run-time.  Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic documenation surrounding the application and the available commands
 
-## Documentation
-Please check out the [Wiki](https://wiki.taskt.net) for basic documenation surrounding the application and the available commands
+![Configuring Tasks](https://i.imgur.com/ufvgfn2.gif)
 
-## Getting Started For Script Building
-- Click [HERE](https://github.com/saucepleez/taskt/releases/) to download the latest from the releases page and extract the taskt project to any folder.  Double-click 'taskt.exe' to launch the application. Note, until the code signing certificate becomes trusted, you may need to click-through SmartScreen.
-- Taskt will ask if you want to create a scripts folder under \My Documents\taskt\My Scripts (optional)
-- Copy sample files from the taskt project folder to \My Documents\taskt\My Scripts (optional)
 
-## Dependencies
-- Excel Commands require Microsoft Excel to be installed and configured.
-- OCR Command requires Microsoft One Note to be installed and configured.
-- Web Browser Command requires Selenium `chromedriver.exe` to function properly.
-- PDF Extraction requires Java 1.8
+![What can taskt do?](https://i.imgur.com/FTMRTi8.png)
+taskt can perform automation on both web and desktop applications, simulating the actions a person would do. Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
 
-## License
-This project is licensed under the Apache License - see the LICENSE.md file for details.  This project is free for personal or commercial use.
+![Manage Your Workforce](https://i.imgur.com/KQVqN9v.png)
+**CURRENTLY IN ALPHA** Manage and orchestrate your digital workforce with taskt's optional [server component](https://github.com/saucepleez/tasktServer) that allows you to publish and execute tasks remotely as well as monitor the overall health of your bots and discover metrics around your robot workers.
 
-## Releases and Updates
-Officially-signed builds are released generally once per week assuming there are updates.  Each officially-signed build contains all updated features since the last officially signed release.  Otherwise, source code in the development-branch is constantly updated 'daily' as required and is the always the latest.
 
-Version Number Strategy (as of 1.1.0.0):
-- Major - Breaking Changes or Incompatability
-- Minor - Features and Enhancement Implementation
-- Revision - Bugfixes, Post Implementation fixes
-- Build - Reserved for Rebuilds
+![tasktServer](https://camo.githubusercontent.com/34e5fd47f19e4d93dcd44e38e3205d299a9d0827/68747470733a2f2f692e696d6775722e636f6d2f644649454d77792e706e67)
 
-If you would like an officially-signed build of a specific or latest version, please [create a new issue.](https://github.com/saucepleez/taskt/issues/new)
 
-## Known Issues
-- Screen Recording requires Windows scale settings to be at 100%.
-- Some commands (that use Windows API) may require a display driver to be invoked (Windows limitation requiring a connected screen or active display driver to render a window).  This presents a problem for infrastructure such as VDI which may stop outputting to a screen. 
+![How can I get started?](https://i.imgur.com/CkESBRT.png)
+Find and download the latest signed release by clicking [HERE](https://github.com/saucepleez/taskt/releases/). Extract to any folder and double-click 'taskt.exe'.  taskt will ask if you want to create a scripts folder to store your scripts as well as copy and deploy sample files.  You can also build directly from source -- take the latest from the master branch!
 
-### Support? Questions? Feature Request? Want to say Hi?
-New features and bug fixes are based on valuable community feedback, feel free to tell us what you think or how we can improve this project.
 
- [Request a feature enhancement or report a bug!](https://github.com/saucepleez/taskt/issues/new)
- 
- [Chat with us on Gitter!](https://gitter.im/taskt-rpa/Lobby)
+![What does taskt Cost?](https://i.imgur.com/fzliKyN.png)
+taskt is free for both personal and commercial use. taskt is licensed under the Apache 2.0 License -- see LICENSE.md for further details. As a community-driven project, the goal of taskt is to give everyone, big or small, the ability to build and deploy process automation.
+
+![Let us know what you think!](https://i.imgur.com/wKExziN.png)
+Feel free to open up a feature request or report a bug/issue.
+[Click here to open a new issue!](https://github.com/saucepleez/taskt/issues/new)
+[Need support? Want to say Hi? Come chat with us on Gitter!](https://gitter.im/taskt-rpa/Lobby)

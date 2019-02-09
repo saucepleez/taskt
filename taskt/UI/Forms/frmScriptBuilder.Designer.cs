@@ -33,9 +33,7 @@
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pnlMain = new System.Windows.Forms.Panel();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblCoordinatorInfo = new System.Windows.Forms.Label();
             this.pnlStatus = new System.Windows.Forms.Panel();
@@ -59,7 +57,6 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblRecentFiles = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.lnkGitWiki = new System.Windows.Forms.LinkLabel();
             this.lnkGitIssue = new System.Windows.Forms.LinkLabel();
             this.lnkGitLatestReleases = new System.Windows.Forms.LinkLabel();
@@ -95,9 +92,7 @@
             this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
             this.tlpControls.SuspendLayout();
             this.pnlHeader.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pnlMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
             this.lstContextStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -132,7 +127,7 @@
             // 
             // tlpControls
             // 
-            this.tlpControls.BackColor = System.Drawing.Color.DimGray;
+            this.tlpControls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.tlpControls.ColumnCount = 3;
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -157,7 +152,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.DimGray;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.tlpControls.SetColumnSpan(this.panel1, 4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 123);
@@ -170,7 +165,7 @@
             // 
             this.pnlHeader.BackColor = System.Drawing.Color.SteelBlue;
             this.tlpControls.SetColumnSpan(this.pnlHeader, 3);
-            this.pnlHeader.Controls.Add(this.flowLayoutPanel1);
+            this.pnlHeader.Controls.Add(this.pnlMain);
             this.pnlHeader.Controls.Add(this.lblCoordinatorInfo);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
@@ -179,47 +174,28 @@
             this.pnlHeader.Size = new System.Drawing.Size(979, 44);
             this.pnlHeader.TabIndex = 2;
             // 
-            // flowLayoutPanel1
+            // pnlMain
             // 
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.SteelBlue;
-            this.flowLayoutPanel1.Controls.Add(this.panel2);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(961, 44);
-            this.flowLayoutPanel1.TabIndex = 14;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.pictureBox2);
-            this.panel2.Controls.Add(this.lblMainLogo);
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(603, 44);
-            this.panel2.TabIndex = 2;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::taskt.Properties.Resources.robot_source;
-            this.pictureBox2.Location = new System.Drawing.Point(2, 4);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.pnlMain.Controls.Add(this.lblMainLogo);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(979, 44);
+            this.pnlMain.TabIndex = 2;
+            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMain_Paint);
             // 
             // lblMainLogo
             // 
             this.lblMainLogo.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblMainLogo.AutoSize = true;
-            this.lblMainLogo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
+            this.lblMainLogo.Font = new System.Drawing.Font("Segoe UI Light", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMainLogo.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblMainLogo.Location = new System.Drawing.Point(34, -2);
+            this.lblMainLogo.Location = new System.Drawing.Point(0, 0);
             this.lblMainLogo.Margin = new System.Windows.Forms.Padding(0);
             this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(93, 45);
+            this.lblMainLogo.Size = new System.Drawing.Size(82, 45);
             this.lblMainLogo.TabIndex = 0;
             this.lblMainLogo.Text = "taskt";
             this.lblMainLogo.Click += new System.EventHandler(this.lblMainLogo_Click);
@@ -238,7 +214,7 @@
             // 
             // pnlStatus
             // 
-            this.pnlStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.pnlStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.tlpControls.SetColumnSpan(this.pnlStatus, 3);
             this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -251,7 +227,7 @@
             // 
             // pnlControlContainer
             // 
-            this.pnlControlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.pnlControlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.tlpControls.SetColumnSpan(this.pnlControlContainer, 3);
             this.pnlControlContainer.Controls.Add(this.grpSearch);
             this.pnlControlContainer.Controls.Add(this.grpSaveClose);
@@ -371,7 +347,7 @@
             // 
             // tvCommands
             // 
-            this.tvCommands.BackColor = System.Drawing.Color.DimGray;
+            this.tvCommands.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.tvCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvCommands.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvCommands.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -385,14 +361,13 @@
             // 
             // pnlCommandHelper
             // 
-            this.pnlCommandHelper.BackColor = System.Drawing.Color.DimGray;
+            this.pnlCommandHelper.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.pnlCommandHelper.Controls.Add(this.flwRecentFiles);
             this.pnlCommandHelper.Controls.Add(this.lblFilesMissing);
             this.pnlCommandHelper.Controls.Add(this.pictureBox4);
             this.pnlCommandHelper.Controls.Add(this.pictureBox3);
             this.pnlCommandHelper.Controls.Add(this.pictureBox1);
             this.pnlCommandHelper.Controls.Add(this.lblRecentFiles);
-            this.pnlCommandHelper.Controls.Add(this.label2);
             this.pnlCommandHelper.Controls.Add(this.lnkGitWiki);
             this.pnlCommandHelper.Controls.Add(this.lnkGitIssue);
             this.pnlCommandHelper.Controls.Add(this.lnkGitLatestReleases);
@@ -409,10 +384,11 @@
             // 
             this.flwRecentFiles.AutoScroll = true;
             this.flwRecentFiles.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flwRecentFiles.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flwRecentFiles.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.flwRecentFiles.Location = new System.Drawing.Point(116, 233);
             this.flwRecentFiles.Name = "flwRecentFiles";
-            this.flwRecentFiles.Size = new System.Drawing.Size(397, 157);
+            this.flwRecentFiles.Size = new System.Drawing.Size(397, 144);
             this.flwRecentFiles.TabIndex = 12;
             this.flwRecentFiles.WrapContents = false;
             // 
@@ -429,7 +405,7 @@
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Image = global::taskt.Properties.Resources.recent_files;
             this.pictureBox4.Location = new System.Drawing.Point(12, 210);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(84, 84);
@@ -460,34 +436,23 @@
             // lblRecentFiles
             // 
             this.lblRecentFiles.AutoSize = true;
-            this.lblRecentFiles.Font = new System.Drawing.Font("Segoe UI Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecentFiles.Font = new System.Drawing.Font("Segoe UI Semilight", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentFiles.ForeColor = System.Drawing.Color.AliceBlue;
             this.lblRecentFiles.Location = new System.Drawing.Point(110, 201);
             this.lblRecentFiles.Name = "lblRecentFiles";
-            this.lblRecentFiles.Size = new System.Drawing.Size(134, 30);
+            this.lblRecentFiles.Size = new System.Drawing.Size(121, 30);
             this.lblRecentFiles.TabIndex = 8;
             this.lblRecentFiles.Text = "Recent Files";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.AliceBlue;
-            this.label2.Location = new System.Drawing.Point(110, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(147, 30);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Helpful Links";
             // 
             // lnkGitWiki
             // 
             this.lnkGitWiki.AutoSize = true;
-            this.lnkGitWiki.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkGitWiki.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lnkGitWiki.ForeColor = System.Drawing.Color.White;
             this.lnkGitWiki.LinkColor = System.Drawing.Color.AliceBlue;
-            this.lnkGitWiki.Location = new System.Drawing.Point(112, 178);
+            this.lnkGitWiki.Location = new System.Drawing.Point(116, 169);
             this.lnkGitWiki.Name = "lnkGitWiki";
-            this.lnkGitWiki.Size = new System.Drawing.Size(156, 17);
+            this.lnkGitWiki.Size = new System.Drawing.Size(169, 20);
             this.lnkGitWiki.TabIndex = 6;
             this.lnkGitWiki.TabStop = true;
             this.lnkGitWiki.Text = "View Documentation/Wiki";
@@ -497,12 +462,12 @@
             // lnkGitIssue
             // 
             this.lnkGitIssue.AutoSize = true;
-            this.lnkGitIssue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkGitIssue.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lnkGitIssue.ForeColor = System.Drawing.Color.White;
             this.lnkGitIssue.LinkColor = System.Drawing.Color.AliceBlue;
-            this.lnkGitIssue.Location = new System.Drawing.Point(112, 162);
+            this.lnkGitIssue.Location = new System.Drawing.Point(116, 149);
             this.lnkGitIssue.Name = "lnkGitIssue";
-            this.lnkGitIssue.Size = new System.Drawing.Size(235, 17);
+            this.lnkGitIssue.Size = new System.Drawing.Size(251, 20);
             this.lnkGitIssue.TabIndex = 5;
             this.lnkGitIssue.TabStop = true;
             this.lnkGitIssue.Text = "Request Enhancement or Report a bug";
@@ -512,12 +477,12 @@
             // lnkGitLatestReleases
             // 
             this.lnkGitLatestReleases.AutoSize = true;
-            this.lnkGitLatestReleases.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkGitLatestReleases.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lnkGitLatestReleases.ForeColor = System.Drawing.Color.White;
             this.lnkGitLatestReleases.LinkColor = System.Drawing.Color.AliceBlue;
-            this.lnkGitLatestReleases.Location = new System.Drawing.Point(112, 146);
+            this.lnkGitLatestReleases.Location = new System.Drawing.Point(116, 129);
             this.lnkGitLatestReleases.Name = "lnkGitLatestReleases";
-            this.lnkGitLatestReleases.Size = new System.Drawing.Size(128, 17);
+            this.lnkGitLatestReleases.Size = new System.Drawing.Size(137, 20);
             this.lnkGitLatestReleases.TabIndex = 4;
             this.lnkGitLatestReleases.TabStop = true;
             this.lnkGitLatestReleases.Text = "View Latest Releases";
@@ -527,12 +492,12 @@
             // lnkGitProject
             // 
             this.lnkGitProject.AutoSize = true;
-            this.lnkGitProject.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkGitProject.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lnkGitProject.ForeColor = System.Drawing.Color.White;
             this.lnkGitProject.LinkColor = System.Drawing.Color.AliceBlue;
-            this.lnkGitProject.Location = new System.Drawing.Point(112, 129);
+            this.lnkGitProject.Location = new System.Drawing.Point(116, 109);
             this.lnkGitProject.Name = "lnkGitProject";
-            this.lnkGitProject.Size = new System.Drawing.Size(142, 17);
+            this.lnkGitProject.Size = new System.Drawing.Size(153, 20);
             this.lnkGitProject.TabIndex = 3;
             this.lnkGitProject.TabStop = true;
             this.lnkGitProject.Text = "View Project on GitHub";
@@ -542,21 +507,21 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semilight", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.AliceBlue;
-            this.label1.Location = new System.Drawing.Point(111, 8);
+            this.label1.Location = new System.Drawing.Point(111, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(202, 30);
+            this.label1.Size = new System.Drawing.Size(179, 30);
             this.label1.TabIndex = 2;
             this.label1.Text = "Welcome to taskt!";
             // 
             // lblNote
             // 
-            this.lblNote.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNote.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNote.ForeColor = System.Drawing.Color.White;
-            this.lblNote.Location = new System.Drawing.Point(114, 34);
+            this.lblNote.Location = new System.Drawing.Point(114, 32);
             this.lblNote.Name = "lblNote";
-            this.lblNote.Size = new System.Drawing.Size(358, 58);
+            this.lblNote.Size = new System.Drawing.Size(280, 75);
             this.lblNote.TabIndex = 1;
             this.lblNote.Text = "Start building automation by double-clicking a command from the list to the left." +
     "";
@@ -615,7 +580,7 @@
             this.grpSearch.TabStop = false;
             this.grpSearch.Text = "Search";
             this.grpSearch.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpSearch.TitleFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpSearch.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpSearch.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpSearch.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
@@ -671,14 +636,14 @@
             this.grpSaveClose.Controls.Add(this.btnSequenceImport);
             this.grpSaveClose.Controls.Add(this.uiBtnKeep);
             this.grpSaveClose.Controls.Add(this.uiPictureButton3);
-            this.grpSaveClose.Location = new System.Drawing.Point(784, 3);
+            this.grpSaveClose.Location = new System.Drawing.Point(787, 3);
             this.grpSaveClose.Name = "grpSaveClose";
             this.grpSaveClose.Size = new System.Drawing.Size(165, 73);
             this.grpSaveClose.TabIndex = 19;
             this.grpSaveClose.TabStop = false;
             this.grpSaveClose.Text = "Save and Close";
             this.grpSaveClose.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpSaveClose.TitleFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpSaveClose.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpSaveClose.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpSaveClose.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             this.grpSaveClose.Visible = false;
@@ -746,7 +711,7 @@
             this.grpFileActions.TabStop = false;
             this.grpFileActions.Text = "File Actions";
             this.grpFileActions.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpFileActions.TitleFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpFileActions.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpFileActions.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpFileActions.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
@@ -843,7 +808,7 @@
             this.grpRecordRun.TabStop = false;
             this.grpRecordRun.Text = "Record and Run";
             this.grpRecordRun.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpRecordRun.TitleFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpRecordRun.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpRecordRun.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpRecordRun.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
@@ -908,7 +873,7 @@
             this.grpVariable.TabStop = false;
             this.grpVariable.Text = "Variables and Settings";
             this.grpVariable.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpVariable.TitleFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpVariable.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpVariable.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpVariable.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
@@ -977,10 +942,8 @@
             this.tlpControls.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.pnlControlContainer.ResumeLayout(false);
             this.lstContextStrip.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -1052,7 +1015,6 @@
         private System.Windows.Forms.LinkLabel lnkGitIssue;
         private System.Windows.Forms.LinkLabel lnkGitLatestReleases;
         private System.Windows.Forms.LinkLabel lnkGitWiki;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblRecentFiles;
         private CustomControls.UIFlowLayoutPanel flwRecentFiles;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -1071,9 +1033,7 @@
         private System.Windows.Forms.Label lblTotalResults;
         private System.Windows.Forms.PictureBox pbSearch;
         private CustomControls.UIPictureButton uiBtnSaveAs;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.ToolStripMenuItem cutSelectedActionssToolStripMenuItem;
         private CustomControls.UIPictureButton uiBtnImport;
         private System.Windows.Forms.ColumnHeader columnHeader1;

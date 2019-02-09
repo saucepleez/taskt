@@ -24,7 +24,7 @@ using System.Diagnostics;
 
 namespace taskt.UI.Forms.Supplemental
 {
-    public partial class frmAbout : UIForm
+    public partial class frmAbout : ThemedForm
     {
         public frmAbout()
         {
