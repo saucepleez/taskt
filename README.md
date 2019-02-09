@@ -1,7 +1,7 @@
 ![taskt](https://i.imgur.com/gBpKDg0.png)
 
 
-taskt (formerly sharpRPA) is the first truly free, easy to use, and open-source process automation client built on the .NET Framework in C#.  
+taskt (formerly sharpRPA) is the first truly free, easy to use, and open-source process automation client built on the .NET Framework in C#.  taskt allows you to build and design process automation without needing to write application code.
 
 ![taskt-main-screen](https://i.imgur.com/tHTy6eh.gif)
 
@@ -17,7 +17,7 @@ taskt works by allowing a bot developer to design a bot configuration known as a
 
 
 ![What can taskt do?](https://i.imgur.com/FTMRTi8.png)
-taskt can perform automation on both web and desktop applications, simulating the actions a person would do. Taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
+taskt can perform automation on both web and desktop applications, simulating the actions a person would do.  From swivel-chair data entry to report generation, taskt can handle your automation needs.  Prefer to write and implement code?  taskt can use youe existing .NET DLLs and services additionally with the ability to compile code on the fly using the Custom Code command! taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
 
 ![Manage Your Workforce](https://i.imgur.com/KQVqN9v.png)
 **CURRENTLY IN ALPHA** Manage and orchestrate your digital workforce with taskt's optional [server component](https://github.com/saucepleez/tasktServer) that allows you to publish and execute tasks remotely as well as monitor the overall health of your bots and discover metrics around your robot workers.
