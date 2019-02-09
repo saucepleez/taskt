@@ -7794,7 +7794,7 @@ namespace taskt.Core.AutomationCommands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get Key Data from Key '" + v_KeyName + "' in tasktServer BotStore]";
+            return base.GetDisplayValue() + " [Get Data from Key '" + v_KeyName + "' in tasktServer BotStore]";
         }
     }
 
