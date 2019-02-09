@@ -132,7 +132,7 @@
             // 
             // tlpControls
             // 
-            this.tlpControls.BackColor = System.Drawing.Color.DimGray;
+            this.tlpControls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.tlpControls.ColumnCount = 3;
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -157,7 +157,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.DimGray;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.tlpControls.SetColumnSpan(this.panel1, 4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 123);
@@ -238,7 +238,7 @@
             // 
             // pnlStatus
             // 
-            this.pnlStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.pnlStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.tlpControls.SetColumnSpan(this.pnlStatus, 3);
             this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -251,7 +251,7 @@
             // 
             // pnlControlContainer
             // 
-            this.pnlControlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.pnlControlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.tlpControls.SetColumnSpan(this.pnlControlContainer, 3);
             this.pnlControlContainer.Controls.Add(this.grpSearch);
             this.pnlControlContainer.Controls.Add(this.grpSaveClose);
@@ -371,7 +371,7 @@
             // 
             // tvCommands
             // 
-            this.tvCommands.BackColor = System.Drawing.Color.DimGray;
+            this.tvCommands.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.tvCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvCommands.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvCommands.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -385,7 +385,7 @@
             // 
             // pnlCommandHelper
             // 
-            this.pnlCommandHelper.BackColor = System.Drawing.Color.DimGray;
+            this.pnlCommandHelper.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.pnlCommandHelper.Controls.Add(this.flwRecentFiles);
             this.pnlCommandHelper.Controls.Add(this.lblFilesMissing);
             this.pnlCommandHelper.Controls.Add(this.pictureBox4);
