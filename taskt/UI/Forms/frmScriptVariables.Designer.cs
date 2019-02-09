@@ -50,11 +50,11 @@
             // 
             this.lblMainLogo.AutoSize = true;
             this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
-            this.lblMainLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMainLogo.Font = new System.Drawing.Font("Segoe UI Semilight", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMainLogo.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblMainLogo.Location = new System.Drawing.Point(3, 8);
+            this.lblMainLogo.Location = new System.Drawing.Point(-2, -2);
             this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(153, 37);
+            this.lblMainLogo.Size = new System.Drawing.Size(138, 45);
             this.lblMainLogo.TabIndex = 7;
             this.lblMainLogo.Text = "variables";
             // 
@@ -126,7 +126,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.panel1.Controls.Add(this.lblDefineName);
             this.panel1.Controls.Add(this.uiBtnNew);
             this.panel1.Controls.Add(this.lblMainLogo);
@@ -141,11 +141,11 @@
             // 
             this.lblDefineName.AutoSize = true;
             this.lblDefineName.BackColor = System.Drawing.Color.Transparent;
-            this.lblDefineName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDefineName.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDefineName.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.lblDefineName.Location = new System.Drawing.Point(55, 47);
+            this.lblDefineName.Location = new System.Drawing.Point(55, 49);
             this.lblDefineName.Name = "lblDefineName";
-            this.lblDefineName.Size = new System.Drawing.Size(301, 42);
+            this.lblDefineName.Size = new System.Drawing.Size(270, 40);
             this.lblDefineName.TabIndex = 16;
             this.lblDefineName.Text = "Double-Click to edit existing variables\r\nPress \'DEL\' key to delete existing varia" +
     "bles";
@@ -177,13 +177,13 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(607, 51);
             this.panel2.TabIndex = 19;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // frmScriptVariables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.BackgroundChangeIndex = 196;
             this.ClientSize = new System.Drawing.Size(607, 417);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
-    public partial class frmAddVariable : UIForm
+    public partial class frmAddVariable : ThemedForm
     {
         public frmAddVariable()
         {
