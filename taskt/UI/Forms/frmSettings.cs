@@ -27,7 +27,7 @@ using WebSocket4Net;
 
 namespace taskt.UI.Forms
 {
-    public partial class frmSettings : UI.Forms.UIForm
+    public partial class frmSettings : ThemedForm
     {
         Core.ApplicationSettings newAppSettings;
         public frmScriptBuilder scriptBuilderForm;
