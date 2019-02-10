@@ -30,7 +30,7 @@ using taskt.Core;
 
 namespace taskt.UI.Forms
 {
-    public partial class frmCommandEditor : Form
+    public partial class frmCommandEditor : ThemedForm
     {
         //list of available commands
         List<CommandItem> commandList = new List<CommandItem>();
@@ -181,8 +181,8 @@ namespace taskt.UI.Forms
                 //create a label for each variable name
                 Label inputLabel = new Label();
                 inputLabel.AutoSize = true;
-                inputLabel.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-                inputLabel.ForeColor = Color.WhiteSmoke;
+                inputLabel.Font = new Font("Segoe UI Light", 12);
+                inputLabel.ForeColor = Color.White;
                 inputLabel.Name = "lbl_" + inputField.Name;
                 formHeight += 50;
                 //apply friendly translation
@@ -215,6 +215,7 @@ namespace taskt.UI.Forms
                         taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
                         helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
                         helperControl.ForeColor = Color.AliceBlue;
+                        helperControl.Font = new Font("Segoe UI Semilight", 10);
                         helperControl.Name = inputLabel.Name + "_helper";
                         helperControl.Tag = inputControl;
 
