@@ -23,7 +23,7 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplemental
 {
-    public partial class frmVariableSelector : UIForm
+    public partial class frmVariableSelector : ThemedForm
     {
         public frmVariableSelector()
         {
