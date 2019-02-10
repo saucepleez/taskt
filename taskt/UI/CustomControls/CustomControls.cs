@@ -105,6 +105,22 @@ namespace taskt.UI.CustomControls
         //}
     }
 
+    public partial class UIPanel: Panel
+    {
+        protected override void OnPaint(PaintEventArgs e)
+        {
+
+           
+                var brush = new Core.Theme().CreateGradient(this.ClientRectangle);
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+
+           
+            base.OnPaint(e);
+        }
+    }
+
+
+
     public partial class UIPictureButton : PictureBox
     {
         private bool isMouseOver;
