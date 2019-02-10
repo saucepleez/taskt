@@ -1904,16 +1904,7 @@ namespace taskt.UI.Forms
             }        
         }
 
-        private void pnlMain_Paint(object sender, PaintEventArgs e)
-        {
-            //style panel
-            var tasktBlue = Color.FromArgb(20, 136, 204);
-            var tasktPurple = Color.FromArgb(43, 50, 178);
-            LinearGradientBrush linearGradientBrush =
-            new LinearGradientBrush(pnlMain.ClientRectangle, tasktPurple, tasktBlue, 180);
-            e.Graphics.FillRectangle(linearGradientBrush, pnlMain.ClientRectangle);
-
-        }
+      
     }
 
 }

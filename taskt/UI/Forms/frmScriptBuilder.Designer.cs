@@ -33,7 +33,7 @@
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
-            this.pnlMain = new System.Windows.Forms.Panel();
+            this.pnlMain = new UI.CustomControls.UIPanel();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblCoordinatorInfo = new System.Windows.Forms.Label();
             this.pnlStatus = new System.Windows.Forms.Panel();
@@ -183,7 +183,6 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 44);
             this.pnlMain.TabIndex = 2;
-            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMain_Paint);
             // 
             // lblMainLogo
             // 
@@ -1033,7 +1032,7 @@
         private System.Windows.Forms.Label lblTotalResults;
         private System.Windows.Forms.PictureBox pbSearch;
         private CustomControls.UIPictureButton uiBtnSaveAs;
-        private System.Windows.Forms.Panel pnlMain;
+        private UI.CustomControls.UIPanel pnlMain;
         private System.Windows.Forms.ToolStripMenuItem cutSelectedActionssToolStripMenuItem;
         private CustomControls.UIPictureButton uiBtnImport;
         private System.Windows.Forms.ColumnHeader columnHeader1;
