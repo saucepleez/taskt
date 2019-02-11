@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace taskt.Core.Automation.Commands
@@ -21,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**Hello World** or **[vMyText]**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Message { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Close After X (Seconds) - 0 to bypass")]
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to display on screen. After the amount of seconds passes, the message box will be automatically closed and script will resume execution.")]
@@ -67,6 +70,18 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Message: " + v_Message + "]";
+        }
+
+        //controls can be overriden and rendered individually
+        public System.Windows.Forms.TextBox v_MessageControl()
+        {
+            var Textbox = new TextBox();
+            Textbox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            Textbox.DataBindings.Add("Text", this, "v_Message", false, DataSourceUpdateMode.OnPropertyChanged);
+            Textbox.Height = 30;
+            Textbox.Width = 300;
+
+            return Textbox;
         }
     }
 }

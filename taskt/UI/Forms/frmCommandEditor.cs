@@ -336,6 +336,19 @@ namespace taskt.UI.Forms
             //create control to capture input which will be assigned to the class variable
             dynamic InputControl;
 
+            //check if current command contains override method to generate the control            
+            var overrideMethodName = string.Concat(inputField.Name, "Control");
+            Type currentCommandType = currentCommand.GetType();
+            MethodInfo overrideMethod = currentCommandType.GetMethod(overrideMethodName);
+
+
+            if (overrideMethod != null)
+            {
+                InputControl = overrideMethod.Invoke(currentCommand, null);
+                return InputControl;
+            }
+           
+      
             //check if selection options were assigned
             var selectionOptions = inputField.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
             if (selectionOptions.Count() > 0)
