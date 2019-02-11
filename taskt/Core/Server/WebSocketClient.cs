@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
-namespace taskt.Core.Sockets
+namespace taskt.Core.Server
 {
     /// <summary>
     /// taskt SocketClient wraps WebSocket4Net and manages local client connection to taskt Server

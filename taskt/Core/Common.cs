@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using taskt.Core.IO;
 
 namespace taskt.Core
 {
@@ -86,12 +87,12 @@ namespace taskt.Core
         public static List<IGrouping<Attribute, Type>> GetGroupedCommands()
         {
             var groupedCommands = Assembly.GetExecutingAssembly().GetTypes()
-                          .Where(t => t.Namespace == "taskt.Core.AutomationCommands")
+                          .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
                           .Where(t => t.Name != "ScriptCommand")
                           .Where(t => t.IsAbstract == false)
                           .Where(t => t.BaseType.Name == "ScriptCommand")
                           .Where(t => CommandEnabled(t))
-                          .GroupBy(t => t.GetCustomAttribute(typeof(Core.AutomationCommands.Attributes.ClassAttributes.Group)))
+                          .GroupBy(t => t.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group)))
                           .ToList();
 
             return groupedCommands;
@@ -101,7 +102,7 @@ namespace taskt.Core
         /// </summary>
         private static bool CommandEnabled(Type cmd)
         {
-            var scriptCommand = (Core.AutomationCommands.ScriptCommand)Activator.CreateInstance(cmd);
+            var scriptCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(cmd);
             return scriptCommand.CommandEnabled;
         }
         /// <summary>
@@ -113,7 +114,7 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM")});
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") });
@@ -131,7 +132,7 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.AutomationCommands.User32Functions.GetActiveWindowTitle() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.Automation.User32.User32Functions.GetActiveWindowTitle() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
             return systemVariableList;

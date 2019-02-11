@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using taskt.Core.Automation;
 namespace taskt.Core
 {
     public static class ExtensionMethods
@@ -20,7 +20,7 @@ namespace taskt.Core
             if (str == null)
                 return string.Empty;
 
-            var engine = (Core.AutomationEngineInstance)sender;
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             
             var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
@@ -228,7 +228,7 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreInUserVariable(this String str, object sender, string targetVariable)
         {
-            AutomationCommands.VariableCommand newVariableCommand = new AutomationCommands.VariableCommand
+            Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
             {
                 v_userVariableName = targetVariable,
                 v_Input = str

@@ -9,15 +9,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using taskt.Core.AutomationCommands;
-using static taskt.Core.AutomationCommands.User32Functions;
+using taskt.Core.Automation.Commands;
+using static taskt.Core.Automation.User32.User32Functions;
 
 namespace taskt.UI.Forms
 {
     public partial class frmSequenceRecorder : UIForm
     {
 
-        public static List<Core.AutomationCommands.ScriptCommand> commandList;
+        public static List<Core.Automation.Commands.ScriptCommand> commandList;
         public frmScriptBuilder callBackForm { get; set; }
         private bool isRecording { get; set; }
         public frmSequenceRecorder()
@@ -56,14 +56,14 @@ namespace taskt.UI.Forms
             var commandList = GlobalHook.generatedCommands;
 
 
-            var outputList = new List<Core.AutomationCommands.ScriptCommand>();
+            var outputList = new List<Core.Automation.Commands.ScriptCommand>();
 
 
             if (chkGroupIntoSequence.Checked)
             {
-                var newSequence = new Core.AutomationCommands.SequenceCommand();
+                var newSequence = new Core.Automation.Commands.SequenceCommand();
 
-                foreach (Core.AutomationCommands.ScriptCommand cmd in commandList)
+                foreach (Core.Automation.Commands.ScriptCommand cmd in commandList)
                 {
                     newSequence.v_scriptActions.Add(cmd);
                 }
@@ -76,18 +76,18 @@ namespace taskt.UI.Forms
             }
             else if (chkGroupMovesIntoSequences.Checked)
             {
-                var newSequence = new Core.AutomationCommands.SequenceCommand();
+                var newSequence = new Core.Automation.Commands.SequenceCommand();
 
-                foreach (Core.AutomationCommands.ScriptCommand cmd in commandList)
+                foreach (Core.Automation.Commands.ScriptCommand cmd in commandList)
                 {
 
-                    if (cmd is Core.AutomationCommands.SendMouseMoveCommand)
+                    if (cmd is Core.Automation.Commands.SendMouseMoveCommand)
                     {
-                        var sendMouseCmd = (Core.AutomationCommands.SendMouseMoveCommand)cmd;
+                        var sendMouseCmd = (Core.Automation.Commands.SendMouseMoveCommand)cmd;
                         if (sendMouseCmd.v_MouseClick != "None")
                         {
                             outputList.Add(newSequence);
-                            newSequence = new Core.AutomationCommands.SequenceCommand();
+                            newSequence = new Core.Automation.Commands.SequenceCommand();
                             outputList.Add(cmd);
                         }
                         else
@@ -98,7 +98,7 @@ namespace taskt.UI.Forms
                     else if (cmd is SendKeysCommand)
                     {
                         outputList.Add(newSequence);
-                        newSequence = new Core.AutomationCommands.SequenceCommand();
+                        newSequence = new Core.Automation.Commands.SequenceCommand();
                         outputList.Add(cmd);
                     }
                     else
@@ -125,7 +125,7 @@ namespace taskt.UI.Forms
 
 
 
-            var commentCommand = new Core.AutomationCommands.CommentCommand();
+            var commentCommand = new Core.Automation.Commands.CommentCommand();
             commentCommand.v_Comment = "Sequence Recorded " + DateTime.Now.ToString();
             outputList.Insert(0, commentCommand);
 
@@ -180,8 +180,7 @@ namespace taskt.UI.Forms
                 lblRecording.Show();
 
 
-                int samplingResolution;
-                int.TryParse(txtHookResolution.Text, out samplingResolution);
+                int.TryParse(txtHookResolution.Text, out int samplingResolution);
 
 
                 GlobalHook.HookStopped += new EventHandler(OnHookStopped);
@@ -191,7 +190,7 @@ namespace taskt.UI.Forms
 
 
 
-                commandList = new List<Core.AutomationCommands.ScriptCommand>();
+                commandList = new List<Core.Automation.Commands.ScriptCommand>();
 
 
                 uiBtnRecord.DisplayText = "Stop";

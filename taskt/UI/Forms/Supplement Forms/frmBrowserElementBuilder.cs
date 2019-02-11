@@ -111,11 +111,11 @@ namespace taskt.UI.Forms.Supplemental
                             return false;
                         };
 
-                        var activateWindow = new Core.AutomationCommands.ActivateWindowCommand();
+                        var activateWindow = new Core.Automation.Commands.ActivateWindowCommand();
                         activateWindow.v_WindowName = cboIEWindow.Text + " - Internet Explorer";
                         activateWindow.RunCommand(null);
 
-                        var moveWindow = new Core.AutomationCommands.MoveWindowCommand();
+                        var moveWindow = new Core.Automation.Commands.MoveWindowCommand();
                         moveWindow.v_WindowName = cboIEWindow.Text + " - Internet Explorer";
                         moveWindow.v_XWindowPosition = "0";
                         moveWindow.v_YWindowPosition = "0";

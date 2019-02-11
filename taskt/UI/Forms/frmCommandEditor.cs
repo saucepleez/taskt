@@ -24,7 +24,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using taskt.Core.AutomationCommands.Attributes;
+using taskt.Core.Automation.Attributes;
 using System.IO;
 using taskt.Core;
 
@@ -37,7 +37,7 @@ namespace taskt.UI.Forms
         //list of variables, assigned from frmScriptBuilder
         public List<Core.Script.ScriptVariable> scriptVariables;
         //reference to currently selected command
-        public Core.AutomationCommands.ScriptCommand selectedCommand;
+        public Core.Automation.Commands.ScriptCommand selectedCommand;
         //assigned by frmScriptBuilder to restrict inputs for editing existing commands
         public CreationMode creationMode;
         //startup command, assigned from frmCommand Browser
@@ -66,7 +66,7 @@ namespace taskt.UI.Forms
 
                 //Pull all available automation commands
                 var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                          .Where(t => t.Namespace == "taskt.Core.AutomationCommands")
+                          .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
                           .Where(t => t.Name != "ScriptCommand")
                           .Where(t => t.IsAbstract == false)
                           .Where(t => t.BaseType.Name == "ScriptCommand")
@@ -75,16 +75,16 @@ namespace taskt.UI.Forms
                 //Loop through each class
                 foreach (var commandClass in commandClasses)
                 {
-                    var groupingAttribute = commandClass.GetCustomAttributes(typeof(Core.AutomationCommands.Attributes.ClassAttributes.Group), true);
+                    var groupingAttribute = commandClass.GetCustomAttributes(typeof(Core.Automation.Attributes.ClassAttributes.Group), true);
                     string groupAttribute = "";
                     if (groupingAttribute.Length > 0)
                     {
-                        var attributeFound = (Core.AutomationCommands.Attributes.ClassAttributes.Group)groupingAttribute[0];
+                        var attributeFound = (Core.Automation.Attributes.ClassAttributes.Group)groupingAttribute[0];
                         groupAttribute = attributeFound.groupName;
                     }
 
                     //Instantiate Class
-                    Core.AutomationCommands.ScriptCommand newCommand = (Core.AutomationCommands.ScriptCommand)Activator.CreateInstance(commandClass);
+                    Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
 
                     //If command is enabled, pull for display and configuration
                     if (newCommand.CommandEnabled)
@@ -133,17 +133,17 @@ namespace taskt.UI.Forms
 
         private void AfterFormInitialization()
         {
-            if (creationMode == CreationMode.Edit && selectedCommand is Core.AutomationCommands.BeginIfCommand)
+            if (creationMode == CreationMode.Edit && selectedCommand is Core.Automation.Commands.BeginIfCommand)
             {
               //load combo boxes
               ifAction_SelectionChangeCommitted(null, null);
             }
-            else if(creationMode == CreationMode.Edit && selectedCommand is Core.AutomationCommands.UIAutomationCommand)
+            else if(creationMode == CreationMode.Edit && selectedCommand is Core.Automation.Commands.UIAutomationCommand)
             {
               //load UIA boxes
               UIAType_SelectionChangeCommitted(null, null);
             }
-            else if(creationMode == CreationMode.Edit && selectedCommand is Core.AutomationCommands.SeleniumBrowserElementActionCommand)
+            else if(creationMode == CreationMode.Edit && selectedCommand is Core.Automation.Commands.SeleniumBrowserElementActionCommand)
             {
                 seleniumAction_SelectionChangeCommitted(null, null);
             }
@@ -164,7 +164,7 @@ namespace taskt.UI.Forms
         /// <summary>
         /// Generate UI elements for data-collection based on the selected command
         /// </summary>
-        private void GenerateUIInputElements(Core.AutomationCommands.ScriptCommand currentCommand)
+        private void GenerateUIInputElements(Core.Automation.Commands.ScriptCommand currentCommand)
         {
             //remove all existing controls
             while (flw_InputVariables.Controls.Count > 0) flw_InputVariables.Controls.RemoveAt(0);
@@ -186,11 +186,11 @@ namespace taskt.UI.Forms
                 inputLabel.Name = "lbl_" + inputField.Name;
                 formHeight += 50;
                 //apply friendly translation
-                var propertyAttributesAssigned = inputField.GetCustomAttributes(typeof(Core.AutomationCommands.Attributes.PropertyAttributes.PropertyDescription), true);
+                var propertyAttributesAssigned = inputField.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription), true);
 
                 if (propertyAttributesAssigned.Length > 0)
                 {
-                    var attribute = (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
+                    var attribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
                     inputLabel.Text = attribute.propertyDescription;
                 }
                 else
@@ -206,11 +206,11 @@ namespace taskt.UI.Forms
                 flw_InputVariables.Controls.Add(inputLabel);
 
                 //find if UI helpers are applied
-                var propertyAllowsVars = inputField.GetCustomAttributes(typeof(Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper), true);
+                var propertyAllowsVars = inputField.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper), true);
 
                 if (propertyAllowsVars.Length > 0)
                 {
-                    foreach (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper attrib in propertyAllowsVars)
+                    foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper attrib in propertyAllowsVars)
                     {
                         taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
                         helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
@@ -221,7 +221,7 @@ namespace taskt.UI.Forms
 
                         switch (attrib.additionalHelper)
                         {
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
                                 //show variable selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
                                 helperControl.CommandDisplay = "Insert Variable";
@@ -229,7 +229,7 @@ namespace taskt.UI.Forms
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
 
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
                                 //show file selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
                                 helperControl.CommandDisplay = "Select a File";
@@ -239,7 +239,7 @@ namespace taskt.UI.Forms
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
 
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
                                 //show file selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
                                 helperControl.CommandDisplay = "Capture Reference Image";
@@ -261,7 +261,7 @@ namespace taskt.UI.Forms
                                 flw_InputVariables.Controls.Add(testRun);
                                 break;
 
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
                                 //show variable selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("RunScriptCommand");
                                 helperControl.CommandDisplay = "Code Builder";
@@ -269,14 +269,14 @@ namespace taskt.UI.Forms
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
 
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
                                 helperControl.CommandImage = UI.Images.GetUIImage("SendMouseMoveCommand");
                                 helperControl.CommandDisplay = "Capture Mouse Position";
                                 helperControl.ForeColor = Color.AliceBlue;
                                 helperControl.Click += ShowMouseCaptureForm;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
                                 //show variable selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
                                 helperControl.CommandDisplay = "Element Recorder";
@@ -284,28 +284,28 @@ namespace taskt.UI.Forms
                                 helperControl.Click += ShowElementRecorder;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
                                 //show variable selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
                                 helperControl.CommandDisplay = "Generate Parameters";
                                 helperControl.Click += GenerateDLLParameters;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
                                 //show variable selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
                                 helperControl.CommandDisplay = "Launch DLL Explorer";
                                 helperControl.Click += ShowDLLExplorer;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
                                 //show variable selector
                                 helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
                                 helperControl.CommandDisplay = "Add Input Parameter";
                                 helperControl.Click += AddInputParameter;
                                 flw_InputVariables.Controls.Add(helperControl);
                                 break;
-                            case Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
                                 helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
                                 helperControl.CommandDisplay = "Launch HTML Builder";
                                 helperControl.Click += ShowHTMLBuilder;
@@ -331,13 +331,13 @@ namespace taskt.UI.Forms
             }
         }
 
-        private Control GenerateInputControl(PropertyInfo inputField, Core.AutomationCommands.ScriptCommand currentCommand)
+        private Control GenerateInputControl(PropertyInfo inputField, Core.Automation.Commands.ScriptCommand currentCommand)
         {
             //create control to capture input which will be assigned to the class variable
             dynamic InputControl;
 
             //check if selection options were assigned
-            var selectionOptions = inputField.GetCustomAttributes(typeof(Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUISelectionOption));
+            var selectionOptions = inputField.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
             if (selectionOptions.Count() > 0)
             {
                 //create combobox for selection item
@@ -347,7 +347,7 @@ namespace taskt.UI.Forms
                 InputControl.Font = new Font("Segoe UI", 12, FontStyle.Regular);
                 InputControl.Name = inputField.Name;
                 //loop through options
-                foreach (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyUISelectionOption option in selectionOptions)
+                foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption option in selectionOptions)
                 {
                     InputControl.Items.Add(option.uiOption);
                 }
@@ -478,23 +478,6 @@ namespace taskt.UI.Forms
                     InputControl.Items.Add("Middle Up");
                     InputControl.Items.Add("Right Up");
                 }
-                else if (inputField.Name == "v_WebAction")
-                {
-                    InputControl = new ComboBox();
-                    InputControl.Height = 30;
-                    InputControl.Width = 300;
-
-                    InputControl.Items.Add("Invoke Click");
-                    InputControl.Items.Add("Left Click");
-                    InputControl.Items.Add("Middle Click");
-                    InputControl.Items.Add("Right Click");
-
-                    InputControl.Items.Add("Get Attribute");
-                    InputControl.Items.Add("Set Attribute");
-
-                    ComboBox webAction = (ComboBox)InputControl;
-                    webAction.SelectedIndexChanged += webAction_SelectionChangeCommitted;
-                }
                 else if ((inputField.Name == "v_userVariableName") || (inputField.Name == "v_applyToVariableName"))
                 {
                     InputControl = new ComboBox();
@@ -536,28 +519,21 @@ namespace taskt.UI.Forms
                     InputControl.AllowUserToDeleteRows = false;
 
                     //set datasource
-
-                    if (currentCommand is Core.AutomationCommands.IEBrowserElementCommand)
+                    if (currentCommand is Core.Automation.Commands.SeleniumBrowserElementActionCommand)
                     {
-                        var cmd = (Core.AutomationCommands.IEBrowserElementCommand)currentCommand;
+                        var cmd = (Core.Automation.Commands.SeleniumBrowserElementActionCommand)currentCommand;
                         InputControl.DataSource = cmd.v_WebActionParameterTable;
                         InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                     }
-                    else if (currentCommand is Core.AutomationCommands.SeleniumBrowserElementActionCommand)
+                    else if (currentCommand is Core.Automation.Commands.BeginIfCommand)
                     {
-                        var cmd = (Core.AutomationCommands.SeleniumBrowserElementActionCommand)currentCommand;
-                        InputControl.DataSource = cmd.v_WebActionParameterTable;
-                        InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
-                    }
-                    else if (currentCommand is Core.AutomationCommands.BeginIfCommand)
-                    {
-                        var cmd = (Core.AutomationCommands.BeginIfCommand)currentCommand;
+                        var cmd = (Core.Automation.Commands.BeginIfCommand)currentCommand;
                         InputControl.DataSource = cmd.v_IfActionParameterTable;
                         InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                     }
-                    else if (currentCommand is Core.AutomationCommands.ExecuteDLLCommand)
+                    else if (currentCommand is Core.Automation.Commands.ExecuteDLLCommand)
                     {
-                        var cmd = (Core.AutomationCommands.ExecuteDLLCommand)currentCommand;
+                        var cmd = (Core.Automation.Commands.ExecuteDLLCommand)currentCommand;
                         InputControl.DataSource = cmd.v_MethodParameters;
                         InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                     }
@@ -611,7 +587,7 @@ namespace taskt.UI.Forms
                     InputControl.AllowUserToDeleteRows = false;
 
 
-                    var cmd = (Core.AutomationCommands.UserInputCommand)currentCommand;
+                    var cmd = (Core.Automation.Commands.UserInputCommand)currentCommand;
                     InputControl.DataSource = cmd.v_UserInputConfig;
 
                 }
@@ -638,7 +614,7 @@ namespace taskt.UI.Forms
                     InputControl.AllowUserToDeleteRows = false;
 
 
-                    var cmd = (Core.AutomationCommands.UIAutomationCommand)currentCommand;
+                    var cmd = (Core.Automation.Commands.UIAutomationCommand)currentCommand;
                     InputControl.DataSource = cmd.v_UIAActionParameters;
 
 
@@ -670,7 +646,7 @@ namespace taskt.UI.Forms
                     InputControl.AllowUserToAddRows = false;
                     InputControl.AllowUserToDeleteRows = false;
 
-                    var cmd = (Core.AutomationCommands.UIAutomationCommand)currentCommand;
+                    var cmd = (Core.Automation.Commands.UIAutomationCommand)currentCommand;
                     InputControl.DataSource = cmd.v_UIASearchParameters;
 
                 }
@@ -701,7 +677,7 @@ namespace taskt.UI.Forms
                     InputControl.AllowUserToDeleteRows = true;
 
 
-                    var cmd = (Core.AutomationCommands.SendAdvancedKeyStrokesCommand)currentCommand;
+                    var cmd = (Core.Automation.Commands.SendAdvancedKeyStrokesCommand)currentCommand;
                     InputControl.DataSource = cmd.v_KeyActions;
 
 
@@ -724,7 +700,7 @@ namespace taskt.UI.Forms
                     // assumed that all "v_Comment" will need to have a larger box for typing user comments about the action
                     InputControl = new TextBox();
 
-                    if (currentCommand is Core.AutomationCommands.CommentCommand)
+                    if (currentCommand is Core.Automation.Commands.CommentCommand)
                     {
                         InputControl.Height = 300;
                         InputControl.Width = 400;
@@ -736,38 +712,7 @@ namespace taskt.UI.Forms
                     }
 
                     InputControl.Multiline = true;
-                }
-                else if (inputField.Name == "v_WebSearchTable")
-                {
-                    InputControl = new DataGridView();
-
-                    InputControl.Name = inputField.Name;
-                    InputControl.Width = 400;
-                    InputControl.Height = 180;
-
-                    InputControl.AutoGenerateColumns = false;
-                    DataGridViewCheckBoxColumn enabledColumn = new DataGridViewCheckBoxColumn();
-                    enabledColumn.HeaderText = "Enabled";
-                    enabledColumn.DataPropertyName = "Enabled";
-                    InputControl.Columns.Add(enabledColumn);
-
-                    DataGridViewTextBoxColumn propertyName = new DataGridViewTextBoxColumn();
-                    propertyName.HeaderText = "Property Name";
-                    propertyName.DataPropertyName = "Property Name";
-                    InputControl.Columns.Add(propertyName);
-
-                    DataGridViewTextBoxColumn propertyValue = new DataGridViewTextBoxColumn();
-                    propertyValue.HeaderText = "Property Value";
-                    propertyValue.DataPropertyName = "Property Value";
-                    InputControl.Columns.Add(propertyValue);
-
-                    InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-
-                    //set datasource
-                    var cmd = (Core.AutomationCommands.IEBrowserElementCommand)currentCommand;
-                    InputControl.DataSource = cmd.v_WebSearchTable;
-                    InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
-                }
+                }             
                 else if (inputField.Name == "v_UIASearchParameters")
                 {
                     InputControl = new DataGridView();
@@ -795,7 +740,7 @@ namespace taskt.UI.Forms
                     InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 
                     //set datasource
-                    var cmd = (Core.AutomationCommands.UIAutomationCommand)currentCommand;
+                    var cmd = (Core.Automation.Commands.UIAutomationCommand)currentCommand;
                     InputControl.DataSource = cmd.v_UIASearchParameters;
                     InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                 }
@@ -826,7 +771,7 @@ namespace taskt.UI.Forms
                     InputControl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 
                     //set datasource
-                    var cmd = (Core.AutomationCommands.TextExtractorCommand)currentCommand;
+                    var cmd = (Core.Automation.Commands.TextExtractorCommand)currentCommand;
                     InputControl.DataSource = cmd.v_TextExtractionTable;
                     InputControl.Font = new Font("Segoe UI", 8, FontStyle.Regular);
                 }
@@ -861,9 +806,9 @@ namespace taskt.UI.Forms
                 InputControl.Name = inputField.Name;
             }
 
-            if ((InputControl is PictureBox) && (currentCommand is taskt.Core.AutomationCommands.ImageRecognitionCommand))
+            if ((InputControl is PictureBox) && (currentCommand is taskt.Core.Automation.Commands.ImageRecognitionCommand))
             {
-                var cmd = (Core.AutomationCommands.ImageRecognitionCommand)currentCommand;
+                var cmd = (Core.Automation.Commands.ImageRecognitionCommand)currentCommand;
 
                 if ((cmd.v_ImageCapture != "") && (cmd.v_ImageCapture != null))
                 {
@@ -907,7 +852,7 @@ namespace taskt.UI.Forms
             if ((webActionParameterBox == null) || (extractionAction == null) || (webActionParameterBox.DataSource == null))
                 return;
 
-            Core.AutomationCommands.TextExtractorCommand cmd = (Core.AutomationCommands.TextExtractorCommand)selectedCommand;
+            Core.Automation.Commands.TextExtractorCommand cmd = (Core.Automation.Commands.TextExtractorCommand)selectedCommand;
             DataTable actionParameters = cmd.v_TextExtractionTable;
             actionParameters.Rows.Clear();
 
@@ -930,60 +875,7 @@ namespace taskt.UI.Forms
                 default:
                     break;
             }
-
-
-        }
-        private void webAction_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            ComboBox webAction = (ComboBox)sender;
-            DataGridView webActionParameterBox = (DataGridView)flw_InputVariables.Controls["v_WebActionParameterTable"];
-            Label additionalParameterLabel = (Label)flw_InputVariables.Controls["lbl_v_WebActionParameterTable"];
-            
-            if ((webActionParameterBox == null) || (webAction == null) || (webActionParameterBox.DataSource == null))
-                return;
-
-            Core.AutomationCommands.IEBrowserElementCommand cmd = (Core.AutomationCommands.IEBrowserElementCommand)selectedCommand;
-            DataTable actionParameters = cmd.v_WebActionParameterTable;
-            actionParameters.Rows.Clear();
-
-            switch (webAction.Text)
-            {
-                case "Invoke Click":
-                    additionalParameterLabel.Visible = false;
-                    webActionParameterBox.Visible = false;         
-                    break;
-
-                case "Left Click":
-                case "Middle Click":
-                case "Right Click":
-                    additionalParameterLabel.Visible = true;
-                    webActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("X Adjustment", 0);
-                    actionParameters.Rows.Add("Y Adjustment", 0);
-                    break;
-
-                case "Set Attribute":
-                    additionalParameterLabel.Visible = true;
-                    webActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Attribute Name");
-                    actionParameters.Rows.Add("Value To Set");
-
-                    break;
-
-                case "Get Attribute":
-                    additionalParameterLabel.Visible = true;
-                    webActionParameterBox.Visible = true;
-                    actionParameters.Rows.Add("Attribute Name");
-                    actionParameters.Rows.Add("Variable Name");
-
-                    break;
-            
-                default:
-                    break;
-            }
-
-
-        }
+        }      
         private void ifAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
   
@@ -995,7 +887,7 @@ namespace taskt.UI.Forms
             if ((ifActionParameterBox == null) || (ifAction == null) || (ifActionParameterBox.DataSource == null))
                 return;
 
-            Core.AutomationCommands.BeginIfCommand cmd = (Core.AutomationCommands.BeginIfCommand)selectedCommand;
+            Core.Automation.Commands.BeginIfCommand cmd = (Core.Automation.Commands.BeginIfCommand)selectedCommand;
             DataTable actionParameters = cmd.v_IfActionParameterTable;
 
             //sender is null when command is updating
@@ -1282,7 +1174,7 @@ namespace taskt.UI.Forms
             if ((webActionParameterBox == null) || (webAction == null) || (webActionParameterBox.DataSource == null))
                 return;
 
-            Core.AutomationCommands.SeleniumBrowserElementActionCommand cmd = (Core.AutomationCommands.SeleniumBrowserElementActionCommand)selectedCommand;
+            Core.Automation.Commands.SeleniumBrowserElementActionCommand cmd = (Core.Automation.Commands.SeleniumBrowserElementActionCommand)selectedCommand;
             DataTable actionParameters = cmd.v_WebActionParameterTable;
 
             if (sender != null)
@@ -1388,7 +1280,7 @@ namespace taskt.UI.Forms
                 return;
 
 
-            Core.AutomationCommands.UIAutomationCommand cmd = (Core.AutomationCommands.UIAutomationCommand)selectedCommand;
+            Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)selectedCommand;
             DataTable actionParameters = cmd.v_UIAActionParameters;
 
             if (sender != null)
@@ -1483,7 +1375,7 @@ namespace taskt.UI.Forms
             if (senderBox.Text != string.Empty)
             {
                 ComboBox handleControl;
-                if (selectedCommand is Core.AutomationCommands.ThickAppClickItemCommand)
+                if (selectedCommand is Core.Automation.Commands.ThickAppClickItemCommand)
                 {
                     handleControl = (ComboBox)flw_InputVariables.Controls["v_AutomationHandleName"];
                 }
@@ -1494,7 +1386,7 @@ namespace taskt.UI.Forms
 
                 if (handleControl != null)
                 {
-                    Core.AutomationCommands.ThickAppClickItemCommand newAppCommand = new Core.AutomationCommands.ThickAppClickItemCommand();
+                    Core.Automation.Commands.ThickAppClickItemCommand newAppCommand = new Core.Automation.Commands.ThickAppClickItemCommand();
 
                     try
                     {
@@ -1523,11 +1415,11 @@ namespace taskt.UI.Forms
 
                 if (IDControl != null)
                 {
-                    Core.AutomationCommands.ThickAppGetTextCommand newAppCommand = new Core.AutomationCommands.ThickAppGetTextCommand();
+                    Core.Automation.Commands.ThickAppGetTextCommand newAppCommand = new Core.Automation.Commands.ThickAppGetTextCommand();
                     var AutomationID = newAppCommand.FindHandleID(WindowNameControl.Text, senderBox.Text);
 
                     IDControl.Text = AutomationID;
-                    Core.AutomationCommands.ThickAppGetTextCommand cmd = (Core.AutomationCommands.ThickAppGetTextCommand)selectedCommand;
+                    Core.Automation.Commands.ThickAppGetTextCommand cmd = (Core.Automation.Commands.ThickAppGetTextCommand)selectedCommand;
                     cmd.v_AutomationID = AutomationID;
                 }
             }
@@ -1565,27 +1457,6 @@ namespace taskt.UI.Forms
 
         //handles forms to help capture additional details
 
-        private void ShowElementCaptureForm(object sender, EventArgs e)
-        {
-            taskt.UI.Forms.Supplemental.frmBrowserElementBuilder frmElementBuilder = new taskt.UI.Forms.Supplemental.frmBrowserElementBuilder();
-            if (frmElementBuilder.ShowDialog() == DialogResult.OK)
-            {
-                Core.AutomationCommands.IEBrowserElementCommand cmd = (Core.AutomationCommands.IEBrowserElementCommand)selectedCommand;
-                DataTable searchParameterTable = (DataTable)frmElementBuilder.dgvSearchParameters.DataSource;
-
-                if (searchParameterTable == null)
-                {
-                    return;
-                }
-
-                searchParameterTable.TableName = "WebSearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss");
-                DataGridView dgvSearchView = (DataGridView)flw_InputVariables.Controls["v_WebSearchTable"];
-                dgvSearchView.DataSource = searchParameterTable;
-                cmd.v_WebSearchTable = searchParameterTable;
-            }
-
-            ShowAllForms();
-        }
         public static void ShowAllForms()
         {
             foreach (Form frm in Application.OpenForms)
@@ -1614,7 +1485,7 @@ namespace taskt.UI.Forms
                 flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
 
                 //find current command and add to underlying class
-                Core.AutomationCommands.SendMouseMoveCommand cmd = (Core.AutomationCommands.SendMouseMoveCommand)selectedCommand;
+                Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)selectedCommand;
                 cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
                 cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
             }
@@ -1702,7 +1573,7 @@ namespace taskt.UI.Forms
         }
         private void GenerateDLLParameters(object sender, EventArgs e)
         {
-            Core.AutomationCommands.ExecuteDLLCommand cmd = (Core.AutomationCommands.ExecuteDLLCommand)selectedCommand;
+            Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)selectedCommand;
 
             var filePath = flw_InputVariables.Controls["v_FilePath"].Text;
             var className = flw_InputVariables.Controls["v_ClassName"].Text;
@@ -1796,7 +1667,7 @@ namespace taskt.UI.Forms
             {
                 //user accepted the selections
                 //declare command
-                Core.AutomationCommands.ExecuteDLLCommand cmd = (Core.AutomationCommands.ExecuteDLLCommand)selectedCommand;
+                Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)selectedCommand;
 
                 //add file name
                 if (!string.IsNullOrEmpty(dllExplorer.FileName))
@@ -1834,7 +1705,7 @@ namespace taskt.UI.Forms
         {
 
             //get command reference
-            Core.AutomationCommands.UIAutomationCommand cmd = (Core.AutomationCommands.UIAutomationCommand)selectedCommand;
+            Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)selectedCommand;
            
             //create recorder
             UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Supplemental.frmThickAppElementRecorder();
@@ -1856,7 +1727,7 @@ namespace taskt.UI.Forms
         {
 
             //get command reference
-            Core.AutomationCommands.UIAutomationCommand cmd = new Core.AutomationCommands.UIAutomationCommand();
+            Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
 
             //create recorder
             UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Supplemental.frmThickAppElementRecorder();
@@ -1950,7 +1821,7 @@ namespace taskt.UI.Forms
             try
             {
                 //run image recognition
-                Core.AutomationCommands.ImageRecognitionCommand imageRecognitionCommand = new Core.AutomationCommands.ImageRecognitionCommand();
+                Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
                 imageRecognitionCommand.v_ImageCapture = imageSource;
                 imageRecognitionCommand.RunCommand(this);
             }
@@ -1985,6 +1856,6 @@ namespace taskt.UI.Forms
     public class CommandItem
     {
         public String DisplayValue { get; set; }
-        public taskt.Core.AutomationCommands.ScriptCommand CommandInstance { get; set; }
+        public taskt.Core.Automation.Commands.ScriptCommand CommandInstance { get; set; }
     }
 }

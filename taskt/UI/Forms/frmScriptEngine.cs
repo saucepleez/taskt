@@ -23,7 +23,8 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using taskt.Core;
-using static taskt.Core.AutomationCommands.User32Functions;
+using taskt.Core.Automation.Engine;
+using static taskt.Core.Automation.User32.User32Functions;
 
 namespace taskt.UI.Forms
 {
@@ -34,11 +35,11 @@ namespace taskt.UI.Forms
         public Core.EngineSettings engineSettings;
         public string filePath { get; set; }
         public string xmlData { get; set; }
-        public Core.Task remoteTask { get; set; }
+        public Core.Server.Task remoteTask { get; set; }
         public bool serverExecution { get; set; }
         public frmScriptBuilder callBackForm { get; set; }
         private bool advancedDebug { get; set; }
-        private Core.AutomationEngineInstance engineInstance { get; set; }
+        private Core.Automation.Engine.AutomationEngineInstance engineInstance { get; set; }
 
         #endregion
 
@@ -146,7 +147,7 @@ namespace taskt.UI.Forms
             }
 
             //start running
-            engineInstance = new Core.AutomationEngineInstance();
+            engineInstance = new Core.Automation.Engine.AutomationEngineInstance();
             engineInstance.ReportProgressEvent += Engine_ReportProgress;
             engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
             engineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
@@ -333,8 +334,8 @@ namespace taskt.UI.Forms
          
         }
 
-        public delegate List<string> ShowInputDelegate(Core.AutomationCommands.UserInputCommand inputs);
-        public List<string> ShowInput(Core.AutomationCommands.UserInputCommand inputs)
+        public delegate List<string> ShowInputDelegate(Core.Automation.Commands.UserInputCommand inputs);
+        public List<string> ShowInput(Core.Automation.Commands.UserInputCommand inputs)
         {
             if (InvokeRequired)
             {

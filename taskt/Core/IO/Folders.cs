@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace taskt.Core
+namespace taskt.Core.IO
 {
    public static class Folders
     {

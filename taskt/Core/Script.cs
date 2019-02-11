@@ -44,7 +44,7 @@ namespace taskt.Core.Script
         /// <summary>
         /// Returns a new 'Top-Level' command.  
         /// </summary>
-        public ScriptAction AddNewParentCommand(Core.AutomationCommands.ScriptCommand scriptCommand)
+        public ScriptAction AddNewParentCommand(Core.Automation.Commands.ScriptCommand scriptCommand)
         {
             ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
             Commands.Add(newExecutionCommand);
@@ -70,10 +70,10 @@ namespace taskt.Core.Script
 
             foreach (ListViewItem commandItem in scriptCommands)
             {
-                var command = (Core.AutomationCommands.ScriptCommand)commandItem.Tag;
+                var command = (Core.Automation.Commands.ScriptCommand)commandItem.Tag;
                 command.LineNumber = lineNumber;
 
-                if ((command is Core.AutomationCommands.BeginNumberOfTimesLoopCommand) || (command is Core.AutomationCommands.BeginContinousLoopCommand) || (command is Core.AutomationCommands.BeginListLoopCommand) || (command is Core.AutomationCommands.BeginIfCommand) || (command is Core.AutomationCommands.BeginExcelDatasetLoopCommand))
+                if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand))
                 {
                     if (subCommands.Count == 0)  //if this is the first loop
                     {
@@ -92,7 +92,7 @@ namespace taskt.Core.Script
                         subCommands.Add(nextNodeParent);
                     }
                 }
-                else if ((command is Core.AutomationCommands.EndLoopCommand) || (command is Core.AutomationCommands.EndIfCommand))  //if current loop scenario is ending
+                else if ((command is Core.Automation.Commands.EndLoopCommand) || (command is Core.Automation.Commands.EndIfCommand))  //if current loop scenario is ending
                 {
                     //get reference to previous node
                     var parentCommand = subCommands[subCommands.Count - 1];
@@ -179,7 +179,7 @@ namespace taskt.Core.Script
         /// generic 'top-level' user-defined script command (ex. not nested)
         /// </summary>
         [XmlElement(Order = 1)]
-        public Core.AutomationCommands.ScriptCommand ScriptCommand { get; set; }
+        public Core.Automation.Commands.ScriptCommand ScriptCommand { get; set; }
         /// <summary>
         /// generic 'sub-level' commands (ex. nested commands within a loop)
         /// </summary>
@@ -188,7 +188,7 @@ namespace taskt.Core.Script
         /// <summary>
         /// adds a command as a nested command to a top-level command
         /// </summary>
-        public ScriptAction AddAdditionalAction(Core.AutomationCommands.ScriptCommand scriptCommand)
+        public ScriptAction AddAdditionalAction(Core.Automation.Commands.ScriptCommand scriptCommand)
         {
             if (AdditionalScriptCommands == null)
             {

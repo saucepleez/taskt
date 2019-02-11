@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
-namespace taskt.Core
+using taskt.Core.Server;
+namespace taskt.Core.Automation.Engine
 {
     public class AutomationEngineInstance
     {
@@ -14,7 +14,7 @@ namespace taskt.Core
         //engine variables
         public List<Core.Script.ScriptVariable> VariableList { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
-        public Core.AutomationCommands.ErrorHandlingCommand ErrorHandler;
+        public Core.Automation.Commands.ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
@@ -26,7 +26,7 @@ namespace taskt.Core
         public EngineSettings engineSettings { get; set; }
         public ServerSettings serverSettings { get; set; }
         public string FileName { get; set; }
-        public Core.Task taskModel { get; set; }
+        public Core.Server.Task taskModel { get; set; }
         public bool serverExecution { get; set; }
 
         //events
@@ -182,7 +182,7 @@ namespace taskt.Core
         public void ExecuteCommand(Core.Script.ScriptAction command)
         {
             //get command
-            Core.AutomationCommands.ScriptCommand parentCommand = command.ScriptCommand;
+            Core.Automation.Commands.ScriptCommand parentCommand = command.ScriptCommand;
 
            //update execution line numbers
             LineNumberChanged(parentCommand.LineNumber);
@@ -222,7 +222,7 @@ namespace taskt.Core
 
 
             //bypass comments
-            if (parentCommand is Core.AutomationCommands.CommentCommand || parentCommand.IsCommented)
+            if (parentCommand is Core.Automation.Commands.CommentCommand || parentCommand.IsCommented)
             {
                 ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue().ConvertToUserVariable(this));
                 return;
@@ -236,28 +236,28 @@ namespace taskt.Core
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.AutomationCommands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.AutomationCommands.BeginContinousLoopCommand) || (parentCommand is Core.AutomationCommands.BeginListLoopCommand) || (parentCommand is Core.AutomationCommands.BeginIfCommand) || parentCommand is Core.AutomationCommands.BeginExcelDatasetLoopCommand)
+                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand)
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Core.AutomationCommands.SequenceCommand)
+                else if (parentCommand is Core.Automation.Commands.SequenceCommand)
                 {
                     parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Core.AutomationCommands.StopTaskCommand)
+                else if (parentCommand is Core.Automation.Commands.StopTaskCommand)
                 {
                     IsCancellationPending = true;
                     return;
                 }
-                else if (parentCommand is Core.AutomationCommands.ExitLoopCommand)
+                else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
                 {
                     CurrentLoopCancelled = true;
                 }
-                else if(parentCommand is Core.AutomationCommands.SetEngineDelayCommand)
+                else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
                 {
                     //get variable
-                    var setEngineCommand = (Core.AutomationCommands.SetEngineDelayCommand)parentCommand;                    
+                    var setEngineCommand = (Core.Automation.Commands.SetEngineDelayCommand)parentCommand;                    
                     var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
                     var delay = int.Parse(engineDelay);
 
@@ -385,7 +385,7 @@ namespace taskt.Core
             ReportProgressEventArgs args = new ReportProgressEventArgs();
             args.ProgressUpdate = progress;
             //send log to server
-            Core.Sockets.SocketClient.SendExecutionLog(progress);
+            Core.Server.SocketClient.SendExecutionLog(progress);
 
             //invoke event
             ReportProgressEvent?.Invoke(this, args);
@@ -428,8 +428,8 @@ namespace taskt.Core
             args.ExecutionTime = sw.Elapsed;
             args.FileName = FileName;
 
-            Core.Sockets.SocketClient.SendExecutionLog("Result Code: " + result.ToString());
-            Core.Sockets.SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
+            Core.Server.SocketClient.SendExecutionLog("Result Code: " + result.ToString());
+            Core.Server.SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
 
 
             //convert to json

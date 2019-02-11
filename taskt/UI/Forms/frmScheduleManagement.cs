@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
 using taskt.Core;
+using taskt.Core.IO;
 
 namespace taskt.UI.Forms
 {
@@ -41,7 +42,7 @@ namespace taskt.UI.Forms
             txtAppPath.Text = System.Reflection.Assembly.GetEntryAssembly().Location;
 
             //get path to scripts folder
-            rpaScriptsFolder = Folders.GetFolder(Core.Folders.FolderType.ScriptsFolder);
+            rpaScriptsFolder = Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
 
             var files = System.IO.Directory.GetFiles(rpaScriptsFolder);
 

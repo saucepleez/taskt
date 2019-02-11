@@ -1,0 +1,386 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+
+namespace taskt.Core.Automation.Commands
+{
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Web Browser Commands")]
+    [Attributes.ClassAttributes.Description("This command allows you to close a Selenium web browser session.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate, set, or get data on a webpage within the web browser.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    public class SeleniumBrowserElementActionCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Element Search Method")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By XPath")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By ID")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By XPath")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By ID")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Tag Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Class Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By CSS Selector")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SeleniumSearchType { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Element Search Parameter")]
+        [Attributes.PropertyAttributes.InputSpecification("Specifies the parameter text that matches to the element based on the previously selected search type.")]
+        [Attributes.PropertyAttributes.SampleUsage("If search type **Find Element By ID** was specified, for example, given <div id='name'></div>, the value of this field would be **name**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_SeleniumSearchParameter { get; set; }
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("Element Action")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Invoke Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Matching Elements")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**")]
+        [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
+        public string v_SeleniumElementAction { get; set; }
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Additioal Parameters will be required based on the action settings selected.")]
+        [Attributes.PropertyAttributes.SampleUsage("Additional Parameters range from adding offset coordinates to specifying a variable to apply element text to.")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public System.Data.DataTable v_WebActionParameterTable { get; set; }
+
+        public SeleniumBrowserElementActionCommand()
+        {
+            this.CommandName = "SeleniumBrowserCreateCommand";
+            this.SelectionName = "Element Action";
+            this.v_InstanceName = "default";
+            this.CommandEnabled = true;
+
+            this.v_WebActionParameterTable = new System.Data.DataTable
+            {
+                TableName = DateTime.Now.ToString("WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
+            };
+            this.v_WebActionParameterTable.Columns.Add("Parameter Name");
+            this.v_WebActionParameterTable.Columns.Add("Parameter Value");
+        }
+
+        public override void RunCommand(object sender)
+        {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            //convert to user variable -- https://github.com/saucepleez/taskt/issues/66
+            var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
+
+
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+
+            dynamic element = null;
+
+            if (v_SeleniumElementAction == "Wait For Element To Exist")
+            {
+
+                var timeoutText = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Timeout (Seconds)"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                timeoutText = timeoutText.ConvertToUserVariable(sender);
+
+                int timeOut = Convert.ToInt32(timeoutText);
+
+                var timeToEnd = DateTime.Now.AddSeconds(timeOut);
+
+                while (timeToEnd >= DateTime.Now)
+                {
+                    try
+                    {
+                        element = FindElement(seleniumInstance, seleniumSearchParam);
+                        break;
+                    }
+                    catch (Exception)
+                    {
+                        engine.ReportProgress("Element Not Yet Found... " + (timeToEnd - DateTime.Now).Seconds + "s remain");
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                }
+
+                if (element == null)
+                {
+                    throw new Exception("Element Not Found");
+                }
+
+                return;
+            }
+            else
+            {
+
+                element = FindElement(seleniumInstance, seleniumSearchParam);
+            }
+
+
+
+
+            switch (v_SeleniumElementAction)
+            {
+                case "Invoke Click":
+                    element.Click();
+                    break;
+
+                case "Left Click":
+                case "Right Click":
+                case "Middle Click":
+                case "Double Left Click":
+
+
+                    int userXAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
+                                                       where rw.Field<string>("Parameter Name") == "X Adjustment"
+                                                       select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                    int userYAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
+                                                       where rw.Field<string>("Parameter Name") == "Y Adjustment"
+                                                       select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                    var elementLocation = element.Location;
+                    SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand();
+                    var seleniumWindowPosition = seleniumInstance.Manage().Window.Position;
+                    newMouseMove.v_XMousePosition = (seleniumWindowPosition.X + elementLocation.X + 30 + userXAdjust).ToString(); // added 30 for offset
+                    newMouseMove.v_YMousePosition = (seleniumWindowPosition.Y + elementLocation.Y + 130 + userYAdjust).ToString(); //added 130 for offset
+                    newMouseMove.v_MouseClick = v_SeleniumElementAction;
+                    newMouseMove.RunCommand(sender);
+                    break;
+
+                case "Set Text":
+
+                    string textToSet = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Text To Set"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+                    string clearElement = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    if (clearElement == null)
+                    {
+                        clearElement = "No";
+                    }
+
+                    if (clearElement == "Yes")
+                    {
+                        element.Clear();
+                    }
+
+
+                    string[] potentialKeyPresses = textToSet.Split('{', '}');
+
+                    Type seleniumKeys = typeof(OpenQA.Selenium.Keys);
+                    System.Reflection.FieldInfo[] fields = seleniumKeys.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+
+                    //check if chunked string contains a key press command like {ENTER}
+                    foreach (string chunkedString in potentialKeyPresses)
+                    {
+                        if (chunkedString == "")
+                            continue;
+
+                        if (fields.Any(f => f.Name == chunkedString))
+                        {
+                            string keyPress = (string)fields.Where(f => f.Name == chunkedString).FirstOrDefault().GetValue(null);
+                            seleniumInstance.Keyboard.PressKey(keyPress);
+                        }
+                        else
+                        {
+                            //convert to user variable - https://github.com/saucepleez/taskt/issues/22
+                            var convertedChunk = chunkedString.ConvertToUserVariable(sender);
+                            element.SendKeys(convertedChunk);
+                        }
+                    }
+
+                    break;
+
+                case "Get Text":
+                case "Get Attribute":
+
+                    string VariableName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Variable Name"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string attributeName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Attribute Name"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+
+                    string elementValue;
+                    if (v_SeleniumElementAction == "Get Text")
+                    {
+                        elementValue = element.Text;
+                    }
+                    else
+                    {
+                        elementValue = element.GetAttribute(attributeName);
+                    }
+
+                    elementValue.StoreInUserVariable(sender, VariableName);
+
+                    break;
+                case "Get Matching Elements":
+                    var variableName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Variable Name"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+
+                    if (requiredComplexVariable == null)
+                    {
+                        engine.VariableList.Add(new Script.ScriptVariable() { VariableName = variableName, CurrentPosition = 0 });
+                        requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+                    }
+
+
+                    //set json settings
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings.Error = (serializer, err) => {
+                        err.ErrorContext.Handled = true;
+                    };
+
+                    settings.Formatting = Formatting.Indented;
+
+                    //create json list
+                    List<string> jsonList = new List<string>();
+                    foreach (OpenQA.Selenium.IWebElement item in element)
+                    {
+                        var json = Newtonsoft.Json.JsonConvert.SerializeObject(item, settings);
+                        jsonList.Add(json);
+                    }
+
+                    requiredComplexVariable.VariableValue = jsonList;
+
+                    break;
+                case "Clear Element":
+                    element.Clear();
+                    break;
+                default:
+                    throw new Exception("Element Action was not found");
+            }
+
+
+        }
+
+        private object FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance, string searchParameter)
+        {
+            object element = null;
+
+            switch (v_SeleniumSearchType)
+            {
+                case "Find Element By XPath":
+                    element = seleniumInstance.FindElementByXPath(searchParameter);
+                    break;
+
+                case "Find Element By ID":
+                    element = seleniumInstance.FindElementById(searchParameter);
+                    break;
+
+                case "Find Element By Name":
+                    element = seleniumInstance.FindElementByName(searchParameter);
+                    break;
+
+                case "Find Element By Tag Name":
+                    element = seleniumInstance.FindElementByTagName(searchParameter);
+                    break;
+
+                case "Find Element By Class Name":
+                    element = seleniumInstance.FindElementByClassName(searchParameter);
+                    break;
+                case "Find Element By CSS Selector":
+                    element = seleniumInstance.FindElementByCssSelector(searchParameter);
+                    break;
+                case "Find Elements By XPath":
+                    element = seleniumInstance.FindElementsByXPath(searchParameter).ToList();
+                    break;
+
+                case "Find Elements By ID":
+                    element = seleniumInstance.FindElementsById(searchParameter).ToList();
+                    break;
+
+                case "Find Elements By Name":
+                    element = seleniumInstance.FindElementsByName(searchParameter).ToList();
+                    break;
+
+                case "Find Elements By Tag Name":
+                    element = seleniumInstance.FindElementsByTagName(searchParameter).ToList();
+                    break;
+
+                case "Find Elements By Class Name":
+                    element = seleniumInstance.FindElementsByClassName(searchParameter).ToList();
+                    break;
+
+                case "Find Elements By CSS Selector":
+                    element = seleniumInstance.FindElementsByCssSelector(searchParameter).ToList();
+                    break;
+
+                default:
+                    throw new Exception("Search Type was not found");
+            }
+
+            return element;
+        }
+
+        public bool ElementExists(object sender, string searchType, string elementName)
+        {
+            //get engine reference
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var seleniumSearchParam = elementName.ConvertToUserVariable(sender);
+
+            //get instance name
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            //get stored app object
+            var browserObject = engine.GetAppInstance(vInstance);
+
+            //get selenium instance driver
+            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+
+            try
+            {
+                //search for element
+                var element = FindElement(seleniumInstance, seleniumSearchParam);
+
+                //element exists
+                return true;
+            }
+            catch (Exception)
+            {
+                //element does not exist
+                return false;
+            }
+
+        }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [" + v_SeleniumSearchType + " and " + v_SeleniumElementAction + ", Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+}

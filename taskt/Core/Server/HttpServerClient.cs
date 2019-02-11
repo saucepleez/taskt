@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
-namespace taskt.Core
+namespace taskt.Core.Server
 {
     /// <summary>
     /// Used by the taskt client for tasktServer integration

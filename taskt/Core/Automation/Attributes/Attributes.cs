@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace taskt.Core.AutomationCommands.Attributes.ClassAttributes
+namespace taskt.Core.Automation.Attributes.ClassAttributes
 {
     [System.AttributeUsage(System.AttributeTargets.Class)]
     public class Group : System.Attribute
@@ -57,7 +57,7 @@ namespace taskt.Core.AutomationCommands.Attributes.ClassAttributes
     }
 }
 
-namespace taskt.Core.AutomationCommands.Attributes.PropertyAttributes
+namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class InputSpecification : System.Attribute
