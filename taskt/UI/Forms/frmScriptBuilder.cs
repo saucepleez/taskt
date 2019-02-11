@@ -164,6 +164,8 @@ namespace taskt.UI.Forms
 
             //get commands
             var groupedCommands = Core.Common.GetGroupedCommands();
+
+
             foreach (var cmd in groupedCommands)
             {
 
@@ -187,6 +189,8 @@ namespace taskt.UI.Forms
                 tvCommands.Nodes.Add(newGroup);
 
             }
+
+            tvCommands.Sort();
 
             //tvCommands.ImageList = uiImages;
 
