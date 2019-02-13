@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
+using taskt.Core.Script;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -49,6 +53,10 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "SendMouseMoveCommand";
             this.SelectionName = "Send Mouse Move";
             this.CommandEnabled = true;
+            //modify this value and enable Render() method to enable custom rendering for this or any command.
+            //this.CustomRendering = true;
+            this.CustomRendering = false;
+           
         }
 
         public override void RunCommand(object sender)
@@ -85,5 +93,46 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Target Coordinates (" + v_XMousePosition + "," + v_YMousePosition + ") Click: " + v_MouseClick + "]";
         }
+
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //sample showing custom rendering using helpers
+        //    base.Render(editor);
+
+        //    var vXPositionLabel = CommandControls.CreateDefaultLabelFor("v_XMousePosition", this);
+        //    var vXPositionBox = CommandControls.CreateDefaultInputFor("v_XMousePosition", this);
+
+        //    var vYPositionLabel = CommandControls.CreateDefaultLabelFor("v_YMousePosition", this);
+        //    var vYPositionBox = CommandControls.CreateDefaultInputFor("v_YMousePosition", this);
+
+
+        //    var vXPositionHelpers = CommandControls.CreateUIHelpersFor("v_XMousePosition", this, new Control[] { vXPositionBox, vYPositionBox }, editor);
+        //    var vYPositionHelpers = CommandControls.CreateUIHelpersFor("v_YMousePosition", this, new Control[] { vXPositionBox, vYPositionBox }, editor);
+
+        //    var vMouseClickLabel = CommandControls.CreateDefaultLabelFor("v_MouseClick", this);
+        //    var vMouseClickDropdown = CommandControls.CreateDropdownFor("v_MouseClick", this);
+
+
+        //    var vCommentLabel = CommandControls.CreateDefaultLabelFor("v_Comment", this);
+        //    var vCommentBox = CommandControls.CreateDefaultInputFor("v_Comment", this);
+
+        //    RenderedControls.Add(vXPositionLabel);
+        //    RenderedControls.AddRange(vXPositionHelpers);
+        //    RenderedControls.Add(vXPositionBox);
+
+        //    RenderedControls.Add(vYPositionLabel);
+        //    RenderedControls.AddRange(vYPositionHelpers);
+        //    RenderedControls.Add(vYPositionBox);      
+
+        //    RenderedControls.Add(vMouseClickLabel);
+        //    RenderedControls.Add(vMouseClickDropdown);
+
+        //    RenderedControls.Add(vCommentLabel);
+        //    RenderedControls.Add(vCommentBox);
+
+        //    return RenderedControls;
+
+
+        //}
     }
 }

@@ -161,10 +161,10 @@
 
         #endregion
         private System.Windows.Forms.ComboBox cboSelectedCommand;
-        private System.Windows.Forms.FlowLayoutPanel flw_InputVariables;
         private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
         private taskt.UI.CustomControls.UIPictureButton uiBtnAdd;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        public System.Windows.Forms.FlowLayoutPanel flw_InputVariables;
     }
 }

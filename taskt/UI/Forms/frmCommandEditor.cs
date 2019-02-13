@@ -1379,7 +1379,36 @@ namespace taskt.UI.Forms
             //find underlying command class and generate the required items on the UI flow layout for configuration
             var selectedCommandItem = cboSelectedCommand.Text;
             selectedCommand = commandList.Where(itm => itm.DisplayValue == selectedCommandItem).FirstOrDefault().CommandInstance;
-            GenerateUIInputElements(selectedCommand);
+
+            if (selectedCommand.CustomRendering)
+            {
+
+                var renderedControls = selectedCommand.Render(this);
+
+                if (renderedControls.Count == 0)
+                {
+                    var label = new Label();
+                    label.ForeColor = Color.Red;
+                    label.AutoSize = true;
+                    label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                    label.Text = "No Controls are defined for rendering!  If you intend to override with custom controls, you must handle the Render() method of this command!  If you do not wish to override with your own custom controls then set 'CustomRendering' to False.";
+                    flw_InputVariables.Controls.Add(label);
+                }
+                else
+                {
+                    foreach (var ctrl in renderedControls)
+                    {
+                        flw_InputVariables.Controls.Add(ctrl);
+                    }
+                }
+            
+            }
+            else
+            {
+                GenerateUIInputElements(selectedCommand);
+            }
+
+         
         }      
         private void AutomationWindowName_SelectedIndexChanged(object sender, System.EventArgs e)
         {
@@ -1505,7 +1534,7 @@ namespace taskt.UI.Forms
         }
         private void ShowCodeBuilder(object sender, EventArgs e)
         {
-            //get textbox text
+            //get textbox textShowImageCapture
             CustomControls.CommandItemControl commandItem = (CustomControls.CommandItemControl)sender;
             TextBox targetTextbox = (TextBox)commandItem.Tag;
 

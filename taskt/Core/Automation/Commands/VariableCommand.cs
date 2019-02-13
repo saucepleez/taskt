@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Drawing;
+using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
@@ -30,6 +33,9 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "VariableCommand";
             this.SelectionName = "Set Variable";
             this.CommandEnabled = true;
+            //set to true and enable Render() method for command
+            //this.CustomRendering = true;
+            this.CustomRendering = false;
         }
 
         public override void RunCommand(object sender)
@@ -91,5 +97,25 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
         }
+
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
+       
+        //    //create inputs using helpers - or you can do it manually yourself
+        //   var vInputLabel = CommandControls.CreateDefaultLabelFor("v_Input", this);
+        //   var vInputBox = CommandControls.CreateDefaultInputFor("v_Input", this);
+        //   var vInputHelpers = CommandControls.CreateUIHelpersFor("v_Input", this, new Control[]{vInputBox}, editor);
+
+        //    RenderedControls.Add(vInputLabel);
+        //    RenderedControls.AddRange(vInputHelpers);
+        //    RenderedControls.Add(vInputBox);
+ 
+
+        //    return RenderedControls;
+
+
+        //}
     }
 }

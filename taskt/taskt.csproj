@@ -255,6 +255,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomControls\CommandControls.cs" />
     <Compile Include="UI\CustomControls\CommandGroupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Drawing;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -122,12 +124,18 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         public bool CommandEnabled { get; set; }
 
+        [XmlIgnore]
+        public bool CustomRendering { get; set; }
+        [XmlIgnore]
+        public List<Control> RenderedControls { get; set; }
+
         public ScriptCommand()
         {
             this.DisplayForeColor = System.Drawing.Color.SteelBlue;
             this.CommandEnabled = false;
             this.DefaultPause = 0;
             this.IsCommented = false;
+            this.CustomRendering = false;
         }
 
         public virtual void RunCommand(object sender)
@@ -142,6 +150,18 @@ namespace taskt.Core.Automation.Commands
         public virtual string GetDisplayValue()
         {
             return SelectionName;
+        }
+
+        public virtual List<Control> Render(UI.Forms.frmCommandEditor editor)
+        {
+            RenderedControls = new List<Control>();
+            return RenderedControls;
+        }
+
+        public virtual List<Control> Render()
+        {
+            RenderedControls = new List<Control>();
+            return RenderedControls;
         }
     }
 }
