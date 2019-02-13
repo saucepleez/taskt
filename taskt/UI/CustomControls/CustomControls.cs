@@ -149,6 +149,18 @@ namespace taskt.UI.CustomControls
                 this.Invalidate();
             }
         }
+        public override string Text
+        {
+            get
+            {
+                return displayText;
+            }
+            set
+            {
+                this.displayText = value;
+                this.Invalidate();
+            }
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaintBackground(e);
