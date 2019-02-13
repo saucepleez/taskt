@@ -1887,11 +1887,17 @@ namespace taskt.UI.Forms
 
         private void frmScriptBuilder_Resize(object sender, EventArgs e)
         {
+            //check when minimized
+          
             if ((this.WindowState == FormWindowState.Minimized) && (appSettings.ClientSettings.MinimizeToTray))
             {
-                notifyTray.Visible = true;
-                notifyTray.ShowBalloonTip(3000);
-                this.ShowInTaskbar = false;
+                appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                if (appSettings.ClientSettings.MinimizeToTray)
+                {
+                    notifyTray.Visible = true;
+                    notifyTray.ShowBalloonTip(3000);
+                    this.ShowInTaskbar = false;
+                }        
             }
 
             pnlMain.Invalidate();

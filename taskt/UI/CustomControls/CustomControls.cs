@@ -321,6 +321,22 @@ namespace taskt.UI.CustomControls
         }
     }
 
+    public class UIPictureBox : PictureBox
+    {
+        private string encodedimage;
+
+        public string EncodedImage
+        {
+            get
+            {
+                return encodedimage;
+            }
+            set
+            {
+                encodedimage = value;
+            }
+        }
+    }
 
     #endregion Custom UI Components
 }

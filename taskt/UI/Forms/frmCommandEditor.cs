@@ -27,6 +27,7 @@ using System.Windows.Forms;
 using taskt.Core.Automation.Attributes;
 using System.IO;
 using taskt.Core;
+using taskt.UI.CustomControls;
 
 namespace taskt.UI.Forms
 {
@@ -791,7 +792,7 @@ namespace taskt.UI.Forms
                 else if(inputField.Name == "v_ImageCapture")
                 {
 
-                    InputControl = new PictureBox();
+                    InputControl = new UIPictureBox();
                     InputControl.Name = inputField.Name;
                     InputControl.Width = 200;
                     InputControl.Height = 150;
@@ -819,16 +820,17 @@ namespace taskt.UI.Forms
                 InputControl.Name = inputField.Name;
             }
 
-            if ((InputControl is PictureBox) && (currentCommand is taskt.Core.Automation.Commands.ImageRecognitionCommand))
+            if ((InputControl is UIPictureBox) && (currentCommand is taskt.Core.Automation.Commands.ImageRecognitionCommand))
             {
                 var cmd = (Core.Automation.Commands.ImageRecognitionCommand)currentCommand;
 
-                if ((cmd.v_ImageCapture != "") && (cmd.v_ImageCapture != null))
+                if (!string.IsNullOrEmpty(cmd.v_ImageCapture))
                 {
                     InputControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
                 }
 
-                InputControl.DataBindings.Add("Text", currentCommand, inputField.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                var typedControl = (UIPictureBox) InputControl;
+                typedControl.DataBindings.Add("EncodedImage", currentCommand, inputField.Name, false, DataSourceUpdateMode.OnPropertyChanged);
 
             }
             else if (!(InputControl is DataGridView)) //dgv already has binding set
@@ -1483,6 +1485,15 @@ namespace taskt.UI.Forms
                     DataGridView currentControl = (DataGridView)ctrl;
                     currentControl.EndEdit();
                 }
+
+                if (ctrl is UIPictureBox)
+                {
+                    var typedControl = (UIPictureBox) ctrl;
+                    var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
+                    cmd.v_ImageCapture = typedControl.EncodedImage;
+                }
+
+
             }
 
             this.DialogResult = DialogResult.OK;
@@ -1501,14 +1512,14 @@ namespace taskt.UI.Forms
 
         public static void ShowAllForms()
         {
-            foreach (Form frm in Application.OpenForms)
+            foreach (Form frm in Application.OpenForms.OfType<Form>().ToList())
             {
                 frm.WindowState = FormWindowState.Normal;
             }
         }
         public static void HideAllForms()
         {
-            foreach (Form frm in Application.OpenForms)
+           foreach (Form frm in Application.OpenForms.OfType<Form>().ToList())
             {
                 frm.WindowState = FormWindowState.Minimized;
             }
@@ -1820,6 +1831,16 @@ namespace taskt.UI.Forms
         private void ShowImageCapture(object sender, EventArgs e)
         {
 
+
+            ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            var minimizePreference = settings.ClientSettings.MinimizeToTray;
+
+            if (minimizePreference)
+            {
+                settings.ClientSettings.MinimizeToTray = false;
+                settings.Save(settings);
+            }
+
             HideAllForms();
 
             var userAcceptance = MessageBox.Show(this, "The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
@@ -1832,22 +1853,34 @@ namespace taskt.UI.Forms
             if (imageCaptureForm.ShowDialog() == DialogResult.OK)
             {
                 CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                PictureBox targetPictureBox = (PictureBox)inputBox.Tag;
+                UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
                 targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                targetPictureBox.Text = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                var convertedImage = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                var convertedLength = convertedImage.Length;
+                targetPictureBox.EncodedImage = convertedImage;
+ 
             }
 
             }
 
             ShowAllForms();
+
+            if (minimizePreference)
+            {
+                settings.ClientSettings.MinimizeToTray = true;
+                settings.Save(settings);
+            }
+
+        
+
         }
         private void RunImageCapture(object sender, EventArgs e)
         {
 
             //get input control
             CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-            PictureBox targetPictureBox = (PictureBox)inputBox.Tag;
-            string imageSource = targetPictureBox.Text;
+            UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
+            string imageSource = targetPictureBox.EncodedImage;
 
             if (string.IsNullOrEmpty(imageSource))
             {
