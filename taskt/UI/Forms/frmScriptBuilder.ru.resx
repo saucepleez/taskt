@@ -118,6 +118,120 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblMainLogo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblCoordinatorInfo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pbSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblCurrentlyViewing.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblTotalResults.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="grpSearch.Text" xml:space="preserve">
+    <value>поиск</value>
+  </data>
+  <data name="btnSequenceImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnSequenceImport.Text" xml:space="preserve">
+    <value>присоединять</value>
+  </data>
+  <data name="uiBtnKeep.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnKeep.Text" xml:space="preserve">
+    <value>держать</value>
+  </data>
+  <data name="uiPictureButton3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiPictureButton3.Text" xml:space="preserve">
+    <value>близко</value>
+  </data>
+  <data name="grpSaveClose.Text" xml:space="preserve">
+    <value>сохрани и закрой</value>
+  </data>
+  <data name="uiBtnImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnImport.Text" xml:space="preserve">
+    <value>Импортировать</value>
+  </data>
+  <data name="uiBtnSaveAs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnSaveAs.Text" xml:space="preserve">
+    <value>сохранить как</value>
+  </data>
+  <data name="uiBtnSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnSave.Text" xml:space="preserve">
+    <value>спасти</value>
+  </data>
+  <data name="uiBtnNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnNew.Text" xml:space="preserve">
+    <value>новый</value>
+  </data>
+  <data name="uiBtnOpen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnOpen.Text" xml:space="preserve">
+    <value>открыто</value>
+  </data>
+  <data name="grpFileActions.Text" xml:space="preserve">
+    <value>действия</value>
+  </data>
+  <data name="uiBtnRecordSequence.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnRecordSequence.Text" xml:space="preserve">
+    <value>запись</value>
+  </data>
+  <data name="uiBtnRunScript.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnRunScript.Text" xml:space="preserve">
+    <value>бежать</value>
+  </data>
+  <data name="uiBtnScheduleManagement.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnScheduleManagement.Text" xml:space="preserve">
+    <value>график</value>
+  </data>
+  <data name="grpRecordRun.Text" xml:space="preserve">
+    <value>запись и запуск</value>
+  </data>
+  <data name="uiBtnClearAll.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnClearAll.Text" xml:space="preserve">
+    <value>удалять</value>
+  </data>
+  <data name="uiBtnSettings.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnSettings.Text" xml:space="preserve">
+    <value>установка</value>
+  </data>
+  <data name="uiBtnAddVariable.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uiBtnAddVariable.Text" xml:space="preserve">
+    <value>переменная</value>
+  </data>
+  <data name="grpVariable.Text" xml:space="preserve">
+    <value>переменные и настройки</value>
+  </data>
   <data name="lblFilesMissing.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -190,108 +304,6 @@
   </data>
   <data name="lblNote.Text" xml:space="preserve">
     <value>Запустите автоматизацию здания, дважды щелкнув команду в списке слева.</value>
-  </data>
-  <data name="lblMainLogo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblCoordinatorInfo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="pbSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblCurrentlyViewing.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblTotalResults.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnSequenceImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnSequenceImport.Text" xml:space="preserve">
-    <value>присоединять</value>
-  </data>
-  <data name="uiBtnKeep.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnKeep.Text" xml:space="preserve">
-    <value>держать</value>
-  </data>
-  <data name="uiPictureButton3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiPictureButton3.Text" xml:space="preserve">
-    <value>близко</value>
-  </data>
-  <data name="uiBtnImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnImport.Text" xml:space="preserve">
-    <value>Импортировать</value>
-  </data>
-  <data name="uiBtnSaveAs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnSaveAs.Text" xml:space="preserve">
-    <value>сохранить как</value>
-  </data>
-  <data name="uiBtnSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnSave.Text" xml:space="preserve">
-    <value>спасти</value>
-  </data>
-  <data name="uiBtnNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnNew.Text" xml:space="preserve">
-    <value>новый</value>
-  </data>
-  <data name="uiBtnOpen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnOpen.Text" xml:space="preserve">
-    <value>открыто</value>
-  </data>
-  <data name="grpFileActions.Text" xml:space="preserve">
-    <value>действия</value>
-  </data>
-  <data name="uiBtnRecordSequence.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnRecordSequence.Text" xml:space="preserve">
-    <value>запись</value>
-  </data>
-  <data name="uiBtnRunScript.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnRunScript.Text" xml:space="preserve">
-    <value>бежать</value>
-  </data>
-  <data name="uiBtnScheduleManagement.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnScheduleManagement.Text" xml:space="preserve">
-    <value>график</value>
-  </data>
-  <data name="uiBtnClearAll.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnClearAll.Text" xml:space="preserve">
-    <value>удалять</value>
-  </data>
-  <data name="uiBtnSettings.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnSettings.Text" xml:space="preserve">
-    <value>установка</value>
-  </data>
-  <data name="uiBtnAddVariable.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uiBtnAddVariable.Text" xml:space="preserve">
-    <value>переменная</value>
   </data>
   <data name="notifyTray.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1044,8 +1056,5 @@
         /hfsS8AuDL0Ae98Kv/BzFAAiC8sCSYLBvCPAHmAHsBPYD/SDsXvf+mrU7QQUACLz4ROcZHOMoDvfB3QD
         h4GDBIX+MXAYQ6+F7L43SqPgp/p/kpJ1K/0vA2IAAAAASUVORK5CYII=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
 </root>
