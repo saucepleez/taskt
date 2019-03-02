@@ -40,14 +40,19 @@ namespace taskt.UI.Forms
         public frmScriptBuilder callBackForm { get; set; }
         private bool advancedDebug { get; set; }
         private Core.Automation.Engine.AutomationEngineInstance engineInstance { get; set; }
-
+        private List<Core.Script.ScriptVariable> Variables { get; set; }
         #endregion
 
         //events and methods
         #region Form Events/Methods
-        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm)
+        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null)
         {
             InitializeComponent();
+
+            if (variables != null)
+            {
+                Variables = variables;
+            }
 
             //set callback form
             callBackForm = builderForm;
@@ -156,7 +161,7 @@ namespace taskt.UI.Forms
             engineInstance.serverExecution = this.serverExecution;
             if (xmlData == null)
             {
-                engineInstance.ExecuteScriptAsync(this, filePath);
+                engineInstance.ExecuteScriptAsync(this, filePath, Variables);
             }
             else
             {

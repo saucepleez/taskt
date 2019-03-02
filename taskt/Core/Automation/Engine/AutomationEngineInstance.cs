@@ -54,11 +54,16 @@ namespace taskt.Core.Automation.Engine
 
         }
 
-        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath)
+        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null)
         {
             engineLogger.Information("Client requesting to execute script using frmEngine");
 
             tasktEngineUI = scriptEngine;
+
+            if (variables != null)
+            {
+                VariableList = variables;
+            }
 
             new Thread(() =>
             {
@@ -128,13 +133,29 @@ namespace taskt.Core.Automation.Engine
                     taskModel = HttpServerClient.UpdateTask(taskModel.TaskID, "Running", "Running Server Assignment");
                 }
 
-
-
                 //track variables and app instances
                 ReportProgress("Creating Variable List");
-                VariableList = automationScript.Variables;
-                ReportProgress("Creating App Instance Tracking List");
+              
 
+                //set variables if they were passed in
+                if (VariableList != null)
+                {
+                    foreach (var var in VariableList)
+                    {
+                        var variableFound = automationScript.Variables.Where(f => f.VariableName == var.VariableName).FirstOrDefault();
+
+                        if (variableFound != null)
+                        {
+                            variableFound.VariableValue = var.VariableValue;
+                        }
+                    }
+                }
+
+
+                VariableList = automationScript.Variables;
+
+
+                ReportProgress("Creating App Instance Tracking List");
                 //create app instances and merge in global instances
                 this.AppInstances = new Dictionary<string, object>();
                 var GlobalInstances = GlobalAppInstances.GetInstances();

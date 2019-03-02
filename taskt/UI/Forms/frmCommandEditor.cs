@@ -39,6 +39,8 @@ namespace taskt.UI.Forms
         public List<Core.Script.ScriptVariable> scriptVariables;
         //reference to currently selected command
         public Core.Automation.Commands.ScriptCommand selectedCommand;
+        //reference to original command
+        public Core.Automation.Commands.ScriptCommand originalCommand;
         //assigned by frmScriptBuilder to restrict inputs for editing existing commands
         public CreationMode creationMode;
         //startup command, assigned from frmCommand Browser
@@ -59,77 +61,168 @@ namespace taskt.UI.Forms
         //handle events for the form
         private void frmNewCommand_Load(object sender, EventArgs e)
         {
-            //Track the creation mode required - Add or Edit depending on calling Form
-            if (creationMode == CreationMode.Add)
+            ////Track the creation mode required - Add or Edit depending on calling Form
+            //if (creationMode == CreationMode.Add)
+            //{
+            //    //Set DisplayMember to track DisplayValue from the class
+            //    cboSelectedCommand.DisplayMember = "DisplayValue";
+
+            //    //Pull all available automation commands
+            //    var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
+            //              .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+            //              .Where(t => t.Name != "ScriptCommand")
+            //              .Where(t => t.IsAbstract == false)
+            //              .Where(t => t.BaseType.Name == "ScriptCommand")
+            //              .ToList();
+
+            //    //Loop through each class
+            //    foreach (var commandClass in commandClasses)
+            //    {
+            //        var groupingAttribute = commandClass.GetCustomAttributes(typeof(Core.Automation.Attributes.ClassAttributes.Group), true);
+            //        string groupAttribute = "";
+            //        if (groupingAttribute.Length > 0)
+            //        {
+            //            var attributeFound = (Core.Automation.Attributes.ClassAttributes.Group)groupingAttribute[0];
+            //            groupAttribute = attributeFound.groupName;
+            //        }
+
+            //        //Instantiate Class
+            //        Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
+
+            //        //If command is enabled, pull for display and configuration
+            //        if (newCommand.CommandEnabled)
+            //        {
+            //            CommandItem newCommandItem = new CommandItem();
+            //            newCommandItem.DisplayValue = string.Join(" - ", groupAttribute,newCommand.SelectionName);
+            //            newCommandItem.CommandInstance = newCommand;
+            //            commandList.Add(newCommandItem);
+            //        }
+            //    }
+
+            //    commandList = commandList.OrderBy(itm => itm.DisplayValue).ToList();
+
+            //    //set combobox to coammand list
+            //    cboSelectedCommand.DataSource = commandList;
+
+            //    if ((defaultStartupCommand != null) && (commandList.Where(x => x.DisplayValue == defaultStartupCommand).Count() > 0))
+
+            //    {
+            //        cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(defaultStartupCommand);
+            //    }
+            //    else
+            //    {
+            //        //set index to first item
+            //        cboSelectedCommand.SelectedIndex = 0;
+            //    }
+
+            //    //force commit event to populate the flow layout
+            //    cboSelectedCommand_SelectionChangeCommitted(null, null);
+            //}
+            //else
+
+            //{
+            //    //enable only the command passed for edit mode
+            //    cboSelectedCommand.Items.Add(selectedCommand.SelectionName);
+            //    cboSelectedCommand.SelectedIndex = 0;
+            //    cboSelectedCommand.Enabled = false;
+            //    cboSelectedCommand.Text = selectedCommand.SelectionName;
+            //    cboSelectedCommand_SelectionChangeCommitted(null, null);
+            //   // GenerateUIInputElements(selectedCommand);
+            //}
+
+            //Set DisplayMember to track DisplayValue from the class
+            cboSelectedCommand.DisplayMember = "DisplayValue";
+
+            //Pull all available automation commands
+            var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
+                      .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+                      .Where(t => t.Name != "ScriptCommand")
+                      .Where(t => t.IsAbstract == false)
+                      .Where(t => t.BaseType.Name == "ScriptCommand")
+                      .ToList();
+
+            //Loop through each class
+            foreach (var commandClass in commandClasses)
             {
-                //Set DisplayMember to track DisplayValue from the class
-                cboSelectedCommand.DisplayMember = "DisplayValue";
-
-                //Pull all available automation commands
-                var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                          .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
-                          .Where(t => t.Name != "ScriptCommand")
-                          .Where(t => t.IsAbstract == false)
-                          .Where(t => t.BaseType.Name == "ScriptCommand")
-                          .ToList();
-
-                //Loop through each class
-                foreach (var commandClass in commandClasses)
+                var groupingAttribute = commandClass.GetCustomAttributes(typeof(Core.Automation.Attributes.ClassAttributes.Group), true);
+                string groupAttribute = "";
+                if (groupingAttribute.Length > 0)
                 {
-                    var groupingAttribute = commandClass.GetCustomAttributes(typeof(Core.Automation.Attributes.ClassAttributes.Group), true);
-                    string groupAttribute = "";
-                    if (groupingAttribute.Length > 0)
-                    {
-                        var attributeFound = (Core.Automation.Attributes.ClassAttributes.Group)groupingAttribute[0];
-                        groupAttribute = attributeFound.groupName;
-                    }
-
-                    //Instantiate Class
-                    Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
-
-                    //If command is enabled, pull for display and configuration
-                    if (newCommand.CommandEnabled)
-                    {
-                        CommandItem newCommandItem = new CommandItem();
-                        newCommandItem.DisplayValue = string.Join(" - ", groupAttribute,newCommand.SelectionName);
-                        newCommandItem.CommandInstance = newCommand;
-                        commandList.Add(newCommandItem);
-                    }
+                    var attributeFound = (Core.Automation.Attributes.ClassAttributes.Group)groupingAttribute[0];
+                    groupAttribute = attributeFound.groupName;
                 }
 
-                commandList = commandList.OrderBy(itm => itm.DisplayValue).ToList();
+                //Instantiate Class
+                Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
 
-                //set combobox to coammand list
-                cboSelectedCommand.DataSource = commandList;
-
-                if ((defaultStartupCommand != null) && (commandList.Where(x => x.DisplayValue == defaultStartupCommand).Count() > 0))
-
+                //If command is enabled, pull for display and configuration
+                if (newCommand.CommandEnabled)
                 {
-                    cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(defaultStartupCommand);
+                    CommandItem newCommandItem = new CommandItem();
+                    newCommandItem.DisplayValue = string.Join(" - ", groupAttribute, newCommand.SelectionName);
+                    newCommandItem.CommandInstance = newCommand;
+                    commandList.Add(newCommandItem);
                 }
-                else
-                {
-                    //set index to first item
-                    cboSelectedCommand.SelectedIndex = 0;
-                }
+            }
 
-                //force commit event to populate the flow layout
-                cboSelectedCommand_SelectionChangeCommitted(null, null);
+            commandList = commandList.OrderBy(itm => itm.DisplayValue).ToList();
+
+            //set combobox to coammand list
+            cboSelectedCommand.DataSource = commandList;
+
+            if ((creationMode == CreationMode.Add) && (defaultStartupCommand != null) && (commandList.Where(x => x.DisplayValue == defaultStartupCommand).Count() > 0))
+            {
+                cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(defaultStartupCommand);
+            }
+            else if ((creationMode == CreationMode.Edit) && (defaultStartupCommand != null) && (commandList.Where(x => x.DisplayValue.Contains(defaultStartupCommand)).Count() > 0))
+            {
+               var requiredCommand = commandList.Where(x => x.DisplayValue.Contains(defaultStartupCommand)).FirstOrDefault();
+               cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.DisplayValue);
             }
             else
-
             {
-                //enable only the command passed for edit mode
-                cboSelectedCommand.Items.Add(selectedCommand.SelectionName);
                 cboSelectedCommand.SelectedIndex = 0;
-                cboSelectedCommand.Enabled = false;
-                cboSelectedCommand.Text = selectedCommand.SelectionName;
-                GenerateUIInputElements(selectedCommand);
             }
+
+            //force commit event to populate the flow layout
+            cboSelectedCommand_SelectionChangeCommitted(null, null);
+
+            //apply original variables if command is being updated
+            if (originalCommand != null)
+            {
+                //copy original properties
+                CopyPropertiesTo(originalCommand, selectedCommand);
+
+                //update bindings
+                foreach (Control c in flw_InputVariables.Controls)
+                    foreach (Binding b in c.DataBindings)
+                        b.ReadValue();
+
+            }
+
+
 
             //gracefully handle post initialization setups (drop downs, etc)
             AfterFormInitialization();
 
+        }
+        private void CopyPropertiesTo(object fromObject, object toObject)
+        {
+            PropertyInfo[] toObjectProperties = toObject.GetType().GetProperties();
+            foreach (PropertyInfo propTo in toObjectProperties)
+            {
+                try
+                {
+                    PropertyInfo propFrom = fromObject.GetType().GetProperty(propTo.Name);
+                    if (propFrom != null && propFrom.CanWrite)
+                        propTo.SetValue(toObject, propFrom.GetValue(fromObject, null), null);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+              
+            }
         }
 
         private void AfterFormInitialization()
@@ -1378,6 +1471,9 @@ namespace taskt.UI.Forms
         }
         private void cboSelectedCommand_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            //clear controls
+            flw_InputVariables.Controls.Clear();
+
             //find underlying command class and generate the required items on the UI flow layout for configuration
             var selectedCommandItem = cboSelectedCommand.Text;
             selectedCommand = commandList.Where(itm => itm.DisplayValue == selectedCommandItem).FirstOrDefault().CommandInstance;
@@ -1918,9 +2014,13 @@ namespace taskt.UI.Forms
 
         }
 
+
         #endregion Assitance Forms Events
 
+        private void cboSelectedCommand_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
     /// <summary>
     /// Helper class for tracking command names and instances of the associated class

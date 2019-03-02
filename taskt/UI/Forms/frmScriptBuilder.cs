@@ -744,8 +744,10 @@ namespace taskt.UI.Forms
                 //creation mode edit locks form to current command
                 editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
 
+                editCommand.defaultStartupCommand = currentCommand.SelectionName;
+
                 //create clone of current command so databinding does not affect if changes are not saved
-                editCommand.selectedCommand = Core.Common.Clone(currentCommand); ;
+                editCommand.originalCommand = Core.Common.Clone(currentCommand);
 
                 //set variables
                 editCommand.scriptVariables = this.scriptVariables;
@@ -818,6 +820,7 @@ namespace taskt.UI.Forms
             newCommand.Text = cmdDetails.GetDisplayValue();
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
+            cmdDetails.RenderedControls = null;
             newCommand.Tag = cmdDetails;
             newCommand.ForeColor = cmdDetails.DisplayForeColor;
             newCommand.BackColor = Color.DimGray;

@@ -53,6 +53,7 @@
             this.cboSelectedCommand.Name = "cboSelectedCommand";
             this.cboSelectedCommand.Size = new System.Drawing.Size(535, 28);
             this.cboSelectedCommand.TabIndex = 2;
+            this.cboSelectedCommand.SelectedIndexChanged += new System.EventHandler(this.cboSelectedCommand_SelectedIndexChanged);
             this.cboSelectedCommand.SelectionChangeCommitted += new System.EventHandler(this.cboSelectedCommand_SelectionChangeCommitted);
             // 
             // flw_InputVariables
@@ -115,6 +116,7 @@
             this.uiBtnAdd.Size = new System.Drawing.Size(88, 49);
             this.uiBtnAdd.TabIndex = 14;
             this.uiBtnAdd.TabStop = false;
+            this.uiBtnAdd.Text = "Ok";
             this.uiBtnAdd.Click += new System.EventHandler(this.uiBtnAdd_Click);
             // 
             // uiBtnCancel
@@ -132,6 +134,7 @@
             this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
             this.uiBtnCancel.TabIndex = 15;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // frmCommandEditor

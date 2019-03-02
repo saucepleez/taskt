@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -45,14 +46,37 @@ namespace taskt.Core
                 return default(T);
             }
 
-            System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            Stream stream = new MemoryStream();
-            using (stream)
+
+
+
+            //output to xml file
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            var settings = new XmlWriterSettings
             {
-                formatter.Serialize(stream, source);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)formatter.Deserialize(stream);
+                NewLineHandling = NewLineHandling.Entitize,
+                Indent = true
+            };
+
+            StringBuilder xml = new StringBuilder();
+            XmlWriter xmlWriter = XmlWriter.Create(xml);
+
+            serializer.Serialize(xmlWriter, source);
+
+
+            using (TextReader reader = new StringReader(xml.ToString()))
+            {
+                T deserializedData = (T)serializer.Deserialize(reader);
+                return deserializedData;
             }
+
+            //System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            //Stream stream = new MemoryStream();
+            //using (stream)
+            //{
+            //    formatter.Serialize(stream, source);
+            //    stream.Seek(0, SeekOrigin.Begin);
+            //    return (T)formatter.Deserialize(stream);
+            //}
         }
         ///// <summary>
         ///// Returns a path to the underlying Script folder where script file objects are loaded and saved. Used when saved or loading files.
