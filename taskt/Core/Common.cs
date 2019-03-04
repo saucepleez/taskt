@@ -20,6 +20,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,33 +43,44 @@ namespace taskt.Core
                 throw new ArgumentException("The type must be serializable.", "source");
             }
 
+
             if (source == null)
             {
                 return default(T);
             }
 
 
-
-
-            //output to xml file
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            var settings = new XmlWriterSettings
+            using (MemoryStream ms = new MemoryStream())
             {
-                NewLineHandling = NewLineHandling.Entitize,
-                Indent = true
-            };
-
-            StringBuilder xml = new StringBuilder();
-            XmlWriter xmlWriter = XmlWriter.Create(xml);
-
-            serializer.Serialize(xmlWriter, source);
-
-
-            using (TextReader reader = new StringReader(xml.ToString()))
-            {
-                T deserializedData = (T)serializer.Deserialize(reader);
-                return deserializedData;
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Context = new StreamingContext(StreamingContextStates.Clone);
+                formatter.Serialize(ms, source);
+                ms.Position = 0;
+                return (T)formatter.Deserialize(ms);
             }
+
+
+
+
+            ////output to xml file
+            //XmlSerializer serializer = new XmlSerializer(typeof(T));
+            //var settings = new XmlWriterSettings
+            //{
+            //    NewLineHandling = NewLineHandling.Entitize,
+            //    Indent = true
+            //};
+
+            //StringBuilder xml = new StringBuilder();
+            //XmlWriter xmlWriter = XmlWriter.Create(xml);
+
+            //serializer.Serialize(xmlWriter, source);
+
+
+            //using (TextReader reader = new StringReader(xml.ToString()))
+            //{
+            //    T deserializedData = (T)serializer.Deserialize(reader);
+            //    return deserializedData;
+            //}
 
             //System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             //Stream stream = new MemoryStream();

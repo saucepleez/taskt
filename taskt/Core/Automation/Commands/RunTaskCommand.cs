@@ -40,9 +40,12 @@ namespace taskt.Core.Automation.Commands
 
 
         [XmlIgnore]
-        private DataGridView AssignmentsGridViewHelper { get; set; }
+        [NonSerialized]
+        private DataGridView AssignmentsGridViewHelper;
+
         [XmlIgnore]
-        private CheckBox PassParameters { get; set; }
+        [NonSerialized]
+        private CheckBox PassParameters;
 
         public RunTaskCommand()
         {
@@ -59,7 +62,7 @@ namespace taskt.Core.Automation.Commands
             AssignmentsGridViewHelper = new DataGridView();
             AssignmentsGridViewHelper.AllowUserToAddRows = true;
             AssignmentsGridViewHelper.AllowUserToDeleteRows = true;
-            AssignmentsGridViewHelper.Size = new Size(400, 350);
+            AssignmentsGridViewHelper.Size = new Size(400, 250);
             AssignmentsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
             AssignmentsGridViewHelper.Hide();
