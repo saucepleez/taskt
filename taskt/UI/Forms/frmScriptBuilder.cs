@@ -95,6 +95,7 @@ namespace taskt.UI.Forms
            //load all commands
            automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
+    
             //set controls double buffered
             foreach (Control control in Controls)
             {
@@ -1679,11 +1680,16 @@ namespace taskt.UI.Forms
                 return;
             }
 
-
-
-
-
             AddNewCommand(tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text);
+
+        }
+       private void tvCommands_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                tvCommands_DoubleClick(this, null);
+            }
 
         }
         #endregion
@@ -1915,7 +1921,6 @@ namespace taskt.UI.Forms
             }        
         }
 
-      
     }
 
 }
