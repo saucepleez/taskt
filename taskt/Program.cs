@@ -71,7 +71,7 @@ namespace taskt
                 SplashForm = new UI.Forms.Supplemental.frmSplash();
                 SplashForm.Show();
 
-
+                Application.DoEvents();
 
                 Application.Run(new UI.Forms.frmScriptBuilder());
             }

@@ -42,7 +42,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmSplash";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmSplash";
+            this.Text = "Welcome to taskt!";
             this.TransparencyKey = System.Drawing.Color.Black;
             this.Load += new System.EventHandler(this.frmSplash_Load);
             this.ResumeLayout(false);
