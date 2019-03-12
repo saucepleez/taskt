@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -12,21 +16,33 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Amount of time to pause for (in milliseconds).")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
         [Attributes.PropertyAttributes.SampleUsage("**8000** or **[vVariableWaitTime]**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public int v_PauseLength { get; set; }
+        public string v_PauseLength { get; set; }
 
         public PauseCommand()
         {
             this.CommandName = "PauseCommand";
             this.SelectionName = "Pause Script";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            System.Threading.Thread.Sleep(v_PauseLength);
+            var userPauseLength = v_PauseLength.ConvertToUserVariable(sender);
+            var pauseLength = int.Parse(userPauseLength);
+            System.Threading.Thread.Sleep(pauseLength);
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_PauseLength", this, editor));
+
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

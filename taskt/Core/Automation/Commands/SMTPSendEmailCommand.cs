@@ -4,7 +4,10 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -76,6 +79,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "SMTPCommand";
             this.SelectionName = "Send SMTP Email";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -97,6 +101,23 @@ namespace taskt.Core.Automation.Commands
             };
 
             client.Send(varSMTPFromEmail, varSMTPToEmail, varSMTPSubject, varSMTPBody);
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPHost", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPPort", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPUserName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPPassword", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPFromEmail", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPToEmail", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPSubject", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPBody", this, editor));
+
+            return RenderedControls;
+
         }
 
         public override string GetDisplayValue()

@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "DatabaseRunQueryCommand";
             this.SelectionName = "Run Query";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
         }
 
         public override void RunCommand(object sender)

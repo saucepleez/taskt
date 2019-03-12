@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -34,6 +38,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Navigate to URL";
             this.v_InstanceName = "default";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -48,6 +53,16 @@ namespace taskt.Core.Automation.Commands
             var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
             seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
 
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
+
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

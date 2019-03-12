@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -23,11 +27,17 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "SetEngineDelayCommand";
             this.SelectionName = "Set Engine Delay";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
             this.v_EngineSpeed = "250";
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
 
-      
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_EngineSpeed", this, editor));
 
+            return RenderedControls;
+        }
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";

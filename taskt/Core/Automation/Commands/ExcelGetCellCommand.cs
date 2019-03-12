@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -36,6 +40,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ExcelGetCellCommand";
             this.SelectionName = "Get Cell";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -53,6 +58,24 @@ namespace taskt.Core.Automation.Commands
                 var cellValue = (string)excelSheet.Range[targetAddress].Text;
                 cellValue.StoreInUserVariable(sender, v_userVariableName);
             
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
+
+            //create control for variable name
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+
+            return RenderedControls;
+
         }
 
         public override string GetDisplayValue()

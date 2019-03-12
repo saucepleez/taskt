@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -66,8 +70,9 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "DateCalculationCommand";
             this.SelectionName = "Date Calculation";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
 
-            this.v_InputValue = "[DateTime.Now]";
+            this.v_InputValue = "{DateTime.Now}";
             this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
 
         }
@@ -138,6 +143,28 @@ namespace taskt.Core.Automation.Commands
 
             //store string in variable
             stringDateFormatted.StoreInUserVariable(sender, v_applyToVariableName);
+
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_CalculationMethod", this));
+            RenderedControls.Add(CommandControls.CreateDropdownFor("v_CalculationMethod", this));
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Increment", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+
+            return RenderedControls;
 
         }
 

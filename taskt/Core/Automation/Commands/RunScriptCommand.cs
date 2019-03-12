@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -12,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Enter the path to the script")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a fully qualified path to the script, including the script extension.")]
         [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myscript.vbs**")]
         [Attributes.PropertyAttributes.Remarks("This command differs from **Start Process** because this command blocks execution until the script has completed.  If you do not want to stop while the script executes, consider using **Start Process** instead.")]
@@ -22,6 +27,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "RunScriptCommand";
             this.SelectionName = "Run Script";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -37,6 +43,17 @@ namespace taskt.Core.Automation.Commands
 
                 scriptProc.Close();
             }
+        }
+
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptPath", this, editor));
+
+        
+
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

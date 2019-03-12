@@ -12,16 +12,20 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using taskt.Core.Server;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Engine Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to set delays between execution of commands in a running instance.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change the execution speed between commands.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get data from tasktServer.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to retrieve data from tasktServer")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class GetDataCommand : ScriptCommand
     {
@@ -48,11 +52,13 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
+
         public GetDataCommand()
         {
             this.CommandName = "GetDataCommand";
-            this.SelectionName = "Get Data";
+            this.SelectionName = "Get BotStore Data";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
@@ -92,6 +98,28 @@ namespace taskt.Core.Automation.Commands
 
 
         }
+
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_KeyName", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_DataOption", this));
+            var dropdown = CommandControls.CreateDropdownFor("v_DataOption", this);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_DataOption", this, new Control[] { dropdown }, editor));
+            RenderedControls.Add(dropdown);
+
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            return RenderedControls;
+        }
+
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Get Data from Key '" + v_KeyName + "' in tasktServer BotStore]";

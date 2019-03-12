@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
+using taskt.UI.CustomControls;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -36,6 +40,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "RenameFileCommand";
             this.SelectionName = "Rename File";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -55,7 +60,15 @@ namespace taskt.Core.Automation.Commands
             System.IO.File.Move(sourceFile, destinationPath);
 
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
 
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_NewName", this, editor));
+
+            return RenderedControls;
+        }
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [rename " + v_SourceFilePath + " to '" + v_NewName + "']";

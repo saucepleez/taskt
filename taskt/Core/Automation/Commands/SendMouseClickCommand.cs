@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -34,12 +37,24 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "SendMouseClickCommand";
             this.SelectionName = "Send Mouse Click";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             var mousePosition = System.Windows.Forms.Cursor.Position;
             User32Functions.SendMouseClick(v_MouseClick, mousePosition.X, mousePosition.Y);
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create window name helper control
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_MouseClick", this, editor));
+       
+
+            return RenderedControls;
+
         }
 
         public override string GetDisplayValue()

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -71,12 +75,26 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public System.Data.DataTable v_WebActionParameterTable { get; set; }
 
+
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView ElementsGridViewHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private ComboBox ElementActionDropdown;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<Control> ElementParameterControls;
+
         public SeleniumBrowserElementActionCommand()
         {
             this.CommandName = "SeleniumBrowserCreateCommand";
             this.SelectionName = "Element Action";
             this.v_InstanceName = "default";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
 
             this.v_WebActionParameterTable = new System.Data.DataTable
             {
@@ -84,7 +102,18 @@ namespace taskt.Core.Automation.Commands
             };
             this.v_WebActionParameterTable.Columns.Add("Parameter Name");
             this.v_WebActionParameterTable.Columns.Add("Parameter Value");
-        }
+
+            ElementsGridViewHelper = new DataGridView();
+            ElementsGridViewHelper.AllowUserToAddRows = true;
+            ElementsGridViewHelper.AllowUserToDeleteRows = true;
+            ElementsGridViewHelper.Size = new Size(400, 250);
+            ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            ElementsGridViewHelper.AllowUserToAddRows = false;
+            ElementsGridViewHelper.AllowUserToDeleteRows = false;
+
+
+    }
 
         public override void RunCommand(object sender)
         {
@@ -376,6 +405,133 @@ namespace taskt.Core.Automation.Commands
                 return false;
             }
 
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SeleniumSearchType", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumSearchParameter", this, editor));
+
+
+            ElementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_SeleniumElementAction", this);
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumElementAction", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_SeleniumElementAction", this, new Control[] { ElementActionDropdown }, editor));
+            ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
+            
+            RenderedControls.Add(ElementActionDropdown);
+
+            ElementParameterControls = new List<Control>();
+            ElementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebActionParameterTable", this));
+            ElementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { ElementsGridViewHelper }, editor));
+            ElementParameterControls.Add(ElementsGridViewHelper);
+
+            RenderedControls.AddRange(ElementParameterControls);
+
+            return RenderedControls;
+        }
+        private void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+
+            Core.Automation.Commands.SeleniumBrowserElementActionCommand cmd = (Core.Automation.Commands.SeleniumBrowserElementActionCommand)this;
+            DataTable actionParameters = cmd.v_WebActionParameterTable;
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Clear();
+            }
+
+
+            switch (ElementActionDropdown.SelectedItem)
+            {
+                case "Invoke Click":
+                case "Clear Element":
+
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Hide();
+                    }
+
+                    break;
+
+                case "Left Click":
+                case "Middle Click":
+                case "Right Click":
+                case "Double Left Click":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("X Adjustment", 0);
+                        actionParameters.Rows.Add("Y Adjustment", 0);
+                    }
+                    break;
+
+                case "Set Text":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Text To Set");
+                        actionParameters.Rows.Add("Clear Element Before Setting Text");
+                    }
+
+                    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("Yes");
+                    comparisonComboBox.Items.Add("No");
+
+                    //assign cell as a combobox
+                    if (sender != null)
+                    {
+                        ElementsGridViewHelper.Rows[1].Cells[1].Value = "No";
+                    }
+                    ElementsGridViewHelper.Rows[1].Cells[1] = comparisonComboBox;
+
+
+                    break;
+
+                case "Get Text":
+                case "Get Matching Elements":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Variable Name");
+                    }
+                    break;
+
+                case "Get Attribute":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Attribute Name");
+                        actionParameters.Rows.Add("Variable Name");
+                    }
+                    break;
+
+                case "Wait For Element To Exist":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Timeout (Seconds)");
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override string GetDisplayValue()

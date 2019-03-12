@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
+
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
@@ -26,6 +31,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ScreenshotCommand";
             this.SelectionName = "Take Screenshot";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -34,6 +40,22 @@ namespace taskt.Core.Automation.Commands
             string ConvertToUserVariabledString = v_FilePath.ConvertToUserVariable(sender);
             image.Save(ConvertToUserVariabledString);
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create window name helper control
+            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_ScreenshotWindowName", this));
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_ScreenshotWindowName", this).AddWindowNames();
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_ScreenshotWindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
+
+
+            return RenderedControls;
+        }
+
 
         public override string GetDisplayValue()
         {

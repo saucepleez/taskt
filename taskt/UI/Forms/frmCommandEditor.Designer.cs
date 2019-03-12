@@ -51,9 +51,8 @@
             this.cboSelectedCommand.Location = new System.Drawing.Point(6, 5);
             this.cboSelectedCommand.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cboSelectedCommand.Name = "cboSelectedCommand";
-            this.cboSelectedCommand.Size = new System.Drawing.Size(535, 28);
+            this.cboSelectedCommand.Size = new System.Drawing.Size(619, 28);
             this.cboSelectedCommand.TabIndex = 2;
-            this.cboSelectedCommand.SelectedIndexChanged += new System.EventHandler(this.cboSelectedCommand_SelectedIndexChanged);
             this.cboSelectedCommand.SelectionChangeCommitted += new System.EventHandler(this.cboSelectedCommand_SelectionChangeCommitted);
             // 
             // flw_InputVariables
@@ -67,7 +66,7 @@
             this.flw_InputVariables.Margin = new System.Windows.Forms.Padding(5);
             this.flw_InputVariables.Name = "flw_InputVariables";
             this.flw_InputVariables.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
-            this.flw_InputVariables.Size = new System.Drawing.Size(537, 429);
+            this.flw_InputVariables.Size = new System.Drawing.Size(621, 487);
             this.flw_InputVariables.TabIndex = 3;
             this.flw_InputVariables.WrapContents = false;
             // 
@@ -86,7 +85,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(547, 529);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(631, 587);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // flowLayoutPanel1
@@ -95,10 +94,10 @@
             this.flowLayoutPanel1.Controls.Add(this.uiBtnAdd);
             this.flowLayoutPanel1.Controls.Add(this.uiBtnCancel);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 472);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 530);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(547, 57);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(631, 57);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // uiBtnAdd
@@ -143,7 +142,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(547, 529);
+            this.ClientSize = new System.Drawing.Size(631, 587);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

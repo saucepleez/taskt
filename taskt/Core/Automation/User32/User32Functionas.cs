@@ -918,7 +918,7 @@ namespace taskt.Core.Automation.User32
                 var pauseTime = sw.ElapsedMilliseconds;
                 var pauseCommand = new Core.Automation.Commands.PauseCommand
                 {
-                    v_PauseLength = Convert.ToInt32(pauseTime)
+                    v_PauseLength = pauseTime.ToString()
                 };
                 generatedCommands.Add(pauseCommand);
                 sw.Restart();

@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -33,13 +37,15 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid height range could be 0-1080")]
         public string v_YWindowSize { get; set; }
 
+        [XmlIgnore]
+        [NonSerialized]
+        public ComboBox WindowNameControl;
         public ResizeWindowCommand()
         {
             this.CommandName = "ResizeWindowCommand";
             this.SelectionName = "Resize Window";
-
-            //not working
             this.CommandEnabled = true;
+            this.CustomRendering = true;    
         }
 
         public override void RunCommand(object sender)
@@ -66,6 +72,30 @@ namespace taskt.Core.Automation.Commands
                 User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
             }
 
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create window name helper control
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.Add(WindowNameControl);
+
+            //create standard group controls
+            var xGroup = CommandControls.CreateDefaultInputGroupFor("v_XWindowSize", this, editor);
+            var yGroup = CommandControls.CreateDefaultInputGroupFor("v_YWindowSize", this, editor);
+            RenderedControls.AddRange(xGroup);
+            RenderedControls.AddRange(yGroup);
+      
+            return RenderedControls;
+
+        }
+        public override void Refresh(frmCommandEditor editor)
+        {
+            base.Refresh();
+            WindowNameControl.AddWindowNames();
         }
 
         public override string GetDisplayValue()

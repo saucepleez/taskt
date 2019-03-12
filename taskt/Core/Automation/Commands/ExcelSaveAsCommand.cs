@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -31,6 +35,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ExcelSaveAsCommand";
             this.SelectionName = "Save Workbook As";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
@@ -53,6 +58,18 @@ namespace taskt.Core.Automation.Commands
             excelInstance.DisplayAlerts = true;
 
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
+
+            return RenderedControls;
+
+        }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Save To '" + v_FileName + "', Instance Name: '" + v_InstanceName + "']";

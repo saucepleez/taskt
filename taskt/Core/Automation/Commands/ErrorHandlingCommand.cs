@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -11,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     public class ErrorHandlingCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Action On Error")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select an action to take in the event an error occurs")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Processing")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Processing")]
         [Attributes.PropertyAttributes.InputSpecification("Select the action you want to take when you come across an error.")]
@@ -24,6 +28,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ErrorHandlingCommand";
             this.SelectionName = "Error Handling";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -31,6 +36,19 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             engine.ErrorHandler = this;
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ErrorHandlingAction", this));
+            var dropdown = CommandControls.CreateDropdownFor("v_ErrorHandlingAction", this);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_ErrorHandlingAction", this, new Control[] { dropdown }, editor));
+            RenderedControls.Add(dropdown);
+
+            return RenderedControls;
+        }
+
 
         public override string GetDisplayValue()
         {

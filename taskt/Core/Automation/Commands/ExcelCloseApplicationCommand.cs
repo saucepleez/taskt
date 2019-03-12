@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -28,6 +32,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ExcelCloseApplicationCommand";
             this.SelectionName = "Close Excel Application";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
@@ -51,6 +56,17 @@ namespace taskt.Core.Automation.Commands
 
             //remove instance
             engine.RemoveAppInstance(vInstance);
+
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelSaveOnExit", this, editor));
+
+            return RenderedControls;
 
         }
         public override string GetDisplayValue()

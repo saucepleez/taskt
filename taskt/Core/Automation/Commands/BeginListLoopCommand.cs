@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -26,6 +29,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "BeginListLoopCommand";
             this.SelectionName = "Loop List";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
@@ -100,6 +104,14 @@ namespace taskt.Core.Automation.Commands
 
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
             }
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_LoopParameter", this, editor));
+           
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

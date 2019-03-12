@@ -126,8 +126,10 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         public bool CustomRendering { get; set; }
+
         [XmlIgnore]
-        public List<Control> RenderedControls { get; set; }
+        [NonSerialized]
+        public List<Control> RenderedControls;
 
         public ScriptCommand()
         {
@@ -163,5 +165,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls = new List<Control>();
             return RenderedControls;
         }
+
+        public virtual void Refresh(UI.Forms.frmCommandEditor editor = null)
+        {
+
+        }
+
     }
 }

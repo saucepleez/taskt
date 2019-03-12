@@ -33,9 +33,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "VariableCommand";
             this.SelectionName = "Set Variable";
             this.CommandEnabled = true;
-            //set to true and enable Render() method for command
-            //this.CustomRendering = true;
-            this.CustomRendering = false;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -98,24 +96,25 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
         }
 
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-       
-        //    //create inputs using helpers - or you can do it manually yourself
-        //   var vInputLabel = CommandControls.CreateDefaultLabelFor("v_Input", this);
-        //   var vInputBox = CommandControls.CreateDefaultInputFor("v_Input", this);
-        //   var vInputHelpers = CommandControls.CreateUIHelpersFor("v_Input", this, new Control[]{vInputBox}, editor);
-
-        //    RenderedControls.Add(vInputLabel);
-        //    RenderedControls.AddRange(vInputHelpers);
-        //    RenderedControls.Add(vInputBox);
- 
-
-        //    return RenderedControls;
+        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        {
+            //custom rendering
+            base.Render(editor);
 
 
-        //}
+            //create control for variable name
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
+
+        
+
+            return RenderedControls;
+
+
+        }
     }
 }

@@ -2,6 +2,10 @@
 using System.Xml.Serialization;
 using System.Net;
 using System.IO;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -26,11 +30,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
 
+
+        [XmlIgnore]
+        [NonSerialized]
+        public ComboBox VariableNameControl;
         public HTTPRequestCommand()
         {
             this.CommandName = "HTTPRequestCommand";
             this.SelectionName = "HTTP Request";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -45,6 +54,24 @@ namespace taskt.Core.Automation.Commands
             string strResponse = reader.ReadToEnd();
 
             strResponse.StoreInUserVariable(sender, v_userVariableName);
+
+        }
+
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create inputs for request url
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WebRequestURL", this, editor));
+
+
+            //create window name helper control
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            return RenderedControls;
 
         }
 

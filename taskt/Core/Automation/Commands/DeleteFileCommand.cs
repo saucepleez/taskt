@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -28,6 +32,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "DeleteFileCommand";
             this.SelectionName = "Delete File";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -39,6 +44,14 @@ namespace taskt.Core.Automation.Commands
             //delete file
             System.IO.File.Delete(sourceFile);
 
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
+
+            return RenderedControls;
         }
 
 

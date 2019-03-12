@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -23,6 +27,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ExcelAddWorkbookCommand";
             this.SelectionName = "Add Workbook";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
@@ -34,6 +39,16 @@ namespace taskt.Core.Automation.Commands
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 excelInstance.Workbooks.Add();
             
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+
+            return RenderedControls;
+
         }
         public override string GetDisplayValue()
         {

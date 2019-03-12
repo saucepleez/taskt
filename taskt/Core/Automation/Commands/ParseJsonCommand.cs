@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -41,6 +44,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ParseJsonCommand";
             this.SelectionName = "Parse JSON";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
           
         }
 
@@ -101,9 +105,26 @@ namespace taskt.Core.Automation.Commands
             requiredComplexVariable.VariableValue = resultList;
 
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
 
-      
-       
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_JsonExtractor", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            return RenderedControls;
+
+        }
+
+
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Apply Result(s) To Variable: " + v_applyToVariableName + "]";

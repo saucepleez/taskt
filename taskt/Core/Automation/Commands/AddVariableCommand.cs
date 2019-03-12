@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     public class AddVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the name of the variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the name of the new variable")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If the variable exists, the value of the old variable will be replaced with the new one")]
@@ -39,6 +43,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "AddVariableCommand";
             this.SelectionName = "Add Variable";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -87,7 +92,23 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-      
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
+
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfExists", this));
+            var dropdown = CommandControls.CreateDropdownFor("v_IfExists", this);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfExists", this, new Control[] { dropdown }, editor));
+            RenderedControls.Add(dropdown);
+
+            return RenderedControls;
+        }
+
+
 
         public override string GetDisplayValue()
         {

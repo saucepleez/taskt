@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -36,6 +38,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Show Message";
             this.CommandEnabled = true;
             this.v_AutoCloseAfter = 0;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -64,6 +67,23 @@ namespace taskt.Core.Automation.Commands
             }
 
             ));
+
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create message controls
+            var messageControlSet = CommandControls.CreateDefaultInputGroupFor("v_Message", this, editor);
+            RenderedControls.AddRange(messageControlSet);
+
+
+            //create auto close control set
+            var autocloseControlSet = CommandControls.CreateDefaultInputGroupFor("v_AutoCloseAfter", this, editor);
+            RenderedControls.AddRange(autocloseControlSet);
+
+
+            return RenderedControls;
 
         }
 

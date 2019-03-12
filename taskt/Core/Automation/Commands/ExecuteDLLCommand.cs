@@ -5,6 +5,10 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Reflection;
 using Newtonsoft.Json;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
+using System.Drawing;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -52,18 +56,30 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         public DataTable v_MethodParameters { get; set; }
-      
+
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView ParametersGridViewHelper;
 
         public ExecuteDLLCommand()
         {
             this.CommandName = "ExecuteDLLCommand";
             this.SelectionName = "Execute DLL";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
 
             this.v_MethodParameters = new DataTable();
             this.v_MethodParameters.Columns.Add("Parameter Name");
             this.v_MethodParameters.Columns.Add("Parameter Value");
             this.v_MethodParameters.TableName = DateTime.Now.ToString("MethodParameterTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+
+            ParametersGridViewHelper = new DataGridView();
+            ParametersGridViewHelper.AllowUserToAddRows = true;
+            ParametersGridViewHelper.AllowUserToDeleteRows = true;
+            ParametersGridViewHelper.Size = new Size(350, 125);
+            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_MethodParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+
         }
 
         public override void RunCommand(object sender)
@@ -199,6 +215,30 @@ namespace taskt.Core.Automation.Commands
             result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
 
         }
+
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ClassName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MethodName", this, editor));
+
+            //create control for variable name
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_MethodParameters", this, new Control[] { ParametersGridViewHelper }, editor));
+            RenderedControls.Add(ParametersGridViewHelper);
+    
+
+
+            return RenderedControls;
+        }
+
 
         public override string GetDisplayValue()
         {

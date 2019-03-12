@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Windows.Automation;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -47,8 +50,9 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "ThickAppClickItemCommand";
             this.SelectionName = "Click UI Item";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
             this.DefaultPause = 3000;
+            this.CustomRendering = false;
         }
 
         public override void RunCommand(object sender)
@@ -126,7 +130,7 @@ namespace taskt.Core.Automation.Commands
 
             return handleList;
         }
-
+      
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Perform " + v_MouseClick + " on '" + v_AutomationHandleName + "' in Window '" + v_AutomationWindowName + "']";

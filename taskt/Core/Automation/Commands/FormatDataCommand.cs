@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -48,11 +52,12 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "FormatDataCommand";
             this.SelectionName = "Format Data";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
 
-            this.v_InputValue = "[DateTime.Now]";
+            this.v_InputValue = "{DateTime.Now}";
             this.v_FormatType = "Date";
             this.v_ToStringFormat = "MM/dd/yyyy";
-
+            
         }
 
         public override void RunCommand(object sender)
@@ -97,7 +102,23 @@ namespace taskt.Core.Automation.Commands
 
 
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
 
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FormatType", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            return RenderedControls;
+
+        }
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Format '" + v_InputValue + "' and Apply Result to Variable '" + v_applyToVariableName + "']";

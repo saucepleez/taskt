@@ -36,7 +36,8 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "ThickAppGetTextCommand";
             this.SelectionName = "Get UI Item";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
+            this.CustomRendering = false;
         }
 
         public override void RunCommand(object sender)

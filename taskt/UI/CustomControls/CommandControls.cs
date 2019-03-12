@@ -1,23 +1,44 @@
-﻿using System;
+﻿using SHDocVw;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core;
 
 namespace taskt.UI.CustomControls
 {
-   public static class CommandControls
+    public static class CommandControls
     {
+        public static UI.Forms.frmCommandEditor CurrentEditor { get; set; }
+
         public static List<Control> CreateDefaultInputGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
         {
             //Todo: Test
             var controlList = new List<Control>();
-            var label = CreateDefaultInputFor(parameterName, parent);
+            var label = CreateDefaultLabelFor(parameterName, parent);
             var input = CreateDefaultInputFor(parameterName, parent);
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor);
+
+            controlList.Add(label);
+            controlList.AddRange(helpers);
+            controlList.Add(input);
+
+            return controlList;
+
+        }
+
+        public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        {
+            //Todo: Test
+            var controlList = new List<Control>();
+            var label = CreateDefaultLabelFor(parameterName, parent);
+            var input = CreateDropdownFor(parameterName, parent);
             var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor);
 
             controlList.Add(label);
@@ -47,20 +68,26 @@ namespace taskt.UI.CustomControls
             }
 
 
-         
+
             inputLabel.AutoSize = true;
             inputLabel.Font = new Font("Segoe UI Light", 12);
             inputLabel.ForeColor = Color.White;
             inputLabel.Name = "lbl_" + parameterName;
             return inputLabel;
         }
-        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
+        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300)
         {
             var inputBox = new TextBox();
             inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
-            inputBox.Height = 30;
-            inputBox.Width = 300;
+            inputBox.Height = height;
+            inputBox.Width = width;
+
+            if (inputBox.Height != 30)
+            {
+                inputBox.Multiline = true;
+            }
+
             inputBox.Name = parameterName;
             return inputBox;
 
@@ -87,6 +114,22 @@ namespace taskt.UI.CustomControls
             return inputBox;
 
         }
+        public static ComboBox CreateStandardComboboxFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
+        {
+
+
+            var inputBox = new ComboBox();
+            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
+            inputBox.Height = 30;
+            inputBox.Width = 300;
+            inputBox.Name = parameterName;
+
+
+            return inputBox;
+
+        }
+
         public static List<Control> CreateUIHelpersFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, UI.Forms.frmCommandEditor editor)
         {
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
@@ -106,6 +149,7 @@ namespace taskt.UI.CustomControls
                 helperControl.Font = new Font("Segoe UI Semilight", 10);
                 helperControl.Name = parameterName + "_helper";
                 helperControl.Tag = targetControls.FirstOrDefault();
+                helperControl.HelperType = attrib.additionalHelper;
 
                 switch (attrib.additionalHelper)
                 {
@@ -113,7 +157,7 @@ namespace taskt.UI.CustomControls
                         //show variable selector
                         helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
                         helperControl.CommandDisplay = "Insert Variable";
-                        helperControl.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
+                        helperControl.Click += (sender, e) => ShowVariableSelector(sender, e);
                         break;
 
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
@@ -127,7 +171,7 @@ namespace taskt.UI.CustomControls
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
                         helperControl.CommandDisplay = "Capture Reference Image";
-                        helperControl.Click += (sender, e) => ShowImageCapture(sender, e, editor);
+                        helperControl.Click += (sender, e) => ShowImageCapture(sender, e);
 
                         taskt.UI.CustomControls.CommandItemControl testRun = new taskt.UI.CustomControls.CommandItemControl();
                         testRun.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
@@ -137,8 +181,8 @@ namespace taskt.UI.CustomControls
                         testRun.CommandDisplay = "Run Image Recognition Test";
                         testRun.ForeColor = Color.AliceBlue;
                         testRun.Tag = targetControls.FirstOrDefault();
-                        helperControl.Click += (sender, e) => RunImageCapture(sender, e, editor);
-                        editor.flw_InputVariables.Controls.Add(testRun);
+                        testRun.Click += (sender, e) => RunImageCapture(sender, e);
+                        controlList.Add(testRun);
                         break;
 
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
@@ -152,25 +196,25 @@ namespace taskt.UI.CustomControls
                         helperControl.CommandImage = UI.Images.GetUIImage("SendMouseMoveCommand");
                         helperControl.CommandDisplay = "Capture Mouse Position";
                         helperControl.ForeColor = Color.AliceBlue;
-                        helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e, editor);
+                        helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
                         //show variable selector
                         helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-                        helperControl.CommandDisplay = "Element Recorder";                   
-                        helperControl.Click    += (sender, e) => ShowElementRecorder(sender, e, editor);
+                        helperControl.CommandDisplay = "Element Recorder";
+                        helperControl.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
                         //show variable selector
                         helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
                         helperControl.CommandDisplay = "Generate Parameters";
-                        helperControl.Click += (sender, e) => GenerateDLLParameters(sender, e, editor);
+                        helperControl.Click += (sender, e) => GenerateDLLParameters(sender, e);
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
                         //show variable selector
                         helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
                         helperControl.CommandDisplay = "Launch DLL Explorer";
-                        helperControl.Click += (sender, e) => ShowDLLExplorer(sender, e, editor);
+                        helperControl.Click += (sender, e) => ShowDLLExplorer(sender, e);
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
                         //show variable selector
@@ -212,7 +256,7 @@ namespace taskt.UI.CustomControls
                 targetTextbox.Text = codeBuilder.rtbCode.Text;
             }
         }
-        private static void ShowMouseCaptureForm(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
+        private static void ShowMouseCaptureForm(object sender, EventArgs e)
         {
             taskt.UI.Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new taskt.UI.Forms.Supplemental.frmShowCursorPosition();
 
@@ -222,22 +266,23 @@ namespace taskt.UI.CustomControls
                 //Todo - ideally one function to add to textbox which adds to class
 
                 //add selected variables to associated control text
-                editor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
-                editor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
+                CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
+                CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
 
                 //find current command and add to underlying class
-                Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)editor.selectedCommand;
+                Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
                 cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
                 cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
             }
         }
-        private static void ShowVariableSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
+        public static void ShowVariableSelector(object sender, EventArgs e)
         {
             //create variable selector form
             UI.Forms.Supplemental.frmVariableSelector newVariableSelector = new Forms.Supplemental.frmVariableSelector();
 
+       
             //get copy of user variables and append system variables, then load to combobox
-            var variableList = editor.scriptVariables.Select(f => f.VariableName).ToList();
+            var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
             newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
 
@@ -306,38 +351,59 @@ namespace taskt.UI.CustomControls
                 targetTextbox.Text = ofd.FileName;
             }
         }
-        private static void ShowImageCapture(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
+        private static void ShowImageCapture(object sender, EventArgs e)
         {
+
+
+            ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            var minimizePreference = settings.ClientSettings.MinimizeToTray;
+
+            if (minimizePreference)
+            {
+                settings.ClientSettings.MinimizeToTray = false;
+                settings.Save(settings);
+            }
 
             HideAllForms();
 
-
-            var userAcceptance = MessageBox.Show(editor, "The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
+            var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
 
             if (userAcceptance == DialogResult.Yes)
             {
 
-                UI.Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new UI.Forms.Supplement_Forms.frmImageCapture();
+                Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture();
 
                 if (imageCaptureForm.ShowDialog() == DialogResult.OK)
                 {
                     CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                    PictureBox targetPictureBox = (PictureBox)inputBox.Tag;
+                    UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
                     targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                    targetPictureBox.Text = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                    var convertedImage = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                    var convertedLength = convertedImage.Length;
+                    targetPictureBox.EncodedImage = convertedImage;
+                    imageCaptureForm.Show();
                 }
 
             }
 
             ShowAllForms();
+
+            if (minimizePreference)
+            {
+                settings.ClientSettings.MinimizeToTray = true;
+                settings.Save(settings);
+            }
+
+
+
         }
-        private static void RunImageCapture(object sender, EventArgs e,UI.Forms.frmCommandEditor editor)
+        private static void RunImageCapture(object sender, EventArgs e)
         {
 
             //get input control
             CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-            PictureBox targetPictureBox = (PictureBox)inputBox.Tag;
-            string imageSource = targetPictureBox.Text;
+            UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
+            string imageSource = targetPictureBox.EncodedImage;
 
             if (string.IsNullOrEmpty(imageSource))
             {
@@ -355,6 +421,7 @@ namespace taskt.UI.CustomControls
                 //run image recognition
                 Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
                 imageRecognitionCommand.v_ImageCapture = imageSource;
+                imageRecognitionCommand.TestMode = true;
                 imageRecognitionCommand.RunCommand(null);
             }
             catch (Exception ex)
@@ -388,16 +455,16 @@ namespace taskt.UI.CustomControls
 
 
         }
-        private static void GenerateDLLParameters(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
+        private static void GenerateDLLParameters(object sender, EventArgs e)
         {
 
-          
-            Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)editor.selectedCommand;
 
-            var filePath = editor.flw_InputVariables.Controls["v_FilePath"].Text;
-            var className = editor.flw_InputVariables.Controls["v_ClassName"].Text;
-            var methodName = editor.flw_InputVariables.Controls["v_MethodName"].Text;
-            DataGridView parameterBox = (DataGridView)editor.flw_InputVariables.Controls["v_MethodParameters"];
+            Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
+
+            var filePath = CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text;
+            var className = CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text;
+            var methodName = CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text;
+            DataGridView parameterBox = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_MethodParameters"];
 
             //clear all rows
             cmd.v_MethodParameters.Rows.Clear();
@@ -453,7 +520,7 @@ namespace taskt.UI.CustomControls
 
 
         }
-        private static void ShowDLLExplorer(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
+        private static void ShowDLLExplorer(object sender, EventArgs e)
         {
             //create form
             UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer();
@@ -463,24 +530,24 @@ namespace taskt.UI.CustomControls
             {
                 //user accepted the selections
                 //declare command
-                Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)editor.selectedCommand;
+                Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
 
                 //add file name
                 if (!string.IsNullOrEmpty(dllExplorer.FileName))
                 {
-                    editor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
+                    CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
                 }
 
                 //add class name
                 if (dllExplorer.lstClasses.SelectedItem != null)
                 {
-                    editor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
+                    CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
                 }
 
                 //add method name
                 if (dllExplorer.lstMethods.SelectedItem != null)
                 {
-                    editor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
+                    CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
                 }
 
                 //add parameters
@@ -500,7 +567,7 @@ namespace taskt.UI.CustomControls
         private static void AddInputParameter(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
 
-            DataGridView inputControl = (DataGridView)editor.flw_InputVariables.Controls["v_UserInputConfig"];
+            DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
             var inputTable = (DataTable)inputControl.DataSource;
             var newRow = inputTable.NewRow();
             newRow["Size"] = "500,100";
@@ -533,6 +600,219 @@ namespace taskt.UI.CustomControls
             foreach (Form frm in Application.OpenForms)
             {
                 frm.WindowState = FormWindowState.Minimized;
+            }
+        }
+
+
+        public static List<AutomationCommand> GenerateCommandsandControls()
+        {
+            var commandList = new List<AutomationCommand>();
+
+            var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
+                                 .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+                                 .Where(t => t.Name != "ScriptCommand")
+                                 .Where(t => t.IsAbstract == false)
+                                 .Where(t => t.BaseType.Name == "ScriptCommand")
+                                 .ToList();
+
+            //Loop through each class
+            foreach (var commandClass in commandClasses)
+            {
+                var groupingAttribute = commandClass.GetCustomAttributes(typeof(Core.Automation.Attributes.ClassAttributes.Group), true);
+                string groupAttribute = "";
+                if (groupingAttribute.Length > 0)
+                {
+                    var attributeFound = (Core.Automation.Attributes.ClassAttributes.Group)groupingAttribute[0];
+                    groupAttribute = attributeFound.groupName;
+                }
+
+                //Instantiate Class
+                Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
+
+                //If command is enabled, pull for display and configuration
+                if (newCommand.CommandEnabled)
+                {
+                    var newAutomationCommand = new AutomationCommand();
+                    newAutomationCommand.CommandClass = commandClass;
+                    newAutomationCommand.Command = newCommand;
+                    newAutomationCommand.DisplayGroup = groupAttribute;
+                    newAutomationCommand.FullName = string.Join(" - ", groupAttribute, newCommand.SelectionName);
+                    newAutomationCommand.ShortName = newCommand.SelectionName;
+                    //call RenderUIComponents to render UI controls
+                    newAutomationCommand.RenderUIComponents();
+                    commandList.Add(newAutomationCommand);
+
+                }
+            }
+
+            return commandList;
+
+        }
+        public static ComboBox AddWindowNames(this ComboBox cbo)
+        {
+            if (cbo == null)
+                return null;
+
+            cbo.Items.Clear();
+            cbo.Items.Add("Current Window");
+
+            Process[] processlist = Process.GetProcesses();
+            //pull the main window title for each
+            foreach (Process process in processlist)
+            {
+                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                {
+                    //add to the control list of available windows
+                    cbo.Items.Add(process.MainWindowTitle);
+                }
+            }
+
+
+
+            return cbo;
+        }
+        public static ComboBox AddVariableNames(this ComboBox cbo, UI.Forms.frmCommandEditor editor)
+        {
+            if (cbo == null)
+                return null;
+
+            if (editor != null)
+            {
+                cbo.Items.Clear();
+
+                foreach (var variable in editor.scriptVariables)
+                {
+                    cbo.Items.Add(variable.VariableName);
+                }
+
+            }
+
+            return cbo;
+        }
+
+    }
+
+
+
+public class AutomationCommand
+    {
+        public Type CommandClass { get; set; }
+        public string FullName { get; set; }
+        public string ShortName { get; set; }
+        public string DisplayGroup { get; set; }
+        public Core.Automation.Commands.ScriptCommand Command { get; set; }
+        public List<Control> UIControls { get; set; }
+        public void RenderUIComponents()
+        {
+            if (Command == null)
+            {
+                throw new InvalidOperationException("Command cannot be null!");
+            }
+
+
+            UIControls = new List<Control>();
+            if (Command.CustomRendering)
+            {
+   
+                var renderedControls = Command.Render(null);
+
+                if (renderedControls.Count == 0)
+                {
+                    var label = new Label();
+                    label.ForeColor = Color.Red;
+                    label.AutoSize = true;
+                    label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                    label.Text = "No Controls are defined for rendering!  If you intend to override with custom controls, you must handle the Render() method of this command!  If you do not wish to override with your own custom controls then set 'CustomRendering' to False.";
+                    UIControls.Add(label);
+                }
+                else
+                {
+                    foreach (var ctrl in renderedControls)
+                    {
+                        UIControls.Add(ctrl);
+                    }
+
+                    //generate comment command if user did not generate it
+                    var commentControlExists = renderedControls.Any(f => f.Name == "v_Comment");
+
+                    if (!commentControlExists)
+                    {
+                        UIControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", Command));
+                        UIControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", Command, 100, 300));                      
+                    }
+
+                }
+
+
+            }
+            else
+            {
+
+                var label = new Label();
+                label.ForeColor = Color.Red;
+                label.AutoSize = true;
+                label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                label.Text = "Command not enabled for custom rendering!";
+                UIControls.Add(label);
+            }
+          
+
+        }  
+        public void Bind(UI.Forms.frmCommandEditor editor)
+        {
+            foreach (var ctrl in UIControls)
+            {
+
+                if (ctrl.DataBindings.Count > 0)
+                {
+                    var newBindingList = new List<Binding>();
+                    foreach (Binding binding in ctrl.DataBindings)
+                    {
+                        newBindingList.Add(new Binding(binding.PropertyName, Command, binding.BindingMemberInfo.BindingField, false, DataSourceUpdateMode.OnPropertyChanged));
+                    }
+
+                    ctrl.DataBindings.Clear();
+
+                    foreach (var newBinding in newBindingList)
+                    {
+                        ctrl.DataBindings.Add(newBinding);
+                    }
+                }
+
+                if (ctrl is CommandItemControl)
+                {
+                    var control = (CommandItemControl)ctrl;
+                    switch (control.HelperType)
+                    {
+                        case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
+                            control.DataSource = editor.scriptVariables;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                //if (ctrl is UIPictureBox)
+                //{
+
+                //    var typedControl = (UIPictureBox)InputControl;
+                
+                //}
+
+                //Todo: helper for loading variables, move to attribute
+                if ((ctrl.Name == "v_userVariableName") && (ctrl is ComboBox))
+                {
+                    var variableCbo = (ComboBox)ctrl;
+                    variableCbo.Items.Clear();
+                    foreach (var var in editor.scriptVariables)
+                    {
+                        variableCbo.Items.Add(var.VariableName);
+                    }
+                }
+
+
+
+              
             }
         }
     }

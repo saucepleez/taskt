@@ -40,7 +40,7 @@ namespace taskt.UI.Forms
         #region Instance and Form Events
         private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
-      
+        private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
         bool editMode { get; set; }
         private ImageList uiImages; 
         public Core.ApplicationSettings appSettings;
@@ -92,8 +92,8 @@ namespace taskt.UI.Forms
 
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
-
-          
+           //load all commands
+           automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
             //set controls double buffered
             foreach (Control control in Controls)
@@ -162,29 +162,25 @@ namespace taskt.UI.Forms
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
 
-            //get commands
-            var groupedCommands = Core.Common.GetGroupedCommands();
-
+            var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
 
             foreach (var cmd in groupedCommands)
             {
 
-                var group = cmd.Key as Core.Automation.Attributes.ClassAttributes.Group;
-                TreeNode newGroup = new TreeNode(group.groupName);
-                // newGroup.ImageIndex = tvCommands.ImageList.Images.Count - 1;
-                // newGroup.SelectedImageIndex = tvCommands.ImageList.Images.Count - 1;
+                TreeNode newGroup = new TreeNode(cmd.Key);
 
                 foreach (var subcmd in cmd)
                 {
+                    TreeNode subNode = new TreeNode(subcmd.ShortName);
 
-                    Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(subcmd);
-                    TreeNode subNode = new TreeNode(newCommand.SelectionName);
-                    //subNode.ImageIndex = uiImages.Images.IndexOfKey(newCommand.GetType().Name);
-                    // subNode.SelectedImageIndex = uiImages.Images.IndexOfKey(newCommand.GetType().Name);
+                    if (!subcmd.Command.CustomRendering)
+                    {
+                        subNode.ForeColor = Color.Red;
+                    }
+                    
+
                     newGroup.Nodes.Add(subNode);
-
                 }
-
 
                 tvCommands.Nodes.Add(newGroup);
 
@@ -267,6 +263,8 @@ namespace taskt.UI.Forms
         }
         private void frmScriptBuilder_Shown(object sender, EventArgs e)
         {
+
+            taskt.Program.SplashForm.Hide();
 
             if (editMode)
                 return;
@@ -739,7 +737,7 @@ namespace taskt.UI.Forms
             {
 
                 //create new command editor form
-                UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor();
+                UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands);
 
                 //creation mode edit locks form to current command
                 editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
@@ -820,7 +818,7 @@ namespace taskt.UI.Forms
             newCommand.Text = cmdDetails.GetDisplayValue();
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-            cmdDetails.RenderedControls = null;
+            //cmdDetails.RenderedControls = null;
             newCommand.Tag = cmdDetails;
             newCommand.ForeColor = cmdDetails.DisplayForeColor;
             newCommand.BackColor = Color.DimGray;
@@ -1656,7 +1654,7 @@ namespace taskt.UI.Forms
         private void AddNewCommand(string specificCommand = "")
         {
             //bring up new command configuration form
-            var newCommandForm = new UI.Forms.frmCommandEditor();
+            var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands);
             newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
             newCommandForm.scriptVariables = this.scriptVariables;
             if (specificCommand != "")

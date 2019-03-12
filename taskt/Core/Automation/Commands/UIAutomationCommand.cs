@@ -6,6 +6,10 @@ using System.Data;
 using System.Windows.Automation;
 using System.Reflection;
 using taskt.Core.Automation.User32;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
+using System.Drawing;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -30,7 +34,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
 
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder)]
         [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
         [Attributes.PropertyAttributes.InputSpecification("Use the Element Recorder to generate a listing of potential search parameters.")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
@@ -44,11 +47,29 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("Parameters change depending on the Automation Type selected.")]
         public DataTable v_UIAActionParameters { get; set; }
 
+        [XmlIgnore]
+        [NonSerialized]
+        private ComboBox AutomationTypeControl;
+
+
+        [XmlIgnore]
+        [NonSerialized]
+        private ComboBox WindowNameControl;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView SearchParametersGridViewHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView ActionParametersGridViewHelper;
+
         public UIAutomationCommand()
         {
             this.CommandName = "UIAutomationCommand";
             this.SelectionName = "UI Automation";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
 
             //set up search parameter table
             this.v_UIASearchParameters = new DataTable();
@@ -302,6 +323,195 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create search param grid
+            SearchParametersGridViewHelper = new DataGridView();
+            SearchParametersGridViewHelper.Width = 500;
+            SearchParametersGridViewHelper.Height = 140;
+            SearchParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIASearchParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            DataGridViewCheckBoxColumn enabled = new DataGridViewCheckBoxColumn();
+            enabled.HeaderText = "Enabled";
+            enabled.DataPropertyName = "Enabled";
+            SearchParametersGridViewHelper.Columns.Add(enabled);
+
+            DataGridViewTextBoxColumn propertyName = new DataGridViewTextBoxColumn();
+            propertyName.HeaderText = "Parameter Name";
+            propertyName.DataPropertyName = "Parameter Name";
+            SearchParametersGridViewHelper.Columns.Add(propertyName);
+
+            DataGridViewTextBoxColumn propertyValue = new DataGridViewTextBoxColumn();
+            propertyValue.HeaderText = "Parameter Value";
+            propertyValue.DataPropertyName = "Parameter Value";
+            SearchParametersGridViewHelper.Columns.Add(propertyValue);
+
+            SearchParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            SearchParametersGridViewHelper.AllowUserToAddRows = false;
+            SearchParametersGridViewHelper.AllowUserToDeleteRows = false;
+
+            //create actions
+            ActionParametersGridViewHelper = new DataGridView();
+            ActionParametersGridViewHelper.Width = 500;
+            ActionParametersGridViewHelper.Height = 140;
+            ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            propertyName = new DataGridViewTextBoxColumn();
+            propertyName.HeaderText = "Parameter Name";
+            propertyName.DataPropertyName = "Parameter Name";
+            ActionParametersGridViewHelper.Columns.Add(propertyName);
+
+            propertyValue = new DataGridViewTextBoxColumn();
+            propertyValue.HeaderText = "Parameter Value";
+            propertyValue.DataPropertyName = "Parameter Value";
+            ActionParametersGridViewHelper.Columns.Add(propertyValue);
+
+            ActionParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            ActionParametersGridViewHelper.AllowUserToAddRows = false;
+            ActionParametersGridViewHelper.AllowUserToDeleteRows = false;
+
+
+
+
+            //create helper control
+            CommandItemControl helperControl = new CommandItemControl();
+            helperControl.Padding = new Padding(10, 0, 0, 0);
+            helperControl.ForeColor = Color.AliceBlue;
+            helperControl.Font = new Font("Segoe UI Semilight", 10);         
+            helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            helperControl.CommandDisplay = "Element Recorder";
+            helperControl.Click += ShowRecorder;
+
+
+
+            //automation type
+            var automationTypeGroup = CommandControls.CreateDefaultDropdownGroupFor("v_AutomationType", this, editor);
+            AutomationTypeControl = (ComboBox)automationTypeGroup.Where(f => f is ComboBox).FirstOrDefault();
+            AutomationTypeControl.SelectionChangeCommitted += UIAType_SelectionChangeCommitted;
+            RenderedControls.AddRange(automationTypeGroup);
+
+
+
+            //window name
+            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.Add(WindowNameControl);
+
+            //create search parameters   
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIASearchParameters", this));
+            RenderedControls.Add(helperControl);
+            RenderedControls.Add(SearchParametersGridViewHelper);
+
+            //create action parameters
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
+            RenderedControls.Add(ActionParametersGridViewHelper);
+
+            return RenderedControls;
+
+        }
+
+        public void ShowRecorder(object sender, EventArgs e)
+        {
+            //get command reference
+            //create recorder
+            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
+            newElementRecorder.searchParameters = this.v_UIASearchParameters;
+
+            //show form
+            newElementRecorder.ShowDialog();
+
+            WindowNameControl.Text = newElementRecorder.cboWindowTitle.Text;
+     
+        }
+
+        private void UIAType_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+  
+            ComboBox selectedAction = AutomationTypeControl;
+
+            if (selectedAction == null)
+                return;
+
+            DataGridView actionParameterView = ActionParametersGridViewHelper;
+
+            DataTable actionParameters = this.v_UIAActionParameters;
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Clear();
+            }
+
+            switch (selectedAction.SelectedItem)
+            {
+                case "Click Element":
+                    var mouseClickBox = new DataGridViewComboBoxCell();
+                    mouseClickBox.Items.Add("Left Click");
+                    mouseClickBox.Items.Add("Middle Click");
+                    mouseClickBox.Items.Add("Right Click");
+                    mouseClickBox.Items.Add("Left Down");
+                    mouseClickBox.Items.Add("Middle Down");
+                    mouseClickBox.Items.Add("Right Down");
+                    mouseClickBox.Items.Add("Left Up");
+                    mouseClickBox.Items.Add("Middle Up");
+                    mouseClickBox.Items.Add("Right Up");
+
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Click Type", "");
+                        actionParameters.Rows.Add("X Adjustment", 0);
+                        actionParameters.Rows.Add("Y Adjustment", 0);
+                    }
+
+                    actionParameterView.Rows[0].Cells[1] = mouseClickBox;
+                    break;
+
+                case "Check If Element Exists":
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Apply To Variable", "");
+                    }
+                    break;
+                default:
+                    var parameterName = new DataGridViewComboBoxCell();
+                    parameterName.Items.Add("AcceleratorKey");
+                    parameterName.Items.Add("AccessKey");
+                    parameterName.Items.Add("AutomationId");
+                    parameterName.Items.Add("ClassName");
+                    parameterName.Items.Add("FrameworkId");
+                    parameterName.Items.Add("HasKeyboardFocus");
+                    parameterName.Items.Add("HelpText");
+                    parameterName.Items.Add("IsContentElement");
+                    parameterName.Items.Add("IsControlElement");
+                    parameterName.Items.Add("IsEnabled");
+                    parameterName.Items.Add("IsKeyboardFocusable");
+                    parameterName.Items.Add("IsOffscreen");
+                    parameterName.Items.Add("IsPassword");
+                    parameterName.Items.Add("IsRequiredForForm");
+                    parameterName.Items.Add("ItemStatus");
+                    parameterName.Items.Add("ItemType");
+                    parameterName.Items.Add("LocalizedControlType");
+                    parameterName.Items.Add("Name");
+                    parameterName.Items.Add("NativeWindowHandle");
+                    parameterName.Items.Add("ProcessID");
+
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Get Value From", "");
+                        actionParameters.Rows.Add("Apply To Variable", "");
+                    }
+
+
+                    actionParameterView.Rows[0].Cells[1] = parameterName;
+                    break;
+            }
+
+        }
 
         public override string GetDisplayValue()
         {

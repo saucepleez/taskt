@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -39,6 +43,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "StringSubstringCommand";
             this.SelectionName = "Substring";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
             v_stringLength = -1;
         }
         public override void RunCommand(object sender)
@@ -58,6 +63,28 @@ namespace taskt.Core.Automation.Commands
             }
 
             variableName.StoreInUserVariable(sender, v_applyToVariableName);
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            var userVariableName = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { userVariableName }, editor));
+            RenderedControls.Add(userVariableName);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_startIndex", this, editor));
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_stringLength", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            return RenderedControls;
+
         }
         public override string GetDisplayValue()
         {

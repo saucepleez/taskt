@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
+
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
@@ -27,11 +32,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowState { get; set; }
 
+        [XmlIgnore]
+        [NonSerialized]
+        public ComboBox WindowNameControl;
+
         public SetWindowStateCommand()
         {
             this.CommandName = "SetWindowStateCommand";
             this.SelectionName = "Set Window State";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -64,10 +74,31 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
-            }
-        
+            }     
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
 
+            //create window name helper control
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.Add(WindowNameControl);
 
+            var windowStateLabel = CommandControls.CreateDefaultLabelFor("v_WindowState", this);
+            RenderedControls.Add(windowStateLabel);
+
+            var windowStateControl = CommandControls.CreateDropdownFor("v_WindowState", this);
+            RenderedControls.Add(windowStateControl);
+
+            return RenderedControls;
+
+        }
+        public override void Refresh(frmCommandEditor editor)
+        {
+            base.Refresh();
+            WindowNameControl.AddWindowNames();
         }
         public override string GetDisplayValue()
         {

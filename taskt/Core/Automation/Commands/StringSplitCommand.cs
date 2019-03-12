@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -37,6 +40,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "StringSplitCommand";
             this.SelectionName = "Split Text";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
@@ -76,6 +80,27 @@ namespace taskt.Core.Automation.Commands
 
             requiredComplexVariable.VariableValue = splitString;
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            var userVariableName = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { userVariableName }, editor));
+            RenderedControls.Add(userVariableName);
+
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_splitCharacter", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyConvertToUserVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyConvertToUserVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyConvertToUserVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            return RenderedControls;
+
+        }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Split '" + v_userVariableName + "' by '" + v_splitCharacter + "' and apply to '" + v_applyConvertToUserVariableName + "']";

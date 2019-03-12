@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -30,6 +34,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "SendKeysCommand";
             this.SelectionName = "Send Keystrokes";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -80,6 +85,22 @@ namespace taskt.Core.Automation.Commands
           
 
             System.Threading.Thread.Sleep(500);
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+
+            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor));
+
+
+            return RenderedControls;
+
         }
 
         public override string GetDisplayValue()

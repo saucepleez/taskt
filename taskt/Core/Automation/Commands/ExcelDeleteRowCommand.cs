@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -25,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_RowNumber { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Should the cells below shift upward after deletion?")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate whether the row below will be shifted up to replace the old row.")]
@@ -36,6 +41,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ExcelDeleteRowCommand";
             this.SelectionName = "Delete Row";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
@@ -64,6 +70,18 @@ namespace taskt.Core.Automation.Commands
 
 
             
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RowNumber", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ShiftUp", this, editor));
+
+            return RenderedControls;
+
         }
         public override string GetDisplayValue()
         {

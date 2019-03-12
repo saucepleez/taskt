@@ -3,6 +3,11 @@ using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
+using System.Drawing;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -26,6 +31,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select the type of extraction that is required.")]
         [Attributes.PropertyAttributes.SampleUsage("Select from Before Text, After Text, Between Text")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All After Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Before Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Between Text")]
         public string v_TextExtractionType { get; set; }
 
         [XmlElement]
@@ -44,11 +52,18 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView ParametersGridViewHelper;
+
         public TextExtractorCommand()
         {
+
             this.CommandName = "TextExtractorCommand";
             this.SelectionName = "Text Extraction";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
+
             //define parameter table
             this.v_TextExtractionTable = new System.Data.DataTable
             {
@@ -57,6 +72,8 @@ namespace taskt.Core.Automation.Commands
 
             this.v_TextExtractionTable.Columns.Add("Parameter Name");
             this.v_TextExtractionTable.Columns.Add("Parameter Value");
+
+        
 
         }
 
@@ -103,6 +120,74 @@ namespace taskt.Core.Automation.Commands
             //store variable
             extractedText.StoreInUserVariable(sender, v_applyToVariableName);
 
+        }
+
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            ParametersGridViewHelper = new DataGridView();
+            ParametersGridViewHelper.AllowUserToAddRows = true;
+            ParametersGridViewHelper.AllowUserToDeleteRows = true;
+            ParametersGridViewHelper.Size = new Size(350, 125);
+            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionType", this));
+            var selectionControl = (ComboBox)CommandControls.CreateDropdownFor("v_TextExtractionType", this);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionType", this, new Control[] { selectionControl }, editor));
+            selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
+            RenderedControls.Add(selectionControl);
+
+
+            //create control for variable name
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionTable", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionTable", this, new Control[] { ParametersGridViewHelper }, editor));
+            RenderedControls.Add(ParametersGridViewHelper);
+
+
+
+            return RenderedControls;
+        }
+        private void textExtraction_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox extractionAction = (ComboBox)sender;
+
+            if ((ParametersGridViewHelper == null) || (extractionAction == null) || (ParametersGridViewHelper.DataSource == null))
+                return;
+
+
+            var textParameters = (DataTable)ParametersGridViewHelper.DataSource;
+
+            textParameters.Rows.Clear();
+
+
+            switch (extractionAction.SelectedItem)
+            {
+                case "Extract All After Text":
+                    textParameters.Rows.Add("Leading Text", "");
+                    textParameters.Rows.Add("Skip Past Occurences", "0");
+                    break;
+                case "Extract All Before Text":
+                    textParameters.Rows.Add("Trailing Text", "");
+                    textParameters.Rows.Add("Skip Past Occurences", "0");
+                    break;
+                case "Extract All Between Text":
+                    textParameters.Rows.Add("Leading Text", "");
+                    textParameters.Rows.Add("Trailing Text", "");
+                    textParameters.Rows.Add("Skip Past Occurences", "0");
+                    break;
+                default:
+                    break;
+            }
         }
 
         private string GetParameterValue(string parameterName)

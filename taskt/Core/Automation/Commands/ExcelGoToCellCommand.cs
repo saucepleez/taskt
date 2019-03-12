@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -22,12 +26,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
         [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_CellLocation { get; set; }
         public ExcelGoToCellCommand()
         {
             this.CommandName = "ExcelGoToCellCommand";
             this.SelectionName = "Go To Cell";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
@@ -36,11 +42,24 @@ namespace taskt.Core.Automation.Commands
 
             var excelObject = engine.GetAppInstance(vInstance);
 
- 
+            var location = v_CellLocation.ConvertToUserVariable(sender);
+
+
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-                excelSheet.Range[v_CellLocation].Select();
+                excelSheet.Range[location].Select();
             
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_CellLocation", this, editor));
+
+            return RenderedControls;
+
         }
         public override string GetDisplayValue()
         {

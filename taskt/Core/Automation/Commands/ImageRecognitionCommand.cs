@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Drawing;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -57,11 +60,13 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("Search times become excessive for colors such as white. For best results, capture a large color variance on screen, not just a white block.")]
         public double v_TimeoutSeconds { get; set; }
+        public bool TestMode = false;
         public ImageRecognitionCommand()
         {
             this.CommandName = "ImageRecognitionCommand";
             this.SelectionName = "Image Recognition";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
 
             v_xOffsetAdjustment = 0;
             v_YOffsetAdjustment = 0;
@@ -69,13 +74,8 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender)
         {
-            bool testMode = false;
-            if (sender is UI.Forms.frmCommandEditor)
-            {
-                testMode = true;
-            }
-
-
+            bool testMode = TestMode;
+           
             //user image to bitmap
             Bitmap userImage = new Bitmap(Core.Common.Base64ToImage(v_ImageCapture));
 
@@ -291,6 +291,28 @@ namespace taskt.Core.Automation.Commands
             }
 
 
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+
+            UIPictureBox imageCapture = new UIPictureBox();
+            imageCapture.Width = 200;
+            imageCapture.Height = 200;
+            imageCapture.DataBindings.Add("EncodedImage", this, "v_ImageCapture", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ImageCapture", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_ImageCapture", this, new Control[] { imageCapture }, editor));
+            RenderedControls.Add(imageCapture);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_xOffsetAdjustment", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_YOffsetAdjustment", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MouseClick", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TimeoutSeconds", this, editor));
+
+
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

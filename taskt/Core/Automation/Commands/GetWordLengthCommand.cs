@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -11,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     public class GetWordLengthCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. {vSomeVariable})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable to find length of (ex. {vSomeVariable})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
         [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
@@ -32,6 +36,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "GetLengthCommand";
             this.SelectionName = "Get Word Length";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
 
         }
 
@@ -50,8 +55,22 @@ namespace taskt.Core.Automation.Commands
             stringLength.ToString().StoreInUserVariable(sender, v_applyToVariableName);
 
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
 
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
+
+            return RenderedControls;
+
+        }
 
         public override string GetDisplayValue()
         {

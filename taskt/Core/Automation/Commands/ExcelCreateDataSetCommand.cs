@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Data;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -38,6 +42,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "ExcelCreateDatasetCommand";
             this.SelectionName = "Create Dataset";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -55,6 +60,18 @@ namespace taskt.Core.Automation.Commands
             };
 
             engine.VariableList.Add(newDataset);
+
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataSetName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
+
+            return RenderedControls;
 
         }
 

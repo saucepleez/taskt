@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Data;
 using taskt.Core.Automation.User32;
+using taskt.UI.Forms;
+using System.Windows.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -27,8 +30,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("Select Valid Options from the dropdowns")]
         public DataTable v_KeyActions { get; set; }
 
-        [XmlElement]
-      
+        [XmlElement]   
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Return all keys to 'UP' position after execution")]
@@ -37,11 +39,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_KeyUpDefault { get; set; }
 
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView KeystrokeGridHelper;
+
         public SendAdvancedKeyStrokesCommand()
         {
             this.CommandName = "SendAdvancedKeyStrokesCommand";
             this.SelectionName = "Send Advanced Keystrokes";
             this.CommandEnabled = true;
+            this.CustomRendering = true;
             this.v_KeyActions = new DataTable();
             this.v_KeyActions.Columns.Add("Key");
             this.v_KeyActions.Columns.Add("Action");
@@ -133,7 +140,47 @@ namespace taskt.Core.Automation.Commands
             }
         
         }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
 
+            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.Add(WindowNameControl);
+
+            KeystrokeGridHelper = new DataGridView();
+            KeystrokeGridHelper.DataBindings.Add("DataSource", this, "v_KeyActions", false, DataSourceUpdateMode.OnPropertyChanged);
+            KeystrokeGridHelper.AllowUserToDeleteRows = true;
+            KeystrokeGridHelper.AutoGenerateColumns = false;
+            KeystrokeGridHelper.Width = 500;
+            KeystrokeGridHelper.Height = 140;
+
+            DataGridViewComboBoxColumn propertyName = new DataGridViewComboBoxColumn();
+            propertyName.DataSource = Core.Common.GetAvailableKeys();
+            propertyName.HeaderText = "Selected Key";
+            propertyName.DataPropertyName = "Key";
+            KeystrokeGridHelper.Columns.Add(propertyName);
+
+            DataGridViewComboBoxColumn propertyValue = new DataGridViewComboBoxColumn();
+            propertyValue.DataSource = new List<string> { "Key Press (Down + Up)", "Key Down", "Key Up" };
+            propertyValue.HeaderText = "Selected Action";
+            propertyValue.DataPropertyName = "Action";
+            KeystrokeGridHelper.Columns.Add(propertyValue);
+
+            KeystrokeGridHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            KeystrokeGridHelper.AllowUserToAddRows = true;
+            KeystrokeGridHelper.AllowUserToDeleteRows = true;
+
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_KeyActions", this));
+            RenderedControls.Add(KeystrokeGridHelper);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_KeyUpDefault", this, editor));
+
+            return RenderedControls;
+        }
+     
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Send To Window '" + v_WindowName + "']";
