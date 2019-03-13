@@ -16,14 +16,14 @@ namespace taskt.Core.Automation.Commands
     public class WaitForWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window name that you are waiting for to exist.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to wait to exist.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Seconds To Wait")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait before an error should be raised.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to wait before an error should be invoked")]
         [Attributes.PropertyAttributes.SampleUsage("**5**")]

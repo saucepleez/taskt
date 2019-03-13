@@ -17,22 +17,22 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to resize.")]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to resize.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new window width")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window.")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new width size of the window")]
         [Attributes.PropertyAttributes.SampleUsage("0")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid width range could be 0-1920")]
         public string v_XWindowSize { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new window height")]
-        [Attributes.PropertyAttributes.InputSpecification("Input the new heiht size of the window")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required height (pixel) of the window.")]
+        [Attributes.PropertyAttributes.InputSpecification("Input the new height size of the window")]
         [Attributes.PropertyAttributes.SampleUsage("0")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid height range could be 0-1080")]
         public string v_YWindowSize { get; set; }

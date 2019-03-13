@@ -16,14 +16,14 @@ namespace taskt.Core.Automation.Commands
     public class SetWindowStateCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select or Type a window Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to target for change.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to change.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select a Window State")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please choose the new required state of the window.")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Maximize")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Minimize")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Restore")]
