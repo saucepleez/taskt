@@ -453,6 +453,11 @@ namespace taskt.UI.Forms
                 lstScriptActions.Invalidate();
                 //FormatCommandListView();
             }
+            else if(e.KeyCode == Keys.Enter)
+            {
+                //if user presses enter simulate double click event
+                lstScriptActions_DoubleClick(null, null);
+            }
             else if ((e.Control) && (e.KeyCode == Keys.X))
             {     
                 CutRows();
