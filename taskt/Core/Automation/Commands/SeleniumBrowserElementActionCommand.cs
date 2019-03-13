@@ -532,6 +532,8 @@ namespace taskt.Core.Automation.Commands
                 default:
                     break;
             }
+
+            ElementsGridViewHelper.DataSource = v_WebActionParameterTable;
         }
 
         public override string GetDisplayValue()
