@@ -102,6 +102,8 @@ namespace taskt.Core.Automation.Commands
     public abstract class ScriptCommand
     {
         [XmlAttribute]
+        public string CommandID { get; set; }
+        [XmlAttribute]
         public string CommandName { get; set; }
         [XmlAttribute]
         public bool IsCommented { get; set; }
@@ -138,6 +140,13 @@ namespace taskt.Core.Automation.Commands
             this.DefaultPause = 0;
             this.IsCommented = false;
             this.CustomRendering = false;
+            this.GenerateID();
+        }
+
+        public void GenerateID()
+        {
+            var id = Guid.NewGuid();
+            this.CommandID = id.ToString();
         }
 
         public virtual void RunCommand(object sender)

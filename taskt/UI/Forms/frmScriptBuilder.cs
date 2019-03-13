@@ -560,6 +560,7 @@ namespace taskt.UI.Forms
                 foreach (ListViewItem item in rowsSelectedForCopy)
                 {
                     Core.Automation.Commands.ScriptCommand duplicatedCommand = (Core.Automation.Commands.ScriptCommand)Core.Common.Clone(item.Tag);
+                    duplicatedCommand.GenerateID();
                     lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
                     destinationIndex += 1;                  
                 }
