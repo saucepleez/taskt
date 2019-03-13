@@ -20,6 +20,9 @@ namespace taskt.Core
             if (str == null)
                 return string.Empty;
 
+            if (sender == null)
+                return str;
+
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             
             var variableList = engine.VariableList;

@@ -52,6 +52,8 @@ namespace taskt.Core.Automation.Engine
             engineSettings = settings.EngineSettings;
             serverSettings = settings.ServerSettings;
 
+            VariableList = new List<Script.ScriptVariable>();
+            AppInstances = new Dictionary<string, object>();
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null)
