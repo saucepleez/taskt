@@ -95,7 +95,9 @@ namespace taskt.UI.Forms
            //load all commands
            automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
-    
+
+
+
             //set controls double buffered
             foreach (Control control in Controls)
             {
@@ -124,7 +126,23 @@ namespace taskt.UI.Forms
 
             //Core.Sockets.SocketClient.Initialize();
             //Core.Sockets.SocketClient.associatedBuilder = this;
-            
+
+
+            //handle action bar preference
+            //hide action panel
+            if (appSettings.ClientSettings.UseSlimActionBar)
+            {
+                tlpControls.RowStyles[2].SizeType = SizeType.Absolute;
+                tlpControls.RowStyles[2].Height = 0;
+            }
+            else
+            {
+                tlpControls.RowStyles[1].SizeType = SizeType.Absolute;
+                tlpControls.RowStyles[1].Height = 0;
+            }
+
+
+
             //get scripts folder
             var rpaScriptsFolder = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
 
@@ -1222,11 +1240,11 @@ namespace taskt.UI.Forms
 
         private void HideNotificationRow()
         {
-            tlpControls.RowStyles[4].Height = 0;
+            tlpControls.RowStyles[5].Height = 0;
         }
         private void ShowNotificationRow()
         {
-            tlpControls.RowStyles[4].Height = 30;
+            tlpControls.RowStyles[5].Height = 30;
         }
         public string notificationText { get; set; }
         private void pnlStatus_Paint(object sender, PaintEventArgs e)
@@ -1927,6 +1945,144 @@ namespace taskt.UI.Forms
             }        
         }
 
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ScriptFilePath = null;
+            lstScriptActions.Items.Clear();
+            HideSearchInfo();
+            scriptVariables = new List<Core.Script.ScriptVariable>();
+            GenerateRecentFiles();
+            pnlCommandHelper.Show();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //show ofd
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+
+            //if user selected file
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //open file
+                OpenFile(openFileDialog.FileName);
+            }
+        }
+
+        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //clear selected items
+            ClearSelectedListViewItems();
+            SaveToFile(false);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //clear selected items
+            ClearSelectedListViewItems();
+            SaveToFile(true);
+        }
+
+        private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
+            scriptVariableEditor.scriptVariables = this.scriptVariables;
+
+            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            {
+                this.scriptVariables = scriptVariableEditor.scriptVariables;
+            }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //show settings dialog
+            frmSettings newSettings = new frmSettings(this);
+            newSettings.ShowDialog();
+
+            //reload app settings
+            appSettings = new Core.ApplicationSettings();
+            appSettings = appSettings.GetOrCreateApplicationSettings();
+
+            //reinit
+            Core.Server.HttpServerClient.Initialize();
+        }
+
+        private void recordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
+            sequenceRecorder.callBackForm = this;
+            sequenceRecorder.ShowDialog();
+
+            pnlCommandHelper.Hide();
+
+            this.Show();
+            this.BringToFront();
+        }
+
+        private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement();
+            scheduleManager.Show();
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (lstScriptActions.Items.Count == 0)
+            {
+                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
+                Notify("You must first build the script by adding commands!");
+                return;
+            }
+
+
+            if (ScriptFilePath == null)
+            {
+                //MessageBox.Show("You must first save your script before you can run it!", "Please Save Script");
+                Notify("You must first save your script before you can run it!");
+                return;
+            }
+
+            //clear selected items
+            ClearSelectedListViewItems();
+
+            Notify("Running Script..");
+
+
+            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
+
+            //this.executionManager = new ScriptExectionManager();
+            //executionManager.CurrentlyExecuting = true;
+            //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
+
+            newEngine.callBackForm = this;
+            newEngine.Show();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem_Click(null, null);
+            runToolStripMenuItem_Click(null, null);
+        }
+
+        private void restartApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void closeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 
 }

@@ -613,6 +613,8 @@
     <None Include="Resources\executing.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\taskt-command-helper.png" />
+    <None Include="Resources\action_bar_restart.png" />
+    <None Include="Resources\action_bar_close.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

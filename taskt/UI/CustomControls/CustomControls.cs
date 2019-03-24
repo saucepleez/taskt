@@ -105,21 +105,19 @@ namespace taskt.UI.CustomControls
         //}
     }
 
-    public partial class UIPanel: Panel
+    public partial class UIPanel : Panel
     {
         protected override void OnPaint(PaintEventArgs e)
         {
 
-           
-                var brush = new Core.Theme().CreateGradient(this.ClientRectangle);
-                e.Graphics.FillRectangle(brush, this.ClientRectangle);
 
-           
+            var brush = new Core.Theme().CreateGradient(this.ClientRectangle);
+            e.Graphics.FillRectangle(brush, this.ClientRectangle);
+
+
             base.OnPaint(e);
         }
     }
-
-
 
     public partial class UIPictureButton : PictureBox
     {
@@ -336,6 +334,77 @@ namespace taskt.UI.CustomControls
                 encodedimage = value;
             }
         }
+    }
+
+    public class UIMenuStrip : MenuStrip
+    {
+        public UIMenuStrip()
+        {
+            //this.Renderer = new UIMenuStripRenderer();
+
+            var renderer = new ToolStripProfessionalRenderer(new UIMenuStripColorTable());
+            renderer.RenderMenuItemBackground += Renderer_RenderMenuItemBackground;
+            this.Renderer = renderer;
+
+        }
+
+        private void Renderer_RenderMenuItemBackground(object sender, ToolStripItemRenderEventArgs e)
+        {
+            Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+            Color c = e.Item.Selected ? Color.FromArgb(59, 59, 59) : Color.FromArgb(30, 30, 30);
+            using (SolidBrush brush = new SolidBrush(c))
+                e.Graphics.FillRectangle(brush, rc);
+        }
+    }
+
+    public class UIMenuStripColorTable : ProfessionalColorTable
+    {
+      
+        public override Color MenuItemPressedGradientBegin
+        {
+            get { return Color.FromArgb(59, 59, 59); }
+        }
+        public override Color MenuItemPressedGradientMiddle
+        {
+            get { return Color.FromArgb(59, 59, 59); }
+        }
+        public override Color MenuItemPressedGradientEnd
+        {
+            get { return Color.FromArgb(59, 59, 59); }
+        }
+        
+        public override Color MenuItemSelected
+        {
+            get { return Color.FromArgb(59,59,59); }
+        }
+        public override Color ToolStripDropDownBackground
+        {
+            get { return Color.FromArgb(30, 30, 30); }
+        }
+
+        public override Color MenuBorder  //added for changing the menu border
+        {
+            get { return Color.FromArgb(30,30,30); }
+        }
+
+        public override Color ImageMarginGradientBegin
+        {
+            get { return Color.FromArgb(30, 30, 30); }
+        }
+        public override Color ImageMarginGradientMiddle
+        {
+            get { return Color.FromArgb(30, 30, 30); }
+        }
+        public override Color ImageMarginGradientEnd
+        {
+            get { return Color.FromArgb(30, 30, 30); }
+        }
+
+        public override Color ButtonSelectedHighlight
+        {
+            get { return Color.FromArgb(59, 59, 59); }
+        }
+
     }
 
     #endregion Custom UI Components

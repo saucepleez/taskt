@@ -151,6 +151,7 @@ namespace taskt.Core
         public string AttendedTasksFolder { get; set; }
         public string StartupMode { get; set; }
         public bool PreloadBuilderCommands { get; set; }
+        public bool UseSlimActionBar { get; set; }
         public ClientSettings()
         {
             MinimizeToTray = false;
@@ -161,6 +162,7 @@ namespace taskt.Core
             AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
             EnableSequenceDragDrop = true;
             PreloadBuilderCommands = false;
+            UseSlimActionBar = true;
         }
     }
 }
