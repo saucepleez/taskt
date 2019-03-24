@@ -150,6 +150,7 @@ namespace taskt.Core
         public bool MinimizeToTray { get; set; }
         public string AttendedTasksFolder { get; set; }
         public string StartupMode { get; set; }
+        public bool PreloadBuilderCommands { get; set; }
         public ClientSettings()
         {
             MinimizeToTray = false;
@@ -159,6 +160,7 @@ namespace taskt.Core
             StartupMode = "Builder Mode";
             AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
             EnableSequenceDragDrop = true;
+            PreloadBuilderCommands = true;
         }
     }
 }
