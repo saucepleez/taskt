@@ -382,7 +382,7 @@ namespace taskt.UI.CustomControls
             get { return Color.FromArgb(30, 30, 30); }
         }
 
-        public override Color MenuBorder  //added for changing the menu border
+        public override Color MenuBorder
         {
             get { return Color.FromArgb(30,30,30); }
         }
