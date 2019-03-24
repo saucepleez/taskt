@@ -615,6 +615,9 @@ namespace taskt.UI.CustomControls
                                  .Where(t => t.BaseType.Name == "ScriptCommand")
                                  .ToList();
 
+
+            var userPrefs = new ApplicationSettings().GetOrCreateApplicationSettings();
+
             //Loop through each class
             foreach (var commandClass in commandClasses)
             {
@@ -638,8 +641,13 @@ namespace taskt.UI.CustomControls
                     newAutomationCommand.DisplayGroup = groupAttribute;
                     newAutomationCommand.FullName = string.Join(" - ", groupAttribute, newCommand.SelectionName);
                     newAutomationCommand.ShortName = newCommand.SelectionName;
-                    //call RenderUIComponents to render UI controls
-                    newAutomationCommand.RenderUIComponents();
+
+                    if (userPrefs.ClientSettings.PreloadBuilderCommands)
+                    {
+                        newAutomationCommand.RenderUIComponents();
+                    }
+
+                    //call RenderUIComponents to render UI controls              
                     commandList.Add(newAutomationCommand);
 
                 }
@@ -760,6 +768,13 @@ public class AutomationCommand
         }  
         public void Bind(UI.Forms.frmCommandEditor editor)
         {
+
+            //preference to preload is false
+            if (UIControls is null)
+            {
+                this.RenderUIComponents();
+            }
+
             foreach (var ctrl in UIControls)
             {
 
