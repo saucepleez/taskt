@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,11 +20,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using taskt.Core.IO;
 
 namespace taskt.Core
 {
@@ -39,19 +43,53 @@ namespace taskt.Core
                 throw new ArgumentException("The type must be serializable.", "source");
             }
 
+
             if (source == null)
             {
                 return default(T);
             }
 
-            System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            Stream stream = new MemoryStream();
-            using (stream)
+
+            using (MemoryStream ms = new MemoryStream())
             {
-                formatter.Serialize(stream, source);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)formatter.Deserialize(stream);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Context = new StreamingContext(StreamingContextStates.Clone);
+                formatter.Serialize(ms, source);
+                ms.Position = 0;
+                return (T)formatter.Deserialize(ms);
             }
+
+
+
+
+            ////output to xml file
+            //XmlSerializer serializer = new XmlSerializer(typeof(T));
+            //var settings = new XmlWriterSettings
+            //{
+            //    NewLineHandling = NewLineHandling.Entitize,
+            //    Indent = true
+            //};
+
+            //StringBuilder xml = new StringBuilder();
+            //XmlWriter xmlWriter = XmlWriter.Create(xml);
+
+            //serializer.Serialize(xmlWriter, source);
+
+
+            //using (TextReader reader = new StringReader(xml.ToString()))
+            //{
+            //    T deserializedData = (T)serializer.Deserialize(reader);
+            //    return deserializedData;
+            //}
+
+            //System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            //Stream stream = new MemoryStream();
+            //using (stream)
+            //{
+            //    formatter.Serialize(stream, source);
+            //    stream.Seek(0, SeekOrigin.Begin);
+            //    return (T)formatter.Deserialize(stream);
+            //}
         }
         ///// <summary>
         ///// Returns a path to the underlying Script folder where script file objects are loaded and saved. Used when saved or loading files.
@@ -86,12 +124,12 @@ namespace taskt.Core
         public static List<IGrouping<Attribute, Type>> GetGroupedCommands()
         {
             var groupedCommands = Assembly.GetExecutingAssembly().GetTypes()
-                          .Where(t => t.Namespace == "taskt.Core.AutomationCommands")
+                          .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
                           .Where(t => t.Name != "ScriptCommand")
                           .Where(t => t.IsAbstract == false)
                           .Where(t => t.BaseType.Name == "ScriptCommand")
                           .Where(t => CommandEnabled(t))
-                          .GroupBy(t => t.GetCustomAttribute(typeof(Core.AutomationCommands.Attributes.ClassAttributes.Group)))
+                          .GroupBy(t => t.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group)))
                           .ToList();
 
             return groupedCommands;
@@ -101,7 +139,7 @@ namespace taskt.Core
         /// </summary>
         private static bool CommandEnabled(Type cmd)
         {
-            var scriptCommand = (Core.AutomationCommands.ScriptCommand)Activator.CreateInstance(cmd);
+            var scriptCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(cmd);
             return scriptCommand.CommandEnabled;
         }
         /// <summary>
@@ -113,7 +151,7 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM")});
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") });
@@ -131,7 +169,7 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.AutomationCommands.User32Functions.GetActiveWindowTitle() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.Automation.User32.User32Functions.GetActiveWindowTitle() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
             return systemVariableList;

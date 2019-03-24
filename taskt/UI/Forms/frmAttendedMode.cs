@@ -81,7 +81,9 @@ namespace taskt.UI.Forms
         private int flashCount = 0;
         private void tmrBackColorFlash_Tick(object sender, EventArgs e)
         {
-            if (this.BackColor == Color.DimGray)
+
+            ;
+            if (this.BackColor == Color.FromArgb(59, 59, 59))
             {
                 this.BackColor = Color.LightYellow;
                 uiBtnClose.DisplayTextBrush = Color.Black;
@@ -89,7 +91,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                this.BackColor = Color.DimGray;
+                this.BackColor = Color.FromArgb(59, 59, 59);
                 uiBtnClose.DisplayTextBrush = Color.White;
                 uiBtnRun.DisplayTextBrush = Color.White;
             }

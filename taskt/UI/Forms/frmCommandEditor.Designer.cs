@@ -51,28 +51,28 @@
             this.cboSelectedCommand.Location = new System.Drawing.Point(6, 5);
             this.cboSelectedCommand.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cboSelectedCommand.Name = "cboSelectedCommand";
-            this.cboSelectedCommand.Size = new System.Drawing.Size(535, 28);
+            this.cboSelectedCommand.Size = new System.Drawing.Size(619, 28);
             this.cboSelectedCommand.TabIndex = 2;
             this.cboSelectedCommand.SelectionChangeCommitted += new System.EventHandler(this.cboSelectedCommand_SelectionChangeCommitted);
             // 
             // flw_InputVariables
             // 
             this.flw_InputVariables.AutoScroll = true;
-            this.flw_InputVariables.BackColor = System.Drawing.Color.DimGray;
+            this.flw_InputVariables.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.flw_InputVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flw_InputVariables.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flw_InputVariables.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.flw_InputVariables.Location = new System.Drawing.Point(2, 35);
-            this.flw_InputVariables.Margin = new System.Windows.Forms.Padding(2);
+            this.flw_InputVariables.Location = new System.Drawing.Point(5, 38);
+            this.flw_InputVariables.Margin = new System.Windows.Forms.Padding(5);
             this.flw_InputVariables.Name = "flw_InputVariables";
             this.flw_InputVariables.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
-            this.flw_InputVariables.Size = new System.Drawing.Size(552, 435);
+            this.flw_InputVariables.Size = new System.Drawing.Size(621, 487);
             this.flw_InputVariables.TabIndex = 3;
             this.flw_InputVariables.WrapContents = false;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.DimGray;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.cboSelectedCommand, 0, 0);
@@ -85,19 +85,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(556, 529);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(631, 587);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.flowLayoutPanel1.Controls.Add(this.uiBtnAdd);
             this.flowLayoutPanel1.Controls.Add(this.uiBtnCancel);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 472);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 530);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(556, 57);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(631, 57);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // uiBtnAdd
@@ -115,6 +115,7 @@
             this.uiBtnAdd.Size = new System.Drawing.Size(88, 49);
             this.uiBtnAdd.TabIndex = 14;
             this.uiBtnAdd.TabStop = false;
+            this.uiBtnAdd.Text = "Ok";
             this.uiBtnAdd.Click += new System.EventHandler(this.uiBtnAdd_Click);
             // 
             // uiBtnCancel
@@ -132,6 +133,7 @@
             this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
             this.uiBtnCancel.TabIndex = 15;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // frmCommandEditor
@@ -140,7 +142,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(556, 529);
+            this.ClientSize = new System.Drawing.Size(631, 587);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -161,10 +163,10 @@
 
         #endregion
         private System.Windows.Forms.ComboBox cboSelectedCommand;
-        private System.Windows.Forms.FlowLayoutPanel flw_InputVariables;
         private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
         private taskt.UI.CustomControls.UIPictureButton uiBtnAdd;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        public System.Windows.Forms.FlowLayoutPanel flw_InputVariables;
     }
 }

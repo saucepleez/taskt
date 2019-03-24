@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using taskt.Core.IO;
 
 namespace taskt.Core
 {
@@ -27,7 +28,7 @@ namespace taskt.Core
         {
             //create settings directory
            
-            var settingsDir = Core.Folders.GetFolder(Folders.FolderType.SettingsFolder);
+            var settingsDir = Core.IO.Folders.GetFolder(Folders.FolderType.SettingsFolder);
 
             //if directory does not exist then create directory
             if (!System.IO.Directory.Exists(settingsDir))
@@ -49,7 +50,7 @@ namespace taskt.Core
         public ApplicationSettings GetOrCreateApplicationSettings()
         {
             //create settings directory
-            var settingsDir = Core.Folders.GetFolder(Folders.FolderType.SettingsFolder);
+            var settingsDir = Core.IO.Folders.GetFolder(Folders.FolderType.SettingsFolder);
 
             //create file path
             var filePath = System.IO.Path.Combine(settingsDir, "AppSettings.xml");
@@ -149,6 +150,7 @@ namespace taskt.Core
         public bool MinimizeToTray { get; set; }
         public string AttendedTasksFolder { get; set; }
         public string StartupMode { get; set; }
+        public bool PreloadBuilderCommands { get; set; }
         public ClientSettings()
         {
             MinimizeToTray = false;
@@ -158,6 +160,7 @@ namespace taskt.Core
             StartupMode = "Builder Mode";
             AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
             EnableSequenceDragDrop = true;
+            PreloadBuilderCommands = false;
         }
     }
 }

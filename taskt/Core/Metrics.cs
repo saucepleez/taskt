@@ -12,7 +12,7 @@ namespace taskt.Core
         public List<ExecutionMetric> ExecutionMetricsSummary()
         {
             //create execution file path
-            var filePath = System.IO.Path.Combine(Core.Folders.GetFolder(Core.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            var filePath = System.IO.Path.Combine(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
 
             //throw if file doesnt exist
             if (!System.IO.File.Exists(filePath))
@@ -21,7 +21,7 @@ namespace taskt.Core
             }
 
             //create list for sorting data
-            var scriptsFinishedArgs = new List<Core.ScriptFinishedEventArgs>();
+            var scriptsFinishedArgs = new List<Core.Automation.Engine.ScriptFinishedEventArgs>();
            
             //get all text from log file
             var logFileLines = System.IO.File.ReadAllLines(filePath);
@@ -35,7 +35,7 @@ namespace taskt.Core
                     var deserializedLine = Newtonsoft.Json.JsonConvert.DeserializeObject(line) as Newtonsoft.Json.Linq.JToken;
 
                     //convert the logged data json
-                    var scriptArgs = Newtonsoft.Json.JsonConvert.DeserializeObject<Core.ScriptFinishedEventArgs>(deserializedLine["@mt"].ToString());
+                    var scriptArgs = Newtonsoft.Json.JsonConvert.DeserializeObject<Core.Automation.Engine.ScriptFinishedEventArgs>(deserializedLine["@mt"].ToString());
     
                     //add to tracking list
                     scriptsFinishedArgs.Add(scriptArgs);
@@ -100,7 +100,7 @@ namespace taskt.Core
 
         public void ClearExecutionMetrics()
         {
-            var filePath = System.IO.Path.Combine(Core.Folders.GetFolder(Core.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            var filePath = System.IO.Path.Combine(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
             System.IO.File.WriteAllText(filePath, string.Empty);
         }
     }
@@ -109,7 +109,7 @@ namespace taskt.Core
     {
        public string FileName { get; set; }
        public TimeSpan AverageExecutionTime { get; set; }
-       public List<taskt.Core.ScriptFinishedEventArgs> ExecutionData { get; set; }
+       public List<Core.Automation.Engine.ScriptFinishedEventArgs> ExecutionData { get; set; }
         
     }
 }

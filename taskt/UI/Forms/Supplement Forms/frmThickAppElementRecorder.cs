@@ -8,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using taskt.Core.AutomationCommands;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.User32;
 
 namespace taskt.UI.Forms.Supplemental
 {

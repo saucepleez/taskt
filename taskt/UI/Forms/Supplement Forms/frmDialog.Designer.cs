@@ -33,7 +33,7 @@
             this.autoCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.lblAutoClose = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlControlContainer = new System.Windows.Forms.Panel();
+            this.pnlControlContainer = new taskt.UI.CustomControls.UIPanel();
             this.txtMessage = new System.Windows.Forms.RichTextBox();
             this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
@@ -168,7 +168,7 @@
         private System.Windows.Forms.Timer autoCloseTimer;
         private System.Windows.Forms.Label lblAutoClose;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel pnlControlContainer;
+        private taskt.UI.CustomControls.UIPanel pnlControlContainer;
         private System.Windows.Forms.RichTextBox txtMessage;
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using taskt.Core.AutomationCommands.Attributes;
+using taskt.Core.Automation.Attributes;
 namespace taskt.Core
 {
  /// <summary>
@@ -28,7 +28,7 @@ namespace taskt.Core
 
             //get all commands
             var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                      .Where(t => t.Namespace == "taskt.Core.AutomationCommands")
+                      .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
                       .Where(t => t.Name != "ScriptCommand")
                       .Where(t => t.IsAbstract == false)
                       .Where(t => t.BaseType.Name == "ScriptCommand")
@@ -43,10 +43,10 @@ namespace taskt.Core
             foreach (var commandClass in commandClasses)
             {
                 //instantiate and pull properties from command class
-                Core.AutomationCommands.ScriptCommand instantiatedCommand = (Core.AutomationCommands.ScriptCommand)Activator.CreateInstance(commandClass);
-                var groupName = GetClassValue(commandClass, typeof(Core.AutomationCommands.Attributes.ClassAttributes.Group));
-                var classDescription = GetClassValue(commandClass, typeof(Core.AutomationCommands.Attributes.ClassAttributes.Description));
-                var usesDescription = GetClassValue(commandClass, typeof(Core.AutomationCommands.Attributes.ClassAttributes.UsesDescription));
+                Core.Automation.Commands.ScriptCommand instantiatedCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
+                var groupName = GetClassValue(commandClass, typeof(Core.Automation.Attributes.ClassAttributes.Group));
+                var classDescription = GetClassValue(commandClass, typeof(Core.Automation.Attributes.ClassAttributes.Description));
+                var usesDescription = GetClassValue(commandClass, typeof(Core.Automation.Attributes.ClassAttributes.UsesDescription));
                 var commandName = instantiatedCommand.SelectionName;
 
                 sb = new StringBuilder();
@@ -81,10 +81,10 @@ namespace taskt.Core
                 {
 
                     //pull attributes from property
-                    var commandLabel = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.PropertyDescription));
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.InputSpecification));
-                    var sampleUsage = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.SampleUsage));
-                    var remarks = GetPropertyValue(prop, typeof(Core.AutomationCommands.Attributes.PropertyAttributes.Remarks));
+                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
+                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification));
+                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage));
+                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks));
 
                     //append to parameter table
                     sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
@@ -179,24 +179,24 @@ namespace taskt.Core
             {
                 var attributeFound = attribute[0];
 
-                if (attributeFound is Core.AutomationCommands.Attributes.PropertyAttributes.PropertyDescription)
+                if (attributeFound is Core.Automation.Attributes.PropertyAttributes.PropertyDescription)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.PropertyAttributes.PropertyDescription)attributeFound;
+                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)attributeFound;
                     return processedAttribute.propertyDescription;
                 }
-                else if (attributeFound is Core.AutomationCommands.Attributes.PropertyAttributes.InputSpecification)
+                else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.InputSpecification)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.PropertyAttributes.InputSpecification)attributeFound;
+                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.InputSpecification)attributeFound;
                     return processedAttribute.inputSpecification;
                 }
-                else if (attributeFound is Core.AutomationCommands.Attributes.PropertyAttributes.SampleUsage)
+                else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.SampleUsage)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.PropertyAttributes.SampleUsage)attributeFound;
+                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.SampleUsage)attributeFound;
                     return processedAttribute.sampleUsage;
                 }
-                else if (attributeFound is Core.AutomationCommands.Attributes.PropertyAttributes.Remarks)
+                else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.Remarks)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.PropertyAttributes.Remarks)attributeFound;
+                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.Remarks)attributeFound;
                     return processedAttribute.remarks;
                 }
                 else
@@ -220,19 +220,19 @@ namespace taskt.Core
                 var attributeFound = attribute[0];
 
 
-                if (attributeFound is Core.AutomationCommands.Attributes.ClassAttributes.Group)
+                if (attributeFound is Core.Automation.Attributes.ClassAttributes.Group)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.ClassAttributes.Group)attributeFound;
+                    var processedAttribute = (Core.Automation.Attributes.ClassAttributes.Group)attributeFound;
                     return processedAttribute.groupName;
                 }
-                else if (attributeFound is Core.AutomationCommands.Attributes.ClassAttributes.Description)
+                else if (attributeFound is Core.Automation.Attributes.ClassAttributes.Description)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.ClassAttributes.Description)attributeFound;
+                    var processedAttribute = (Core.Automation.Attributes.ClassAttributes.Description)attributeFound;
                     return processedAttribute.commandFunctionalDescription;
                 }
-                else if (attributeFound is Core.AutomationCommands.Attributes.ClassAttributes.UsesDescription)
+                else if (attributeFound is Core.Automation.Attributes.ClassAttributes.UsesDescription)
                 {
-                    var processedAttribute = (Core.AutomationCommands.Attributes.ClassAttributes.UsesDescription)attributeFound;
+                    var processedAttribute = (Core.Automation.Attributes.ClassAttributes.UsesDescription)attributeFound;
                     return processedAttribute.usesDescription;
                 }
     

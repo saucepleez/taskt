@@ -139,31 +139,123 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
-    <Compile Include="Core\Automation Command Attributes\Automation Command Attributes.cs" />
-    <Compile Include="Core\AutomationCommands.cs" />
+    <Compile Include="Core\Automation\Commands\AddVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginIfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginContinousLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginExcelDatasetLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginListLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginNumberOfTimesLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ActivateWindowCommand.cs" />
+    <Compile Include="Core\Automation\Attributes\Attributes.cs" />
+    <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CloseWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CommentCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MessageBoxCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserCloseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserCreateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MoveWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ResizeWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RunCustomCodeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RunScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserElementActionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserExecuteScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateBackCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateForwardCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateURLCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserRefreshCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SetWindowStateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SMTPSendEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StartProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StopProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WaitForWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\HTMLInputCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SendAdvancedKeyStrokesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SendKeysCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SendMouseClickCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SendMouseMoveCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SequenceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ThickAppClickItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ThickAppGetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UserInputCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DatabaseRunQueryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateCalculationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EndLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelActivateSheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelAddWorkbookCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelCloseApplicationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelCreateApplicationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelCreateDataSetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelDeleteCellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelDeleteRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGetCellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGetLastRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGoToCellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelOpenWorkbookCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelRunMacroCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelSaveAsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelSaveCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelSetCellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExitLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FormatDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetWordCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetWordLengthCommand.cs" />
+    <Compile Include="Core\Automation\Commands\LogDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ParseJsonCommand.cs" />
+    <Compile Include="Core\Automation\Commands\PDFTextExtractionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RegExExtractorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StringReplaceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StringSplitCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StringSubstringCommand.cs" />
+    <Compile Include="Core\Automation\Commands\TextExtractorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DeleteFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ElseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EndIfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ErrorHandlingCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExecuteDLLCommand.cs" />
+    <Compile Include="Core\Automation\Commands\HTTPQueryResultCommand.cs" />
+    <Compile Include="Core\Automation\Commands\HTTPRequestCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ImageRecognitionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MoveFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OCRCommand.cs" />
+    <Compile Include="Core\Automation\Commands\PauseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ReadTextFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RenameFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RunTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScreenshotCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SetEngineDelayCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StopTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UploadDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\VariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WaitForFileToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WriteTextFileCommand.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />
     <Compile Include="Core\DatasetCommands.cs" />
-    <Compile Include="Core\AutomationEngine.cs" />
+    <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
-    <Compile Include="Core\Folders.cs" />
-    <Compile Include="Core\HttpServerClient.cs" />
+    <Compile Include="Core\IO\Folders.cs" />
+    <Compile Include="Core\Server\HttpServerClient.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
-    <Compile Include="Core\JavaInterface.cs" />
+    <Compile Include="Core\IO\JavaInterface.cs" />
     <Compile Include="Core\Logging.cs" />
     <Compile Include="Core\Metrics.cs" />
     <Compile Include="Core\Theme.cs" />
-    <Compile Include="Core\WebSocketClient.cs" />
-    <Compile Include="Core\Win32Commands.cs" />
+    <Compile Include="Core\Server\WebSocketClient.cs" />
+    <Compile Include="Core\Automation\User32\User32Functionas.cs" />
     <Compile Include="Core\Script.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomControls\CommandControls.cs" />
     <Compile Include="UI\CustomControls\CommandGroupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -250,6 +342,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.Designer.cs">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSplash.Designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.cs">
       <SubType>Form</SubType>
@@ -355,6 +453,9 @@
     <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmScriptBuilder.ru.resx">
+      <DependentUpon>frmScriptBuilder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmSequenceRecorder.resx">
       <DependentUpon>frmSequenceRecorder.cs</DependentUpon>
     </EmbeddedResource>
@@ -417,6 +518,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.resx">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
@@ -508,9 +612,11 @@
     <None Include="Resources\recent-files.png" />
     <None Include="Resources\executing.png" />
     <None Include="Resources\error.png" />
+    <None Include="Resources\taskt-command-helper.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\taskt-splash.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

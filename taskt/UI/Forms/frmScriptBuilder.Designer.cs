@@ -33,8 +33,6 @@
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblCoordinatorInfo = new System.Windows.Forms.Label();
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
@@ -67,6 +65,8 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.commandColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pnlMain = new taskt.UI.CustomControls.UIPanel();
+            this.lblMainLogo = new System.Windows.Forms.Label();
             this.grpSearch = new taskt.UI.CustomControls.UIGroupBox();
             this.pbSearch = new System.Windows.Forms.PictureBox();
             this.lblCurrentlyViewing = new System.Windows.Forms.Label();
@@ -92,7 +92,6 @@
             this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
             this.tlpControls.SuspendLayout();
             this.pnlHeader.SuspendLayout();
-            this.pnlMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
             this.lstContextStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -103,6 +102,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlMain.SuspendLayout();
             this.grpSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
             this.grpSaveClose.SuspendLayout();
@@ -173,32 +173,6 @@
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(979, 44);
             this.pnlHeader.TabIndex = 2;
-            // 
-            // pnlMain
-            // 
-            this.pnlMain.Controls.Add(this.lblMainLogo);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 0);
-            this.pnlMain.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(979, 44);
-            this.pnlMain.TabIndex = 2;
-            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMain_Paint);
-            // 
-            // lblMainLogo
-            // 
-            this.lblMainLogo.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblMainLogo.AutoSize = true;
-            this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
-            this.lblMainLogo.Font = new System.Drawing.Font("Segoe UI Light", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMainLogo.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblMainLogo.Location = new System.Drawing.Point(0, 0);
-            this.lblMainLogo.Margin = new System.Windows.Forms.Padding(0);
-            this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(82, 45);
-            this.lblMainLogo.TabIndex = 0;
-            this.lblMainLogo.Text = "taskt";
-            this.lblMainLogo.Click += new System.EventHandler(this.lblMainLogo_Click);
             // 
             // lblCoordinatorInfo
             // 
@@ -358,6 +332,7 @@
             this.tvCommands.Size = new System.Drawing.Size(238, 393);
             this.tvCommands.TabIndex = 8;
             this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
+            this.tvCommands.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tvCommands_KeyPress);
             // 
             // pnlCommandHelper
             // 
@@ -566,6 +541,31 @@
             this.commandColumn.Text = "Script Commands";
             this.commandColumn.Width = 800;
             // 
+            // pnlMain
+            // 
+            this.pnlMain.Controls.Add(this.lblMainLogo);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(979, 44);
+            this.pnlMain.TabIndex = 2;
+            // 
+            // lblMainLogo
+            // 
+            this.lblMainLogo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblMainLogo.AutoSize = true;
+            this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
+            this.lblMainLogo.Font = new System.Drawing.Font("Segoe UI Light", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMainLogo.ForeColor = System.Drawing.Color.AliceBlue;
+            this.lblMainLogo.Location = new System.Drawing.Point(0, 0);
+            this.lblMainLogo.Margin = new System.Windows.Forms.Padding(0);
+            this.lblMainLogo.Name = "lblMainLogo";
+            this.lblMainLogo.Size = new System.Drawing.Size(82, 45);
+            this.lblMainLogo.TabIndex = 0;
+            this.lblMainLogo.Text = "taskt";
+            this.lblMainLogo.Click += new System.EventHandler(this.lblMainLogo_Click);
+            // 
             // grpSearch
             // 
             this.grpSearch.BackColor = System.Drawing.Color.Transparent;
@@ -662,6 +662,7 @@
             this.btnSequenceImport.Size = new System.Drawing.Size(48, 50);
             this.btnSequenceImport.TabIndex = 20;
             this.btnSequenceImport.TabStop = false;
+            this.btnSequenceImport.Text = "Import";
             this.btnSequenceImport.Click += new System.EventHandler(this.btnSequenceImport_Click);
             // 
             // uiBtnKeep
@@ -678,6 +679,7 @@
             this.uiBtnKeep.Size = new System.Drawing.Size(48, 50);
             this.uiBtnKeep.TabIndex = 19;
             this.uiBtnKeep.TabStop = false;
+            this.uiBtnKeep.Text = "Keep";
             this.uiBtnKeep.Click += new System.EventHandler(this.uiBtnKeep_Click);
             // 
             // uiPictureButton3
@@ -694,6 +696,7 @@
             this.uiPictureButton3.Size = new System.Drawing.Size(52, 50);
             this.uiPictureButton3.TabIndex = 13;
             this.uiPictureButton3.TabStop = false;
+            this.uiPictureButton3.Text = "Close";
             this.uiPictureButton3.Click += new System.EventHandler(this.uiPictureButton3_Click);
             // 
             // grpFileActions
@@ -729,6 +732,7 @@
             this.uiBtnImport.Size = new System.Drawing.Size(48, 50);
             this.uiBtnImport.TabIndex = 14;
             this.uiBtnImport.TabStop = false;
+            this.uiBtnImport.Text = "Import";
             this.uiBtnImport.Click += new System.EventHandler(this.uiBtnImport_Click);
             // 
             // uiBtnSaveAs
@@ -745,6 +749,7 @@
             this.uiBtnSaveAs.Size = new System.Drawing.Size(48, 50);
             this.uiBtnSaveAs.TabIndex = 13;
             this.uiBtnSaveAs.TabStop = false;
+            this.uiBtnSaveAs.Text = "Save As";
             this.uiBtnSaveAs.Click += new System.EventHandler(this.uiBtnSaveAs_Click);
             // 
             // uiBtnSave
@@ -761,6 +766,7 @@
             this.uiBtnSave.Size = new System.Drawing.Size(48, 50);
             this.uiBtnSave.TabIndex = 11;
             this.uiBtnSave.TabStop = false;
+            this.uiBtnSave.Text = "Save";
             this.uiBtnSave.Click += new System.EventHandler(this.uiBtnSave_Click);
             // 
             // uiBtnNew
@@ -777,6 +783,7 @@
             this.uiBtnNew.Size = new System.Drawing.Size(48, 50);
             this.uiBtnNew.TabIndex = 12;
             this.uiBtnNew.TabStop = false;
+            this.uiBtnNew.Text = "New";
             this.uiBtnNew.Click += new System.EventHandler(this.uiBtnNew_Click);
             // 
             // uiBtnOpen
@@ -793,6 +800,7 @@
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 50);
             this.uiBtnOpen.TabIndex = 10;
             this.uiBtnOpen.TabStop = false;
+            this.uiBtnOpen.Text = "Open";
             this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
             // 
             // grpRecordRun
@@ -826,6 +834,7 @@
             this.uiBtnRecordSequence.Size = new System.Drawing.Size(48, 50);
             this.uiBtnRecordSequence.TabIndex = 19;
             this.uiBtnRecordSequence.TabStop = false;
+            this.uiBtnRecordSequence.Text = "Record";
             this.uiBtnRecordSequence.Click += new System.EventHandler(this.uiBtnRecordSequence_Click);
             // 
             // uiBtnRunScript
@@ -842,6 +851,7 @@
             this.uiBtnRunScript.Size = new System.Drawing.Size(48, 50);
             this.uiBtnRunScript.TabIndex = 12;
             this.uiBtnRunScript.TabStop = false;
+            this.uiBtnRunScript.Text = "Run";
             this.uiBtnRunScript.Click += new System.EventHandler(this.uiBtnRunScript_Click);
             // 
             // uiBtnScheduleManagement
@@ -858,6 +868,7 @@
             this.uiBtnScheduleManagement.Size = new System.Drawing.Size(52, 50);
             this.uiBtnScheduleManagement.TabIndex = 13;
             this.uiBtnScheduleManagement.TabStop = false;
+            this.uiBtnScheduleManagement.Text = "Schedule";
             this.uiBtnScheduleManagement.Click += new System.EventHandler(this.uiBtnScheduleManagement_Click);
             // 
             // grpVariable
@@ -891,6 +902,7 @@
             this.uiBtnClearAll.Size = new System.Drawing.Size(48, 50);
             this.uiBtnClearAll.TabIndex = 14;
             this.uiBtnClearAll.TabStop = false;
+            this.uiBtnClearAll.Text = "Clear";
             this.uiBtnClearAll.Click += new System.EventHandler(this.uiBtnClearAll_Click);
             // 
             // uiBtnSettings
@@ -907,6 +919,7 @@
             this.uiBtnSettings.Size = new System.Drawing.Size(48, 50);
             this.uiBtnSettings.TabIndex = 12;
             this.uiBtnSettings.TabStop = false;
+            this.uiBtnSettings.Text = "Settings";
             this.uiBtnSettings.Click += new System.EventHandler(this.uiBtnSettings_Click);
             // 
             // uiBtnAddVariable
@@ -923,6 +936,7 @@
             this.uiBtnAddVariable.Size = new System.Drawing.Size(52, 50);
             this.uiBtnAddVariable.TabIndex = 13;
             this.uiBtnAddVariable.TabStop = false;
+            this.uiBtnAddVariable.Text = "Variables";
             this.uiBtnAddVariable.Click += new System.EventHandler(this.uiBtnAddVariable_Click);
             // 
             // frmScriptBuilder
@@ -942,8 +956,6 @@
             this.tlpControls.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
-            this.pnlMain.ResumeLayout(false);
-            this.pnlMain.PerformLayout();
             this.pnlControlContainer.ResumeLayout(false);
             this.lstContextStrip.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -955,6 +967,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.grpSearch.ResumeLayout(false);
             this.grpSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
@@ -1033,7 +1047,7 @@
         private System.Windows.Forms.Label lblTotalResults;
         private System.Windows.Forms.PictureBox pbSearch;
         private CustomControls.UIPictureButton uiBtnSaveAs;
-        private System.Windows.Forms.Panel pnlMain;
+        private UI.CustomControls.UIPanel pnlMain;
         private System.Windows.Forms.ToolStripMenuItem cutSelectedActionssToolStripMenuItem;
         private CustomControls.UIPictureButton uiBtnImport;
         private System.Windows.Forms.ColumnHeader columnHeader1;

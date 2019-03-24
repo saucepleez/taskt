@@ -105,6 +105,22 @@ namespace taskt.UI.CustomControls
         //}
     }
 
+    public partial class UIPanel: Panel
+    {
+        protected override void OnPaint(PaintEventArgs e)
+        {
+
+           
+                var brush = new Core.Theme().CreateGradient(this.ClientRectangle);
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+
+           
+            base.OnPaint(e);
+        }
+    }
+
+
+
     public partial class UIPictureButton : PictureBox
     {
         private bool isMouseOver;
@@ -122,6 +138,18 @@ namespace taskt.UI.CustomControls
         }
         private string displayText;
         public string DisplayText
+        {
+            get
+            {
+                return displayText;
+            }
+            set
+            {
+                this.displayText = value;
+                this.Invalidate();
+            }
+        }
+        public override string Text
         {
             get
             {
@@ -293,6 +321,22 @@ namespace taskt.UI.CustomControls
         }
     }
 
+    public class UIPictureBox : PictureBox
+    {
+        private string encodedimage;
+
+        public string EncodedImage
+        {
+            get
+            {
+                return encodedimage;
+            }
+            set
+            {
+                encodedimage = value;
+            }
+        }
+    }
 
     #endregion Custom UI Components
 }

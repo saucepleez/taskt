@@ -72,7 +72,7 @@ namespace taskt.UI.Forms
             chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
             chkMinimizeToTray.DataBindings.Add("Checked", clientSettings, "MinimizeToTray", false, DataSourceUpdateMode.OnPropertyChanged);
             cboStartUpMode.DataBindings.Add("Text", clientSettings, "StartupMode", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            chkPreloadCommands.DataBindings.Add("Checked", clientSettings, "PreloadBuilderCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             //get metrics
             bgwMetrics.RunWorkerAsync();
 
@@ -80,7 +80,7 @@ namespace taskt.UI.Forms
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            Core.Sockets.SocketClient.Connect(txtServerURL.Text);
+            Core.Server.SocketClient.Connect(txtServerURL.Text);
         }
 
 
@@ -97,7 +97,7 @@ namespace taskt.UI.Forms
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
             newAppSettings.Save(newAppSettings);
-            taskt.Core.Sockets.SocketClient.LoadSettings();
+            Core.Server.SocketClient.LoadSettings();
             this.Close();
         }
 
@@ -156,11 +156,11 @@ namespace taskt.UI.Forms
 
         private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
         {
-            lblStatus.Text = "Socket Status: " + Core.Sockets.SocketClient.GetSocketState();
-            if (Core.Sockets.SocketClient.connectionException != string.Empty)
+            lblStatus.Text = "Socket Status: " + Core.Server.SocketClient.GetSocketState();
+            if (Core.Server.SocketClient.connectionException != string.Empty)
             {
                 lblSocketException.Show();
-                lblSocketException.Text = Core.Sockets.SocketClient.connectionException;
+                lblSocketException.Text = Core.Server.SocketClient.connectionException;
             }
             else
             {
@@ -171,7 +171,7 @@ namespace taskt.UI.Forms
 
         private void btnCloseConnection_Click(object sender, EventArgs e)
         {
-            Core.Sockets.SocketClient.Disconnect();
+            Core.Server.SocketClient.Disconnect();
         }
 
         private void chkBypassValidation_CheckedChanged(object sender, EventArgs e)
@@ -367,11 +367,11 @@ namespace taskt.UI.Forms
 
         private void btnGetGUID_Click(object sender, EventArgs e)
         {
-            var successfulConnection = Core.HttpServerClient.TestConnection(txtHttpsAddress.Text);
+            var successfulConnection =  Core.Server.HttpServerClient.TestConnection(txtHttpsAddress.Text);
 
             if (successfulConnection)
             {
-                var pulledNewGUID = Core.HttpServerClient.GetGuid();
+                var pulledNewGUID =  Core.Server.HttpServerClient.GetGuid();
 
                 if (pulledNewGUID)
                 {
@@ -395,7 +395,7 @@ namespace taskt.UI.Forms
 
         private void btnGetBotGUID_Click(object sender, EventArgs e)
         {
-            var newGUID = Core.HttpServerClient.GetGuid();
+            var newGUID =  Core.Server.HttpServerClient.GetGuid();
 
 
         }
@@ -404,7 +404,7 @@ namespace taskt.UI.Forms
         {
             if (System.IO.File.Exists(scriptBuilderForm.ScriptFilePath))
             {
-                Core.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.PublishedScript.PublishType.ServerReference);
+                 Core.Server.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.Server.PublishedScript.PublishType.ServerReference);
             }
             else
             {
