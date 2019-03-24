@@ -644,7 +644,7 @@ namespace taskt.UI.CustomControls
 
                     if (userPrefs.ClientSettings.PreloadBuilderCommands)
                     {
-                        newAutomationCommand.RenderUIComponents();
+                        //newAutomationCommand.RenderUIComponents();
                     }
 
                     //call RenderUIComponents to render UI controls              

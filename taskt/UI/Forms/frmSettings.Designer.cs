@@ -417,6 +417,7 @@
             this.chkPreloadCommands.TabIndex = 41;
             this.chkPreloadCommands.Text = "Load Commands at Startup (Reduces Flicker)";
             this.chkPreloadCommands.UseVisualStyleBackColor = false;
+            this.chkPreloadCommands.Visible = false;
             // 
             // btnLaunchDisplayManager
             // 
@@ -638,7 +639,7 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(620, 597);
+            this.tabDebugSettings.Size = new System.Drawing.Size(611, 553);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
             // 
@@ -792,7 +793,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(620, 597);
+            this.tabServerSettings.Size = new System.Drawing.Size(611, 553);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 

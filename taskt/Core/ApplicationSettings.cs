@@ -160,7 +160,7 @@ namespace taskt.Core
             StartupMode = "Builder Mode";
             AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
             EnableSequenceDragDrop = true;
-            PreloadBuilderCommands = true;
+            PreloadBuilderCommands = false;
         }
     }
 }
