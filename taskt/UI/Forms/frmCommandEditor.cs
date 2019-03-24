@@ -244,7 +244,7 @@ namespace taskt.UI.Forms
         {
             foreach (Control item in flw_InputVariables.Controls)
             {
-                item.Width = this.Width - 50;
+                item.Width = this.Width - 70;
             }
 
         }
