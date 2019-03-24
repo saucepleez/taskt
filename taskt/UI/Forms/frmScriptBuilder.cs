@@ -130,7 +130,17 @@ namespace taskt.UI.Forms
 
             //handle action bar preference
             //hide action panel
-            if (appSettings.ClientSettings.UseSlimActionBar)
+
+            if (this.editMode)
+            {
+                tlpControls.RowStyles[1].SizeType = SizeType.Absolute;
+                tlpControls.RowStyles[1].Height = 0;
+
+                tlpControls.RowStyles[2].SizeType = SizeType.Absolute;
+                tlpControls.RowStyles[2].Height = 81;
+
+            }
+            else if (appSettings.ClientSettings.UseSlimActionBar)
             {
                 tlpControls.RowStyles[2].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[2].Height = 0;
@@ -140,6 +150,9 @@ namespace taskt.UI.Forms
                 tlpControls.RowStyles[1].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[1].Height = 0;
             }
+
+
+
 
 
 
@@ -731,6 +744,7 @@ namespace taskt.UI.Forms
 
                 //apply editor style format
                 newBuilder.ApplyEditorFormat();
+
                 newBuilder.parentBuilder = this;
 
                 //if data has been changed
@@ -817,7 +831,8 @@ namespace taskt.UI.Forms
             grpSearch.Left = grpSaveClose.Right + 20;
 
             moveToParentToolStripMenuItem.Visible = true;
-            
+
+
         }
 
 
@@ -1787,7 +1802,7 @@ namespace taskt.UI.Forms
 
         private void pbSearch_Click(object sender, EventArgs e)
         {
-            if (txtCommandSearch.Text != "")
+            if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
             {
                 reqdIndex++;
                 SearchForItemInListView();
@@ -1798,9 +1813,16 @@ namespace taskt.UI.Forms
         private void SearchForItemInListView()
         {
 
- 
+
+            var searchCriteria = txtCommandSearch.Text;
+
+            if (searchCriteria == "")
+            {
+                searchCriteria = tsSearchBox.Text;
+            }
+
             var matchingItems = (from ListViewItem itm in lstScriptActions.Items
-                                 where itm.Text.Contains(txtCommandSearch.Text)
+                                 where itm.Text.Contains(searchCriteria)
                                  select itm).ToList();
 
 
@@ -1829,6 +1851,7 @@ namespace taskt.UI.Forms
             else
             {
                 lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
+                tsSearchResult.Text =  "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 lblTotalResults.Text = totalMatches + " total results found";
             }
 
@@ -2083,6 +2106,30 @@ namespace taskt.UI.Forms
         {
             Application.Exit();
         }
+
+        private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //set to empty
+            tsSearchResult.Text = "";
+            tsSearchBox.Text = "";
+
+            //show or hide
+            tsSearchBox.Visible = !tsSearchBox.Visible;
+            tsSearchButton.Visible = !tsSearchButton.Visible;
+            tsSearchResult.Visible = !tsSearchResult.Visible;
+
+            //update verbiage
+            if (tsSearchBox.Visible)
+            {
+                showSearchBarToolStripMenuItem.Text = "Hide Search Bar";
+            }
+            else
+            {
+                showSearchBarToolStripMenuItem.Text = "Show Search Bar";
+            }
+
+        }
+
     }
 
 }

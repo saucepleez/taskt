@@ -32,12 +32,35 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
+            this.fileActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.variablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showSearchBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.tsSearchButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsSearchResult = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
             this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
             this.lblFilesMissing = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblRecentFiles = new System.Windows.Forms.Label();
             this.lnkGitWiki = new System.Windows.Forms.LinkLabel();
             this.lnkGitIssue = new System.Windows.Forms.LinkLabel();
@@ -56,13 +79,28 @@
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
             this.grpSearch = new taskt.UI.CustomControls.UIGroupBox();
+            this.pbSearch = new System.Windows.Forms.PictureBox();
             this.lblCurrentlyViewing = new System.Windows.Forms.Label();
             this.lblTotalResults = new System.Windows.Forms.Label();
             this.txtCommandSearch = new System.Windows.Forms.TextBox();
             this.grpSaveClose = new taskt.UI.CustomControls.UIGroupBox();
+            this.btnSequenceImport = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnKeep = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiPictureButton3 = new taskt.UI.CustomControls.UIPictureButton();
             this.grpFileActions = new taskt.UI.CustomControls.UIGroupBox();
+            this.uiBtnImport = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnSaveAs = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnSave = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.grpRecordRun = new taskt.UI.CustomControls.UIGroupBox();
+            this.uiBtnRecordSequence = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnRunScript = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnScheduleManagement = new taskt.UI.CustomControls.UIPictureButton();
             this.grpVariable = new taskt.UI.CustomControls.UIGroupBox();
+            this.uiBtnClearAll = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnSettings = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrNotify = new System.Windows.Forms.Timer(this.components);
             this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,40 +111,6 @@
             this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
-            this.fileActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restartApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.variablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scriptActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pbSearch = new System.Windows.Forms.PictureBox();
-            this.btnSequenceImport = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnKeep = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiPictureButton3 = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnImport = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnSaveAs = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnSave = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnRecordSequence = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnRunScript = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnScheduleManagement = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnClearAll = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnSettings = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -114,33 +118,33 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.pnlCommandHelper.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlHeader.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
             this.grpSearch.SuspendLayout();
-            this.grpSaveClose.SuspendLayout();
-            this.grpFileActions.SuspendLayout();
-            this.grpRecordRun.SuspendLayout();
-            this.grpVariable.SuspendLayout();
-            this.lstContextStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
+            this.grpSaveClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).BeginInit();
+            this.grpFileActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSaveAs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSave)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
+            this.grpRecordRun.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnRecordSequence)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnRunScript)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnScheduleManagement)).BeginInit();
+            this.grpVariable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).BeginInit();
+            this.lstContextStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpControls
@@ -179,12 +183,206 @@
             this.fileActionsToolStripMenuItem,
             this.modifyToolStripMenuItem,
             this.scriptActionsToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.tsSearchBox,
+            this.tsSearchButton,
+            this.tsSearchResult});
             this.menuStrip1.Location = new System.Drawing.Point(0, 41);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(979, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileActionsToolStripMenuItem
+            // 
+            this.fileActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.importFileToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.restartApplicationToolStripMenuItem,
+            this.closeApplicationToolStripMenuItem});
+            this.fileActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.fileActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.fileActionsToolStripMenuItem.Name = "fileActionsToolStripMenuItem";
+            this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(96, 26);
+            this.fileActionsToolStripMenuItem.Text = "File Actions";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Text = "New File";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Text = "Open Existing File";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // importFileToolStripMenuItem
+            // 
+            this.importFileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.importFileToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
+            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
+            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importFileToolStripMenuItem.Text = "Import File";
+            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.saveToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_save;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.saveAsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_saveas;
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // restartApplicationToolStripMenuItem
+            // 
+            this.restartApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.restartApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_restart;
+            this.restartApplicationToolStripMenuItem.Name = "restartApplicationToolStripMenuItem";
+            this.restartApplicationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restartApplicationToolStripMenuItem.Text = "Restart Application";
+            this.restartApplicationToolStripMenuItem.Click += new System.EventHandler(this.restartApplicationToolStripMenuItem_Click);
+            // 
+            // closeApplicationToolStripMenuItem
+            // 
+            this.closeApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.closeApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_close;
+            this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
+            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeApplicationToolStripMenuItem.Text = "Close Application";
+            this.closeApplicationToolStripMenuItem.Click += new System.EventHandler(this.closeApplicationToolStripMenuItem_Click);
+            // 
+            // modifyToolStripMenuItem
+            // 
+            this.modifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.variablesToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.showSearchBarToolStripMenuItem});
+            this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(77, 26);
+            this.modifyToolStripMenuItem.Text = "Options";
+            // 
+            // variablesToolStripMenuItem
+            // 
+            this.variablesToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.variablesToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
+            this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
+            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.variablesToolStripMenuItem.Text = "Variable Manager";
+            this.variablesToolStripMenuItem.Click += new System.EventHandler(this.variablesToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.settingsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Text = "Settings Manager";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // showSearchBarToolStripMenuItem
+            // 
+            this.showSearchBarToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.showSearchBarToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.showSearchBarToolStripMenuItem.Name = "showSearchBarToolStripMenuItem";
+            this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showSearchBarToolStripMenuItem.Text = "Show Search Bar";
+            this.showSearchBarToolStripMenuItem.Click += new System.EventHandler(this.showSearchBarToolStripMenuItem_Click);
+            // 
+            // scriptActionsToolStripMenuItem
+            // 
+            this.scriptActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.recordToolStripMenuItem,
+            this.scheduleToolStripMenuItem,
+            this.runToolStripMenuItem});
+            this.scriptActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.scriptActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
+            this.scriptActionsToolStripMenuItem.Name = "scriptActionsToolStripMenuItem";
+            this.scriptActionsToolStripMenuItem.Size = new System.Drawing.Size(108, 26);
+            this.scriptActionsToolStripMenuItem.Text = "Script Actions";
+            // 
+            // recordToolStripMenuItem
+            // 
+            this.recordToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.recordToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
+            this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
+            this.recordToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.recordToolStripMenuItem.Text = "Record";
+            this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
+            // 
+            // scheduleToolStripMenuItem
+            // 
+            this.scheduleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.scheduleToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_schedule;
+            this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
+            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.scheduleToolStripMenuItem.Text = "Schedule";
+            this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
+            // 
+            // runToolStripMenuItem
+            // 
+            this.runToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.runToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
+            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.runToolStripMenuItem.Text = "Run";
+            this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.toolStripMenuItem1.Image = global::taskt.Properties.Resources.action_bar_run;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(106, 26);
+            this.toolStripMenuItem1.Text = "Save and Run";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // tsSearchBox
+            // 
+            this.tsSearchBox.Name = "tsSearchBox";
+            this.tsSearchBox.Size = new System.Drawing.Size(100, 26);
+            this.tsSearchBox.Visible = false;
+            this.tsSearchBox.TextChanged += new System.EventHandler(this.txtCommandSearch_TextChanged);
+            // 
+            // tsSearchButton
+            // 
+            this.tsSearchButton.ForeColor = System.Drawing.Color.White;
+            this.tsSearchButton.Image = global::taskt.Properties.Resources.command_search;
+            this.tsSearchButton.Name = "tsSearchButton";
+            this.tsSearchButton.Size = new System.Drawing.Size(28, 26);
+            this.tsSearchButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsSearchButton.Visible = false;
+            this.tsSearchButton.Click += new System.EventHandler(this.pbSearch_Click);
+            // 
+            // tsSearchResult
+            // 
+            this.tsSearchResult.ForeColor = System.Drawing.Color.White;
+            this.tsSearchResult.Name = "tsSearchResult";
+            this.tsSearchResult.Size = new System.Drawing.Size(12, 26);
+            this.tsSearchResult.Visible = false;
             // 
             // panel1
             // 
@@ -277,6 +475,36 @@
             this.lblFilesMissing.TabIndex = 16;
             this.lblFilesMissing.Text = "there were no script files found in your script directory.";
             this.lblFilesMissing.Visible = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::taskt.Properties.Resources.recent_files;
+            this.pictureBox4.Location = new System.Drawing.Point(12, 210);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(84, 84);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 15;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::taskt.Properties.Resources.links_header;
+            this.pictureBox3.Location = new System.Drawing.Point(12, 108);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(84, 84);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 14;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::taskt.Properties.Resources.item_header;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 8);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(84, 84);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
             // 
             // lblRecentFiles
             // 
@@ -509,6 +737,19 @@
             this.grpSearch.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpSearch.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
+            // pbSearch
+            // 
+            this.pbSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.pbSearch.Location = new System.Drawing.Point(158, 18);
+            this.pbSearch.Name = "pbSearch";
+            this.pbSearch.Size = new System.Drawing.Size(16, 16);
+            this.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSearch.TabIndex = 17;
+            this.pbSearch.TabStop = false;
+            this.pbSearch.Click += new System.EventHandler(this.pbSearch_Click);
+            this.pbSearch.MouseEnter += new System.EventHandler(this.pbSearch_MouseEnter);
+            this.pbSearch.MouseLeave += new System.EventHandler(this.pbSearch_MouseLeave);
+            // 
             // lblCurrentlyViewing
             // 
             this.lblCurrentlyViewing.AutoSize = true;
@@ -560,340 +801,6 @@
             this.grpSaveClose.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             this.grpSaveClose.Visible = false;
             // 
-            // grpFileActions
-            // 
-            this.grpFileActions.BackColor = System.Drawing.Color.Transparent;
-            this.grpFileActions.Controls.Add(this.uiBtnImport);
-            this.grpFileActions.Controls.Add(this.uiBtnSaveAs);
-            this.grpFileActions.Controls.Add(this.uiBtnSave);
-            this.grpFileActions.Controls.Add(this.uiBtnNew);
-            this.grpFileActions.Controls.Add(this.uiBtnOpen);
-            this.grpFileActions.Location = new System.Drawing.Point(2, 5);
-            this.grpFileActions.Name = "grpFileActions";
-            this.grpFileActions.Size = new System.Drawing.Size(255, 73);
-            this.grpFileActions.TabIndex = 16;
-            this.grpFileActions.TabStop = false;
-            this.grpFileActions.Text = "File Actions";
-            this.grpFileActions.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpFileActions.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpFileActions.TitleForeColor = System.Drawing.Color.GhostWhite;
-            this.grpFileActions.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
-            // 
-            // grpRecordRun
-            // 
-            this.grpRecordRun.BackColor = System.Drawing.Color.Transparent;
-            this.grpRecordRun.Controls.Add(this.uiBtnRecordSequence);
-            this.grpRecordRun.Controls.Add(this.uiBtnRunScript);
-            this.grpRecordRun.Controls.Add(this.uiBtnScheduleManagement);
-            this.grpRecordRun.Location = new System.Drawing.Point(433, 6);
-            this.grpRecordRun.Name = "grpRecordRun";
-            this.grpRecordRun.Size = new System.Drawing.Size(162, 73);
-            this.grpRecordRun.TabIndex = 18;
-            this.grpRecordRun.TabStop = false;
-            this.grpRecordRun.Text = "Record and Run";
-            this.grpRecordRun.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpRecordRun.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpRecordRun.TitleForeColor = System.Drawing.Color.GhostWhite;
-            this.grpRecordRun.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
-            // 
-            // grpVariable
-            // 
-            this.grpVariable.BackColor = System.Drawing.Color.Transparent;
-            this.grpVariable.Controls.Add(this.uiBtnClearAll);
-            this.grpVariable.Controls.Add(this.uiBtnSettings);
-            this.grpVariable.Controls.Add(this.uiBtnAddVariable);
-            this.grpVariable.Location = new System.Drawing.Point(257, 6);
-            this.grpVariable.Name = "grpVariable";
-            this.grpVariable.Size = new System.Drawing.Size(171, 73);
-            this.grpVariable.TabIndex = 17;
-            this.grpVariable.TabStop = false;
-            this.grpVariable.Text = "Variables and Settings";
-            this.grpVariable.TitleBackColor = System.Drawing.Color.Transparent;
-            this.grpVariable.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpVariable.TitleForeColor = System.Drawing.Color.GhostWhite;
-            this.grpVariable.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
-            // 
-            // tmrNotify
-            // 
-            this.tmrNotify.Enabled = true;
-            this.tmrNotify.Interval = 500;
-            this.tmrNotify.Tick += new System.EventHandler(this.tmrNotify_Tick);
-            // 
-            // lstContextStrip
-            // 
-            this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstContextStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableSelectedCodeToolStripMenuItem,
-            this.disableSelectedCodeToolStripMenuItem,
-            this.pauseBeforeExecutionToolStripMenuItem,
-            this.cutSelectedActionssToolStripMenuItem,
-            this.copySelectedToolStripMenuItem,
-            this.pasteSelectedToolStripMenuItem,
-            this.moveToParentToolStripMenuItem});
-            this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(254, 172);
-            // 
-            // enableSelectedCodeToolStripMenuItem
-            // 
-            this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
-            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.enableSelectedCodeToolStripMenuItem.Text = "Enable Selected Code";
-            this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
-            // 
-            // disableSelectedCodeToolStripMenuItem
-            // 
-            this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
-            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.disableSelectedCodeToolStripMenuItem.Text = "Disable Selected Code";
-            this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
-            // 
-            // pauseBeforeExecutionToolStripMenuItem
-            // 
-            this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
-            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.pauseBeforeExecutionToolStripMenuItem.Text = "Pause Before Execution";
-            this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
-            // 
-            // cutSelectedActionssToolStripMenuItem
-            // 
-            this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
-            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Actions(s)";
-            this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
-            // 
-            // copySelectedToolStripMenuItem
-            // 
-            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
-            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.copySelectedToolStripMenuItem.Text = "Copy Selected Action(s)";
-            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
-            // 
-            // pasteSelectedToolStripMenuItem
-            // 
-            this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
-            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s)";
-            this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
-            // 
-            // moveToParentToolStripMenuItem
-            // 
-            this.moveToParentToolStripMenuItem.Name = "moveToParentToolStripMenuItem";
-            this.moveToParentToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.moveToParentToolStripMenuItem.Text = "Move Out To Parent";
-            this.moveToParentToolStripMenuItem.Visible = false;
-            this.moveToParentToolStripMenuItem.Click += new System.EventHandler(this.moveToParentToolStripMenuItem_Click);
-            // 
-            // notifyTray
-            // 
-            this.notifyTray.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyTray.BalloonTipText = "taskt is still running in your system tray. Double-click to restore taskt to full" +
-    " size!\r\n";
-            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyTray.Icon")));
-            this.notifyTray.Text = "taskt, free and open-source process automation";
-            this.notifyTray.Visible = true;
-            this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
-            // 
-            // fileActionsToolStripMenuItem
-            // 
-            this.fileActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.importFileToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.restartApplicationToolStripMenuItem,
-            this.closeApplicationToolStripMenuItem});
-            this.fileActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.fileActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
-            this.fileActionsToolStripMenuItem.Name = "fileActionsToolStripMenuItem";
-            this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(96, 26);
-            this.fileActionsToolStripMenuItem.Text = "File Actions";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.newToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newToolStripMenuItem.Text = "New File";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem.Text = "Open Existing";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // importFileToolStripMenuItem
-            // 
-            this.importFileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.importFileToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
-            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
-            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.importFileToolStripMenuItem.Text = "Import File";
-            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.saveToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_save;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.saveAsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_saveas;
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
-            // 
-            // restartApplicationToolStripMenuItem
-            // 
-            this.restartApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.restartApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_restart;
-            this.restartApplicationToolStripMenuItem.Name = "restartApplicationToolStripMenuItem";
-            this.restartApplicationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.restartApplicationToolStripMenuItem.Text = "Restart Application";
-            this.restartApplicationToolStripMenuItem.Click += new System.EventHandler(this.restartApplicationToolStripMenuItem_Click);
-            // 
-            // closeApplicationToolStripMenuItem
-            // 
-            this.closeApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.closeApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_close;
-            this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
-            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.closeApplicationToolStripMenuItem.Text = "Close Application";
-            this.closeApplicationToolStripMenuItem.Click += new System.EventHandler(this.closeApplicationToolStripMenuItem_Click);
-            // 
-            // modifyToolStripMenuItem
-            // 
-            this.modifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.variablesToolStripMenuItem,
-            this.settingsToolStripMenuItem});
-            this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
-            this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(78, 26);
-            this.modifyToolStripMenuItem.Text = "Manage";
-            // 
-            // variablesToolStripMenuItem
-            // 
-            this.variablesToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.variablesToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
-            this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
-            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.variablesToolStripMenuItem.Text = "Variable Manager";
-            this.variablesToolStripMenuItem.Click += new System.EventHandler(this.variablesToolStripMenuItem_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.settingsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.settingsToolStripMenuItem.Text = "Settings Manager";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // scriptActionsToolStripMenuItem
-            // 
-            this.scriptActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.recordToolStripMenuItem,
-            this.scheduleToolStripMenuItem,
-            this.runToolStripMenuItem});
-            this.scriptActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.scriptActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
-            this.scriptActionsToolStripMenuItem.Name = "scriptActionsToolStripMenuItem";
-            this.scriptActionsToolStripMenuItem.Size = new System.Drawing.Size(108, 26);
-            this.scriptActionsToolStripMenuItem.Text = "Script Actions";
-            // 
-            // recordToolStripMenuItem
-            // 
-            this.recordToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.recordToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
-            this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
-            this.recordToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.recordToolStripMenuItem.Text = "Record";
-            this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
-            // 
-            // scheduleToolStripMenuItem
-            // 
-            this.scheduleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.scheduleToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_schedule;
-            this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
-            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.scheduleToolStripMenuItem.Text = "Schedule";
-            this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
-            // 
-            // runToolStripMenuItem
-            // 
-            this.runToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.runToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
-            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.runToolStripMenuItem.Text = "Run";
-            this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
-            this.toolStripMenuItem1.Image = global::taskt.Properties.Resources.action_bar_run;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(106, 26);
-            this.toolStripMenuItem1.Text = "Save and Run";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::taskt.Properties.Resources.recent_files;
-            this.pictureBox4.Location = new System.Drawing.Point(12, 210);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 15;
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::taskt.Properties.Resources.links_header;
-            this.pictureBox3.Location = new System.Drawing.Point(12, 108);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::taskt.Properties.Resources.item_header;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pbSearch
-            // 
-            this.pbSearch.Image = global::taskt.Properties.Resources.command_search;
-            this.pbSearch.Location = new System.Drawing.Point(158, 18);
-            this.pbSearch.Name = "pbSearch";
-            this.pbSearch.Size = new System.Drawing.Size(16, 16);
-            this.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbSearch.TabIndex = 17;
-            this.pbSearch.TabStop = false;
-            this.pbSearch.Click += new System.EventHandler(this.pbSearch_Click);
-            this.pbSearch.MouseEnter += new System.EventHandler(this.pbSearch_MouseEnter);
-            this.pbSearch.MouseLeave += new System.EventHandler(this.pbSearch_MouseLeave);
-            // 
             // btnSequenceImport
             // 
             this.btnSequenceImport.BackColor = System.Drawing.Color.Transparent;
@@ -944,6 +851,25 @@
             this.uiPictureButton3.TabStop = false;
             this.uiPictureButton3.Text = "Close";
             this.uiPictureButton3.Click += new System.EventHandler(this.uiPictureButton3_Click);
+            // 
+            // grpFileActions
+            // 
+            this.grpFileActions.BackColor = System.Drawing.Color.Transparent;
+            this.grpFileActions.Controls.Add(this.uiBtnImport);
+            this.grpFileActions.Controls.Add(this.uiBtnSaveAs);
+            this.grpFileActions.Controls.Add(this.uiBtnSave);
+            this.grpFileActions.Controls.Add(this.uiBtnNew);
+            this.grpFileActions.Controls.Add(this.uiBtnOpen);
+            this.grpFileActions.Location = new System.Drawing.Point(2, 5);
+            this.grpFileActions.Name = "grpFileActions";
+            this.grpFileActions.Size = new System.Drawing.Size(255, 73);
+            this.grpFileActions.TabIndex = 16;
+            this.grpFileActions.TabStop = false;
+            this.grpFileActions.Text = "File Actions";
+            this.grpFileActions.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grpFileActions.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpFileActions.TitleForeColor = System.Drawing.Color.GhostWhite;
+            this.grpFileActions.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
             // uiBtnImport
             // 
@@ -1030,6 +956,23 @@
             this.uiBtnOpen.Text = "Open";
             this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
             // 
+            // grpRecordRun
+            // 
+            this.grpRecordRun.BackColor = System.Drawing.Color.Transparent;
+            this.grpRecordRun.Controls.Add(this.uiBtnRecordSequence);
+            this.grpRecordRun.Controls.Add(this.uiBtnRunScript);
+            this.grpRecordRun.Controls.Add(this.uiBtnScheduleManagement);
+            this.grpRecordRun.Location = new System.Drawing.Point(433, 6);
+            this.grpRecordRun.Name = "grpRecordRun";
+            this.grpRecordRun.Size = new System.Drawing.Size(162, 73);
+            this.grpRecordRun.TabIndex = 18;
+            this.grpRecordRun.TabStop = false;
+            this.grpRecordRun.Text = "Record and Run";
+            this.grpRecordRun.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grpRecordRun.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpRecordRun.TitleForeColor = System.Drawing.Color.GhostWhite;
+            this.grpRecordRun.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
+            // 
             // uiBtnRecordSequence
             // 
             this.uiBtnRecordSequence.BackColor = System.Drawing.Color.Transparent;
@@ -1080,6 +1023,23 @@
             this.uiBtnScheduleManagement.TabStop = false;
             this.uiBtnScheduleManagement.Text = "Schedule";
             this.uiBtnScheduleManagement.Click += new System.EventHandler(this.uiBtnScheduleManagement_Click);
+            // 
+            // grpVariable
+            // 
+            this.grpVariable.BackColor = System.Drawing.Color.Transparent;
+            this.grpVariable.Controls.Add(this.uiBtnClearAll);
+            this.grpVariable.Controls.Add(this.uiBtnSettings);
+            this.grpVariable.Controls.Add(this.uiBtnAddVariable);
+            this.grpVariable.Location = new System.Drawing.Point(257, 6);
+            this.grpVariable.Name = "grpVariable";
+            this.grpVariable.Size = new System.Drawing.Size(171, 73);
+            this.grpVariable.TabIndex = 17;
+            this.grpVariable.TabStop = false;
+            this.grpVariable.Text = "Variables and Settings";
+            this.grpVariable.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grpVariable.TitleFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpVariable.TitleForeColor = System.Drawing.Color.GhostWhite;
+            this.grpVariable.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
             // uiBtnClearAll
             // 
@@ -1132,6 +1092,87 @@
             this.uiBtnAddVariable.Text = "Variables";
             this.uiBtnAddVariable.Click += new System.EventHandler(this.uiBtnAddVariable_Click);
             // 
+            // tmrNotify
+            // 
+            this.tmrNotify.Enabled = true;
+            this.tmrNotify.Interval = 500;
+            this.tmrNotify.Tick += new System.EventHandler(this.tmrNotify_Tick);
+            // 
+            // lstContextStrip
+            // 
+            this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstContextStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableSelectedCodeToolStripMenuItem,
+            this.disableSelectedCodeToolStripMenuItem,
+            this.pauseBeforeExecutionToolStripMenuItem,
+            this.cutSelectedActionssToolStripMenuItem,
+            this.copySelectedToolStripMenuItem,
+            this.pasteSelectedToolStripMenuItem,
+            this.moveToParentToolStripMenuItem});
+            this.lstContextStrip.Name = "lstContextStrip";
+            this.lstContextStrip.Size = new System.Drawing.Size(254, 172);
+            // 
+            // enableSelectedCodeToolStripMenuItem
+            // 
+            this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
+            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.enableSelectedCodeToolStripMenuItem.Text = "Enable Selected Code";
+            this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
+            // 
+            // disableSelectedCodeToolStripMenuItem
+            // 
+            this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
+            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.disableSelectedCodeToolStripMenuItem.Text = "Disable Selected Code";
+            this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
+            // 
+            // pauseBeforeExecutionToolStripMenuItem
+            // 
+            this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
+            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.pauseBeforeExecutionToolStripMenuItem.Text = "Pause Before Execution";
+            this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
+            // 
+            // cutSelectedActionssToolStripMenuItem
+            // 
+            this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
+            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Actions(s)";
+            this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
+            // 
+            // copySelectedToolStripMenuItem
+            // 
+            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.copySelectedToolStripMenuItem.Text = "Copy Selected Action(s)";
+            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
+            // 
+            // pasteSelectedToolStripMenuItem
+            // 
+            this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
+            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s)";
+            this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
+            // 
+            // moveToParentToolStripMenuItem
+            // 
+            this.moveToParentToolStripMenuItem.Name = "moveToParentToolStripMenuItem";
+            this.moveToParentToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
+            this.moveToParentToolStripMenuItem.Text = "Move Out To Parent";
+            this.moveToParentToolStripMenuItem.Visible = false;
+            this.moveToParentToolStripMenuItem.Click += new System.EventHandler(this.moveToParentToolStripMenuItem_Click);
+            // 
+            // notifyTray
+            // 
+            this.notifyTray.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyTray.BalloonTipText = "taskt is still running in your system tray. Double-click to restore taskt to full" +
+    " size!\r\n";
+            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyTray.Icon")));
+            this.notifyTray.Text = "taskt, free and open-source process automation";
+            this.notifyTray.Visible = true;
+            this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1157,6 +1198,9 @@
             this.splitContainer1.ResumeLayout(false);
             this.pnlCommandHelper.ResumeLayout(false);
             this.pnlCommandHelper.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
@@ -1164,29 +1208,26 @@
             this.pnlControlContainer.ResumeLayout(false);
             this.grpSearch.ResumeLayout(false);
             this.grpSearch.PerformLayout();
-            this.grpSaveClose.ResumeLayout(false);
-            this.grpFileActions.ResumeLayout(false);
-            this.grpRecordRun.ResumeLayout(false);
-            this.grpVariable.ResumeLayout(false);
-            this.lstContextStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
+            this.grpSaveClose.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).EndInit();
+            this.grpFileActions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSaveAs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSave)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).EndInit();
+            this.grpRecordRun.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnRecordSequence)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnRunScript)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnScheduleManagement)).EndInit();
+            this.grpVariable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).EndInit();
+            this.lstContextStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1269,6 +1310,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem restartApplicationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeApplicationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showSearchBarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tsSearchBox;
+        private System.Windows.Forms.ToolStripMenuItem tsSearchButton;
+        private System.Windows.Forms.ToolStripMenuItem tsSearchResult;
     }
 }
 
