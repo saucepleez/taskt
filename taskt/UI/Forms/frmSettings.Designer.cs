@@ -52,6 +52,7 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.chkPreloadCommands = new System.Windows.Forms.CheckBox();
             this.btnLaunchDisplayManager = new System.Windows.Forms.Button();
             this.lblStartupMode = new System.Windows.Forms.Label();
             this.cboStartUpMode = new System.Windows.Forms.ComboBox();
@@ -101,7 +102,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.chkPreloadCommands = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -266,7 +266,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 710);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 666);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -326,7 +326,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(12, 340);
+            this.btnUpdates.Location = new System.Drawing.Point(12, 303);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 27);
             this.btnUpdates.TabIndex = 22;
@@ -370,7 +370,7 @@
             this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(628, 631);
+            this.uiSettingTabs.Size = new System.Drawing.Size(619, 587);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
@@ -401,14 +401,27 @@
             this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppSettings.Size = new System.Drawing.Size(620, 597);
+            this.tabAppSettings.Size = new System.Drawing.Size(611, 553);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // chkPreloadCommands
+            // 
+            this.chkPreloadCommands.AutoSize = true;
+            this.chkPreloadCommands.BackColor = System.Drawing.Color.Transparent;
+            this.chkPreloadCommands.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkPreloadCommands.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkPreloadCommands.Location = new System.Drawing.Point(10, 117);
+            this.chkPreloadCommands.Name = "chkPreloadCommands";
+            this.chkPreloadCommands.Size = new System.Drawing.Size(320, 24);
+            this.chkPreloadCommands.TabIndex = 41;
+            this.chkPreloadCommands.Text = "Load Commands at Startup (Reduces Flicker)";
+            this.chkPreloadCommands.UseVisualStyleBackColor = false;
             // 
             // btnLaunchDisplayManager
             // 
             this.btnLaunchDisplayManager.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchDisplayManager.Location = new System.Drawing.Point(225, 373);
+            this.btnLaunchDisplayManager.Location = new System.Drawing.Point(225, 336);
             this.btnLaunchDisplayManager.Name = "btnLaunchDisplayManager";
             this.btnLaunchDisplayManager.Size = new System.Drawing.Size(207, 27);
             this.btnLaunchDisplayManager.TabIndex = 40;
@@ -422,7 +435,7 @@
             this.lblStartupMode.BackColor = System.Drawing.Color.Transparent;
             this.lblStartupMode.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStartupMode.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStartupMode.Location = new System.Drawing.Point(10, 283);
+            this.lblStartupMode.Location = new System.Drawing.Point(10, 246);
             this.lblStartupMode.Name = "lblStartupMode";
             this.lblStartupMode.Size = new System.Drawing.Size(70, 17);
             this.lblStartupMode.TabIndex = 39;
@@ -435,14 +448,14 @@
             this.cboStartUpMode.Items.AddRange(new object[] {
             "Builder Mode",
             "Attended Task Mode"});
-            this.cboStartUpMode.Location = new System.Drawing.Point(13, 302);
+            this.cboStartUpMode.Location = new System.Drawing.Point(13, 265);
             this.cboStartUpMode.Name = "cboStartUpMode";
             this.cboStartUpMode.Size = new System.Drawing.Size(219, 29);
             this.cboStartUpMode.TabIndex = 38;
             // 
             // btnSelectAttendedTaskFolder
             // 
-            this.btnSelectAttendedTaskFolder.Location = new System.Drawing.Point(504, 250);
+            this.btnSelectAttendedTaskFolder.Location = new System.Drawing.Point(504, 213);
             this.btnSelectAttendedTaskFolder.Name = "btnSelectAttendedTaskFolder";
             this.btnSelectAttendedTaskFolder.Size = new System.Drawing.Size(42, 30);
             this.btnSelectAttendedTaskFolder.TabIndex = 37;
@@ -456,7 +469,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.SlateGray;
-            this.label6.Location = new System.Drawing.Point(9, 232);
+            this.label6.Location = new System.Drawing.Point(9, 195);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(130, 17);
             this.label6.TabIndex = 36;
@@ -464,7 +477,7 @@
             // 
             // txtAttendedTaskFolder
             // 
-            this.txtAttendedTaskFolder.Location = new System.Drawing.Point(12, 251);
+            this.txtAttendedTaskFolder.Location = new System.Drawing.Point(12, 214);
             this.txtAttendedTaskFolder.Name = "txtAttendedTaskFolder";
             this.txtAttendedTaskFolder.Size = new System.Drawing.Size(490, 29);
             this.txtAttendedTaskFolder.TabIndex = 35;
@@ -472,7 +485,7 @@
             // btnLaunchAttendedMode
             // 
             this.btnLaunchAttendedMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchAttendedMode.Location = new System.Drawing.Point(225, 340);
+            this.btnLaunchAttendedMode.Location = new System.Drawing.Point(225, 303);
             this.btnLaunchAttendedMode.Name = "btnLaunchAttendedMode";
             this.btnLaunchAttendedMode.Size = new System.Drawing.Size(207, 27);
             this.btnLaunchAttendedMode.TabIndex = 34;
@@ -509,7 +522,7 @@
             // btnGenerateWikiDocs
             // 
             this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 373);
+            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 336);
             this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
             this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 27);
             this.btnGenerateWikiDocs.TabIndex = 31;
@@ -533,7 +546,7 @@
             // btnClearMetrics
             // 
             this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(11, 560);
+            this.btnClearMetrics.Location = new System.Drawing.Point(11, 523);
             this.btnClearMetrics.Name = "btnClearMetrics";
             this.btnClearMetrics.Size = new System.Drawing.Size(108, 25);
             this.btnClearMetrics.TabIndex = 29;
@@ -548,7 +561,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
-            this.label5.Location = new System.Drawing.Point(13, 410);
+            this.label5.Location = new System.Drawing.Point(13, 373);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(248, 17);
             this.label5.TabIndex = 28;
@@ -559,7 +572,7 @@
             this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
             this.lblMetrics.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMetrics.Location = new System.Drawing.Point(12, 429);
+            this.lblMetrics.Location = new System.Drawing.Point(12, 392);
             this.lblMetrics.Name = "lblMetrics";
             this.lblMetrics.Size = new System.Drawing.Size(534, 127);
             this.lblMetrics.TabIndex = 27;
@@ -567,7 +580,7 @@
             // 
             // tvExecutionTimes
             // 
-            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 429);
+            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 392);
             this.tvExecutionTimes.Name = "tvExecutionTimes";
             this.tvExecutionTimes.Size = new System.Drawing.Size(534, 127);
             this.tvExecutionTimes.TabIndex = 26;
@@ -575,7 +588,7 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(504, 199);
+            this.btnSelectFolder.Location = new System.Drawing.Point(504, 162);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(42, 30);
             this.btnSelectFolder.TabIndex = 25;
@@ -589,7 +602,7 @@
             this.lblRootFolder.BackColor = System.Drawing.Color.Transparent;
             this.lblRootFolder.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRootFolder.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblRootFolder.Location = new System.Drawing.Point(9, 180);
+            this.lblRootFolder.Location = new System.Drawing.Point(9, 143);
             this.lblRootFolder.Name = "lblRootFolder";
             this.lblRootFolder.Size = new System.Drawing.Size(101, 17);
             this.lblRootFolder.TabIndex = 24;
@@ -597,7 +610,7 @@
             // 
             // txtAppFolderPath
             // 
-            this.txtAppFolderPath.Location = new System.Drawing.Point(12, 199);
+            this.txtAppFolderPath.Location = new System.Drawing.Point(12, 162);
             this.txtAppFolderPath.Name = "txtAppFolderPath";
             this.txtAppFolderPath.Size = new System.Drawing.Size(490, 29);
             this.txtAppFolderPath.TabIndex = 23;
@@ -625,7 +638,7 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(620, 537);
+            this.tabDebugSettings.Size = new System.Drawing.Size(620, 597);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
             // 
@@ -779,7 +792,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(620, 537);
+            this.tabServerSettings.Size = new System.Drawing.Size(620, 597);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -958,7 +971,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(634, 767);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(625, 723);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -970,7 +983,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(634, 70);
+            this.panel1.Size = new System.Drawing.Size(625, 70);
             this.panel1.TabIndex = 26;
             // 
             // tmrGetSocketStatus
@@ -983,24 +996,11 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // chkPreloadCommands
-            // 
-            this.chkPreloadCommands.AutoSize = true;
-            this.chkPreloadCommands.BackColor = System.Drawing.Color.Transparent;
-            this.chkPreloadCommands.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkPreloadCommands.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkPreloadCommands.Location = new System.Drawing.Point(10, 117);
-            this.chkPreloadCommands.Name = "chkPreloadCommands";
-            this.chkPreloadCommands.Size = new System.Drawing.Size(320, 24);
-            this.chkPreloadCommands.TabIndex = 41;
-            this.chkPreloadCommands.Text = "Load Commands at Startup (Reduces Flicker)";
-            this.chkPreloadCommands.UseVisualStyleBackColor = false;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 767);
+            this.ClientSize = new System.Drawing.Size(625, 723);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
