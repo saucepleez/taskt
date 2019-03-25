@@ -85,6 +85,11 @@ namespace taskt.Core.Automation.Commands
 
         }
 
+        private void ActionParametersGridViewHelper_MouseEnter(object sender, EventArgs e)
+        {
+            this.UIAType_SelectionChangeCommitted(null, null);
+        }
+
         public PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
             string propName = propertyName + "Property";
@@ -357,6 +362,7 @@ namespace taskt.Core.Automation.Commands
             ActionParametersGridViewHelper.Width = 500;
             ActionParametersGridViewHelper.Height = 140;
             ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            ActionParametersGridViewHelper.MouseEnter += ActionParametersGridViewHelper_MouseEnter;
 
             propertyName = new DataGridViewTextBoxColumn();
             propertyName.HeaderText = "Parameter Name";
@@ -412,7 +418,6 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
 
         }
-
         public void ShowRecorder(object sender, EventArgs e)
         {
             //get command reference
@@ -424,10 +429,21 @@ namespace taskt.Core.Automation.Commands
             newElementRecorder.ShowDialog();
 
             WindowNameControl.Text = newElementRecorder.cboWindowTitle.Text;
-     
+
+
+            this.v_UIASearchParameters.Rows.Clear();
+            foreach (DataRow rw in newElementRecorder.searchParameters.Rows)
+            {
+                this.v_UIASearchParameters.ImportRow(rw);
+            }
+
+           
+            SearchParametersGridViewHelper.DataSource = this.v_UIASearchParameters;
+            SearchParametersGridViewHelper.Refresh();
+
         }
 
-        private void UIAType_SelectionChangeCommitted(object sender, EventArgs e)
+        public void UIAType_SelectionChangeCommitted(object sender, EventArgs e)
         {
   
             ComboBox selectedAction = AutomationTypeControl;
@@ -436,6 +452,7 @@ namespace taskt.Core.Automation.Commands
                 return;
 
             DataGridView actionParameterView = ActionParametersGridViewHelper;
+            actionParameterView.Refresh();
 
             DataTable actionParameters = this.v_UIAActionParameters;
 
@@ -444,6 +461,7 @@ namespace taskt.Core.Automation.Commands
                 actionParameters.Rows.Clear();
             }
 
+  
             switch (selectedAction.SelectedItem)
             {
                 case "Click Element":
@@ -506,10 +524,13 @@ namespace taskt.Core.Automation.Commands
                         actionParameters.Rows.Add("Apply To Variable", "");
                     }
 
-
+                    actionParameterView.Refresh();
                     actionParameterView.Rows[0].Cells[1] = parameterName;
                     break;
             }
+
+
+            actionParameterView.Refresh();
 
         }
 
