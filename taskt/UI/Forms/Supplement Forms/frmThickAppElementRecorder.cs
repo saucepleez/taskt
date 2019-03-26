@@ -26,7 +26,7 @@ namespace taskt.UI.Forms.Supplemental
         {
             //create data source from windows
             cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-         
+            
         }
 
 
@@ -35,6 +35,14 @@ namespace taskt.UI.Forms.Supplemental
         {
 
             this.WindowState = FormWindowState.Minimized;
+
+
+            this.searchParameters = new DataTable();
+            this.searchParameters.Columns.Add("Enabled");
+            this.searchParameters.Columns.Add("Parameter Name");
+            this.searchParameters.Columns.Add("Parameter Value");
+            this.searchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+
 
             //clear all
             searchParameters.Rows.Clear();
