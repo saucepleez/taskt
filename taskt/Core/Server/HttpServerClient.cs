@@ -141,7 +141,7 @@ namespace taskt.Core.Server
                 {
                     httpLogger.Information("Requesting to check in with the server");
                     var client = new WebClient();
-                    var content = client.DownloadString("https://localhost:44377/api/Workers/CheckIn?workerID=" + workerID + "&engineBusy=" + Core.Client.EngineBusy);
+                    var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Workers/CheckIn?workerID=" + workerID + "&engineBusy=" + Core.Client.EngineBusy);
                     httpLogger.Information("Received /api/Workers/CheckIn response: " + content);
                     var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<CheckInResponse>(content);
 
@@ -313,7 +313,7 @@ namespace taskt.Core.Server
 
 
                 WebClient webClient = new WebClient();
-                var content = webClient.DownloadString(appSettings.ServerSettings.HTTPServerURL + "api/Scripts/Exists?workerID=" + script.WorkerID + "&friendlyName=" + script.FriendlyName);
+                var content = webClient.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Exists?workerID=" + script.WorkerID + "&friendlyName=" + script.FriendlyName);
 
                 var scriptExists = Newtonsoft.Json.JsonConvert.DeserializeObject<bool>(content);
 
@@ -366,6 +366,7 @@ namespace taskt.Core.Server
             catch (Exception ex)
             {
                 httpLogger.Information("Publish Error: " + ex.ToString());
+                MessageBox.Show("Publish Error: " + ex.ToString());
             }
 
 
