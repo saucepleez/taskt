@@ -45,6 +45,12 @@ namespace taskt.Core.Automation.Commands
             //get variable path to source file
             var vSourceFilePath = v_FilePath.ConvertToUserVariable(sender);
 
+
+            if (!System.IO.File.Exists(vSourceFilePath))
+            {
+                throw new System.IO.FileNotFoundException("Could not find file: " + vSourceFilePath);
+            }
+
             //create process interface
             JavaInterface javaInterface = new JavaInterface();
 
