@@ -154,32 +154,34 @@ namespace taskt.Core
                 {
                     //peform dataset check
                     var splitVariable = potentialVariable.Split('.');
-                    string dsleading = splitVariable[0];
-                    string datasetName = splitVariable[1];
-                    string columnRequired = splitVariable[2];
 
-                    var datasetVariable = variableList.Where(f => f.VariableName == datasetName).FirstOrDefault();
-
-                    if (datasetVariable == null)
-                        continue;
-
-                    DataTable dataTable = (DataTable)datasetVariable.VariableValue;
-
-                    if (datasetVariable == null)
-                        continue;
-
-                    if ((dsleading == "ds") && (int.TryParse(columnRequired, out int columnNumber)))
+                    if (splitVariable.Length == 3)
                     {
-                        //get by column index
-                        str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnNumber];
-                    }
-                    else if (dsleading == "ds")
-                    {
-                        //get by column index
-                        str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnRequired];
-                    }
+                        string dsleading = splitVariable[0];
+                        string datasetName = splitVariable[1];
+                        string columnRequired = splitVariable[2];
 
+                        var datasetVariable = variableList.Where(f => f.VariableName == datasetName).FirstOrDefault();
 
+                        if (datasetVariable == null)
+                            continue;
+
+                        DataTable dataTable = (DataTable)datasetVariable.VariableValue;
+
+                        if (datasetVariable == null)
+                            continue;
+
+                        if ((dsleading == "ds") && (int.TryParse(columnRequired, out int columnNumber)))
+                        {
+                            //get by column index
+                            str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnNumber];
+                        }
+                        else if (dsleading == "ds")
+                        {
+                            //get by column index
+                            str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnRequired];
+                        }
+                    }
 
                 }
 

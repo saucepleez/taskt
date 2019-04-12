@@ -52,6 +52,14 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
+
+            var forbiddenMarkers = new List<string> { "[", "]" };
+
+            if (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableStartMarker) || (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableEndMarker)))
+            {
+                throw new Exception("Cannot use Parse JSON command with square bracket variable markers [ ]");
+            }
+
             //get variablized input
             var variableInput = v_InputValue.ConvertToUserVariable(sender);
 
