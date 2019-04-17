@@ -507,7 +507,9 @@ namespace taskt.UI
             uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
+            uiImages.Add("RESTCommand", taskt.Properties.Resources.command_run_code);
             uiImages.Add("ParseJsonCommand", taskt.Properties.Resources.command_parse);
+            uiImages.Add("ParseJsonArrayCommand", taskt.Properties.Resources.command_parse);
             uiImages.Add("UploadDataCommand", taskt.Properties.Resources.command_server);
             uiImages.Add("GetDataCommand", taskt.Properties.Resources.command_server);
             return uiImages;
