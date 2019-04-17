@@ -236,15 +236,15 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(RESTParametersGridViewHelper);
 
             //create local helper
-            taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
-            helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            helperControl.ForeColor = Color.AliceBlue;
-            helperControl.Font = new Font("Segoe UI Semilight", 10);
-            helperControl.Name = "addRow_helper";
-            helperControl.Tag = RESTParametersGridViewHelper;
-            helperControl.CommandDisplay = "Test API";
-            helperControl.Click += HelperControl_Click;
-            RenderedControls.Add(helperControl);
+            //taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
+            //helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            //helperControl.ForeColor = Color.AliceBlue;
+            //helperControl.Font = new Font("Segoe UI Semilight", 10);
+            //helperControl.Name = "addRow_helper";
+            //helperControl.Tag = RESTParametersGridViewHelper;
+            //helperControl.CommandDisplay = "Test API";
+            //helperControl.Click += HelperControl_Click;
+            //RenderedControls.Add(helperControl);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
@@ -256,19 +256,19 @@ namespace taskt.Core.Automation.Commands
         }
 
 
-        private void HelperControl_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var engine = new Engine.AutomationEngineInstance();
-                var result = this.ExecuteRESTRequest(engine);
-                MessageBox.Show("Result Received: " + result);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An Error Occured: " + ex.ToString());
-            }
-        }
+        //private void HelperControl_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        var engine = new Engine.AutomationEngineInstance();
+        //        var result = this.ExecuteRESTRequest(engine);
+        //        MessageBox.Show("Result Received: " + result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("An Error Occured: " + ex.ToString());
+        //    }
+        //}
 
         public override string GetDisplayValue()
         {
