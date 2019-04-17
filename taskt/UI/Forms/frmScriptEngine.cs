@@ -92,7 +92,7 @@ namespace taskt.UI.Forms
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-            GlobalHook.StartEngineCancellationHook();
+            GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
 
 
 
@@ -137,10 +137,10 @@ namespace taskt.UI.Forms
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-            GlobalHook.StartEngineCancellationHook();
+            GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
 
     
-
+            
         }
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {

@@ -64,6 +64,29 @@ namespace taskt.UI.Forms
             txtCommandDelay.DataBindings.Add("Text", engineSettings, "DelayBetweenCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkOverrideInstances.DataBindings.Add("Checked", engineSettings, "OverrideExistingAppInstances", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            cboCancellationKey.DataSource = Enum.GetValues(typeof(Keys));
+            cboCancellationKey.DataBindings.Add("Text", engineSettings, "CancellationKey", false, DataSourceUpdateMode.OnPropertyChanged);
+
+
+
+
+            //   cmbxNewBox.DataSource = Enum.GetValues(typeof(MyEnum))
+            //.Cast<Enum>()
+            //.Select(value => new
+            //{
+            //    (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
+            //    value
+            //})
+            //.OrderBy(item => item.value)
+            //.ToList();
+            //   cmbxNewBox.DisplayMember = "Description";
+            //   cmbxNewBox.ValueMember = "value";
+
+
+
+
+
+
             var clientSettings = newAppSettings.ClientSettings;
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAppFolderPath.DataBindings.Add("Text", clientSettings, "RootFolder", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -98,6 +121,8 @@ namespace taskt.UI.Forms
 
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
+            Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
+            newAppSettings.EngineSettings.CancellationKey = key;
             newAppSettings.Save(newAppSettings);
             Core.Server.SocketClient.LoadSettings();
             this.Close();

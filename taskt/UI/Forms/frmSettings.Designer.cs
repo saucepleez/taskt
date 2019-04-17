@@ -73,6 +73,8 @@
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
+            this.label16 = new System.Windows.Forms.Label();
+            this.cboCancellationKey = new System.Windows.Forms.ComboBox();
             this.chkOverrideInstances = new System.Windows.Forms.CheckBox();
             this.lblDelay = new System.Windows.Forms.Label();
             this.txtCommandDelay = new System.Windows.Forms.TextBox();
@@ -634,6 +636,8 @@
             // tabDebugSettings
             // 
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.label16);
+            this.tabDebugSettings.Controls.Add(this.cboCancellationKey);
             this.tabDebugSettings.Controls.Add(this.chkOverrideInstances);
             this.tabDebugSettings.Controls.Add(this.lblDelay);
             this.tabDebugSettings.Controls.Add(this.txtCommandDelay);
@@ -657,6 +661,27 @@
             this.tabDebugSettings.Size = new System.Drawing.Size(611, 583);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label16.Location = new System.Drawing.Point(6, 413);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(134, 21);
+            this.label16.TabIndex = 37;
+            this.label16.Text = "End Script Hotkey:";
+            // 
+            // cboCancellationKey
+            // 
+            this.cboCancellationKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCancellationKey.FormattingEnabled = true;
+            this.cboCancellationKey.Location = new System.Drawing.Point(122, 410);
+            this.cboCancellationKey.Name = "cboCancellationKey";
+            this.cboCancellationKey.Size = new System.Drawing.Size(154, 29);
+            this.cboCancellationKey.TabIndex = 36;
             // 
             // chkOverrideInstances
             // 
@@ -1112,5 +1137,7 @@
         private System.Windows.Forms.Button btnTaskPublish;
         private System.Windows.Forms.CheckBox chkPreloadCommands;
         private System.Windows.Forms.CheckBox chkSlimActionBar;
+        private System.Windows.Forms.ComboBox cboCancellationKey;
+        private System.Windows.Forms.Label label16;
     }
 }

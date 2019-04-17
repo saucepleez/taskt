@@ -437,8 +437,9 @@ namespace taskt.Core.Automation.User32
 
             public static event EventHandler HookStopped = delegate { };
 
-            public static void StartEngineCancellationHook()
+            public static void StartEngineCancellationHook(Keys keyName)
             {
+                stopHookKey = keyName.ToString();
                 //set hook for engine cancellation
                 _keyboardHookID = SetKeyboardHook(_kbProc);
             }
