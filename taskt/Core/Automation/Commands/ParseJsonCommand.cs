@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         public ParseJsonCommand()
         {
             this.CommandName = "ParseJsonCommand";
-            this.SelectionName = "Parse JSON";
+            this.SelectionName = "Parse JSON Object";
             this.CommandEnabled = true;
             this.CustomRendering = true;
           
@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply Result(s) To Variable: " + v_applyToVariableName + "]";
+            return base.GetDisplayValue() + " [Selector: " + v_JsonExtractor + ", Apply Result(s) To Variable: " + v_applyToVariableName + "]";
         }
     }
 }
