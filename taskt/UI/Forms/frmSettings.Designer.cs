@@ -678,7 +678,7 @@
             // 
             this.cboCancellationKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCancellationKey.FormattingEnabled = true;
-            this.cboCancellationKey.Location = new System.Drawing.Point(122, 410);
+            this.cboCancellationKey.Location = new System.Drawing.Point(142, 411);
             this.cboCancellationKey.Name = "cboCancellationKey";
             this.cboCancellationKey.Size = new System.Drawing.Size(154, 29);
             this.cboCancellationKey.TabIndex = 36;
