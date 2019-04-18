@@ -180,8 +180,19 @@ namespace taskt.Core.Automation.Commands
             IRestResponse response = client.Execute(request);
             var content = response.Content;
 
-            return response.Content;
-
+            // return response.Content;
+            try
+            {
+                //try to parse and return json content
+                var result = Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                return result.ToString();
+            }
+            catch (Exception)
+            {
+                //content failed to parse simply return it
+                return content;
+            }
+           
 
         }
 
