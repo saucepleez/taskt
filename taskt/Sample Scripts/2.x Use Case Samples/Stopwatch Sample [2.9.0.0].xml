@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="64565e14-001e-4b0e-a585-b216e8d187d6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="1) Start/Stop and show elapsed time" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="ffac2e5c-79e2-4873-8df2-898193928285" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Start Stopwatch" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="dfdfd903-cfe6-402a-901f-f299242154ce" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="3000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="1aaf0c9e-b916-4b17-aaa7-7daf9aba8250" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Stop Stopwatch" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="94a39fd2-2c8f-4cf0-abfc-b58c80ca58c9" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Measure Stopwatch" v_userVariableName="vElapsed" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2ecd7e12-beb6-45c5-8c2a-e72460954031" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vElapsed}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8481f5d8-f61e-4a5c-888c-de37b18d4825" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="2) Restart/Stop and show elapsed time" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="09638194-46a7-49e8-a615-64a020e0930e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Note: Restart sets to zero and starts immediately" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="294a8213-50ba-4265-9432-6325d029dee8" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Restart Stopwatch" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="a13ff69e-04ab-42b2-b2af-758b80e594f8" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="4000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="8933f34d-b041-40ce-b173-5c8f87936ca9" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Stop Stopwatch" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="4430415c-d2ae-4d2b-b7f0-e37c1270b0aa" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Measure Stopwatch" v_userVariableName="vElapsed" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9e56bd23-317d-4e91-a335-19ac9a1704e3" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vElapsed}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="22e6aad7-3349-49f7-9735-6528ad12f33e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="3) Reset Stopwatch and show zero'd time" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f6186120-e582-4e10-918b-bece34eb47a6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Note: Reset sets to zero and does not start automatically" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="7adfacc6-11b1-4ec2-abf4-b54a60d3c339" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Reset Stopwatch" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="c8d3cb98-0223-4fdd-b595-a42a324b64eb" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopwatchCommand" CommandID="a4bb34f1-d75c-4b05-852a-c20525115680" CommandName="StopwatchCommand" IsCommented="false" SelectionName="Stopwatch" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_StopwatchName="default" v_StopwatchAction="Measure Stopwatch" v_userVariableName="vElapsed" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="0aaa71ba-5e85-49b7-91c0-21e74897cae1" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vElapsed}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vElapsed</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

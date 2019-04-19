@@ -175,6 +175,7 @@
     <Compile Include="Core\Automation\Commands\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\SMTPSendEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\StartProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopProcessCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitForWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\HTMLInputCommand.cs" />
@@ -612,6 +613,7 @@
     <None Include="Resources\taskt-command-helper.png" />
     <None Include="Resources\action_bar_restart.png" />
     <None Include="Resources\action_bar_close.png" />
+    <None Include="Resources\command-stopwatch.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

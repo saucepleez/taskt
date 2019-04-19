@@ -100,6 +100,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetDataCommand))]
     [XmlInclude(typeof(RESTCommand))]
     [XmlInclude(typeof(ParseJSONArrayCommand))]
+    [XmlInclude(typeof(StopwatchCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
