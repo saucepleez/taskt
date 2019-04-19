@@ -513,6 +513,7 @@ namespace taskt.UI
             uiImages.Add("UploadDataCommand", taskt.Properties.Resources.command_server);
             uiImages.Add("GetDataCommand", taskt.Properties.Resources.command_server);
             uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
+            uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
             return uiImages;
         }
         public static ImageList UIImageList()

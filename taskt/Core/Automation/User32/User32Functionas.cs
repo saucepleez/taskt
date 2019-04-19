@@ -28,6 +28,17 @@ namespace taskt.Core.Automation.User32
 {
     public static class User32Functions
     {
+        [DllImport("user32.dll")]
+        public static extern bool LockWorkStation();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
+
+        public static bool WindowsLogOff()
+        {
+            return ExitWindowsEx(0, 0);
+        }
+
         [DllImport("User32.dll", EntryPoint = "FindWindow")]
         private static extern IntPtr FindWindowNative(string className, string windowName);
         public static IntPtr FindWindow(string windowName)
