@@ -514,6 +514,7 @@ namespace taskt.UI
             uiImages.Add("GetDataCommand", taskt.Properties.Resources.command_server);
             uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
             uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("RemoteDesktopCommand", taskt.Properties.Resources.command_system);
             return uiImages;
         }
         public static ImageList UIImageList()

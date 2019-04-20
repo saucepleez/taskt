@@ -338,6 +338,17 @@ namespace taskt.UI.Forms
             }
          
         }
+        public void LaunchRDPSession(string machineName, string userName, string password, int width, int height)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke((Action)(() => LaunchRDPSession(machineName, userName, password, width, height)));
+            }
+
+            var remoteDesktopForm = new UI.Forms.Supplemental.frmRemoteDesktopViewer(machineName, userName, password, width, height, false, false);
+            remoteDesktopForm.Show();
+
+        }
 
         public delegate List<string> ShowInputDelegate(Core.Automation.Commands.UserInputCommand inputs);
         public List<string> ShowInput(Core.Automation.Commands.UserInputCommand inputs)
