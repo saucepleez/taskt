@@ -9,13 +9,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("System Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
+    [Attributes.ClassAttributes.Description("This command allows you to perform an account action")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to perform an action such as logoff, restart, shutdown or restart.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class SystemActionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select the action to take")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select a system action to perform")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select from one of the options")]
         [Attributes.PropertyAttributes.SampleUsage("")]
