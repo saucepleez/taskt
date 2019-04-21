@@ -101,8 +101,12 @@ namespace taskt.Core.Automation.Commands
             //get type
             Type t = requiredAssembly.GetType(className);
 
+            //get all methods
+            MethodInfo[] availableMethods = t.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
             //get method
-            MethodInfo m = t.GetMethod(methodName);
+            MethodInfo m = availableMethods.Where(f => f.ToString() == methodName).FirstOrDefault();
+
 
             //create instance
             var instance = requiredAssembly.CreateInstance(className);

@@ -550,6 +550,8 @@ namespace taskt.UI.CustomControls
                     CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
                 }
 
+                cmd.v_MethodParameters.Rows.Clear();
+
                 //add parameters
                 if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
                 {
