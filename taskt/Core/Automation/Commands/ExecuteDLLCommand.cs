@@ -178,6 +178,11 @@ namespace taskt.Core.Automation.Commands
                     {
                         parameters.Add(requiredParameterValue);
                     }
+                    else if ((param.ParameterType.FullName == "System.DateTime"))
+                    {
+                        var parseResult = DateTime.Parse(requiredParameterValue);
+                        parameters.Add(parseResult);
+                    }
                     else
                     {
                         throw new NotImplementedException("Only system parameter types are supported!");
