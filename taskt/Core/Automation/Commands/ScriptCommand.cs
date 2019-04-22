@@ -103,6 +103,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(StopwatchCommand))]
     [XmlInclude(typeof(SystemActionCommand))]
     [XmlInclude(typeof(RemoteDesktopCommand))]
+    [XmlInclude(typeof(EnvironmentVariableCommand))]
+    [XmlInclude(typeof(OSVariableCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

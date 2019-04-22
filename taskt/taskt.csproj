@@ -116,6 +116,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
@@ -153,6 +154,7 @@
     <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\CommentCommand.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Core\Automation\Commands\SMTPSendEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\StartProcessCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteDesktopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\SystemActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopProcessCommand.cs" />
