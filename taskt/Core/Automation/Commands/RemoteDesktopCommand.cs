@@ -90,7 +90,15 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MachineName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_UserName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Password", this, editor));
+
+            //mask passwords
+            var passwordGroup = CommandControls.CreateDefaultInputGroupFor("v_Password", this, editor);
+            TextBox inputBox = (TextBox)passwordGroup[2];
+            inputBox.PasswordChar = '*';
+
+            RenderedControls.AddRange(passwordGroup);
+
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RDPWidth", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RDPHeight", this, editor));
 
