@@ -179,6 +179,7 @@
     <Compile Include="Core\Automation\Commands\StartProcessCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteDesktopCommand.cs" />
     <Compile Include="Core\Automation\Commands\EnvironmentVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ModifyVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\SystemActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopProcessCommand.cs" />

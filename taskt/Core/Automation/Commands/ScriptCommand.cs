@@ -105,6 +105,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(RemoteDesktopCommand))]
     [XmlInclude(typeof(EnvironmentVariableCommand))]
     [XmlInclude(typeof(OSVariableCommand))]
+    [XmlInclude(typeof(ModifyVariableCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
