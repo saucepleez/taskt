@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using OpenQA.Selenium;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -126,7 +127,7 @@ namespace taskt.Core.Automation.Commands
 
             var browserObject = engine.GetAppInstance(vInstance);
 
-            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
             dynamic element = null;
 
@@ -238,7 +239,9 @@ namespace taskt.Core.Automation.Commands
                         if (fields.Any(f => f.Name == chunkedString))
                         {
                             string keyPress = (string)fields.Where(f => f.Name == chunkedString).FirstOrDefault().GetValue(null);
-                            seleniumInstance.Keyboard.PressKey(keyPress);
+                            element.SendKeys(keyPress);
+
+
                         }
                         else
                         {
@@ -317,60 +320,62 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        private object FindElement(OpenQA.Selenium.Chrome.ChromeDriver seleniumInstance, string searchParameter)
+        private object FindElement(OpenQA.Selenium.IWebDriver seleniumInstance, string searchParameter)
         {
             object element = null;
+
+
 
             switch (v_SeleniumSearchType)
             {
                 case "Find Element By XPath":
-                    element = seleniumInstance.FindElementByXPath(searchParameter);
+                    element = seleniumInstance.FindElement(By.XPath(searchParameter));
                     break;
 
                 case "Find Element By ID":
-                    element = seleniumInstance.FindElementById(searchParameter);
+                    element = seleniumInstance.FindElement(By.Id(searchParameter));
                     break;
 
                 case "Find Element By Name":
-                    element = seleniumInstance.FindElementByName(searchParameter);
+                    element = seleniumInstance.FindElement(By.Name(searchParameter));
                     break;
 
                 case "Find Element By Tag Name":
-                    element = seleniumInstance.FindElementByTagName(searchParameter);
+                    element = seleniumInstance.FindElement(By.TagName(searchParameter));
                     break;
 
                 case "Find Element By Class Name":
-                    element = seleniumInstance.FindElementByClassName(searchParameter);
+                    element = seleniumInstance.FindElement(By.ClassName(searchParameter));
                     break;
                 case "Find Element By CSS Selector":
-                    element = seleniumInstance.FindElementByCssSelector(searchParameter);
+                    element = seleniumInstance.FindElement(By.CssSelector(searchParameter));
                     break;
                 case "Find Elements By XPath":
-                    element = seleniumInstance.FindElementsByXPath(searchParameter).ToList();
+                    element = seleniumInstance.FindElements(By.XPath(searchParameter));
                     break;
 
                 case "Find Elements By ID":
-                    element = seleniumInstance.FindElementsById(searchParameter).ToList();
+                    element = seleniumInstance.FindElements(By.Id(searchParameter));
                     break;
 
                 case "Find Elements By Name":
-                    element = seleniumInstance.FindElementsByName(searchParameter).ToList();
+                    element = seleniumInstance.FindElements(By.Name(searchParameter));
                     break;
 
                 case "Find Elements By Tag Name":
-                    element = seleniumInstance.FindElementsByTagName(searchParameter).ToList();
+                    element = seleniumInstance.FindElements(By.TagName(searchParameter));
                     break;
 
                 case "Find Elements By Class Name":
-                    element = seleniumInstance.FindElementsByClassName(searchParameter).ToList();
+                    element = seleniumInstance.FindElements(By.ClassName(searchParameter));
                     break;
 
                 case "Find Elements By CSS Selector":
-                    element = seleniumInstance.FindElementsByCssSelector(searchParameter).ToList();
+                    element = seleniumInstance.FindElements(By.CssSelector(searchParameter));
                     break;
 
                 default:
-                    throw new Exception("Search Type was not found");
+                    throw new Exception("Element Search Type was not found: " + v_SeleniumSearchType);
             }
 
             return element;

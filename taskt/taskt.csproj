@@ -621,6 +621,9 @@
     <None Include="Resources\action_bar_close.png" />
     <None Include="Resources\command-stopwatch.png" />
     <None Include="Resources\command-system.png" />
+    <Content Include="Resources\IEDriverServer.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

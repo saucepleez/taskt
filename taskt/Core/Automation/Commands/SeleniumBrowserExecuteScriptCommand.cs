@@ -43,14 +43,19 @@ namespace taskt.Core.Automation.Commands
 
             var script = v_ScriptCode.ConvertToUserVariable(sender);
             var args = v_Args.ConvertToUserVariable(sender);
-            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+
+
+            OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
+
+
             if (String.IsNullOrEmpty(args))
             {
-                seleniumInstance.ExecuteScript(script);
+                js.ExecuteScript(script);
             }
             else
             {
-                seleniumInstance.ExecuteScript(script, args);
+                js.ExecuteScript(script, args);
             }
 
 

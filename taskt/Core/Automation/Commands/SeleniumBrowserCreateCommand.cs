@@ -40,6 +40,15 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_BrowserWindowOption { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Select a Browser Engine Type")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Chrome")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("IE")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the window state that the browser should start up with.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Normal** to start the browser in normal mode or **Maximize** to start the browser in maximized mode.")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_EngineType { get; set; }
+
         public SeleniumBrowserCreateCommand()
         {
             this.CommandName = "SeleniumBrowserCreateCommand";
@@ -47,38 +56,55 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "default";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_EngineType = "Chrome";
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources");
-            OpenQA.Selenium.Chrome.ChromeDriverService driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-
-            var newSeleniumSession = new OpenQA.Selenium.Chrome.ChromeDriver(driverService, new OpenQA.Selenium.Chrome.ChromeOptions());
-
+            var seleniumEngine = v_EngineType.ConvertToUserVariable(sender);
             var instanceName = v_InstanceName.ConvertToUserVariable(sender);
 
-            engine.AddAppInstance(instanceName, newSeleniumSession);
+            OpenQA.Selenium.DriverService driverService;
+            OpenQA.Selenium.IWebDriver webDriver;
+
+            if (seleniumEngine == "Chrome")
+            {
+                driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
+                webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, new OpenQA.Selenium.Chrome.ChromeOptions());          
+            }
+            else
+            {
+                driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
+                webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());            
+            }
+
+
+            //add app instance
+            engine.AddAppInstance(instanceName, webDriver);
 
 
             //handle app instance tracking
             if (v_InstanceTracking == "Keep Instance Alive")
             {
-                GlobalAppInstances.AddInstance(instanceName, newSeleniumSession);
+                GlobalAppInstances.AddInstance(instanceName, webDriver);
             }
 
             //handle window type on startup - https://github.com/saucepleez/taskt/issues/22
             switch (v_BrowserWindowOption)
             {
                 case "Maximize":
-                    newSeleniumSession.Manage().Window.Maximize();
+                    webDriver.Manage().Window.Maximize();
                     break;
                 case "Normal":
                 case "":
                 default:
                     break;
             }
+
+
+
 
 
         }
@@ -88,6 +114,7 @@ namespace taskt.Core.Automation.Commands
 
         
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EngineType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_InstanceTracking", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_BrowserWindowOption", this, editor));
 
@@ -96,7 +123,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "', Instance Tracking: " + v_InstanceTracking + "]";
+            return "Create " + v_EngineType + " Browser - [Instance Name: '" + v_InstanceName + "', Instance Tracking: " + v_InstanceTracking + "]";
         }
     }
 }
