@@ -92,7 +92,7 @@ namespace taskt.UI.Forms
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-            GlobalHook.StartEngineCancellationHook();
+            GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
 
 
 
@@ -137,10 +137,10 @@ namespace taskt.UI.Forms
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-            GlobalHook.StartEngineCancellationHook();
+            GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
 
     
-
+            
         }
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
@@ -337,6 +337,17 @@ namespace taskt.UI.Forms
                 confirmationForm.ShowDialog();
             }
          
+        }
+        public void LaunchRDPSession(string machineName, string userName, string password, int width, int height)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke((Action)(() => LaunchRDPSession(machineName, userName, password, width, height)));
+            }
+
+            var remoteDesktopForm = new UI.Forms.Supplemental.frmRemoteDesktopViewer(machineName, userName, password, width, height, false, false);
+            remoteDesktopForm.Show();
+
         }
 
         public delegate List<string> ShowInputDelegate(Core.Automation.Commands.UserInputCommand inputs);

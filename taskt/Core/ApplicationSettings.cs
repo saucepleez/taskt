@@ -116,6 +116,7 @@ namespace taskt.Core
         public bool TrackExecutionMetrics { get; set; }
         public string VariableStartMarker { get; set; }
         public string VariableEndMarker { get; set; }
+        public System.Windows.Forms.Keys CancellationKey { get; set; }
         public int DelayBetweenCommands { get; set; }
         public bool OverrideExistingAppInstances { get; set; }
         public bool AutoCloseMessagesOnServerExecution { get; set; }
@@ -131,6 +132,7 @@ namespace taskt.Core
             TrackExecutionMetrics = true;
             VariableStartMarker = "[";
             VariableEndMarker = "]";
+            CancellationKey = System.Windows.Forms.Keys.Pause;
             DelayBetweenCommands = 250;
             OverrideExistingAppInstances = false;
             AutoCloseMessagesOnServerExecution = true;

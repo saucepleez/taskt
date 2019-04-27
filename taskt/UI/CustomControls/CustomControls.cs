@@ -433,6 +433,7 @@ namespace taskt.UI
             uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("TextExtractorCommand", taskt.Properties.Resources.command_function);
@@ -507,9 +508,14 @@ namespace taskt.UI
             uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
+            uiImages.Add("RESTCommand", taskt.Properties.Resources.command_run_code);
             uiImages.Add("ParseJsonCommand", taskt.Properties.Resources.command_parse);
+            uiImages.Add("ParseJsonArrayCommand", taskt.Properties.Resources.command_parse);
             uiImages.Add("UploadDataCommand", taskt.Properties.Resources.command_server);
             uiImages.Add("GetDataCommand", taskt.Properties.Resources.command_server);
+            uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
+            uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("RemoteDesktopCommand", taskt.Properties.Resources.command_system);
             return uiImages;
         }
         public static ImageList UIImageList()

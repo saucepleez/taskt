@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
             var browserObject = engine.GetAppInstance(vInstance);
 
 
-            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
             seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
 
         }

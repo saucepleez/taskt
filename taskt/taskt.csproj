@@ -99,6 +99,9 @@
     <Reference Include="OneNoteOCRDll, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OneNoteOCR.1.0.0.0\lib\OneNoteOCRDll.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.6.9.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.9\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.7.1\lib\net45\Serilog.dll</HintPath>
     </Reference>
@@ -113,7 +116,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -149,10 +154,13 @@
     <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\MessageBoxCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ParseJSONArray.cs" />
+    <Compile Include="Core\Automation\Commands\RESTCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCreateCommand.cs" />
@@ -169,6 +177,11 @@
     <Compile Include="Core\Automation\Commands\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\SMTPSendEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\StartProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RemoteDesktopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EnvironmentVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ModifyVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SystemActionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopProcessCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitForWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\HTMLInputCommand.cs" />
@@ -551,15 +564,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="AcroPDFLib">
-      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <COMReference Include="AxMSTSCLib">
       <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -615,6 +619,11 @@
     <None Include="Resources\taskt-command-helper.png" />
     <None Include="Resources\action_bar_restart.png" />
     <None Include="Resources\action_bar_close.png" />
+    <None Include="Resources\command-stopwatch.png" />
+    <None Include="Resources\command-system.png" />
+    <Content Include="Resources\IEDriverServer.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

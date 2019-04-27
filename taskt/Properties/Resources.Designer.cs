@@ -433,9 +433,29 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_stopwatch {
+            get {
+                object obj = ResourceManager.GetObject("command_stopwatch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_string {
             get {
                 object obj = ResourceManager.GetObject("command_string", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_system {
+            get {
+                object obj = ResourceManager.GetObject("command_system", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -507,6 +527,16 @@ namespace taskt.Properties {
             get {
                 object obj = ResourceManager.GetObject("header_backing_dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] IEDriverServer {
+            get {
+                object obj = ResourceManager.GetObject("IEDriverServer", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

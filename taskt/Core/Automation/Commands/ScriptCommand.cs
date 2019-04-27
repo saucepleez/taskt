@@ -98,7 +98,14 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(HTMLInputCommand))]
     [XmlInclude(typeof(UploadDataCommand))]
     [XmlInclude(typeof(GetDataCommand))]
-
+    [XmlInclude(typeof(RESTCommand))]
+    [XmlInclude(typeof(ParseJSONArrayCommand))]
+    [XmlInclude(typeof(StopwatchCommand))]
+    [XmlInclude(typeof(SystemActionCommand))]
+    [XmlInclude(typeof(RemoteDesktopCommand))]
+    [XmlInclude(typeof(EnvironmentVariableCommand))]
+    [XmlInclude(typeof(OSVariableCommand))]
+    [XmlInclude(typeof(ModifyVariableCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

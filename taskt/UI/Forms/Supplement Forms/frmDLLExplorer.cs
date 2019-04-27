@@ -97,7 +97,7 @@ namespace taskt.UI.Forms.Supplemental
                         foreach (var method in methods)
                         {
                             var newMethod = new Method();
-                            newMethod.MethodName = method.Name;
+                            newMethod.MethodName = method.ToString();
 
                             var reqdParams = method.GetParameters();
 

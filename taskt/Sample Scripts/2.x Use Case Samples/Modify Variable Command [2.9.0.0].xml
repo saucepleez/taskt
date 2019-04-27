@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="07a12233-0373-4f6f-b0fa-efdef3ec4b08" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Sample shows how to modify case or convert to/from base64 format" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="4f603ead-69be-4be3-bb28-9813870095fe" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vVar" v_Input="hello world!" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="61478b82-3a4c-4dc5-b954-0bf000b2efa8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Show Starting Value" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="8ae6b1bb-23e0-44a9-836c-42884b00fba1" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Starting With: {vVar}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e33fc4e6-7931-465b-ab08-78ecf17c3a80" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Show Upper Case Conversion" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ModifyVariableCommand" CommandID="61dd23d0-0313-4afc-82e0-ddc7ffebdd69" CommandName="StringCaseCommand" IsCommented="false" SelectionName="Modify Variable" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vVar" v_ConvertType="To Upper Case" v_applyToVariableName="vVar" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="1ad28387-2160-469f-b3ae-828b3018d583" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="To Upper Case: {vVar}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="18c6a368-f213-4f03-9c2a-8e21d9b9b837" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Show Lower Case Conversion" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ModifyVariableCommand" CommandID="45554a6f-d9ec-419f-a075-36f69e4b76c7" CommandName="StringCaseCommand" IsCommented="false" SelectionName="Modify Variable" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vVar" v_ConvertType="To Lower Case" v_applyToVariableName="vVar" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="a285fa22-42b3-4538-85a0-d1fabf45c2d4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="To Lower Case: {vVar}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="62012f06-0422-436a-b550-64b378afbc2a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Show To Base64 Conversion" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ModifyVariableCommand" CommandID="2a88bb4e-edcf-4950-88a2-6c21e3cd2e41" CommandName="StringCaseCommand" IsCommented="false" SelectionName="Modify Variable" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vVar" v_ConvertType="To Base64 String" v_applyToVariableName="vVar" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d595a259-fa0f-478a-89bd-e9086a48aeed" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="To Base 64: {vVar}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="28ca5eef-7ca1-42b7-875e-a1e881efbdd8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Show From Base64 Conversion" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ModifyVariableCommand" CommandID="c2aacdcc-acba-440b-9148-3f1d83c7a8b9" CommandName="StringCaseCommand" IsCommented="false" SelectionName="Modify Variable" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vVar" v_ConvertType="From Base64 String" v_applyToVariableName="vVar" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="291c0dc3-3e49-46f2-8705-415718d5c471" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="From Base 64: {vVar}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vVar</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

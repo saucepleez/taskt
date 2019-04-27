@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         public WriteTextFileCommand()
         {
             this.CommandName = "WriteTextFileCommand";
-            this.SelectionName = "Write To File";
+            this.SelectionName = "Write Text File";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
