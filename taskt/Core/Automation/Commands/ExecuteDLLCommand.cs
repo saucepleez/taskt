@@ -203,7 +203,7 @@ namespace taskt.Core.Automation.Commands
             var returnType = result.GetType();
 
             //check namespace
-            if (returnType.Namespace != "System")
+            if (returnType.Namespace != "System" || returnType.IsArray)
             {
                 //conversion of type is required due to type being a complex object
 
