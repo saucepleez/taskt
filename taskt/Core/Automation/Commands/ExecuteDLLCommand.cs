@@ -183,6 +183,11 @@ namespace taskt.Core.Automation.Commands
                         var parseResult = DateTime.Parse(requiredParameterValue);
                         parameters.Add(parseResult);
                     }
+                    else if ((param.ParameterType.IsArray))
+                    {
+                        var parseResult = requiredParameterValue.Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries);
+                        parameters.Add(parseResult);
+                    }
                     else
                     {
                         throw new NotImplementedException("Only system parameter types are supported!");
