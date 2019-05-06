@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
                 if (complexVariable != null)
                     complexVariable.CurrentPosition = i;
 
-                (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+             
 
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
@@ -94,12 +94,17 @@ namespace taskt.Core.Automation.Commands
                     if (engine.IsCancellationPending)
                         return;
 
+                    (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                     engine.ExecuteCommand(cmd);
 
 
                     if (engine.CurrentLoopCancelled)
+                    {
+                        engine.ReportProgress("Exiting Loop From Line " + loopCommand.LineNumber);
+                        engine.CurrentLoopCancelled = false;
                         return;
+                    }
                 }
 
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
