@@ -119,6 +119,9 @@
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
+    <Reference Include="SharpSimpleNLG, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSimpleNLG.1.2.0\lib\net45\SharpSimpleNLG.dll</HintPath>
+    </Reference>
     <Reference Include="SuperSocket.ClientEngine, Version=0.8.0.13, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
       <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.8.0.13\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
     </Reference>
@@ -162,6 +165,8 @@
     <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLGGeneratePhraseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLGSetParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEBrowserFindBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\OSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataCommand.cs" />
@@ -169,6 +174,7 @@
     <Compile Include="Core\Automation\Commands\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\MessageBoxCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseJSONArray.cs" />
+    <Compile Include="Core\Automation\Commands\NLGCreateInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\RESTCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEBrowserCloseCommand.cs" />
@@ -633,6 +639,7 @@
     <None Include="Resources\action_bar_close.png" />
     <None Include="Resources\command-stopwatch.png" />
     <None Include="Resources\command-system.png" />
+    <None Include="Resources\command-nlg.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
