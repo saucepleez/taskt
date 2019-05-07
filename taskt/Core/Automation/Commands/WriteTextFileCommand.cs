@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the text to be written")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the text to be written. [crLF] inserts a newline.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the text should be written to files.")]
         [Attributes.PropertyAttributes.SampleUsage("**[vText]** or **Hello World!**")]
@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         {
             //convert variables
             var filePath = v_FilePath.ConvertToUserVariable(sender);
-            var outputText = v_TextToWrite.ConvertToUserVariable(sender);
+            var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
 
             //append or overwrite as necessary
             if (v_Overwrite == "Append")
