@@ -313,6 +313,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_nlg {
+            get {
+                object obj = ResourceManager.GetObject("command_nlg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_parse {
             get {
                 object obj = ResourceManager.GetObject("command_parse", resourceCulture);

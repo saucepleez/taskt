@@ -516,6 +516,10 @@ namespace taskt.UI
             uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
             uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RemoteDesktopCommand", taskt.Properties.Resources.command_system);
+            uiImages.Add("NLGGeneratePhraseCommand", taskt.Properties.Resources.command_nlg);
+            uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
+            uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
+
             return uiImages;
         }
         public static ImageList UIImageList()
