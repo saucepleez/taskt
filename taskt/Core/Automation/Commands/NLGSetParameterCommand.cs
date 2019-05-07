@@ -77,6 +77,10 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
+            //remove existing associations if override app instances is not enabled
+            engine.AppInstances.Remove(vInstance);
+
+            //add to app instance to track
             engine.AddAppInstance(vInstance, p);
 
 
