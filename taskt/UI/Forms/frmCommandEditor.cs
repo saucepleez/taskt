@@ -74,13 +74,13 @@ namespace taskt.UI.Forms
             //Set DisplayMember to track DisplayValue from the class
             cboSelectedCommand.DisplayMember = "FullName";
 
-             if ((creationMode == CreationMode.Add) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName == defaultStartupCommand).Count() > 0))
+            if ((creationMode == CreationMode.Add) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName == defaultStartupCommand).Count() > 0))
             {
                 cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(defaultStartupCommand);
             }
             else if ((creationMode == CreationMode.Edit) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).Count() > 0))
             {
-                var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault();
+                var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand) && x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
                 cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.FullName);
             }
             else
@@ -117,13 +117,13 @@ namespace taskt.UI.Forms
                             typedControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
                         }
 
-                        
-                        
+
+
                     }
 
-                 
+
                 }
-       
+
 
                 //handle selection change events
 
@@ -156,7 +156,7 @@ namespace taskt.UI.Forms
         private void AfterFormInitialization()
         {
 
-   
+
             frmCommandEditor_Resize(null, null);
         }
 
@@ -204,7 +204,7 @@ namespace taskt.UI.Forms
                 flw_InputVariables.Controls.Add(ctrl);
             }
 
-        
+
             //resize controls
             frmCommandEditor_Resize(null, null);
 
