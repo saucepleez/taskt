@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserElementActionCommand()
         {
-            this.CommandName = "SeleniumBrowserCreateCommand";
+            this.CommandName = "SeleniumBrowserElementActionCommand";
             this.SelectionName = "Element Action";
             this.v_InstanceName = "default";
             this.CommandEnabled = true;
