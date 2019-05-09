@@ -32,6 +32,10 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Verb")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Object")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Complement")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Modifier")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Pre-Modifier")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Front Modifier")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Post Modifier")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ParameterType { get; set; }
 
@@ -72,6 +76,18 @@ namespace taskt.Core.Automation.Commands
                     break;
                 case "Add Complement":
                     p.addComplement(userInput);
+                    break;
+                case "Add Modifier":
+                    p.addModifier(userInput);             
+                    break;
+                case "Add Front Modifier":
+                    p.addFrontModifier(userInput);
+                    break;
+                case "Add Post Modifier":
+                    p.addPostModifier(userInput);
+                    break;
+                case "Add Pre-Modifier":
+                    p.addPreModifier(userInput);
                     break;
                 default:
                     break;

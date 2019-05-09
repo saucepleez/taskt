@@ -29,16 +29,22 @@
       <ScriptCommand xsi:type="NLGSetParameterCommand" CommandID="13c9def0-9ae7-4084-889b-7b4f2283013d" CommandName="NLGSetParameterCommand" IsCommented="false" SelectionName="Set NLG Parameter" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="nlgDefaultInstance" v_ParameterType="Set Object" v_Parameter="open-source" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="8a7f7429-841b-4653-835e-d754940cb0db" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Generate (Realise) Phrase" CommandEnabled="true" />
+      <ScriptCommand xsi:type="NLGSetParameterCommand" CommandID="0095aada-c51d-48de-b670-e89f5bd60f4d" CommandName="NLGSetParameterCommand" IsCommented="false" SelectionName="Set NLG Parameter" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="nlgDefaultInstance" v_ParameterType="Add Pre-Modifier" v_Parameter="truly" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="NLGGeneratePhraseCommand" CommandID="c13c7cfa-3582-47f8-877c-6e84072de440" CommandName="NLGGeneratePhraseCommand" IsCommented="false" SelectionName="Generate NLG Phrase" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="nlgDefaultInstance" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="NLGSetParameterCommand" CommandID="61c86136-169f-4cbe-a1fa-41b12681d805" CommandName="NLGSetParameterCommand" IsCommented="false" SelectionName="Set NLG Parameter" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="nlgDefaultInstance" v_ParameterType="Add Front Modifier" v_Parameter="Sometimes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="71101699-37cb-4dd9-a7eb-534b0cbf10b4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Show to User" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8a7f7429-841b-4653-835e-d754940cb0db" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Generate (Realise) Phrase" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="7d4fdc43-a7dd-4e0a-85dc-c8fe69e47c74" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vResult}" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="NLGGeneratePhraseCommand" CommandID="c13c7cfa-3582-47f8-877c-6e84072de440" CommandName="NLGGeneratePhraseCommand" IsCommented="false" SelectionName="Generate NLG Phrase" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="nlgDefaultInstance" v_applyToVariableName="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="71101699-37cb-4dd9-a7eb-534b0cbf10b4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Show to User" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="7d4fdc43-a7dd-4e0a-85dc-c8fe69e47c74" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vResult}" v_AutoCloseAfter="0" />
     </ScriptAction>
   </Commands>
   <Variables>
