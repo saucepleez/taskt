@@ -41,11 +41,12 @@ namespace taskt.UI.Forms
         private bool advancedDebug { get; set; }
         private Core.Automation.Engine.AutomationEngineInstance engineInstance { get; set; }
         private List<Core.Script.ScriptVariable> Variables { get; set; }
+        public bool CloseWhenDone = false;
         #endregion
 
         //events and methods
         #region Form Events/Methods
-        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null)
+        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false)
         {
             InitializeComponent();
 
@@ -53,6 +54,8 @@ namespace taskt.UI.Forms
             {
                 Variables = variables;
             }
+
+            CloseWhenDone = blnCloseWhenDone;
 
             //set callback form
             callBackForm = builderForm;
@@ -101,7 +104,7 @@ namespace taskt.UI.Forms
         {
             InitializeComponent();
 
-           
+
             //set file
             this.filePath = null;
 
@@ -139,8 +142,8 @@ namespace taskt.UI.Forms
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
 
-    
-            
+
+
         }
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
@@ -168,10 +171,10 @@ namespace taskt.UI.Forms
                 engineInstance.ExecuteScriptXML(xmlData);
             }
 
-   
+
         }
 
-     
+
 
         /// <summary>
         /// Triggers the automation engine to stop based on a hooked key press
@@ -185,7 +188,7 @@ namespace taskt.UI.Forms
             engineInstance.CancelScript();
 
         }
-      
+
         #endregion
 
         //engine event handlers
@@ -212,14 +215,14 @@ namespace taskt.UI.Forms
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
                     AddStatus("Script Completed Successfully");
                     UpdateUI("debug info (success)");
-                
+
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Error:
                     AddStatus("Error: " + e.Error);
                     AddStatus("Script Completed With Errors!");
                     UpdateUI("debug info (error)");
 
-                   
+
 
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
@@ -231,8 +234,13 @@ namespace taskt.UI.Forms
             }
 
 
-       
+
             AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
+
+            if(CloseWhenDone)
+            {
+                this.Close();
+            }
 
         }
 
@@ -262,12 +270,12 @@ namespace taskt.UI.Forms
             }
             else
             {
-               //update status
+                //update status
                 lblAction.Text = text + "..";
                 lstSteppingCommands.Items.Add(DateTime.Now.ToString("MM/dd/yy hh:mm:ss.fff") + " | " + text + "..");
                 lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
 
-           
+
             }
 
         }
@@ -336,7 +344,7 @@ namespace taskt.UI.Forms
                 var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter);
                 confirmationForm.ShowDialog();
             }
-         
+
         }
         public void LaunchRDPSession(string machineName, string userName, string password, int width, int height)
         {
@@ -392,9 +400,9 @@ namespace taskt.UI.Forms
                 {
                     return null;
                 }
-        
 
-           
+
+
             }
 
         }
@@ -448,7 +456,7 @@ namespace taskt.UI.Forms
                 {
                     callBackForm.DebugLine = lineNumber;
                 }
-                        
+
             }
         }
         #endregion
@@ -491,7 +499,7 @@ namespace taskt.UI.Forms
 
         private void uiBtnPause_Click(object sender, EventArgs e)
         {
-           
+
 
             if (uiBtnPause.DisplayText == "Pause")
             {

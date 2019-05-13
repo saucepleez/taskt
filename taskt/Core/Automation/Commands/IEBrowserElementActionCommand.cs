@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Attribute")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Fire onmousedown event")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Set Text**, **Get Text**, **Get Attribute**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
@@ -246,6 +247,10 @@ namespace taskt.Core.Automation.Commands
 
         private void RunCommandActions(IHTMLElement element, object sender, InternetExplorer browserInstance)
         {
+            if (v_WebAction == "Fire onmousedown event")
+            {
+                ((IHTMLElement3)element).FireEvent("onmousedown");
+            }
             if (v_WebAction == "Invoke Click")
             {
                 element.click();
@@ -391,6 +396,7 @@ namespace taskt.Core.Automation.Commands
             switch (ElementActionDropdown.SelectedItem)
             {
                 case "Invoke Click":
+                case "Fire onmousedown event":
                 case "Clear Element":
 
                     foreach (var ctrl in ElementParameterControls)
