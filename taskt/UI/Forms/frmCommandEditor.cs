@@ -80,8 +80,18 @@ namespace taskt.UI.Forms
             }
             else if ((creationMode == CreationMode.Edit) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).Count() > 0))
             {
-                var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand) && x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
-                cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.FullName);
+                var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault(); //&& x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
+
+                if (requiredCommand == null)
+                {
+                    MessageBox.Show("Command was not found! " + defaultStartupCommand);
+                }
+                else
+                {
+                    cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.FullName);
+                }
+
+               
             }
             else
             {
