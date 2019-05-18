@@ -169,8 +169,7 @@ namespace taskt.UI.Forms
 
         private void AfterFormInitialization()
         {
-
-
+            //force control resizing
             frmCommandEditor_Resize(null, null);
         }
 
@@ -217,11 +216,7 @@ namespace taskt.UI.Forms
             {
                 flw_InputVariables.Controls.Add(ctrl);
             }
-
-
-            //resize controls
-            frmCommandEditor_Resize(null, null);
-
+        
         }
 
 
