@@ -43,8 +43,10 @@ namespace taskt.UI.Forms
         public Core.Automation.Commands.ScriptCommand originalCommand;
         //assigned by frmScriptBuilder to restrict inputs for editing existing commands
         public CreationMode creationMode;
-        //startup command, assigned from frmCommand Browser
+        //startup command, assigned from frmScriptBuilder
         public string defaultStartupCommand;
+        //editing command, assigned from frmScriptBuilder when editing a command
+        public Core.Automation.Commands.ScriptCommand editingCommand;
         public frmCommandEditor(List<AutomationCommand> commands)
         {
             InitializeComponent();
@@ -78,9 +80,11 @@ namespace taskt.UI.Forms
             {
                 cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(defaultStartupCommand);
             }
-            else if ((creationMode == CreationMode.Edit) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).Count() > 0))
+            else if (creationMode == CreationMode.Edit)
             {
-                var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault(); //&& x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
+                // var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault(); //&& x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
+
+                var requiredCommand = commandList.Where(x => x.Command.ToString() == editingCommand.ToString()).FirstOrDefault();
 
                 if (requiredCommand == null)
                 {
