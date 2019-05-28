@@ -112,9 +112,14 @@ namespace taskt.Core.Automation.Commands
             ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             ElementsGridViewHelper.AllowUserToAddRows = false;
             ElementsGridViewHelper.AllowUserToDeleteRows = false;
-
+            ElementsGridViewHelper.MouseEnter += ElementsGridViewHelper_MouseEnter;
 
     }
+
+        private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
+        {
+            seleniumAction_SelectionChangeCommitted(null, null);
+        }
 
         public override void RunCommand(object sender)
         {
@@ -436,7 +441,12 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
-        private void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
+        public override void Refresh(UI.Forms.frmCommandEditor editor)
+        {
+    
+            //seleniumAction_SelectionChangeCommitted(null, null);
+        }
+        public void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
 
             Core.Automation.Commands.SeleniumBrowserElementActionCommand cmd = (Core.Automation.Commands.SeleniumBrowserElementActionCommand)this;

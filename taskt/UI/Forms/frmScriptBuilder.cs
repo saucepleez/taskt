@@ -781,7 +781,8 @@ namespace taskt.UI.Forms
                 //creation mode edit locks form to current command
                 editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
 
-                editCommand.defaultStartupCommand = currentCommand.SelectionName;
+                //editCommand.defaultStartupCommand = currentCommand.SelectionName;
+                editCommand.editingCommand = currentCommand;
 
                 //create clone of current command so databinding does not affect if changes are not saved
                 editCommand.originalCommand = Core.Common.Clone(currentCommand);
