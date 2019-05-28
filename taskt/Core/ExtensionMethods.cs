@@ -24,7 +24,7 @@ namespace taskt.Core
                 return str;
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            
+
             var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
 
@@ -62,12 +62,12 @@ namespace taskt.Core
                             //get the value from the list
 
                             complexJsonVariable = complexJsonVariable.Replace("^" + potentialSubVariable + "^", matchingVar.GetDisplayValue());
-                                continue;
-                            }
-
+                            continue;
                         }
 
-         
+                    }
+
+
 
                     //split by json select token pointer
                     var element = complexJsonVariable.Split(new string[] { "=>" }, StringSplitOptions.None);
@@ -110,24 +110,32 @@ namespace taskt.Core
 
                             }
                         }
-                    }                
-               }
+                    }
+                }
 
+                string varcheckname = potentialVariable;
+                string[] aPotentialVariable = potentialVariable.Split(new string[] { "[", "]" }, StringSplitOptions.None);
+                int ix=0;
+                if (aPotentialVariable.Length == 3 && int.TryParse(aPotentialVariable[1], out ix))
+                {
+                    varcheckname = aPotentialVariable[0];
+                }
 
                 var varCheck = (from vars in searchList
-                                where vars.VariableName == potentialVariable
+                                where vars.VariableName == varcheckname
                                 select vars).FirstOrDefault();
 
 
                 if (potentialVariable.Length == 0)
-                                    continue;
+                    continue;
 
 
                 if (potentialVariable == "taskt.EngineContext")
                 {
                     //set json settings
                     JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Error = (serializer, err) => {
+                    settings.Error = (serializer, err) =>
+                    {
                         err.ErrorContext.Handled = true;
                     };
                     settings.Formatting = Formatting.Indented;
@@ -142,11 +150,21 @@ namespace taskt.Core
 
                     if (str.Contains(searchVariable))
                     {
-                        str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
+                        if (ix != 0)
+                        {
+                            int savePosition = varCheck.CurrentPosition;
+                            varCheck.CurrentPosition = ix;
+                            str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
+                            varCheck.CurrentPosition = savePosition;
+                        }
+                        else
+                        {
+                            str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
+                        }
                     }
                     else if (str.Contains(potentialVariable))
-                    {                
-                         str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());                                 
+                    {
+                        str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());
                     }
                 }
 
@@ -201,7 +219,7 @@ namespace taskt.Core
 
             //if the string matches the char then return
             //as the user does not want to do math
-            if (mathChars.Any( f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
+            if (mathChars.Any(f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
             {
                 return str;
             }
@@ -247,7 +265,7 @@ namespace taskt.Core
         public static string ApplyVariableFormatting(this String str)
         {
             var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
-           
+
             return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
         }
     }
