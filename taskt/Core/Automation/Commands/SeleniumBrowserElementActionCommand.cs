@@ -118,7 +118,7 @@ namespace taskt.Core.Automation.Commands
 
         private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
         {
-            seleniumAction_SelectionChangeCommitted(null, null);
+        //    seleniumAction_SelectionChangeCommitted(null, null);
         }
 
         public override void RunCommand(object sender)
@@ -441,11 +441,12 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
+
         public override void Refresh(UI.Forms.frmCommandEditor editor)
         {
-    
             //seleniumAction_SelectionChangeCommitted(null, null);
         }
+
         public void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
 
