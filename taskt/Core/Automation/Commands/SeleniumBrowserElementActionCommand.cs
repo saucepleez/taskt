@@ -112,14 +112,14 @@ namespace taskt.Core.Automation.Commands
             ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             ElementsGridViewHelper.AllowUserToAddRows = false;
             ElementsGridViewHelper.AllowUserToDeleteRows = false;
-            ElementsGridViewHelper.MouseEnter += ElementsGridViewHelper_MouseEnter;
+            //ElementsGridViewHelper.MouseEnter += ElementsGridViewHelper_MouseEnter;
 
         }
 
-        private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
-        {
-            //seleniumAction_SelectionChangeCommitted(null, null);
-        }
+        //private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
+        //{
+        //    seleniumAction_SelectionChangeCommitted(null, null);
+        //}
 
         public override void RunCommand(object sender)
         {
@@ -224,7 +224,7 @@ namespace taskt.Core.Automation.Commands
                         clearElement = "No";
                     }
 
-                    if (clearElement == "Yes")
+                    if (clearElement.ToLower() == "yes") 
                     {
                         element.Clear();
                     }
