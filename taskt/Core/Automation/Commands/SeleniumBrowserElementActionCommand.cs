@@ -114,11 +114,11 @@ namespace taskt.Core.Automation.Commands
             ElementsGridViewHelper.AllowUserToDeleteRows = false;
             ElementsGridViewHelper.MouseEnter += ElementsGridViewHelper_MouseEnter;
 
-    }
+        }
 
         private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
         {
-        //    seleniumAction_SelectionChangeCommitted(null, null);
+            //seleniumAction_SelectionChangeCommitted(null, null);
         }
 
         public override void RunCommand(object sender)
@@ -466,7 +466,7 @@ namespace taskt.Core.Automation.Commands
 
                     foreach (var ctrl in ElementParameterControls)
                     {
-                        ctrl.Hide();
+                        //ctrl.Hide();
                     }
 
                     break;
