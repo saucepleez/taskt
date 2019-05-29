@@ -442,10 +442,10 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
-        public override void Refresh(UI.Forms.frmCommandEditor editor)
-        {
-            //seleniumAction_SelectionChangeCommitted(null, null);
-        }
+        //public override void Refresh(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //seleniumAction_SelectionChangeCommitted(null, null);
+        //}
 
         public void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
