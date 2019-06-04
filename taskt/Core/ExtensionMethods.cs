@@ -115,10 +115,14 @@ namespace taskt.Core
 
                 string varcheckname = potentialVariable;
                 string[] aPotentialVariable = potentialVariable.Split(new string[] { "[", "]" }, StringSplitOptions.None);
-                int ix=0;
-                if (aPotentialVariable.Length == 3 && int.TryParse(aPotentialVariable[1], out ix))
+                int directElementIndex = 0;
+                if (aPotentialVariable.Length == 3 && int.TryParse(aPotentialVariable[1], out directElementIndex))
                 {
                     varcheckname = aPotentialVariable[0];
+                }
+                else if (potentialVariable.Split('.').Length==2)
+                {
+                    varcheckname = potentialVariable.Split('.')[0];
                 }
 
                 var varCheck = (from vars in searchList
@@ -150,12 +154,17 @@ namespace taskt.Core
 
                     if (str.Contains(searchVariable))
                     {
-                        if (ix != 0)
+                        if (directElementIndex != 0)
                         {
                             int savePosition = varCheck.CurrentPosition;
-                            varCheck.CurrentPosition = ix;
+                            varCheck.CurrentPosition = directElementIndex;
                             str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
                             varCheck.CurrentPosition = savePosition;
+                        }
+                        else if (potentialVariable.Split('.').Length==2) // This handles vVariable.count 
+                        {
+                            string propertyName = potentialVariable.Split('.')[1];
+                            str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue(propertyName));
                         }
                         else
                         {

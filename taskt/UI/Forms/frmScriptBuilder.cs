@@ -1603,6 +1603,8 @@ namespace taskt.UI.Forms
             //clear selected items
             ClearSelectedListViewItems();
 
+            SaveToFile(false); // Save & Run!
+
             Notify("Running Script..");
 
 

@@ -228,7 +228,13 @@ namespace taskt.Core.Script
             else
             {
                 List<string> requiredValue = (List<string>)VariableValue;
-                return requiredValue[CurrentPosition];
+                switch(requiredProperty)
+                {
+                    case "count":
+                        return requiredValue.Count.ToString();
+                    default:
+                        return requiredValue[CurrentPosition];
+                }
             }
            
         }
