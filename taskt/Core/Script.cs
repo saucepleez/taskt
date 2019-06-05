@@ -221,9 +221,19 @@ namespace taskt.Core.Script
         /// </summary>
         public string GetDisplayValue(string requiredProperty = "")
         {
+           
             if (VariableValue is string)
             {
-                return (string)VariableValue;
+                switch (requiredProperty)
+                {
+                    case "type":
+                    case "Type":
+                    case "TYPE":
+                        return "BASIC";
+                    default:
+                        return (string)VariableValue;
+                }
+              
             }
             else
             {
@@ -256,6 +266,10 @@ namespace taskt.Core.Script
                     case "Last":
                     case "LAST":
                         return requiredValue.Last();
+                    case "type":
+                    case "Type":
+                    case "TYPE":
+                        return "LIST";
                     default:
                         return requiredValue[CurrentPosition];
                 }
