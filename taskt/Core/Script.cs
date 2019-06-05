@@ -234,6 +234,20 @@ namespace taskt.Core.Script
                     case "Count":
                     case "COUNT":
                         return requiredValue.Count.ToString();
+                    case "index":
+                    case "Index":
+                    case "INDEX":
+                        return CurrentPosition.ToString();
+                    case "ToJson":
+                    case "TOJSON":
+                    case "tojson":
+                    case "toJson":
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
+                    case "toPipe":
+                    case "ToPipe":
+                    case "TOPIPE":
+                    case "topipe":
+                        return String.Join("|", requiredValue);
                     default:
                         return requiredValue[CurrentPosition];
                 }
