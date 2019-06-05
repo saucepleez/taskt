@@ -231,6 +231,8 @@ namespace taskt.Core.Script
                 switch(requiredProperty)
                 {
                     case "count":
+                    case "Count":
+                    case "COUNT":
                         return requiredValue.Count.ToString();
                     default:
                         return requiredValue[CurrentPosition];
