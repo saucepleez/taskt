@@ -116,9 +116,11 @@ namespace taskt.Core
                 string varcheckname = potentialVariable;
                 string[] aPotentialVariable = potentialVariable.Split(new string[] { "[", "]" }, StringSplitOptions.None);
                 int directElementIndex = 0;
+                bool useDirectElementIndex = false;
                 if (aPotentialVariable.Length == 3 && int.TryParse(aPotentialVariable[1], out directElementIndex))
                 {
                     varcheckname = aPotentialVariable[0];
+                    useDirectElementIndex = true;
                 }
                 else if (potentialVariable.Split('.').Length==2)
                 {
@@ -154,7 +156,7 @@ namespace taskt.Core
 
                     if (str.Contains(searchVariable))
                     {
-                        if (directElementIndex != 0)
+                        if (useDirectElementIndex)
                         {
                             int savePosition = varCheck.CurrentPosition;
                             varCheck.CurrentPosition = directElementIndex;
