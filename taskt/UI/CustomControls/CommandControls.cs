@@ -772,10 +772,10 @@ public class AutomationCommand
         {
 
             //preference to preload is false
-            if (UIControls is null)
-            {
+            //if (UIControls is null)
+            //{
                 this.RenderUIComponents();
-            }
+            //}
 
             foreach (var ctrl in UIControls)
             {

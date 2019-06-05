@@ -38,6 +38,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Attribute")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Fire onmousedown event")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Fire onmouseover event")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Set Text**, **Get Text**, **Get Attribute**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
@@ -113,29 +115,40 @@ namespace taskt.Core.Automation.Commands
             bool qualifyingElementFound = false;
             foreach (IHTMLElement element in elementCollection) // browserInstance.Document.All)
             {
-                qualifyingElementFound = FindQualifyingElement(elementSearchProperties, element);
-                if (qualifyingElementFound)
+                if (element.outerHTML != null)
                 {
-                    RunCommandActions(element, sender, browserInstance);
-                    lastElementCollectionFound = elementCollection;
-                    return (true);
-                    //break;
-                }
-                if (element.outerHTML != null && element.outerHTML.ToLower().Trim().StartsWith("<frame "))
-                {
-                    string frameId = element.getAttribute("id");
-                    if (frameId == null)
+                    string outerHtml = element.outerHTML.ToLower().Trim();
+
+                    if (!outerHtml.StartsWith("<html") &&
+                        !outerHtml.StartsWith("<body") &&
+                        !outerHtml.StartsWith("<head") &&
+                        !outerHtml.StartsWith("<!doctype"))
                     {
-                        frameId = element.getAttribute("name");
+                        qualifyingElementFound = FindQualifyingElement(elementSearchProperties, element);
+                        if (qualifyingElementFound)
+                        {
+                            RunCommandActions(element, sender, browserInstance);
+                            lastElementCollectionFound = elementCollection;
+                            return (true);
+                            //break;
+                        }
+                        if (element.outerHTML != null && element.outerHTML.ToLower().Trim().StartsWith("<frame "))
+                        {
+                            string frameId = element.getAttribute("id");
+                            if (frameId == null)
+                            {
+                                frameId = element.getAttribute("name");
+                            }
+                            if (frameId != null)
+                            {
+                                qualifyingElementFound = InspectFrame(browserInstance.Document.getElementById(frameId).contentDocument.all, elementSearchProperties, sender, browserInstance);
+                            }
+                        }
+                        if (qualifyingElementFound)
+                        {
+                            break;
+                        }
                     }
-                    if (frameId != null)
-                    {
-                        qualifyingElementFound = InspectFrame(browserInstance.Document.getElementById(frameId).contentDocument.all, elementSearchProperties, sender, browserInstance);
-                    }
-                }
-                if (qualifyingElementFound)
-                {
-                    break;
                 }
             }
             return (qualifyingElementFound);
@@ -164,6 +177,12 @@ namespace taskt.Core.Automation.Commands
             var elementSearchProperties = from rws in searchTable.AsEnumerable()
                                           where rws.Field<Boolean>("Enabled").ToString() == "True"
                                           select rws;
+            foreach (DataRow seachCriteria in elementSearchProperties)
+            {
+                string searchPropertyValue = seachCriteria.Field<string>("Property Value");
+                searchPropertyValue = searchPropertyValue.ConvertToUserVariable(engine);
+                seachCriteria.SetField<string>("Property Value", searchPropertyValue);
+            }
 
             bool qualifyingElementFound = false;
 
@@ -201,52 +220,83 @@ namespace taskt.Core.Automation.Commands
 
                 searchPropertyFound = "False";
 
-                //if (element.GetType().GetProperty(searchPropertyName) == null)
-                if ((outerHTML == null) || (element.getAttribute(searchPropertyName) == null) || (System.Convert.IsDBNull(element.getAttribute(searchPropertyName))))
+                try
                 {
-                    return false;
-                }
+                    //if (element.GetType().GetProperty(searchPropertyName) == null)
+                    if ((outerHTML == null) || (element.getAttribute(searchPropertyName) == null) || (System.Convert.IsDBNull(element.getAttribute(searchPropertyName))))
+                    {
+                        return false;
+                    }
 
-                int searchValue;
-                if (int.TryParse(searchPropertyValue, out searchValue))
-                {
-                    //int elementValue = (int)element.GetType().GetProperty(searchPropertyName).GetValue(element, null);
-                    int elementValue = (int)element.getAttribute(searchPropertyName);
-                    if (elementValue == searchValue)
+                    if (searchPropertyName.ToLower() == "href")
                     {
-                        seachCriteria.SetField<string>("Match Found", "True");
+                        try
+                        {
+                            HTMLAnchorElement anchor = (HTMLAnchorElement)element;
+                            if (anchor.href.Contains(searchPropertyValue))
+                            {
+                                seachCriteria.SetField<string>("Match Found", "True");
+                            }
+                            else
+                            {
+                                seachCriteria.SetField<string>("Match Found", "False");
+                            }
+                        }
+                        catch (Exception ex) { }
                     }
                     else
                     {
-                        seachCriteria.SetField<string>("Match Found", "False");
+                        int searchValue;
+                        if (int.TryParse(searchPropertyValue, out searchValue))
+                        {
+                            //int elementValue = (int)element.GetType().GetProperty(searchPropertyName).GetValue(element, null);
+                            int elementValue = (int)element.getAttribute(searchPropertyName);
+                            if (elementValue == searchValue)
+                            {
+                                seachCriteria.SetField<string>("Match Found", "True");
+                            }
+                            else
+                            {
+                                seachCriteria.SetField<string>("Match Found", "False");
+                            }
+                        }
+                        else
+                        {
+                            //string elementValue = (string)element.GetType().GetProperty(searchPropertyName).GetValue(element, null);
+                            string elementValue = (string)element.getAttribute(searchPropertyName);
+                            if ((elementValue != null) && (elementValue == searchPropertyValue))
+                            {
+                                seachCriteria.SetField<string>("Match Found", "True");
+                            }
+                            else
+                            {
+                                seachCriteria.SetField<string>("Match Found", "False");
+                            }
+                        }
                     }
                 }
-                else
-                {
-                    //string elementValue = (string)element.GetType().GetProperty(searchPropertyName).GetValue(element, null);
-                    string elementValue = (string)element.getAttribute(searchPropertyName);
-                    if ((elementValue != null) && (elementValue == searchPropertyValue))
-                    {
-                        seachCriteria.SetField<string>("Match Found", "True");
-                    }
-                    else
-                    {
-                        seachCriteria.SetField<string>("Match Found", "False");
-                    }
-                }
+                catch (Exception ex) { }
             }
 
-            foreach (var seachCriteria in elementSearchProperties)
+            /*foreach (var seachCriteria in elementSearchProperties)
             {
                 Console.WriteLine(seachCriteria.Field<string>("Property Value"));
-            }
+            }*/
 
             return elementSearchProperties.Where(seachCriteria => seachCriteria.Field<string>("Match Found") == "True").Count() == elementSearchProperties.Count();
         }
 
         private void RunCommandActions(IHTMLElement element, object sender, InternetExplorer browserInstance)
         {
-            if (v_WebAction == "Invoke Click")
+            if (v_WebAction == "Fire onmousedown event")
+            {
+                ((IHTMLElement3)element).FireEvent("onmousedown");
+            }
+            else if (v_WebAction == "Fire onmouseover event")
+            {
+                ((IHTMLElement3)element).FireEvent("onmouseover");
+            }
+            else if (v_WebAction == "Invoke Click")
             {
                 element.click();
                 IEBrowserCreateCommand.WaitForReadyState(browserInstance);
@@ -391,6 +441,8 @@ namespace taskt.Core.Automation.Commands
             switch (ElementActionDropdown.SelectedItem)
             {
                 case "Invoke Click":
+                case "Fire onmousedown event":
+                case "Fire onmouseover event":
                 case "Clear Element":
 
                     foreach (var ctrl in ElementParameterControls)

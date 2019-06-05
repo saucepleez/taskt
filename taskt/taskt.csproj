@@ -190,6 +190,7 @@
     <Compile Include="Core\Automation\Commands\SeleniumBrowserExecuteScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateBackCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateForwardCommand.cs" />
+    <Compile Include="Core\Automation\Commands\IEBrowserNavigateURLCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateURLCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserRefreshCommand.cs" />
     <Compile Include="Core\Automation\Commands\SetWindowStateCommand.cs" />
