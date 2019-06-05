@@ -238,16 +238,24 @@ namespace taskt.Core.Script
                     case "Index":
                     case "INDEX":
                         return CurrentPosition.ToString();
-                    case "ToJson":
-                    case "TOJSON":
                     case "tojson":
+                    case "ToJson":                
                     case "toJson":
+                    case "TOJSON":
                         return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
-                    case "toPipe":
-                    case "ToPipe":
-                    case "TOPIPE":
                     case "topipe":
+                    case "ToPipe":
+                    case "toPipe":                
+                    case "TOPIPE":
                         return String.Join("|", requiredValue);
+                    case "first":
+                    case "First":
+                    case "FIRST":
+                        return requiredValue.FirstOrDefault();
+                    case "last":
+                    case "Last":
+                    case "LAST":
+                        return requiredValue.Last();
                     default:
                         return requiredValue[CurrentPosition];
                 }
