@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         public AddVariableCommand()
         {
             this.CommandName = "AddVariableCommand";
-            this.SelectionName = "Add Variable";
+            this.SelectionName = "New Variable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
