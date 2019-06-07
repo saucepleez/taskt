@@ -431,6 +431,8 @@ namespace taskt.UI
             uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process); 
             uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
             uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("AddToVariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);

@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
-    public class VariableCommand : ScriptCommand
+    public class AddToVariableCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
@@ -22,16 +22,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be added to the variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
         [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
         [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
         public string v_Input { get; set; }
-        public VariableCommand()
+        public AddToVariableCommand()
         {
-            this.CommandName = "VariableCommand";
-            this.SelectionName = "Set Variable";
+            this.CommandName = "AddToVariableCommand";
+            this.SelectionName = "Add To Variable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -50,28 +50,35 @@ namespace taskt.Core.Automation.Commands
                 requiredVariable = LookupVariable(engine);
             }
 
+            var variableInput = v_Input.ConvertToUserVariable(sender);
+
+
             if (requiredVariable != null)
             {
 
-
-                var variableInput = v_Input.ConvertToUserVariable(sender);
-
-
-                if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
+                if (requiredVariable.VariableValue is List<string>)
                 {
-                    var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
-                    requiredVariable.VariableValue = itemList;
+                    var existingList = (List<string>)requiredVariable.VariableValue;
+                    existingList.Add(variableInput);
                 }
                 else
                 {
-                    requiredVariable.VariableValue = variableInput;
-                }
+                    var itemList = new List<string>();
 
+                    if (requiredVariable.GetDisplayValue() != "")
+                        itemList.Add(requiredVariable.GetDisplayValue());
+
+                    itemList.Add(variableInput);
+
+                    requiredVariable.VariableValue = itemList;
+                  
+                }
+           
     
             }
             else
             {
-                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
+                throw new Exception("Attempted to add data to a variable, but the variable was not found. Enclose variables within brackets, ex. {vVariable}");
             }
         }
 

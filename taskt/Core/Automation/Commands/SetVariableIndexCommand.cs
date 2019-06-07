@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
-    public class VariableCommand : ScriptCommand
+    public class SetVariableIndexCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
@@ -22,16 +22,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please set the current index of the variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
-        public string v_Input { get; set; }
-        public VariableCommand()
+        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's index should be set to.")]
+        [Attributes.PropertyAttributes.SampleUsage("1, 2, etc.")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {vName}.  You can also perform basic math operations.")]
+        public string v_Index { get; set; }
+        public SetVariableIndexCommand()
         {
-            this.CommandName = "VariableCommand";
-            this.SelectionName = "Set Variable";
+            this.CommandName = "SetVariableIndexCommand";
+            this.SelectionName = "Set Variable Index";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -53,25 +53,14 @@ namespace taskt.Core.Automation.Commands
             if (requiredVariable != null)
             {
 
+                var index = int.Parse(v_Index.ConvertToUserVariable(sender));
 
-                var variableInput = v_Input.ConvertToUserVariable(sender);
-
-
-                if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
-                {
-                    var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
-                    requiredVariable.VariableValue = itemList;
-                }
-                else
-                {
-                    requiredVariable.VariableValue = variableInput;
-                }
-
-    
+                requiredVariable.CurrentPosition = index;
+          
             }
             else
             {
-                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
+                throw new Exception("Attempted to update variable index, but variable was not found. Enclose variables within brackets, ex. {vVariable}");
             }
         }
 
@@ -93,7 +82,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
+            return base.GetDisplayValue() + " [Update Variable '" + v_userVariableName + "' index to '" + v_Index + "']";
         }
 
         public override List<Control> Render(UI.Forms.frmCommandEditor editor)
@@ -108,7 +97,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Index", this, editor));
 
         
 

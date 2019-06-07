@@ -202,6 +202,8 @@
     <Compile Include="Core\Automation\Commands\SystemActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\AddToVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitForWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\HTMLInputCommand.cs" />
     <Compile Include="Core\Automation\Commands\SendAdvancedKeyStrokesCommand.cs" />

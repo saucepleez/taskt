@@ -221,9 +221,19 @@ namespace taskt.Core.Script
         /// </summary>
         public string GetDisplayValue(string requiredProperty = "")
         {
+           
             if (VariableValue is string)
             {
-                return (string)VariableValue;
+                switch (requiredProperty)
+                {
+                    case "type":
+                    case "Type":
+                    case "TYPE":
+                        return "BASIC";
+                    default:
+                        return (string)VariableValue;
+                }
+              
             }
             else
             {
@@ -231,7 +241,35 @@ namespace taskt.Core.Script
                 switch(requiredProperty)
                 {
                     case "count":
+                    case "Count":
+                    case "COUNT":
                         return requiredValue.Count.ToString();
+                    case "index":
+                    case "Index":
+                    case "INDEX":
+                        return CurrentPosition.ToString();
+                    case "tojson":
+                    case "ToJson":                
+                    case "toJson":
+                    case "TOJSON":
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
+                    case "topipe":
+                    case "ToPipe":
+                    case "toPipe":                
+                    case "TOPIPE":
+                        return String.Join("|", requiredValue);
+                    case "first":
+                    case "First":
+                    case "FIRST":
+                        return requiredValue.FirstOrDefault();
+                    case "last":
+                    case "Last":
+                    case "LAST":
+                        return requiredValue.Last();
+                    case "type":
+                    case "Type":
+                    case "TYPE":
+                        return "LIST";
                     default:
                         return requiredValue[CurrentPosition];
                 }
