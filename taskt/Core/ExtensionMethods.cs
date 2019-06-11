@@ -114,6 +114,7 @@ namespace taskt.Core
                 }
 
                 string varcheckname = potentialVariable;
+                bool isSystemVar = systemVariables.Any(vars => vars.VariableName == varcheckname);
                 string[] aPotentialVariable = potentialVariable.Split(new string[] { "[", "]" }, StringSplitOptions.None);
                 int directElementIndex = 0;
                 bool useDirectElementIndex = false;
@@ -122,7 +123,7 @@ namespace taskt.Core
                     varcheckname = aPotentialVariable[0];
                     useDirectElementIndex = true;
                 }
-                else if (potentialVariable.Split('.').Length==2)
+                else if (potentialVariable.Split('.').Length == 2 && !isSystemVar)
                 {
                     varcheckname = potentialVariable.Split('.')[0];
                 }
@@ -163,7 +164,7 @@ namespace taskt.Core
                             str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
                             varCheck.CurrentPosition = savePosition;
                         }
-                        else if (potentialVariable.Split('.').Length==2) // This handles vVariable.count 
+                        else if (potentialVariable.Split('.').Length == 2) // This handles vVariable.count 
                         {
                             string propertyName = potentialVariable.Split('.')[1];
                             str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue(propertyName));

@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
 
             this.v_WebActionParameterTable = new System.Data.DataTable
             {
-                TableName = DateTime.Now.ToString("WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
+                TableName = "WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss")
             };
             this.v_WebActionParameterTable.Columns.Add("Parameter Name");
             this.v_WebActionParameterTable.Columns.Add("Parameter Value");
@@ -112,6 +112,7 @@ namespace taskt.Core.Automation.Commands
             ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             ElementsGridViewHelper.AllowUserToAddRows = false;
             ElementsGridViewHelper.AllowUserToDeleteRows = false;
+            ElementsGridViewHelper.AllowUserToResizeRows = false;
             //ElementsGridViewHelper.MouseEnter += ElementsGridViewHelper_MouseEnter;
 
         }
@@ -313,6 +314,7 @@ namespace taskt.Core.Automation.Commands
                     }
 
                     requiredComplexVariable.VariableValue = jsonList;
+                    requiredComplexVariable.CurrentPosition = 0;
 
                     break;
                 case "Clear Element":
@@ -466,7 +468,7 @@ namespace taskt.Core.Automation.Commands
 
                     foreach (var ctrl in ElementParameterControls)
                     {
-                        //ctrl.Hide();
+                        ctrl.Hide();
                     }
 
                     break;
