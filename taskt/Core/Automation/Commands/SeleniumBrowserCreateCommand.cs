@@ -82,7 +82,8 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(v_SeleniumOptions))
                 {
-                    options.AddArguments(v_SeleniumOptions);
+                    var convertedOptions = v_SeleniumOptions.ConvertToUserVariable(sender);
+                    options.AddArguments(convertedOptions);
                 }
 
                 driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
