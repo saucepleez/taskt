@@ -30,25 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRemoteDesktopViewer));
-            this.axRDP = new AxMSTSCLib.AxMsRdpClient9NotSafeForScripting();
             this.pnlCover = new System.Windows.Forms.Panel();
             this.lblLogo = new System.Windows.Forms.Label();
             this.tmrLoginFailure = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.axRDP)).BeginInit();
+            this.axRDP = new AxMSTSCLib.AxMsRdpClient6NotSafeForScripting();
             this.pnlCover.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axRDP)).BeginInit();
             this.SuspendLayout();
-            // 
-            // axRDP
-            // 
-            this.axRDP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axRDP.Enabled = true;
-            this.axRDP.Location = new System.Drawing.Point(0, 0);
-            this.axRDP.Name = "axRDP";
-            this.axRDP.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axRDP.OcxState")));
-            this.axRDP.Size = new System.Drawing.Size(1904, 1041);
-            this.axRDP.TabIndex = 0;
-            this.axRDP.OnLoginComplete += new System.EventHandler(this.axRDP_OnLoginComplete);
-            this.axRDP.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.axRDP_OnDisconnected);
             // 
             // pnlCover
             // 
@@ -62,8 +50,8 @@
             // 
             // lblLogo
             // 
-            this.lblLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.lblLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLogo.AutoSize = true;
             this.lblLogo.Font = new System.Drawing.Font("Segoe UI", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -79,6 +67,16 @@
             this.tmrLoginFailure.Interval = 15000;
             this.tmrLoginFailure.Tick += new System.EventHandler(this.tmrLoginFailure_Tick);
             // 
+            // axRDP
+            // 
+            this.axRDP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axRDP.Enabled = true;
+            this.axRDP.Location = new System.Drawing.Point(0, 0);
+            this.axRDP.Name = "axRDP";
+            this.axRDP.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axRDP.OcxState")));
+            this.axRDP.Size = new System.Drawing.Size(1904, 1041);
+            this.axRDP.TabIndex = 2;
+            // 
             // frmRemoteDesktopViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -90,9 +88,9 @@
             this.Name = "frmRemoteDesktopViewer";
             this.Text = "Remote Desktop";
             this.Load += new System.EventHandler(this.frmRemoteDesktopViewer_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.axRDP)).EndInit();
             this.pnlCover.ResumeLayout(false);
             this.pnlCover.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axRDP)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -100,7 +98,7 @@
         #endregion
         private System.Windows.Forms.Panel pnlCover;
         private System.Windows.Forms.Label lblLogo;
-        public AxMSTSCLib.AxMsRdpClient9NotSafeForScripting axRDP;
         private System.Windows.Forms.Timer tmrLoginFailure;
+        private AxMSTSCLib.AxMsRdpClient6NotSafeForScripting axRDP;
     }
 }
