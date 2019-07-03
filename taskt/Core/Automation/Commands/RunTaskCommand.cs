@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
             var variableList = new List<Script.ScriptVariable>();
             foreach (DataRow rw in v_VariableAssignments.Rows)
             {
-                var variableName = ((string)rw.ItemArray[0]).ConvertToUserVariable(sender);
+                var variableName = ((string)rw.ItemArray[0]);
                 var variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender);
                 variableList.Add(new Script.ScriptVariable
                 {
