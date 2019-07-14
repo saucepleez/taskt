@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserElementActionCommand()
         {
-            this.CommandName = "SeleniumBrowserCreateCommand";
+            this.CommandName = "SeleniumBrowserElementActionCommand";
             this.SelectionName = "Element Action";
             this.v_InstanceName = "default";
             this.CommandEnabled = true;
@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
 
             this.v_WebActionParameterTable = new System.Data.DataTable
             {
-                TableName = DateTime.Now.ToString("WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
+                TableName = "WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss")
             };
             this.v_WebActionParameterTable.Columns.Add("Parameter Name");
             this.v_WebActionParameterTable.Columns.Add("Parameter Value");
@@ -112,9 +112,15 @@ namespace taskt.Core.Automation.Commands
             ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             ElementsGridViewHelper.AllowUserToAddRows = false;
             ElementsGridViewHelper.AllowUserToDeleteRows = false;
+            ElementsGridViewHelper.AllowUserToResizeRows = false;
+            //ElementsGridViewHelper.MouseEnter += ElementsGridViewHelper_MouseEnter;
 
+        }
 
-    }
+        //private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
+        //{
+        //    seleniumAction_SelectionChangeCommitted(null, null);
+        //}
 
         public override void RunCommand(object sender)
         {
@@ -219,7 +225,7 @@ namespace taskt.Core.Automation.Commands
                         clearElement = "No";
                     }
 
-                    if (clearElement == "Yes")
+                    if (clearElement.ToLower() == "yes") 
                     {
                         element.Clear();
                     }
@@ -308,6 +314,7 @@ namespace taskt.Core.Automation.Commands
                     }
 
                     requiredComplexVariable.VariableValue = jsonList;
+                    requiredComplexVariable.CurrentPosition = 0;
 
                     break;
                 case "Clear Element":
@@ -436,7 +443,13 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
-        private void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
+
+        //public override void Refresh(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //seleniumAction_SelectionChangeCommitted(null, null);
+        //}
+
+        public void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
 
             Core.Automation.Commands.SeleniumBrowserElementActionCommand cmd = (Core.Automation.Commands.SeleniumBrowserElementActionCommand)this;

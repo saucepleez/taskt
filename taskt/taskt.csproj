@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>taskt</RootNamespace>
     <AssemblyName>taskt</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
@@ -29,6 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -74,6 +75,14 @@
   <PropertyGroup>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.6.10.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.6.10\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -110,6 +119,9 @@
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSimpleNLG, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSimpleNLG.1.2.0\lib\net45\SharpSimpleNLG.dll</HintPath>
     </Reference>
     <Reference Include="SuperSocket.ClientEngine, Version=0.8.0.13, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
       <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.8.0.13\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
@@ -154,24 +166,32 @@
     <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLGGeneratePhraseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLGSetParameterCommand.cs" />
+    <Compile Include="Core\Automation\Commands\IEBrowserFindBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\OSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\MessageBoxCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseJSONArray.cs" />
+    <Compile Include="Core\Automation\Commands\NLGCreateInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\RESTCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\IEBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCloseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\IEBrowserCreateCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCreateCommand.cs" />
     <Compile Include="Core\Automation\Commands\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ResizeWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\RunCustomCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\RunScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\IEBrowserElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserExecuteScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateBackCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateForwardCommand.cs" />
+    <Compile Include="Core\Automation\Commands\IEBrowserNavigateURLCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserNavigateURLCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserRefreshCommand.cs" />
     <Compile Include="Core\Automation\Commands\SetWindowStateCommand.cs" />
@@ -183,6 +203,8 @@
     <Compile Include="Core\Automation\Commands\SystemActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\StopProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\AddToVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitForWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\HTMLInputCommand.cs" />
     <Compile Include="Core\Automation\Commands\SendAdvancedKeyStrokesCommand.cs" />
@@ -621,6 +643,7 @@
     <None Include="Resources\action_bar_close.png" />
     <None Include="Resources\command-stopwatch.png" />
     <None Include="Resources\command-system.png" />
+    <None Include="Resources\command-nlg.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

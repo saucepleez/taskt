@@ -517,15 +517,22 @@ namespace taskt.Core.Automation.Commands
                     parameterName.Items.Add("NativeWindowHandle");
                     parameterName.Items.Add("ProcessID");
 
-
                     if (sender != null)
                     {
                         actionParameters.Rows.Add("Get Value From", "");
                         actionParameters.Rows.Add("Apply To Variable", "");
+                        actionParameterView.Refresh();
+                        try
+                        {
+                            actionParameterView.Rows[0].Cells[1] = parameterName;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Unable to select first row, second cell to apply '" + parameterName + "': " + ex.ToString());
+                        }
+
                     }
 
-                    actionParameterView.Refresh();
-                    actionParameterView.Rows[0].Cells[1] = parameterName;
                     break;
             }
 

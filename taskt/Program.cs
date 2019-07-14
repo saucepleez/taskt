@@ -56,7 +56,7 @@ namespace taskt
                     return;
                 }
 
-                Application.Run(new UI.Forms.frmScriptEngine(filePath, null));
+                Application.Run(new UI.Forms.frmScriptEngine(filePath, null, null, true));
             }
             else
             {
@@ -84,8 +84,8 @@ namespace taskt
             MessageBox.Show("An unhandled exception occured: " + (e.ExceptionObject as Exception).ToString(), "Oops");
         }
 
-        public static UI.Forms.Supplemental.frmSplash SplashForm {get; set;}
+        public static UI.Forms.Supplemental.frmSplash SplashForm { get; set; }
 
-       
+
     }
 }

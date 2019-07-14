@@ -43,8 +43,10 @@ namespace taskt.UI.Forms
         public Core.Automation.Commands.ScriptCommand originalCommand;
         //assigned by frmScriptBuilder to restrict inputs for editing existing commands
         public CreationMode creationMode;
-        //startup command, assigned from frmCommand Browser
+        //startup command, assigned from frmScriptBuilder
         public string defaultStartupCommand;
+        //editing command, assigned from frmScriptBuilder when editing a command
+        public Core.Automation.Commands.ScriptCommand editingCommand;
         public frmCommandEditor(List<AutomationCommand> commands)
         {
             InitializeComponent();
@@ -74,14 +76,26 @@ namespace taskt.UI.Forms
             //Set DisplayMember to track DisplayValue from the class
             cboSelectedCommand.DisplayMember = "FullName";
 
-             if ((creationMode == CreationMode.Add) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName == defaultStartupCommand).Count() > 0))
+            if ((creationMode == CreationMode.Add) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName == defaultStartupCommand).Count() > 0))
             {
                 cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(defaultStartupCommand);
             }
-            else if ((creationMode == CreationMode.Edit) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).Count() > 0))
+            else if (creationMode == CreationMode.Edit)
             {
-                var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault();
-                cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.FullName);
+                // var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault(); //&& x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
+
+                var requiredCommand = commandList.Where(x => x.Command.ToString() == editingCommand.ToString()).FirstOrDefault();
+
+                if (requiredCommand == null)
+                {
+                    MessageBox.Show("Command was not found! " + defaultStartupCommand);
+                }
+                else
+                {
+                    cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.FullName);
+                }
+
+               
             }
             else
             {
@@ -117,13 +131,13 @@ namespace taskt.UI.Forms
                             typedControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
                         }
 
-                        
-                        
+
+
                     }
 
-                 
+
                 }
-       
+
 
                 //handle selection change events
 
@@ -155,8 +169,7 @@ namespace taskt.UI.Forms
 
         private void AfterFormInitialization()
         {
-
-   
+            //force control resizing
             frmCommandEditor_Resize(null, null);
         }
 
@@ -203,11 +216,7 @@ namespace taskt.UI.Forms
             {
                 flw_InputVariables.Controls.Add(ctrl);
             }
-
         
-            //resize controls
-            frmCommandEditor_Resize(null, null);
-
         }
 
 

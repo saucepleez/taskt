@@ -431,6 +431,8 @@ namespace taskt.UI
             uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process); 
             uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
             uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("AddToVariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
@@ -516,6 +518,10 @@ namespace taskt.UI
             uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
             uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RemoteDesktopCommand", taskt.Properties.Resources.command_system);
+            uiImages.Add("NLGGeneratePhraseCommand", taskt.Properties.Resources.command_nlg);
+            uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
+            uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
+
             return uiImages;
         }
         public static ImageList UIImageList()

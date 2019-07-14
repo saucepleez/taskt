@@ -41,6 +41,13 @@ namespace taskt.Core.Automation.Commands
         public string v_BrowserWindowOption { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Selenium command line options (optional)")]
+        [Attributes.PropertyAttributes.InputSpecification("Select optional options to be passed to the Selenium command.")]
+        [Attributes.PropertyAttributes.SampleUsage("user-data-dir=/user/public/SeleniumTasktProfile")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SeleniumOptions { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select a Browser Engine Type")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Chrome")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("IE")]
@@ -71,13 +78,21 @@ namespace taskt.Core.Automation.Commands
 
             if (seleniumEngine == "Chrome")
             {
+                OpenQA.Selenium.Chrome.ChromeOptions options = new OpenQA.Selenium.Chrome.ChromeOptions();
+
+                if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                {
+                    var convertedOptions = v_SeleniumOptions.ConvertToUserVariable(sender);
+                    options.AddArguments(convertedOptions);
+                }
+
                 driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-                webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, new OpenQA.Selenium.Chrome.ChromeOptions());          
+                webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, options);
             }
             else
             {
                 driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
-                webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());            
+                webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());
             }
 
 
@@ -112,11 +127,12 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-        
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EngineType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_InstanceTracking", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_BrowserWindowOption", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumOptions", this, editor));
 
             return RenderedControls;
         }

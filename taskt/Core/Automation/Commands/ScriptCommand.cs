@@ -106,6 +106,16 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(EnvironmentVariableCommand))]
     [XmlInclude(typeof(OSVariableCommand))]
     [XmlInclude(typeof(ModifyVariableCommand))]
+    [XmlInclude(typeof(NLGCreateInstanceCommand))]
+    [XmlInclude(typeof(NLGSetParameterCommand))]
+    [XmlInclude(typeof(NLGGeneratePhraseCommand))]
+    [XmlInclude(typeof(IEBrowserCreateCommand))]
+    [XmlInclude(typeof(IEBrowserCloseCommand))]
+    [XmlInclude(typeof(IEBrowserFindBrowserCommand))]
+    [XmlInclude(typeof(IEBrowserElementActionCommand))]
+    [XmlInclude(typeof(IEBrowserNavigateURLCommand))]
+    [XmlInclude(typeof(AddToVariableCommand))]
+    [XmlInclude(typeof(SetVariableIndexCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

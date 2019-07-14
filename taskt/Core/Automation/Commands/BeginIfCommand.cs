@@ -89,6 +89,7 @@ namespace taskt.Core.Automation.Commands
             IfGridViewHelper.DataBindings.Add("DataSource", this, "v_IfActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             IfGridViewHelper.AllowUserToAddRows = false;
             IfGridViewHelper.AllowUserToDeleteRows = false;
+            IfGridViewHelper.MouseEnter += IfGridViewHelper_MouseEnter;
 
             RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
             RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
@@ -102,6 +103,11 @@ namespace taskt.Core.Automation.Commands
 
 
 
+        }
+
+        private void IfGridViewHelper_MouseEnter(object sender, EventArgs e)
+        {
+            ifAction_SelectionChangeCommitted(null, null);
         }
 
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
