@@ -181,6 +181,7 @@
     <Compile Include="Core\Automation\Commands\IEBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEBrowserCreateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCreateCommand.cs" />
     <Compile Include="Core\Automation\Commands\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ResizeWindowCommand.cs" />

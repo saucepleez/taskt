@@ -55,6 +55,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SeleniumBrowserCloseCommand))]
     [XmlInclude(typeof(SeleniumBrowserElementActionCommand))]
     [XmlInclude(typeof(SeleniumBrowserExecuteScriptCommand))]
+    [XmlInclude(typeof(SeleniumBrowserSwitchWindowCommand))]
     [XmlInclude(typeof(SMTPSendEmailCommand))]
     [XmlInclude(typeof(ErrorHandlingCommand))]
     [XmlInclude(typeof(StringSubstringCommand))]
