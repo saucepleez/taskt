@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace taskt.Core.Automation.Engine
         public string FileName { get; set; }
         public Core.Server.Task taskModel { get; set; }
         public bool serverExecution { get; set; }
-
+        public List<IRestResponse> ServiceResponses { get; set; }
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -54,6 +55,7 @@ namespace taskt.Core.Automation.Engine
 
             VariableList = new List<Script.ScriptVariable>();
             AppInstances = new Dictionary<string, object>();
+            ServiceResponses = new List<IRestResponse>();
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null)

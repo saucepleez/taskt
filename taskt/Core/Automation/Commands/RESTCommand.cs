@@ -53,9 +53,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_APIMethodType { get; set; }
 
+        [Attributes.PropertyAttributes.PropertyDescription("Advanced REST Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify a list of advanced parameters.")]
+        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public DataTable v_AdvancedParameters { get; set; }
 
-        [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
-        [Attributes.PropertyAttributes.InputSpecification("Use the Element Recorder to generate a listing of potential search parameters.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Basic REST Parameters")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify default search parameters")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
         [Attributes.PropertyAttributes.Remarks("Once you have clicked on a valid window the search parameters will be populated.  Enable only the ones required to be a match at runtime.")]
         public DataTable v_RESTParameters { get; set; }
@@ -67,24 +72,44 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select method type")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Json")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Xml")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("None")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the necessary method type.")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_RequestFormat { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
         private DataGridView RESTParametersGridViewHelper;
 
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView AdvancedRESTParametersGridViewHelper;
         public RESTCommand()
         {
             this.CommandName = "RESTCommand";
             this.SelectionName = "Execute REST API";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
+            this.v_RequestFormat = "Json";
             this.v_RESTParameters = new DataTable();
             this.v_RESTParameters.Columns.Add("Parameter Type");
             this.v_RESTParameters.Columns.Add("Parameter Name");
             this.v_RESTParameters.Columns.Add("Parameter Value");
             this.v_RESTParameters.TableName = DateTime.Now.ToString("RESTParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
+            //advanced parameters
+
+            this.v_AdvancedParameters = new DataTable();
+         
+            this.v_AdvancedParameters.Columns.Add("Parameter Name");
+            this.v_AdvancedParameters.Columns.Add("Parameter Value");
+            this.v_AdvancedParameters.Columns.Add("Content Type");
+            this.v_AdvancedParameters.Columns.Add("Parameter Type");
+            this.v_AdvancedParameters.TableName = DateTime.Now.ToString("AdvRESTParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
         }
 
         public override void RunCommand(object sender)
@@ -107,6 +132,9 @@ namespace taskt.Core.Automation.Commands
         }
         public string ExecuteRESTRequest(object sender)
         {
+            //get engine instance
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+
             //get parameters
             var targetURL = v_BaseURL.ConvertToUserVariable(sender);
             var targetEndpoint = v_APIEndPoint.ConvertToUserVariable(sender);
@@ -175,10 +203,43 @@ namespace taskt.Core.Automation.Commands
 
             }
 
+            //add advanced parameters
+            foreach (DataRow rw in this.v_AdvancedParameters.Rows)
+            {
+                var paramName = rw.Field<string>("Parameter Name").ConvertToUserVariable(sender);
+                var paramValue = rw.Field<string>("Parameter Value").ConvertToUserVariable(sender);
+                var paramType = rw.Field<string>("Parameter Type").ConvertToUserVariable(sender);
+                var contentType = rw.Field<string>("Content Type").ConvertToUserVariable(sender);
 
+                var param = new Parameter();
+
+                if (!string.IsNullOrEmpty(contentType))
+                    param.ContentType = contentType;
+
+                if (!string.IsNullOrEmpty(paramType))
+                    param.Type = (ParameterType)System.Enum.Parse(typeof(ParameterType), paramType);
+                
+                   
+                param.Name = paramName;
+                param.Value = paramValue;
+
+                request.Parameters.Add(param);
+            }
+
+            var requestFormat = v_RequestFormat.ConvertToUserVariable(sender);
+            if (string.IsNullOrEmpty(requestFormat))
+            {
+                requestFormat = "Xml";
+            }
+            request.RequestFormat = (DataFormat)System.Enum.Parse(typeof(DataFormat), requestFormat);
+     
+            
             //execute client request
             IRestResponse response = client.Execute(request);
             var content = response.Content;
+
+            //add service response for tracking
+            engine.ServiceResponses.Add(response);
 
             // return response.Content;
             try
@@ -209,6 +270,8 @@ namespace taskt.Core.Automation.Commands
 
             var apiMethodLabel = CommandControls.CreateDefaultLabelFor("v_APIMethodType", this);
             var apiMethodDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_APIMethodType", this);
+     
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_RequestFormat", this, editor));
 
             foreach (Method method in (Method[])Enum.GetValues(typeof(Method)))
             {
@@ -218,6 +281,8 @@ namespace taskt.Core.Automation.Commands
      
             RenderedControls.Add(apiMethodLabel);
             RenderedControls.Add(apiMethodDropdown);
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_RESTParameters", this));
 
             RESTParametersGridViewHelper = new DataGridView();
             RESTParametersGridViewHelper.Width = 500;
@@ -241,21 +306,45 @@ namespace taskt.Core.Automation.Commands
             paramValueColumn.HeaderText = "Value";
             paramValueColumn.DataPropertyName = "Parameter Value";
             RESTParametersGridViewHelper.Columns.Add(paramValueColumn);
-
-
+       
             RESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_RESTParameters", false, DataSourceUpdateMode.OnPropertyChanged);
             RenderedControls.Add(RESTParametersGridViewHelper);
 
-            //create local helper
-            //taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
-            //helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            //helperControl.ForeColor = Color.AliceBlue;
-            //helperControl.Font = new Font("Segoe UI Semilight", 10);
-            //helperControl.Name = "addRow_helper";
-            //helperControl.Tag = RESTParametersGridViewHelper;
-            //helperControl.CommandDisplay = "Test API";
-            //helperControl.Click += HelperControl_Click;
-            //RenderedControls.Add(helperControl);
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_AdvancedParameters", this));
+
+            //advanced parameters
+            AdvancedRESTParametersGridViewHelper = new DataGridView();
+            AdvancedRESTParametersGridViewHelper.Width = 500;
+            AdvancedRESTParametersGridViewHelper.Height = 140;
+
+            AdvancedRESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            AdvancedRESTParametersGridViewHelper.AutoGenerateColumns = false;
+
+            var advParamNameColumn = new DataGridViewTextBoxColumn();
+            advParamNameColumn.HeaderText = "Name";
+            advParamNameColumn.DataPropertyName = "Parameter Name";
+            AdvancedRESTParametersGridViewHelper.Columns.Add(advParamNameColumn);
+
+            var advParamValueColumns = new DataGridViewTextBoxColumn();
+            advParamValueColumns.HeaderText = "Value";
+            advParamValueColumns.DataPropertyName = "Parameter Value";
+            AdvancedRESTParametersGridViewHelper.Columns.Add(advParamValueColumns);
+
+            var advParamContentType = new DataGridViewTextBoxColumn();
+            advParamContentType.HeaderText = "Content Type";
+            advParamContentType.DataPropertyName = "Content Type";
+            AdvancedRESTParametersGridViewHelper.Columns.Add(advParamContentType);
+
+
+            var advParamType = new DataGridViewComboBoxColumn();
+            advParamType.HeaderText = "Parameter Type";
+            advParamType.DataPropertyName = "Parameter Type";
+            advParamType.DataSource = new string[] { "Cookie", "GetOrPost", "HttpHeader", "QueryString", "RequestBody", "URLSegment", "QueryStringWithoutEncode"};
+            AdvancedRESTParametersGridViewHelper.Columns.Add(advParamType);
+
+            AdvancedRESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_AdvancedParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            RenderedControls.Add(AdvancedRESTParametersGridViewHelper);
+
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
@@ -265,21 +354,6 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
 
         }
-
-
-        //private void HelperControl_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        var engine = new Engine.AutomationEngineInstance();
-        //        var result = this.ExecuteRESTRequest(engine);
-        //        MessageBox.Show("Result Received: " + result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("An Error Occured: " + ex.ToString());
-        //    }
-        //}
 
         public override string GetDisplayValue()
         {
