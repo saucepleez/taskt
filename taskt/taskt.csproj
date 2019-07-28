@@ -166,6 +166,9 @@
     <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DatabaseExecuteQueryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DatabaseDefineConnectionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLGGeneratePhraseCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLGSetParameterCommand.cs" />
@@ -598,6 +601,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{B691E011-1797-432E-907A-4D8C69339129}</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="AxMSTSCLib">
       <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -605,6 +617,15 @@
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="MSDASC">
+      <Guid>{2206CEB0-19C1-11D1-89E0-00C04FD7A829}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
     <COMReference Include="MSHTML">
       <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
@@ -656,6 +677,7 @@
     <None Include="Resources\command-stopwatch.png" />
     <None Include="Resources\command-system.png" />
     <None Include="Resources\command-nlg.png" />
+    <None Include="Resources\command-database.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

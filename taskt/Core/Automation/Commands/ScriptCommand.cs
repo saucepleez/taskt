@@ -119,6 +119,9 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddToVariableCommand))]
     [XmlInclude(typeof(SetVariableIndexCommand))]
     [XmlInclude(typeof(ShowEngineContextCommand))]
+    [XmlInclude(typeof(DatabaseDefineConnectionCommand))]
+    [XmlInclude(typeof(DatabaseExecuteQueryCommand))]
+    [XmlInclude(typeof(ParseDatasetRowCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

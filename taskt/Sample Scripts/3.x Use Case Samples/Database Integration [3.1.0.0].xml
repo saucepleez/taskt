@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e5969c6a-5db2-43f1-a085-0c5bed575d44" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="NOTE: THIS SAMPLE USES taskt.accdb FROM \Sample Scripts\3.x Use Case Samples\Sample Resources\ AND REQUIRES 32BIT ACCESS DATABASE ENGINE FOR OLEDB" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="DatabaseDefineConnectionCommand" CommandID="bd5e3e76-6104-4094-8103-180566c641e6" CommandName="DatabaseDefineConnectionCommand" IsCommented="false" SelectionName="Define Database Connection" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="sqlDefault" v_ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\path\to\taskt.accdb;Persist Security Info=False" v_TestConnection="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="5d3a6040-1b1e-4002-a168-eb5085ede393" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="EXECUTE QUERY WHICH RETURNS A DATASET THAT CAN BE PARSED" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="DatabaseExecuteQueryCommand" CommandID="feeaa9ba-cd2f-4ad6-bb2a-c2596433d923" CommandName="DatabaseExecuteQueryCommand" IsCommented="false" SelectionName="Execute Database Query" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="sqlDefault" v_QueryType="Return Dataset" v_Query="SELECT * FROM [tblSampleInvoice]" v_DatasetName="vInvoiceDataset" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d9a5d086-dae0-4fd1-a209-ec9b53488935" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="LOOP LIST WHICH SUPPORTS DATASET" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="79789c17-4993-474a-a19e-a939dd38d4cd" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{vInvoiceDataset}" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="1d5443e3-e669-4eed-8a45-497c470f1bb9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="SHOW ROW DATA AS JSON" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="691a47b7-cff9-4157-aed0-37d04673a7b6" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Row {Loop.CurrentIndex} contains data: {vInvoiceDataset}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="e3981f80-46eb-4ae1-ac2d-073a6018f00d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="1) DATA CAN BE PARSED THROUGH THE JSON ARRAY" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ParseJSONArrayCommand" CommandID="eb0755e6-c396-4724-9d7e-49ad19ac8500" CommandName="ParseJSONArrayCommand" IsCommented="false" SelectionName="Parse JSON Array" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="{vInvoiceDataset}" v_applyToVariableName="vRow" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="e5d180e0-175e-4882-b1ed-bbc91f50892a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="DATA CAN BE ACCESSED FROM THE ROW VARIABLE[INDEX]" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="09b17b9f-2096-4a5e-bcc4-0ff3f97e422f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="InvoiceDate: {vRow[1]}, Invoice Amount: {vRow[2]}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="ad585a86-347a-4953-b374-3551615558f6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="2) PARSE SPECIFIC COLUMNS USING 'PARSE DATASET ROW' COMMAND" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="5d75c9e8-7952-4819-b503-8ebad17cc6b8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="PARSING SAMPLE BY KNOWN COLUMN NAME" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ParseDatasetRowCommand" CommandID="28295f95-f659-4cf8-92c6-bf646b561919" CommandName="ParseRowCommand" IsCommented="false" SelectionName="Parse Dataset Row" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_DatasetName="{vInvoiceDataset}" v_ColumnParseType="By Column Name" v_ColumnParameter="InvoiceDate" v_applyToVariableName="vInvoiceDate" v_SpecifiedRow="N/A" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ParseDatasetRowCommand" CommandID="e9c315a3-146c-4e24-a73c-fc48b9cc8e20" CommandName="ParseRowCommand" IsCommented="false" SelectionName="Parse Dataset Row" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_DatasetName="{vInvoiceDataset}" v_ColumnParseType="By Column Name" v_ColumnParameter="CompanyName" v_applyToVariableName="vCompanyName" v_SpecifiedRow="N/A" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="3cdcb3a9-7dfd-49f8-8f42-3395ba54bffe" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" v_Comment="PARSING SAMPLE BY KNOWN COLUMN INDEX" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ParseDatasetRowCommand" CommandID="c29d84c1-0cc1-4b65-ab86-27bad985f627" CommandName="ParseRowCommand" IsCommented="false" SelectionName="Parse Dataset Row" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_DatasetName="{vInvoiceDataset}" v_ColumnParseType="By Column Index" v_ColumnParameter="2" v_applyToVariableName="vInvoiceAmount" v_SpecifiedRow="N/A" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="25ea1f35-297e-412c-a4bf-9626dfe293bb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" v_Comment="SHOW PARSED OUTPUT IN A SAMPLE SENTENCE" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3a954309-7e6a-4e40-b32d-b44d5b680214" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="We recevied an invoice from '{vCompanyName}' in the amount of {vInvoiceAmount} on {vInvoiceDate}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="ce9d133d-eced-43a5-bbec-747f9d3197eb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" v_Comment="EXIT LOOP FOR BREVITY" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ExitLoopCommand" CommandID="ad183231-e508-4c1e-ba1b-0b3ff8689d7a" CommandName="ExitLoopCommand" IsCommented="false" SelectionName="Exit Loop" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="fd102fbe-348e-4bd6-8818-b319ab8562a6" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2805de59-dd21-4441-9770-60f7363ad055" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="24" PauseBeforeExeucution="false" v_Comment="EXECUTE NONQUERY WHICH RETURNS AFFECTED RECORD COUNT- UPDATE INVOICES TO PAID STATUS" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="DatabaseExecuteQueryCommand" CommandID="ce2ab6a8-938e-4ad7-9e51-2ded8dc8f35e" CommandName="DatabaseExecuteQueryCommand" IsCommented="false" SelectionName="Execute Database Query" DefaultPause="0" LineNumber="25" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="sqlDefault" v_QueryType="Execute NonQuery" v_Query="UPDATE tblSampleInvoice SET tblSampleInvoice.Status = &quot;PAID&quot;;" v_DatasetName="vNonQueryResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8e00c568-0873-4338-8fb3-72a11ae292d5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="26" PauseBeforeExeucution="false" v_Comment="SHOW AFFECTED ROWS OUTPUT" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="1f6a5f5e-3f6d-4df9-b192-6f98438e8853" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vNonQueryResult} records were affected" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vCompanyName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vInvoiceAmount</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vInvoiceDataset</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vInvoiceDate</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vNonQueryResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

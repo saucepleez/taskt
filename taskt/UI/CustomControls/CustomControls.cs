@@ -435,6 +435,7 @@ namespace taskt.UI
             uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("ParseDatasetRowCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
@@ -524,6 +525,8 @@ namespace taskt.UI
             uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("DatabaseDefineConnectionCommand", taskt.Properties.Resources.command_database);
+            uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
             return uiImages;
         }
         public static ImageList UIImageList()

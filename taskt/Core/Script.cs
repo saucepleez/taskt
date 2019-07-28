@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Xml;
+using System.Data;
 
 namespace taskt.Core.Script
 {
@@ -234,6 +235,12 @@ namespace taskt.Core.Script
                         return (string)VariableValue;
                 }
               
+            }
+            else if(VariableValue is DataTable)
+            {
+                DataTable dataTable = (DataTable)VariableValue;
+                var dataRow = dataTable.Rows[CurrentPosition];
+                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
             }
             else
             {
