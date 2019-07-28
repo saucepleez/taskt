@@ -494,6 +494,19 @@ namespace taskt.Core.Automation.Engine
             Loaded, Running, Paused, Finished
         }
 
+        public string GetEngineContext()
+        {
+            //set json settings
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Error = (serializer, err) =>
+            {
+                err.ErrorContext.Handled = true;
+            };
+            settings.Formatting = Formatting.Indented;
+
+            return  JsonConvert.SerializeObject(this, settings);
+        }
+
     }
     public class ReportProgressEventArgs : EventArgs
     {

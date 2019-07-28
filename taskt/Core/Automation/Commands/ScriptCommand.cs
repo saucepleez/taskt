@@ -118,6 +118,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(IEBrowserNavigateURLCommand))]
     [XmlInclude(typeof(AddToVariableCommand))]
     [XmlInclude(typeof(SetVariableIndexCommand))]
+    [XmlInclude(typeof(ShowEngineContextCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

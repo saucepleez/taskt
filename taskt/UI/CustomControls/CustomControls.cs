@@ -523,7 +523,7 @@ namespace taskt.UI
             uiImages.Add("NLGGeneratePhraseCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
-
+            uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
             return uiImages;
         }
         public static ImageList UIImageList()

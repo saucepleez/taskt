@@ -139,15 +139,7 @@ namespace taskt.Core
 
                 if (potentialVariable == "taskt.EngineContext")
                 {
-                    //set json settings
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Error = (serializer, err) =>
-                    {
-                        err.ErrorContext.Handled = true;
-                    };
-                    settings.Formatting = Formatting.Indented;
-
-                    varCheck.VariableValue = Newtonsoft.Json.JsonConvert.SerializeObject(engine, settings);
+                    varCheck.VariableValue = engine.GetEngineContext();
                 }
 
 

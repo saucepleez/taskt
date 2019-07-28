@@ -346,6 +346,28 @@ namespace taskt.UI.Forms
             }
 
         }
+        /// <summary>
+        /// Delegate for showing engine context form
+        /// </summary>
+        /// <param name="message"></param>
+        public delegate void ShowEngineContextDelegate(string context, int closeAfter);
+        /// <summary>
+        /// Used by the automation engine to show the engine context data
+        /// </summary>
+        public void ShowEngineContext(string context, int closeAfter)
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowEngineContextDelegate(ShowEngineContext);
+                Invoke(d, new object[] { context, closeAfter });
+            }
+            else
+            {
+                var contextForm = new UI.Forms.Supplement_Forms.frmEngineContextViewer(context, closeAfter);
+                contextForm.ShowDialog();
+            }
+
+        }
         public void LaunchRDPSession(string machineName, string userName, string password, int width, int height)
         {
             if (InvokeRequired)
