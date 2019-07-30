@@ -10,9 +10,9 @@ using System.Drawing;
 
 namespace taskt.Core.Automation.Commands
 {
- 
 
-   
+
+
     [Serializable]
     [Attributes.ClassAttributes.Group("Database Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to define a connection to an OLEDB data source")]
@@ -37,6 +37,14 @@ namespace taskt.Core.Automation.Commands
         public string v_ConnectionString { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Define Connection String Password")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_ConnectionStringPassword { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Test Connection Before Proceeding")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
@@ -49,6 +57,10 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         private TextBox ConnectionString;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private TextBox ConnectionStringPassword;
         public DatabaseDefineConnectionCommand()
         {
             this.CommandName = "DatabaseDefineConnectionCommand";
@@ -65,6 +77,15 @@ namespace taskt.Core.Automation.Commands
             var connection = v_ConnectionString.ConvertToUserVariable(sender);
             var instance = v_InstanceName.ConvertToUserVariable(sender);
             var testPreference = v_TestConnection.ConvertToUserVariable(sender);
+            var connectionPass = v_ConnectionStringPassword.ConvertToUserVariable(sender);
+
+            if (connectionPass.StartsWith("!"))
+            {
+                connectionPass = connectionPass.Substring(1);
+                connectionPass = EncryptionServices.DecryptString(connectionPass, "taskt-database-automation");
+            }
+
+            connection = connection.Replace("#pwd", connectionPass);
 
             var oleDBConnection = new OleDbConnection(connection);
 
@@ -92,7 +113,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
             helperControl.CommandDisplay = "Build Connection String";
             helperControl.Click += (sender, e) => Button_Click(sender, e);
-      
+
 
             ConnectionString = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionString", this);
 
@@ -104,6 +125,48 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(connectionHelpers);
             RenderedControls.Add(ConnectionString);
 
+            ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this);
+
+            var connectionPassLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionStringPassword", this);
+            var connectionPassHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionStringPassword", this, new[] { ConnectionStringPassword }, editor);
+
+            RenderedControls.Add(connectionPassLabel);
+            RenderedControls.AddRange(connectionPassHelpers);
+
+            CommandItemControl passwordHelperControl = new CommandItemControl();
+            passwordHelperControl.Padding = new Padding(10, 0, 0, 0);
+            passwordHelperControl.ForeColor = Color.AliceBlue;
+            passwordHelperControl.Font = new Font("Segoe UI Semilight", 10);
+            passwordHelperControl.Name = "show_pass_helper";
+            passwordHelperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            passwordHelperControl.CommandDisplay = "Show Password";
+            passwordHelperControl.Click += (sender, e) => TogglePasswordChar(passwordHelperControl, e);
+
+            RenderedControls.Add(passwordHelperControl);
+
+
+            CommandItemControl encryptHelperControl = new CommandItemControl();
+            encryptHelperControl.Padding = new Padding(10, 0, 0, 0);
+            encryptHelperControl.ForeColor = Color.AliceBlue;
+            encryptHelperControl.Font = new Font("Segoe UI Semilight", 10);
+            encryptHelperControl.Name = "show_pass_helper";
+            encryptHelperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            encryptHelperControl.CommandDisplay = "Encrypt Password";
+            encryptHelperControl.Click += (sender, e) => EncryptPassword(passwordHelperControl, e);
+            RenderedControls.Add(encryptHelperControl);
+
+            var label = new Label();
+            label.AutoSize = true;
+            label.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+            label.ForeColor = Color.White;
+            label.Text = "NOTE: If storing the password in the textbox below, please ensure the connection string above contains a database-specific placeholder with #pwd to be replaced at runtime. (;Password=#pwd)";
+            RenderedControls.Add(label);
+
+
+            RenderedControls.Add(ConnectionStringPassword);
+            ConnectionStringPassword.PasswordChar = '*';
+
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TestConnection", this, editor));
 
             return RenderedControls;
@@ -113,6 +176,37 @@ namespace taskt.Core.Automation.Commands
         private void Button_Click(object sender, EventArgs e)
         {
             ShowConnectionBuilder();
+        }
+        private void TogglePasswordChar(CommandItemControl sender, EventArgs e)
+        {
+            //if password is hidden
+            if (ConnectionStringPassword.PasswordChar == '*')
+            {
+                //show password plain text
+                sender.CommandDisplay = "Hide Password";
+                ConnectionStringPassword.PasswordChar = '\0';
+            }
+            else
+            {
+                //mask password with chars
+                sender.CommandDisplay = "Show Password";
+                ConnectionStringPassword.PasswordChar = '*';
+            }
+        }
+        private void EncryptPassword(CommandItemControl sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(ConnectionStringPassword.Text))
+            {
+                return;
+            }
+
+           var acknowledgement =  MessageBox.Show("WARNING! This function will encrypt the password locally but is not extremely secure as the client knows the secret!  Consider using a password management service instead. The encrypted password will be stored with a leading exclamation ('!') whch the automation engine will detect and know to decrypt the value automatically at run-time. Do not encrypt the password multiple times or the decryption will be invalid!  Would you like to proceed?", "Encryption Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (acknowledgement == DialogResult.Yes)
+            {
+                ConnectionStringPassword.Text = string.Concat($"!{EncryptionServices.EncryptString(ConnectionStringPassword.Text, "taskt-database-automation")}");
+            }
+
         }
 
         public void ShowConnectionBuilder()

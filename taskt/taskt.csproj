@@ -130,6 +130,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
@@ -274,6 +275,7 @@
     <Compile Include="Core\Automation\Commands\WaitForFileToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\WriteTextFileCommand.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
+    <Compile Include="Core\EncryptionServices.cs" />
     <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
