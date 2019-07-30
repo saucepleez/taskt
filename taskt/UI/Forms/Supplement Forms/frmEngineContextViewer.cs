@@ -17,6 +17,19 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
             LoadEngineContext(context);
+
+            if (closeAfter > 0)
+            {
+                var timer = new System.Windows.Forms.Timer();
+                timer.Interval = (closeAfter * 1000);
+                timer.Tick += Timer_Tick;
+                timer.Start();
+            }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
         }
 
         private void FrmEngineContextViewer_Load(object sender, EventArgs e)
