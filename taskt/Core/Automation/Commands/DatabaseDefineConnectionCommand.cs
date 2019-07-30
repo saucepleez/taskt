@@ -73,21 +73,13 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            //get engine and preference
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var connection = v_ConnectionString.ConvertToUserVariable(sender);
             var instance = v_InstanceName.ConvertToUserVariable(sender);
             var testPreference = v_TestConnection.ConvertToUserVariable(sender);
-            var connectionPass = v_ConnectionStringPassword.ConvertToUserVariable(sender);
 
-            if (connectionPass.StartsWith("!"))
-            {
-                connectionPass = connectionPass.Substring(1);
-                connectionPass = EncryptionServices.DecryptString(connectionPass, "taskt-database-automation");
-            }
-
-            connection = connection.Replace("#pwd", connectionPass);
-
-            var oleDBConnection = new OleDbConnection(connection);
+            //create connection
+            var oleDBConnection = CreateConnection(sender);
 
             //attempt to open and close connection
             if (testPreference == "Yes")
@@ -98,6 +90,21 @@ namespace taskt.Core.Automation.Commands
 
             engine.AddAppInstance(instance, oleDBConnection);
 
+        }
+        private OleDbConnection CreateConnection(object sender)
+        {
+            var connection = v_ConnectionString.ConvertToUserVariable(sender);
+            var connectionPass = v_ConnectionStringPassword.ConvertToUserVariable(sender);
+
+            if (connectionPass.StartsWith("!"))
+            {
+                connectionPass = connectionPass.Substring(1);
+                connectionPass = EncryptionServices.DecryptString(connectionPass, "taskt-database-automation");
+            }
+
+            connection = connection.Replace("#pwd", connectionPass);
+
+            return new OleDbConnection(connection);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -119,10 +126,20 @@ namespace taskt.Core.Automation.Commands
 
             var connectionLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionString", this);
             var connectionHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionString", this, new[] { ConnectionString }, editor);
+            CommandItemControl testConnectionControl = new CommandItemControl();
+            testConnectionControl.Padding = new Padding(10, 0, 0, 0);
+            testConnectionControl.ForeColor = Color.AliceBlue;
+            testConnectionControl.Font = new Font("Segoe UI Semilight", 10);
+            testConnectionControl.Name = "connection_helper";
+            testConnectionControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            testConnectionControl.CommandDisplay = "Test Connection";
+            testConnectionControl.Click += (sender, e) => TestConnection(sender, e);
+            RenderedControls.Add(testConnectionControl);
 
             RenderedControls.Add(connectionLabel);
             RenderedControls.Add(helperControl);
             RenderedControls.AddRange(connectionHelpers);
+            RenderedControls.Add(testConnectionControl);
             RenderedControls.Add(ConnectionString);
 
             ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this);
@@ -155,6 +172,7 @@ namespace taskt.Core.Automation.Commands
             encryptHelperControl.Click += (sender, e) => EncryptPassword(passwordHelperControl, e);
             RenderedControls.Add(encryptHelperControl);
 
+            
             var label = new Label();
             label.AutoSize = true;
             label.Font = new Font("Segoe UI", 10, FontStyle.Regular);
@@ -166,10 +184,29 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(ConnectionStringPassword);
             ConnectionStringPassword.PasswordChar = '*';
 
+          
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TestConnection", this, editor));
 
             return RenderedControls;
+
+        }
+        private void TestConnection(object sender, EventArgs e)
+        {
+            try
+            {
+                var engine = new Engine.AutomationEngineInstance();
+                var oleDBConnection = CreateConnection(engine);
+                oleDBConnection.Open();
+                oleDBConnection.Close();
+                MessageBox.Show("Connection Successful", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Connection Failed: {ex.ToString()}", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+          
+
 
         }
 
