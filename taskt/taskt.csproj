@@ -169,6 +169,10 @@
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DatabaseExecuteQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DatabaseDefineConnectionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CatchExceptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EndTryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLGGeneratePhraseCommand.cs" />
@@ -680,6 +684,7 @@
     <None Include="Resources\command-system.png" />
     <None Include="Resources\command-nlg.png" />
     <None Include="Resources\command-database.png" />
+    <None Include="Resources\command-try.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

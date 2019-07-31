@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="708c12f2-66d3-45c1-a920-269cda1df3f2" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Sample Compatible with taskt v3.1.0.0+" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1ff07d9a-c272-41a2-850c-e696a9573487" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="=====Example 1=====" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="b9d2e5fe-6d5c-48a5-bd65-f7496ee01276" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Standard Try/Catch Sample.  Try &gt; Catch Exception &gt; End Try" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TryCommand" CommandID="88904f79-10c2-41f2-b9a8-c146f3ba13c2" CommandName="TryCommand" IsCommented="false" SelectionName="Try" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="ba2302c1-49ec-4264-a58a-16eb929bb2ad" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Attempt to activate a non-existent window and cause error" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ActivateWindowCommand" CommandID="9e6c5dac-01c9-456c-8b6e-04d25b85e394" CommandName="ActivateWindowCommand" IsCommented="false" SelectionName="Activate Window" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="zzZZzz_zzZZzz" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CatchExceptionCommand" CommandID="c698e61e-03d1-44d4-afdd-8add4f9e819b" CommandName="CatchExceptionCommand" IsCommented="false" SelectionName="Catch Exception" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="e0549da3-dddd-43dd-91c8-f42679f6e569" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Exception Handled :)" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d035f98a-531a-454f-a16a-669abe8e7bd3" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="An error was encountered: {Catch:ErrorMessage}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="168b94db-81b2-4798-ac1c-515742cc55d5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Stack Trace: {Catch:StackTrace}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndTryCommand" CommandID="59bba832-c4ca-4483-b908-6151f92d6e55" CommandName="EndTryCommand" IsCommented="false" SelectionName="End Try" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="90131f0d-63d1-4c37-9b2c-b7a3105969b6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="=====Example 2=====" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="de6f0104-7022-48f2-841d-a21f078cde4b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Advanced Try/Catch Sample.  Try &gt; Catch Exception &gt; Finally &gt; End Try" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TryCommand" CommandID="763d7165-47bc-4cb6-8101-327aba151efe" CommandName="TryCommand" IsCommented="false" SelectionName="Try" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="05164e2a-5012-4265-bb72-5220edbe1ecd" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Execute unconfigured command" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="RESTCommand" CommandID="238af0b3-c105-4f12-bf70-86ab660031fe" CommandName="RESTCommand" IsCommented="false" SelectionName="Execute REST API" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_RequestFormat="Json">
+          <v_AdvancedParameters>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="A30vRESTPara23Table073019.082344" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="A30vRESTPara23Table073019.082344">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                          <xs:element name="Content_x0020_Type" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+          </v_AdvancedParameters>
+          <v_RESTParameters>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="RESTPara23Table073019.082344" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="RESTPara23Table073019.082344">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+          </v_RESTParameters>
+        </ScriptCommand>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CatchExceptionCommand" CommandID="54951cc7-a7e7-499d-9ce9-c679db12e304" CommandName="CatchExceptionCommand" IsCommented="false" SelectionName="Catch Exception" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="032cb65f-ed21-4a27-aff6-9ca11f92f4e0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" v_Comment="Exception Handled :)" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f0b984f5-2b38-4135-ba10-931ac6d7d5ce" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="An error was encountered: {Catch:ErrorMessage}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="37a28c49-13a0-4663-a9f6-fa0b751594bc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Stack Trace: {Catch:StackTrace}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="FinallyCommand" CommandID="ba382fb5-3d3a-4424-b243-b7cc08d323c2" CommandName="FinallyCommand" IsCommented="false" SelectionName="Finally" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="8450d16e-6127-4253-b6e6-dba6d2e2833e" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Finally executes after error" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndTryCommand" CommandID="c0b113db-8671-49a3-94c4-cee39160bb1b" CommandName="EndTryCommand" IsCommented="false" SelectionName="End Try" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="02cd3174-d714-4791-970d-a1cedefb9bf5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="24" PauseBeforeExeucution="false" v_Comment="=====Example 3=====" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0f70ad56-fa18-46d1-abc8-84819576c62f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="25" PauseBeforeExeucution="false" v_Comment="Advanced Try/Catch Sample.  Try &gt; Catch Exception &gt; Finally &gt; End Try" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TryCommand" CommandID="d971e32e-282d-44ea-ae04-d954d1159033" CommandName="TryCommand" IsCommented="false" SelectionName="Try" DefaultPause="0" LineNumber="26" PauseBeforeExeucution="false" CommandEnabled="true" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="802a3c6a-fff7-40e1-b57c-fcfbd50989b6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="27" PauseBeforeExeucution="false" v_Comment="Do not cause error" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="41f1f8cc-8077-4a66-b7c0-61970b8a68b0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="hello world!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CatchExceptionCommand" CommandID="b31fd6d2-f604-4483-a9af-b81de285cb91" CommandName="CatchExceptionCommand" IsCommented="false" SelectionName="Catch Exception" DefaultPause="0" LineNumber="29" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="4b08837c-6ee0-407a-b8cb-4403659b531b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="30" PauseBeforeExeucution="false" v_Comment="Exception Handled :)" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="1394180d-8961-455a-b6bf-4db511723c80" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="31" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="An error was encountered: {Catch:ErrorMessage}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2c257cd2-5f43-43d8-b8ae-5eea18808366" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="32" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Stack Trace: {Catch:StackTrace}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="FinallyCommand" CommandID="1f11de9a-4ff1-4014-bb9a-1488bdc41fb1" CommandName="FinallyCommand" IsCommented="false" SelectionName="Finally" DefaultPause="0" LineNumber="33" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="40591dab-a1ba-445b-95b6-949593cb6a85" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="34" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Finally executes after no error" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndTryCommand" CommandID="2286b1c3-456c-4e2f-b2c4-6b7d5e8198f4" CommandName="EndTryCommand" IsCommented="false" SelectionName="End Try" DefaultPause="0" LineNumber="35" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>

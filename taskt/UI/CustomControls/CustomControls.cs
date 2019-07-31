@@ -488,6 +488,10 @@ namespace taskt.UI
             uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
+            uiImages.Add("TryCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("CatchExceptionCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("FinallyCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("EndTryCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
