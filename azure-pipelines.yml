@@ -49,9 +49,8 @@ steps:
     SourceFolder: 
     Contents: '\taskt.pdb'
 
-- task: DownloadBuildArtifacts@0
+- task: PublishBuildArtifacts@1
   inputs:
-    buildType: 'current'
-    downloadType: 'specific'
-    downloadPath: '$(System.ArtifactsDirectory)'
-
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'taskt'
+    publishLocation: 'Container'
