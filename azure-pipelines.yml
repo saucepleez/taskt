@@ -54,6 +54,7 @@ steps:
   inputs:
     Contents: '**\taskt\bin\Release\**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: true
 
 - task: PublishBuildArtifacts@1
   inputs:
