@@ -52,7 +52,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: '**\Release\**'
+    Contents: '**\taskt\bin\Release\**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
