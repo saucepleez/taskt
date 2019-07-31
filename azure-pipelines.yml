@@ -5,7 +5,7 @@
 
 trigger:
 - master
-
+- development-branch
 pool:
   vmImage: 'windows-latest'
 
@@ -31,3 +31,16 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: codesigning@2
+  inputs:
+    secureFileId: '$(certName)'
+    signCertPassword: '$(certPass)'
+    files: '**/taskt.exe'
+    timeServer: 'http://timestamp.digicert.com'
+    hashingAlgorithm: 'SHA256'
+
+- task: DeleteFiles@1
+  inputs:
+    SourceFolder: 
+    Contents: '\taskt.pdb'
