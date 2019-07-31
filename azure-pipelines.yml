@@ -52,9 +52,8 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: '**\taskt\bin\Release\**'
+    Contents: '\taskt\taskt\bin\Release**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    flattenFolders: true
 
 - task: PublishBuildArtifacts@1
   inputs:
