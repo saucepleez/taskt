@@ -52,7 +52,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)\taskt\taskt\bin\Release'
+    SourceFolder: '$(Build.SourcesDirectory)\taskt\bin\Release'
     Contents: '**'
     TargetFolder: '''$(Build.ArtifactStagingDirectory)\taskt'''
 
