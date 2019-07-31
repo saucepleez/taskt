@@ -32,6 +32,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: '$(certName)'
+
 - task: codesigning@2
   inputs:
     secureFileId: '$(certName)'
