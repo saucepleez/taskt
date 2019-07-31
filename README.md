@@ -1,7 +1,17 @@
 ![taskt](https://i.imgur.com/gBpKDg0.png)
 
-
 taskt (formerly sharpRPA) is the first truly free, easy to use, and open-source process automation client built on the .NET Framework in C#.  taskt allows you to build and design process automation without needing to write application code.
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/saucepleez/taskt)
+
+
+branch | build status
+------------ | -------------
+master | [![Build Status](https://dev.azure.com/taskt/taskt/_apis/build/status/saucepleez.taskt?branchName=master)](https://dev.azure.com/taskt/taskt/_build/latest?definitionId=1&branchName=master)
+development-branch | [![Build Status](https://dev.azure.com/taskt/taskt/_apis/build/status/saucepleez.taskt?branchName=development-branch)](https://dev.azure.com/taskt/taskt/_build/latest?definitionId=1&branchName=development-branch)
+
+
 
 ![taskt-main-screen](https://i.imgur.com/tHTy6eh.gif)
 
@@ -35,5 +45,7 @@ taskt is free for both personal and commercial use. taskt is licensed under the 
 
 ![Let us know what you think!](https://i.imgur.com/wKExziN.png)
 Feel free to open up a feature request or report a bug/issue.
-[Click here to open a new issue!](https://github.com/saucepleez/taskt/issues/new)
-[Need support? Want to say Hi? Come chat with us on Gitter!](https://gitter.im/taskt-rpa/Lobby)
+
+[![Open New Issue](https://img.shields.io/badge/Open-New&nbsp;Issue-blue.svg)](https://github.com/saucepleez/taskt/issues/new)
+[![Chat on Gitter](https://img.shields.io/badge/Chat-On&nbsp;Gitter-green.svg)](https://gitter.im/taskt-rpa/Lobby)
+
