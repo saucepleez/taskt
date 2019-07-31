@@ -52,8 +52,9 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: '\taskt\taskt\bin\Release**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    SourceFolder: '$(Build.SourcesDirectory)\taskt\taskt\bin\Release'
+    Contents: '**'
+    TargetFolder: '''$(Build.ArtifactStagingDirectory)\taskt'''
 
 - task: PublishBuildArtifacts@1
   inputs:
