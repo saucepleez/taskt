@@ -47,7 +47,7 @@ steps:
 
 - task: DeleteFiles@1
   inputs:
-    SourceFolder: '$(Agent.BuildDirectory)'
+    SourceFolder: '$(Build.SourcesDirectory)\taskt\bin\Release'
     Contents: '\taskt.pdb'
 
 - task: CopyFiles@2
