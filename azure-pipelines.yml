@@ -35,11 +35,11 @@ steps:
 
 - task: DownloadSecureFile@1
   inputs:
-    secureFile: '$(certName)'
+    secureFile: 'app_cert'
 
 - task: codesigning@2
   inputs:
-    secureFileId: '$(certName)'
+    secureFileId: 'app_cert'
     signCertPassword: '$(certPass)'
     files: '**/taskt.exe'
     timeServer: 'http://timestamp.digicert.com'
