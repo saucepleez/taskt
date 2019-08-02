@@ -45,14 +45,9 @@ steps:
     timeServer: 'http://timestamp.digicert.com'
     hashingAlgorithm: 'SHA256'
 
-- task: DeleteFiles@1
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)\taskt\bin\Release'
-    Contents: '\taskt.pdb'
-
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)\taskt\bin\Release'
+    SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
