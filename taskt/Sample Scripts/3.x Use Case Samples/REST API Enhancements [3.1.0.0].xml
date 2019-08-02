@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="44a889d2-2340-4b72-aaf1-933a03b81bb5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Use Basic Parameters" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RESTCommand" CommandID="0c6361de-be57-4c66-b64a-adf70fe34591" CommandName="RESTCommand" IsCommented="false" SelectionName="Execute REST API" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="https://reqres.in" v_APIEndPoint="/api/register" v_APIMethodType="POST" v_userVariableName="vRes" v_RequestFormat="Json">
+        <v_AdvancedParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="A27vRESTPara16Table072719.051657">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  <xs:element name="Content_x0020_Type" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="A27vRESTPara16Table072719.051657" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="A27vRESTPara16Table072719.051657" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_AdvancedParameters>
+        <v_RESTParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="RESTPara43Table072719.044352">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="RESTPara43Table072719.044352" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="RESTPara43Table072719.044352" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <RESTPara43Table072719.044352 diffgr:id="RESTPara43Table072719.0443521" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Type>JSON BODY</Parameter_x0020_Type>
+                <Parameter_x0020_Name>[does not matter]</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{ "email": "eve.holt@reqres.in", "password": "pistol" }</Parameter_x0020_Value>
+              </RESTPara43Table072719.044352>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_RESTParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3bb9d6c2-9453-45ef-8b12-d9e3e7fff142" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vRes}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="eddd0d05-f1f8-47d4-a5b9-75429f84a1ab" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Use Advanced Parameters" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RESTCommand" CommandID="81c333cb-5d94-4a6a-b948-e3b699a33259" CommandName="RESTCommand" IsCommented="false" SelectionName="Execute REST API" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="https://reqres.in" v_APIEndPoint="/api/register" v_APIMethodType="POST" v_userVariableName="vRes" v_RequestFormat="None">
+        <v_AdvancedParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="A27vRESTPara16Table072719.051657">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  <xs:element name="Content_x0020_Type" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="A27vRESTPara16Table072719.051657" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="A27vRESTPara16Table072719.051657" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <A27vRESTPara16Table072719.051657 diffgr:id="A27vRESTPara16Table072719.0516571" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>application/json</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{ "email": "eve.holt@reqres.in", "password": "123stol" }</Parameter_x0020_Value>
+                <Content_x0020_Type>application/json</Content_x0020_Type>
+                <Parameter_x0020_Type>RequestBody</Parameter_x0020_Type>
+              </A27vRESTPara16Table072719.051657>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_AdvancedParameters>
+        <v_RESTParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="RESTPara43Table072719.044352">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="RESTPara43Table072719.044352" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="RESTPara43Table072719.044352" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_RESTParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="e72719e3-9a81-48e2-8ebd-b93f1833c435" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vRes}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2dc80ea9-d4e2-4d50-aad2-684b47bbe101" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Additional Array in Context for ServiceResponses" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="e8263cde-c326-4cc2-a4d8-010aa92bc3db" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{taskt.EngineContext}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>

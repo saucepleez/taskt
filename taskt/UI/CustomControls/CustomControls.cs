@@ -435,6 +435,7 @@ namespace taskt.UI
             uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("ParseDatasetRowCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
@@ -483,8 +484,14 @@ namespace taskt.UI
             uiImages.Add("SeleniumBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
             uiImages.Add("SeleniumBrowserElementActionCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SeleniumBrowserExecuteScriptCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("SeleniumBrowserSwitchWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
+            uiImages.Add("TryCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("CatchExceptionCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("FinallyCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("EndTryCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
@@ -521,7 +528,9 @@ namespace taskt.UI
             uiImages.Add("NLGGeneratePhraseCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
-
+            uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("DatabaseDefineConnectionCommand", taskt.Properties.Resources.command_database);
+            uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
             return uiImages;
         }
         public static ImageList UIImageList()

@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- development-branch
 
 pool:
   vmImage: 'windows-latest'
@@ -31,3 +32,32 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'app_cert'
+
+- task: codesigning@2
+  inputs:
+    secureFileId: 'app_cert'
+    signCertPassword: '$(certPass)'
+    files: '**/taskt.exe'
+    timeServer: 'http://timestamp.digicert.com'
+    hashingAlgorithm: 'SHA256'
+
+- task: DeleteFiles@1
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)\taskt\bin\Release'
+    Contents: '\taskt.pdb'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)\taskt\bin\Release'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'taskt'
+    publishLocation: 'Container'
