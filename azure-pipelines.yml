@@ -22,6 +22,33 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: BuildVersioning@0
+  inputs:
+    versionSource: 'buildNumber'
+    versionFormat: 'fourParts'
+    paramAssemblyVersion: '4'
+    paramAssemblyFileVersion: '4'
+    paramAssemblyInformationalVersion: '4'
+    paramOverwriteFourthDigitWithBuildCounter: false
+    paramVersionCode: '2'
+    doAssemblyInfoAppendSuffix: false
+    doConvertAssemblyInfoToLowerCase: false
+    buildNumberVersionFormat: '2'
+    buildNumberAction: 'replace'
+    doReplaceAssemblyInfo: false
+    doReplaceNuspec: false
+    doReplaceNpm: false
+    doReplaceDotNetCore: false
+    doReplaceAndroid: false
+    doReplaceiOS: false
+    doReplaceCustom: false
+    doShowWarningsForUnmatchedRegex: true
+    excludeFilePattern: |
+      !**/bin/**
+      !**/obj/**
+      !**/node_modules/**
+      !**/packages/**
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
