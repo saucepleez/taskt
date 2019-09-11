@@ -251,8 +251,7 @@ namespace taskt.UI.Forms
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-            var brush = new Core.Theme().CreateGradient(panel2.ClientRectangle);
-            e.Graphics.FillRectangle(brush, panel2.ClientRectangle);
+            e.Graphics.FillRectangle(this.Theme.CreateGradient(panel2.ClientRectangle), panel2.ClientRectangle);
         }
     }
 }

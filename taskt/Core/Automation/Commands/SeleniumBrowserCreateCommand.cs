@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please specify Selenium command line options (optional)")]
         [Attributes.PropertyAttributes.InputSpecification("Select optional options to be passed to the Selenium command.")]
-        [Attributes.PropertyAttributes.SampleUsage("user-data-dir=/user/public/SeleniumTasktProfile")]
+        [Attributes.PropertyAttributes.SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SeleniumOptions { get; set; }
 
