@@ -901,6 +901,13 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndIfCommand()));
             }
+            else if (selectedCommand is Core.Automation.Commands.TryCommand)
+            {
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will be handled if error occurs" }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.CatchExceptionCommand() { v_Comment = "Items in this section will run if error occurs" }));
+                lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "This section executes if error occurs above" }));
+                lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndTryCommand()));
+            }
 
            
 
@@ -921,13 +928,13 @@ namespace taskt.UI.Forms
             foreach (ListViewItem rowItem in lstScriptActions.Items)
             {
 
-                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginListLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginContinousLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand))
+                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginListLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginContinousLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
                     indent += 2;
                 }
-                else if ((rowItem.Tag is Core.Automation.Commands.EndLoopCommand) || (rowItem.Tag is Core.Automation.Commands.EndIfCommand))
+                else if ((rowItem.Tag is Core.Automation.Commands.EndLoopCommand) || (rowItem.Tag is Core.Automation.Commands.EndIfCommand) || (rowItem.Tag is Core.Automation.Commands.EndTryCommand))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -935,7 +942,7 @@ namespace taskt.UI.Forms
                     indent -= 2;
                     if (indent < 0) indent = 0;
                 }
-                else if (rowItem.Tag is Core.Automation.Commands.ElseCommand)
+                else if ((rowItem.Tag is Core.Automation.Commands.ElseCommand) || (rowItem.Tag is Core.Automation.Commands.CatchExceptionCommand) || (rowItem.Tag is Core.Automation.Commands.FinallyCommand))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -1466,6 +1473,7 @@ namespace taskt.UI.Forms
 
             int beginLoopValidationCount = 0;
             int beginIfValidationCount = 0;
+            int tryCatchValidationCount = 0;
             foreach (ListViewItem item in lstScriptActions.Items)
             {
                 if ((item.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (item.Tag is Core.Automation.Commands.BeginListLoopCommand) || (item.Tag is Core.Automation.Commands.BeginContinousLoopCommand) ||(item.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand))
@@ -1484,7 +1492,20 @@ namespace taskt.UI.Forms
                 {
                     beginIfValidationCount--;
                 }
+                else if(item.Tag is Core.Automation.Commands.TryCommand)
+                {
+                    tryCatchValidationCount++;
+                }
+                else if (item.Tag is Core.Automation.Commands.EndTryCommand)
+                {
+                    tryCatchValidationCount--;
+                }
 
+                if (tryCatchValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your try/catch blocks.");
+                    return;
+                }
 
                 //end loop was found first
                 if (beginLoopValidationCount < 0)
@@ -1517,6 +1538,11 @@ namespace taskt.UI.Forms
                 return;
             }
 
+            if (tryCatchValidationCount != 0)
+            {
+                Notify("Please verify the ordering of your try/catch blocks.");
+                return;
+            }
 
             //define default output path
             if ((this.ScriptFilePath == null) || (saveAs))

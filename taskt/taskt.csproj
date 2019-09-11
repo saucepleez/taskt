@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>taskt</RootNamespace>
     <AssemblyName>taskt</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
@@ -29,6 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -129,6 +130,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
@@ -165,6 +167,14 @@
     <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DatabaseExecuteQueryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DatabaseDefineConnectionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CatchExceptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EndTryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\TryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLGGeneratePhraseCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLGSetParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEBrowserFindBrowserCommand.cs" />
@@ -180,6 +190,8 @@
     <Compile Include="Core\Automation\Commands\IEBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEBrowserCreateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCreateCommand.cs" />
     <Compile Include="Core\Automation\Commands\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ResizeWindowCommand.cs" />
@@ -267,6 +279,7 @@
     <Compile Include="Core\Automation\Commands\WaitForFileToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\WriteTextFileCommand.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
+    <Compile Include="Core\EncryptionServices.cs" />
     <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
@@ -346,6 +359,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmDLLExplorer.Designer.cs">
       <DependentUpon>frmDLLExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmEngineContextViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmEngineContextViewer.Designer.cs">
+      <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.cs">
       <SubType>Form</SubType>
@@ -527,6 +546,9 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDLLExplorer.resx">
       <DependentUpon>frmDLLExplorer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmEngineContextViewer.resx">
+      <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLBuilder.resx">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
     </EmbeddedResource>
@@ -585,6 +607,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{B691E011-1797-432E-907A-4D8C69339129}</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="AxMSTSCLib">
       <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -592,6 +623,15 @@
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="MSDASC">
+      <Guid>{2206CEB0-19C1-11D1-89E0-00C04FD7A829}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
     <COMReference Include="MSHTML">
       <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
@@ -643,6 +683,8 @@
     <None Include="Resources\command-stopwatch.png" />
     <None Include="Resources\command-system.png" />
     <None Include="Resources\command-nlg.png" />
+    <None Include="Resources\command-database.png" />
+    <None Include="Resources\command-try.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -74,6 +74,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**Everything ran ok at [DateTime.Now]**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPBody { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Attachment Path (Optional)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Indicates the file path to attachment.")]
+        [Attributes.PropertyAttributes.SampleUsage("**c:\\temp\\file.txt**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SMTPAttachment { get; set; }
         public SMTPSendEmailCommand()
         {
             this.CommandName = "SMTPCommand";
@@ -93,6 +101,7 @@ namespace taskt.Core.Automation.Commands
             string varSMTPToEmail = v_SMTPToEmail.ConvertToUserVariable(sender);
             string varSMTPSubject = v_SMTPSubject.ConvertToUserVariable(sender);
             string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
+            string varSMTPFilePath = v_SMTPAttachment.ConvertToUserVariable(sender);
 
             var client = new SmtpClient(varSMTPHost, int.Parse(varSMTPPort))
             {
@@ -100,7 +109,16 @@ namespace taskt.Core.Automation.Commands
                 EnableSsl = true
             };
 
-            client.Send(varSMTPFromEmail, varSMTPToEmail, varSMTPSubject, varSMTPBody);
+            var message = new MailMessage(varSMTPFromEmail, varSMTPToEmail);
+            message.Subject = varSMTPSubject;
+            message.Body = varSMTPBody;
+
+            if (!string.IsNullOrEmpty(varSMTPFilePath))
+            {
+                message.Attachments.Add(new Attachment(varSMTPFilePath));
+            }
+
+            client.Send(message);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -115,6 +133,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPToEmail", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPSubject", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPBody", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPAttachment", this, editor));
 
             return RenderedControls;
 

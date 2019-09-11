@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch (Exception ex)
             {
-                throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
+                throw new Exception("Error Occured Parsing Tokens: " + ex.ToString());
             }
  
 

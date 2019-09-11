@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -25,10 +27,11 @@ namespace taskt.Core.Automation.Engine
         public EngineStatus CurrentStatus { get; set; }
         public EngineSettings engineSettings { get; set; }
         public ServerSettings serverSettings { get; set; }
+        public List<DataTable> DataTables { get; set; }
         public string FileName { get; set; }
         public Core.Server.Task taskModel { get; set; }
         public bool serverExecution { get; set; }
-
+        public List<IRestResponse> ServiceResponses { get; set; }
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -54,6 +57,8 @@ namespace taskt.Core.Automation.Engine
 
             VariableList = new List<Script.ScriptVariable>();
             AppInstances = new Dictionary<string, object>();
+            ServiceResponses = new List<IRestResponse>();
+            DataTables = new List<DataTable>();
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null)
@@ -259,7 +264,7 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand)
+                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);
@@ -314,13 +319,13 @@ namespace taskt.Core.Automation.Engine
 
                         default:
                         
-                            throw new Exception(ex.ToString());
+                            throw ex;
                     }
                 }
                 else
                 {
                 
-                    throw new Exception(ex.ToString());
+                    throw ex;
                 }
             }
         }
@@ -387,6 +392,33 @@ namespace taskt.Core.Automation.Engine
 
         }
 
+        public void AddVariable(string variableName, object variableValue)
+        {
+
+            if (VariableList.Any(f => f.VariableName == variableName))
+            {
+                //update existing variable
+                var existingVariable = VariableList.FirstOrDefault(f => f.VariableName == variableName);
+                existingVariable.VariableName = variableName;
+                existingVariable.VariableValue = variableValue;
+            }
+            else if (VariableList.Any(f => "{" + f.VariableName + "}" == variableName))
+            {
+                //update existing edge-case variable due to user error
+                var existingVariable = VariableList.FirstOrDefault(f => "{" + f.VariableName + "}" == variableName);
+                existingVariable.VariableName = variableName;
+                existingVariable.VariableValue = variableValue;
+            }
+            else
+            {
+                //add new variable
+                var newVariable = new Script.ScriptVariable();
+                newVariable.VariableName = variableName;
+                newVariable.VariableValue = variableValue;
+                VariableList.Add(newVariable);
+            }
+
+        }
         public void CancelScript()
         {
             IsCancellationPending = true;
@@ -490,6 +522,19 @@ namespace taskt.Core.Automation.Engine
        public enum EngineStatus
         {
             Loaded, Running, Paused, Finished
+        }
+
+        public string GetEngineContext()
+        {
+            //set json settings
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Error = (serializer, err) =>
+            {
+                err.ErrorContext.Handled = true;
+            };
+            settings.Formatting = Formatting.Indented;
+
+            return  JsonConvert.SerializeObject(this, settings);
         }
 
     }

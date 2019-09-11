@@ -71,6 +71,10 @@ namespace taskt.Core.Automation.Commands
             {
               listToLoop = (List<OpenQA.Selenium.IWebElement>)complexVariable.VariableValue;
             }
+            else if (complexVariable.VariableValue is DataTable)
+            {
+                listToLoop = ((DataTable)complexVariable.VariableValue).Rows;
+            }
             else
             {
                 throw new Exception("Complex Variable List Type<T> Not Supported");

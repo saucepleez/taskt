@@ -35,12 +35,12 @@ namespace taskt.UI.Forms.Supplemental
             //declare credentials
             axRDP.Server = machineName;
             axRDP.UserName = userName;
-            axRDP.AdvancedSettings8.ClearTextPassword = password;
+            axRDP.AdvancedSettings7.ClearTextPassword = password;
 
             //defaults to false
-            axRDP.AdvancedSettings8.RedirectDrives = false;
-            axRDP.AdvancedSettings8.RedirectPrinters = false;
-            axRDP.AdvancedSettings8.RedirectClipboard = false;
+            axRDP.AdvancedSettings7.RedirectDrives = false;
+            axRDP.AdvancedSettings7.RedirectPrinters = false;
+            axRDP.AdvancedSettings7.RedirectClipboard = false;
 
             //initiate connection
             axRDP.Connect();

@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Xml;
+using System.Data;
 
 namespace taskt.Core.Script
 {
@@ -73,7 +74,7 @@ namespace taskt.Core.Script
                 var command = (Core.Automation.Commands.ScriptCommand)commandItem.Tag;
                 command.LineNumber = lineNumber;
 
-                if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand))
+                if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (command is Core.Automation.Commands.TryCommand))
                 {
                     if (subCommands.Count == 0)  //if this is the first loop
                     {
@@ -92,7 +93,7 @@ namespace taskt.Core.Script
                         subCommands.Add(nextNodeParent);
                     }
                 }
-                else if ((command is Core.Automation.Commands.EndLoopCommand) || (command is Core.Automation.Commands.EndIfCommand))  //if current loop scenario is ending
+                else if ((command is Core.Automation.Commands.EndLoopCommand) || (command is Core.Automation.Commands.EndIfCommand) || (command is Core.Automation.Commands.EndTryCommand))  //if current loop scenario is ending
                 {
                     //get reference to previous node
                     var parentCommand = subCommands[subCommands.Count - 1];
@@ -234,6 +235,12 @@ namespace taskt.Core.Script
                         return (string)VariableValue;
                 }
               
+            }
+            else if(VariableValue is DataTable)
+            {
+                DataTable dataTable = (DataTable)VariableValue;
+                var dataRow = dataTable.Rows[CurrentPosition];
+                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
             }
             else
             {

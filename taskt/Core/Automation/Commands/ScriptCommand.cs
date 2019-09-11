@@ -55,6 +55,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SeleniumBrowserCloseCommand))]
     [XmlInclude(typeof(SeleniumBrowserElementActionCommand))]
     [XmlInclude(typeof(SeleniumBrowserExecuteScriptCommand))]
+    [XmlInclude(typeof(SeleniumBrowserSwitchWindowCommand))]
+    [XmlInclude(typeof(SeleniumBrowserInfoCommand))]
     [XmlInclude(typeof(SMTPSendEmailCommand))]
     [XmlInclude(typeof(ErrorHandlingCommand))]
     [XmlInclude(typeof(StringSubstringCommand))]
@@ -116,6 +118,14 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(IEBrowserNavigateURLCommand))]
     [XmlInclude(typeof(AddToVariableCommand))]
     [XmlInclude(typeof(SetVariableIndexCommand))]
+    [XmlInclude(typeof(ShowEngineContextCommand))]
+    [XmlInclude(typeof(DatabaseDefineConnectionCommand))]
+    [XmlInclude(typeof(DatabaseExecuteQueryCommand))]
+    [XmlInclude(typeof(ParseDatasetRowCommand))]
+    [XmlInclude(typeof(TryCommand))]
+    [XmlInclude(typeof(CatchExceptionCommand))]
+    [XmlInclude(typeof(FinallyCommand))]
+    [XmlInclude(typeof(EndTryCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
