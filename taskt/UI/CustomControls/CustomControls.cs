@@ -107,11 +107,18 @@ namespace taskt.UI.CustomControls
 
     public partial class UIPanel : Panel
     {
+        private taskt.Core.Theme _Theme = new taskt.Core.Theme();
+        public taskt.Core.Theme Theme
+        {
+            get { return _Theme; }
+            set { _Theme = value; }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
 
 
-            var brush = new Core.Theme().CreateGradient(this.ClientRectangle);
+            var brush = this.Theme.CreateGradient(this.ClientRectangle);
             e.Graphics.FillRectangle(brush, this.ClientRectangle);
 
 

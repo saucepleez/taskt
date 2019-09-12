@@ -239,7 +239,7 @@ namespace taskt.UI.Forms
 
             if(CloseWhenDone)
             {
-                this.Close();
+                engineInstance.tasktEngineUI.Invoke((Action)delegate () { this.Close(); });
             }
 
         }
@@ -311,6 +311,19 @@ namespace taskt.UI.Forms
                 if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
                 {
                     pbBotIcon.Image = Properties.Resources.error;
+                }
+
+                if (mainLogoText.Contains("(error)"))
+                {
+                    this.Theme.BgGradientStartColor = Color.DarkRed;
+                    this.Theme.BgGradientEndColor = Color.LightCoral;
+                    this.Invalidate();
+                }
+                else if (mainLogoText.Contains("(success)"))
+                {
+                    this.Theme.BgGradientStartColor = Color.DarkGreen;
+                    this.Theme.BgGradientEndColor = Color.LightGreen;
+                    this.Invalidate();
                 }
 
                 //reset debug line

@@ -31,6 +31,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage(" **-a** or **-version**")]
         [Attributes.PropertyAttributes.Remarks("You will need to consult documentation to determine if your executable supports arguments or flags on startup.")]
         public string v_ProgramArgs { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Wait for the process to complete?")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("Wait For Exit.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select 'Yes' or 'No'")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_WaitForExit { get; set; }
 
         public StartProcessCommand()
         {
@@ -45,18 +53,25 @@ namespace taskt.Core.Automation.Commands
 
             string vProgramName = v_ProgramName.ConvertToUserVariable(sender);
             string vProgramArgs = v_ProgramArgs.ConvertToUserVariable(sender);
+            System.Diagnostics.Process p;
 
             if (v_ProgramArgs == "")
             {
-                System.Diagnostics.Process.Start(vProgramName);
+                p = System.Diagnostics.Process.Start(vProgramName);
             }
             else
             {
-                System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
+                p = System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
+            }
+
+            if (v_WaitForExit == "Yes")
+            {
+                p.WaitForExit();
             }
 
             System.Threading.Thread.Sleep(2000);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -64,8 +79,8 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramName", this, editor));
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramArgs", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_WaitForExit", this, editor));
 
-         
             return RenderedControls;
         }
         public override string GetDisplayValue()

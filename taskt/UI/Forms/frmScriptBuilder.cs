@@ -1366,8 +1366,9 @@ namespace taskt.UI.Forms
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 //import
+                Cursor.Current = Cursors.WaitCursor;
                 Import(openFileDialog.FileName);
-
+                Cursor.Current = Cursors.Default;
             }
 
         }
@@ -1393,6 +1394,13 @@ namespace taskt.UI.Forms
 
                 //import
                 PopulateExecutionCommands(deserializedScript.Commands);
+                foreach (Core.Script.ScriptVariable var in deserializedScript.Variables)
+                {
+                    if (scriptVariables.Find(alreadyExists => alreadyExists.VariableName == var.VariableName) == null)
+                    {
+                        scriptVariables.Add(var);
+                    }
+                }
 
                 //comment
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));

@@ -10,16 +10,24 @@ namespace taskt.Core
 {
     public class Theme
     {
-       public LinearGradientBrush CreateGradient(Rectangle rect)
+
+        Color _BgGradientStartColor = Color.FromArgb(20, 136, 204);
+        public Color BgGradientStartColor
         {
-            var tasktBlue = Color.FromArgb(20, 136, 204);
-            var tasktPurple = Color.FromArgb(43, 50, 178);
-            LinearGradientBrush linearGradientBrush =
-            new LinearGradientBrush(rect, tasktPurple, tasktBlue, 180);
-            return linearGradientBrush;
+            get { return _BgGradientStartColor; }
+            set { _BgGradientStartColor = value; }
+        }
 
-            //e.Graphics.FillRectangle(linearGradientBrush, pnlMain.ClientRectangle);
+        Color _BgGradientEndColor = Color.FromArgb(43, 50, 178);
+        public Color BgGradientEndColor
+        {
+            get { return _BgGradientEndColor; }
+            set { _BgGradientEndColor = value; }
+        }
 
+        public LinearGradientBrush CreateGradient(Rectangle rect)
+        {
+            return new LinearGradientBrush(rect, _BgGradientStartColor, _BgGradientEndColor, 180);
         }
 
     }
