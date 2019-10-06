@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
             var variableList = new List<Script.ScriptVariable>();
             foreach (DataRow rw in v_VariableAssignments.Rows)
             {
-                var variableName = ((string)rw.ItemArray[0]).ConvertToUserVariable(sender);
+                var variableName = (string)rw.ItemArray[0];
                 var variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender);
                 variableList.Add(new Script.ScriptVariable
                 {
@@ -85,8 +85,12 @@ namespace taskt.Core.Automation.Commands
                 });
             }
 
-            Application.Run(new UI.Forms.frmScriptEngine(startFile, null, variableList));
-
+            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true);
+            Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
+            currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = false; });
+            Application.Run(newEngine);
+            //currentScriptEngine.tasktEngineUI.TopMost = false;
+            currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = true; });
         }
 
         public override List<Control> Render(frmCommandEditor editor)

@@ -64,6 +64,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Matching Elements")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Switch to frame")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
@@ -171,9 +172,8 @@ namespace taskt.Core.Automation.Commands
 
                 return;
             }
-            else
+            else if (seleniumSearchParam != string.Empty)
             {
-
                 element = FindElement(seleniumInstance, seleniumSearchParam);
             }
 
@@ -320,6 +320,18 @@ namespace taskt.Core.Automation.Commands
                 case "Clear Element":
                     element.Clear();
                     break;
+
+                case "Switch to frame":
+                    if (seleniumSearchParam == "")
+                    {
+                        seleniumInstance.SwitchTo().DefaultContent();
+                    }
+                    else
+                    {
+                        seleniumInstance.SwitchTo().Frame(element);
+                    }
+                    break;
+
                 default:
                     throw new Exception("Element Action was not found");
             }
@@ -547,6 +559,14 @@ namespace taskt.Core.Automation.Commands
                         actionParameters.Rows.Add("Timeout (Seconds)");
                     }
                     break;
+
+                case "Switch to frame":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Hide();
+                    }
+                    break;
+
                 default:
                     break;
             }

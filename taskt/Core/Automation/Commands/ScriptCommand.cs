@@ -187,7 +187,14 @@ namespace taskt.Core.Automation.Commands
 
         public virtual string GetDisplayValue()
         {
-            return SelectionName;
+            if (String.IsNullOrEmpty(v_Comment))
+            {
+                return SelectionName;
+            }
+            else
+            {
+                return SelectionName + " [" + v_Comment + "]";
+            }
         }
 
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor)

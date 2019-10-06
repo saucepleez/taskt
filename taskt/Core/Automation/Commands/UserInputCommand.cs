@@ -92,7 +92,7 @@ namespace taskt.Core.Automation.Commands
             //translate variables for each label
             foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)
             {
-                rw["Label"] = rw["Label"].ToString().ConvertToUserVariable(sender);
+                rw["DefaultValue"] = rw["DefaultValue"].ToString().ConvertToUserVariable(sender);
 
                 var targetVariable = rw["ApplyToVariable"] as string;
 
