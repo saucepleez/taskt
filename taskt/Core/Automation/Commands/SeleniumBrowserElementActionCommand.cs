@@ -35,14 +35,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Link Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By XPath")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By ID")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Class Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By CSS Selector")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Link Text")]
         [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SeleniumSearchType { get; set; }
         [XmlAttribute]
@@ -378,6 +380,11 @@ namespace taskt.Core.Automation.Commands
                 case "Find Element By CSS Selector":
                     element = seleniumInstance.FindElement(By.CssSelector(searchParameter));
                     break;
+
+                case "Find Element By Link Text":
+                    element = seleniumInstance.FindElement(By.LinkText(searchParameter));
+                    break;
+
                 case "Find Elements By XPath":
                     element = seleniumInstance.FindElements(By.XPath(searchParameter));
                     break;
@@ -400,6 +407,10 @@ namespace taskt.Core.Automation.Commands
 
                 case "Find Elements By CSS Selector":
                     element = seleniumInstance.FindElements(By.CssSelector(searchParameter));
+                    break;
+
+                case "Find Elements By Link Text":
+                    element = seleniumInstance.FindElements(By.LinkText(searchParameter));
                     break;
 
                 default:
