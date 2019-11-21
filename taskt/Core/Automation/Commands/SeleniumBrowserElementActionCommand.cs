@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -34,14 +35,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Link Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By XPath")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By ID")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Tag Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Class Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By CSS Selector")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Link Text")]
         [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SeleniumSearchType { get; set; }
         [XmlAttribute]
@@ -65,8 +68,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Matching Elements")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Switch to frame")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Count")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**, **Get Count**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
         public string v_SeleniumElementAction { get; set; }
         [XmlElement]
@@ -225,7 +229,7 @@ namespace taskt.Core.Automation.Commands
                         clearElement = "No";
                     }
 
-                    if (clearElement.ToLower() == "yes") 
+                    if (clearElement.ToLower() == "yes")
                     {
                         element.Clear();
                     }
@@ -261,6 +265,7 @@ namespace taskt.Core.Automation.Commands
 
                 case "Get Text":
                 case "Get Attribute":
+                case "Get Count":
 
                     string VariableName = (from rw in v_WebActionParameterTable.AsEnumerable()
                                            where rw.Field<string>("Parameter Name") == "Variable Name"
@@ -274,6 +279,12 @@ namespace taskt.Core.Automation.Commands
                     if (v_SeleniumElementAction == "Get Text")
                     {
                         elementValue = element.Text;
+                    }
+                    else if (v_SeleniumElementAction == "Get Count")
+                    {
+                        elementValue = "1";
+                        if (element is ReadOnlyCollection<IWebElement>)
+                            elementValue = ((ReadOnlyCollection<IWebElement>)element).Count().ToString(); 
                     }
                     else
                     {
@@ -369,6 +380,11 @@ namespace taskt.Core.Automation.Commands
                 case "Find Element By CSS Selector":
                     element = seleniumInstance.FindElement(By.CssSelector(searchParameter));
                     break;
+
+                case "Find Element By Link Text":
+                    element = seleniumInstance.FindElement(By.LinkText(searchParameter));
+                    break;
+
                 case "Find Elements By XPath":
                     element = seleniumInstance.FindElements(By.XPath(searchParameter));
                     break;
@@ -391,6 +407,10 @@ namespace taskt.Core.Automation.Commands
 
                 case "Find Elements By CSS Selector":
                     element = seleniumInstance.FindElements(By.CssSelector(searchParameter));
+                    break;
+
+                case "Find Elements By Link Text":
+                    element = seleniumInstance.FindElements(By.LinkText(searchParameter));
                     break;
 
                 default:
@@ -443,7 +463,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumElementAction", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_SeleniumElementAction", this, new Control[] { ElementActionDropdown }, editor));
             ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
-            
+
             RenderedControls.Add(ElementActionDropdown);
 
             ElementParameterControls = new List<Control>();
@@ -527,6 +547,7 @@ namespace taskt.Core.Automation.Commands
 
                 case "Get Text":
                 case "Get Matching Elements":
+                case "Get Count":
                     foreach (var ctrl in ElementParameterControls)
                     {
                         ctrl.Show();
