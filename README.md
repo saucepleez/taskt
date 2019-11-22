@@ -49,13 +49,13 @@ Feel free to open up a feature request or report a bug/issue.
 # System specifications
 Please note whatever software that taskt is automating can affect the minimum software requirements. 
 ## Minimum
- * Windows 8/8.1/10
+ * Windows 7/8.1/10/server 2012/server 2016
  * 1gb ram
  * 200mb disk space
  * 1vcpu
  * .NET Framework 4.8
 ## Recommended minimum
- * Windows 8/8.1/10
+ * Windows 7/8.1/10/server 2012/server 2016
  * 2gb ram
  * 200mb disk space
  * 1vcpu
