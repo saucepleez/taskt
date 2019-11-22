@@ -46,6 +46,21 @@ taskt is free for both personal and commercial use. taskt is licensed under the 
 ![Let us know what you think!](https://i.imgur.com/wKExziN.png)
 Feel free to open up a feature request or report a bug/issue.
 
+# System specifications
+Please note whatever software that taskt is automating can affect the minimum software requirements. 
+## Minimum
+ * Windows 8/8.1/10
+ * 1gb ram
+ * 200mb disk space
+ * 1vcpu
+ * .NET Framework 4.8
+## Recommended minimum
+ * Windows 8/8.1/10
+ * 2gb ram
+ * 200mb disk space
+ * 1vcpu
+ * .NET Framework 4.8
+
 [![Open New Issue](https://img.shields.io/badge/Open-New&nbsp;Issue-blue.svg)](https://github.com/saucepleez/taskt/issues/new)
 [![Chat on Gitter](https://img.shields.io/badge/Chat-On&nbsp;Gitter-green.svg)](https://gitter.im/taskt-rpa/Lobby)
 
