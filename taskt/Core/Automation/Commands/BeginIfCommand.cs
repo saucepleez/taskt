@@ -454,6 +454,10 @@ namespace taskt.Core.Automation.Commands
             }
             else if (v_IfActionType == "Web Element Exists")
             {
+                string instanceName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                         where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
                 string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                          where rw.Field<string>("Parameter Name") == "Element Search Parameter"
                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -462,8 +466,10 @@ namespace taskt.Core.Automation.Commands
                                         where rw.Field<string>("Parameter Name") == "Element Search Method"
                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
+               
                 SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
                 newElementActionCommand.v_SeleniumSearchType = searchMethod;
+                newElementActionCommand.v_InstanceName = instanceName.ConvertToUserVariable(sender);
                 bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
                 ifResult = elementExists;
 
