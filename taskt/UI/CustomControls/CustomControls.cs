@@ -538,6 +538,9 @@ namespace taskt.UI
             uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("DatabaseDefineConnectionCommand", taskt.Properties.Resources.command_database);
             uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
+            uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
+            uiImages.Add("RemoteAPICommand", taskt.Properties.Resources.command_remote);
+
             return uiImages;
         }
         public static ImageList UIImageList()

@@ -18,6 +18,7 @@ namespace taskt.Core
         public ServerSettings ServerSettings { get; set; } = new ServerSettings();
         public EngineSettings EngineSettings { get; set; } = new EngineSettings();
         public ClientSettings ClientSettings { get; set; } = new ClientSettings();
+        public LocalListenerSettings ListenerSettings { get; set; } = new LocalListenerSettings();
         public ApplicationSettings()
         {
 
@@ -165,6 +166,26 @@ namespace taskt.Core
             EnableSequenceDragDrop = true;
             PreloadBuilderCommands = false;
             UseSlimActionBar = true;
+        }
+    }
+    /// <summary>
+    /// Defines Server settings for tasktServer if using the server component to manage the client
+    /// </summary>
+    [Serializable]
+    public class LocalListenerSettings
+    {
+        public bool StartListenerOnStartup { get; set; }
+        public bool LocalListeningEnabled { get; set; }
+        public bool RequireListenerAuthenticationKey { get; set; }
+        public int ListeningPort { get; set; }
+        public string AuthKey { get; set; }
+        public LocalListenerSettings()
+        {
+            StartListenerOnStartup = false;
+            LocalListeningEnabled = false;
+            RequireListenerAuthenticationKey = false;
+            ListeningPort = 19312;
+            AuthKey = Guid.NewGuid().ToString();
         }
     }
 }

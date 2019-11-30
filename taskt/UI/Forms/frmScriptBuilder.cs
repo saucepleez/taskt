@@ -124,6 +124,7 @@ namespace taskt.UI.Forms
 
              Core.Server.HttpServerClient.associatedBuilder = this;
 
+            Core.Server.LocalTCPListener.Initialize(this);
             //Core.Sockets.SocketClient.Initialize();
             //Core.Sockets.SocketClient.associatedBuilder = this;
 

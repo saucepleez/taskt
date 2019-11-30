@@ -315,14 +315,14 @@ namespace taskt.UI.Forms
 
                 if (mainLogoText.Contains("(error)"))
                 {
-                    this.Theme.BgGradientStartColor = Color.DarkRed;
-                    this.Theme.BgGradientEndColor = Color.LightCoral;
+                    this.Theme.BgGradientStartColor = Color.OrangeRed;
+                    this.Theme.BgGradientEndColor = Color.OrangeRed;
                     this.Invalidate();
                 }
                 else if (mainLogoText.Contains("(success)"))
                 {
-                    this.Theme.BgGradientStartColor = Color.DarkGreen;
-                    this.Theme.BgGradientEndColor = Color.LightGreen;
+                    this.Theme.BgGradientStartColor = Color.Green;
+                    this.Theme.BgGradientEndColor = Color.Green;
                     this.Invalidate();
                 }
 
