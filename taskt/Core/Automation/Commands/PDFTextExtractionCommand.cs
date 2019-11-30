@@ -8,7 +8,7 @@ using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-        [Serializable]
+    [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("")]
     [Attributes.ClassAttributes.UsesDescription("")]
@@ -16,12 +16,21 @@ namespace taskt.Core.Automation.Commands
     public class PDFTextExtractionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path or PDF file URL")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.pdf or [vFilePath]")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
+        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.pdf , [vFilePath] or https://temp.com/myfile.pdf")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select source type of PDF file")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("File Path")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("File URL")]
+        [Attributes.PropertyAttributes.InputSpecification("Select source type of PDF file")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **File Path**, **File URL**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_FileSourceType { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the PDF text")]
@@ -42,10 +51,44 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
 
-            //get variable path to source file
+            //get variable path or URL to source file
             var vSourceFilePath = v_FilePath.ConvertToUserVariable(sender);
+            // get source type of file either from a physical file or from a URL
+            var vSourceFileType = v_FileSourceType.ConvertToUserVariable(sender);
 
+            if (vSourceFileType == "File URL")
+            {
+                //create temp directory
+                var tempDir = Core.IO.Folders.GetFolder(Folders.FolderType.TempFolder);
+                var tempFile = System.IO.Path.Combine(tempDir, $"{ Guid.NewGuid()}.pdf");
 
+                //check if directory does not exist then create directory
+                if (!System.IO.Directory.Exists(tempDir))
+                {
+                    System.IO.Directory.CreateDirectory(tempDir);
+                }
+
+                // Create webClient to download the file for extraction
+                var webclient = new System.Net.WebClient();
+                var uri = new Uri(vSourceFilePath);
+                webclient.DownloadFile(uri, tempFile);
+
+                // check if file is downloaded successfully
+                if (System.IO.File.Exists(tempFile))
+                {
+                    vSourceFilePath = tempFile;
+                }
+
+                // Free not needed resources
+                uri = null;
+                if (webclient != null)
+                {
+                    webclient.Dispose();
+                    webclient = null;
+                }
+            }
+
+            // Check if file exists before proceeding
             if (!System.IO.File.Exists(vSourceFilePath))
             {
                 throw new System.IO.FileNotFoundException("Could not find file: " + vSourceFilePath);
@@ -68,6 +111,8 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileSourceType", this, editor));
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
 
 
