@@ -49,16 +49,16 @@ Feel free to open up a feature request or report a bug/issue.
 # System specifications
 Please note whatever software that taskt is automating can affect the minimum software requirements. 
 ## Minimum
- * Windows 7/8.1/10/server 2012/server 2016
- * 1gb ram
- * 200mb disk space
- * 1vcpu
+ * Windows 7/8.1/10/Server 2012/Server 2016
+ * 1GB ram
+ * 200MB disk space
+ * 1 vCPU
  * .NET Framework 4.8
-## Recommended minimum
- * Windows 7/8.1/10/server 2012/server 2016
- * 2gb ram
- * 200mb disk space
- * 1vcpu
+## Recommended
+ * Windows 10/Server 2012/Server 2016
+ * 4GB ram
+ * 1GB disk space
+ * 2 CPU
  * .NET Framework 4.8
 
 [![Open New Issue](https://img.shields.io/badge/Open-New&nbsp;Issue-blue.svg)](https://github.com/saucepleez/taskt/issues/new)
