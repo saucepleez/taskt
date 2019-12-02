@@ -16,7 +16,7 @@ namespace taskt.Core.Server
     /// </summary>
     public static class LocalTCPListener
     {
-        private static Automation.Engine.AutomationEngineInstance automationInstance;
+        public static Automation.Engine.AutomationEngineInstance automationInstance;
         private static Serilog.Core.Logger automationLogger;
         public static TcpListener automationListener;
         private static LocalListenerSettings listenerSettings;
@@ -24,6 +24,7 @@ namespace taskt.Core.Server
         public static int Port;
         public static bool IsListening { get; set; }
 
+        public static string TasktResult { get; set; }
         public static event EventHandler ListeningStarted;
         public static event EventHandler ListeningStopped;
         static LocalTCPListener()
@@ -198,7 +199,7 @@ namespace taskt.Core.Server
         private static void ProcessRequest(string data, string[] messageContent, NetworkStream stream)
         {
 
-            if (data.StartsWith("POST /ExecuteScript"))
+            if ((data.StartsWith("POST /ExecuteScript")) || (data.StartsWith("POST /AwaitScript")))
             {
                 automationLogger.Information($"Client Requests Script Execution");
 
@@ -272,18 +273,44 @@ namespace taskt.Core.Server
                 //log execution
                 automationLogger.Information($"Executing Script: {dataParameter}");
 
+           
                 //invoke builder and pass it script data to execute
                 associatedBuilder.Invoke(new MethodInvoker(delegate ()
                 {
                     UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
                     newEngine.xmlData = dataParameter;
                     newEngine.callBackForm = null;
+                    //instance = newEngine.engineInstance;
                     newEngine.Show();
                 }));
 
-                byte[] msg = System.Text.Encoding.ASCII.GetBytes("200 OK");
+              
 
-                SendResponse(ResponseCode.OK, "Script Launched Successfully", stream);
+                if (data.StartsWith("POST /AwaitScript"))
+                {
+                    //reset result value
+                    TasktResult = "";
+
+                    //add reference to script finished event
+                    automationInstance.ScriptFinishedEvent += AutomationInstance_ScriptFinishedEvent;    
+
+                    //wait for script to finish before returning
+                    do
+                    {
+                        Thread.Sleep(1000);
+                    } while (TasktResult == string.Empty);
+
+                    //send response back to client
+                    SendResponse(ResponseCode.OK, automationInstance.TasktResult, stream);
+
+                }
+                else
+                {
+                    //return success immediately
+                    SendResponse(ResponseCode.OK, "Script Launched Successfully", stream);
+                }
+
+             
 
             }
             else if (data.StartsWith("POST /EngineStatus"))
@@ -303,6 +330,13 @@ namespace taskt.Core.Server
                 SendResponse(ResponseCode.InternalServerError, "Invalid Client Request", stream);
             }
         }
+
+        private static void AutomationInstance_ScriptFinishedEvent(object sender, Automation.Engine.ScriptFinishedEventArgs e)
+        {
+            //set result once script completes
+            TasktResult = automationInstance.TasktResult;
+        }
+
         public static void SendResponse(ResponseCode ResponseCode, string content, Stream networkStream)
         {
             System.IO.StreamWriter writer = new System.IO.StreamWriter(networkStream);
