@@ -2168,6 +2168,15 @@ namespace taskt.UI.Forms
 
         }
 
+        private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (notifyTray != null)
+            {
+                notifyTray.Visible = false;
+                notifyTray.Dispose();
+            }
+                              
+        }
     }
 
 }
