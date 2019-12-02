@@ -16,15 +16,15 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Remote Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to show a message to the user.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to present or display a value on screen to the user.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'MessageBox' and invokes VariableCommand to find variable data.")]
+    [Attributes.ClassAttributes.Description("This command allows you to execute automation against another taskt Client.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to automate against a taskt instance that enables Local Listener.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command uses Core.Server.LocalTCPListener")]
     public class RemoteAPICommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the IP:Port (ex. 192.168.2.200:19312)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Define any API endpoint which contains the full URL.")]
+        [Attributes.PropertyAttributes.InputSpecification("Define any IP endpoint which is enabled for local listening.")]
         [Attributes.PropertyAttributes.SampleUsage("**https://example.com** or **{vMyUrl}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_BaseURL { get; set; }
@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Engine Status")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Restart taskt")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the necessary method type.")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the necessary API Method")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ParameterType { get; set; }
 

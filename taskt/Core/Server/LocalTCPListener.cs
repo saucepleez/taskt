@@ -439,9 +439,6 @@ namespace taskt.Core.Server
                     throw new FileNotFoundException(scriptData);
                 }
 
-                //remove any return lines
-                //scriptData = scriptData.Replace("\r\n", "");
-
                 //add script data
                 request.AddParameter("ScriptData", scriptData.ToBase64(), RestSharp.ParameterType.HttpHeader);
 
