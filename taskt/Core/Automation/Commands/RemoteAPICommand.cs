@@ -39,6 +39,13 @@ namespace taskt.Core.Automation.Commands
         public string v_ParameterType { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Request Timeout (ms)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the length of time to wait before the request times out ")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_RequestTimeout { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the response")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
@@ -52,6 +59,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Remote API";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_RequestTimeout = "5000";
         }
 
         public override void RunCommand(object sender)
@@ -61,8 +69,9 @@ namespace taskt.Core.Automation.Commands
             {
                 var server = v_BaseURL.ConvertToUserVariable(sender);
                 var paramType = v_ParameterType.ConvertToUserVariable(sender);
+                var timeout = v_RequestTimeout.ConvertToUserVariable(sender);
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType);
+                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout);
 
                 response.StoreInUserVariable(sender, v_userVariableName);
 
@@ -78,6 +87,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_BaseURL", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ParameterType", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RequestTimeout", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);

@@ -57,6 +57,13 @@ namespace taskt.Core.Automation.Commands
         public string v_Parameter { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Request Timeout (ms)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the length of time to wait before the request times out ")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_RequestTimeout { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the response")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
@@ -71,6 +78,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
             this.v_ExecuteAwait = "Continue Execution";
+            this.v_RequestTimeout = "120000";
         }
 
         public override void RunCommand(object sender)
@@ -82,8 +90,9 @@ namespace taskt.Core.Automation.Commands
                 var paramType = v_ParameterType.ConvertToUserVariable(sender);
                 var parameter = v_Parameter.ConvertToUserVariable(sender);
                 var awaitPreference = v_ExecuteAwait.ConvertToUserVariable(sender);
+                var timeout = v_RequestTimeout.ConvertToUserVariable(sender);
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, parameter, awaitPreference);
+                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference);
 
                 response.StoreInUserVariable(sender, v_userVariableName);
 
@@ -101,6 +110,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ParameterType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Parameter", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ExecuteAwait", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RequestTimeout", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);

@@ -74,6 +74,9 @@ namespace taskt.UI.Forms
             chkRequireListenerKey.DataBindings.Add("Checked", listenerSettings, "RequireListenerAuthenticationKey", false, DataSourceUpdateMode.OnPropertyChanged);
             txtListeningPort.DataBindings.Add("Text", listenerSettings, "ListeningPort", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAuthListeningKey.DataBindings.Add("Text", listenerSettings, "AuthKey", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkEnableWhitelist.DataBindings.Add("Checked", listenerSettings, "EnableWhitelist", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtWhiteList.DataBindings.Add("Text", listenerSettings, "IPWhiteList", false, DataSourceUpdateMode.OnPropertyChanged);
+
             SetupListeningUI();
 
             var clientSettings = newAppSettings.ClientSettings;
@@ -507,8 +510,12 @@ namespace taskt.UI.Forms
             Core.Server.LocalTCPListener.StopAutomationListener();
         }
 
-
-
+        private void btnWhiteList_Click(object sender, EventArgs e)
+        {
+            //newAppSettings.ListenerSettings.IPWhiteList.Add(new Core.WhiteListIP("127.0.0.1"));
+            //Supplement_Forms.frmGridView frmWhitelist = new Supplement_Forms.frmGridView(newAppSettings.ListenerSettings.IPWhiteList);
+            //frmWhitelist.ShowDialog();
+        }
 
     }
 }

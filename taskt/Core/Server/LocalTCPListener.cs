@@ -94,7 +94,7 @@ namespace taskt.Core.Server
                 // Start listening for client requests.
                 automationListener.Start();
 
-                automationLogger.Information($"Automation Listener endpoint started at {automationListener.LocalEndpoint}");
+                automationLogger.Information($"Automation Listener Endpoint started at {automationListener.LocalEndpoint}");
 
                 // Buffer for reading data
                 Byte[] bytes = new Byte[2048];
@@ -129,6 +129,35 @@ namespace taskt.Core.Server
 
                             //break out request content
                             var messageContent = data.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+                            if (listenerSettings.EnableWhitelist)
+                            {
+                                automationLogger.Information($"Listener requires IP Verification (Whitelist)");
+
+                                //verify that client is allowed to connect
+                                var clientAddress = (((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString());
+
+                                //get list of ip
+                                var enabledIPs = listenerSettings.IPWhiteList.Split(',');
+
+                                if (enabledIPs.Any( s => s.Trim().Contains(clientAddress)))
+                                {
+                                    automationLogger.Information($"Client '{clientAddress}' verified from WhiteList '{listenerSettings.IPWhiteList}'"); 
+                                }
+                                else
+                                {
+                                    automationLogger.Information($"Closing Client Connection due to IP verification failure");
+                                    SendResponse(ResponseCode.Unauthorized, $"Unauthorized", stream);
+                                    return;
+                                }
+                              
+                            }
+                            else
+                            {
+                                automationLogger.Information($"Listener does not require IP Verification");
+                            }
+
+
 
                             if (listenerSettings.RequireListenerAuthenticationKey)
                             {
@@ -374,7 +403,7 @@ namespace taskt.Core.Server
         {
             automationListener.Stop();
         }
-        public static string SendAutomationTask(string endpoint, string parameterType, string scriptData = "", string awaitPreference = "")
+        public static string SendAutomationTask(string endpoint, string parameterType, string timeout, string scriptData = "", string awaitPreference = "")
         {
 
             if (!endpoint.StartsWith("http://"))
@@ -468,18 +497,7 @@ namespace taskt.Core.Server
                 request.Resource = "/RestartTaskt";
             }
 
-
-
-
-            if (awaitPreference == "Await For Result")
-            {
-                request.Timeout = 120000;
-            }
-            else
-            {
-                request.Timeout = 5000;
-            }
-
+            request.Timeout = int.Parse(timeout);
     
 
             RestSharp.IRestResponse resp = client.Execute(request);

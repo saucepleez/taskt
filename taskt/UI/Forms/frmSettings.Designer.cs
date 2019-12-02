@@ -118,6 +118,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.chkEnableWhitelist = new System.Windows.Forms.CheckBox();
+            this.txtWhiteList = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -1014,6 +1016,8 @@
             // 
             // tabLocalListener
             // 
+            this.tabLocalListener.Controls.Add(this.txtWhiteList);
+            this.tabLocalListener.Controls.Add(this.chkEnableWhitelist);
             this.tabLocalListener.Controls.Add(this.chkAutoStartListener);
             this.tabLocalListener.Controls.Add(this.label19);
             this.tabLocalListener.Controls.Add(this.txtListeningPort);
@@ -1073,7 +1077,7 @@
             this.lblListeningStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblListeningStatus.Font = new System.Drawing.Font("Segoe UI Light", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblListeningStatus.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblListeningStatus.Location = new System.Drawing.Point(9, 326);
+            this.lblListeningStatus.Location = new System.Drawing.Point(10, 427);
             this.lblListeningStatus.Name = "lblListeningStatus";
             this.lblListeningStatus.Size = new System.Drawing.Size(137, 30);
             this.lblListeningStatus.TabIndex = 40;
@@ -1083,7 +1087,7 @@
             // btnStopListening
             // 
             this.btnStopListening.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnStopListening.Location = new System.Drawing.Point(167, 280);
+            this.btnStopListening.Location = new System.Drawing.Point(167, 391);
             this.btnStopListening.Name = "btnStopListening";
             this.btnStopListening.Size = new System.Drawing.Size(147, 33);
             this.btnStopListening.TabIndex = 39;
@@ -1094,7 +1098,7 @@
             // btnStartListening
             // 
             this.btnStartListening.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnStartListening.Location = new System.Drawing.Point(14, 280);
+            this.btnStartListening.Location = new System.Drawing.Point(14, 391);
             this.btnStartListening.Name = "btnStartListening";
             this.btnStartListening.Size = new System.Drawing.Size(147, 33);
             this.btnStartListening.TabIndex = 38;
@@ -1213,6 +1217,27 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // chkEnableWhitelist
+            // 
+            this.chkEnableWhitelist.AutoSize = true;
+            this.chkEnableWhitelist.BackColor = System.Drawing.Color.Transparent;
+            this.chkEnableWhitelist.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkEnableWhitelist.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkEnableWhitelist.Location = new System.Drawing.Point(14, 261);
+            this.chkEnableWhitelist.Name = "chkEnableWhitelist";
+            this.chkEnableWhitelist.Size = new System.Drawing.Size(318, 24);
+            this.chkEnableWhitelist.TabIndex = 47;
+            this.chkEnableWhitelist.Text = "Enable IP Verification (Seperate with comma)";
+            this.chkEnableWhitelist.UseVisualStyleBackColor = false;
+            // 
+            // txtWhiteList
+            // 
+            this.txtWhiteList.Location = new System.Drawing.Point(15, 291);
+            this.txtWhiteList.Multiline = true;
+            this.txtWhiteList.Name = "txtWhiteList";
+            this.txtWhiteList.Size = new System.Drawing.Size(371, 93);
+            this.txtWhiteList.TabIndex = 48;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1330,5 +1355,7 @@
         private System.Windows.Forms.CheckBox chkAutoStartListener;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox txtListeningPort;
+        private System.Windows.Forms.CheckBox chkEnableWhitelist;
+        private System.Windows.Forms.TextBox txtWhiteList;
     }
 }

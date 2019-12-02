@@ -179,13 +179,28 @@ namespace taskt.Core
         public bool RequireListenerAuthenticationKey { get; set; }
         public int ListeningPort { get; set; }
         public string AuthKey { get; set; }
+        public bool EnableWhitelist { get; set; }
+        public string IPWhiteList { get; set; }
         public LocalListenerSettings()
         {
             StartListenerOnStartup = false;
             LocalListeningEnabled = false;
             RequireListenerAuthenticationKey = false;
+            EnableWhitelist = false;
             ListeningPort = 19312;
             AuthKey = Guid.NewGuid().ToString();
+            IPWhiteList = "";
         }
+    }
+
+    [Serializable]
+    public class WhiteListIP
+    {
+        string _value;
+        public WhiteListIP(string s)
+        {
+            _value = s;
+        }
+        public string Value { get { return _value; } set { _value = value; } }
     }
 }
