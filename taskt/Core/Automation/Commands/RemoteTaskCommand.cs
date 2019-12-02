@@ -40,6 +40,15 @@ namespace taskt.Core.Automation.Commands
         public string v_ParameterType { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Wait for Script to Finish?")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Execution")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Await For Result")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the necessary method type.")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_ExecuteAwait { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Script Parameter Data")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify a list of advanced parameters.")]
@@ -61,6 +70,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Remote Task";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_ExecuteAwait = "Continue Execution";
         }
 
         public override void RunCommand(object sender)
@@ -71,8 +81,9 @@ namespace taskt.Core.Automation.Commands
                 var server = v_BaseURL.ConvertToUserVariable(sender);
                 var paramType = v_ParameterType.ConvertToUserVariable(sender);
                 var parameter = v_Parameter.ConvertToUserVariable(sender);
+                var awaitPreference = v_ExecuteAwait.ConvertToUserVariable(sender);
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, parameter);
+                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, parameter, awaitPreference);
 
                 response.StoreInUserVariable(sender, v_userVariableName);
 
@@ -89,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_BaseURL", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ParameterType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Parameter", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ExecuteAwait", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);

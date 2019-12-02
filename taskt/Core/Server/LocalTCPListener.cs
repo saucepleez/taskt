@@ -374,7 +374,7 @@ namespace taskt.Core.Server
         {
             automationListener.Stop();
         }
-        public static string SendAutomationTask(string endpoint, string parameterType, string scriptData)
+        public static string SendAutomationTask(string endpoint, string parameterType, string scriptData = "", string awaitPreference = "")
         {
 
             if (!endpoint.StartsWith("http://"))
@@ -395,17 +395,33 @@ namespace taskt.Core.Server
             //check type of execution needed
             if (parameterType == "Run Raw Script Data")
             {
-                request.Resource = "/ExecuteScript";
+         
 
-                //remove any return lines
-               // scriptData = scriptData.Replace("\r\n", "");
+                //handle await preference
+                if (awaitPreference == "Await For Result")
+                {
+                    request.Resource = "/AwaitScript";
+                }
+                else
+                {
+                    request.Resource = "/ExecuteScript";
+                }
 
                 //add script data
                 request.AddParameter("ScriptData", scriptData.ToBase64(), RestSharp.ParameterType.HttpHeader);
             }
             else if (parameterType == "Run Local File")
             {
-                request.Resource = "/ExecuteScript";
+
+                //handle await preference
+                if (awaitPreference == "Await For Result")
+                {
+                    request.Resource = "/AwaitScript";
+                }
+                else
+                {
+                    request.Resource = "/ExecuteScript";
+                }
 
                 if (File.Exists(scriptData))
                 {
@@ -432,7 +448,16 @@ namespace taskt.Core.Server
             }
             else if (parameterType == "Run Remote File")
             {
-                request.Resource = "/ExecuteScript";
+
+                //handle await preference
+                if (awaitPreference == "Await For Result")
+                {
+                    request.Resource = "/AwaitScript";
+                }
+                else
+                {
+                    request.Resource = "/ExecuteScript";
+                }
 
                 //add script parameter
                 request.AddParameter("ScriptLocation", scriptData, RestSharp.ParameterType.HttpHeader);
@@ -446,7 +471,19 @@ namespace taskt.Core.Server
                 request.Resource = "/RestartTaskt";
             }
 
-            request.Timeout = 5000;
+
+
+
+            if (awaitPreference == "Await For Result")
+            {
+                request.Timeout = 120000;
+            }
+            else
+            {
+                request.Timeout = 5000;
+            }
+
+    
 
             RestSharp.IRestResponse resp = client.Execute(request);
 

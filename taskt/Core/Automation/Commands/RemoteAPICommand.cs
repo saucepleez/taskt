@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
                 var server = v_BaseURL.ConvertToUserVariable(sender);
                 var paramType = v_ParameterType.ConvertToUserVariable(sender);
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, "");
+                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType);
 
                 response.StoreInUserVariable(sender, v_userVariableName);
 
