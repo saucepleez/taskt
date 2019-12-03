@@ -35,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Run Raw Script Data")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Run Local File")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Run Remote File")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Run Command Json")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary parameter.")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ParameterType { get; set; }

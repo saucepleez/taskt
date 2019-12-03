@@ -17,6 +17,7 @@ namespace taskt.Core.Server
     public static class LocalTCPListener
     {
         public static Automation.Engine.AutomationEngineInstance automationInstance;
+        public static Automation.Engine.AutomationEngineInstance ExecuteCommandEngine;
         private static Serilog.Core.Logger automationLogger;
         public static TcpListener automationListener;
         private static LocalListenerSettings listenerSettings;
@@ -30,6 +31,7 @@ namespace taskt.Core.Server
         static LocalTCPListener()
         {
             automationLogger = new Core.Logging().CreateLogger("Automation Client", Serilog.RollingInterval.Day);
+            ExecuteCommandEngine = new Automation.Engine.AutomationEngineInstance();
         }
 
         public static void Initialize(UI.Forms.frmScriptBuilder builder)
@@ -140,9 +142,9 @@ namespace taskt.Core.Server
                                 //get list of ip
                                 var enabledIPs = listenerSettings.IPWhiteList.Split(',');
 
-                                if (enabledIPs.Any( s => s.Trim().Contains(clientAddress)))
+                                if (enabledIPs.Any(s => s.Trim().Contains(clientAddress)))
                                 {
-                                    automationLogger.Information($"Client '{clientAddress}' verified from WhiteList '{listenerSettings.IPWhiteList}'"); 
+                                    automationLogger.Information($"Client '{clientAddress}' verified from WhiteList '{listenerSettings.IPWhiteList}'");
                                 }
                                 else
                                 {
@@ -150,7 +152,7 @@ namespace taskt.Core.Server
                                     SendResponse(ResponseCode.Unauthorized, $"Unauthorized", stream);
                                     return;
                                 }
-                              
+
                             }
                             else
                             {
@@ -207,7 +209,7 @@ namespace taskt.Core.Server
                     {
                         automationLogger.Information($"Error Occured Reading Stream: {ex.ToString()}");
                     }
-         
+
                     // Shutdown and end connection
                     client.Close();
                     automationLogger.Information($"Client Connection Closed");
@@ -263,7 +265,7 @@ namespace taskt.Core.Server
                     return;
                 }
 
-               
+
                 if (dataParameter.TryParseBase64(out var base64SourceString))
                 {
                     automationLogger.Information($"Client Passed Base64 String: {base64SourceString}");
@@ -274,7 +276,7 @@ namespace taskt.Core.Server
                     automationLogger.Information($"Client Did Not Pass Base64 String");
                 }
 
-               
+
                 //check if data parameter references file location
                 if (isFileLocation)
                 {
@@ -302,7 +304,7 @@ namespace taskt.Core.Server
                 //log execution
                 automationLogger.Information($"Executing Script: {dataParameter}");
 
-           
+
                 //invoke builder and pass it script data to execute
                 associatedBuilder.Invoke(new MethodInvoker(delegate ()
                 {
@@ -313,7 +315,6 @@ namespace taskt.Core.Server
                     newEngine.Show();
                 }));
 
-              
 
                 if (data.StartsWith("POST /AwaitScript"))
                 {
@@ -321,7 +322,7 @@ namespace taskt.Core.Server
                     TasktResult = "";
 
                     //add reference to script finished event
-                    automationInstance.ScriptFinishedEvent += AutomationInstance_ScriptFinishedEvent;    
+                    automationInstance.ScriptFinishedEvent += AutomationInstance_ScriptFinishedEvent;
 
                     //wait for script to finish before returning
                     do
@@ -339,9 +340,69 @@ namespace taskt.Core.Server
                     SendResponse(ResponseCode.OK, "Script Launched Successfully", stream);
                 }
 
-             
+
 
             }
+            else if (data.StartsWith("POST /ExecuteCommand"))
+            {
+                automationLogger.Information($"Client Requests Command Execution");
+
+                //locate the body content
+                string dataParameter = "";
+
+                //find the script parameter
+                foreach (var item in messageContent)
+                {
+                    if (item.StartsWith("CommandData: "))
+                    {
+                        dataParameter = item.Replace("CommandData: ", "");
+                        break;
+                    }
+                }
+
+                //check to see if nothing was provided
+                if (string.IsNullOrEmpty(dataParameter))
+                {
+                    automationLogger.Information($"Client Command Data Not Found");
+                    return;
+                }
+
+
+                if (dataParameter.TryParseBase64(out var base64SourceString))
+                {
+                    automationLogger.Information($"Client Passed Base64 String: {base64SourceString}");
+                    dataParameter = base64SourceString;
+                }
+                else
+                {
+                    automationLogger.Information($"Client Did Not Pass Base64 String");
+                }
+
+                try
+                {
+                    //deserialize command
+                    var command = Newtonsoft.Json.JsonConvert.DeserializeObject(dataParameter, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
+
+                    //log execution
+                    automationLogger.Information($"Executing Command: {dataParameter}");
+
+                    //define script action
+                    var scriptAction = new Script.ScriptAction() { ScriptCommand = (Core.Automation.Commands.ScriptCommand)command };
+
+                    //execute command
+                    ExecuteCommandEngine.ExecuteCommand(scriptAction);
+
+                    //send back response
+                    SendResponse(ResponseCode.OK, "Command Executed Successfully", stream);
+                }
+                catch (Exception ex)
+                {
+                    SendResponse(ResponseCode.InternalServerError, $"An error occured: {ex.ToString()}", stream);
+                }
+
+
+            }
+
             else if (data.StartsWith("POST /EngineStatus"))
             {
                 automationLogger.Information($"Returning Engine Status: {Client.ClientStatus}");
@@ -424,7 +485,7 @@ namespace taskt.Core.Server
             //check type of execution needed
             if (parameterType == "Run Raw Script Data")
             {
-         
+
 
                 //handle await preference
                 if (awaitPreference == "Await For Result")
@@ -488,6 +549,15 @@ namespace taskt.Core.Server
                 //add script parameter
                 request.AddParameter("ScriptLocation", scriptData, RestSharp.ParameterType.HttpHeader);
             }
+            else if (parameterType == "Run Command Json")
+            {
+
+                request.Resource = "/ExecuteCommand";
+
+                //add script data
+                request.AddParameter("CommandData", scriptData.ToBase64(), RestSharp.ParameterType.HttpHeader);
+
+            }
             else if (parameterType == "Get Engine Status")
             {
                 request.Resource = "/EngineStatus";
@@ -498,7 +568,7 @@ namespace taskt.Core.Server
             }
 
             request.Timeout = int.Parse(timeout);
-    
+
 
             RestSharp.IRestResponse resp = client.Execute(request);
 
@@ -518,15 +588,15 @@ namespace taskt.Core.Server
         public static string GetListeningAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
-                foreach (var ip in host.AddressList)
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    if (ip.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        return $"{ip.ToString()}:{Port.ToString()}" ;
-                    }
+                    return $"{ip.ToString()}:{Port.ToString()}";
                 }
+            }
 
-                throw new Exception("No network adapters with an IPv4 address in the system!");         
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
     }
     public enum ResponseCode

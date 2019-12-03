@@ -2177,6 +2177,19 @@ namespace taskt.UI.Forms
             }
                               
         }
+
+        private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+         
+            var currentCommand = lstScriptActions.SelectedItems[0].Tag;
+
+            var jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(currentCommand, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
+
+            var dialog = new Supplemental.frmDialog(jsonText, "Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0);
+            dialog.ShowDialog();
+
+
+        }
     }
 
 }
