@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace taskt.Core.IO
 {
-   public static class Folders
+    public static class Folders
     {
         public static string GetFolder(FolderType folderType)
         {
@@ -26,6 +26,9 @@ namespace taskt.Core.IO
                 case FolderType.LogFolder:
                     //return logs folder
                     return System.IO.Path.Combine(GetFolder(FolderType.RootFolder), "Logs\\");
+                case FolderType.TempFolder:
+                    //return temp folder
+                    return System.IO.Path.GetTempPath() + "\\taskt\\";
                 default:
                     //enum is not implemented
                     throw new NotImplementedException("FolderType " + folderType.ToString() + " Not Supported");
@@ -34,13 +37,13 @@ namespace taskt.Core.IO
         }
 
 
-      public enum FolderType
+        public enum FolderType
         {
             RootFolder,
             SettingsFolder,
             ScriptsFolder,
             LogFolder,
-      
+            TempFolder
         }
     }
 }

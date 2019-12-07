@@ -492,6 +492,7 @@ namespace taskt.UI
             uiImages.Add("SeleniumBrowserElementActionCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SeleniumBrowserExecuteScriptCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("SeleniumBrowserSwitchWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SeleniumBrowserSwitchFrameCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
@@ -538,6 +539,9 @@ namespace taskt.UI
             uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("DatabaseDefineConnectionCommand", taskt.Properties.Resources.command_database);
             uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
+            uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
+            uiImages.Add("RemoteAPICommand", taskt.Properties.Resources.command_remote);
+
             return uiImages;
         }
         public static ImageList UIImageList()

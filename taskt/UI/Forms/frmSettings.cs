@@ -68,24 +68,16 @@ namespace taskt.UI.Forms
             cboCancellationKey.DataBindings.Add("Text", engineSettings, "CancellationKey", false, DataSourceUpdateMode.OnPropertyChanged);
 
 
+            var listenerSettings = newAppSettings.ListenerSettings;
+            chkAutoStartListener.DataBindings.Add("Checked", listenerSettings, "StartListenerOnStartup", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkEnableListening.DataBindings.Add("Checked", listenerSettings, "LocalListeningEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkRequireListenerKey.DataBindings.Add("Checked", listenerSettings, "RequireListenerAuthenticationKey", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtListeningPort.DataBindings.Add("Text", listenerSettings, "ListeningPort", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtAuthListeningKey.DataBindings.Add("Text", listenerSettings, "AuthKey", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkEnableWhitelist.DataBindings.Add("Checked", listenerSettings, "EnableWhitelist", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtWhiteList.DataBindings.Add("Text", listenerSettings, "IPWhiteList", false, DataSourceUpdateMode.OnPropertyChanged);
 
-
-            //   cmbxNewBox.DataSource = Enum.GetValues(typeof(MyEnum))
-            //.Cast<Enum>()
-            //.Select(value => new
-            //{
-            //    (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
-            //    value
-            //})
-            //.OrderBy(item => item.value)
-            //.ToList();
-            //   cmbxNewBox.DisplayMember = "Description";
-            //   cmbxNewBox.ValueMember = "value";
-
-
-
-
-
+            SetupListeningUI();
 
             var clientSettings = newAppSettings.ClientSettings;
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -98,8 +90,40 @@ namespace taskt.UI.Forms
             chkPreloadCommands.DataBindings.Add("Checked", clientSettings, "PreloadBuilderCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkSlimActionBar.DataBindings.Add("Checked", clientSettings, "UseSlimActionBar", false, DataSourceUpdateMode.OnPropertyChanged);
 
+
             //get metrics
             bgwMetrics.RunWorkerAsync();
+
+            Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
+            Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
+        }
+        public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
+        public delegate void AutomationTCPListener_StoppedDelegate(object sender, EventArgs e);
+        private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStopped);
+                Invoke(stoppedDelegate, new object[] { sender, e });
+            }
+            else
+            {
+                SetupListeningUI();
+            }
+
+        }
+
+        private void AutomationTCPListener_ListeningStarted(object sender, EventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                var startedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStarted);
+                Invoke(startedDelegate, new object[] { sender, e });
+            }
+            else
+            {
+                SetupListeningUI();
+            }
 
         }
 
@@ -439,5 +463,59 @@ namespace taskt.UI.Forms
             }
           
         }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SetupListeningUI()
+        {
+
+            if (Core.Server.LocalTCPListener.IsListening)
+            {     
+                lblListeningStatus.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
+                btnStopListening.Enabled = true;
+                btnStartListening.Enabled = false;
+            }
+            else
+            {
+                lblListeningStatus.Text = $"Client is Not Listening!";
+                btnStopListening.Enabled = false;
+                btnStartListening.Enabled = true;
+            }
+
+            lblListeningStatus.Show();
+        }
+
+        private void DisableListenerButtons()
+        {
+            btnStopListening.Enabled = false;
+            btnStartListening.Enabled = false;
+        }
+
+        private void btnStartListening_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtListeningPort.Text, out var portNumber)){
+                DisableListenerButtons();
+                Core.Server.LocalTCPListener.StartListening(portNumber);
+            }
+           
+ 
+        }
+
+        private void btnStopListening_Click(object sender, EventArgs e)
+        {
+            DisableListenerButtons();
+            Core.Server.LocalTCPListener.StopAutomationListener();
+        }
+
+        private void btnWhiteList_Click(object sender, EventArgs e)
+        {
+            //newAppSettings.ListenerSettings.IPWhiteList.Add(new Core.WhiteListIP("127.0.0.1"));
+            //Supplement_Forms.frmGridView frmWhitelist = new Supplement_Forms.frmGridView(newAppSettings.ListenerSettings.IPWhiteList);
+            //frmWhitelist.ShowDialog();
+        }
+
     }
 }

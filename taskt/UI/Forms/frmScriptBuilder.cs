@@ -124,6 +124,7 @@ namespace taskt.UI.Forms
 
              Core.Server.HttpServerClient.associatedBuilder = this;
 
+            Core.Server.LocalTCPListener.Initialize(this);
             //Core.Sockets.SocketClient.Initialize();
             //Core.Sockets.SocketClient.associatedBuilder = this;
 
@@ -2167,6 +2168,28 @@ namespace taskt.UI.Forms
 
         }
 
+        private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (notifyTray != null)
+            {
+                notifyTray.Visible = false;
+                notifyTray.Dispose();
+            }
+                              
+        }
+
+        private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+         
+            var currentCommand = lstScriptActions.SelectedItems[0].Tag;
+
+            var jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(currentCommand, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
+
+            var dialog = new Supplemental.frmDialog(jsonText, "Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0);
+            dialog.ShowDialog();
+
+
+        }
     }
 
 }

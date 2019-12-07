@@ -172,6 +172,9 @@
     <Compile Include="Core\Automation\Commands\CatchExceptionCommand.cs" />
     <Compile Include="Core\Automation\Commands\EndTryCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RemoteAPICommand.cs" />
+    <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />
@@ -288,6 +291,7 @@
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\IO\Folders.cs" />
+    <Compile Include="Core\Server\LocalTCPListener.cs" />
     <Compile Include="Core\Server\HttpServerClient.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\IO\JavaInterface.cs" />
@@ -685,6 +689,7 @@
     <None Include="Resources\command-nlg.png" />
     <None Include="Resources\command-database.png" />
     <None Include="Resources\command-try.png" />
+    <None Include="Resources\command-remote.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

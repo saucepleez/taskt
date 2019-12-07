@@ -24,6 +24,14 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Supply Arguments")]
         public string v_Args { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the data")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        public string v_userVariableName { get; set; }
         public SeleniumBrowserExecuteScriptCommand()
         {
             this.CommandName = "SeleniumBrowserExecuteScriptCommand";
@@ -48,16 +56,22 @@ namespace taskt.Core.Automation.Commands
 
             OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
 
-
+            object result;
             if (String.IsNullOrEmpty(args))
             {
-                js.ExecuteScript(script);
+                result = js.ExecuteScript(script);
             }
             else
             {
-                js.ExecuteScript(script, args);
+                result = js.ExecuteScript(script, args);
             }
 
+            //apply result to variable
+            if ((result != null) && (!string.IsNullOrEmpty(v_userVariableName)))
+            {   
+                result.ToString().StoreInUserVariable(sender, v_userVariableName);
+            }
+    
 
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -68,6 +82,10 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptCode", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Args", this, editor));
 
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.Add(VariableNameControl);
 
             return RenderedControls;
         }

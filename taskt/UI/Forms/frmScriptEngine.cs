@@ -39,11 +39,11 @@ namespace taskt.UI.Forms
         public bool serverExecution { get; set; }
         public frmScriptBuilder callBackForm { get; set; }
         private bool advancedDebug { get; set; }
-        private Core.Automation.Engine.AutomationEngineInstance engineInstance { get; set; }
+        public AutomationEngineInstance engineInstance { get; set; }
         private List<Core.Script.ScriptVariable> Variables { get; set; }
         public bool CloseWhenDone = false;
         #endregion
-
+        public string Result { get; set; }
         //events and methods
         #region Form Events/Methods
         public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false)
@@ -162,6 +162,8 @@ namespace taskt.UI.Forms
             engineInstance.taskModel = remoteTask;
             engineInstance.tasktEngineUI = this;
             engineInstance.serverExecution = this.serverExecution;
+            Core.Server.LocalTCPListener.automationInstance = engineInstance;
+
             if (xmlData == null)
             {
                 engineInstance.ExecuteScriptAsync(this, filePath, Variables);
@@ -215,15 +217,11 @@ namespace taskt.UI.Forms
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
                     AddStatus("Script Completed Successfully");
                     UpdateUI("debug info (success)");
-
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Error:
                     AddStatus("Error: " + e.Error);
                     AddStatus("Script Completed With Errors!");
                     UpdateUI("debug info (error)");
-
-
-
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
                     AddStatus("Script Cancelled By User");
@@ -233,6 +231,8 @@ namespace taskt.UI.Forms
                     break;
             }
 
+
+            Result = engineInstance.TasktResult;
 
 
             AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
@@ -315,14 +315,14 @@ namespace taskt.UI.Forms
 
                 if (mainLogoText.Contains("(error)"))
                 {
-                    this.Theme.BgGradientStartColor = Color.DarkRed;
-                    this.Theme.BgGradientEndColor = Color.LightCoral;
+                    this.Theme.BgGradientStartColor = Color.OrangeRed;
+                    this.Theme.BgGradientEndColor = Color.OrangeRed;
                     this.Invalidate();
                 }
                 else if (mainLogoText.Contains("(success)"))
                 {
-                    this.Theme.BgGradientStartColor = Color.DarkGreen;
-                    this.Theme.BgGradientEndColor = Color.LightGreen;
+                    this.Theme.BgGradientStartColor = Color.Green;
+                    this.Theme.BgGradientEndColor = Color.Green;
                     this.Invalidate();
                 }
 
