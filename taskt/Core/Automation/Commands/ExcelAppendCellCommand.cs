@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
+using System.Data;
+using System;
+using System.Linq;
+using System.Xml.Serialization;
+using System.Data;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
+
+
+namespace taskt.Core.Automation.Commands
+{
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.Description("Append to last row of sheet.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cells.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automations.")]
+    public class ExcelAppendCellCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InstanceName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello World or [vText]")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_TextToSet { get; set; }
+
+        public ExcelAppendCellCommand()
+        {
+            this.CommandName = "ExcelSetCellCommand";
+            this.SelectionName = "Append Cell";
+            this.CommandEnabled = true;
+            this.CustomRendering = true;
+        }
+        public override void RunCommand(object sender)
+        {
+
+             
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            var excelObject = engine.GetAppInstance(vInstance);
+
+
+    //        var targetAddress = "A"+ (lastUsedRow+1);
+      //          var targetText = v_TextToSet.ConvertToUserVariable(sender);
+
+                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            int test = 0;
+            test = excelSheet.Columns.Count;
+            var lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
+                                 System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                                 Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
+                                 false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+            Console.WriteLine("TEST" + lastUsedRow);
+            Console.Write(test);
+            var targetAddress = "A" + (lastUsedRow + 1);
+            var targetText = v_TextToSet.ConvertToUserVariable(sender);
+            excelSheet.Range[targetAddress].Value = targetText;
+
+        }
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //create standard group controls
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
+           // RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
+
+            return RenderedControls;
+
+        }
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + " [Append Cell '" + "last cell"  + "' to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
+        }
+    }
+}
