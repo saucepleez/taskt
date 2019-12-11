@@ -10,63 +10,65 @@ using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.Group("Misc Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]
-    public class AddDataRowCommand : ScriptCommand
+    public class GetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the output variable")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public string v_DataTableName { get; set; }
+        public string v_OutputVariable { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input the data you want entered.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please input The Dictionary")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
         [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputData { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
+        [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_Key { get; set; }
 
-        public AddDataRowCommand()
+        public GetDictionaryValueCommand()
         {
             this.CommandName = "AddDataRowCommand";
-            this.SelectionName = "Add DataRow to Datatable";
+            this.SelectionName = "Get Value From Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
+            Console.WriteLine("DSAHDUSAIFSA");
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var dataSetVariable = LookupVariable(engine);
-            var vInputData = v_InputData.ConvertToUserVariable(engine);
-            DataTable Dt = (DataTable)dataSetVariable.VariableValue;
-            vInputData = vInputData.Trim('\\', '"', '/');
-            var splittext = vInputData.Split(',');
-            int i = 0;
-            foreach(string str in splittext)
+            Dictionary<string,string> dict = (Dictionary<string,string>)dataSetVariable.VariableValue;
+            Script.ScriptVariable Output = new Script.ScriptVariable
             {
-                splittext[i] = str.Trim('\\','"','[',']');
-                if (splittext[i] == null)
-                    splittext[i] = string.Empty;
-                    i++;
-            }
-            Dt.Rows.Add(splittext.ToArray());
-            dataSetVariable.VariableValue = Dt;
+                VariableName = v_OutputVariable,
+                VariableValue = dict[v_Key]
+            };
+
+            engine.VariableList.Add(Output);
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {
             //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataTableName).FirstOrDefault();
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputData).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_DataTableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DataTableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
-                var reformattedVariable = v_DataTableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                var reformattedVariable = v_InputData.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 
@@ -76,8 +78,10 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputVariable", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Key", this, editor));
+
 
 
             return RenderedControls;
