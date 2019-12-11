@@ -157,6 +157,8 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginIfCommand.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Core\Automation\Commands\ExcelGetRangeCommand - Copy.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGetRangeCommand .cs" />
     <Compile Include="Core\Automation\Commands\ExcelGetRangeCommandASDT.cs" />
+    <Compile Include="Core\Automation\Commands\LoadDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
     <Compile Include="Core\Automation\Commands\MessageBoxHelloWorldCommand.cs" />
