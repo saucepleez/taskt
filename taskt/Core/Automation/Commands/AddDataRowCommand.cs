@@ -10,7 +10,7 @@ using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.Group("Misc Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]
@@ -23,9 +23,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataTableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input the data you want entered.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please the names of your columns")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the actual names of your columns.")]
         [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputData { get; set; }

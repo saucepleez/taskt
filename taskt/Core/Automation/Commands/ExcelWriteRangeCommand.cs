@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
             int sum = 0;
 
             for (int i = 0; i < targetAddress.Length; i++)
-            {   
+            {
                 sum *= 26;
                 sum += (targetAddress[i] - 'A' + 1);
             }
