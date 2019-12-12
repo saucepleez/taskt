@@ -131,8 +131,8 @@ namespace taskt.Core
             ShowAdvancedDebugOutput = false;
             CreateMissingVariablesDuringExecution = true;
             TrackExecutionMetrics = true;
-            VariableStartMarker = "[";
-            VariableEndMarker = "]";
+            VariableStartMarker = "{";
+            VariableEndMarker = "}";
             CancellationKey = System.Windows.Forms.Keys.Pause;
             DelayBetweenCommands = 250;
             OverrideExistingAppInstances = false;
