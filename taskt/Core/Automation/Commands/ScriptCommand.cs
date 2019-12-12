@@ -129,6 +129,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(RemoteTaskCommand))]
     [XmlInclude(typeof(RemoteAPICommand))]
     [XmlInclude(typeof(SeleniumBrowserSwitchFrameCommand))]
+    [XmlInclude(typeof(ParseJsonModelCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
