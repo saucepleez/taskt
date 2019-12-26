@@ -177,15 +177,14 @@
     <Compile Include="Core\Automation\Commands\EndTryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelAppendCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelAppendRowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ExcelGetRangeCommand - Copy.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGetRangeCommand .cs" />
     <Compile Include="Core\Automation\Commands\ExcelGetRangeCommandASDT.cs" />
     <Compile Include="Core\Automation\Commands\LoadDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
-    <Compile Include="Core\Automation\Commands\MessageBoxHelloWorldCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
