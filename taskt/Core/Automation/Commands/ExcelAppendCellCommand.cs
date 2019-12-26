@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.Description("Append input to last row of sheet into the first cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cell.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automations.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ExcelAppendCellCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -67,14 +67,13 @@ namespace taskt.Core.Automation.Commands
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-            // RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
 
             return RenderedControls;
 
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Append Cell '" + "last cell" + "' to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Append last cell to: " + v_TextToSet +"]";
         }
     }
 }

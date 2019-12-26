@@ -163,8 +163,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SearchItem", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AndOr", this, editor));
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_AndOr", this));
-
             return RenderedControls;
         }
 

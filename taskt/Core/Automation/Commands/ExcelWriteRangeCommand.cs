@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         public string v_ExcelCellAddress { get; set; }
         public ExcelWriteRangeCommand()
         {
-            this.CommandName = "ExcelSetCellCommand";
+            this.CommandName = "ExcelWriteRangeCommand";
             this.SelectionName = "Write Range";
             this.CommandEnabled = true;
             this.CustomRendering = true;

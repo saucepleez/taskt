@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRangeCommandAsDT()
         {
-            this.CommandName = "ExcelGetRangeCommand";
+            this.CommandName = "ExcelGetRangeCommandAsDT";
             this.SelectionName = "Get Range As Datatable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
