@@ -11,50 +11,53 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command opens an Excel Workbook.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to open an existing Excel Workbook.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.Description("This command Reads a Config file and stores it into a Dictionary.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load a config file.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop and OLEDB to achieve automation.")]
     public class LoadDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Dictionary Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a name for a Dictionary.")]
+        [Attributes.PropertyAttributes.SampleUsage("**myDictionary**")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_DictionaryName { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be loaded into the Dictionary.")]
         [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or [vFilePath]")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Sheet Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or [vFilePath]")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the sheet name of the workbook to be read.")]
+        [Attributes.PropertyAttributes.SampleUsage("Sheet1")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SheetName { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Key column")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or [vFilePath]")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the key column name to create a Dictionary off of.")]
+        [Attributes.PropertyAttributes.SampleUsage("keyColumn")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_KeyColumn { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Value Column")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or [vFilePath]")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a value column name to create a Dictionary off of.")]
+        [Attributes.PropertyAttributes.SampleUsage("valueColumn")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ValueColumn { get; set; }
+
         public LoadDictionaryCommand()
         {
-            this.CommandName = "ExcelOpenWorkbookCommand";
+            this.CommandName = "LoadDictionaryCommand";
             this.SelectionName = "Load Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
@@ -62,27 +65,24 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = "Test";
+            var vInstance = DateTime.Now.ToString();
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
 
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
-                Visible = true
+                Visible = false
             };
 
-            engine.AddAppInstance("Test", newExcelSession);
+            engine.AddAppInstance(vInstance, newExcelSession);
 
 
             var excelObject = engine.GetAppInstance(vInstance);
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            //excelInstance.Workbooks.Open(vFilePath);
 
+            //Query required from workbook using OLEDB
             DatasetCommands dataSetCommand = new DatasetCommands();
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select "+v_KeyColumn+ ","+ v_ValueColumn + " From [" + v_SheetName + "$]");
-            //Console.WriteLine(requiredData.Columns[0].ColumnName);
+            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select " + v_KeyColumn + "," + v_ValueColumn + " From [" + v_SheetName + "$]");
 
-              //  requiredData.Columns[requiredData.Columns[0].ToString()].ColumnName = v_KeyColumn;
-                //requiredData.Columns[requiredData.Columns[1].ToString()].ColumnName = v_ValueColumn;
             var dictlist = requiredData.AsEnumerable().Select(x => new
             {
                 keys = (string)x[v_KeyColumn],
@@ -105,6 +105,7 @@ namespace taskt.Core.Automation.Commands
 
             //remove instance
             engine.RemoveAppInstance(vInstance);
+
             engine.VariableList.Add(newDictionary);
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -124,7 +125,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Open from '" + v_FilePath + "', Instance Name: '"  + "']";
+            return base.GetDisplayValue() + " [Load Dictionary from '" + v_FilePath + "' and store in: '" +v_DictionaryName+ "']";
         }
     }
 }

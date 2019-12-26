@@ -10,20 +10,20 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command gets a range of cells and applies them against a dataset")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to quickly iterate over Excel as a dataset.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'OLEDB' to achieve automation.")]
+    [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new DataTable")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class CreateDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please create a DataSet name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please create a DataTable name")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
-        [Attributes.PropertyAttributes.SampleUsage("vMyDataset")]
+        [Attributes.PropertyAttributes.SampleUsage("vMyDatatable")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please the names of your columns")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the names of your columns")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual names of your columns.")]
         [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
@@ -43,7 +43,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vDataTableColumnNames = v_DataTableColumnNames.ConvertToUserVariable(sender);
 
-            //DatasetCommands dataSetCommand = new DatasetCommands();
             var splittext = vDataTableColumnNames.Split(',');
             DataTable Dt = new DataTable();
 
@@ -59,10 +58,6 @@ namespace taskt.Core.Automation.Commands
             };
 
             engine.VariableList.Add(newDataTable);
-
-
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -78,7 +73,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            return base.GetDisplayValue()+ "[Create DataTable with name: "+ v_DataTableName +"]";
         }
     }
 }

@@ -11,17 +11,26 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]
+    [Attributes.ClassAttributes.Description("This command allows you remove specified data rows.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a specific row.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command attempts to delete a DataTable Row")]
     public class RemoveDataRowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the name of your DataTable")]
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataTableName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select overwrite option")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("And")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Or")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate whether this command should append the text to or overwrite all existing text in the file")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Append** or **Overwrite**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_AndOr { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate tuples to delete column rows.")]
@@ -33,7 +42,7 @@ namespace taskt.Core.Automation.Commands
 
         public RemoveDataRowCommand()
         {
-            this.CommandName = "AddDataRowCommand";
+            this.CommandName = "RemoveDataRowCommand";
             this.SelectionName = "Remove DataRow from Datatable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
@@ -56,39 +65,81 @@ namespace taskt.Core.Automation.Commands
             foreach (string item in listPairs)
             {
                 string temp;
-                temp = item.Trim('{');
-                var tempList = temp.Split(',');
+                temp = item.Trim('{', '"');
+                var tempList = temp.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+                for (int z = 0; z < tempList.Count; z++)
+                {
+                    tempList[z] = tempList[z].Trim('{');
+                }
                 t.Insert(i, Tuple.Create(tempList[0], tempList[1]));
                 i++;
             }
 
 
-            List<DataRow> listrows = Dt.AsEnumerable().ToList();
-            List<DataRow> templist = new List<DataRow>();
-
-            foreach (Tuple<string, string> tuple in t)
+            List<DataRow> listrows = new List<DataRow>();
+            listrows = Dt.AsEnumerable().ToList();
+            if (v_AndOr == "Or")
             {
-
-
-                foreach (DataRow item in listrows)
+                List<DataRow> templist = new List<DataRow>();
+                //for each filter
+                foreach (Tuple<string, string> tuple in t)
                 {
-                    if (item[tuple.Item1] != null)
+                    //for each datarow
+                    foreach (DataRow item in listrows)
                     {
-                        if (item[tuple.Item1].ToString() == tuple.Item2.ToString())
+                        if (item[tuple.Item1] != null)
                         {
-                            templist.Add(item);
+
+                            if (item[tuple.Item1].ToString() == tuple.Item2.ToString())
+                            {
+                                //add to list if filter matches
+                                if (!templist.Contains(item))
+                                    templist.Add(item);
+                            }
+                        }
+                    }
+
+                }
+                foreach (DataRow item in templist)
+                {
+                    Dt.Rows.Remove(item);
+                }
+                Dt.AcceptChanges();
+                dataSetVariable.VariableValue = Dt;
+            }
+
+            //If And operation is checked
+            if (v_AndOr == "And")
+            {
+                List<DataRow> templist = new List<DataRow>(listrows);
+
+                //for each tuple
+                foreach (Tuple<string, string> tuple in t)
+                {
+                    //for each datarow
+                    foreach (DataRow drow in Dt.AsEnumerable())
+                    {
+                        if (drow[tuple.Item1].ToString() != tuple.Item2)
+                        {
+                            //remove from list if filter matches
+                            templist.Remove(drow);
                         }
                     }
                 }
-            }
-            foreach (DataRow item in templist)
-            {
-                Dt.Rows.Remove(item);
-            }
-            Dt.AcceptChanges();
-            dataSetVariable.VariableValue = Dt;
+
+                foreach (DataRow item in templist)
+                {
+
+                    Dt.Rows.Remove(item);
+                }
+                Dt.AcceptChanges();
+
+                //Assigns Datatable to newly updated Datatable
+                dataSetVariable.VariableValue = Dt;
 
 
+            }
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {
@@ -111,13 +162,15 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SearchItem", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AndOr", this, editor));
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_AndOr", this));
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            return base.GetDisplayValue() + "[Remove all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_DataTableName + "]";
         }
     }
 }

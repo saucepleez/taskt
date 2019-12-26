@@ -15,6 +15,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetRegexMatchesCommand))]
     [XmlInclude(typeof(MoveWindowCommand))]
     [XmlInclude(typeof(CommentCommand))]
+    [XmlInclude(typeof(FilterDataTableCommand))]
     [XmlInclude(typeof(CreateDataTableCommand))]
     [XmlInclude(typeof(GetDictionaryValueCommand))]
     [XmlInclude(typeof(LoadDictionaryCommand))]

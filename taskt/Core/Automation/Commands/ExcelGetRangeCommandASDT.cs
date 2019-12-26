@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Cell.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
+    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range and put it into a DataTable.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific range.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
     public class ExcelGetRangeCommandAsDT : ScriptCommand
     {
@@ -122,7 +122,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get Value Between '" + v_ExcelCellAddress1 + "And " + v_ExcelCellAddress2 + "' and apply to variable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get Value Between '" + v_ExcelCellAddress1 + "And " + v_ExcelCellAddress2 + "' and apply to variable '" + v_userVariableName + "'from, Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

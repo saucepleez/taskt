@@ -10,8 +10,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("Append to last row of sheet.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cells.")]
+    [Attributes.ClassAttributes.Description("Append input to last row of sheet into the first cell.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automations.")]
     public class ExcelAppendCellCommand : ScriptCommand
     {
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAppendCellCommand()
         {
-            this.CommandName = "ExcelSetCellCommand";
+            this.CommandName = "ExcelAppendCellCommand";
             this.SelectionName = "Append Cell";
             this.CommandEnabled = true;
             this.CustomRendering = true;
@@ -40,26 +40,21 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
 
-             
+
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
             var excelObject = engine.GetAppInstance(vInstance);
 
 
-    //        var targetAddress = "A"+ (lastUsedRow+1);
-      //          var targetText = v_TextToSet.ConvertToUserVariable(sender);
-
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             int test = 0;
             test = excelSheet.Columns.Count;
             var lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
                                  System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                                  Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
                                  false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-            Console.WriteLine("TEST" + lastUsedRow);
-            Console.Write(test);
             var targetAddress = "A" + (lastUsedRow + 1);
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
             excelSheet.Range[targetAddress].Value = targetText;
@@ -72,14 +67,14 @@ namespace taskt.Core.Automation.Commands
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-           // RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
+            // RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
 
             return RenderedControls;
 
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Append Cell '" + "last cell"  + "' to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Append Cell '" + "last cell" + "' to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

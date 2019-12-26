@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Cell.")]
+    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
     public class ExcelGetRangeCommand : ScriptCommand
@@ -69,6 +69,7 @@ namespace taskt.Core.Automation.Commands
             int cCnt;
             string str;
 
+            //Get Range from Excel sheet and add to list of strings.
             for (rCnt = 1; rCnt <= rw; rCnt++)
             {
 
@@ -85,6 +86,8 @@ namespace taskt.Core.Automation.Commands
             }
             string output = String.Join(",", lst);
             v_ExcelCellAddress1 = output;
+            
+            //Store Strings of comma seperated values into user variable
             output.StoreInUserVariable(sender, v_userVariableName);
 
         }
@@ -110,7 +113,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get Value Between '" + v_ExcelCellAddress1 + "And " + v_ExcelCellAddress2 + "' and apply to variable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get Value Between '" + v_ExcelCellAddress1 + "And " + v_ExcelCellAddress2 + "' and apply to variable '" + v_userVariableName + "' from, Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

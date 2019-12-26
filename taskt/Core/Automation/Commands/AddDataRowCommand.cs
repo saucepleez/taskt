@@ -11,14 +11,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]
+    [Attributes.ClassAttributes.Description("This command allows you to add a datarow to a DataTable")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a datarow to a DataTable.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class AddDataRowCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to add rows to.")]
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataTableName { get; set; }
@@ -46,14 +46,16 @@ namespace taskt.Core.Automation.Commands
             DataTable Dt = (DataTable)dataSetVariable.VariableValue;
             vInputData = vInputData.Trim('\\', '"', '/');
             var splittext = vInputData.Split(',');
+
             int i = 0;
-            foreach(string str in splittext)
+            foreach (string str in splittext)
             {
-                splittext[i] = str.Trim('\\','"','[',']');
+                splittext[i] = str.Trim('\\', '"', '[', ']');
                 if (splittext[i] == null)
                     splittext[i] = string.Empty;
-                    i++;
+                i++;
             }
+
             Dt.Rows.Add(splittext.ToArray());
             dataSetVariable.VariableValue = Dt;
         }
@@ -85,7 +87,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            return base.GetDisplayValue() + " [Add Datarow: " + v_InputData + " to DataTable: " + v_DataTableName + " ]";
         }
     }
 }

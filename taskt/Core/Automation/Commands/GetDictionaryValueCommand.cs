@@ -22,24 +22,28 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_OutputVariable { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please input The Dictionary")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
+        [Attributes.PropertyAttributes.SampleUsage("myData")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputData { get; set; }
+
+
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
+        [Attributes.PropertyAttributes.SampleUsage("key1")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Key { get; set; }
 
         public GetDictionaryValueCommand()
         {
-            this.CommandName = "AddDataRowCommand";
+            this.CommandName = "GetDictionaryValueCommand";
             this.SelectionName = "Get Value From Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
@@ -47,16 +51,18 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            Console.WriteLine("DSAHDUSAIFSA");
+            //Retrieve Dictionary by name
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var dataSetVariable = LookupVariable(engine);
+
+            //Declare local dictionary and assign output
             Dictionary<string,string> dict = (Dictionary<string,string>)dataSetVariable.VariableValue;
             Script.ScriptVariable Output = new Script.ScriptVariable
             {
                 VariableName = v_OutputVariable,
                 VariableValue = dict[v_Key]
             };
-
+            //Add to variable list
             engine.VariableList.Add(Output);
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
