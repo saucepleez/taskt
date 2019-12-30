@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         public RemoveDataRowCommand()
         {
             this.CommandName = "RemoveDataRowCommand";
-            this.SelectionName = "Remove DataRow from Datatable";
+            this.SelectionName = "Remove DataRow";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

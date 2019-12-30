@@ -10,7 +10,7 @@ using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]

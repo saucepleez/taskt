@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         public AddDataRowCommand()
         {
             this.CommandName = "AddDataRowCommand";
-            this.SelectionName = "Add DataRow to Datatable";
+            this.SelectionName = "Add DataRow";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
