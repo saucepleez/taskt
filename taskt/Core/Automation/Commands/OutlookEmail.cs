@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to send an email with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an email with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class EmailOutlook : ScriptCommand
+    public class EmailOutlookCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Recipients of this email")]
@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Body { get; set; }
 
-        public EmailOutlook()
+        public EmailOutlookCommand()
         {
             this.CommandName = "EmailOutlook";
             this.SelectionName = "Send Outlook Email";
