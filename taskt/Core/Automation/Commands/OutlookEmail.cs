@@ -6,8 +6,6 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using Outlook = Microsoft.Office.Interop.Outlook;
-
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
@@ -63,14 +61,14 @@ namespace taskt.Core.Automation.Commands
 
             var splittext = vRecipients.Split(';');
 
-            Outlook.Application outlookApp = new Outlook.Application();
-            
-            Outlook.MailItem mail = (Outlook.MailItem)outlookApp.CreateItem(Outlook.OlItemType.olMailItem);
-            Outlook.AddressEntry currentUser =
+            Microsoft.Office.Interop.Outlook.Application outlookApp = new Microsoft.Office.Interop.Outlook.Application();
+
+            Microsoft.Office.Interop.Outlook.MailItem mail = (Microsoft.Office.Interop.Outlook.MailItem)outlookApp.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+            Microsoft.Office.Interop.Outlook.AddressEntry currentUser =
                 outlookApp.Session.CurrentUser.AddressEntry;
             if (currentUser.Type == "EX")
             {
-                Outlook.ExchangeUser manager =
+                Microsoft.Office.Interop.Outlook.ExchangeUser manager =
                     currentUser.GetExchangeUser().GetExchangeUserManager();
                 // Add recipient using display name, alias, or smtp address
                 foreach(var t in splittext)
