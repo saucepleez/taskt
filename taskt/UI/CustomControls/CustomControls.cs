@@ -462,6 +462,7 @@ namespace taskt.UI
             uiImages.Add("IEBrowserElementCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SendKeysCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendAdvancedKeyStrokesCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("EncryptionCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendMouseMoveCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendMouseClickCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);

@@ -227,6 +227,12 @@ namespace taskt.Core.Automation.Commands
                                            where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
+                    string encryptedData = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Encrypted Text"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+
                     if (clearElement == null)
                     {
                         clearElement = "No";
@@ -238,6 +244,11 @@ namespace taskt.Core.Automation.Commands
                     }
 
 
+                    if (encryptedData == "Encrypted")
+                    {
+                        textToSet = Core.EncryptionServices.DecryptString(textToSet, "TASKT");
+                    }
+                   
                     string[] potentialKeyPresses = textToSet.Split('{', '}');
 
                     Type seleniumKeys = typeof(OpenQA.Selenium.Keys);
@@ -611,6 +622,20 @@ namespace taskt.Core.Automation.Commands
                     {
                         actionParameters.Rows.Add("Text To Set");
                         actionParameters.Rows.Add("Clear Element Before Setting Text");
+                        actionParameters.Rows.Add("Encrypted Text");
+                        actionParameters.Rows.Add("Optional - Click to Encrypt 'Text To Set'");
+
+                        DataGridViewComboBoxCell encryptedBox = new DataGridViewComboBoxCell();
+                        encryptedBox.Items.Add("Not Encrypted");
+                        encryptedBox.Items.Add("Encrypted");
+                        ElementsGridViewHelper.Rows[2].Cells[1] = encryptedBox;
+                        ElementsGridViewHelper.Rows[2].Cells[1].Value = "Not Encrypted";
+
+                        var buttonCell = new DataGridViewButtonCell();
+                        ElementsGridViewHelper.Rows[3].Cells[1] = buttonCell;
+                        ElementsGridViewHelper.Rows[3].Cells[1].Value = "Encrypt Text";
+                        ElementsGridViewHelper.CellContentClick += ElementsGridViewHelper_CellContentClick;
+
                     }
 
                     DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
@@ -702,6 +727,30 @@ namespace taskt.Core.Automation.Commands
             }
 
             ElementsGridViewHelper.DataSource = v_WebActionParameterTable;
+        }
+
+        private void ElementsGridViewHelper_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var targetCell = ElementsGridViewHelper.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (targetCell is DataGridViewButtonCell && targetCell.Value.ToString() == "Encrypt Text")
+            {
+                var targetElement = ElementsGridViewHelper.Rows[0].Cells[1];
+
+                if (string.IsNullOrEmpty(targetElement.Value.ToString()))
+                    return;
+
+                var warning = MessageBox.Show($"Warning! Text should only be encrypted one time and is not reversible in the builder.  Would you like to proceed and convert '{targetElement.Value.ToString()}' to an encrypted value?", "Encryption Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+               
+                if (warning == DialogResult.Yes)
+                {
+                    targetElement.Value = EncryptionServices.EncryptString(targetElement.Value.ToString(), "TASKT");
+                    ElementsGridViewHelper.Rows[2].Cells[1].Value = "Encrypted";
+                }
+               
+            }
+
+         
         }
 
         public override string GetDisplayValue()
