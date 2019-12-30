@@ -164,7 +164,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
-    <Compile Include="Core\Automation\Commands\OutlookEmail.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddDataRowCommand.cs" />

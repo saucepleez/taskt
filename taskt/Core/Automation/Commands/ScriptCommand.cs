@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]
     [XmlInclude(typeof(SendMouseMoveCommand))]
     [XmlInclude(typeof(PauseCommand))]
-    [XmlInclude(typeof(EmailOutlookCommand))]
+    [XmlInclude(typeof(OutlookEmailCommand))]
     [XmlInclude(typeof(ActivateWindowCommand))]
     [XmlInclude(typeof(GetRegexMatchesCommand))]
     [XmlInclude(typeof(MoveWindowCommand))]
