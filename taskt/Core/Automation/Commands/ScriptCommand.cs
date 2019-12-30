@@ -131,6 +131,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SeleniumBrowserSwitchFrameCommand))]
     [XmlInclude(typeof(ParseJsonModelCommand))]
     [XmlInclude(typeof(EncryptionCommand))]
+    [XmlInclude(typeof(MathCalculationCommand))]
+    [XmlInclude(typeof(SetEnginePreferenceCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

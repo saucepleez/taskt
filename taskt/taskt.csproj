@@ -173,6 +173,7 @@
     <Compile Include="Core\Automation\Commands\DatabaseExecuteQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DatabaseDefineConnectionCommand.cs" />
     <Compile Include="Core\Automation\Commands\CatchExceptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MathCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\EndTryCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
     <Compile Include="Core\Automation\Commands\EncryptionCommand.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Core\Automation\Commands\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />

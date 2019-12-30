@@ -122,7 +122,7 @@ namespace taskt.Core
         public bool OverrideExistingAppInstances { get; set; }
         public bool AutoCloseMessagesOnServerExecution { get; set; }
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
-
+        public bool AutoCalcVariables { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -138,6 +138,7 @@ namespace taskt.Core
             OverrideExistingAppInstances = false;
             AutoCloseMessagesOnServerExecution = true;
             AutoCloseDebugWindowOnServerExecution = true;
+            AutoCalcVariables = true;
     }
     }
     /// <summary>

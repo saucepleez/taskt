@@ -217,42 +217,48 @@ namespace taskt.Core
             }
 
 
-
-
-            //track math chars
-            var mathChars = new List<Char>();
-            mathChars.Add('*');
-            mathChars.Add('+');
-            mathChars.Add('-');
-            mathChars.Add('=');
-            mathChars.Add('/');
-
-            //if the string matches the char then return
-            //as the user does not want to do math
-            if (mathChars.Any(f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
+            if (!engine.AutoCalculateVariables)
             {
                 return str;
             }
-
-            //bypass math for types that are dates
-            DateTime dateTest;
-            if ((DateTime.TryParse(str, out dateTest) && (str.Length > 6)))
+            else
             {
-                return str;
+                //track math chars
+                var mathChars = new List<Char>();
+                mathChars.Add('*');
+                mathChars.Add('+');
+                mathChars.Add('-');
+                mathChars.Add('=');
+                mathChars.Add('/');
+
+                //if the string matches the char then return
+                //as the user does not want to do math
+                if (mathChars.Any(f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
+                {
+                    return str;
+                }
+
+                //bypass math for types that are dates
+                DateTime dateTest;
+                if ((DateTime.TryParse(str, out dateTest) && (str.Length > 6)))
+                {
+                    return str;
+                }
+
+                //test if math is required
+                try
+                {
+                    DataTable dt = new DataTable();
+                    var v = dt.Compute(str, "");
+                    return v.ToString();
+                }
+                catch (Exception)
+                {
+                    return str;
+                }
             }
 
-
-            //test if math is required
-            try
-            {
-                DataTable dt = new DataTable();
-                var v = dt.Compute(str, "");
-                return v.ToString();
-            }
-            catch (Exception)
-            {
-                return str;
-            }
+           
         }
         /// <summary>
         /// Stores value of the string to a user-defined variable.

@@ -445,6 +445,7 @@ namespace taskt.UI
             uiImages.Add("ParseDatasetRowCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("MathCalculationCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("TextExtractorCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("PDFTextExtractionCommand", taskt.Properties.Resources.command_function);
@@ -539,6 +540,7 @@ namespace taskt.UI
             uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
             uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SetEnginePreferenceCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("DatabaseDefineConnectionCommand", taskt.Properties.Resources.command_database);
             uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
             uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
