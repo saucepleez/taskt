@@ -146,8 +146,11 @@
     <Reference Include="UIAutomationClientsideProviders" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
-    <Reference Include="WebDriver, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.7.0\lib\net45\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net, Version=0.15.0.9, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.15.0\lib\net45\WebSocket4Net.dll</HintPath>

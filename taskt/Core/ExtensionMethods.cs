@@ -23,6 +23,12 @@ namespace taskt.Core
             if (sender == null)
                 return str;
 
+            if (str.Length < 2)
+            {
+                return str;
+            }
+
+
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var variableList = engine.VariableList;
