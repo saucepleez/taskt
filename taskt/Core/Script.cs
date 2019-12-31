@@ -238,9 +238,9 @@ namespace taskt.Core.Script
             }
             else if(VariableValue is DataTable)
             {
-                DataTable dataTable = (DataTable)VariableValue;
+                DataTable dataTable = (DataTable)VariableValue;              
                 var dataRow = dataTable.Rows[CurrentPosition];
-                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
+                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);            
             }
             else
             {

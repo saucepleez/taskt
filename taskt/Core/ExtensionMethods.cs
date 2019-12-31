@@ -174,7 +174,15 @@ namespace taskt.Core
                     }
                     else if (str.Contains(potentialVariable))
                     {
-                        str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());
+                        try
+                        {
+                            str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                       
                     }
                 }
 

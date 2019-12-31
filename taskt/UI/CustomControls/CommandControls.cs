@@ -48,6 +48,20 @@ namespace taskt.UI.CustomControls
             return controlList;
 
         }
+
+        public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        {
+            var controlList = new List<Control>();
+            var label = CreateDefaultLabelFor(parameterName, parent);
+            var gridview = CreateDataGridView(parent, parameterName);
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { gridview }, editor);
+
+            controlList.Add(label);
+            controlList.AddRange(helpers);
+            controlList.Add(gridview);
+
+            return controlList;
+        }
         public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
@@ -240,7 +254,18 @@ namespace taskt.UI.CustomControls
 
         }
 
-
+      
+        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName)
+        {
+            var gridView = new DataGridView();
+            gridView.AllowUserToAddRows = true;
+            gridView.AllowUserToDeleteRows = true;
+            gridView.Size = new Size(400, 250);
+            gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridView.DataBindings.Add("DataSource", sourceCommand, dataSourceName, false, DataSourceUpdateMode.OnPropertyChanged);
+            gridView.AllowUserToResizeRows = false;
+            return gridView;
+        }
         private static void ShowCodeBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
             //get textbox text
