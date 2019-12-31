@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new DataTable")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new Dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class CreateDictionaryCommand : ScriptCommand
     {

@@ -12,14 +12,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
-    [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new DataTable")]
+    [Attributes.ClassAttributes.Description("This command Adds a key and value to a existing Dictionary")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add to a dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class AddDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Dictionary Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate a Dictionary to add to")]
         [Attributes.PropertyAttributes.SampleUsage("vMyDictionary")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DictionaryName { get; set; }
