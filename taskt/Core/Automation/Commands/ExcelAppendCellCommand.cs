@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
 
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
             int test = 0;
             test = excelSheet.Columns.Count;
             var lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,

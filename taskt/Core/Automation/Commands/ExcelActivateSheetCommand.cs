@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
-                Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.Sheets[sheetToDelete];
+                Microsoft.Office.Interop.Excel.Worksheet workSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Sheets[sheetToDelete];
                 workSheet.Select();
 
 

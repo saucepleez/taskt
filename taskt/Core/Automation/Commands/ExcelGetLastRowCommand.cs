@@ -48,9 +48,9 @@ namespace taskt.Core.Automation.Commands
             var excelObject = engine.GetAppInstance(vInstance);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                var excelSheet = excelInstance.ActiveSheet;
-                var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, "A").End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
-
+                var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
+            //var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, "A").End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
+             var lastRow = excelSheet.UsedRange.Row + excelSheet.UsedRange.Rows.Count - 1;
 
                 lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
 

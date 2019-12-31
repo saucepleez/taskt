@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
 
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
                 excelSheet.Range[location].Select();
             
         }

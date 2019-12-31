@@ -62,6 +62,15 @@ namespace taskt.UI.CustomControls
 
             return controlList;
         }
+        
+        public static CommandItemControl CreateHelperControl(string displayText)
+        {
+            CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
+            helperControl.ForeColor = System.Drawing.Color.White;
+            helperControl.CommandDisplay = displayText;
+            return helperControl;
+        }
+        
         public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();

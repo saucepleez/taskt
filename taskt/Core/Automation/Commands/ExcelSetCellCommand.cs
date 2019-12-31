@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
                 var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
                 excelSheet.Range[targetAddress].Value = targetText;
             
         }

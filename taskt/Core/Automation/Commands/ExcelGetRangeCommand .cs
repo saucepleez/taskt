@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
             var targetAddress2 = v_ExcelCellAddress2.ConvertToUserVariable(sender);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
             var cellValue = excelSheet.Range[targetAddress1, targetAddress2];
 
             List<object> lst = new List<object>();

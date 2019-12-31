@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
                 var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
                 var cellValue = (string)excelSheet.Range[targetAddress].Text;
                 cellValue.StoreInUserVariable(sender, v_userVariableName);
             

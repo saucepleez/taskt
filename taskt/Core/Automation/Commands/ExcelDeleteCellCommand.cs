@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
            
 
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
+                Microsoft.Office.Interop.Excel.Worksheet workSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
 
                 string range = v_Range.ConvertToUserVariable(sender);
                 var cells = workSheet.Range[range, Type.Missing];

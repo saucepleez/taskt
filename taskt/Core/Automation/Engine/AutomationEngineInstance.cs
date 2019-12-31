@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.ML;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace taskt.Core.Automation.Engine
 
         //engine variables
         public List<Core.Script.ScriptVariable> VariableList { get; set; }
+        public Dictionary<string, ITransformer> LoadedModels { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
         public Core.Automation.Commands.ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
@@ -63,7 +65,7 @@ namespace taskt.Core.Automation.Engine
             AppInstances = new Dictionary<string, object>();
             ServiceResponses = new List<IRestResponse>();
             DataTables = new List<DataTable>();
-
+            LoadedModels = new Dictionary<string, ITransformer>();
             //this value can be later overriden by script
             AutoCalculateVariables = engineSettings.AutoCalcVariables;
 
