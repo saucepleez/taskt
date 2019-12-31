@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="LoadDictionaryCommand" CommandID="337810b7-f72d-45e3-9bbf-cc0578308378" CommandName="LoadDictionaryCommand" IsCommented="false" SelectionName="Load Dictionary" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="myDictionary" v_FilePath="C:\Users\MohammedBhatti\source\repos\taskt2\taskt\Sample Scripts\ConfigSample.xlsx" v_SheetName="Sheet1" v_KeyColumn="myKeys" v_ValueColumn="myValues" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="f36293c2-0525-46dd-b3c0-57b8e4a76f78" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Value From Dictionary" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputVariable="Emails" v_InputData="myDictionary" v_Key="Email" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="13564aef-365e-4e1c-9443-485922978cfe" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Emails" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="493220a0-63e6-4aca-8224-a9ea4e35df71" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Value From Dictionary" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputVariable="Password" v_InputData="myDictionary" v_Key="Password" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="c91ff23d-94a9-456f-8b9b-6d8a21f9a63d" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Password" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="28267b63-6155-459b-ba05-daf1fd788da2" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Value From Dictionary" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputVariable="Website" v_InputData="myDictionary" v_Key="Website" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6e63a40e-de7b-4451-b0a8-87ab9edc3e25" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Website" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddDictionaryCommand" CommandID="131ac8db-ae20-45a0-8c66-62db81d85339" CommandName="CreateDictionaryCommand" IsCommented="false" SelectionName="Add Dictionary" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="myDictionary">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ColumnNamesDataTable123119.013628">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                  <xs:element name="Values" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNamesDataTable123119.013628" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ColumnNamesDataTable123119.013628" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNamesDataTable123119.013628 diffgr:id="ColumnNamesDataTable123119.0136281" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Keys>Added Key</Keys>
+                <Values>Added Value</Values>
+              </ColumnNamesDataTable123119.013628>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="71e827d8-dbd2-48e4-a19b-119a3cb1b18d" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Value From Dictionary" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputVariable="added" v_InputData="myDictionary" v_Key="Added Key" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="5cd62117-c8d9-4e7b-94e2-3a8a9e57bb2c" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="added" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>
