@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         public AddDictionaryCommand()
         {
             this.CommandName = "CreateDictionaryCommand";
-            this.SelectionName = "Add Dictionary";
+            this.SelectionName = "Add Dictionary Item";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
