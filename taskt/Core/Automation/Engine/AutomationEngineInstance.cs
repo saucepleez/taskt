@@ -37,6 +37,7 @@ namespace taskt.Core.Automation.Engine
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
         public event EventHandler<LineNumberChangedEventArgs> LineNumberChangedEvent;
 
+        public bool AutoCalculateVariables { get; set; }
         public string TasktResult { get; set; } = "";
 
         public Serilog.Core.Logger engineLogger;
@@ -62,6 +63,10 @@ namespace taskt.Core.Automation.Engine
             AppInstances = new Dictionary<string, object>();
             ServiceResponses = new List<IRestResponse>();
             DataTables = new List<DataTable>();
+
+            //this value can be later overriden by script
+            AutoCalculateVariables = engineSettings.AutoCalcVariables;
+
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null)

@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]
     [XmlInclude(typeof(SendMouseMoveCommand))]
     [XmlInclude(typeof(PauseCommand))]
-    [XmlInclude(typeof(EmailOutlookCommand))]
+    [XmlInclude(typeof(OutlookEmailCommand))]
     [XmlInclude(typeof(ActivateWindowCommand))]
     [XmlInclude(typeof(GetRegexMatchesCommand))]
     [XmlInclude(typeof(MoveWindowCommand))]
@@ -142,6 +142,10 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(RemoteTaskCommand))]
     [XmlInclude(typeof(RemoteAPICommand))]
     [XmlInclude(typeof(SeleniumBrowserSwitchFrameCommand))]
+    [XmlInclude(typeof(ParseJsonModelCommand))]
+    [XmlInclude(typeof(EncryptionCommand))]
+    [XmlInclude(typeof(MathCalculationCommand))]
+    [XmlInclude(typeof(SetEnginePreferenceCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

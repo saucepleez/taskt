@@ -150,8 +150,11 @@
     <Reference Include="UIAutomationClientsideProviders" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
-    <Reference Include="WebDriver, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.7.0\lib\net45\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net, Version=0.15.0.9, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.15.0\lib\net45\WebSocket4Net.dll</HintPath>
@@ -161,7 +164,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
-    <Compile Include="Core\Automation\Commands\OutlookEmail.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddDataRowCommand.cs" />
@@ -179,6 +182,7 @@
     <Compile Include="Core\Automation\Commands\DatabaseExecuteQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DatabaseDefineConnectionCommand.cs" />
     <Compile Include="Core\Automation\Commands\CatchExceptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MathCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\EndTryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelAppendCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelAppendRowCommand.cs" />
@@ -187,11 +191,14 @@
     <Compile Include="Core\Automation\Commands\LoadDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EncryptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ParseJsonModelCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />
@@ -435,11 +442,11 @@
     <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
+    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.Designer.cs">
-      <DependentUpon>frmVariableSelector.cs</DependentUpon>
+    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.Designer.cs">
+      <DependentUpon>frmItemSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmUpdate.cs">
       <SubType>Form</SubType>
@@ -605,8 +612,8 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
-      <DependentUpon>frmVariableSelector.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmItemSelector.resx">
+      <DependentUpon>frmItemSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUpdate.resx">
       <DependentUpon>frmUpdate.cs</DependentUpon>
