@@ -31,6 +31,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress1 { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select output Option")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Datatable")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Delimited String")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate whether this command should return a datatable or Delimited String")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Datatable** or **Delimited String**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_Output { get; set; }
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
@@ -54,7 +62,9 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+
+           
+                var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
             var targetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
@@ -63,41 +73,74 @@ namespace taskt.Core.Automation.Commands
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             var cellValue = excelSheet.Range[targetAddress1, targetAddress2];
-
-            List<object> lst = new List<object>();
-            int rw = cellValue.Rows.Count;
-            int cl = cellValue.Columns.Count;
-            int rCnt;
-            int cCnt;
-            string str;
-            DataTable DT = new DataTable();
-            for (rCnt = 1; rCnt <= rw; rCnt++)
+            if (v_Output == "Datatable")
             {
 
-                DataRow newRow = DT.NewRow();
-                for (cCnt = 1; cCnt <= cl; cCnt++)
+                List<object> lst = new List<object>();
+                int rw = cellValue.Rows.Count;
+                int cl = cellValue.Columns.Count;
+                int rCnt;
+                int cCnt;
+                string str;
+                DataTable DT = new DataTable();
+                for (rCnt = 1; rCnt <= rw; rCnt++)
                 {
 
-                    if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) != null)
+                    DataRow newRow = DT.NewRow();
+                    for (cCnt = 1; cCnt <= cl; cCnt++)
                     {
-                        if (!DT.Columns.Contains(cCnt.ToString()))
+
+                        if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) != null)
                         {
-                            DT.Columns.Add(cCnt.ToString());
+                            if (!DT.Columns.Contains(cCnt.ToString()))
+                            {
+                                DT.Columns.Add(cCnt.ToString());
+                            }
+                            newRow[cCnt.ToString()] = ((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
+
+
                         }
-                        newRow[cCnt.ToString()] = ((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
-                       
+                    }
+                    DT.Rows.Add(newRow);
+                }
+                Script.ScriptVariable newDataset = new Script.ScriptVariable
+                {
+                    VariableName = v_userVariableName,
+                    VariableValue = DT
+                };
+
+                engine.VariableList.Add(newDataset);
+            }
+            if(v_Output == "Delimited String")
+            {
+                List<object> lst = new List<object>();
+                int rw = cellValue.Rows.Count;
+                int cl = cellValue.Columns.Count;
+                int rCnt;
+                int cCnt;
+                string str;
+
+                //Get Range from Excel sheet and add to list of strings.
+                for (rCnt = 1; rCnt <= rw; rCnt++)
+                {
+
+                    for (cCnt = 1; cCnt <= cl; cCnt++)
+                    {
+                        if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) != null)
+                        {
+                            str = ((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
+                            lst.Add(str);
+                        }
 
                     }
-                }
-                DT.Rows.Add(newRow);
-            }
-            Script.ScriptVariable newDataset = new Script.ScriptVariable
-            {
-                VariableName = v_userVariableName,
-                VariableValue = DT
-            };
 
-            engine.VariableList.Add(newDataset);
+                }
+                string output = String.Join(",", lst);
+                v_ExcelCellAddress1 = output;
+
+                //Store Strings of comma seperated values into user variable
+                output.StoreInUserVariable(sender, v_userVariableName);
+            }
 
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -108,12 +151,12 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress1", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress2", this, editor));
-
             //create control for variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Output", this, editor));
 
 
             return RenderedControls;
