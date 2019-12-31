@@ -47,10 +47,13 @@ namespace taskt.UI.Forms
         public string defaultStartupCommand;
         //editing command, assigned from frmScriptBuilder when editing a command
         public Core.Automation.Commands.ScriptCommand editingCommand;
-        public frmCommandEditor(List<AutomationCommand> commands)
+        //track existing commands for visibility
+        public List<Core.Automation.Commands.ScriptCommand> configuredCommands;
+        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
         {
             InitializeComponent();
             commandList = commands;
+            configuredCommands = existingCommands;
         }
 
         public enum CreationMode
@@ -262,6 +265,11 @@ namespace taskt.UI.Forms
             {
                 item.Width = this.Width - 70;
             }
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

@@ -31,6 +31,11 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_AddDataDataTable { get; set; }
 
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<CreateDataTableCommand> DataTableCreationCommands;
+
         public AddDataRowCommand()
         {
             this.CommandName = "AddDataRowCommand";
@@ -88,10 +93,49 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
+
+
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_AddDataDataTable", this, editor));
+
+            taskt.UI.CustomControls.CommandItemControl loadSchemaControl = new taskt.UI.CustomControls.CommandItemControl();
+            loadSchemaControl.ForeColor = System.Drawing.Color.White;
+            loadSchemaControl.CommandDisplay = "Load Column Names From Existing Table";
+            loadSchemaControl.Click += LoadSchemaControl_Click;
+            RenderedControls.Add(loadSchemaControl);
+
+            DataTableCreationCommands = editor.configuredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
+
+
 
 
             return RenderedControls;
+        }
+
+        private void LoadSchemaControl_Click(object sender, EventArgs e)
+        {
+            UI.Forms.Supplemental.frmItemSelector selectionForm = new UI.Forms.Supplemental.frmItemSelector();
+            selectionForm.Text = "Load Schema";
+            selectionForm.lblHeader.Text = "Select a table from the list";
+            foreach (var item in DataTableCreationCommands)
+            {
+                selectionForm.lstVariables.Items.Add(item.v_DataTableName);
+            }
+
+           var result = selectionForm.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                var tableName = selectionForm.lstVariables.SelectedItem.ToString();
+                var schema = DataTableCreationCommands.Where(f => f.v_DataTableName == tableName).FirstOrDefault();
+
+                v_AddDataDataTable.Rows.Clear();
+
+                foreach (DataRow rw in schema.v_ColumnNameDataTable.Rows)
+                {
+                    v_AddDataDataTable.Rows.Add(rw.Field<string>("Column Name"), "");
+                }
+
+            }   
         }
 
         public override string GetDisplayValue()

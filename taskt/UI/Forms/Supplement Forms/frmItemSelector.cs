@@ -23,9 +23,9 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplemental
 {
-    public partial class frmVariableSelector : ThemedForm
+    public partial class frmItemSelector : ThemedForm
     {
-        public frmVariableSelector()
+        public frmItemSelector()
         {
             InitializeComponent();
         }
@@ -38,7 +38,7 @@ namespace taskt.UI.Forms.Supplemental
         {
             if (lstVariables.SelectedItem == null)
             {
-                MessageBox.Show("There are no variables selected! Select a variable and Ok or select Cancel");
+                MessageBox.Show("There are no item(s) selected! Select an item and Ok or select Cancel");
                 return;
             }
 

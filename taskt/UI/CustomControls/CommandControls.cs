@@ -303,7 +303,7 @@ namespace taskt.UI.CustomControls
         public static void ShowVariableSelector(object sender, EventArgs e)
         {
             //create variable selector form
-            UI.Forms.Supplemental.frmVariableSelector newVariableSelector = new Forms.Supplemental.frmVariableSelector();
+            UI.Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector();
 
        
             //get copy of user variables and append system variables, then load to combobox
@@ -737,7 +737,7 @@ public class AutomationCommand
         public string DisplayGroup { get; set; }
         public Core.Automation.Commands.ScriptCommand Command { get; set; }
         public List<Control> UIControls { get; set; }
-        public void RenderUIComponents()
+        public void RenderUIComponents(taskt.UI.Forms.frmCommandEditor editorForm)
         {
             if (Command == null)
             {
@@ -749,7 +749,7 @@ public class AutomationCommand
             if (Command.CustomRendering)
             {
    
-                var renderedControls = Command.Render(null);
+                var renderedControls = Command.Render(editorForm);
 
                 if (renderedControls.Count == 0)
                 {
@@ -799,7 +799,7 @@ public class AutomationCommand
             //preference to preload is false
             //if (UIControls is null)
             //{
-                this.RenderUIComponents();
+                this.RenderUIComponents(editor);
             //}
 
             foreach (var ctrl in UIControls)
