@@ -22,13 +22,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataTableName { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input the data you want entered.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
+
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("Define Data")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the Column Names required for each column of data")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public string v_InputData { get; set; }
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public DataTable v_AddDataDataTable { get; set; }
 
         public AddDataRowCommand()
         {
@@ -36,27 +37,35 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Add DataRow";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            //initialize data table
+            this.v_AddDataDataTable = new System.Data.DataTable
+            {
+                TableName = "AddDataDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
+            };
+
+            this.v_AddDataDataTable.Columns.Add("Column Name");
+            this.v_AddDataDataTable.Columns.Add("Data");
+
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var dataSetVariable = LookupVariable(engine);
-            var vInputData = v_InputData.ConvertToUserVariable(engine);
-            DataTable Dt = (DataTable)dataSetVariable.VariableValue;
-            vInputData = vInputData.Trim('\\', '"', '/');
-            var splittext = vInputData.Split(',');
 
-            int i = 0;
-            foreach (string str in splittext)
+            DataTable Dt = (DataTable)dataSetVariable.VariableValue;
+            var newRow = Dt.NewRow();
+
+            foreach (DataRow rw in v_AddDataDataTable.Rows)
             {
-                splittext[i] = str.Trim('\\', '"', '[', ']');
-                if (splittext[i] == null)
-                    splittext[i] = string.Empty;
-                i++;
+                var columnName = rw.Field<string>("Column Name");
+                var data = rw.Field<string>("Data");
+                newRow.SetField(columnName, data); 
             }
 
-            Dt.Rows.Add(splittext.ToArray());
+            Dt.Rows.Add(newRow);
+        
             dataSetVariable.VariableValue = Dt;
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
@@ -79,7 +88,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_AddDataDataTable", this, editor));
 
 
             return RenderedControls;
@@ -87,7 +96,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Add Datarow: " + v_InputData + " to DataTable: " + v_DataTableName + " ]";
+            return base.GetDisplayValue() + $" [{v_AddDataDataTable.Rows.Count} Fields, apply to '{v_DataTableName}']";
         }
     }
 }
