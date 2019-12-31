@@ -164,6 +164,8 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
