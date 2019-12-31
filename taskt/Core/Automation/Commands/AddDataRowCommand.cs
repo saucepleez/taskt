@@ -64,8 +64,8 @@ namespace taskt.Core.Automation.Commands
 
             foreach (DataRow rw in v_AddDataDataTable.Rows)
             {
-                var columnName = rw.Field<string>("Column Name");
-                var data = rw.Field<string>("Data");
+                var columnName = rw.Field<string>("Column Name").ConvertToUserVariable(sender);
+                var data = rw.Field<string>("Data").ConvertToUserVariable(sender);
                 newRow.SetField(columnName, data); 
             }
 
