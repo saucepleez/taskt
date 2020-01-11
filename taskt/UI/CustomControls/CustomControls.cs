@@ -511,6 +511,7 @@ namespace taskt.UI
             uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("BeginIfCommand", taskt.Properties.Resources.command_begin_if);
+            uiImages.Add("NextLoopCommand", taskt.Properties.Resources.command_nextloop);
             uiImages.Add("BeginMultiIfCommand", taskt.Properties.Resources.command_begin_multi_if);
             uiImages.Add("EndIfCommand", taskt.Properties.Resources.command_end_if);
             uiImages.Add("ElseCommand", taskt.Properties.Resources.command_else);

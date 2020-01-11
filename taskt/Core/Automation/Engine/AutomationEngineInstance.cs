@@ -20,6 +20,7 @@ namespace taskt.Core.Automation.Engine
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
+        public bool CurrentLoopContinuing { get; set; }
         private bool IsScriptPaused { get; set; }
         [JsonIgnore]
         public UI.Forms.frmScriptEngine tasktEngineUI { get; set; }
@@ -289,6 +290,10 @@ namespace taskt.Core.Automation.Engine
                 else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
                 {
                     CurrentLoopCancelled = true;
+                }
+                else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
+                {
+                    CurrentLoopContinuing = true;
                 }
                 else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
                 {

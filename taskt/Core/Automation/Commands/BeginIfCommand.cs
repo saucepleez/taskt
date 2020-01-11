@@ -144,7 +144,7 @@ namespace taskt.Core.Automation.Commands
 
             for (int i = startIndex; i < endIndex; i++)
             {
-                if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled))
+                if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled) || (engine.CurrentLoopContinuing))
                     return;
 
                 engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);

@@ -87,6 +87,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(DatabaseRunQueryCommand))]
     [XmlInclude(typeof(BeginNumberOfTimesLoopCommand))]
     [XmlInclude(typeof(BeginListLoopCommand))]
+    [XmlInclude(typeof(NextLoopCommand))]
     [XmlInclude(typeof(BeginContinousLoopCommand))]
     [XmlInclude(typeof(SequenceCommand))]
     [XmlInclude(typeof(StopTaskCommand))]
