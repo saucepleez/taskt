@@ -114,10 +114,48 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
+            var ifResult = DetermineStatementTruth(sender);
 
+            int startIndex, endIndex, elseIndex;
+            if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.Automation.Commands.ElseCommand))
+            {
+                elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is Core.Automation.Commands.ElseCommand);
+
+                if (ifResult)
+                {
+                    startIndex = 0;
+                    endIndex = elseIndex;
+                }
+                else
+                {
+                    startIndex = elseIndex + 1;
+                    endIndex = parentCommand.AdditionalScriptCommands.Count;
+                }
+            }
+            else if (ifResult)
+            {
+                startIndex = 0;
+                endIndex = parentCommand.AdditionalScriptCommands.Count;
+            }
+            else
+            {
+                return;
+            }
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled))
+                    return;
+
+                engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
+            }
+
+        }
+        public bool DetermineStatementTruth(object sender)
+        {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             bool ifResult = false;
-
 
             if (v_IfActionType == "Value")
             {
@@ -203,7 +241,7 @@ namespace taskt.Core.Automation.Commands
                         ifResult = (dt1 != dt2);
                         break;
 
-                    case "is greater than":                   
+                    case "is greater than":
                         ifResult = (dt1 > dt2);
                         break;
 
@@ -211,7 +249,7 @@ namespace taskt.Core.Automation.Commands
                         ifResult = (dt1 >= dt2);
                         break;
 
-                    case "is less than":        
+                    case "is less than":
                         ifResult = (dt1 < dt2);
                         break;
 
@@ -233,8 +271,8 @@ namespace taskt.Core.Automation.Commands
                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 string caseSensitive = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Case Sensitive"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                         where rw.Field<string>("Parameter Name") == "Case Sensitive"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 value1 = value1.ConvertToUserVariable(sender);
                 value2 = value2.ConvertToUserVariable(sender);
@@ -246,7 +284,7 @@ namespace taskt.Core.Automation.Commands
                 }
 
 
-         
+
                 switch (operand)
                 {
                     case "contains":
@@ -269,8 +307,8 @@ namespace taskt.Core.Automation.Commands
             else if (v_IfActionType == "Variable Has Value")
             {
                 string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Variable Name"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                        where rw.Field<string>("Parameter Name") == "Variable Name"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
 
@@ -455,8 +493,8 @@ namespace taskt.Core.Automation.Commands
             else if (v_IfActionType == "Web Element Exists")
             {
                 string instanceName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                                        where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                          where rw.Field<string>("Parameter Name") == "Element Search Parameter"
@@ -466,7 +504,7 @@ namespace taskt.Core.Automation.Commands
                                         where rw.Field<string>("Parameter Name") == "Element Search Method"
                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-               
+
                 SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
                 newElementActionCommand.v_SeleniumSearchType = searchMethod;
                 newElementActionCommand.v_InstanceName = instanceName.ConvertToUserVariable(sender);
@@ -477,16 +515,16 @@ namespace taskt.Core.Automation.Commands
             else if (v_IfActionType == "GUI Element Exists")
             {
                 string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Window Name"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                string elementSearchParam = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                                      where rw.Field<string>("Parameter Name") == "Window Name"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
-                string elementSearchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                              where rw.Field<string>("Parameter Name") == "Element Search Method"
+                string elementSearchParam = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                              where rw.Field<string>("Parameter Name") == "Element Search Parameter"
                                               select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                string elementSearchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                               where rw.Field<string>("Parameter Name") == "Element Search Method"
+                                               select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
 
                 UIAutomationCommand newUIACommand = new UIAutomationCommand();
@@ -502,7 +540,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     ifResult = true;
                 }
-                
+
 
             }
             else
@@ -510,47 +548,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("If type not recognized!");
             }
 
-
-
-            int startIndex, endIndex, elseIndex;
-            if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.Automation.Commands.ElseCommand))
-            {
-                elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is Core.Automation.Commands.ElseCommand);
-
-                if (ifResult)
-                {
-                    startIndex = 0;
-                    endIndex = elseIndex;
-                }
-                else
-                {
-                    startIndex = elseIndex + 1;
-                    endIndex = parentCommand.AdditionalScriptCommands.Count;
-                }
-            }
-            else if (ifResult)
-            {
-                startIndex = 0;
-                endIndex = parentCommand.AdditionalScriptCommands.Count;
-            }
-            else
-            {
-                return;
-            }
-
-            for (int i = startIndex; i < endIndex; i++)
-            {
-                if ((engine.IsCancellationPending) || (engine.CurrentLoopCancelled))
-                    return;
-
-                engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
-            }
-
-
-
-
-
-
+            return ifResult;
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

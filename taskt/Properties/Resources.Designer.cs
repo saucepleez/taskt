@@ -213,6 +213,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_begin_multi_if {
+            get {
+                object obj = ResourceManager.GetObject("command_begin_multi_if", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_camera {
             get {
                 object obj = ResourceManager.GetObject("command_camera", resourceCulture);

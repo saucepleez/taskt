@@ -114,7 +114,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             GenerateDLLParameters,
             ShowDLLExplorer,
             AddInputParameter,
-            ShowHTMLBuilder
+            ShowHTMLBuilder,
+            ShowIfBuilder
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]

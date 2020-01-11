@@ -75,6 +75,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(StringSubstringCommand))]
     [XmlInclude(typeof(StringSplitCommand))]
     [XmlInclude(typeof(BeginIfCommand))]
+    [XmlInclude(typeof(BeginMultiIfCommand))]
     [XmlInclude(typeof(EndIfCommand))]
     [XmlInclude(typeof(ElseCommand))]
     [XmlInclude(typeof(OCRCommand))]
