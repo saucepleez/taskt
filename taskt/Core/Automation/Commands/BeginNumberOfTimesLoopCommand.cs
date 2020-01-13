@@ -91,6 +91,14 @@ namespace taskt.Core.Automation.Commands
                         return;
                     }
 
+                    if (engine.CurrentLoopContinuing)
+                    {
+                        engine.ReportProgress("Continuing Next Loop From Line " + loopCommand.LineNumber);
+                        engine.CurrentLoopContinuing = false;
+                        break;
+                    }
+
+
                 }
 
           

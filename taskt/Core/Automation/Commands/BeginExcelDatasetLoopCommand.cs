@@ -27,7 +27,8 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "BeginExcelDataSetLoopCommand";
             this.SelectionName = "Loop Excel Dataset";
-            this.CommandEnabled = true;
+            //this command is no longer required as list loop can successfully loop.
+            this.CommandEnabled = false;
             this.CustomRendering = true;
         }
 

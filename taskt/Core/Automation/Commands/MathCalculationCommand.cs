@@ -24,6 +24,21 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("You can use known numbers or variables.")]
         public string v_InputValue { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate Thousand Seperator")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the seperator used to identify decimal places")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("Typically a comma or a decimal point (period)")]
+        public string v_ThousandSeperator { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate Decimal Seperator")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the seperator used to identify decimal places")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("Typically a comma or a decimal point (period)")]
+        public string v_DecimalSeperator { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the math calculation")]
@@ -41,7 +56,8 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             this.v_InputValue = "(2 + 5) * 3";
-
+            this.v_DecimalSeperator = ".";
+            this.v_ThousandSeperator = ",";
         }
 
         public override void RunCommand(object sender)
@@ -51,10 +67,29 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
+                var decimalSeperator = v_DecimalSeperator.ConvertToUserVariable(sender);
+                var thousandSeperator = v_ThousandSeperator.ConvertToUserVariable(sender);
+
+                //remove thousandths markers
+                variableMath = variableMath.Replace(thousandSeperator, "");
+
+                //check decimal seperator
+                if (decimalSeperator != ".")
+                {
+                    variableMath = variableMath.Replace(decimalSeperator, ".");
+                }
+
                 //perform compute
                 DataTable dt = new DataTable();
                 var result = dt.Compute(variableMath, "");
 
+                //restore decimal seperator
+                if (decimalSeperator != ".")
+                {
+                    result = result.ToString().Replace(".", decimalSeperator);
+                }
+
+               
                 //store string in variable
                 result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
             }
@@ -70,6 +105,8 @@ namespace taskt.Core.Automation.Commands
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ThousandSeperator", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DecimalSeperator", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);

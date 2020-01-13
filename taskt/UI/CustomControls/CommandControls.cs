@@ -241,6 +241,12 @@ namespace taskt.UI.CustomControls
                         helperControl.CommandDisplay = "Launch HTML Builder";
                         helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
                         break;
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
+                        //show variable selector
+                        helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+                        helperControl.CommandDisplay = "Add New If Statement";
+                        break;
+
                         //default:
                         //    MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                         //    break;

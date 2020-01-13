@@ -20,6 +20,7 @@ namespace taskt.Core.Automation.Engine
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
+        public bool CurrentLoopContinuing { get; set; }
         private bool IsScriptPaused { get; set; }
         [JsonIgnore]
         public UI.Forms.frmScriptEngine tasktEngineUI { get; set; }
@@ -272,7 +273,7 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand))
+                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);
@@ -289,6 +290,10 @@ namespace taskt.Core.Automation.Engine
                 else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
                 {
                     CurrentLoopCancelled = true;
+                }
+                else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
+                {
+                    CurrentLoopContinuing = true;
                 }
                 else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
                 {

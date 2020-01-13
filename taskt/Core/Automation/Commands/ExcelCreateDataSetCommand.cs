@@ -37,19 +37,29 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SheetName { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate if Header Row Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]    
+        [Attributes.PropertyAttributes.InputSpecification("Select the necessary indicator")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Yes**, **NO**.  Data will be loaded as column headers if **YES** is selected.")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_ContainsHeaderRow { get; set; }
+
         public ExcelCreateDataSetCommand()
         {
             this.CommandName = "ExcelCreateDatasetCommand";
             this.SelectionName = "Create Dataset";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            v_ContainsHeaderRow = "Yes";
         }
 
         public override void RunCommand(object sender)
         {
 
             DatasetCommands dataSetCommand = new DatasetCommands();
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=No;IMEX=1""", "Select * From [" + v_SheetName + "$]");
+            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath.ConvertToUserVariable(sender) + $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ConvertToUserVariable(sender)};IMEX=1""", "Select * From [" + v_SheetName.ConvertToUserVariable(sender) + "$]");
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
@@ -70,7 +80,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataSetName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ContainsHeaderRow", this, editor));
             return RenderedControls;
 
         }

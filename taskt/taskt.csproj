@@ -166,6 +166,8 @@
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginMutliIfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
@@ -734,6 +736,8 @@
     <None Include="Resources\command-database.png" />
     <None Include="Resources\command-try.png" />
     <None Include="Resources\command-remote.png" />
+    <None Include="Resources\command-begin-multi-if.png" />
+    <None Include="Resources\command-nextloop.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

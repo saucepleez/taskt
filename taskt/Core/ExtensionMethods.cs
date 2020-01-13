@@ -100,11 +100,19 @@ namespace taskt.Core
                                 //get the value from the list
                                 var complexJson = matchingVar.GetDisplayValue();
 
-                                //deserialize into json object
-                                JObject parsedObject = JObject.Parse(complexJson);
-
-                                //attempt to match based on user defined pattern
-                                var match = parsedObject.SelectToken(jsonPattern);
+                                JToken match;
+                                if (complexJson.StartsWith("[") && complexJson.EndsWith("]"))
+                                {
+                                    //attempt to match array based on user defined pattern
+                                    JArray parsedObject = JArray.Parse(complexJson);
+                                    match = parsedObject.SelectToken(jsonPattern);
+                                }
+                                else
+                                {
+                                    //attempt to match object based on user defined pattern
+                                    JObject parsedObject = JObject.Parse(complexJson);        
+                                    match = parsedObject.SelectToken(jsonPattern);
+                                }
 
                                 //check match
                                 if (match != null)
@@ -113,7 +121,7 @@ namespace taskt.Core
                                     str = str.Replace(startVariableMarker + potentialVariable + endVariableMarker, match.ToString());
                                     continue;
                                 }
-
+                        
                             }
                         }
                     }
@@ -161,6 +169,27 @@ namespace taskt.Core
                             varCheck.CurrentPosition = directElementIndex;
                             str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
                             varCheck.CurrentPosition = savePosition;
+                        }
+                        else if (varCheck.VariableValue is DataTable && potentialVariable.Split('.').Length == 2)
+                        {
+                            //user is trying to get data from column name or index
+                            string columnName = potentialVariable.Split('.')[1];
+                            var dt = varCheck.VariableValue as DataTable;
+
+                            string cellItem;
+                            if (int.TryParse(columnName, out var columnIndex))
+                            {
+                                cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnIndex).ToString();
+                            }
+                            else
+                            {
+                                cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnName).ToString();
+                            }
+
+
+                            str = str.Replace(searchVariable, cellItem);
+
+
                         }
                         else if (potentialVariable.Split('.').Length == 2) // This handles vVariable.count 
                         {
