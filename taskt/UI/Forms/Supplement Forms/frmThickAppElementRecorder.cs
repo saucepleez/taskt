@@ -22,6 +22,7 @@ namespace taskt.UI.Forms.Supplemental
         }
 
         public DataTable searchParameters;
+        public string LastItemClicked;
         private void frmThickAppElementRecorder_Load(object sender, EventArgs e)
         {
             //create data source from windows
@@ -34,7 +35,20 @@ namespace taskt.UI.Forms.Supplemental
         private void pbRecord_Click(object sender, EventArgs e)
         {
 
-            this.WindowState = FormWindowState.Minimized;
+            // this.WindowState = FormWindowState.Minimized;
+
+            if (!chkStopOnClick.Checked)
+            {
+                lblDescription.Text = $"Recording.  Press F2 to stop recording!";
+                MoveFormToBottomRight(this);
+                this.TopMost = true;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+         
+            this.Size = new Size(540, 156);
 
 
             this.searchParameters = new DataTable();
@@ -60,10 +74,17 @@ namespace taskt.UI.Forms.Supplemental
                 User32Functions.SetWindowPosition(hWnd, 0, 0);
 
                 //start global hook and wait for left mouse down event
-                User32Functions.GlobalHook.StartElementCaptureHook();
+                User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
+                User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
+                User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
                 User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
-
             }
+        }
+
+        private void GlobalHook_HookStopped(object sender, EventArgs e)
+        {
+            GlobalHook_MouseEvent(null, null);
+            this.Close();
         }
 
         private void GlobalHook_MouseEvent(object sender, MouseCoordinateEventArgs e)
@@ -73,8 +94,14 @@ namespace taskt.UI.Forms.Supplemental
             //invoke UIA
             try
             {
+            
                 System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
                 System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
+
+                LastItemClicked = $"[Name:{element.Current.Name}].[ID:{element.Current.AutomationId.ToString()}].[Class:{element.Current.ClassName}]";
+                lblSubHeader.Text = LastItemClicked;
+
+                searchParameters.Rows.Clear();
 
                 //get properties from class via reflection
                 System.Reflection.PropertyInfo[] properties = typeof(System.Windows.Automation.AutomationElement.AutomationElementInformation).GetProperties();
@@ -101,14 +128,18 @@ namespace taskt.UI.Forms.Supplemental
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error in recording, please try again! " + ex.ToString());
+                lblDescription.Text = "Error cloning element. Please Try Again.";
+                //MessageBox.Show("Error in recording, please try again! " + ex.ToString());
             }
 
-            this.WindowState = FormWindowState.Normal;
-            this.Close();
-
+            if (chkStopOnClick.Checked)
+            {
+                this.Close();     
+            }
+              
+            
            
 
 
