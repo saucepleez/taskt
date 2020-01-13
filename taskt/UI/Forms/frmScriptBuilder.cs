@@ -928,6 +928,10 @@ namespace taskt.UI.Forms
             int indent = 0;
             foreach (ListViewItem rowItem in lstScriptActions.Items)
             {
+                if (rowItem is null)
+                {
+                    continue;
+                }
 
                 if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginListLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginContinousLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand))
                 {
