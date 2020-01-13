@@ -63,6 +63,8 @@ namespace taskt.UI.Forms
             txtVariableEndMarker.DataBindings.Add("Text", engineSettings, "VariableEndMarker", false, DataSourceUpdateMode.OnPropertyChanged);
             txtCommandDelay.DataBindings.Add("Text", engineSettings, "DelayBetweenCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkOverrideInstances.DataBindings.Add("Checked", engineSettings, "OverrideExistingAppInstances", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkAutoCalcVariables.DataBindings.Add("Checked", engineSettings, "AutoCalcVariables", false, DataSourceUpdateMode.OnPropertyChanged);
+
 
             cboCancellationKey.DataSource = Enum.GetValues(typeof(Keys));
             cboCancellationKey.DataBindings.Add("Text", engineSettings, "CancellationKey", false, DataSourceUpdateMode.OnPropertyChanged);

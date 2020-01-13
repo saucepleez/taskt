@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,43 +83,78 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**c:\\temp\\file.txt**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPAttachment { get; set; }
+
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("SSL Validation")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Validate SSL")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Bypass SSL Validation")]
+     
+        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate option")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Validate SSL**, **Bypass SSL Validation**")]
+        [Attributes.PropertyAttributes.Remarks("This field manages whether taskt will attempt to validate the SSL connection")]
+        public string v_SSLValidation { get; set; }
         public SMTPSendEmailCommand()
         {
             this.CommandName = "SMTPCommand";
             this.SelectionName = "Send SMTP Email";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_SSLValidation = "Validate SSL";
         }
 
         public override void RunCommand(object sender)
         {
-            string varSMTPHost = v_SMTPHost.ConvertToUserVariable(sender);
-            string varSMTPPort = v_SMTPPort.ToString().ConvertToUserVariable(sender);
-            string varSMTPUserName = v_SMTPUserName.ConvertToUserVariable(sender);
-            string varSMTPPassword = v_SMTPPassword.ConvertToUserVariable(sender);
-
-            string varSMTPFromEmail = v_SMTPFromEmail.ConvertToUserVariable(sender);
-            string varSMTPToEmail = v_SMTPToEmail.ConvertToUserVariable(sender);
-            string varSMTPSubject = v_SMTPSubject.ConvertToUserVariable(sender);
-            string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
-            string varSMTPFilePath = v_SMTPAttachment.ConvertToUserVariable(sender);
-
-            var client = new SmtpClient(varSMTPHost, int.Parse(varSMTPPort))
+            //bypass ssl validation if requested
+            if (v_SSLValidation.ConvertToUserVariable(sender) == "Bypass SSL Validation")
             {
-                Credentials = new System.Net.NetworkCredential(varSMTPUserName, varSMTPPassword),
-                EnableSsl = true
-            };
-
-            var message = new MailMessage(varSMTPFromEmail, varSMTPToEmail);
-            message.Subject = varSMTPSubject;
-            message.Body = varSMTPBody;
-
-            if (!string.IsNullOrEmpty(varSMTPFilePath))
-            {
-                message.Attachments.Add(new Attachment(varSMTPFilePath));
+                ServicePointManager.ServerCertificateValidationCallback =
+                                    (sndr, certificate, chain, sslPolicyErrors) => true;
             }
 
-            client.Send(message);
+            try
+            {
+                string varSMTPHost = v_SMTPHost.ConvertToUserVariable(sender);
+                string varSMTPPort = v_SMTPPort.ToString().ConvertToUserVariable(sender);
+                string varSMTPUserName = v_SMTPUserName.ConvertToUserVariable(sender);
+                string varSMTPPassword = v_SMTPPassword.ConvertToUserVariable(sender);
+
+                string varSMTPFromEmail = v_SMTPFromEmail.ConvertToUserVariable(sender);
+                string varSMTPToEmail = v_SMTPToEmail.ConvertToUserVariable(sender);
+                string varSMTPSubject = v_SMTPSubject.ConvertToUserVariable(sender);
+                string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
+                string varSMTPFilePath = v_SMTPAttachment.ConvertToUserVariable(sender);
+
+                var client = new SmtpClient(varSMTPHost, int.Parse(varSMTPPort))
+                {
+                    Credentials = new System.Net.NetworkCredential(varSMTPUserName, varSMTPPassword),
+                    EnableSsl = true
+                };
+
+
+                var message = new MailMessage(varSMTPFromEmail, varSMTPToEmail);
+                message.Subject = varSMTPSubject;
+                message.Body = varSMTPBody;
+
+                if (!string.IsNullOrEmpty(varSMTPFilePath))
+                {
+                    message.Attachments.Add(new Attachment(varSMTPFilePath));
+                }
+
+                client.Send(message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                //restore default validation
+                if (v_SSLValidation.ConvertToUserVariable(sender) == "Bypass SSL Validation")
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = null;
+                }
+            }
+            
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -134,7 +170,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPSubject", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPBody", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPAttachment", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SSLValidation", this, editor));
             return RenderedControls;
 
         }

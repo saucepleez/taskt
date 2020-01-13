@@ -777,7 +777,7 @@ namespace taskt.UI.Forms
             {
 
                 //create new command editor form
-                UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands);
+                UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands());
 
                 //creation mode edit locks form to current command
                 editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
@@ -897,7 +897,7 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndLoopCommand()));
             }
-            else if (selectedCommand is Core.Automation.Commands.BeginIfCommand)
+            else if ((selectedCommand is Core.Automation.Commands.BeginIfCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiIfCommand))
             {
                 lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndIfCommand()));
@@ -928,8 +928,12 @@ namespace taskt.UI.Forms
             int indent = 0;
             foreach (ListViewItem rowItem in lstScriptActions.Items)
             {
+                if (rowItem is null)
+                {
+                    continue;
+                }
 
-                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginListLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginContinousLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand))
+                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginListLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginContinousLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
@@ -1463,6 +1467,16 @@ namespace taskt.UI.Forms
             SaveToFile(true);
         }
 
+        private List<Core.Automation.Commands.ScriptCommand> GetConfiguredCommands()
+        {
+            List<Core.Automation.Commands.ScriptCommand> ConfiguredCommands = new List<Core.Automation.Commands.ScriptCommand>();
+            foreach (ListViewItem item in lstScriptActions.Items)
+            {
+                ConfiguredCommands.Add(item.Tag as Core.Automation.Commands.ScriptCommand);
+            }
+
+            return ConfiguredCommands;
+        }
 
         private void SaveToFile(bool saveAs)
         {
@@ -1485,7 +1499,7 @@ namespace taskt.UI.Forms
                 {
                     beginLoopValidationCount--;
                 }
-                else if (item.Tag is Core.Automation.Commands.BeginIfCommand)
+                else if ((item.Tag is Core.Automation.Commands.BeginIfCommand) || (item.Tag is Core.Automation.Commands.BeginMultiIfCommand))
                 {
                     beginIfValidationCount++;
                 }
@@ -1732,7 +1746,7 @@ namespace taskt.UI.Forms
         private void AddNewCommand(string specificCommand = "")
         {
             //bring up new command configuration form
-            var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands);
+            var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands());
             newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
             newCommandForm.scriptVariables = this.scriptVariables;
             if (specificCommand != "")

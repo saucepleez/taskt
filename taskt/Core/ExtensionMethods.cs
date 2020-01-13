@@ -23,6 +23,12 @@ namespace taskt.Core
             if (sender == null)
                 return str;
 
+            if (str.Length < 2)
+            {
+                return str;
+            }
+
+
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var variableList = engine.VariableList;
@@ -94,11 +100,19 @@ namespace taskt.Core
                                 //get the value from the list
                                 var complexJson = matchingVar.GetDisplayValue();
 
-                                //deserialize into json object
-                                JObject parsedObject = JObject.Parse(complexJson);
-
-                                //attempt to match based on user defined pattern
-                                var match = parsedObject.SelectToken(jsonPattern);
+                                JToken match;
+                                if (complexJson.StartsWith("[") && complexJson.EndsWith("]"))
+                                {
+                                    //attempt to match array based on user defined pattern
+                                    JArray parsedObject = JArray.Parse(complexJson);
+                                    match = parsedObject.SelectToken(jsonPattern);
+                                }
+                                else
+                                {
+                                    //attempt to match object based on user defined pattern
+                                    JObject parsedObject = JObject.Parse(complexJson);        
+                                    match = parsedObject.SelectToken(jsonPattern);
+                                }
 
                                 //check match
                                 if (match != null)
@@ -107,7 +121,7 @@ namespace taskt.Core
                                     str = str.Replace(startVariableMarker + potentialVariable + endVariableMarker, match.ToString());
                                     continue;
                                 }
-
+                        
                             }
                         }
                     }
@@ -156,6 +170,27 @@ namespace taskt.Core
                             str = str.Replace(searchVariable, (string)varCheck.GetDisplayValue());
                             varCheck.CurrentPosition = savePosition;
                         }
+                        else if (varCheck.VariableValue is DataTable && potentialVariable.Split('.').Length == 2)
+                        {
+                            //user is trying to get data from column name or index
+                            string columnName = potentialVariable.Split('.')[1];
+                            var dt = varCheck.VariableValue as DataTable;
+
+                            string cellItem;
+                            if (int.TryParse(columnName, out var columnIndex))
+                            {
+                                cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnIndex).ToString();
+                            }
+                            else
+                            {
+                                cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnName).ToString();
+                            }
+
+
+                            str = str.Replace(searchVariable, cellItem);
+
+
+                        }
                         else if (potentialVariable.Split('.').Length == 2) // This handles vVariable.count 
                         {
                             string propertyName = potentialVariable.Split('.')[1];
@@ -168,7 +203,15 @@ namespace taskt.Core
                     }
                     else if (str.Contains(potentialVariable))
                     {
-                        str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());
+                        try
+                        {
+                            str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                       
                     }
                 }
 
@@ -211,42 +254,48 @@ namespace taskt.Core
             }
 
 
-
-
-            //track math chars
-            var mathChars = new List<Char>();
-            mathChars.Add('*');
-            mathChars.Add('+');
-            mathChars.Add('-');
-            mathChars.Add('=');
-            mathChars.Add('/');
-
-            //if the string matches the char then return
-            //as the user does not want to do math
-            if (mathChars.Any(f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
+            if (!engine.AutoCalculateVariables)
             {
                 return str;
             }
-
-            //bypass math for types that are dates
-            DateTime dateTest;
-            if ((DateTime.TryParse(str, out dateTest) && (str.Length > 6)))
+            else
             {
-                return str;
+                //track math chars
+                var mathChars = new List<Char>();
+                mathChars.Add('*');
+                mathChars.Add('+');
+                mathChars.Add('-');
+                mathChars.Add('=');
+                mathChars.Add('/');
+
+                //if the string matches the char then return
+                //as the user does not want to do math
+                if (mathChars.Any(f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
+                {
+                    return str;
+                }
+
+                //bypass math for types that are dates
+                DateTime dateTest;
+                if ((DateTime.TryParse(str, out dateTest) && (str.Length > 6)))
+                {
+                    return str;
+                }
+
+                //test if math is required
+                try
+                {
+                    DataTable dt = new DataTable();
+                    var v = dt.Compute(str, "");
+                    return v.ToString();
+                }
+                catch (Exception)
+                {
+                    return str;
+                }
             }
 
-
-            //test if math is required
-            try
-            {
-                DataTable dt = new DataTable();
-                var v = dt.Compute(str, "");
-                return v.ToString();
-            }
-            catch (Exception)
-            {
-                return str;
-            }
+           
         }
         /// <summary>
         /// Stores value of the string to a user-defined variable.

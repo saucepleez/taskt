@@ -75,6 +75,21 @@ namespace taskt.Core.Automation.Commands
             {
                 listToLoop = ((DataTable)complexVariable.VariableValue).Rows;
             }
+            else if ((complexVariable.VariableValue.ToString().StartsWith("[")) && (complexVariable.VariableValue.ToString().EndsWith("]")) && (complexVariable.VariableValue.ToString().Contains(",")))
+            {
+                //automatically handle if user has given a json array
+                Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(complexVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
+
+               var itemList = new List<string>();
+                foreach (var item in jsonArray)
+                {
+                    var value = (Newtonsoft.Json.Linq.JValue)item;
+                    itemList.Add(value.ToString());
+                }
+
+                complexVariable.VariableValue = itemList;
+                listToLoop = itemList;
+            }
             else
             {
                 throw new Exception("Complex Variable List Type<T> Not Supported");
@@ -108,6 +123,13 @@ namespace taskt.Core.Automation.Commands
                         engine.ReportProgress("Exiting Loop From Line " + loopCommand.LineNumber);
                         engine.CurrentLoopCancelled = false;
                         return;
+                    }
+
+                    if (engine.CurrentLoopContinuing)
+                    {
+                        engine.ReportProgress("Continuing Next Loop From Line " + loopCommand.LineNumber);
+                        engine.CurrentLoopContinuing = false;
+                        break;
                     }
                 }
 

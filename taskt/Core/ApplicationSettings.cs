@@ -122,7 +122,7 @@ namespace taskt.Core
         public bool OverrideExistingAppInstances { get; set; }
         public bool AutoCloseMessagesOnServerExecution { get; set; }
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
-
+        public bool AutoCalcVariables { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -131,13 +131,14 @@ namespace taskt.Core
             ShowAdvancedDebugOutput = false;
             CreateMissingVariablesDuringExecution = true;
             TrackExecutionMetrics = true;
-            VariableStartMarker = "[";
-            VariableEndMarker = "]";
+            VariableStartMarker = "{";
+            VariableEndMarker = "}";
             CancellationKey = System.Windows.Forms.Keys.Pause;
             DelayBetweenCommands = 250;
             OverrideExistingAppInstances = false;
             AutoCloseMessagesOnServerExecution = true;
             AutoCloseDebugWindowOnServerExecution = true;
+            AutoCalcVariables = true;
     }
     }
     /// <summary>

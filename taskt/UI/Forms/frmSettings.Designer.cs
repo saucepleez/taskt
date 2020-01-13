@@ -102,6 +102,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.tabLocalListener = new System.Windows.Forms.TabPage();
+            this.txtWhiteList = new System.Windows.Forms.TextBox();
+            this.chkEnableWhitelist = new System.Windows.Forms.CheckBox();
             this.chkAutoStartListener = new System.Windows.Forms.CheckBox();
             this.label19 = new System.Windows.Forms.Label();
             this.txtListeningPort = new System.Windows.Forms.TextBox();
@@ -118,8 +120,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.chkEnableWhitelist = new System.Windows.Forms.CheckBox();
-            this.txtWhiteList = new System.Windows.Forms.TextBox();
+            this.chkAutoCalcVariables = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -653,6 +654,7 @@
             // tabDebugSettings
             // 
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.chkAutoCalcVariables);
             this.tabDebugSettings.Controls.Add(this.label16);
             this.tabDebugSettings.Controls.Add(this.cboCancellationKey);
             this.tabDebugSettings.Controls.Add(this.chkOverrideInstances);
@@ -685,7 +687,7 @@
             this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label16.Location = new System.Drawing.Point(6, 413);
+            this.label16.Location = new System.Drawing.Point(6, 424);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(134, 21);
             this.label16.TabIndex = 37;
@@ -695,7 +697,7 @@
             // 
             this.cboCancellationKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCancellationKey.FormattingEnabled = true;
-            this.cboCancellationKey.Location = new System.Drawing.Point(142, 411);
+            this.cboCancellationKey.Location = new System.Drawing.Point(142, 422);
             this.cboCancellationKey.Name = "cboCancellationKey";
             this.cboCancellationKey.Size = new System.Drawing.Size(154, 29);
             this.cboCancellationKey.TabIndex = 36;
@@ -720,7 +722,7 @@
             this.lblDelay.BackColor = System.Drawing.Color.Transparent;
             this.lblDelay.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDelay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblDelay.Location = new System.Drawing.Point(6, 192);
+            this.lblDelay.Location = new System.Drawing.Point(6, 207);
             this.lblDelay.Name = "lblDelay";
             this.lblDelay.Size = new System.Drawing.Size(349, 21);
             this.lblDelay.TabIndex = 34;
@@ -728,7 +730,7 @@
             // 
             // txtCommandDelay
             // 
-            this.txtCommandDelay.Location = new System.Drawing.Point(359, 190);
+            this.txtCommandDelay.Location = new System.Drawing.Point(359, 205);
             this.txtCommandDelay.Name = "txtCommandDelay";
             this.txtCommandDelay.Size = new System.Drawing.Size(77, 29);
             this.txtCommandDelay.TabIndex = 33;
@@ -739,7 +741,7 @@
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label10.Location = new System.Drawing.Point(15, 361);
+            this.label10.Location = new System.Drawing.Point(15, 372);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 21);
             this.label10.TabIndex = 32;
@@ -751,7 +753,7 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label9.Location = new System.Drawing.Point(12, 327);
+            this.label9.Location = new System.Drawing.Point(12, 338);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(106, 21);
             this.label9.TabIndex = 31;
@@ -762,7 +764,7 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label8.Location = new System.Drawing.Point(10, 248);
+            this.label8.Location = new System.Drawing.Point(10, 259);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(410, 72);
             this.label8.TabIndex = 30;
@@ -775,7 +777,7 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Segoe UI Light", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label7.Location = new System.Drawing.Point(6, 221);
+            this.label7.Location = new System.Drawing.Point(6, 232);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(149, 30);
             this.label7.TabIndex = 29;
@@ -787,7 +789,7 @@
             this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 342);
+            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 353);
             this.lblVariableDisplay.Name = "lblVariableDisplay";
             this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
             this.lblVariableDisplay.TabIndex = 28;
@@ -795,7 +797,7 @@
             // 
             // txtVariableEndMarker
             // 
-            this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 357);
+            this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 368);
             this.txtVariableEndMarker.Name = "txtVariableEndMarker";
             this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableEndMarker.TabIndex = 27;
@@ -803,7 +805,7 @@
             // 
             // txtVariableStartMarker
             // 
-            this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 324);
+            this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 335);
             this.txtVariableStartMarker.Name = "txtVariableStartMarker";
             this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableStartMarker.TabIndex = 26;
@@ -1038,6 +1040,27 @@
             this.tabLocalListener.Text = "Local Listener";
             this.tabLocalListener.UseVisualStyleBackColor = true;
             // 
+            // txtWhiteList
+            // 
+            this.txtWhiteList.Location = new System.Drawing.Point(15, 291);
+            this.txtWhiteList.Multiline = true;
+            this.txtWhiteList.Name = "txtWhiteList";
+            this.txtWhiteList.Size = new System.Drawing.Size(371, 93);
+            this.txtWhiteList.TabIndex = 48;
+            // 
+            // chkEnableWhitelist
+            // 
+            this.chkEnableWhitelist.AutoSize = true;
+            this.chkEnableWhitelist.BackColor = System.Drawing.Color.Transparent;
+            this.chkEnableWhitelist.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkEnableWhitelist.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkEnableWhitelist.Location = new System.Drawing.Point(14, 261);
+            this.chkEnableWhitelist.Name = "chkEnableWhitelist";
+            this.chkEnableWhitelist.Size = new System.Drawing.Size(318, 24);
+            this.chkEnableWhitelist.TabIndex = 47;
+            this.chkEnableWhitelist.Text = "Enable IP Verification (Seperate with comma)";
+            this.chkEnableWhitelist.UseVisualStyleBackColor = false;
+            // 
             // chkAutoStartListener
             // 
             this.chkAutoStartListener.AutoSize = true;
@@ -1217,26 +1240,18 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // chkEnableWhitelist
+            // chkAutoCalcVariables
             // 
-            this.chkEnableWhitelist.AutoSize = true;
-            this.chkEnableWhitelist.BackColor = System.Drawing.Color.Transparent;
-            this.chkEnableWhitelist.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkEnableWhitelist.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkEnableWhitelist.Location = new System.Drawing.Point(14, 261);
-            this.chkEnableWhitelist.Name = "chkEnableWhitelist";
-            this.chkEnableWhitelist.Size = new System.Drawing.Size(318, 24);
-            this.chkEnableWhitelist.TabIndex = 47;
-            this.chkEnableWhitelist.Text = "Enable IP Verification (Seperate with comma)";
-            this.chkEnableWhitelist.UseVisualStyleBackColor = false;
-            // 
-            // txtWhiteList
-            // 
-            this.txtWhiteList.Location = new System.Drawing.Point(15, 291);
-            this.txtWhiteList.Multiline = true;
-            this.txtWhiteList.Name = "txtWhiteList";
-            this.txtWhiteList.Size = new System.Drawing.Size(371, 93);
-            this.txtWhiteList.TabIndex = 48;
+            this.chkAutoCalcVariables.AutoSize = true;
+            this.chkAutoCalcVariables.BackColor = System.Drawing.Color.Transparent;
+            this.chkAutoCalcVariables.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAutoCalcVariables.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkAutoCalcVariables.Location = new System.Drawing.Point(10, 178);
+            this.chkAutoCalcVariables.Name = "chkAutoCalcVariables";
+            this.chkAutoCalcVariables.Size = new System.Drawing.Size(255, 25);
+            this.chkAutoCalcVariables.TabIndex = 38;
+            this.chkAutoCalcVariables.Text = "Calculate Variables Automatically";
+            this.chkAutoCalcVariables.UseVisualStyleBackColor = false;
             // 
             // frmSettings
             // 
@@ -1357,5 +1372,6 @@
         private System.Windows.Forms.TextBox txtListeningPort;
         private System.Windows.Forms.CheckBox chkEnableWhitelist;
         private System.Windows.Forms.TextBox txtWhiteList;
+        internal System.Windows.Forms.CheckBox chkAutoCalcVariables;
     }
 }
