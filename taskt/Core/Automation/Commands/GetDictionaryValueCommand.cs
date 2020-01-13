@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         public GetDictionaryValueCommand()
         {
             this.CommandName = "GetDictionaryValueCommand";
-            this.SelectionName = "Get Value From Dictionary";
+            this.SelectionName = "Get Dictionary Item";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

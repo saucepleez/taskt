@@ -27,8 +27,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please select overwrite option")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("And")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Or")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate whether this command should append the text to or overwrite all existing text in the file")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Append** or **Overwrite**")]
+        [Attributes.PropertyAttributes.InputSpecification("Indicate whether this command should remove rows with all the constraints or remove them with 1 or more constraints")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **And** or **Or**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_AndOr { get; set; }
 
