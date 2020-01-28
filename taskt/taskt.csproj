@@ -167,6 +167,7 @@
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginMutliIfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExtractFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
@@ -738,6 +739,12 @@
     <None Include="Resources\command-remote.png" />
     <None Include="Resources\command-begin-multi-if.png" />
     <None Include="Resources\command-nextloop.png" />
+    <Content Include="Resources\7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\7z.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
