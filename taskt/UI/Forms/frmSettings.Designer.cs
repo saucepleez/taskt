@@ -101,15 +101,32 @@
             this.lblSocketException = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.tabLocalListener = new System.Windows.Forms.TabPage();
+            this.txtWhiteList = new System.Windows.Forms.TextBox();
+            this.chkEnableWhitelist = new System.Windows.Forms.CheckBox();
+            this.chkAutoStartListener = new System.Windows.Forms.CheckBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtListeningPort = new System.Windows.Forms.TextBox();
+            this.lblListeningStatus = new System.Windows.Forms.Label();
+            this.btnStopListening = new System.Windows.Forms.Button();
+            this.btnStartListening = new System.Windows.Forms.Button();
+            this.chkRequireListenerKey = new System.Windows.Forms.CheckBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtAuthListeningKey = new System.Windows.Forms.TextBox();
+            this.chkEnableListening = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.chkAutoCalcVariables = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
             this.tabServerSettings.SuspendLayout();
+            this.tabLocalListener.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -269,7 +286,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 696);
+            this.uiBtnOpen.Location = new System.Drawing.Point(3, 576);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(48, 48);
             this.uiBtnOpen.TabIndex = 13;
@@ -368,12 +385,13 @@
             this.uiSettingTabs.Controls.Add(this.tabAppSettings);
             this.uiSettingTabs.Controls.Add(this.tabDebugSettings);
             this.uiSettingTabs.Controls.Add(this.tabServerSettings);
+            this.uiSettingTabs.Controls.Add(this.tabLocalListener);
             this.uiSettingTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiSettingTabs.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uiSettingTabs.Location = new System.Drawing.Point(3, 73);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(619, 617);
+            this.uiSettingTabs.Size = new System.Drawing.Size(632, 497);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
@@ -405,7 +423,7 @@
             this.tabAppSettings.Location = new System.Drawing.Point(4, 30);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppSettings.Size = new System.Drawing.Size(611, 583);
+            this.tabAppSettings.Size = new System.Drawing.Size(624, 463);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
@@ -636,6 +654,7 @@
             // tabDebugSettings
             // 
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.chkAutoCalcVariables);
             this.tabDebugSettings.Controls.Add(this.label16);
             this.tabDebugSettings.Controls.Add(this.cboCancellationKey);
             this.tabDebugSettings.Controls.Add(this.chkOverrideInstances);
@@ -658,7 +677,7 @@
             this.tabDebugSettings.Location = new System.Drawing.Point(4, 30);
             this.tabDebugSettings.Name = "tabDebugSettings";
             this.tabDebugSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebugSettings.Size = new System.Drawing.Size(611, 583);
+            this.tabDebugSettings.Size = new System.Drawing.Size(624, 463);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
             // 
@@ -668,7 +687,7 @@
             this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label16.Location = new System.Drawing.Point(6, 413);
+            this.label16.Location = new System.Drawing.Point(6, 424);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(134, 21);
             this.label16.TabIndex = 37;
@@ -678,7 +697,7 @@
             // 
             this.cboCancellationKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCancellationKey.FormattingEnabled = true;
-            this.cboCancellationKey.Location = new System.Drawing.Point(142, 411);
+            this.cboCancellationKey.Location = new System.Drawing.Point(142, 422);
             this.cboCancellationKey.Name = "cboCancellationKey";
             this.cboCancellationKey.Size = new System.Drawing.Size(154, 29);
             this.cboCancellationKey.TabIndex = 36;
@@ -703,7 +722,7 @@
             this.lblDelay.BackColor = System.Drawing.Color.Transparent;
             this.lblDelay.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDelay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblDelay.Location = new System.Drawing.Point(6, 192);
+            this.lblDelay.Location = new System.Drawing.Point(6, 207);
             this.lblDelay.Name = "lblDelay";
             this.lblDelay.Size = new System.Drawing.Size(349, 21);
             this.lblDelay.TabIndex = 34;
@@ -711,7 +730,7 @@
             // 
             // txtCommandDelay
             // 
-            this.txtCommandDelay.Location = new System.Drawing.Point(359, 190);
+            this.txtCommandDelay.Location = new System.Drawing.Point(359, 205);
             this.txtCommandDelay.Name = "txtCommandDelay";
             this.txtCommandDelay.Size = new System.Drawing.Size(77, 29);
             this.txtCommandDelay.TabIndex = 33;
@@ -722,7 +741,7 @@
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label10.Location = new System.Drawing.Point(15, 361);
+            this.label10.Location = new System.Drawing.Point(15, 372);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 21);
             this.label10.TabIndex = 32;
@@ -734,7 +753,7 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label9.Location = new System.Drawing.Point(12, 327);
+            this.label9.Location = new System.Drawing.Point(12, 338);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(106, 21);
             this.label9.TabIndex = 31;
@@ -745,7 +764,7 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label8.Location = new System.Drawing.Point(10, 248);
+            this.label8.Location = new System.Drawing.Point(10, 259);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(410, 72);
             this.label8.TabIndex = 30;
@@ -758,7 +777,7 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Segoe UI Light", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label7.Location = new System.Drawing.Point(6, 221);
+            this.label7.Location = new System.Drawing.Point(6, 232);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(149, 30);
             this.label7.TabIndex = 29;
@@ -770,7 +789,7 @@
             this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 342);
+            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 353);
             this.lblVariableDisplay.Name = "lblVariableDisplay";
             this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
             this.lblVariableDisplay.TabIndex = 28;
@@ -778,7 +797,7 @@
             // 
             // txtVariableEndMarker
             // 
-            this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 357);
+            this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 368);
             this.txtVariableEndMarker.Name = "txtVariableEndMarker";
             this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableEndMarker.TabIndex = 27;
@@ -786,7 +805,7 @@
             // 
             // txtVariableStartMarker
             // 
-            this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 324);
+            this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 335);
             this.txtVariableStartMarker.Name = "txtVariableStartMarker";
             this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableStartMarker.TabIndex = 26;
@@ -833,7 +852,7 @@
             this.tabServerSettings.Location = new System.Drawing.Point(4, 30);
             this.tabServerSettings.Name = "tabServerSettings";
             this.tabServerSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabServerSettings.Size = new System.Drawing.Size(611, 583);
+            this.tabServerSettings.Size = new System.Drawing.Size(624, 463);
             this.tabServerSettings.TabIndex = 2;
             this.tabServerSettings.Text = "Server";
             // 
@@ -997,6 +1016,190 @@
             this.lblStatus.TabIndex = 16;
             this.lblStatus.Visible = false;
             // 
+            // tabLocalListener
+            // 
+            this.tabLocalListener.Controls.Add(this.txtWhiteList);
+            this.tabLocalListener.Controls.Add(this.chkEnableWhitelist);
+            this.tabLocalListener.Controls.Add(this.chkAutoStartListener);
+            this.tabLocalListener.Controls.Add(this.label19);
+            this.tabLocalListener.Controls.Add(this.txtListeningPort);
+            this.tabLocalListener.Controls.Add(this.lblListeningStatus);
+            this.tabLocalListener.Controls.Add(this.btnStopListening);
+            this.tabLocalListener.Controls.Add(this.btnStartListening);
+            this.tabLocalListener.Controls.Add(this.chkRequireListenerKey);
+            this.tabLocalListener.Controls.Add(this.label20);
+            this.tabLocalListener.Controls.Add(this.txtAuthListeningKey);
+            this.tabLocalListener.Controls.Add(this.chkEnableListening);
+            this.tabLocalListener.Controls.Add(this.label17);
+            this.tabLocalListener.Controls.Add(this.label18);
+            this.tabLocalListener.Location = new System.Drawing.Point(4, 30);
+            this.tabLocalListener.Name = "tabLocalListener";
+            this.tabLocalListener.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLocalListener.Size = new System.Drawing.Size(624, 463);
+            this.tabLocalListener.TabIndex = 3;
+            this.tabLocalListener.Text = "Local Listener";
+            this.tabLocalListener.UseVisualStyleBackColor = true;
+            // 
+            // txtWhiteList
+            // 
+            this.txtWhiteList.Location = new System.Drawing.Point(15, 291);
+            this.txtWhiteList.Multiline = true;
+            this.txtWhiteList.Name = "txtWhiteList";
+            this.txtWhiteList.Size = new System.Drawing.Size(371, 93);
+            this.txtWhiteList.TabIndex = 48;
+            // 
+            // chkEnableWhitelist
+            // 
+            this.chkEnableWhitelist.AutoSize = true;
+            this.chkEnableWhitelist.BackColor = System.Drawing.Color.Transparent;
+            this.chkEnableWhitelist.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkEnableWhitelist.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkEnableWhitelist.Location = new System.Drawing.Point(14, 261);
+            this.chkEnableWhitelist.Name = "chkEnableWhitelist";
+            this.chkEnableWhitelist.Size = new System.Drawing.Size(318, 24);
+            this.chkEnableWhitelist.TabIndex = 47;
+            this.chkEnableWhitelist.Text = "Enable IP Verification (Seperate with comma)";
+            this.chkEnableWhitelist.UseVisualStyleBackColor = false;
+            // 
+            // chkAutoStartListener
+            // 
+            this.chkAutoStartListener.AutoSize = true;
+            this.chkAutoStartListener.BackColor = System.Drawing.Color.Transparent;
+            this.chkAutoStartListener.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAutoStartListener.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkAutoStartListener.Location = new System.Drawing.Point(14, 82);
+            this.chkAutoStartListener.Name = "chkAutoStartListener";
+            this.chkAutoStartListener.Size = new System.Drawing.Size(193, 24);
+            this.chkAutoStartListener.TabIndex = 43;
+            this.chkAutoStartListener.Text = "Start Listening on Startup";
+            this.chkAutoStartListener.UseVisualStyleBackColor = false;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Transparent;
+            this.label19.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.SlateGray;
+            this.label19.Location = new System.Drawing.Point(11, 128);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(83, 17);
+            this.label19.TabIndex = 41;
+            this.label19.Text = "Listening Port";
+            // 
+            // txtListeningPort
+            // 
+            this.txtListeningPort.ForeColor = System.Drawing.Color.SteelBlue;
+            this.txtListeningPort.Location = new System.Drawing.Point(14, 148);
+            this.txtListeningPort.Name = "txtListeningPort";
+            this.txtListeningPort.Size = new System.Drawing.Size(132, 29);
+            this.txtListeningPort.TabIndex = 42;
+            // 
+            // lblListeningStatus
+            // 
+            this.lblListeningStatus.AutoSize = true;
+            this.lblListeningStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblListeningStatus.Font = new System.Drawing.Font("Segoe UI Light", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblListeningStatus.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblListeningStatus.Location = new System.Drawing.Point(10, 427);
+            this.lblListeningStatus.Name = "lblListeningStatus";
+            this.lblListeningStatus.Size = new System.Drawing.Size(137, 30);
+            this.lblListeningStatus.TabIndex = 40;
+            this.lblListeningStatus.Text = "Listening on {}";
+            this.lblListeningStatus.Visible = false;
+            // 
+            // btnStopListening
+            // 
+            this.btnStopListening.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btnStopListening.Location = new System.Drawing.Point(167, 391);
+            this.btnStopListening.Name = "btnStopListening";
+            this.btnStopListening.Size = new System.Drawing.Size(147, 33);
+            this.btnStopListening.TabIndex = 39;
+            this.btnStopListening.Text = "Stop Listening";
+            this.btnStopListening.UseVisualStyleBackColor = true;
+            this.btnStopListening.Click += new System.EventHandler(this.btnStopListening_Click);
+            // 
+            // btnStartListening
+            // 
+            this.btnStartListening.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btnStartListening.Location = new System.Drawing.Point(14, 391);
+            this.btnStartListening.Name = "btnStartListening";
+            this.btnStartListening.Size = new System.Drawing.Size(147, 33);
+            this.btnStartListening.TabIndex = 38;
+            this.btnStartListening.Text = "Start Listening";
+            this.btnStartListening.UseVisualStyleBackColor = true;
+            this.btnStartListening.Click += new System.EventHandler(this.btnStartListening_Click);
+            // 
+            // chkRequireListenerKey
+            // 
+            this.chkRequireListenerKey.AutoSize = true;
+            this.chkRequireListenerKey.BackColor = System.Drawing.Color.Transparent;
+            this.chkRequireListenerKey.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkRequireListenerKey.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkRequireListenerKey.Location = new System.Drawing.Point(14, 183);
+            this.chkRequireListenerKey.Name = "chkRequireListenerKey";
+            this.chkRequireListenerKey.Size = new System.Drawing.Size(204, 24);
+            this.chkRequireListenerKey.TabIndex = 37;
+            this.chkRequireListenerKey.Text = "Require Authentication Key";
+            this.chkRequireListenerKey.UseVisualStyleBackColor = false;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.Transparent;
+            this.label20.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.SlateGray;
+            this.label20.Location = new System.Drawing.Point(11, 209);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(113, 17);
+            this.label20.TabIndex = 34;
+            this.label20.Text = "Authentication Key";
+            // 
+            // txtAuthListeningKey
+            // 
+            this.txtAuthListeningKey.ForeColor = System.Drawing.Color.SteelBlue;
+            this.txtAuthListeningKey.Location = new System.Drawing.Point(14, 229);
+            this.txtAuthListeningKey.Name = "txtAuthListeningKey";
+            this.txtAuthListeningKey.Size = new System.Drawing.Size(371, 29);
+            this.txtAuthListeningKey.TabIndex = 35;
+            // 
+            // chkEnableListening
+            // 
+            this.chkEnableListening.AutoSize = true;
+            this.chkEnableListening.BackColor = System.Drawing.Color.Transparent;
+            this.chkEnableListening.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkEnableListening.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkEnableListening.Location = new System.Drawing.Point(14, 105);
+            this.chkEnableListening.Name = "chkEnableListening";
+            this.chkEnableListening.Size = new System.Drawing.Size(180, 24);
+            this.chkEnableListening.TabIndex = 33;
+            this.chkEnableListening.Text = "Local Listening Enabled";
+            this.chkEnableListening.UseVisualStyleBackColor = false;
+            // 
+            // label17
+            // 
+            this.label17.BackColor = System.Drawing.Color.Transparent;
+            this.label17.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.SlateGray;
+            this.label17.Location = new System.Drawing.Point(10, 36);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(587, 67);
+            this.label17.TabIndex = 32;
+            this.label17.Text = "Enable this functionality to allow this computer to accept script execution reque" +
+    "sts from other taskt or REST-capable clients.";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.Color.Transparent;
+            this.label18.Font = new System.Drawing.Font("Segoe UI Light", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label18.Location = new System.Drawing.Point(7, 6);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(268, 30);
+            this.label18.TabIndex = 31;
+            this.label18.Text = "Local Listener Settings (BETA)";
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
@@ -1012,7 +1215,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(625, 753);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(638, 633);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -1024,7 +1227,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(625, 70);
+            this.panel1.Size = new System.Drawing.Size(638, 70);
             this.panel1.TabIndex = 26;
             // 
             // tmrGetSocketStatus
@@ -1037,11 +1240,24 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // chkAutoCalcVariables
+            // 
+            this.chkAutoCalcVariables.AutoSize = true;
+            this.chkAutoCalcVariables.BackColor = System.Drawing.Color.Transparent;
+            this.chkAutoCalcVariables.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAutoCalcVariables.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkAutoCalcVariables.Location = new System.Drawing.Point(10, 178);
+            this.chkAutoCalcVariables.Name = "chkAutoCalcVariables";
+            this.chkAutoCalcVariables.Size = new System.Drawing.Size(255, 25);
+            this.chkAutoCalcVariables.TabIndex = 38;
+            this.chkAutoCalcVariables.Text = "Calculate Variables Automatically";
+            this.chkAutoCalcVariables.UseVisualStyleBackColor = false;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 753);
+            this.ClientSize = new System.Drawing.Size(638, 633);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1056,6 +1272,8 @@
             this.tabDebugSettings.PerformLayout();
             this.tabServerSettings.ResumeLayout(false);
             this.tabServerSettings.PerformLayout();
+            this.tabLocalListener.ResumeLayout(false);
+            this.tabLocalListener.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -1139,5 +1357,21 @@
         private System.Windows.Forms.CheckBox chkSlimActionBar;
         private System.Windows.Forms.ComboBox cboCancellationKey;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TabPage tabLocalListener;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtAuthListeningKey;
+        private System.Windows.Forms.CheckBox chkEnableListening;
+        private System.Windows.Forms.CheckBox chkRequireListenerKey;
+        private System.Windows.Forms.Button btnStopListening;
+        private System.Windows.Forms.Button btnStartListening;
+        private System.Windows.Forms.Label lblListeningStatus;
+        private System.Windows.Forms.CheckBox chkAutoStartListener;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtListeningPort;
+        private System.Windows.Forms.CheckBox chkEnableWhitelist;
+        private System.Windows.Forms.TextBox txtWhiteList;
+        internal System.Windows.Forms.CheckBox chkAutoCalcVariables;
     }
 }

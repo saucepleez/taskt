@@ -1,6 +1,6 @@
 ﻿namespace taskt.UI.Forms.Supplemental
 {
-    partial class frmVariableSelector
+    partial class frmItemSelector
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVariableSelector));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmItemSelector));
             this.lstVariables = new System.Windows.Forms.ListBox();
-            this.lblXPosition = new System.Windows.Forms.Label();
+            this.lblHeader = new System.Windows.Forms.Label();
             this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
@@ -48,17 +48,17 @@
             this.lstVariables.TabIndex = 0;
             this.lstVariables.DoubleClick += new System.EventHandler(this.lstVariables_DoubleClick);
             // 
-            // lblXPosition
+            // lblHeader
             // 
-            this.lblXPosition.AutoSize = true;
-            this.lblXPosition.BackColor = System.Drawing.Color.Transparent;
-            this.lblXPosition.Font = new System.Drawing.Font("Segoe UI Light", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblXPosition.ForeColor = System.Drawing.Color.White;
-            this.lblXPosition.Location = new System.Drawing.Point(7, 4);
-            this.lblXPosition.Name = "lblXPosition";
-            this.lblXPosition.Size = new System.Drawing.Size(301, 32);
-            this.lblXPosition.TabIndex = 1;
-            this.lblXPosition.Text = "Insert a variable from the list";
+            this.lblHeader.AutoSize = true;
+            this.lblHeader.BackColor = System.Drawing.Color.Transparent;
+            this.lblHeader.Font = new System.Drawing.Font("Segoe UI Light", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeader.ForeColor = System.Drawing.Color.White;
+            this.lblHeader.Location = new System.Drawing.Point(7, 4);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(301, 32);
+            this.lblHeader.TabIndex = 1;
+            this.lblHeader.Text = "Insert a variable from the list";
             // 
             // uiBtnOk
             // 
@@ -75,6 +75,7 @@
             this.uiBtnOk.Size = new System.Drawing.Size(88, 49);
             this.uiBtnOk.TabIndex = 18;
             this.uiBtnOk.TabStop = false;
+            this.uiBtnOk.Text = "Ok";
             this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // uiBtnCancel
@@ -92,6 +93,7 @@
             this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
             this.uiBtnCancel.TabIndex = 19;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // frmVariableSelector
@@ -101,7 +103,7 @@
             this.ClientSize = new System.Drawing.Size(353, 262);
             this.Controls.Add(this.uiBtnOk);
             this.Controls.Add(this.uiBtnCancel);
-            this.Controls.Add(this.lblXPosition);
+            this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.lstVariables);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmVariableSelector";
@@ -115,9 +117,9 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label lblXPosition;
         private CustomControls.UIPictureButton uiBtnOk;
         private CustomControls.UIPictureButton uiBtnCancel;
         public System.Windows.Forms.ListBox lstVariables;
+        public System.Windows.Forms.Label lblHeader;
     }
 }

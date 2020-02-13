@@ -48,6 +48,20 @@ namespace taskt.UI.CustomControls
             return controlList;
 
         }
+
+        public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        {
+            var controlList = new List<Control>();
+            var label = CreateDefaultLabelFor(parameterName, parent);
+            var gridview = CreateDataGridView(parent, parameterName);
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { gridview }, editor);
+
+            controlList.Add(label);
+            controlList.AddRange(helpers);
+            controlList.Add(gridview);
+
+            return controlList;
+        }
         public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
@@ -227,6 +241,12 @@ namespace taskt.UI.CustomControls
                         helperControl.CommandDisplay = "Launch HTML Builder";
                         helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
                         break;
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
+                        //show variable selector
+                        helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+                        helperControl.CommandDisplay = "Add New If Statement";
+                        break;
+
                         //default:
                         //    MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
                         //    break;
@@ -240,7 +260,18 @@ namespace taskt.UI.CustomControls
 
         }
 
-
+      
+        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName)
+        {
+            var gridView = new DataGridView();
+            gridView.AllowUserToAddRows = true;
+            gridView.AllowUserToDeleteRows = true;
+            gridView.Size = new Size(400, 250);
+            gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridView.DataBindings.Add("DataSource", sourceCommand, dataSourceName, false, DataSourceUpdateMode.OnPropertyChanged);
+            gridView.AllowUserToResizeRows = false;
+            return gridView;
+        }
         private static void ShowCodeBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
             //get textbox text
@@ -278,7 +309,7 @@ namespace taskt.UI.CustomControls
         public static void ShowVariableSelector(object sender, EventArgs e)
         {
             //create variable selector form
-            UI.Forms.Supplemental.frmVariableSelector newVariableSelector = new Forms.Supplemental.frmVariableSelector();
+            UI.Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector();
 
        
             //get copy of user variables and append system variables, then load to combobox
@@ -712,7 +743,7 @@ public class AutomationCommand
         public string DisplayGroup { get; set; }
         public Core.Automation.Commands.ScriptCommand Command { get; set; }
         public List<Control> UIControls { get; set; }
-        public void RenderUIComponents()
+        public void RenderUIComponents(taskt.UI.Forms.frmCommandEditor editorForm)
         {
             if (Command == null)
             {
@@ -724,7 +755,7 @@ public class AutomationCommand
             if (Command.CustomRendering)
             {
    
-                var renderedControls = Command.Render(null);
+                var renderedControls = Command.Render(editorForm);
 
                 if (renderedControls.Count == 0)
                 {
@@ -774,7 +805,7 @@ public class AutomationCommand
             //preference to preload is false
             //if (UIControls is null)
             //{
-                this.RenderUIComponents();
+                this.RenderUIComponents(editor);
             //}
 
             foreach (var ctrl in UIControls)

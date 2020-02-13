@@ -2,13 +2,13 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" />
+      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandID="eb1f243a-df42-4ac0-b376-35f8901ce20b" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExcelOpenWorkbookCommand" CommandName="ExcelOpenWorkbookCommand" IsCommented="false" SelectionName="Open Workbook" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_FilePath="D:\Dropbox\Environment Folders\Desktop\Sample.xlsx" />
+      <ScriptCommand xsi:type="ExcelOpenWorkbookCommand" CommandID="b0dab417-e794-4b2b-8cd3-65763dab3048" CommandName="ExcelOpenWorkbookCommand" IsCommented="false" SelectionName="Open Workbook" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_FilePath="D:\Dropbox\Environment Folders\Desktop\Sample.xlsx" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExcelActivateSheetCommand" CommandName="ExcelActivateSheetCommand" IsCommented="false" SelectionName="Activate Sheet" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_SheetName="Sheet2" />
+      <ScriptCommand xsi:type="ExcelActivateSheetCommand" CommandID="fc092c88-1355-405b-a068-cb5be49f698c" CommandName="ExcelActivateSheetCommand" IsCommented="false" SelectionName="Activate Sheet" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_SheetName="Sheet2" />
     </ScriptAction>
   </Commands>
   <Variables />

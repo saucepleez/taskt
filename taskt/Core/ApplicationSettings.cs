@@ -18,6 +18,7 @@ namespace taskt.Core
         public ServerSettings ServerSettings { get; set; } = new ServerSettings();
         public EngineSettings EngineSettings { get; set; } = new EngineSettings();
         public ClientSettings ClientSettings { get; set; } = new ClientSettings();
+        public LocalListenerSettings ListenerSettings { get; set; } = new LocalListenerSettings();
         public ApplicationSettings()
         {
 
@@ -121,7 +122,7 @@ namespace taskt.Core
         public bool OverrideExistingAppInstances { get; set; }
         public bool AutoCloseMessagesOnServerExecution { get; set; }
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
-
+        public bool AutoCalcVariables { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -130,13 +131,14 @@ namespace taskt.Core
             ShowAdvancedDebugOutput = false;
             CreateMissingVariablesDuringExecution = true;
             TrackExecutionMetrics = true;
-            VariableStartMarker = "[";
-            VariableEndMarker = "]";
+            VariableStartMarker = "{";
+            VariableEndMarker = "}";
             CancellationKey = System.Windows.Forms.Keys.Pause;
             DelayBetweenCommands = 250;
             OverrideExistingAppInstances = false;
             AutoCloseMessagesOnServerExecution = true;
             AutoCloseDebugWindowOnServerExecution = true;
+            AutoCalcVariables = true;
     }
     }
     /// <summary>
@@ -166,5 +168,40 @@ namespace taskt.Core
             PreloadBuilderCommands = false;
             UseSlimActionBar = true;
         }
+    }
+    /// <summary>
+    /// Defines Server settings for tasktServer if using the server component to manage the client
+    /// </summary>
+    [Serializable]
+    public class LocalListenerSettings
+    {
+        public bool StartListenerOnStartup { get; set; }
+        public bool LocalListeningEnabled { get; set; }
+        public bool RequireListenerAuthenticationKey { get; set; }
+        public int ListeningPort { get; set; }
+        public string AuthKey { get; set; }
+        public bool EnableWhitelist { get; set; }
+        public string IPWhiteList { get; set; }
+        public LocalListenerSettings()
+        {
+            StartListenerOnStartup = false;
+            LocalListeningEnabled = false;
+            RequireListenerAuthenticationKey = false;
+            EnableWhitelist = false;
+            ListeningPort = 19312;
+            AuthKey = Guid.NewGuid().ToString();
+            IPWhiteList = "";
+        }
+    }
+
+    [Serializable]
+    public class WhiteListIP
+    {
+        string _value;
+        public WhiteListIP(string s)
+        {
+            _value = s;
+        }
+        public string Value { get { return _value; } set { _value = value; } }
     }
 }

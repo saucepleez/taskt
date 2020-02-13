@@ -20,6 +20,7 @@ namespace taskt.Core.Automation.Engine
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
+        public bool CurrentLoopContinuing { get; set; }
         private bool IsScriptPaused { get; set; }
         [JsonIgnore]
         public UI.Forms.frmScriptEngine tasktEngineUI { get; set; }
@@ -36,6 +37,9 @@ namespace taskt.Core.Automation.Engine
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
         public event EventHandler<LineNumberChangedEventArgs> LineNumberChangedEvent;
+
+        public bool AutoCalculateVariables { get; set; }
+        public string TasktResult { get; set; } = "";
 
         public Serilog.Core.Logger engineLogger;
         public AutomationEngineInstance()
@@ -56,9 +60,14 @@ namespace taskt.Core.Automation.Engine
             serverSettings = settings.ServerSettings;
 
             VariableList = new List<Script.ScriptVariable>();
+
             AppInstances = new Dictionary<string, object>();
             ServiceResponses = new List<IRestResponse>();
             DataTables = new List<DataTable>();
+
+            //this value can be later overriden by script
+            AutoCalculateVariables = engineSettings.AutoCalcVariables;
+
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null)
@@ -264,7 +273,7 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand))
+                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);
@@ -282,6 +291,10 @@ namespace taskt.Core.Automation.Engine
                 {
                     CurrentLoopCancelled = true;
                 }
+                else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
+                {
+                    CurrentLoopContinuing = true;
+                }
                 else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
                 {
                     //get variable
@@ -296,10 +309,10 @@ namespace taskt.Core.Automation.Engine
                 {
                     //sleep required time
                     System.Threading.Thread.Sleep(engineSettings.DelayBetweenCommands);
-
-                    //run the command
-                    parentCommand.RunCommand(this);
-                }
+                 
+                        //run the command
+                        parentCommand.RunCommand(this);
+                    }
             }
             catch (Exception ex)
             {
@@ -449,7 +462,18 @@ namespace taskt.Core.Automation.Engine
         {
             engineLogger.Information("Result Code: " + result.ToString());
 
-       
+            //add result variable if missing
+            var resultVar = VariableList.Where(f => f.VariableName == "taskt.Result").FirstOrDefault();
+            
+            //handle if variable is missing
+            if (resultVar == null)
+            {
+                resultVar = new Script.ScriptVariable() { VariableName = "taskt.Result", VariableValue = "" };
+            }
+
+            //check value
+            var resultValue = resultVar.VariableValue.ToString();
+
 
             if (error == null)
             {
@@ -459,6 +483,16 @@ namespace taskt.Core.Automation.Engine
                 {
                     HttpServerClient.UpdateTask(taskModel.TaskID, "Completed", "Script Completed Successfully");
                 }
+
+                if (string.IsNullOrEmpty(resultValue))
+                {
+                    TasktResult = "Successfully Completed Script";
+                }
+                else
+                {
+                    TasktResult = resultValue;
+                }
+                
             }
                
             else
@@ -469,7 +503,9 @@ namespace taskt.Core.Automation.Engine
                 {
                     HttpServerClient.UpdateTask(taskModel.TaskID, "Error", error);
                 }
-               
+
+                TasktResult = error;
+
             }
 
             engineLogger.Dispose();

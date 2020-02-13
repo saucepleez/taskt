@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f967b1b8-243e-4a6d-a0c9-ff80feef3b16" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="This sample shows how taskt can be used remotely by API" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="141d1035-8dc6-4ce6-943e-9178e9117a52" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="or other taskt Instances" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="b88f48b3-e895-4d82-8551-995d18d04978" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Scenario 1) Call Remote API to get Engine Status" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoteAPICommand" CommandID="2fb19012-ed9a-4a5f-a27d-58275bc64bfd" CommandName="RemoteAPICommand" IsCommented="false" SelectionName="Remote API" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="192.168.86.200:19312" v_ParameterType="Get Engine Status" v_RequestTimeout="5000" v_userVariableName="vRes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="31e8ef5e-fbb3-4ca9-b71e-761266067797" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vRes" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ef8115ef-11aa-4b0f-9500-6c4445a9ca5b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Scenario 2) Run a task remotely using raw taskt XML data" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoteTaskCommand" CommandID="1d15c255-a87b-4223-ba88-806ce53aca18" CommandName="RunTaskRemoteCommand" IsCommented="false" SelectionName="Remote Task" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="192.168.86.200:19312" v_ParameterType="Run Raw Script Data" v_ExecuteAwait="Continue Execution" v_Parameter="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;Script xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;&#xD;&#xA;  &lt;Commands&gt;&#xD;&#xA;    &lt;ScriptAction&gt;&#xD;&#xA;      &lt;ScriptCommand xsi:type=&quot;MessageBoxCommand&quot; CommandID=&quot;47aaa426-52ed-4b3f-ab93-9fceeff696a0&quot; CommandName=&quot;MessageBoxCommand&quot; IsCommented=&quot;false&quot; SelectionName=&quot;Show Message&quot; DefaultPause=&quot;0&quot; LineNumber=&quot;1&quot; PauseBeforeExeucution=&quot;false&quot; CommandEnabled=&quot;true&quot; v_ExecutionLocation=&quot;rem&quot; v_Message=&quot;Hello World!&quot; v_AutoCloseAfter=&quot;0&quot; /&gt;&#xD;&#xA;    &lt;/ScriptAction&gt;&#xD;&#xA;  &lt;/Commands&gt;&#xD;&#xA;  &lt;Variables&gt;&#xD;&#xA;    &lt;ScriptVariable&gt;&#xD;&#xA;      &lt;VariableName&gt;vResult&lt;/VariableName&gt;&#xD;&#xA;      &lt;VariableValue xsi:type=&quot;xsd:string&quot;&gt;&lt;/VariableValue&gt;&#xD;&#xA;    &lt;/ScriptVariable&gt;&#xD;&#xA;  &lt;/Variables&gt;&#xD;&#xA;&lt;/Script&gt;" v_RequestTimeout="120000" v_userVariableName="vRes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="5bdf2afb-ea4c-4f11-9ace-6ac12386911f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vRes" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="20659457-2c28-4eed-88f0-f573b228e64f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Scenario 3) Run a local task (on current PC) remotely" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoteTaskCommand" CommandID="92fd5748-9862-40d9-aab9-a6a01bc1de22" CommandName="RunTaskRemoteCommand" IsCommented="false" SelectionName="Remote Task" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="192.168.86.200:19312" v_ParameterType="Run Local File" v_ExecuteAwait="Continue Execution" v_Parameter="Hello World 123.xml" v_RequestTimeout="120000" v_userVariableName="vRes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="be0ce9cb-f2cc-4b33-be9b-d94a67bfd8a2" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vRes" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="feac7065-a071-43a3-a162-f07d1e202272" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Scenario 4) Run a remote task" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoteTaskCommand" CommandID="da794a25-e73c-4421-9106-b0abaa49bb92" CommandName="RunTaskRemoteCommand" IsCommented="false" SelectionName="Remote Task" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="192.168.86.200:19312" v_ParameterType="Run Remote File" v_ExecuteAwait="Continue Execution" v_Parameter="Hi.xml" v_RequestTimeout="120000" v_userVariableName="vRes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f55a3ef3-4611-4649-bba8-0b8a1f992d3d" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vRes" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="af6fbe61-2378-434f-bbcd-57d7875d2670" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Scenario 5) Run Task and Await Result" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoteTaskCommand" CommandID="1ec32408-6e79-43a2-a604-bba91c879833" CommandName="RunTaskRemoteCommand" IsCommented="false" SelectionName="Remote Task" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="192.168.86.200:19312" v_ParameterType="Run Local File" v_ExecuteAwait="Await For Result" v_Parameter="Await.xml" v_RequestTimeout="120000" v_userVariableName="vRes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="191a6bd3-5f40-405b-8706-8aa2d38599ef" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vRes" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3b941412-f357-4eb3-94fa-8b3919180f14" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" v_Comment="Scenario 6) Run a JSON Command" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoteTaskCommand" CommandID="8d3f7d44-62c5-47f9-a630-8c7380754a00" CommandName="RunTaskRemoteCommand" IsCommented="false" SelectionName="Remote Task" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="192.168.86.200:19312" v_ParameterType="Run Command Json" v_ExecuteAwait="Await For Result" v_Parameter="{&quot;$type&quot;:&quot;taskt.Core.Automation.Commands.MessageBoxCommand, taskt&quot;,&quot;v_Message&quot;:&quot;test&quot;,&quot;v_AutoCloseAfter&quot;:0,&quot;CommandID&quot;:&quot;40aae430-f6bc-4d04-861c-4f6f03dd0601&quot;,&quot;CommandName&quot;:&quot;MessageBoxCommand&quot;,&quot;IsCommented&quot;:false,&quot;SelectionName&quot;:&quot;Show Message&quot;,&quot;DefaultPause&quot;:0,&quot;LineNumber&quot;:2,&quot;PauseBeforeExeucution&quot;:false,&quot;DisplayForeColor&quot;:&quot;SteelBlue&quot;,&quot;v_Comment&quot;:null,&quot;CommandEnabled&quot;:true,&quot;CustomRendering&quot;:true}" v_RequestTimeout="120000" v_userVariableName="vRes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="e2dd753b-7553-4b5f-82ec-5aa2896b05ab" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vRes" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e1551e0e-46ae-4fa7-9665-e87371a57c6f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" v_Comment="Scenario 7) Remotely Restart taskt" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoteAPICommand" CommandID="204414e2-ba0d-4d4f-b92d-2521098a8417" CommandName="RemoteAPICommand" IsCommented="false" SelectionName="Remote API" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="192.168.86.200:19312" v_ParameterType="Restart taskt" v_RequestTimeout="5000" v_userVariableName="vRes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="7eba73a0-42e8-404a-bcba-a81fdffb7007" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vRes" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vRes</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

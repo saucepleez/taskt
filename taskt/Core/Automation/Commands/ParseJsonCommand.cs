@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         public ParseJsonCommand()
         {
             this.CommandName = "ParseJsonCommand";
-            this.SelectionName = "Parse JSON Object";
+            this.SelectionName = "Parse JSON Item";
             this.CommandEnabled = true;
             this.CustomRendering = true;
           

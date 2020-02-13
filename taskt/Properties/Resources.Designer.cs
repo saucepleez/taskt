@@ -213,6 +213,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_begin_multi_if {
+            get {
+                object obj = ResourceManager.GetObject("command_begin_multi_if", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_camera {
             get {
                 object obj = ResourceManager.GetObject("command_camera", resourceCulture);
@@ -323,6 +333,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_nextloop {
+            get {
+                object obj = ResourceManager.GetObject("command_nextloop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_nlg {
             get {
                 object obj = ResourceManager.GetObject("command_nlg", resourceCulture);
@@ -346,6 +366,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_pause {
             get {
                 object obj = ResourceManager.GetObject("command_pause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_remote {
+            get {
+                object obj = ResourceManager.GetObject("command_remote", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

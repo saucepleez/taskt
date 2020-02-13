@@ -98,6 +98,10 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.14.0.0.1\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
       <HintPath>..\packages\TaskScheduler.2.6.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
@@ -146,8 +150,11 @@
     <Reference Include="UIAutomationClientsideProviders" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
-    <Reference Include="WebDriver, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.7.0\lib\net45\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net, Version=0.15.0.9, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.15.0\lib\net45\WebSocket4Net.dll</HintPath>
@@ -157,6 +164,14 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginMutliIfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\AddDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginIfCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginContinousLoopCommand.cs" />
@@ -167,11 +182,27 @@
     <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CreateDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DatabaseExecuteQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DatabaseDefineConnectionCommand.cs" />
     <Compile Include="Core\Automation\Commands\CatchExceptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MathCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\EndTryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelAppendCellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelAppendRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGetRangeCommand .cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGetRangeCommandASDT.cs" />
+    <Compile Include="Core\Automation\Commands\LoadDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EncryptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ParseJsonModelCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RemoteAPICommand.cs" />
+    <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FilterDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RemoveDataRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />
@@ -288,6 +319,7 @@
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\IO\Folders.cs" />
+    <Compile Include="Core\Server\LocalTCPListener.cs" />
     <Compile Include="Core\Server\HttpServerClient.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\IO\JavaInterface.cs" />
@@ -414,11 +446,11 @@
     <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
+    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.Designer.cs">
-      <DependentUpon>frmVariableSelector.cs</DependentUpon>
+    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.Designer.cs">
+      <DependentUpon>frmItemSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmUpdate.cs">
       <SubType>Form</SubType>
@@ -584,8 +616,8 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
-      <DependentUpon>frmVariableSelector.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmItemSelector.resx">
+      <DependentUpon>frmItemSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUpdate.resx">
       <DependentUpon>frmUpdate.cs</DependentUpon>
@@ -624,6 +656,15 @@
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="MSDASC">
       <Guid>{2206CEB0-19C1-11D1-89E0-00C04FD7A829}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -660,6 +701,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\robot-bouncing.gif" />
@@ -685,6 +735,9 @@
     <None Include="Resources\command-nlg.png" />
     <None Include="Resources\command-database.png" />
     <None Include="Resources\command-try.png" />
+    <None Include="Resources\command-remote.png" />
+    <None Include="Resources\command-begin-multi-if.png" />
+    <None Include="Resources\command-nextloop.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

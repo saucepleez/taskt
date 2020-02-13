@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -69,6 +70,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Switch to frame")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Count")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Options")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Select Option")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**, **Get Count**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
@@ -224,6 +227,12 @@ namespace taskt.Core.Automation.Commands
                                            where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
+                    string encryptedData = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Encrypted Text"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+
                     if (clearElement == null)
                     {
                         clearElement = "No";
@@ -235,6 +244,11 @@ namespace taskt.Core.Automation.Commands
                     }
 
 
+                    if (encryptedData == "Encrypted")
+                    {
+                        textToSet = Core.EncryptionServices.DecryptString(textToSet, "TASKT");
+                    }
+                   
                     string[] potentialKeyPresses = textToSet.Split('{', '}');
 
                     Type seleniumKeys = typeof(OpenQA.Selenium.Keys);
@@ -262,7 +276,86 @@ namespace taskt.Core.Automation.Commands
                     }
 
                     break;
+                case "Get Options":
 
+                    string applyToVarName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Variable Name"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+                    string attribName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Attribute Name"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+
+
+                    var optionsItems = new List<string>();
+                    var ele = (IWebElement)element;
+                    var select = new SelectElement(ele);
+                    var options = select.Options;
+
+                    foreach (var option in options)
+                    {
+                        var optionValue = option.GetAttribute(attribName);
+                        optionsItems.Add(optionValue);
+                    }
+                 
+                    var requiredVariable = engine.VariableList.Where(x => x.VariableName == applyToVarName).FirstOrDefault();
+
+                    if (requiredVariable == null)
+                    {
+                        engine.VariableList.Add(new Script.ScriptVariable() { VariableName = applyToVarName, CurrentPosition = 0 });
+                        requiredVariable = engine.VariableList.Where(x => x.VariableName == applyToVarName).FirstOrDefault();
+                    }
+
+                    requiredVariable.VariableValue = optionsItems;
+                    requiredVariable.CurrentPosition = 0;
+
+
+                    break;
+                case "Select Option":
+
+                    string selectionType = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                             where rw.Field<string>("Parameter Name") == "Selection Type"
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string selectionParam = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Selection Parameter"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+                    seleniumInstance.SwitchTo().ActiveElement();
+
+                    var el = (IWebElement)element;
+                    var selectionElement = new SelectElement(el);
+                
+                    switch (selectionType)
+                    {
+                        case "Select By Index":
+                            selectionElement.SelectByIndex(int.Parse(selectionParam));
+                            break;
+                        case "Select By Text":
+                            selectionElement.SelectByText(selectionParam);
+                            break;
+                        case "Select By Value":
+                            selectionElement.SelectByValue(selectionParam);
+                            break;
+                        case "Deselect By Index":
+                            selectionElement.DeselectByIndex(int.Parse(selectionParam));
+                            break;
+                        case "Deselect By Text":
+                            selectionElement.DeselectByText(selectionParam);
+                            break;
+                        case "Deselect By Value":
+                            selectionElement.DeselectByValue(selectionParam);
+                            break;
+                        case "Deselect All":
+                            selectionElement.DeselectAll();
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                    break;
                 case "Get Text":
                 case "Get Attribute":
                 case "Get Count":
@@ -529,6 +622,20 @@ namespace taskt.Core.Automation.Commands
                     {
                         actionParameters.Rows.Add("Text To Set");
                         actionParameters.Rows.Add("Clear Element Before Setting Text");
+                        actionParameters.Rows.Add("Encrypted Text");
+                        actionParameters.Rows.Add("Optional - Click to Encrypt 'Text To Set'");
+
+                        DataGridViewComboBoxCell encryptedBox = new DataGridViewComboBoxCell();
+                        encryptedBox.Items.Add("Not Encrypted");
+                        encryptedBox.Items.Add("Encrypted");
+                        ElementsGridViewHelper.Rows[2].Cells[1] = encryptedBox;
+                        ElementsGridViewHelper.Rows[2].Cells[1].Value = "Not Encrypted";
+
+                        var buttonCell = new DataGridViewButtonCell();
+                        ElementsGridViewHelper.Rows[3].Cells[1] = buttonCell;
+                        ElementsGridViewHelper.Rows[3].Cells[1].Value = "Encrypt Text";
+                        ElementsGridViewHelper.CellContentClick += ElementsGridViewHelper_CellContentClick;
+
                     }
 
                     DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
@@ -569,7 +676,34 @@ namespace taskt.Core.Automation.Commands
                         actionParameters.Rows.Add("Variable Name");
                     }
                     break;
+                case "Get Options":
+                    actionParameters.Rows.Add("Attribute Name");
+                    actionParameters.Rows.Add("Variable Name");
+                    break;
+                case "Select Option":
+                    actionParameters.Rows.Add("Selection Type");
+                    actionParameters.Rows.Add("Selection Parameter");
 
+
+                    DataGridViewComboBoxCell selectionTypeBox = new DataGridViewComboBoxCell();
+                    selectionTypeBox.Items.Add("Select By Index");
+                    selectionTypeBox.Items.Add("Select By Text");
+                    selectionTypeBox.Items.Add("Select By Value");
+                    selectionTypeBox.Items.Add("Deselect By Index");
+                    selectionTypeBox.Items.Add("Deselect By Text");
+                    selectionTypeBox.Items.Add("Deselect By Value");
+                    selectionTypeBox.Items.Add("Deselect All");
+
+                    //assign cell as a combobox
+                    if (sender != null)
+                    {
+                        ElementsGridViewHelper.Rows[0].Cells[1].Value = "Select By Text";
+                    }
+
+                    ElementsGridViewHelper.Rows[0].Cells[1] = selectionTypeBox;
+
+
+                    break;
                 case "Wait For Element To Exist":
                     foreach (var ctrl in ElementParameterControls)
                     {
@@ -593,6 +727,30 @@ namespace taskt.Core.Automation.Commands
             }
 
             ElementsGridViewHelper.DataSource = v_WebActionParameterTable;
+        }
+
+        private void ElementsGridViewHelper_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var targetCell = ElementsGridViewHelper.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (targetCell is DataGridViewButtonCell && targetCell.Value.ToString() == "Encrypt Text")
+            {
+                var targetElement = ElementsGridViewHelper.Rows[0].Cells[1];
+
+                if (string.IsNullOrEmpty(targetElement.Value.ToString()))
+                    return;
+
+                var warning = MessageBox.Show($"Warning! Text should only be encrypted one time and is not reversible in the builder.  Would you like to proceed and convert '{targetElement.Value.ToString()}' to an encrypted value?", "Encryption Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+               
+                if (warning == DialogResult.Yes)
+                {
+                    targetElement.Value = EncryptionServices.EncryptString(targetElement.Value.ToString(), "TASKT");
+                    ElementsGridViewHelper.Rows[2].Cells[1].Value = "Encrypted";
+                }
+               
+            }
+
+         
         }
 
         public override string GetDisplayValue()
