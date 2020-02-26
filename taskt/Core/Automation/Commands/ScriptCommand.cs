@@ -150,6 +150,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(EncryptionCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
     [XmlInclude(typeof(SetEnginePreferenceCommand))]
+    [XmlInclude(typeof(ExtractFileCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
