@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         {
             ShowVariableHelper,
             ShowFileSelectionHelper,
-            ShowFolderSelectionHelper, //FF
+            ShowFolderSelectionHelper,
             ShowImageRecogitionHelper,
             ShowCodeBuilder,
             ShowMouseCaptureHelper,

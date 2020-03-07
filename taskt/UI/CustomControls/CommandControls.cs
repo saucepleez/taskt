@@ -181,7 +181,7 @@ namespace taskt.UI.CustomControls
                         helperControl.Click += (sender, e) => ShowFileSelector(sender, e, editor);
                         break;
 
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper: //FF
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
                         helperControl.CommandDisplay = "Select a Folder";
@@ -389,7 +389,7 @@ namespace taskt.UI.CustomControls
                 targetTextbox.Text = ofd.FileName;
             }
         }
-        private static void ShowFolderSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor) //FF
+        private static void ShowFolderSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
 
