@@ -16,15 +16,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to manipulate emails with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-
-    public class OutlookMoveEmailsCommand : ScriptCommand
+    public class OutlookReplyToEmailsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to Move or Copy the emails")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Move Emails")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Copy Emails")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to move or copy the Emails. Moving will remove the emails from the original folder while Copying will not.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select either **Move Emails** or **Copy Emails**")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to Reply or Reply All")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Reply")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Reply All")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to reply or reply all. Replying will reply to only the original sender. Reply all will reply to everyone.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select either **Reply** or **Reply All**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_OperationType { get; set; }
 
@@ -38,43 +37,54 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Provide a filter (Optional)")]
-        [Attributes.PropertyAttributes.InputSpecification("[Subject] = 'Hello' and [SenderName] = 'Jane Doe'")]
-        [Attributes.PropertyAttributes.SampleUsage("[Subject] = 'Hello'")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter an outlook filter string")]
+        [Attributes.PropertyAttributes.SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe'")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Filter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Move/Copy unread emails only")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether to move/copy unread email messages only")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_MoveUnreadOnly { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Provide the destination folder name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Provide Email Body")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the body you want on your email to be sent.")]
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public string v_DestinationFolder { get; set; }
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_Body { get; set; }
 
-        public OutlookMoveEmailsCommand()
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Select Email Body Type")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Plain")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("HTML")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_BodyType { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Attachment File Path (Optional)")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the Filepath of the file you want attached.")]
+        [Attributes.PropertyAttributes.SampleUsage("c:sales reports\fy06q4.xlsx")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_Attachment { get; set; }
+        public OutlookReplyToEmailsCommand()
         {
-            this.CommandName = "OutlookMoveEmailsCommand";
-            this.SelectionName = "Move/Copy Outlook Emails";
+            this.CommandName = "OutlookReplyToEmailsCommand";
+            this.SelectionName = "Reply To Outlook Emails";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_BodyType = "Plain";
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
             var vFilter = v_Filter.ConvertToUserVariable(sender);
-            var vDestinationFolder = v_DestinationFolder.ConvertToUserVariable(sender);
-            
+            var vBody = v_Body.ConvertToUserVariable(sender);
+            var vAttachment = v_Attachment.ConvertToUserVariable(sender);
+
             Application outlookApp = new Application();
             AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
             NameSpace test = outlookApp.GetNamespace("MAPI");
@@ -83,7 +93,6 @@ namespace taskt.Core.Automation.Commands
             {
                 MAPIFolder inboxFolder = test.GetDefaultFolder(OlDefaultFolders.olFolderInbox).Parent;
                 MAPIFolder sourceFolder = inboxFolder.Folders[vSourceFolder];
-                MAPIFolder destinationFolder = inboxFolder.Folders[vDestinationFolder];
                 Items filteredItems = null;
 
                 if (vFilter != "")
@@ -100,41 +109,31 @@ namespace taskt.Core.Automation.Commands
                     if (_obj is MailItem)
                     {
                         MailItem tempMail = (MailItem)_obj;
-                        if(v_OperationType == "Move Emails")
+                        if (v_OperationType == "Reply")
                         {
-                            if (v_MoveUnreadOnly == "Yes")
-                            {
-                                if (tempMail.UnRead == true)
-                                {
-                                    tempMail.Move(destinationFolder);
-                                }
-                            }
-                            else
-                            {
-                                tempMail.Move(destinationFolder);
-                            }
+                            MailItem newMail = tempMail.Reply();
+                            Reply(newMail, vBody, vAttachment);
                         }
-                        else if (v_OperationType == "Copy Emails")
+                        else if(v_OperationType == "Reply All")
                         {
-                            MailItem copyMail = null;
-                            if (v_MoveUnreadOnly == "Yes")
-                            {
-                                if (tempMail.UnRead == true)
-                                {
-                                    copyMail = tempMail.Copy();
-                                    copyMail.Move(destinationFolder);
-                                }
-                            }
-                            else
-                            {
-                                copyMail = tempMail.Copy();
-                                copyMail.Move(destinationFolder);
-                            }
+                            MailItem newMail = tempMail.ReplyAll();
+                            Reply(newMail, vBody, vAttachment);
                         }
-
                     }
                 }
             }
+        }
+
+        private void Reply(MailItem mail, string body, string attPath)
+        {
+            if(v_BodyType == "HTML")
+                mail.HTMLBody = body;
+            else mail.Body = body;
+            
+            if (!string.IsNullOrEmpty(attPath))
+                mail.Attachments.Add(attPath);
+
+            mail.Send();
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -143,15 +142,15 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolder", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MoveUnreadOnly", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationFolder", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Body", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_BodyType", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Attachment", this, editor));
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From: {v_SourceFolder}, To: {v_DestinationFolder}]";
+            return base.GetDisplayValue() + $" [From: {v_SourceFolder}]";
         }
     }
 }

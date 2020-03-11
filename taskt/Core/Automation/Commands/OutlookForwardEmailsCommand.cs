@@ -16,8 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to manipulate emails with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-
-    public class OutlookDeleteEmailsCommand : ScriptCommand
+    public class OutlookForwardEmailsCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Provide the source mail folder name")]
@@ -28,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolder { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Provide a filter (Required)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Provide a filter (Optional)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter an outlook filter string")]
         [Attributes.PropertyAttributes.SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe'")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -36,26 +35,29 @@ namespace taskt.Core.Automation.Commands
         public string v_Filter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Delete read emails only")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether to delete read email messages only")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate Recipients (; delimited)")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the Email Addresses of the recipients in semicolon seperated values")]
+        [Attributes.PropertyAttributes.SampleUsage("test@test.com;test2@test.com")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public string v_DeleteReadOnly { get; set; }
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_Recipients { get; set; }
 
-        public OutlookDeleteEmailsCommand()
+        public OutlookForwardEmailsCommand()
         {
-            this.CommandName = "OutlookDeleteEmailsCommand";
-            this.SelectionName = "Delete Outlook Emails";
+            this.CommandName = "OutlookForwardEmailsCommand";
+            this.SelectionName = "Forward Outlook Emails";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
             var vFilter = v_Filter.ConvertToUserVariable(sender);
+            var vRecipients = v_Recipients.ConvertToUserVariable(sender);
+
+            var splittext = vRecipients.Split(';');
 
             Application outlookApp = new Application();
             AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
@@ -73,33 +75,21 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    throw new System.Exception("No filter found. Filter required for deleting emails.");
+                    filteredItems = sourceFolder.Items;
                 }
 
-                List<MailItem> tempItems = new List<MailItem>();
                 foreach (object _obj in filteredItems)
                 {
                     if (_obj is MailItem)
                     {
                         MailItem tempMail = (MailItem)_obj;
-                        
-                        if (v_DeleteReadOnly == "Yes")
-                        {
-                            if (tempMail.UnRead == false)
-                            {
-                                tempItems.Add(tempMail);
-                            }
-                        }
-                        else
-                        {
-                            tempItems.Add(tempMail);
-                        }
+                        MailItem newMail = tempMail.Forward();
+                        foreach (var t in splittext)
+                            newMail.Recipients.Add(t.ToString().Trim());
+                        newMail.Recipients.ResolveAll();
+                        newMail.Send();
+                    
                     }
-                }
-                int count = tempItems.Count;
-                for (int i = 0; i < count; i++)
-                {
-                    tempItems[i].Delete();
                 }
             }
         }
@@ -109,13 +99,14 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolder", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteReadOnly", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Recipients", this, editor));
+
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From: {v_SourceFolder}]";
+            return base.GetDisplayValue() + $" [From: {v_SourceFolder}, To: {v_Recipients}]";
         }
     }
 }

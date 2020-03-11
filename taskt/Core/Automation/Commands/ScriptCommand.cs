@@ -17,6 +17,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(OutlookGetEmailsCommand))]
     [XmlInclude(typeof(OutlookMoveEmailsCommand))]
     [XmlInclude(typeof(OutlookDeleteEmailsCommand))]
+    [XmlInclude(typeof(OutlookForwardEmailsCommand))]
+    [XmlInclude(typeof(OutlookReplyToEmailsCommand))]
     [XmlInclude(typeof(ActivateWindowCommand))]
     [XmlInclude(typeof(GetRegexMatchesCommand))]
     [XmlInclude(typeof(MoveWindowCommand))]

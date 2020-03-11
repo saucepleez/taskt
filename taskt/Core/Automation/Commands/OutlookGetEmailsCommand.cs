@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
     public class OutlookGetEmailsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Provide the mail folder name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Provide the source mail folder name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the mail folder you want your emails to come from")]
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Provide a filter (Optional)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter an outlook filter string")]
-        [Attributes.PropertyAttributes.SampleUsage("[Subject] = 'Hello'")]
+        [Attributes.PropertyAttributes.SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe'")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Filter { get; set; }
