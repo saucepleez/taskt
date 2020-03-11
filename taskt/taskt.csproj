@@ -172,6 +172,7 @@
     <Compile Include="Core\Automation\Commands\ExtractFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\MoveFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookDeleteEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
@@ -200,11 +201,14 @@
     <Compile Include="Core\Automation\Commands\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
     <Compile Include="Core\Automation\Commands\EncryptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookGetEmailsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookMoveEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseJsonModelCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoveDataRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RenameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />

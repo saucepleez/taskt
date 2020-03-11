@@ -10,8 +10,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Outlook Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to send an email with outlook")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an email with your currenty logged in outlook account")]
+    [Attributes.ClassAttributes.Description("This command allows you to manipulate emails with outlook")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class OutlookEmailCommand : ScriptCommand
     {
@@ -24,11 +24,12 @@ namespace taskt.Core.Automation.Commands
         public string v_Recipients { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Attachment File Path")]
+        [Attributes.PropertyAttributes.PropertyDescription("Attachment File Path (Optional)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the Filepath of the file you want attached.")]
         [Attributes.PropertyAttributes.SampleUsage("c:sales reports\fy06q4.xlsx")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_Attachment { get; set; }
 
         [XmlAttribute]

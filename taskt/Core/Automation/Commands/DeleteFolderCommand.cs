@@ -15,7 +15,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     public class DeleteFolderCommand : ScriptCommand
     {
-
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source folder")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -24,8 +23,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or [vTextFolderPath]")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFolderPath { get; set; }
-
-
 
         public DeleteFolderCommand()
         {
@@ -53,9 +50,6 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
-
-
-
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [delete " + v_SourceFolderPath + "']";

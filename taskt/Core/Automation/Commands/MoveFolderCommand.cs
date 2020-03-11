@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to move or copy the folder")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Move Folder")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Copy Folder")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to move the folder or copy the folder.  Moving will remove the file from the original path while Copying will not.")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to move the folder or copy the folder. Moving will remove the folder from the original path while Copying will not.")]
         [Attributes.PropertyAttributes.SampleUsage("Select either **Move Folder** or **Copy Folder**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_OperationType { get; set; }
@@ -60,7 +60,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DeleteExisting { get; set; }
 
-
         public MoveFolderCommand()
         {
             this.CommandName = "MoveFolderCommand";
@@ -71,7 +70,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
             //apply variable logic
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
             var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(sender);
@@ -105,8 +103,7 @@ namespace taskt.Core.Automation.Commands
             }
 
         }
-
-        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);

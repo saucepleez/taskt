@@ -56,16 +56,18 @@ namespace taskt.Core.Automation.Commands
             var destinationDirectory = v_DestinationDirectory.ConvertToUserVariable(sender);
             var newFolder = v_NewFolderName.ConvertToUserVariable(sender);
 
+
+            var finalPath = System.IO.Path.Combine(destinationDirectory, newFolder);
             //delete folder if it exists AND the delete option is selected 
             if (v_DeleteExisting == "Yes" && System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
             {
-                System.IO.Directory.Delete(destinationDirectory + "\\" + newFolder, true);
+                System.IO.Directory.Delete(finalPath, true);
             }
 
             //create folder if it doesn't exist
-            if (!System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
+            if (!System.IO.Directory.Exists(finalPath))
             {
-                System.IO.Directory.CreateDirectory(destinationDirectory + "\\" + newFolder);
+                System.IO.Directory.CreateDirectory(finalPath);
             }
      
         }
@@ -82,7 +84,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [create " + v_DestinationDirectory + "\\" + v_NewFolderName +"']";
+            return base.GetDisplayValue() + "[create " + v_DestinationDirectory + "\\" + v_NewFolderName +"']";
         }
     }
 }
