@@ -485,6 +485,18 @@ namespace taskt.UI
             uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("WordCreateApplicationCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordCloseApplicationCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordOpenDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordSaveCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordSaveAsCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordExportToPDFCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAddDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordReadDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordReplaceTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendImageCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendDataTableCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
