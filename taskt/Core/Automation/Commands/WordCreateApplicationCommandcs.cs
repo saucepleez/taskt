@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command opens the Word Application.")]
+    [Attributes.ClassAttributes.Description("This command creates a Word Application.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Word.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     public class WordCreateApplicationCommand : ScriptCommand

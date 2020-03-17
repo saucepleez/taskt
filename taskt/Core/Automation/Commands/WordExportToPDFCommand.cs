@@ -10,8 +10,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to save an Word document.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a document to a file.")]
+    [Attributes.ClassAttributes.Description("This command allows you to export a Word document to a PDF.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a document to a PDF.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     public class WordExportToPDFCommand : ScriptCommand
     {
