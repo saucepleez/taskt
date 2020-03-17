@@ -62,6 +62,13 @@ namespace taskt.Core.Automation.Commands
                 VariableName = v_OutputVariable,
                 VariableValue = dict[v_Key]
             };
+
+            //Overwrites variable if it already exists
+            if (engine.VariableList.Exists(x => x.VariableName == Output.VariableName))
+            {
+                Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == Output.VariableName).FirstOrDefault();
+                engine.VariableList.Remove(temp);
+            }
             //Add to variable list
             engine.VariableList.Add(Output);
         }

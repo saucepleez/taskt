@@ -40,6 +40,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddVariableCommand))]
     [XmlInclude(typeof(VariableCommand))]
     [XmlInclude(typeof(RunScriptCommand))]
+    [XmlInclude(typeof(RunPowerShellScriptCommand))]
     [XmlInclude(typeof(CloseWindowCommand))]
     [XmlInclude(typeof(SetWindowStateCommand))]
     [XmlInclude(typeof(BeginExcelDatasetLoopCommand))]

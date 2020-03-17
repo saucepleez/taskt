@@ -67,6 +67,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = DateTime.Now.ToString();
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            var vDictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
 
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
@@ -81,7 +82,7 @@ namespace taskt.Core.Automation.Commands
 
             //Query required from workbook using OLEDB
             DatasetCommands dataSetCommand = new DatasetCommands();
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select " + v_KeyColumn + "," + v_ValueColumn + " From [" + v_SheetName + "$]");
+            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + vFilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select " + v_KeyColumn + "," + v_ValueColumn + " From [" + v_SheetName + "$]");
 
             var dictlist = requiredData.AsEnumerable().Select(x => new
             {
@@ -97,7 +98,7 @@ namespace taskt.Core.Automation.Commands
 
             Script.ScriptVariable newDictionary = new Script.ScriptVariable
             {
-                VariableName = v_DictionaryName,
+                VariableName = vDictionaryName,
                 VariableValue = outputDictionary
             };
             //close excel
@@ -106,6 +107,12 @@ namespace taskt.Core.Automation.Commands
             //remove instance
             engine.RemoveAppInstance(vInstance);
 
+            //Overwrites variable if it already exists
+            if (engine.VariableList.Exists(x => x.VariableName == newDictionary.VariableName))
+            {
+                Script.ScriptVariable tempDictionary = engine.VariableList.Where(x => x.VariableName == newDictionary.VariableName).FirstOrDefault();
+                engine.VariableList.Remove(tempDictionary);
+            }
             engine.VariableList.Add(newDictionary);
         }
         public override List<Control> Render(frmCommandEditor editor)

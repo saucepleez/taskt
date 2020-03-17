@@ -133,6 +133,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
@@ -202,6 +205,7 @@
     <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoveDataRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RunPowerShellScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
