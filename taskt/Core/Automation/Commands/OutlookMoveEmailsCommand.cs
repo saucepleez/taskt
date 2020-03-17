@@ -13,8 +13,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Outlook Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to manipulate emails with outlook")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate emails with your currenty logged in outlook account")]
+    [Attributes.ClassAttributes.Description("This command allows you to move/copy emails with outlook")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move/copy emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
 
     public class OutlookMoveEmailsCommand : ScriptCommand
