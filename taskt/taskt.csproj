@@ -170,6 +170,7 @@
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginMutliIfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelSplitRangeByColumn.cs" />
     <Compile Include="Core\Automation\Commands\ExtractFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
