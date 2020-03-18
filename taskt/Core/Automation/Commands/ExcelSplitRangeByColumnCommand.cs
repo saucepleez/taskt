@@ -139,27 +139,30 @@ namespace taskt.Core.Automation.Commands
             engine.VariableList.Add(splitDataset);
 
             //save split datatables in individual workbooks labeled by selected column data
-            string newName;
-            foreach (DataTable newDT in result)
+            if (Directory.Exists(vOutputDirectory))
             {
-                newName = newDT.Rows[0].Field<string>(vColumnName).ToString();
-                Console.WriteLine(newName);
-                Microsoft.Office.Interop.Excel.Workbook newWorkBook = excelInstance.Workbooks.Add(Type.Missing);
-                Microsoft.Office.Interop.Excel.Worksheet newSheet = newWorkBook.ActiveSheet;
-                for (int i = 1; i < newDT.Columns.Count + 1; i++)
+                string newName;
+                foreach (DataTable newDT in result)
                 {
-                    newSheet.Cells[1, i] = newDT.Columns[i - 1].ColumnName;
-                }
-
-                for (int j = 0; j < newDT.Rows.Count; j++)
-                {
-                    for (int k = 0; k < newDT.Columns.Count; k++)
+                    newName = newDT.Rows[0].Field<string>(vColumnName).ToString();
+                    Console.WriteLine(newName);
+                    Microsoft.Office.Interop.Excel.Workbook newWorkBook = excelInstance.Workbooks.Add(Type.Missing);
+                    Microsoft.Office.Interop.Excel.Worksheet newSheet = newWorkBook.ActiveSheet;
+                    for (int i = 1; i < newDT.Columns.Count + 1; i++)
                     {
-                        newSheet.Cells[j + 2, k + 1] = newDT.Rows[j].ItemArray[k].ToString();
+                        newSheet.Cells[1, i] = newDT.Columns[i - 1].ColumnName;
                     }
+
+                    for (int j = 0; j < newDT.Rows.Count; j++)
+                    {
+                        for (int k = 0; k < newDT.Columns.Count; k++)
+                        {
+                            newSheet.Cells[j + 2, k + 1] = newDT.Rows[j].ItemArray[k].ToString();
+                        }
+                    }
+                    newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName + ".xlsx"));
                 }
-                newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName + ".xlsx"));
-            }
+            }   
         }
 
         public override List<Control> Render(frmCommandEditor editor)
