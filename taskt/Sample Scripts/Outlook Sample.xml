@@ -2,7 +2,7 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="OutlookGetEmailsCommand" CommandID="aa52b03d-f0f8-4e60-b21f-54f30caeef34" CommandName="OutlookGetEmailsCommand" IsCommented="false" SelectionName="Get Outlook Emails" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_Folder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_GetUnreadOnly="Yes" v_MessageDirectory="C:\Users\Default\Documents" v_SaveAttachments="Yes" v_AttachmentDirectory="C:\Users\Default\Documents" />
+      <ScriptCommand xsi:type="OutlookGetEmailsCommand" CommandID="aa52b03d-f0f8-4e60-b21f-54f30caeef34" CommandName="OutlookGetEmailsCommand" IsCommented="false" SelectionName="Get Outlook Emails" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_Folder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_GetUnreadOnly="Yes" v_MarkAsRead="Yes" v_MessageDirectory="C:\Users\Default\Documents" v_userVariableName="mailList" v_SaveMessagesAndAttachments="Yes" v_AttachmentDirectory="C:\Users\Default\Documents" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="OutlookReplyToEmailsCommand" CommandID="af199723-01bc-4ad4-95e4-dc057800a020" CommandName="OutlookReplyToEmailsCommand" IsCommented="false" SelectionName="Reply To Outlook Emails" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_OperationType="Reply" v_SourceFolder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_Body="Hello" v_BodyType="Plain" v_Attachment="C:\app.txt" />
