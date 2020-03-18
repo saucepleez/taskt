@@ -168,6 +168,7 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginMutliIfCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateFolderCommand.cs" />

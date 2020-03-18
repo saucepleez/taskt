@@ -531,6 +531,7 @@ namespace taskt.UI
             uiImages.Add("BeginContinousLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("ExitLoopCommand", taskt.Properties.Resources.command_exitloop);
             uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
             uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);

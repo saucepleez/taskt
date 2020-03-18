@@ -98,6 +98,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(BeginListLoopCommand))]
     [XmlInclude(typeof(NextLoopCommand))]
     [XmlInclude(typeof(BeginContinousLoopCommand))]
+    [XmlInclude(typeof(BeginLoopCommand))]
     [XmlInclude(typeof(SequenceCommand))]
     [XmlInclude(typeof(StopTaskCommand))]
     [XmlInclude(typeof(RunTaskCommand))]
