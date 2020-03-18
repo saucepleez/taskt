@@ -181,6 +181,13 @@ namespace taskt.UI.CustomControls
                         helperControl.Click += (sender, e) => ShowFileSelector(sender, e, editor);
                         break;
 
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
+                        //show file selector
+                        helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+                        helperControl.CommandDisplay = "Select a Folder";
+                        helperControl.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
+                        break;
+
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
@@ -380,6 +387,17 @@ namespace taskt.UI.CustomControls
                 TextBox targetTextbox = (TextBox)inputBox.Tag;
                 //concat variable name with brackets [vVariable] as engine searches for the same
                 targetTextbox.Text = ofd.FileName;
+            }
+        }
+        private static void ShowFolderSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+            if(fbd.ShowDialog() == DialogResult.OK)
+            {
+                CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
+                TextBox targetTextBox = (TextBox)inputBox.Tag;
+                targetTextBox.Text = fbd.SelectedPath;
             }
         }
         private static void ShowImageCapture(object sender, EventArgs e)
