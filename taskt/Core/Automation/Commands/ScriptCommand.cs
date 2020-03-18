@@ -31,6 +31,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelGetRangeCommandAsDT))]
     [XmlInclude(typeof(ExcelGetRangeCommand))]
     [XmlInclude(typeof(ExcelWriteRangeCommand))]
+    [XmlInclude(typeof(ExcelSplitRangeByColumnCommand))]
     [XmlInclude(typeof(UIAutomationCommand))]
     [XmlInclude(typeof(ResizeWindowCommand))]
     [XmlInclude(typeof(WaitForWindowCommand))]

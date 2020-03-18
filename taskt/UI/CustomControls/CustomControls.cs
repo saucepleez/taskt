@@ -486,6 +486,7 @@ namespace taskt.UI
             uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSplitRangeByColumnCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
