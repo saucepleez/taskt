@@ -216,7 +216,6 @@
     <Compile Include="Core\Automation\Commands\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\RenameFolderCommand.cs" />
-    <Compile Include="Core\Automation\Commands\RunPowerShellScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
