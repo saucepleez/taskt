@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.Forms;
@@ -55,8 +56,9 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             v_VariableAssignments = new DataTable();
-            v_VariableAssignments.Columns.Add("VariableName");
+            v_VariableAssignments.Columns.Add("VariableName"); 
             v_VariableAssignments.Columns.Add("VariableValue");
+            v_VariableAssignments.Columns.Add("VariableReturn");
             v_VariableAssignments.TableName = "RunTaskCommandInputParameters" + DateTime.Now.ToString("MMddyyhhmmss");
 
             AssignmentsGridViewHelper = new DataGridView();
@@ -74,21 +76,56 @@ namespace taskt.Core.Automation.Commands
 
             //create variable list
             var variableList = new List<Script.ScriptVariable>();
+            var variableReturnList = new List<Script.ScriptVariable>();
+
             foreach (DataRow rw in v_VariableAssignments.Rows)
             {
                 var variableName = (string)rw.ItemArray[0];
-                var variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender);
+                var variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender); 
+                var variableReturn = (string)rw.ItemArray[2];
                 variableList.Add(new Script.ScriptVariable
                 {
                     VariableName = variableName,
                     VariableValue = variableValue
                 });
+                if (variableReturn == "Yes")
+                {
+                    variableReturnList.Add(new Script.ScriptVariable
+                    {
+                        VariableName = variableName,
+                        VariableValue = variableValue
+                    });
+                }
+
             }
 
             UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true);
+            
             Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
             currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = false; });
             Application.Run(newEngine);
+
+            //get new variable list from the new task engine after it finishes running
+            var newVariableList = newEngine.engineInstance.VariableList;
+            foreach (var variable in variableReturnList)
+            {
+                //check if the variables we wish to return are in the new variable list
+                if (newVariableList.Exists(x => x.VariableName == variable.VariableName))
+                {
+                    //if yes, get that variable from the new list
+                    Script.ScriptVariable newTemp = newVariableList.Where(x => x.VariableName == variable.VariableName).FirstOrDefault();
+                    //check if that variable previously existed in the current engine
+                    if (currentScriptEngine.VariableList.Exists(x => x.VariableName == newTemp.VariableName))
+                    {
+                        //if yes, overwrite it 
+                        Script.ScriptVariable currentTemp = currentScriptEngine.VariableList.Where(x => x.VariableName == newTemp.VariableName).FirstOrDefault();
+                        currentScriptEngine.VariableList.Remove(currentTemp);
+                    }
+                    //Add to current engine variable list    
+                    currentScriptEngine.VariableList.Add(newTemp);
+                }  
+            }
+
             //currentScriptEngine.tasktEngineUI.TopMost = false;
             currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = true; });
         }
@@ -139,18 +176,27 @@ namespace taskt.Core.Automation.Commands
             {
               
                 Script.Script deserializedScript = Core.Script.Script.DeserializeFile(v_taskPath);
-
+                
                 foreach (var variable in deserializedScript.Variables)
                 {
                     DataRow[] foundVariables  = v_VariableAssignments.Select("VariableName = '" + variable.VariableName + "'");
                     if (foundVariables.Length == 0)
                     {
                         v_VariableAssignments.Rows.Add(variable.VariableName, variable.VariableValue);
+                        
                     }                  
                 }
 
-
                 AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
+
+                
+                for (int i = 0; i<AssignmentsGridViewHelper.Rows.Count-1; i++)
+                {
+                    DataGridViewComboBoxCell returnComboBox = new DataGridViewComboBoxCell();
+                    returnComboBox.Items.Add("Yes");
+                    returnComboBox.Items.Add("No");
+                    AssignmentsGridViewHelper.Rows[i].Cells[2] = returnComboBox;
+                }
             }
 
 
