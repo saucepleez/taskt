@@ -854,20 +854,20 @@ namespace taskt.Core.Automation.Commands
                                       where rw.Field<string>("Parameter Name") == "Value2"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "While (" + value1 + " " + operand + " " + value2 + ")";
+                    return "Loop While (" + value1 + " " + operand + " " + value2 + ")";
 
                 case "Variable Has Value":
                     string variableName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                             where rw.Field<string>("Parameter Name") == "Variable Name"
                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "While (Variable " + variableName + " Has Value)";
+                    return "Loop While (Variable " + variableName + " Has Value)";
                 case "Variable Is Numeric":
                     string varName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                        where rw.Field<string>("Parameter Name") == "Variable Name"
                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "While (Variable " + varName + " Is Numeric)";
+                    return "Loop While (Variable " + varName + " Is Numeric)";
 
                 case "Error Occured":
 
@@ -875,14 +875,14 @@ namespace taskt.Core.Automation.Commands
                                           where rw.Field<string>("Parameter Name") == "Line Number"
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "While (Error Occured on Line Number " + lineNumber + ")";
+                    return "Loop While (Error Occured on Line Number " + lineNumber + ")";
                 case "Error Did Not Occur":
 
                     string lineNum = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                        where rw.Field<string>("Parameter Name") == "Line Number"
                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "While (Error Did Not Occur on Line Number " + lineNum + ")";
+                    return "Loop While (Error Did Not Occur on Line Number " + lineNum + ")";
                 case "Window Name Exists":
                 case "Active Window Name Is":
 
@@ -890,7 +890,7 @@ namespace taskt.Core.Automation.Commands
                                           where rw.Field<string>("Parameter Name") == "Window Name"
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "While " + v_LoopActionType + " [Name: " + windowName + "]";
+                    return "Loop While " + v_LoopActionType + " [Name: " + windowName + "]";
                 case "File Exists":
 
                     string filePath = ((from rw in v_LoopActionParameterTable.AsEnumerable()
@@ -902,7 +902,7 @@ namespace taskt.Core.Automation.Commands
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    return "While " + v_LoopActionType + " [File: " + filePath + "]";
+                    return "Loop While " + v_LoopActionType + " [File: " + filePath + "]";
 
                 case "Folder Exists":
 
@@ -915,7 +915,7 @@ namespace taskt.Core.Automation.Commands
                                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    return "While " + v_LoopActionType + " [Folder: " + folderPath + "]";
+                    return "Loop While " + v_LoopActionType + " [Folder: " + folderPath + "]";
 
                 case "Web Element Exists":
 
@@ -929,7 +929,7 @@ namespace taskt.Core.Automation.Commands
                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    return "While Web Element Exists [" + searchMethod + ": " + parameterName + "]";
+                    return "Loop While Web Element Exists [" + searchMethod + ": " + parameterName + "]";
 
                 case "GUI Element Exists":
 
@@ -945,12 +945,12 @@ namespace taskt.Core.Automation.Commands
 
 
 
-                    return "While GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
+                    return "Loop While GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
 
 
                 default:
 
-                    return "While .... ";
+                    return "Loop While .... ";
             }
 
         }
