@@ -175,6 +175,8 @@
     <Compile Include="Core\Automation\Commands\DeleteFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelSplitRangeByColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExtractFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetFilesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetFoldersCommand.cs" />
     <Compile Include="Core\Automation\Commands\MoveFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookDeleteEmailsCommand.cs" />
