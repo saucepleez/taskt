@@ -67,7 +67,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = DateTime.Now.ToString();
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
-            var vDictionaryName = LookupVariable(engine); //v_DictionaryName.ConvertToUserVariable(sender);
+            var vDictionaryName = v_DictionaryName;
+            var vDictionary = LookupVariable(engine); 
+            if (vDictionary != null)
+            {
+                vDictionaryName = vDictionary.VariableName;
+            }
 
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
@@ -98,7 +103,7 @@ namespace taskt.Core.Automation.Commands
 
             Script.ScriptVariable newDictionary = new Script.ScriptVariable
             {
-                VariableName = vDictionaryName.VariableName,
+                VariableName = vDictionaryName,
                 VariableValue = outputDictionary
             };
             //close excel
