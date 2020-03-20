@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = DateTime.Now.ToString();
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
-            var vDictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
+            var vDictionaryName = LookupVariable(engine); //v_DictionaryName.ConvertToUserVariable(sender);
 
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
 
             Script.ScriptVariable newDictionary = new Script.ScriptVariable
             {
-                VariableName = vDictionaryName,
+                VariableName = vDictionaryName.VariableName,
                 VariableValue = outputDictionary
             };
             //close excel
@@ -114,6 +114,22 @@ namespace taskt.Core.Automation.Commands
                 engine.VariableList.Remove(tempDictionary);
             }
             engine.VariableList.Add(newDictionary);
+        }
+
+        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (v_DictionaryName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DictionaryName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_DictionaryName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
