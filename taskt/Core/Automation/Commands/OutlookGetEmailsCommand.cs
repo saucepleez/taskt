@@ -158,13 +158,17 @@ namespace taskt.Core.Automation.Commands
             {
                 mail.UnRead = false;
             }
-            if (v_SaveMessagesAndAttachments == "Yes" && System.IO.Directory.Exists(msgDirectory) && System.IO.Directory.Exists(attDirectory))
+            if (v_SaveMessagesAndAttachments == "Yes")
             {
-                mail.SaveAs(System.IO.Path.Combine(msgDirectory, mail.Subject + ".msg"));
-                foreach (Attachment attachment in mail.Attachments)
+                if (System.IO.Directory.Exists(msgDirectory))
+                    mail.SaveAs(System.IO.Path.Combine(msgDirectory, mail.Subject + ".msg"));
+                if (System.IO.Directory.Exists(attDirectory))
                 {
-                    attachment.SaveAsFile(System.IO.Path.Combine(attDirectory, attachment.FileName));
-                }
+                    foreach (Attachment attachment in mail.Attachments)
+                    {
+                        attachment.SaveAsFile(System.IO.Path.Combine(attDirectory, attachment.FileName));
+                    }
+                } 
             }
         }
 
