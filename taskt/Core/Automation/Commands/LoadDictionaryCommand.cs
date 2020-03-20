@@ -18,6 +18,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Dictionary Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a name for a Dictionary.")]
         [Attributes.PropertyAttributes.SampleUsage("**myDictionary**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -25,6 +26,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be loaded into the Dictionary.")]
         [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or [vFilePath]")]
@@ -33,7 +35,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Sheet Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the sheet name of the workbook to be read.")]
         [Attributes.PropertyAttributes.SampleUsage("Sheet1")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -41,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Key column")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the key column name to create a Dictionary off of.")]
         [Attributes.PropertyAttributes.SampleUsage("keyColumn")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -49,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Value Column")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a value column name to create a Dictionary off of.")]
         [Attributes.PropertyAttributes.SampleUsage("valueColumn")]
         [Attributes.PropertyAttributes.Remarks("")]
