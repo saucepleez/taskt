@@ -6,6 +6,7 @@ using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using System.Data;
 using System.Text;
+using System.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -64,7 +65,7 @@ namespace taskt.Core.Automation.Commands
         {
 
            
-                var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
             var targetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
@@ -81,7 +82,6 @@ namespace taskt.Core.Automation.Commands
                 int cl = cellValue.Columns.Count;
                 int rCnt;
                 int cCnt;
-                string str;
                 DataTable DT = new DataTable();
                 for (rCnt = 1; rCnt <= rw; rCnt++)
                 {
@@ -109,6 +109,12 @@ namespace taskt.Core.Automation.Commands
                     VariableValue = DT
                 };
 
+                //Overwrites variable if it already exists
+                if (engine.VariableList.Exists(x => x.VariableName == newDataset.VariableName))
+                {
+                    Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newDataset.VariableName).FirstOrDefault();
+                    engine.VariableList.Remove(temp);
+                }
                 engine.VariableList.Add(newDataset);
             }
             if(v_Output == "Delimited String")
