@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Output { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2, Optional)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
         [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
@@ -73,7 +73,16 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            var cellValue = excelSheet.Range[targetAddress1, targetAddress2];
+            Microsoft.Office.Interop.Excel.Range cellValue;
+            if (targetAddress2 != "")
+                cellValue = excelSheet.Range[targetAddress1, targetAddress2];
+            else
+            {
+                Microsoft.Office.Interop.Excel.Range last = excelSheet.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+                cellValue = excelSheet.Range[targetAddress1, last];
+            }
+                
+
             if (v_Output == "Datatable")
             {
 
@@ -142,7 +151,6 @@ namespace taskt.Core.Automation.Commands
 
                 }
                 string output = String.Join(",", lst);
-                v_ExcelCellAddress1 = output;
 
                 //Store Strings of comma seperated values into user variable
                 output.StoreInUserVariable(sender, v_userVariableName);

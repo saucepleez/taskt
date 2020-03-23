@@ -60,7 +60,14 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            var cellValue = excelSheet.Range[targetAddress1, targetAddress2];
+            Microsoft.Office.Interop.Excel.Range cellValue;
+            if (targetAddress2 != "")
+                cellValue = excelSheet.Range[targetAddress1, targetAddress2];
+            else
+            {
+                Microsoft.Office.Interop.Excel.Range last = excelSheet.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+                cellValue = excelSheet.Range[targetAddress1, last];
+            }
 
             List<object> lst = new List<object>();
             int rw = cellValue.Rows.Count;
@@ -85,7 +92,6 @@ namespace taskt.Core.Automation.Commands
 
             }
             string output = String.Join(",", lst);
-            v_ExcelCellAddress1 = output;
             
             //Store Strings of comma seperated values into user variable
             output.StoreInUserVariable(sender, v_userVariableName);
