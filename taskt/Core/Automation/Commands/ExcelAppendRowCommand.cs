@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Append Row '" +v_TextToSet+ " to last row" + "of workboook with Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Append Row '" +v_TextToSet+ " to last row of workboook with Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

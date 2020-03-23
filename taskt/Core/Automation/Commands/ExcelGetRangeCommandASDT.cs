@@ -46,6 +46,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress2 { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Add Headers")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("When selected, the column headers from the specified spreadsheet range are also extracted.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Datatable** or **Delimited String**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_AddHeaders { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
@@ -59,6 +69,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Range As Datatable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_AddHeaders = "Yes";
         }
 
         public override void RunCommand(object sender)
@@ -91,8 +102,10 @@ namespace taskt.Core.Automation.Commands
                 int cl = cellValue.Columns.Count;
                 int rCnt;
                 int cCnt;
+                string cName;
                 DataTable DT = new DataTable();
-                for (rCnt = 1; rCnt <= rw; rCnt++)
+
+                for (rCnt = 2; rCnt <= rw; rCnt++)
                 {
 
                     DataRow newRow = DT.NewRow();
@@ -112,6 +125,17 @@ namespace taskt.Core.Automation.Commands
                     }
                     DT.Rows.Add(newRow);
                 }
+
+                if (v_AddHeaders == "Yes")
+                {
+                    //Set column names
+                    for (cCnt = 1; cCnt <= cl; cCnt++)
+                    {
+                        cName = ((cellValue.Cells[1, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
+                        DT.Columns[cCnt - 1].ColumnName = cName;
+                    }
+                }
+
                 Script.ScriptVariable newDataset = new Script.ScriptVariable
                 {
                     VariableName = v_userVariableName,
@@ -171,7 +195,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Output", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AddHeaders", this, editor));
 
             return RenderedControls;
 
@@ -179,7 +203,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get Value Between '" + v_ExcelCellAddress1 + "And " + v_ExcelCellAddress2 + "' and apply to variable '" + v_userVariableName + "'from, Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get Values Between '" + v_ExcelCellAddress1 + "' and '" + v_ExcelCellAddress2 + "' and apply to variable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

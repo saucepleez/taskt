@@ -105,6 +105,13 @@ namespace taskt.Core.Automation.Commands
                 VariableValue = outputDT
             };
 
+            //Overwrites variable if it already exists
+            if (engine.VariableList.Exists(y => y.VariableName == newDatatable.VariableName))
+            {
+                Script.ScriptVariable temp = engine.VariableList.Where(y => y.VariableName == newDatatable.VariableName).FirstOrDefault();
+                engine.VariableList.Remove(temp);
+            }
+
             engine.VariableList.Add(newDatatable);
             dataSetVariable.VariableValue = Dt;
 
