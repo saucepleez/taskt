@@ -253,6 +253,11 @@ namespace taskt.UI.CustomControls
                         helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
                         helperControl.CommandDisplay = "Add New If Statement";
                         break;
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
+                        //show variable selector
+                        helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+                        helperControl.CommandDisplay = "Add New Loop Statement";
+                        break;
 
                         //default:
                         //    MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());

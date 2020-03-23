@@ -103,10 +103,9 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
-            //Core.Automation.Commands.BeginLoopCommand loopCommand = (Core.Automation.Commands.BeginLoopCommand)parentCommand.ScriptCommand;
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var loopResult = DetermineStatementTruth(sender);
-            engine.ReportProgress("Starting Loop"); //From Line " + loopCommand.LineNumber);
+            engine.ReportProgress("Starting Loop"); 
 
             while (loopResult)
             {
@@ -119,14 +118,14 @@ namespace taskt.Core.Automation.Commands
 
                     if (engine.CurrentLoopCancelled)
                     {
-                        engine.ReportProgress("Exiting Loop"); // From Line " + loopCommand.LineNumber);
+                        engine.ReportProgress("Exiting Loop"); 
                         engine.CurrentLoopCancelled = false;
                         return;
                     }
 
                     if (engine.CurrentLoopContinuing)
                     {
-                        engine.ReportProgress("Continuing Next Loop"); // From Line " + loopCommand.LineNumber);
+                        engine.ReportProgress("Continuing Next Loop"); 
                         engine.CurrentLoopContinuing = false;
                         break;
                     }
