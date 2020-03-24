@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.InputSpecification("When selected, the column headers from the specified spreadsheet range are also extracted.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Datatable** or **Delimited String**")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Yes** or **No**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_AddHeaders { get; set; }
 
