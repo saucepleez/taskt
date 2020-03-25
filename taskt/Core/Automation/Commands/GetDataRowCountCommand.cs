@@ -11,10 +11,10 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get the DataRow count from a DataTable")]
+    [Attributes.ClassAttributes.Description("This command allows you to add a datarow to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a datarow to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class GetDataRowCommand : ScriptCommand
+    public class GetDataRowCountCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Name")]
@@ -25,26 +25,18 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or [vIndex]")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_DataRowIndex { get; set; }
-
-        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_UserVariableName { get; set; }
 
-        public GetDataRowCommand()
+        public GetDataRowCountCommand()
         {
-            this.CommandName = "GetDataRowCommand";
-            this.SelectionName = "Get DataRow";
+            this.CommandName = "GetDataRowCountCommand";
+            this.SelectionName = "Get DataRow Count";
             this.CommandEnabled = true;
-            this.CustomRendering = true;         
+            this.CustomRendering = true;
 
         }
 
@@ -54,24 +46,9 @@ namespace taskt.Core.Automation.Commands
             var dataSetVariable = LookupVariable(engine);
             DataTable dataTable = (DataTable)dataSetVariable.VariableValue;
 
-            var rowIndex = v_DataRowIndex.ConvertToUserVariable(sender);
-            int index = int.Parse(rowIndex);
+            var count = dataTable.Rows.Count.ToString();
 
-            DataRow row = dataTable.Rows[index];
-
-            Script.ScriptVariable newDataRow = new Script.ScriptVariable
-            {
-                VariableName = v_UserVariableName,
-                VariableValue = row
-            };
-
-            //Overwrites variable if it already exists
-            if (engine.VariableList.Exists(x => x.VariableName == newDataRow.VariableName))
-            {
-                Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newDataRow.VariableName).FirstOrDefault();
-                engine.VariableList.Remove(temp);
-            }
-            engine.VariableList.Add(newDataRow);
+            count.StoreInUserVariable(sender, v_UserVariableName);
 
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
@@ -94,7 +71,6 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataRowIndex", this, editor));
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
@@ -103,11 +79,11 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
-        
+
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Get DataRow '{v_DataRowIndex}' from '{v_DataTableName}', Store In: '{v_UserVariableName}']";
+            return base.GetDisplayValue() + $" [From '{v_DataTableName}', Store In: '{v_UserVariableName}']";
         }
     }
 }

@@ -177,6 +177,7 @@
     <Compile Include="Core\Automation\Commands\ExcelSplitRangeByColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExtractFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetDataRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetFilesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetFoldersCommand.cs" />

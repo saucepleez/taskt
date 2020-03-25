@@ -72,6 +72,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var startFile = v_taskPath.ConvertToUserVariable(sender);
 
             //create variable list
@@ -81,7 +82,15 @@ namespace taskt.Core.Automation.Commands
             foreach (DataRow rw in v_VariableAssignments.Rows)
             {
                 var variableName = (string)rw.ItemArray[0];
-                var variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender); 
+                object variableValue;
+                try
+                {
+                    variableValue = LookupVariable(currentScriptEngine, (string)rw.ItemArray[1]).VariableValue;
+                }
+                catch(Exception ex)
+                {
+                    variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender);
+                }
                 var variableReturn = (string)rw.ItemArray[2];
                 variableList.Add(new Script.ScriptVariable
                 {
@@ -101,7 +110,7 @@ namespace taskt.Core.Automation.Commands
 
             UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true);
             
-            Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
+            //Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
             currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = false; });
             Application.Run(newEngine);
 
@@ -128,6 +137,22 @@ namespace taskt.Core.Automation.Commands
 
             //currentScriptEngine.tasktEngineUI.TopMost = false;
             currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = true; });
+        }
+
+        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance, string lookupVariable )
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == lookupVariable).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (lookupVariable.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (lookupVariable.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = lookupVariable.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
 
         public override List<Control> Render(frmCommandEditor editor)
