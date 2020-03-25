@@ -329,6 +329,7 @@
     <Compile Include="Core\Automation\Commands\UploadDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\VariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitForFileToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WriteDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\WriteTextFileCommand.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />

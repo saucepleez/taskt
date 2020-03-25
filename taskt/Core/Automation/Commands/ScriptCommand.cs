@@ -30,6 +30,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddDataRowCommand))]
     [XmlInclude(typeof(GetDataRowCommand))]
     [XmlInclude(typeof(GetDataRowValueCommand))]
+    [XmlInclude(typeof(WriteDataRowValueCommand))]
     [XmlInclude(typeof(GetDataRowCountCommand))]
     [XmlInclude(typeof(RemoveDataRowCommand))]
     [XmlInclude(typeof(ThickAppClickItemCommand))]

@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set.")]
         [Attributes.PropertyAttributes.SampleUsage("Hello World or [vText]")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public string v_TextToSet { get; set; }
+        public string v_DataTableToSet { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location to start from (ex. A1 or B2)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -38,18 +38,28 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Add Headers")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("When selected, the column headers from the specified spreadsheet range are also added.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select from **Yes** or **No**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_AddHeaders { get; set; }
         public ExcelWriteRangeCommand()
         {
             this.CommandName = "ExcelWriteRangeCommand";
             this.SelectionName = "Write Range";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_AddHeaders = "Yes";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var dataSetVariable = engine.VariableList.Where(f => f.VariableName == v_TextToSet).FirstOrDefault();
+            var dataSetVariable = LookupVariable(engine); //engine.VariableList.Where(f => f.VariableName == v_TextToSet).FirstOrDefault();
             var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
             var excelObject = engine.GetAppInstance(vInstance);
 
@@ -71,18 +81,63 @@ namespace taskt.Core.Automation.Commands
                 sum += (targetAddress[i] - 'A' + 1);
             }
 
-            for (int i = 0; i < Dt.Rows.Count; i++)
+            if (v_AddHeaders == "Yes")
             {
+                //Write column names
+                string columnName;
                 for (int j = 0; j < Dt.Columns.Count; j++)
                 {
-                    if (Dt.Rows[i][j].ToString() == "null")
+                    if (Dt.Columns[j].ColumnName == "null")                    
+                        columnName = string.Empty;
+                    
+                    else                    
+                        columnName = Dt.Columns[j].ColumnName;
+                    
+                    excelSheet.Cells[Int32.Parse(numberOfRow), j + sum] = columnName;
+                }
+
+                for (int i = 0; i < Dt.Rows.Count; i++)
+                {
+                    for (int j = 0; j < Dt.Columns.Count; j++)
                     {
-                        Dt.Rows[i][j] = string.Empty;
+                        if (Dt.Rows[i][j].ToString() == "null")
+                        {
+                            Dt.Rows[i][j] = string.Empty;
+                        }
+                        excelSheet.Cells[i + Int32.Parse(numberOfRow) + 1, j + sum] = Dt.Rows[i][j].ToString();
                     }
-                    excelSheet.Cells[i + Int32.Parse(numberOfRow), j + sum] = Dt.Rows[i][j].ToString();
+                }
+            }
+            else { 
+                for (int i = 0; i < Dt.Rows.Count; i++)
+                {
+                    for (int j = 0; j < Dt.Columns.Count; j++)
+                    {
+                        if (Dt.Rows[i][j].ToString() == "null")
+                        {
+                            Dt.Rows[i][j] = string.Empty;
+                        }
+                        excelSheet.Cells[i + Int32.Parse(numberOfRow), j + sum] = Dt.Rows[i][j].ToString();
+                    }
                 }
             }
 
+        }
+
+        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataTableToSet).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (v_DataTableToSet.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DataTableToSet.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_DataTableToSet.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -90,8 +145,9 @@ namespace taskt.Core.Automation.Commands
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableToSet", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AddHeaders", this, editor));
 
             return RenderedControls;
 
