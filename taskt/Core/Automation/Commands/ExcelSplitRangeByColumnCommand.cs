@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         public string v_ExcelCellAddress1 { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2, Leave Blank for All)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
         [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
@@ -88,7 +88,15 @@ namespace taskt.Core.Automation.Commands
             excelInstance.Visible = false;
             excelInstance.DisplayAlerts = false;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            var cellValue = excelSheet.Range[vTargetAddress1, vTargetAddress2];
+
+            Microsoft.Office.Interop.Excel.Range cellValue;
+            if (vTargetAddress2 != "")
+                cellValue = excelSheet.Range[vTargetAddress1, vTargetAddress2];
+            else
+            {
+                Microsoft.Office.Interop.Excel.Range last = excelSheet.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+                cellValue = excelSheet.Range[vTargetAddress1, last];
+            }
 
             //Convert Range to DataTable
             List<object> lst = new List<object>();
