@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
             else dataRow = (DataRow)dataRowVariable.VariableValue;
 
             var valueIndex = v_DataValueIndex.ConvertToUserVariable(sender);
-            //string value = "";
+            
             if (v_Option == "Index")
             {
                 int index = int.Parse(valueIndex);
@@ -89,10 +89,8 @@ namespace taskt.Core.Automation.Commands
             else if (v_Option == "Column Name")
             {
                 string index = valueIndex;
-                dataRow.SetField<string>(index, dataRowValue);  //Field<string>(index) = dataRowValue;
+                dataRow.SetField<string>(index, dataRowValue);  
             }
-
-            //value.StoreInUserVariable(sender, v_UserVariableName);
 
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)

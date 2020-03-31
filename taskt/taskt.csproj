@@ -182,6 +182,8 @@
     <Compile Include="Core\Automation\Commands\GetDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetFilesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetFoldersCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetListCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\MoveFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookDeleteEmailsCommand.cs" />

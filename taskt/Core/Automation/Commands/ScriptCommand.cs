@@ -132,6 +132,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(PDFTextExtractionCommand))]
     [XmlInclude(typeof(UserInputCommand))]
     [XmlInclude(typeof(GetWordCountCommand))]
+    [XmlInclude(typeof(GetListCountCommand))]
+    [XmlInclude(typeof(GetListItemCommand))]
     [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(HTMLInputCommand))]
     [XmlInclude(typeof(UploadDataCommand))]

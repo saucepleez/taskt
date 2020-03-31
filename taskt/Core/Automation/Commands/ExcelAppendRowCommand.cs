@@ -47,10 +47,19 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            var lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
+            int lastUsedRow;
+            try
+            {
+                lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
                                  System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                                  Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
                                  false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+            }
+            catch(Exception ex)
+            {
+                lastUsedRow = 0;
+            }
+
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
             splittext = targetText.Split(',');
 

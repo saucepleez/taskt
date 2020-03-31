@@ -60,6 +60,15 @@ namespace taskt.Core.Automation.Commands
         public string v_OutputDirectory { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the File Type to save as")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("xlsx")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("csv")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify the file format type for the split ranges")]
+        [Attributes.PropertyAttributes.SampleUsage("Select either **xlsx* or **csv**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_FileType { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Assign DataTable List to Variable")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
@@ -72,6 +81,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Split Range By Column";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            v_FileType = "xlsx";
         }
 
         public override void RunCommand(object sender)
@@ -168,7 +178,17 @@ namespace taskt.Core.Automation.Commands
                             newSheet.Cells[j + 2, k + 1] = newDT.Rows[j].ItemArray[k].ToString();
                         }
                     }
-                    newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName + ".xlsx"));
+                    if (v_FileType == "csv")
+                    {
+                        newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName), Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV, Type.Missing, Type.Missing,
+                                        Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
+                                        Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing); 
+                    }
+                    else
+                    {
+                        newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName + ".xlsx"));
+                    }
+                    
                 }
             }   
         }
@@ -183,6 +203,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress2", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ColumnName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputDirectory", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileType", this, editor));
             //create control for variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);

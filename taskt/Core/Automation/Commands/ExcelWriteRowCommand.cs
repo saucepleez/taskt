@@ -50,14 +50,27 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var dataRowVariable = LookupVariable(engine); 
+            var dataRowVariable = LookupVariable(engine);
+            var variableList = engine.VariableList;
+            DataRow row;
+
             var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
             var excelObject = engine.GetAppInstance(vInstance);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
 
-            DataRow row = (DataRow)dataRowVariable.VariableValue;
+            //check in case of looping through datatable using BeginListLoopCommand
+            if (dataRowVariable.VariableValue is DataTable && engine.VariableList.Exists(x => x.VariableName == "Loop.CurrentIndex"))
+            {
+                var loopIndexVariable = engine.VariableList.Where(x => x.VariableName == "Loop.CurrentIndex").FirstOrDefault();
+                int loopIndex = int.Parse(loopIndexVariable.VariableValue.ToString());
+                row = ((DataTable)dataRowVariable.VariableValue).Rows[loopIndex - 1];
+            }
+
+            else row = (DataRow)dataRowVariable.VariableValue;
+
+
             if (string.IsNullOrEmpty(targetAddress)) throw new ArgumentNullException("columnName");
 
             var numberOfRow = Regex.Match(targetAddress, @"\d+").Value;
