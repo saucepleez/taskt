@@ -346,6 +346,7 @@
     <Compile Include="Core\Automation\Commands\WordReplaceTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\WordSaveAsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WordSaveCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WriteDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\WriteTextFileCommand.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
