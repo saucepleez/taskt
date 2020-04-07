@@ -53,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         {
             //Retrieve Dictionary by name
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var vKey = v_Key.ConvertToUserVariable(sender);
             var dataSetVariable = LookupVariable(engine);
 
             //Declare local dictionary and assign output
@@ -60,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             Script.ScriptVariable Output = new Script.ScriptVariable
             {
                 VariableName = v_OutputVariable,
-                VariableValue = dict[v_Key]
+                VariableValue = dict[vKey]
             };
 
             //Overwrites variable if it already exists

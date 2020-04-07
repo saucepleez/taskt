@@ -164,6 +164,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(CatchExceptionCommand))]
     [XmlInclude(typeof(FinallyCommand))]
     [XmlInclude(typeof(EndTryCommand))]
+    [XmlInclude(typeof(ThrowExceptionCommand))]
     [XmlInclude(typeof(RemoteTaskCommand))]
     [XmlInclude(typeof(RemoteAPICommand))]
     [XmlInclude(typeof(SeleniumBrowserSwitchFrameCommand))]

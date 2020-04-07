@@ -227,6 +227,7 @@
     <Compile Include="Core\Automation\Commands\RenameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ThrowExceptionCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />

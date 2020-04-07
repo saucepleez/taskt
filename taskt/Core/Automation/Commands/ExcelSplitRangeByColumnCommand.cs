@@ -129,8 +129,17 @@ namespace taskt.Core.Automation.Commands
                         {
                             DT.Columns.Add(cCnt.ToString());
                         }
-                        newRow[cCnt.ToString()] = ((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();  
+                        newRow[cCnt.ToString()] = ((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
                     }
+                    else if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) == null && ((cellValue.Cells[1, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) != null)
+                    {
+                        if (!DT.Columns.Contains(cCnt.ToString()))
+                        {
+                            DT.Columns.Add(cCnt.ToString());
+                        }
+                        newRow[cCnt.ToString()] = string.Empty;
+                    }
+
                 }
                 DT.Rows.Add(newRow);
             }
@@ -162,7 +171,15 @@ namespace taskt.Core.Automation.Commands
                 string newName;
                 foreach (DataTable newDT in result)
                 {
-                    newName = newDT.Rows[0].Field<string>(vColumnName).ToString();
+                    try
+                    {
+                        newName = newDT.Rows[0].Field<string>(vColumnName).ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        continue;
+                    }
+                     
                     Console.WriteLine(newName);
                     Microsoft.Office.Interop.Excel.Workbook newWorkBook = excelInstance.Workbooks.Add(Type.Missing);
                     Microsoft.Office.Interop.Excel.Worksheet newSheet = newWorkBook.ActiveSheet;
@@ -178,13 +195,19 @@ namespace taskt.Core.Automation.Commands
                             newSheet.Cells[j + 2, k + 1] = newDT.Rows[j].ItemArray[k].ToString();
                         }
                     }
-                    if (v_FileType == "csv")
+
+                    if (newName.Contains("."))
+                    {
+                        newName = newName.Replace(".", string.Empty);
+                    }
+
+                    if (v_FileType == "csv" && !newName.Equals(string.Empty))
                     {
                         newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName), Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV, Type.Missing, Type.Missing,
                                         Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
                                         Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing); 
                     }
-                    else
+                    else if (!newName.Equals(string.Empty))
                     {
                         newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName + ".xlsx"));
                     }
