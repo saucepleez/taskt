@@ -20,6 +20,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Select a Task to run")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the valid path to the file.")]
         [Attributes.PropertyAttributes.SampleUsage("c:\\temp\\mytask.xml or [vScriptPath]")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -180,9 +181,6 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(AssignmentsGridViewHelper);
 
-
-
-
             return RenderedControls;
         }
 
@@ -193,14 +191,18 @@ namespace taskt.Core.Automation.Commands
 
         private void PassParametersCheckbox_CheckedChanged(object sender, EventArgs e)
         {
+            Engine.AutomationEngineInstance currentScriptEngine = new Engine.AutomationEngineInstance();
+            var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);
+
             var Sender = (CheckBox)sender;
+            
             AssignmentsGridViewHelper.Visible = Sender.Checked;
 
             //load variables if selected and file exists
-            if ((Sender.Checked) && (System.IO.File.Exists(v_taskPath)))
+            if ((Sender.Checked) && (System.IO.File.Exists(startFile)))
             {
               
-                Script.Script deserializedScript = Core.Script.Script.DeserializeFile(v_taskPath);
+                Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile);
                 
                 foreach (var variable in deserializedScript.Variables)
                 {
