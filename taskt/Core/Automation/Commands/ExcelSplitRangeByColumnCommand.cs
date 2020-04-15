@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the output directory")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the new directory for the split Excel Files.")]
         [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\new path\\ or [vTextFolderPath]")]
         [Attributes.PropertyAttributes.Remarks("")]
