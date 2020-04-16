@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddVariableCommand" CommandID="2fb2e18b-7c8e-4de2-b6a1-ea21dfb3a760" CommandName="AddVariableCommand" IsCommented="false" SelectionName="New Variable" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="count" v_Input="0">
+        <v_IfExists>Replace If Variable Exists</v_IfExists>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="0a4f8d02-7330-4382-b198-e49f3ab62edb" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write Text File" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="C:\test\test.txt" v_TextToWrite="test" v_Overwrite="Overwrite" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginMultiLoopCommand" CommandID="bb37964c-75ab-46ba-a704-cfca268aff80" CommandName="BeginMultiLoopCommand" IsCommented="false" SelectionName="Begin Multi Loop" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true">
+        <v_LoopConditionsTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="_x0033_ulAiLoopCon23iAionTable032320.111325">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Statement" type="xs:string" minOccurs="0" />
+                  <xs:element name="CommandData" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="_x0033_ulAiLoopCon23iAionTable032320.111325" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="_x0033_ulAiLoopCon23iAionTable032320.111325" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <_x0033_ulAiLoopCon23iAionTable032320.111325 diffgr:id="3ulAiLoopCon23iAionTable032320.1113251" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Statement>Loop While (count is less than 5)</Statement>
+                <CommandData>{"v_LoopActionType":"Value","v_LoopActionParameterTable":[{"Parameter Name":"Value1","Parameter Value":"count"},{"Parameter Name":"Operand","Parameter Value":"is less than"},{"Parameter Name":"Value2","Parameter Value":"5"}],"CommandID":"68cd8582-be23-4d67-a75f-c96af0e7521c","CommandName":"BeginLoopCommand","IsCommented":false,"SelectionName":"Begin Loop","DefaultPause":0,"LineNumber":0,"PauseBeforeExeucution":false,"DisplayForeColor":"SteelBlue","v_Comment":null,"CommandEnabled":true,"CustomRendering":true}</CommandData>
+              </_x0033_ulAiLoopCon23iAionTable032320.111325>
+              <_x0033_ulAiLoopCon23iAionTable032320.111325 diffgr:id="3ulAiLoopCon23iAionTable032320.1113252" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Statement>Loop While File Exists [File: C:\test\test.txt]</Statement>
+                <CommandData>{"v_LoopActionType":"File Exists","v_LoopActionParameterTable":[{"Parameter Name":"File Path","Parameter Value":"C:\\test\\test.txt"},{"Parameter Name":"True When","Parameter Value":"It Does Exist"}],"CommandID":"1c365b16-39a6-4543-8a0d-09e873c6525a","CommandName":"BeginLoopCommand","IsCommented":false,"SelectionName":"Begin Loop","DefaultPause":0,"LineNumber":0,"PauseBeforeExeucution":false,"DisplayForeColor":"SteelBlue","v_Comment":null,"CommandEnabled":true,"CustomRendering":true}</CommandData>
+              </_x0033_ulAiLoopCon23iAionTable032320.111325>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_LoopConditionsTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="bf23a483-fe17-4093-bb1a-5df256142a3b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="count" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="BeginIfCommand" CommandID="524eaf1c-35a6-46de-bf4d-67d6c86aaa58" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+          <v_IfActionParameterTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I1AcAionPara16Table031820.111628" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="I1AcAionPara16Table031820.111628">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <I1AcAionPara16Table031820.111628 diffgr:id="I1AcAionPara16Table031820.1116281" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>count</Parameter_x0020_Value>
+                </I1AcAionPara16Table031820.111628>
+                <I1AcAionPara16Table031820.111628 diffgr:id="I1AcAionPara16Table031820.1116282" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+                </I1AcAionPara16Table031820.111628>
+                <I1AcAionPara16Table031820.111628 diffgr:id="I1AcAionPara16Table031820.1116283" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>3</Parameter_x0020_Value>
+                </I1AcAionPara16Table031820.111628>
+              </DocumentElement>
+            </diffgr:diffgram>
+          </v_IfActionParameterTable>
+        </ScriptCommand>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="DeleteFileCommand" CommandID="d92a2bfe-cf2a-4458-a22f-dbbca54b593b" CommandName="DeleteFileCommand" IsCommented="false" SelectionName="Delete File" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFilePath="C:\test\test.txt" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="EndIfCommand" CommandID="5bb9f9c1-99d2-4386-8cca-f62dd1123dcb" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="VariableCommand" CommandID="3e1deaaf-5732-456b-804c-a2b61336795f" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="count" v_Input="{count} + 1" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="9fcc97b1-59bc-4d3f-afac-182785cb33e8" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6e3162f5-6221-4b38-8654-c1ce6011d46a" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="exiting loop" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>
