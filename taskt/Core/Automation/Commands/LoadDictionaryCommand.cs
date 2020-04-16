@@ -18,6 +18,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Dictionary Name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a name for a Dictionary.")]
         [Attributes.PropertyAttributes.SampleUsage("**myDictionary**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -25,6 +26,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be loaded into the Dictionary.")]
         [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or [vFilePath]")]
@@ -33,7 +35,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Sheet Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the sheet name of the workbook to be read.")]
         [Attributes.PropertyAttributes.SampleUsage("Sheet1")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -41,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Key column")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the key column name to create a Dictionary off of.")]
         [Attributes.PropertyAttributes.SampleUsage("keyColumn")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -49,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Value Column")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a value column name to create a Dictionary off of.")]
         [Attributes.PropertyAttributes.SampleUsage("valueColumn")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -67,6 +69,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = DateTime.Now.ToString();
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            var vDictionaryName = v_DictionaryName;
+            var vDictionary = LookupVariable(engine); 
+            if (vDictionary != null)
+            {
+                vDictionaryName = vDictionary.VariableName;
+            }
 
             var newExcelSession = new Microsoft.Office.Interop.Excel.Application
             {
@@ -81,7 +89,7 @@ namespace taskt.Core.Automation.Commands
 
             //Query required from workbook using OLEDB
             DatasetCommands dataSetCommand = new DatasetCommands();
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select " + v_KeyColumn + "," + v_ValueColumn + " From [" + v_SheetName + "$]");
+            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + vFilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select " + v_KeyColumn + "," + v_ValueColumn + " From [" + v_SheetName + "$]");
 
             var dictlist = requiredData.AsEnumerable().Select(x => new
             {
@@ -97,7 +105,7 @@ namespace taskt.Core.Automation.Commands
 
             Script.ScriptVariable newDictionary = new Script.ScriptVariable
             {
-                VariableName = v_DictionaryName,
+                VariableName = vDictionaryName,
                 VariableValue = outputDictionary
             };
             //close excel
@@ -106,7 +114,29 @@ namespace taskt.Core.Automation.Commands
             //remove instance
             engine.RemoveAppInstance(vInstance);
 
+            //Overwrites variable if it already exists
+            if (engine.VariableList.Exists(x => x.VariableName == newDictionary.VariableName))
+            {
+                Script.ScriptVariable tempDictionary = engine.VariableList.Where(x => x.VariableName == newDictionary.VariableName).FirstOrDefault();
+                engine.VariableList.Remove(tempDictionary);
+            }
             engine.VariableList.Add(newDictionary);
+        }
+
+        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (v_DictionaryName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DictionaryName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_DictionaryName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

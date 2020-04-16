@@ -190,6 +190,14 @@ namespace taskt.Core.Automation.Commands
             switch (v_SeleniumElementAction)
             {
                 case "Invoke Click":
+                    int seleniumWindowHeightY = seleniumInstance.Manage().Window.Size.Height;
+                    int elementPositionY = element.Location.Y;
+                    if (elementPositionY > seleniumWindowHeightY)
+                    {
+                        String scroll = String.Format("window.scroll(0, {0})", elementPositionY);
+                        IJavaScriptExecutor js = browserObject as IJavaScriptExecutor;
+                        js.ExecuteScript(scroll);
+                    }
                     element.Click();
                     break;
 

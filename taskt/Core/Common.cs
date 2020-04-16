@@ -152,6 +152,8 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.RootFolder)});
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM")});
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") });

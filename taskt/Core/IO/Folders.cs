@@ -10,13 +10,19 @@ namespace taskt.Core.IO
     {
         public static string GetFolder(FolderType folderType)
         {
+            
             switch (folderType)
             {
                 case FolderType.RootFolder:
-                    //return folder from settings
-                    var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                    var rootFolder = settings.ClientSettings.RootFolder;
+                    //return root folder from settings
+                    var rootSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                    var rootFolder = rootSettings.ClientSettings.RootFolder;
                     return rootFolder;
+                case FolderType.AttendedTasksFolder:
+                    //return attended tasks folder from settings
+                    var attendedSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                    var attentedTasksFolder = attendedSettings.ClientSettings.AttendedTasksFolder;
+                    return attentedTasksFolder;
                 case FolderType.SettingsFolder:
                     //return app data taskt folder
                     return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\taskt\\";
@@ -43,7 +49,8 @@ namespace taskt.Core.IO
             SettingsFolder,
             ScriptsFolder,
             LogFolder,
-            TempFolder
+            TempFolder,
+            AttendedTasksFolder
         }
     }
 }

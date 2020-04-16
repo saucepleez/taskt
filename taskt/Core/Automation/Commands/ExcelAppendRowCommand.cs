@@ -18,12 +18,12 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Row to set")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set (This could be a DataRow).")]
         [Attributes.PropertyAttributes.SampleUsage("Hello,world or [vText]")]
@@ -47,10 +47,19 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            var lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
+            int lastUsedRow;
+            try
+            {
+                lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
                                  System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                                  Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
                                  false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+            }
+            catch(Exception ex)
+            {
+                lastUsedRow = 0;
+            }
+
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
             splittext = targetText.Split(',');
 
@@ -82,7 +91,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Append Row '" +v_TextToSet+ " to last row" + "of workboook with Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Append Row '" +v_TextToSet+ " to last row of workboook with Instance Name: '" + v_InstanceName + "']";
         }
     }
 }
