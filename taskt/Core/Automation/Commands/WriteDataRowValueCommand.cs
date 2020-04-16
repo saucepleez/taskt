@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get a DataRow Value from a DataTable")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a datarow to a DataTable.")]
+    [Attributes.ClassAttributes.Description("This command allows you to write a Value to a DataRow")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to write a Value to a DataRow.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class WriteDataRowValueCommand : ScriptCommand
     {
@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Option { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow Value")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
         [Attributes.PropertyAttributes.SampleUsage("0 or [vIndex]")]

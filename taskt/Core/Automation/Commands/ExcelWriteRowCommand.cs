@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command writes a datarow to an excel sheet starting from the given cell address.")]
+    [Attributes.ClassAttributes.Description("This command writes a DataRow to an excel sheet starting from the given cell address.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelWriteRowCommand : ScriptCommand
@@ -20,15 +20,15 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the DataRow Variable Name to Set")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Row to Set")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello World or [vText]")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set (This could be a DataRow).")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello,World or [vText]")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataRowToSet { get; set; }
         [XmlAttribute]

@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataRow Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to add rows to.")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataRow to get Values from.")]
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataRowName { get; set; }
@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Option { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow Value")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
         [Attributes.PropertyAttributes.SampleUsage("0 or [vIndex]")]

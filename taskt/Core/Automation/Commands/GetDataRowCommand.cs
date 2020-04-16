@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get the DataRow count from a DataTable")]
+    [Attributes.ClassAttributes.Description("This command allows you to get a DataRow from a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a datarow to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class GetDataRowCommand : ScriptCommand
@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to add rows to.")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to fet rows from.")]
         [Attributes.PropertyAttributes.SampleUsage("**myData**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataTableName { get; set; }
