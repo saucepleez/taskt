@@ -585,6 +585,10 @@ namespace taskt.UI
             uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
             uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
             uiImages.Add("RemoteAPICommand", taskt.Properties.Resources.command_remote);
+            uiImages.Add("AddDictionaryCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_dictionary);
 
             return uiImages;
         }
