@@ -324,11 +324,11 @@ namespace taskt.Core.Automation.Commands
 
                     string selectionType = (from rw in v_WebActionParameterTable.AsEnumerable()
                                              where rw.Field<string>("Parameter Name") == "Selection Type"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
                     string selectionParam = (from rw in v_WebActionParameterTable.AsEnumerable()
                                             where rw.Field<string>("Parameter Name") == "Selection Parameter"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
 
                     seleniumInstance.SwitchTo().ActiveElement();
