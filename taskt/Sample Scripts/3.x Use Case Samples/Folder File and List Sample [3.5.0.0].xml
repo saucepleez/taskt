@@ -23,7 +23,7 @@
       <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="4e8b62a2-9462-4e2a-b796-93a21a6a5087" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write Text File" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="C:\\FolderA\InnerFolder2\sampleA2.txt" v_TextToWrite="World" v_Overwrite="Overwrite" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetFoldersCommand" CommandID="a5d1b23c-640f-4b71-8c67-60cf9311d9cb" CommandName="GetFoldersCommand" IsCommented="false" SelectionName="Get Folders" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFolderPath="C:\\FolderA" v_UserVariableName="folderAFolders" />
+      <ScriptCommand xsi:type="GetFoldersCommand" CommandID="a5d1b23c-640f-4b71-8c67-60cf9311d9cb" CommandName="GetFoldersCommand" IsCommented="false" SelectionName="Get Folders" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="true" CommandEnabled="true" v_SourceFolderPath="C:\\FolderA" v_UserVariableName="folderAFolders" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="70f73b70-6b18-4086-8135-95a9be6f8473" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="folderAFolders" />

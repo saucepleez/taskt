@@ -5,10 +5,10 @@
       <ScriptCommand xsi:type="WordCreateApplicationCommand" CommandID="acd0ea34-7a8f-4746-a56a-fb5bf2418c23" CommandName="WordOpenApplicationCommand" IsCommented="false" SelectionName="Create Word Application" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="WordOpenDocumentCommand" CommandID="36387141-ae98-4473-831c-3adc69a4d73a" CommandName="WordOpenDocumentCommand" IsCommented="false" SelectionName="Open Document" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_FilePath="C:\test.docx" />
+      <ScriptCommand xsi:type="WordOpenDocumentCommand" CommandID="36387141-ae98-4473-831c-3adc69a4d73a" CommandName="WordOpenDocumentCommand" IsCommented="true" SelectionName="Open Document" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_FilePath="C:\test.docx" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="WordAddDocumentCommand" CommandID="32e3b2ea-792d-434d-8b83-187a3c053108" CommandName="WordAddDocumentCommand" IsCommented="true" SelectionName="Add Document" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" />
+      <ScriptCommand xsi:type="WordAddDocumentCommand" CommandID="32e3b2ea-792d-434d-8b83-187a3c053108" CommandName="WordAddDocumentCommand" IsCommented="false" SelectionName="Add Document" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="WordAppendTextCommand" CommandID="59b7575a-3e3f-42ee-a23d-193961959393" CommandName="WordAppendTextCommand" IsCommented="false" SelectionName="Append Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_TextToSet="Hello World" v_FontName="Times New Roman" v_FontSize="40" v_FontBold="Yes" v_FontItalic="Yes" v_FontUnderline="Yes" />
