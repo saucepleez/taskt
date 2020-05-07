@@ -22,6 +22,22 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("This command differs from **Start Process** because this command blocks execution until the script has completed.  If you do not want to stop while the script executes, consider using **Start Process** instead.")]
         public string v_ScriptPath { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Script Type")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Powershell")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Default")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the type of script you want to execute.")]
+        [Attributes.PropertyAttributes.SampleUsage("Select Powershell to run ps1 files, Default to run a file through the system default.")]
+        [Attributes.PropertyAttributes.Remarks("Default executes with the system default for that file type.")]
+        public string v_ScriptType { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Enter script arguments, if any.")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter any arguments as a single string.")]
+        [Attributes.PropertyAttributes.SampleUsage("-message Hello -t 2")]
+        public string v_ScriptArgs { get; set; }
+
         public RunScriptCommand()
         {
             this.CommandName = "RunScriptCommand";
@@ -32,17 +48,41 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
+
+            string scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
+            string scriptType = v_ScriptType.ConvertToUserVariable(sender);
+            string scriptArgs = v_ScriptArgs.ConvertToUserVariable(sender);
+
+            switch(scriptType)
             {
-                System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
-
-                var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
-                scriptProc.StartInfo.FileName = scriptPath;
-                scriptProc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                scriptProc.Start();
-                scriptProc.WaitForExit();
-
-                scriptProc.Close();
+                case "Powershell":
+                    scriptProc.StartInfo = new System.Diagnostics.ProcessStartInfo()
+                    {
+                        FileName = "powershell.exe",
+                        Arguments = $"-NoProfile -ExecutionPolicy unrestricted -file \"{scriptPath}\" " + scriptArgs,
+                        CreateNoWindow = true,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
+                    break;
+                default:
+                    scriptProc.StartInfo = new System.Diagnostics.ProcessStartInfo()
+                    {
+                        FileName = scriptPath,
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
+                    break;
             }
+            scriptProc.Start();
+            scriptProc.WaitForExit();
+
+            string output = scriptProc.StandardOutput.ReadToEnd();
+            string error = scriptProc.StandardError.ReadToEnd();
+            scriptProc.Close();
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -50,8 +90,9 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptPath", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptArgs", this, editor));
 
-        
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ScriptType", this, editor));
 
             return RenderedControls;
         }
