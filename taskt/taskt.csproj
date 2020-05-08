@@ -181,6 +181,7 @@
     <Compile Include="Core\Automation\Commands\GetDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDataRowValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetExceptionMessageCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetFilesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetFoldersCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetListCountCommand.cs" />

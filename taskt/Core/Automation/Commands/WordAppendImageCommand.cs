@@ -58,6 +58,8 @@ namespace taskt.Core.Automation.Commands
             imageRange.Collapse(ref collapseEnd);
             imageRange.InlineShapes.AddPicture(vImagePath, Type.Missing, Type.Missing, imageRange);
 
+            Paragraph paragraph = wordDocument.Content.Paragraphs.Add();
+            paragraph.Format.SpaceAfter = 10f;
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

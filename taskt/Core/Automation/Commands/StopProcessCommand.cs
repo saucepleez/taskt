@@ -15,8 +15,9 @@ namespace taskt.Core.Automation.Commands
     public class StopProcessCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter the process name to be stopped (calc, notepad)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the name or path to the program to be stopped (ex. calc, notepad)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Provide the program process name as it appears as a process in Windows Task Manager")]
         [Attributes.PropertyAttributes.SampleUsage("**notepad**, **calc**")]
         [Attributes.PropertyAttributes.Remarks("The program name may vary from the actual process name.  You can use Thick App commands instead to close an application window.")]
