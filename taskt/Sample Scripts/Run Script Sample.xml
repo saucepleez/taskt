@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RunScriptCommand" CommandID="76bf0dc4-7ac8-454f-a357-bfae0e7dcaae" CommandName="RunScriptCommand" IsCommented="false" SelectionName="Run Script" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_ScriptPath="C:\Users\miguel\Documents\TaskT\taskt-fork\taskt\Sample Scripts\Sample.ps1" v_ScriptType="Powershell" v_ScriptArgs="-message &quot;Your script is running&quot; -timeout 2" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>
