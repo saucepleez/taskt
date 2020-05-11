@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Recipients { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Attachment File Path (Optional)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Attachment File Path (; delimited, Optional)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the Filepath of the file you want attached.")]
         [Attributes.PropertyAttributes.SampleUsage("c:sales reports\fy06q4.xlsx")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
             var vBody = v_Body.ConvertToUserVariable(sender);
             var vBodyType = v_BodyType.ConvertToUserVariable(sender);
 
-            var splittext = vRecipients.Split(';');
+            var splitRecipients = vRecipients.Split(';');
 
             Microsoft.Office.Interop.Outlook.Application outlookApp = new Microsoft.Office.Interop.Outlook.Application();
 
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
                 Microsoft.Office.Interop.Outlook.ExchangeUser manager =
                     currentUser.GetExchangeUser().GetExchangeUserManager();
                 // Add recipient using display name, alias, or smtp address
-                foreach(var t in splittext)
+                foreach (var t in splitRecipients)
                     mail.Recipients.Add(t.ToString());
 
                 mail.Recipients.ResolveAll();
@@ -104,7 +104,11 @@ namespace taskt.Core.Automation.Commands
                 }
  
                 if (!string.IsNullOrEmpty(vAttachment))
-                   mail.Attachments.Add(vAttachment);
+                {
+                    var splitAttachments = vAttachment.Split(';');
+                    foreach (var attachment in splitAttachments)
+                        mail.Attachments.Add(attachment);
+                }
 
                 mail.Send();
                 

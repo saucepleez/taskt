@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using System.Drawing;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -36,9 +37,23 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var image = User32Functions.CaptureWindow(v_ScreenshotWindowName);
-            string ConvertToUserVariabledString = v_FilePath.ConvertToUserVariable(sender);
-            image.Save(ConvertToUserVariabledString);
+            string vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            Bitmap image;
+
+            if (v_ScreenshotWindowName == "Current Window")
+            {
+                image = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+                using (Graphics g = Graphics.FromImage(image))
+                {
+                    g.CopyFromScreen(0, 0, 0, 0, Screen.PrimaryScreen.Bounds.Size);
+                }
+            }
+            else
+            {
+                image = User32Functions.CaptureWindow(v_ScreenshotWindowName);
+            }
+
+            image.Save(vFilePath);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

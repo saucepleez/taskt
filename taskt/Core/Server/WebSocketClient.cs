@@ -231,7 +231,7 @@ namespace taskt.Core.Server
 
             try
             {
-                if (SocketClient.webSocket.State == WebSocket4Net.WebSocketState.Open)
+                if (SocketClient.webSocket?.State == WebSocket4Net.WebSocketState.Open)
                 {
                     using (WebClient client = new WebClient())
                     {

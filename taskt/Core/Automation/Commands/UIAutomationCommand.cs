@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using System.Drawing;
+using System.Threading;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -23,8 +24,12 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the action")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Click Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Check If Element Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
         public string v_AutomationType { get; set; }
 
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -63,6 +68,10 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         private DataGridView ActionParametersGridViewHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<Control> ElementParameterControls;
 
         public UIAutomationCommand()
         {
@@ -139,11 +148,6 @@ namespace taskt.Core.Automation.Commands
                 default:
                     throw new NotImplementedException("Property Type '" + propertyName + "' not implemented");
             }
-
-
-
-
-
         }
 
         public AutomationElement SearchForGUIElement(object sender, string variableWindowName)
@@ -174,9 +178,6 @@ namespace taskt.Core.Automation.Commands
                     propCondition = CreatePropertyCondition(parameterName, parameterValue);
                 }
 
-
-
-               
                 conditionList.Add(propCondition);
             }
 
@@ -206,125 +207,248 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender)
         {
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             //create variable window name
             var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
-
             if (variableWindowName == "Current Window")
-            {
                 variableWindowName = User32Functions.GetActiveWindowTitle();
-            }
 
-            var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
+            dynamic requiredHandle = null;
+            if (v_AutomationType != "Wait For Element To Exist")
+                requiredHandle =  SearchForGUIElement(sender, variableWindowName);
 
-
-            //if element exists type
-            if (v_AutomationType == "Check If Element Exists")
+            switch (v_AutomationType)
             {
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                //determine element click type
+                case "Click Element":
+                    //if handle was not found
+                    if (requiredHandle == null)
+                        throw new Exception("Element was not found in window '" + variableWindowName + "'");
+                    //create search params
+                    var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
+                                     where rw.Field<string>("Parameter Name") == "Click Type"
+                                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    //get x adjust
+                    var xAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "X Adjustment"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    //get y adjust
+                    var yAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Y Adjustment"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    //convert potential variable
+                    var xAdjustVariable = xAdjust.ConvertToUserVariable(sender);
+                    var yAdjustVariable = yAdjust.ConvertToUserVariable(sender);
+
+                    //parse to int
+                    var xAdjustInt = int.Parse(xAdjustVariable);
+                    var yAdjustInt = int.Parse(yAdjustVariable);
+
+                    //get clickable point
+                    var newPoint = requiredHandle.GetClickablePoint();
+
+                    //send mousemove command
+                    var newMouseMove = new SendMouseMoveCommand
+                    {
+                        v_XMousePosition = (newPoint.X + xAdjustInt).ToString(),
+                        v_YMousePosition = (newPoint.Y + yAdjustInt).ToString(),
+                        v_MouseClick = clickType
+                    };
+
+                    //run commands
+                    newMouseMove.RunCommand(sender);
+                    break;
+                case "Set Text":
+                    string textToSet = (from rw in v_UIAActionParameters.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Text To Set"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+                    string clearElement = (from rw in v_UIAActionParameters.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string encryptedData = (from rw in v_UIAActionParameters.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Encrypted Text"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                    if (clearElement == null)
+                    {
+                        clearElement = "No";
+                    }
+                    if (encryptedData == "Encrypted")
+                    {
+                        textToSet = Core.EncryptionServices.DecryptString(textToSet, "TASKT");
+                    }
+                    textToSet = textToSet.ConvertToUserVariable(sender);
+
+                    if (requiredHandle.Current.IsEnabled && requiredHandle.Current.IsKeyboardFocusable)
+                    {
+                        object valuePattern = null;
+                        if (!requiredHandle.TryGetCurrentPattern(ValuePattern.Pattern, out valuePattern))
+                        {
+                            //The control does not support ValuePattern Using keyboard input
+
+                            // Set focus for input functionality and begin.
+                            requiredHandle.SetFocus();
+
+                            // Pause before sending keyboard input.
+                            Thread.Sleep(100);
+
+                            if (clearElement.ToLower() == "yes")
+                            {
+                                // Delete existing content in the control and insert new content.
+                                SendKeys.SendWait("^{HOME}");   // Move to start of control
+                                SendKeys.SendWait("^+{END}");   // Select everything
+                                SendKeys.SendWait("{DEL}");     // Delete selection
+                            }
+                            SendKeys.SendWait(textToSet);
+                        }
+                        else
+                        {
+                            if (clearElement.ToLower() == "no")
+                            {
+                                string currentText;
+                                object tPattern = null;
+                                if (requiredHandle.TryGetCurrentPattern(TextPattern.Pattern, out tPattern))
+                                {
+                                    var textPattern = (TextPattern)tPattern;
+                                    currentText = textPattern.DocumentRange.GetText(-1).TrimEnd('\r').ToString(); // often there is an extra '\r' hanging off the end.
+                                }
+                                else
+                                {
+                                    currentText = requiredHandle.Current.Name.ToString();
+                                }
+                                textToSet = currentText + textToSet;
+                            }
+                            requiredHandle.SetFocus();
+                            ((ValuePattern)valuePattern).SetValue(textToSet);
+                        }
+                    }
+                    break;
+                case "Clear Element":
+                    if (requiredHandle.Current.IsEnabled && requiredHandle.Current.IsKeyboardFocusable)
+                    {
+                        object valuePattern = null;
+                        if (!requiredHandle.TryGetCurrentPattern(ValuePattern.Pattern, out valuePattern))
+                        {
+                            //The control does not support ValuePattern Using keyboard input
+
+                            // Set focus for input functionality and begin.
+                            requiredHandle.SetFocus();
+
+                            // Pause before sending keyboard input.
+                            Thread.Sleep(100);
+
+                            // Delete existing content in the control and insert new content.
+                            SendKeys.SendWait("^{HOME}");   // Move to start of control
+                            SendKeys.SendWait("^+{END}");   // Select everything
+                            SendKeys.SendWait("{DEL}");     // Delete selection
+                            
+                        }
+                        else
+                        {
+                            requiredHandle.SetFocus();
+                            ((ValuePattern)valuePattern).SetValue("");
+                        }
+                    }
+                    break;
+                case "Get Text":
+                //if element exists type
+                case "Check If Element Exists":
+                    //apply to variable
+                    var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+                    //remove brackets from variable
+                    applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+
+                    //declare search result
+                    string searchResult = "";
+                    if (v_AutomationType == "Get Text")
+                    {
+                        //string currentText;
+                        object tPattern = null;
+                        if (requiredHandle.TryGetCurrentPattern(TextPattern.Pattern, out tPattern))
+                        {
+                            var textPattern = (TextPattern)tPattern;
+                            searchResult = textPattern.DocumentRange.GetText(-1).TrimEnd('\r').ToString(); // often there is an extra '\r' hanging off the end.
+                        }
+                        else
+                        {
+                            searchResult = requiredHandle.Current.Name.ToString();
+                        }
+                    }
+
+                    else if (v_AutomationType == "Check If Element Exists")
+                    {
+                        //determine search result
+                        if (requiredHandle == null)
+                        {
+                            searchResult = "FALSE";
+                        }
+                        else
+                        {
+                            searchResult = "TRUE";
+                        }
+
+                    }
+                    //store data
+                    searchResult.StoreInUserVariable(sender, applyToVariable);
+                    break;
+                case "Wait For Element To Exist":
+                    var timeoutText = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Timeout (Seconds)"
                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                
-                //remove brackets from variable
-                applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+                    timeoutText = timeoutText.ConvertToUserVariable(sender);
 
-                //declare search result
-                string searchResult;
+                    int timeOut = Convert.ToInt32(timeoutText);
 
-                //determine search result
-                if (requiredHandle == null)
-                {
-                    searchResult = "FALSE";
-  
-                }
-                else
-                {
-                    searchResult = "TRUE";
-                }
+                    var timeToEnd = DateTime.Now.AddSeconds(timeOut);
+                    while (timeToEnd >= DateTime.Now)
+                    {
+                        try
+                        {
+                            requiredHandle = SearchForGUIElement(sender, variableWindowName);
+                            break;
+                        }
+                        catch (Exception)
+                        {
+                            engine.ReportProgress("Element Not Yet Found... " + (timeToEnd - DateTime.Now).Seconds + "s remain");
+                            Thread.Sleep(1000);
+                        }
+                    }
+                    break;
 
-              //store data
-                searchResult.StoreInUserVariable(sender, applyToVariable);
+                case "Get Value From Element":
+                    if (requiredHandle == null)
+                        throw new Exception("Element was not found in window '" + variableWindowName + "'");
+                    //get value from property
+                    var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Get Value From"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-            }
+                    //apply to variable
+                    var applyToVariable2 = (from rw in v_UIAActionParameters.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-            //determine element click type
-           else if (v_AutomationType == "Click Element")
-            {
+                    //remove brackets from variable
+                    applyToVariable2 = applyToVariable2.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
 
-                //if handle was not found
-                if (requiredHandle == null)
-                    throw new Exception("Element was not found in window '" + variableWindowName + "'");
+                    //get required value
+                    var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
 
-                //create search params
-                var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
-                                 where rw.Field<string>("Parameter Name") == "Click Type"
-                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //get x adjust
-                var xAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
-                               where rw.Field<string>("Parameter Name") == "X Adjustment"
-                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //get y adjust
-                var yAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
-                               where rw.Field<string>("Parameter Name") == "Y Adjustment"
-                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //convert potential variable
-                var xAdjustVariable = xAdjust.ConvertToUserVariable(sender);
-                var yAdjustVariable = yAdjust.ConvertToUserVariable(sender);
-
-                //parse to int
-                var xAdjustInt = int.Parse(xAdjustVariable);
-                var yAdjustInt = int.Parse(yAdjustVariable);
-
-                //get clickable point
-                var newPoint = requiredHandle.GetClickablePoint();
-
-                //send mousemove command
-                var newMouseMove = new SendMouseMoveCommand
-                {
-                    v_XMousePosition = (newPoint.X + xAdjustInt).ToString(),
-                    v_YMousePosition = (newPoint.Y + yAdjustInt).ToString(),
-                    v_MouseClick = clickType
-                };
-
-                //run commands
-                newMouseMove.RunCommand(sender);
-            }
-            else if (v_AutomationType == "Get Value From Element")
-            {
-
-                //if handle was not found
-                if (requiredHandle == null)
-                    throw new Exception("Element was not found in window '" + variableWindowName + "'");
-                //get value from property
-                var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "Get Value From"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault();
-               
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //remove brackets from variable
-                applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
-
-                //get required value
-                var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
-
-                //store into variable
-                requiredValue.StoreInUserVariable(sender, applyToVariable);
-
-            }
-            else
-            {
-                throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
+                    //store into variable
+                    requiredValue.StoreInUserVariable(sender, applyToVariable2);
+                    break;
+                default:
+                    throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
             }
         }
 
@@ -378,9 +502,6 @@ namespace taskt.Core.Automation.Commands
             ActionParametersGridViewHelper.AllowUserToAddRows = false;
             ActionParametersGridViewHelper.AllowUserToDeleteRows = false;
 
-
-
-
             //create helper control
             CommandItemControl helperControl = new CommandItemControl();
             helperControl.Padding = new Padding(10, 0, 0, 0);
@@ -390,15 +511,11 @@ namespace taskt.Core.Automation.Commands
             helperControl.CommandDisplay = "Element Recorder";
             helperControl.Click += ShowRecorder;
 
-
-
             //automation type
             var automationTypeGroup = CommandControls.CreateDefaultDropdownGroupFor("v_AutomationType", this, editor);
             AutomationTypeControl = (ComboBox)automationTypeGroup.Where(f => f is ComboBox).FirstOrDefault();
             AutomationTypeControl.SelectionChangeCommitted += UIAType_SelectionChangeCommitted;
             RenderedControls.AddRange(automationTypeGroup);
-
-
 
             //window name
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
@@ -412,8 +529,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(SearchParametersGridViewHelper);
 
             //create action parameters
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
-            RenderedControls.Add(ActionParametersGridViewHelper);
+            ElementParameterControls = new List<Control>();
+            ElementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
+            ElementParameterControls.Add(ActionParametersGridViewHelper);
+
+            RenderedControls.AddRange(ElementParameterControls);
 
             return RenderedControls;
 
@@ -430,14 +550,12 @@ namespace taskt.Core.Automation.Commands
 
             WindowNameControl.Text = newElementRecorder.cboWindowTitle.Text;
 
-
             this.v_UIASearchParameters.Rows.Clear();
             foreach (DataRow rw in newElementRecorder.searchParameters.Rows)
             {
                 this.v_UIASearchParameters.ImportRow(rw);
             }
 
-           
             SearchParametersGridViewHelper.DataSource = this.v_UIASearchParameters;
             SearchParametersGridViewHelper.Refresh();
 
@@ -445,7 +563,6 @@ namespace taskt.Core.Automation.Commands
 
         public void UIAType_SelectionChangeCommitted(object sender, EventArgs e)
         {
-  
             ComboBox selectedAction = AutomationTypeControl;
 
             if (selectedAction == null)
@@ -461,10 +578,13 @@ namespace taskt.Core.Automation.Commands
                 actionParameters.Rows.Clear();
             }
 
-  
             switch (selectedAction.SelectedItem)
             {
                 case "Click Element":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
                     var mouseClickBox = new DataGridViewComboBoxCell();
                     mouseClickBox.Items.Add("Left Click");
                     mouseClickBox.Items.Add("Middle Click");
@@ -475,7 +595,7 @@ namespace taskt.Core.Automation.Commands
                     mouseClickBox.Items.Add("Left Up");
                     mouseClickBox.Items.Add("Middle Up");
                     mouseClickBox.Items.Add("Right Up");
-
+                    mouseClickBox.Items.Add("Double Left Click");
 
                     if (sender != null)
                     {
@@ -486,15 +606,62 @@ namespace taskt.Core.Automation.Commands
 
                     actionParameterView.Rows[0].Cells[1] = mouseClickBox;
                     break;
+                case "Set Text":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Text To Set");
+                        actionParameters.Rows.Add("Clear Element Before Setting Text");
+                        actionParameters.Rows.Add("Encrypted Text");
+                        actionParameters.Rows.Add("Optional - Click to Encrypt 'Text To Set'");
 
+                        DataGridViewComboBoxCell encryptedBox = new DataGridViewComboBoxCell();
+                        encryptedBox.Items.Add("Not Encrypted");
+                        encryptedBox.Items.Add("Encrypted");
+                        actionParameterView.Rows[2].Cells[1] = encryptedBox;
+                        actionParameterView.Rows[2].Cells[1].Value = "Not Encrypted";
+
+                        var buttonCell = new DataGridViewButtonCell();
+                        actionParameterView.Rows[3].Cells[1] = buttonCell;
+                        actionParameterView.Rows[3].Cells[1].Value = "Encrypt Text";
+                        actionParameterView.CellContentClick += ElementsGridViewHelper_CellContentClick;
+                    }
+                    break;
+                case "Get Text":
                 case "Check If Element Exists":
-
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
                     if (sender != null)
                     {
                         actionParameters.Rows.Add("Apply To Variable", "");
                     }
                     break;
-                default:
+                case "Clear Element":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Hide();
+                    }
+                    break;
+                case "Wait For Element To Exist":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Timeout (Seconds)");
+                    }
+                    break;
+                case "Get Value From Element":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
                     var parameterName = new DataGridViewComboBoxCell();
                     parameterName.Items.Add("AcceleratorKey");
                     parameterName.Items.Add("AccessKey");
@@ -530,17 +697,38 @@ namespace taskt.Core.Automation.Commands
                         {
                             MessageBox.Show("Unable to select first row, second cell to apply '" + parameterName + "': " + ex.ToString());
                         }
-
                     }
-
+                    break;
+                default:
                     break;
             }
-
-
             actionParameterView.Refresh();
 
         }
 
+        private void ElementsGridViewHelper_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var targetCell = ActionParametersGridViewHelper.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (targetCell is DataGridViewButtonCell && targetCell.Value.ToString() == "Encrypt Text")
+            {
+                var targetElement = ActionParametersGridViewHelper.Rows[0].Cells[1];
+
+                if (string.IsNullOrEmpty(targetElement.Value.ToString()))
+                    return;
+
+                var warning = MessageBox.Show($"Warning! Text should only be encrypted one time and is not reversible in the builder.  Would you like to proceed and convert '{targetElement.Value.ToString()}' to an encrypted value?", "Encryption Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (warning == DialogResult.Yes)
+                {
+                    targetElement.Value = EncryptionServices.EncryptString(targetElement.Value.ToString(), "TASKT");
+                    ActionParametersGridViewHelper.Rows[2].Cells[1].Value = "Encrypted";
+                }
+
+            }
+
+
+        }
         public override string GetDisplayValue()
         {
             if (v_AutomationType == "Click Element")
@@ -563,7 +751,7 @@ namespace taskt.Core.Automation.Commands
 
                 return base.GetDisplayValue() + " [Check for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
             }
-            else
+            else if(v_AutomationType == "Get Value From Element")
             {
                 //get value from property
                 var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
@@ -576,6 +764,10 @@ namespace taskt.Core.Automation.Commands
                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                 return base.GetDisplayValue() + " [Get value from '" + propertyName + "' in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+            }
+            else
+            {
+                return base.GetDisplayValue() + " [" + v_AutomationType + " on element in window '" + v_WindowName + "']";
             }
 
 

@@ -39,8 +39,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-
-
             var targetWindows = User32Functions.FindTargetWindows(windowName);
 
             //loop each window
@@ -48,9 +46,6 @@ namespace taskt.Core.Automation.Commands
             {
                 User32Functions.CloseWindow(targetedWindow);
             }
-            
-
-           
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
