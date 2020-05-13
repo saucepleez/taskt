@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -96,6 +97,10 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         private List<Control> ElementParameterControls;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<Control> SearchParameterControls;
 
         public SeleniumBrowserElementActionCommand()
         {
@@ -478,6 +483,7 @@ namespace taskt.Core.Automation.Commands
                 case "Find Element By Class Name":
                     element = seleniumInstance.FindElement(By.ClassName(searchParameter));
                     break;
+
                 case "Find Element By CSS Selector":
                     element = seleniumInstance.FindElement(By.CssSelector(searchParameter));
                     break;
@@ -555,10 +561,23 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            //create helper control
+            CommandItemControl helperControl = new CommandItemControl();
+            helperControl.Padding = new Padding(10, 0, 0, 0);
+            helperControl.ForeColor = Color.AliceBlue;
+            helperControl.Font = new Font("Segoe UI Semilight", 10);
+            helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            helperControl.CommandDisplay = "Element Recorder";
+            helperControl.Click += ShowRecorder;
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SeleniumSearchType", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumSearchParameter", this, editor));
-
+            
+            SearchParameterControls = new List<Control>();
+            SearchParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumSearchParameter", this));
+            SearchParameterControls.Add(helperControl);
+            SearchParameterControls.Add(CommandControls.CreateDefaultInputFor("v_SeleniumSearchParameter", this));
+            RenderedControls.AddRange(SearchParameterControls);
 
             ElementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_SeleniumElementAction", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumElementAction", this));
@@ -581,6 +600,27 @@ namespace taskt.Core.Automation.Commands
         //{
         //    //seleniumAction_SelectionChangeCommitted(null, null);
         //}
+        public void ShowRecorder(object sender, EventArgs e)
+        {
+            //get command reference
+            //create recorder
+            UI.Forms.Supplemental.frmHTMLElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmHTMLElementRecorder();
+
+            //show form
+            newElementRecorder.ShowDialog();
+
+            try
+            {
+                string seleniumSearchType = Regex.Matches(v_SeleniumSearchType, @"(?<=By )[\w\s]+")[0].ToString();
+                var searchParameter = newElementRecorder.searchParameters.AsEnumerable().Where(s => s[0].ToString() == seleniumSearchType).SingleOrDefault();
+                this.SearchParameterControls[2].Text = searchParameter[1].ToString();
+            }
+            catch (Exception)
+            {
+                //Search parameter not found
+            }
+            
+        }
 
         public void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -757,8 +797,6 @@ namespace taskt.Core.Automation.Commands
                 }
                
             }
-
-         
         }
 
         public override string GetDisplayValue()
