@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -73,6 +74,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Count")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Options")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Select Option")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Table")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**, **Get Count**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
@@ -434,6 +436,44 @@ namespace taskt.Core.Automation.Commands
                     requiredComplexVariable.CurrentPosition = 0;
 
                     break;
+                case "Get Table":
+                    var v_VariableName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                          where rw.Field<string>("Parameter Name") == "Variable Name"
+                                          select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    // Get HTML (Source) of the Element
+                    string tableHTML = element.GetAttribute("innerHTML").ToString();
+                    HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+
+                    //Load Source (String) as HTML Document
+                    doc.LoadHtml(tableHTML);
+
+                    //Get Header Tags
+                    var headers = doc.DocumentNode.SelectNodes("//tr/th");
+
+                    DataTable DT = new DataTable();
+                    foreach (HtmlNode header in headers)
+                        DT.Columns.Add(Regex.Replace(header.InnerText, @"\t|\n|\r", "")); // create columns from th
+
+                    // select rows with td elements and load each row (containing <td> tags) into DataTable
+                    foreach (var row in doc.DocumentNode.SelectNodes("//tr[td]"))
+                        DT.Rows.Add(row.SelectNodes("td").Select(td => Regex.Replace(td.InnerText, @"\t|\n|\r", "")).ToArray());
+
+                    Script.ScriptVariable newDataset = new Script.ScriptVariable
+                    {
+                        VariableName = v_VariableName,
+                        VariableValue = DT
+                    };
+
+                    //Overwrites variable if it already exists
+                    if (engine.VariableList.Exists(x => x.VariableName == newDataset.VariableName))
+                    {
+                        Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newDataset.VariableName).FirstOrDefault();
+                        engine.VariableList.Remove(temp);
+                    }
+                    engine.VariableList.Add(newDataset);
+
+                    break;
                 case "Clear Element":
                     element.Clear();
                     break;
@@ -702,6 +742,7 @@ namespace taskt.Core.Automation.Commands
 
                 case "Get Text":
                 case "Get Matching Elements":
+                case "Get Table":
                 case "Get Count":
                     foreach (var ctrl in ElementParameterControls)
                     {
