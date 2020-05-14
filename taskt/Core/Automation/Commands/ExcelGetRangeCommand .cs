@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
@@ -60,7 +60,14 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            var cellValue = excelSheet.Range[targetAddress1, targetAddress2];
+            Microsoft.Office.Interop.Excel.Range cellValue;
+            if (targetAddress2 != "")
+                cellValue = excelSheet.Range[targetAddress1, targetAddress2];
+            else
+            {
+                Microsoft.Office.Interop.Excel.Range last = excelSheet.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+                cellValue = excelSheet.Range[targetAddress1, last];
+            }
 
             List<object> lst = new List<object>();
             int rw = cellValue.Rows.Count;
@@ -85,7 +92,6 @@ namespace taskt.Core.Automation.Commands
 
             }
             string output = String.Join(",", lst);
-            v_ExcelCellAddress1 = output;
             
             //Store Strings of comma seperated values into user variable
             output.StoreInUserVariable(sender, v_userVariableName);

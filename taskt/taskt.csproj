@@ -102,6 +102,10 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
       <HintPath>..\packages\TaskScheduler.2.6.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
@@ -165,9 +169,25 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\BeginMultiLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginMutliIfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CreateFolderCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DeleteFolderCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelSplitRangeByColumnCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelWriteRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExtractFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetDataRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetDataRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetDataRowValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetFilesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetFoldersCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetListCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MoveFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\NextLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookDeleteEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\OutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetDictionaryValueCommand.cs" />
@@ -196,13 +216,19 @@
     <Compile Include="Core\Automation\Commands\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\FinallyCommand.cs" />
     <Compile Include="Core\Automation\Commands\EncryptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookForwardEmailsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookGetEmailsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookMoveEmailsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\OutlookReplyToEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseJsonModelCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\RemoveDataRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\RenameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\SetEnginePreferenceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ThrowExceptionCommand.cs" />
     <Compile Include="Core\Automation\Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ShowEngineContextCommand.cs" />
@@ -308,6 +334,19 @@
     <Compile Include="Core\Automation\Commands\UploadDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\VariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitForFileToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordAddDocumentCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordAppendDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordAppendImageCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordAppendTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordCloseApplicationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordCreateApplicationCommandcs.cs" />
+    <Compile Include="Core\Automation\Commands\WordExportToPDFCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordOpenDocumentCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordReadDocumentCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordReplaceTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordSaveAsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordSaveCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WriteDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\WriteTextFileCommand.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
@@ -738,6 +777,13 @@
     <None Include="Resources\command-remote.png" />
     <None Include="Resources\command-begin-multi-if.png" />
     <None Include="Resources\command-nextloop.png" />
+    <Content Include="Resources\7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\7z.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\command-dictionary.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

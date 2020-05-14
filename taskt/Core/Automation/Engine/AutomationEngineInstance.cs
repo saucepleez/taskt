@@ -273,7 +273,7 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand))
+                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);

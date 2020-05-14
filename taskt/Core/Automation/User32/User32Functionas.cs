@@ -442,6 +442,7 @@ namespace taskt.Core.Automation.User32
             private static bool trackWindowOpenLocations;
             private static int msResolution;
             public static string stopHookKey;
+            public static bool stopOnClick;
             private static Stopwatch lastMouseMove;
 
             public static List<Core.Automation.Commands.ScriptCommand> generatedCommands;
@@ -454,8 +455,9 @@ namespace taskt.Core.Automation.User32
                 //set hook for engine cancellation
                 _keyboardHookID = SetKeyboardHook(_kbProc);
             }
-            public static void StartElementCaptureHook()
+            public static void StartElementCaptureHook(bool stopOnFirstClick)
             {
+                stopOnClick = stopOnFirstClick;
                 //set hook for engine cancellation
                 _mouseHookID = SetMouseHook(_mouseLeftUpProc);
             }
@@ -545,7 +547,10 @@ namespace taskt.Core.Automation.User32
 
                     if (message == MouseMessages.WM_LBUTTONDOWN)
                     {
-                        UnhookWindowsHookEx(_mouseHookID);
+                        if (stopOnClick)
+                        {
+                            UnhookWindowsHookEx(_mouseHookID);
+                        }
 
                         MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
                         System.Windows.Point point = new System.Windows.Point(hookStruct.pt.x, hookStruct.pt.y);

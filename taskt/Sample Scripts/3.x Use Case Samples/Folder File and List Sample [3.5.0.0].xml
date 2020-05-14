@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateFolderCommand" CommandID="48858602-6ded-4217-acd6-af2b9fbbd96b" CommandName="CreateFolderCommand" IsCommented="false" SelectionName="Create Folder" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_NewFolderName="FolderA" v_DestinationDirectory="C:\" v_DeleteExisting="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateFolderCommand" CommandID="61abf2a3-08e2-4a8f-b3da-6dc4a01882a4" CommandName="CreateFolderCommand" IsCommented="false" SelectionName="Create Folder" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_NewFolderName="InnerFolder1" v_DestinationDirectory="C:\\FolderA" v_DeleteExisting="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="7c22a921-3c45-4b80-8aac-b2502808fd04" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write Text File" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="C:\\FolderA\InnerFolder1\sampleA1.txt" v_TextToWrite="Hello" v_Overwrite="Overwrite" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="cb8b16de-75eb-409e-bd6f-7b3fdcbd498d" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write Text File" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="C:\\FolderA\InnerFolder1\sampleA2.txt" v_TextToWrite="World" v_Overwrite="Overwrite" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateFolderCommand" CommandID="8848aaa4-3afb-4b54-9003-4cbf03a154c3" CommandName="CreateFolderCommand" IsCommented="false" SelectionName="Create Folder" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_NewFolderName="InnerFolder2" v_DestinationDirectory="C:\\FolderA" v_DeleteExisting="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="ac2f7987-e018-4948-b7ad-042f74e23c73" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write Text File" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="C:\\FolderA\InnerFolder2\sampleA1.txt" v_TextToWrite="Goodbye" v_Overwrite="Overwrite" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="4e8b62a2-9462-4e2a-b796-93a21a6a5087" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write Text File" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="C:\\FolderA\InnerFolder2\sampleA2.txt" v_TextToWrite="World" v_Overwrite="Overwrite" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetFoldersCommand" CommandID="a5d1b23c-640f-4b71-8c67-60cf9311d9cb" CommandName="GetFoldersCommand" IsCommented="false" SelectionName="Get Folders" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="true" CommandEnabled="true" v_SourceFolderPath="C:\\FolderA" v_UserVariableName="folderAFolders" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="70f73b70-6b18-4086-8135-95a9be6f8473" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="folderAFolders" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetFilesCommand" CommandID="b4185cbf-9da6-4f85-8f24-fd31f74db2ba" CommandName="GetFilesCommand" IsCommented="false" SelectionName="Get Files" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFolderPath="folderAFolders" v_UserVariableName="folderAFiles" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetListCountCommand" CommandID="6b685272-1d67-461d-8a0c-0ab4177e98d7" CommandName="GetListCountCommand" IsCommented="false" SelectionName="Get List Count" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="folderAFiles" v_UserVariableName="folderAFileCount" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="AddVariableCommand" CommandID="75184a3e-8d08-4b4f-95fb-f7fc97e5db63" CommandName="AddVariableCommand" IsCommented="false" SelectionName="New Variable" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="count" v_Input="0">
+          <v_IfExists>Replace If Variable Exists</v_IfExists>
+        </ScriptCommand>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="BeginLoopCommand" CommandID="6f989270-209e-4044-a229-dfb5e0ea9b80" CommandName="BeginLoopCommand" IsCommented="false" SelectionName="Begin Loop" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopActionType="Value">
+          <v_LoopActionParameterTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="LoopAcAionPara45Table041620.104504" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="LoopAcAionPara45Table041620.104504">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <LoopAcAionPara45Table041620.104504 diffgr:id="LoopAcAionPara45Table041620.1045041" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>count</Parameter_x0020_Value>
+                </LoopAcAionPara45Table041620.104504>
+                <LoopAcAionPara45Table041620.104504 diffgr:id="LoopAcAionPara45Table041620.1045042" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>is less than</Parameter_x0020_Value>
+                </LoopAcAionPara45Table041620.104504>
+                <LoopAcAionPara45Table041620.104504 diffgr:id="LoopAcAionPara45Table041620.1045043" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                  <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>folderAFileCount</Parameter_x0020_Value>
+                </LoopAcAionPara45Table041620.104504>
+              </DocumentElement>
+            </diffgr:diffgram>
+          </v_LoopActionParameterTable>
+        </ScriptCommand>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="GetListItemCommand" CommandID="66318429-057e-47b1-a0b1-dc6f50aab79d" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="folderAFiles" v_ItemIndex="count" v_UserVariableName="folderAFile" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="ReadTextFileCommand" CommandID="9321cfc6-2794-44dd-98c3-4ec5049d4ebe" CommandName="ReadTextFileCommand" IsCommented="false" SelectionName="Read Text File" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="folderAFile" v_userVariableName="folderAFileText" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9f898b21-8bae-40b2-bc72-18a909ffdfe5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="folderAFileText" v_AutoCloseAfter="1" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="RenameFileCommand" CommandID="a8b2bec8-585e-4288-8c34-1a48fdb02198" CommandName="RenameFileCommand" IsCommented="false" SelectionName="Rename File" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFilePath="folderAFile" v_NewName="newSampleA{count}.txt" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="VariableCommand" CommandID="ff947b60-e1e3-494e-9478-8e5f80a85160" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="count" v_Input="{count} + 1" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="EndLoopCommand" CommandID="8c8c1c57-1108-46da-bac3-febb677c423e" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="78140f0c-dafe-42ad-b2f2-6516c4143813" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MoveFolderCommand" CommandID="ba5a77ef-4d67-49af-a571-86d2b8faa107" CommandName="MoveFolderCommand" IsCommented="false" SelectionName="Move/Copy Folder" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_OperationType="Copy Folder" v_SourceFolderPath="C:\FolderA" v_DestinationDirectory="C:\FolderB" v_CreateDirectory="Yes" v_DeleteExisting="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="DeleteFolderCommand" CommandID="d6ea6396-2b8c-4cbd-a4a4-ed69855c59c5" CommandName="DeleteFolderCommand" IsCommented="false" SelectionName="Delete Folder" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFolderPath="C:\\FolderA" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RenameFolderCommand" CommandID="c26259c0-a4e1-43fb-af3c-8e6fdf9a755a" CommandName="RenameFolderCommand" IsCommented="false" SelectionName="Rename Folder" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFolderPath="C:\\FolderB" v_NewName="OuterFolder" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>

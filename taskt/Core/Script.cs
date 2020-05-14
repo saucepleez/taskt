@@ -74,7 +74,7 @@ namespace taskt.Core.Script
                 var command = (Core.Automation.Commands.ScriptCommand)commandItem.Tag;
                 command.LineNumber = lineNumber;
 
-                if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginMultiIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (command is Core.Automation.Commands.TryCommand))
+                if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginMultiIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (command is Core.Automation.Commands.TryCommand) || (command is Core.Automation.Commands.BeginLoopCommand) || (command is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     if (subCommands.Count == 0)  //if this is the first loop
                     {

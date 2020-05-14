@@ -107,6 +107,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         {
             ShowVariableHelper,
             ShowFileSelectionHelper,
+            ShowFolderSelectionHelper,
             ShowImageRecogitionHelper,
             ShowCodeBuilder,
             ShowMouseCaptureHelper,
@@ -115,7 +116,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             ShowDLLExplorer,
             AddInputParameter,
             ShowHTMLBuilder,
-            ShowIfBuilder
+            ShowIfBuilder,
+            ShowLoopBuilder
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]

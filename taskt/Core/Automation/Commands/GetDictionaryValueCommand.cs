@@ -53,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         {
             //Retrieve Dictionary by name
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var vKey = v_Key.ConvertToUserVariable(sender);
             var dataSetVariable = LookupVariable(engine);
 
             //Declare local dictionary and assign output
@@ -60,8 +61,15 @@ namespace taskt.Core.Automation.Commands
             Script.ScriptVariable Output = new Script.ScriptVariable
             {
                 VariableName = v_OutputVariable,
-                VariableValue = dict[v_Key]
+                VariableValue = dict[vKey]
             };
+
+            //Overwrites variable if it already exists
+            if (engine.VariableList.Exists(x => x.VariableName == Output.VariableName))
+            {
+                Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == Output.VariableName).FirstOrDefault();
+                engine.VariableList.Remove(temp);
+            }
             //Add to variable list
             engine.VariableList.Add(Output);
         }
@@ -95,7 +103,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            return base.GetDisplayValue() + $" [From: {v_InputData}, Get: {v_Key}, Store In: {v_OutputVariable}]";
         }
     }
 }

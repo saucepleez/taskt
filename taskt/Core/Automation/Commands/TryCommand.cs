@@ -63,7 +63,8 @@ namespace taskt.Core.Automation.Commands
                     {
                         engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[j]);
                     }
-                  
+                    break;
+
                 }
              
             }

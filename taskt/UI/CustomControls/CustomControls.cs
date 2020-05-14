@@ -451,6 +451,8 @@ namespace taskt.UI
             uiImages.Add("PDFTextExtractionCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetListCountCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetListItemCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
             uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);
@@ -485,7 +487,24 @@ namespace taskt.UI
             uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("WordCreateApplicationCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordCloseApplicationCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordOpenDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordSaveCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordSaveAsCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordExportToPDFCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAddDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordReadDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordReplaceTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendImageCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendDataTableCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("ExcelSplitRangeByColumnCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("WriteDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowCountCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("RemoveDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
@@ -502,11 +521,17 @@ namespace taskt.UI
             uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("OutlookEmailCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookGetEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookMoveEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookDeleteEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookForwardEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookReplyToEmailsCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
             uiImages.Add("TryCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("CatchExceptionCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("FinallyCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("EndTryCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("ThrowExceptionCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
@@ -524,6 +549,8 @@ namespace taskt.UI
             uiImages.Add("BeginContinousLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginMultiLoopCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("ExitLoopCommand", taskt.Properties.Resources.command_exitloop);
             uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
             uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);
@@ -532,6 +559,12 @@ namespace taskt.UI
             uiImages.Add("DeleteFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("RenameFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("GetFilesCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("GetFoldersCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("CreateFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("DeleteFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("MoveFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("RenameFolderCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
             uiImages.Add("RESTCommand", taskt.Properties.Resources.command_run_code);
@@ -552,6 +585,10 @@ namespace taskt.UI
             uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
             uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
             uiImages.Add("RemoteAPICommand", taskt.Properties.Resources.command_remote);
+            uiImages.Add("AddDictionaryCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_dictionary);
 
             return uiImages;
         }

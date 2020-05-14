@@ -190,6 +190,14 @@ namespace taskt.Core.Automation.Commands
             switch (v_SeleniumElementAction)
             {
                 case "Invoke Click":
+                    int seleniumWindowHeightY = seleniumInstance.Manage().Window.Size.Height;
+                    int elementPositionY = element.Location.Y;
+                    if (elementPositionY > seleniumWindowHeightY)
+                    {
+                        String scroll = String.Format("window.scroll(0, {0})", elementPositionY);
+                        IJavaScriptExecutor js = browserObject as IJavaScriptExecutor;
+                        js.ExecuteScript(scroll);
+                    }
                     element.Click();
                     break;
 
@@ -316,11 +324,11 @@ namespace taskt.Core.Automation.Commands
 
                     string selectionType = (from rw in v_WebActionParameterTable.AsEnumerable()
                                              where rw.Field<string>("Parameter Name") == "Selection Type"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
                     string selectionParam = (from rw in v_WebActionParameterTable.AsEnumerable()
                                             where rw.Field<string>("Parameter Name") == "Selection Parameter"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
 
                     seleniumInstance.SwitchTo().ActiveElement();

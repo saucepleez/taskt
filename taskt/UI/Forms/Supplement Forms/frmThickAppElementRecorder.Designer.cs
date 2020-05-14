@@ -32,11 +32,12 @@
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.pbRefresh = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.cboWindowTitle = new System.Windows.Forms.ComboBox();
+            this.pbRecord = new System.Windows.Forms.PictureBox();
+            this.lblDescription = new System.Windows.Forms.Label();
+            this.chkStopOnClick = new System.Windows.Forms.CheckBox();
             this.lblSubHeader = new System.Windows.Forms.Label();
             this.lblHeader = new System.Windows.Forms.Label();
-            this.pbRecord = new System.Windows.Forms.PictureBox();
-            this.cboWindowTitle = new System.Windows.Forms.ComboBox();
             this.tlpControls.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRefresh)).BeginInit();
@@ -54,29 +55,30 @@
             this.tlpControls.RowCount = 1;
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 190F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpControls.Size = new System.Drawing.Size(740, 171);
+            this.tlpControls.Size = new System.Drawing.Size(735, 186);
             this.tlpControls.TabIndex = 1;
             // 
             // pnlHeader
             // 
             this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.pnlHeader.Controls.Add(this.pbRefresh);
-            this.pnlHeader.Controls.Add(this.label1);
+            this.pnlHeader.Controls.Add(this.cboWindowTitle);
+            this.pnlHeader.Controls.Add(this.pbRecord);
+            this.pnlHeader.Controls.Add(this.lblDescription);
+            this.pnlHeader.Controls.Add(this.chkStopOnClick);
             this.pnlHeader.Controls.Add(this.lblSubHeader);
             this.pnlHeader.Controls.Add(this.lblHeader);
-            this.pnlHeader.Controls.Add(this.pbRecord);
-            this.pnlHeader.Controls.Add(this.cboWindowTitle);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(740, 190);
+            this.pnlHeader.Size = new System.Drawing.Size(735, 190);
             this.pnlHeader.TabIndex = 1;
             // 
             // pbRefresh
             // 
             this.pbRefresh.Image = global::taskt.Properties.Resources.command_startloop;
-            this.pbRefresh.Location = new System.Drawing.Point(10, 123);
+            this.pbRefresh.Location = new System.Drawing.Point(14, 123);
             this.pbRefresh.Name = "pbRefresh";
             this.pbRefresh.Size = new System.Drawing.Size(32, 32);
             this.pbRefresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -84,17 +86,53 @@
             this.pbRefresh.TabStop = false;
             this.pbRefresh.Click += new System.EventHandler(this.pbRefresh_Click);
             // 
-            // label1
+            // cboWindowTitle
             // 
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(10, 69);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(778, 53);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "Instructions: Select the target window name from the drop-down list and click the" +
+            this.cboWindowTitle.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cboWindowTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboWindowTitle.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cboWindowTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboWindowTitle.FormattingEnabled = true;
+            this.cboWindowTitle.Location = new System.Drawing.Point(52, 127);
+            this.cboWindowTitle.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.cboWindowTitle.Name = "cboWindowTitle";
+            this.cboWindowTitle.Size = new System.Drawing.Size(348, 28);
+            this.cboWindowTitle.TabIndex = 3;
+            // 
+            // pbRecord
+            // 
+            this.pbRecord.Image = global::taskt.Properties.Resources.various_record_button;
+            this.pbRecord.Location = new System.Drawing.Point(409, 123);
+            this.pbRecord.Name = "pbRecord";
+            this.pbRecord.Size = new System.Drawing.Size(32, 32);
+            this.pbRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbRecord.TabIndex = 4;
+            this.pbRecord.TabStop = false;
+            this.pbRecord.Click += new System.EventHandler(this.pbRecord_Click);
+            // 
+            // lblDescription
+            // 
+            this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.ForeColor = System.Drawing.Color.White;
+            this.lblDescription.Location = new System.Drawing.Point(10, 69);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(778, 53);
+            this.lblDescription.TabIndex = 16;
+            this.lblDescription.Text = "Instructions: Select the target window name from the drop-down list and click the" +
     " record button.  Once recording has started, click the element in the target app" +
     "lication that you want to capture.\r\n ";
+            // 
+            // chkStopOnClick
+            // 
+            this.chkStopOnClick.AutoSize = true;
+            this.chkStopOnClick.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkStopOnClick.ForeColor = System.Drawing.Color.White;
+            this.chkStopOnClick.Location = new System.Drawing.Point(18, 161);
+            this.chkStopOnClick.Name = "chkStopOnClick";
+            this.chkStopOnClick.Size = new System.Drawing.Size(195, 21);
+            this.chkStopOnClick.TabIndex = 20;
+            this.chkStopOnClick.Text = "Stop Recording on First Click";
+            this.chkStopOnClick.UseVisualStyleBackColor = true;
             // 
             // lblSubHeader
             // 
@@ -119,37 +157,13 @@
             this.lblHeader.TabIndex = 14;
             this.lblHeader.Text = "element recorder";
             // 
-            // pbRecord
-            // 
-            this.pbRecord.Image = global::taskt.Properties.Resources.various_record_button;
-            this.pbRecord.Location = new System.Drawing.Point(404, 123);
-            this.pbRecord.Name = "pbRecord";
-            this.pbRecord.Size = new System.Drawing.Size(32, 32);
-            this.pbRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbRecord.TabIndex = 4;
-            this.pbRecord.TabStop = false;
-            this.pbRecord.Click += new System.EventHandler(this.pbRecord_Click);
-            // 
-            // cboWindowTitle
-            // 
-            this.cboWindowTitle.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.cboWindowTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboWindowTitle.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cboWindowTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboWindowTitle.FormattingEnabled = true;
-            this.cboWindowTitle.Location = new System.Drawing.Point(48, 127);
-            this.cboWindowTitle.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.cboWindowTitle.Name = "cboWindowTitle";
-            this.cboWindowTitle.Size = new System.Drawing.Size(348, 28);
-            this.cboWindowTitle.TabIndex = 3;
-            // 
             // frmThickAppElementRecorder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.BackgroundChangeIndex = 265;
-            this.ClientSize = new System.Drawing.Size(740, 171);
+            this.ClientSize = new System.Drawing.Size(735, 186);
             this.Controls.Add(this.tlpControls);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -171,8 +185,9 @@
         private System.Windows.Forms.PictureBox pbRecord;
         private System.Windows.Forms.Label lblSubHeader;
         private System.Windows.Forms.Label lblHeader;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.PictureBox pbRefresh;
         public System.Windows.Forms.ComboBox cboWindowTitle;
+        private System.Windows.Forms.CheckBox chkStopOnClick;
     }
 }
