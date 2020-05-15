@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -66,9 +67,10 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             var vInstance = DateTime.Now.ToString();
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            var vSheetName = v_SheetName.ConvertToUserVariable(sender);
             var vDictionaryName = v_DictionaryName;
             var vDictionary = LookupVariable(engine); 
             if (vDictionary != null)
@@ -83,15 +85,45 @@ namespace taskt.Core.Automation.Commands
 
             engine.AddAppInstance(vInstance, newExcelSession);
 
-
             var excelObject = engine.GetAppInstance(vInstance);
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            //Query required from workbook using OLEDB
-            DatasetCommands dataSetCommand = new DatasetCommands();
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + vFilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select " + v_KeyColumn + "," + v_ValueColumn + " From [" + v_SheetName + "$]");
+            var excelWorkbook = newExcelSession.Workbooks.Open(vFilePath);
+            var excelSheet = excelWorkbook.Sheets[vSheetName];
+ 
+            Range last = excelSheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
+            Range cellValue = excelSheet.Range["A1", last];
+            
+            int rw = cellValue.Rows.Count;
+            int cl = 2;
+            int rCnt;
+            int cCnt;
 
-            var dictlist = requiredData.AsEnumerable().Select(x => new
+            System.Data.DataTable DT = new System.Data.DataTable();
+
+            for (rCnt = 2; rCnt <= rw; rCnt++)
+            {
+                DataRow newRow = DT.NewRow();
+                for (cCnt = 1; cCnt <= cl; cCnt++)
+                {
+                    if (((cellValue.Cells[rCnt, cCnt] as Range).Value2) != null)
+                    {
+                        if (!DT.Columns.Contains(cCnt.ToString()))
+                        {
+                            DT.Columns.Add(cCnt.ToString());
+                        }
+                        newRow[cCnt.ToString()] = ((cellValue.Cells[rCnt, cCnt] as Range).Value2).ToString();
+                    }
+                }
+                DT.Rows.Add(newRow);
+            }
+
+            string cKeyName = ((cellValue.Cells[1, 1] as Range).Value2).ToString();
+            DT.Columns[0].ColumnName = cKeyName;
+            string cValueName = ((cellValue.Cells[1, 2] as Range).Value2).ToString();
+            DT.Columns[1].ColumnName = cValueName;
+
+            var dictlist = DT.AsEnumerable().Select(x => new
             {
                 keys = (string)x[v_KeyColumn],
                 values = (string)x[v_ValueColumn]
@@ -101,7 +133,6 @@ namespace taskt.Core.Automation.Commands
             {
                 outputDictionary.Add(dict.keys, dict.values);
             }
-
 
             Script.ScriptVariable newDictionary = new Script.ScriptVariable
             {
@@ -123,7 +154,7 @@ namespace taskt.Core.Automation.Commands
             engine.VariableList.Add(newDictionary);
         }
 
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        private Script.ScriptVariable LookupVariable(Engine.AutomationEngineInstance sendingInstance)
         {
             //search for the variable
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
