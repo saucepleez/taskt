@@ -111,17 +111,13 @@ namespace taskt.Core.Automation.Commands
                     DataRow newRow = DT.NewRow();
                     for (cCnt = 1; cCnt <= cl; cCnt++)
                     {
+                        if (!DT.Columns.Contains(cCnt.ToString()))
+                            DT.Columns.Add(cCnt.ToString());
 
-                        if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) != null)
-                        {
-                            if (!DT.Columns.Contains(cCnt.ToString()))
-                            {
-                                DT.Columns.Add(cCnt.ToString());
-                            }
-                            newRow[cCnt.ToString()] = ((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
-
-
-                        }
+                        if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) == null)
+                            newRow[cCnt.ToString()] = "";
+                        else
+                            newRow[cCnt.ToString()] = (cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2.ToString();
                     }
                     DT.Rows.Add(newRow);
                 }

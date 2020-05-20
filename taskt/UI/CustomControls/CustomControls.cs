@@ -508,6 +508,7 @@ namespace taskt.UI
             uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("RemoveDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("MergeDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("SeleniumBrowserCreateCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SeleniumBrowserNavigateURLCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SeleniumBrowserNavigateForwardCommand", taskt.Properties.Resources.command_web);
