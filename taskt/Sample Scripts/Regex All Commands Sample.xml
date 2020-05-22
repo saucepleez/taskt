@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="6589fddb-6e42-4c2e-b06c-23879f6cc0c9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Set Regex Pattern to Variable" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="84cc9aa9-1115-4691-9617-181aab5051ca" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="regexPattern" v_Input="(?&lt;=Client\s*\w*\s*:\s*)(.*)" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e8515d81-000d-44d8-87e2-ab7884163557" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Set Input Text to Variable" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="9907bf64-a27f-4e4d-abac-0cdc4e6f2ba7" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="inputData" v_Input="Client ID: CD2F4X&#xD;&#xA;Client Name: John Doe&#xD;&#xA;Client Country: Germany" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="5de73676-694b-4060-a730-4cffd4d8037a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Apply Regex to Get All Matches" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetRegexMatchesCommand" CommandID="5f704cf8-d4d0-4386-9ebe-c61819bb1501" CommandName="GetRegexMatchesCommand" IsCommented="false" SelectionName="Get Regex Matches" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Regex="{regexPattern}" v_InputData="{inputData}" v_OutputVariableName="listAllMatches" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="33d3c811-82f3-49df-b6cb-466d9f8f53a5" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{listAllMatches}" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="c5b0bdc9-349a-4f3a-9e6c-9ac51173c018" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Items in this section will run within the loop" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9afd6555-5a09-4c16-8894-fbb08bd44ad3" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{listAllMatches}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="13b3f83b-b83f-41cd-9deb-1bffac3d7aca" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="25ffc767-b5c1-4add-b3ec-129af5d36685" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Apply Regex to find If there is a Match" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RegexIsMatchCommand" CommandID="f0e06fff-3981-44c5-b893-d13b23c43f82" CommandName="RegexIsMatchCommand" IsCommented="false" SelectionName="Regex IsMatch" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InputTextData="Client ID: CD2F4X&#xD;&#xA;Client Name: John Doe&#xD;&#xA;Client Country: Germany" v_RegEx="(?&lt;=Client\s*\w*\s*:\s*)(.*)" v_OutputVariableName="isMatchFound" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="26b1bdee-2870-4193-80c1-98fcd9e1e581" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{isMatchFound}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="285877e3-ea3c-4fca-94a6-56307337eca1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Apply Regex to Replace all Matches in Input Text and Get Replaced Text" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RegexReplaceCommand" CommandID="bdf6d916-b859-47a8-8b10-e30bbd0ac4e0" CommandName="RegexReplaceCommand" IsCommented="false" SelectionName="Regex Replace" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InputTextData="Client ID: CD2F4X&#xD;&#xA;Client Name: John Doe&#xD;&#xA;Client Country: Germany" v_RegEx="(?&lt;=Client\s*\w*\s*:\s*)(.*)" v_ReplaceTextData="Client Info" v_OutputVariableName="replacedText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6ecbe6cc-32c0-4f06-884d-04c243b856cb" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{replacedText}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e7235585-be94-4c85-bb28-ba6ad713f8c2" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" v_Comment="Apply Regex to Split Text based on Matches and Return a List" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RegexSplitCommand" CommandID="84fe5727-93fb-4589-83fa-e4aed01bc3c5" CommandName="RegexSplitCommand" IsCommented="false" SelectionName="Regex Split" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_InputTextData="Client ID: CD2F4X&#xD;&#xA;Client Name: John Doe&#xD;&#xA;Client Country: Germany" v_RegEx="(?&lt;=Client\s*\w*\s*:\s*)(.*)" v_OutputVariableName="listSplitRegex" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="5d26763c-54ac-41ad-a75f-d05d947e6377" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{listSplitRegex}" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="5a76d29d-07a9-4747-8f91-032e65120e4a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Items in this section will run within the loop" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="588b76b9-73a3-4fa2-b4e6-93e701a3b7ef" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{listSplitRegex}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="23cbad8a-2bdf-4a95-a010-ac7a8f32c8ca" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>inputData</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>isMatchFound</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>listAllMatches</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>listSplitRegex</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>regexPattern</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>replacedText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
