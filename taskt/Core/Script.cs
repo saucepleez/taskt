@@ -27,6 +27,8 @@ namespace taskt.Core.Script
 
     public class Script
     {
+        public string FileName { get; set; }
+        public string ProjectName { get; set; }
         /// <summary>
         /// Contains user-defined variables
         /// </summary>
@@ -35,6 +37,7 @@ namespace taskt.Core.Script
         /// Contains user-selected commands
         /// </summary>
         public List<ScriptAction> Commands;
+        
 
         public Script()
         {
@@ -55,9 +58,13 @@ namespace taskt.Core.Script
         /// <summary>
         /// Converts and serializes the user-defined commands into an XML file  
         /// </summary>
-        public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, string scriptFilePath = "")
+        public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, string scriptFilePath = "", string projectName = "")
         {
             var script = new Core.Script.Script();
+
+            script.FileName = System.IO.Path.GetFileName(scriptFilePath);
+
+            script.ProjectName = projectName;
 
             //save variables to file
 

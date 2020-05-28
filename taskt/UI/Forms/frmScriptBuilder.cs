@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using Newtonsoft.Json;
 using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using taskt.Core;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms
 {
@@ -54,10 +57,6 @@ namespace taskt.UI.Forms
         private int currentIndex = -1;
         private frmScriptBuilder parentBuilder { get; set; }
 
-        public frmScriptBuilder()
-        {
-            InitializeComponent();
-        }
         private string scriptFilePath;
         public string ScriptFilePath
         {
@@ -71,31 +70,35 @@ namespace taskt.UI.Forms
                 UpdateWindowTitle();
             }
         }
+        private Project scriptProject { get; set; }
+        private string scriptProjectPath { get; set; }
 
+        public frmScriptBuilder()
+        {
+            InitializeComponent();
+        }
 
         private void UpdateWindowTitle()
         {
-
-
             if (ScriptFilePath != null)
             {
-                System.IO.FileInfo scriptFileInfo = new System.IO.FileInfo(ScriptFilePath);
-                this.Text = "taskt - (" + scriptFileInfo.Name + ")";
+                FileInfo scriptFileInfo = new FileInfo(ScriptFilePath);
+                Text = "taskt - (Project: " + scriptProject.GetProjectName() + " - Script: " + scriptFileInfo.Name + ")";
+            }
+            else if (scriptProject.GetProjectName() != null)
+            {
+                Text = "taskt - (Project: " + scriptProject.GetProjectName() + ")";
             }
             else
             {
-                this.Text = "taskt";
+                Text = "taskt";
             }
-
-
         }
 
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
-           //load all commands
-           automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
-
-
+            //load all commands
+            automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
 
             //set controls double buffered
@@ -232,7 +235,6 @@ namespace taskt.UI.Forms
                 frmAttended.Show();
 
             }
-
         }
         private void GenerateRecentFiles()
         {
@@ -302,6 +304,7 @@ namespace taskt.UI.Forms
             if (editMode)
                 return;
 
+            AddProject();
             Notify("Welcome! Press 'Add Command' to get started!");
         }
         private void pnlControlContainer_Paint(object sender, PaintEventArgs e)
@@ -1306,7 +1309,7 @@ namespace taskt.UI.Forms
         {
             //show ofd
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+            openFileDialog.InitialDirectory = scriptProjectPath;
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Filter = "Xml (*.xml)|*.xml";
 
@@ -1322,12 +1325,19 @@ namespace taskt.UI.Forms
 
             try
             {
+                
+                //get deserialized script
+                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
+
+                //check if script is a part of the currently opened project
+                string openScriptProjectName = deserializedScript.ProjectName;
+
+                if (openScriptProjectName != scriptProject.GetProjectName())
+                    throw new Exception("Attempted to load a script not part of the currently open project");
+
                 //reinitialize
                 lstScriptActions.Items.Clear();
                 scriptVariables = new List<Core.Script.ScriptVariable>();
-
-                //get deserialized script
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -1337,8 +1347,16 @@ namespace taskt.UI.Forms
                 //update file path and reflect in title bar
                 this.ScriptFilePath = filePath;
 
+                //assign ProjectPath variable
+                var projectPathVariable = new Core.Script.ScriptVariable
+                {
+                    VariableName = "ProjectPath",
+                    VariableValue = scriptProjectPath
+                };
+                scriptVariables.Add(projectPathVariable);
+
                 //assign variables
-                scriptVariables = deserializedScript.Variables;
+                scriptVariables.AddRange(deserializedScript.Variables);
 
                 //populate commands
                 PopulateExecutionCommands(deserializedScript.Commands);
@@ -1563,7 +1581,7 @@ namespace taskt.UI.Forms
             if ((this.ScriptFilePath == null) || (saveAs))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+                saveFileDialog.InitialDirectory = scriptProjectPath;
                 saveFileDialog.RestoreDirectory = true;
                 saveFileDialog.Filter = "Xml (*.xml)|*.xml";
 
@@ -1572,45 +1590,28 @@ namespace taskt.UI.Forms
                     return;
                 }
 
+                if (!saveFileDialog.FileName.ToString().Contains(scriptProjectPath))
+                {
+                    Notify("An Error Occured: Attempted to save script outside of project directory");
+                    return;
+                }
+                    
                 this.ScriptFilePath = saveFileDialog.FileName;
 
-
-                // var fileName = Microsoft.VisualBasic.Interaction.InputBox("Please enter a file name (without extension)", "Enter File Name", "Default", -1, -1);
-
-
-
-                //var rpaScriptsFolder = Core.Common.GetScriptFolderPath();
-
-                //if (!System.IO.Directory.Exists(rpaScriptsFolder))
-                //{
-                //    UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0);
-
-                //    if (userDialog.ShowDialog() == DialogResult.OK)
-                //    {
-                //        System.IO.Directory.CreateDirectory(rpaScriptsFolder);
-                //    }
-                //    else
-                //    {
-                //        return;
-                //    }
-
-
-                //}
-
-
-                //this.ScriptFilePath = rpaScriptsFolder + fileName + ".xml";
             }
 
             //serialize script
             try
             {
-                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, this.ScriptFilePath);
+                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, this.ScriptFilePath, scriptProject.GetProjectName());
+                scriptProject.SaveProject(ScriptFilePath, exportedScript);
+            
                 //show success dialog
                 Notify("File has been saved successfully!");
             }
             catch (Exception ex)
             {
-                Notify("Er ror: " + ex.ToString());
+                Notify("An Error Occured: " + ex.Message);
             }
 
 
@@ -1674,6 +1675,13 @@ namespace taskt.UI.Forms
             lstScriptActions.Items.Clear();
             HideSearchInfo();
             scriptVariables = new List<Core.Script.ScriptVariable>();
+            //assign ProjectPath variable
+            var projectPathVariable = new Core.Script.ScriptVariable
+            {
+                VariableName = "ProjectPath",
+                VariableValue = scriptProjectPath
+            };
+            scriptVariables.Add(projectPathVariable);
             GenerateRecentFiles();
             pnlCommandHelper.Show();
         }
@@ -2026,6 +2034,13 @@ namespace taskt.UI.Forms
             lstScriptActions.Items.Clear();
             HideSearchInfo();
             scriptVariables = new List<Core.Script.ScriptVariable>();
+            //assign ProjectPath variable
+            var projectPathVariable = new Core.Script.ScriptVariable
+            {
+                VariableName = "ProjectPath",
+                VariableValue = scriptProjectPath
+            };
+            scriptVariables.Add(projectPathVariable);
             GenerateRecentFiles();
             pnlCommandHelper.Show();
         }
@@ -2034,7 +2049,7 @@ namespace taskt.UI.Forms
         {
             //show ofd
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+            openFileDialog.InitialDirectory = scriptProjectPath;
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Filter = "Xml (*.xml)|*.xml";
 
@@ -2203,6 +2218,88 @@ namespace taskt.UI.Forms
             dialog.ShowDialog();
 
 
+        }
+
+        private void addProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddProject();
+        }
+
+        private void uiBtnProject_Click(object sender, EventArgs e)
+        {
+            AddProject();
+        }
+
+        public void AddProject()
+        {
+            var projectBuilder = new Supplement_Forms.frmProjectBuilder();
+            projectBuilder.ShowDialog();
+
+            //Close taskt if add project form is closed at startup
+            if (projectBuilder.DialogResult == DialogResult.Cancel && scriptProject == null)
+            {
+                Application.Exit();
+            }
+
+            //Create new taskt project
+            else if (projectBuilder.createProject == true)
+            {
+                scriptProjectPath = projectBuilder.newProjectPath;
+                //Create new main script
+                string mainScriptPath = Path.Combine(scriptProjectPath, "Main.xml");
+                lstScriptActions.Items.Clear();
+                scriptVariables = new List<Core.Script.ScriptVariable>();
+                var helloWorldCommand = new MessageBoxCommand();
+                helloWorldCommand.v_Message = "Hello World";
+                lstScriptActions.Items.Insert(0, CreateScriptCommandListViewItem(helloWorldCommand));
+
+                //Begin saving as main.xml
+                ClearSelectedListViewItems();
+
+                try
+                {
+                    //Serialize main script
+                    var mainScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, mainScriptPath, projectBuilder.newProjectName);
+                    //Create new project
+                    Project proj = new Project(projectBuilder.newProjectName);
+                    //Save new project
+                    proj.SaveProject(mainScriptPath, mainScript);
+                    //Open new project
+                    scriptProject = Project.OpenProject(mainScriptPath);
+                    //Open main script
+                    OpenFile(mainScriptPath);
+                    scriptFilePath = mainScriptPath;
+                    //Show success dialog
+                    Notify("Project has been created successfully!");
+                }
+                catch (Exception ex)
+                {
+                    Notify("An Error Occured: " + ex.Message);
+                }
+            }
+
+            //Open existing taskt project
+            else if (projectBuilder.openProject == true)
+            {
+                try
+                {
+                    //Open project
+                    scriptProject = Project.OpenProject(projectBuilder.existingMainPath);
+                    scriptProjectPath = Path.GetDirectoryName(projectBuilder.existingMainPath);
+                    //Open Main.xml
+                    OpenFile(projectBuilder.existingMainPath);
+                    //show success dialog
+                    Notify("Project has been opened successfully!");
+                }
+                catch (Exception ex)
+                {
+                    //show fail dialog
+                    Notify("An Error Occured: " + ex.Message);
+                    //Try adding project again
+                    AddProject();
+                }
+
+            }
         }
     }
 

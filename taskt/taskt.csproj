@@ -362,6 +362,7 @@
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\IO\Folders.cs" />
+    <Compile Include="Core\Project.cs" />
     <Compile Include="Core\Server\LocalTCPListener.cs" />
     <Compile Include="Core\Server\HttpServerClient.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
@@ -410,6 +411,12 @@
     </Compile>
     <Compile Include="UI\Forms\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmProjectBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmProjectBuilder.Designer.cs">
+      <DependentUpon>frmProjectBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmAddVariable.cs">
       <SubType>Form</SubType>
@@ -598,6 +605,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmProjectBuilder.resx">
+      <DependentUpon>frmProjectBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAddVariable.resx">
       <DependentUpon>frmAddVariable.cs</DependentUpon>
