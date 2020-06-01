@@ -363,6 +363,9 @@
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\IO\Folders.cs" />
     <Compile Include="Core\Project.cs" />
+    <Compile Include="Core\Script\Script.cs" />
+    <Compile Include="Core\Script\ScriptAction.cs" />
+    <Compile Include="Core\Script\ScriptVariable.cs" />
     <Compile Include="Core\Server\LocalTCPListener.cs" />
     <Compile Include="Core\Server\HttpServerClient.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
@@ -372,7 +375,6 @@
     <Compile Include="Core\Theme.cs" />
     <Compile Include="Core\Server\WebSocketClient.cs" />
     <Compile Include="Core\Automation\User32\User32Functionas.cs" />
-    <Compile Include="Core\Script.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
