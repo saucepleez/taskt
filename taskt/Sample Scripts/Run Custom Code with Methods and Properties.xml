@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RunCustomCodeCommand" CommandID="43cd87bc-8134-4930-b2a3-48b02cb39797" CommandName="RunCustomCodeCommand" IsCommented="false" SelectionName="Run Custom Code" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_Code="{firstString}.Contains({secondString})" v_Args="" v_applyToVariableName="thirdString" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="97308e21-f03c-4ed2-ab93-69595400aaaa" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{thirdString}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RunCustomCodeCommand" CommandID="7ba9ab77-a6b1-42f6-baad-9c847f9aaf40" CommandName="RunCustomCodeCommand" IsCommented="false" SelectionName="Run Custom Code" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_Code="{firstString}.Length" v_applyToVariableName="thirdString" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="db13d52e-e3ff-4a72-871a-9351f0820d7c" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{thirdString}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>firstString</VariableName>
+      <VariableValue xsi:type="xsd:string">first</VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>secondString</VariableName>
+      <VariableValue xsi:type="xsd:string">Second</VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>thirdString</VariableName>
+      <VariableValue xsi:type="xsd:string">THIRD</VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

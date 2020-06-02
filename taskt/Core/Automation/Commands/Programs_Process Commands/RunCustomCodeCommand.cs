@@ -1,7 +1,14 @@
-﻿using System;
+﻿using SimpleNLG.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Text.RegularExpressions;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -25,8 +32,8 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Supply Arguments (optional)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter arguments that the custom code will receive during execution")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter arguments that the custom code will receive during execution, split them using commas")]
+        [Attributes.PropertyAttributes.SampleUsage("**vArg1**, **vArg2**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Args { get; set; }
 
@@ -39,64 +46,76 @@ namespace taskt.Core.Automation.Commands
 
         public RunCustomCodeCommand()
         {
-            this.CommandName = "RunCustomCodeCommand";
-            this.SelectionName = "Run Custom Code";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "RunCustomCodeCommand";
+            SelectionName = "Run Custom Code";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            //create compiler service
-            var compilerSvc = new Core.CompilerServices();
             var customCode = v_Code.ConvertToUserVariable(sender);
+            var engine = (AutomationEngineInstance)sender;
 
-            //compile custom code
-            var result = compilerSvc.CompileInput(customCode);
-
-            //check for errors
-            if (result.Errors.HasErrors)
+            if(customCode.Contains("static void Main"))
             {
-                //throw exception
-                var errors = string.Join(", ", result.Errors);
-                throw new Exception("Errors Occured: " + errors);
-            }
-            else
+                //User entered a Main so compile and execute the code
+                compileAndExecute(customCode, sender);
+            } else
             {
+                // TODO: This branch of the functionality should be split into its own command, say Execute Method.
+                // User entered a line of code to be evaluated at runtime
+                dynamic result;
 
-                var arguments = v_Args.ConvertToUserVariable(sender);
-            
-                //run code, taskt will wait for the app to exit before resuming
-                System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
-                scriptProc.StartInfo.FileName = result.PathToAssembly;
-                scriptProc.StartInfo.Arguments = arguments;
+                // Using Regex, retrieve all the entries in v_Code that match {myVar}, then trim the curly braces
+                var userInputtedVariables = Regex.Matches(v_Code, @"{\w+}").Cast<Match>().Select(match => match.Value).ToList();
+                userInputtedVariables = userInputtedVariables.Select(var => var.Trim('{', '}')).ToList();
 
-                if (v_applyToVariableName != "")
+                var memberToInvoke = Regex.Match(v_Code, @"\.(\w+)").Groups[1].ToString();
+
+                List<ScriptVariable> variableList = engine.VariableList;
+                variableList.AddRange(Common.GenerateSystemVariables());
+
+                object invokingVar = (from vars in variableList
+                                      where vars.VariableName == userInputtedVariables[0]
+                                      select vars.VariableValue).FirstOrDefault();
+                userInputtedVariables.RemoveAt(0);
+
+                try
                 {
-                    //redirect output
-                    scriptProc.StartInfo.RedirectStandardOutput = true;
-                    scriptProc.StartInfo.UseShellExecute = false;
-                }
-             
+                    if (v_Code.contains("(") && v_Code.contains(")"))
+                    {
+                        List<ScriptVariable> argList = new List<ScriptVariable>();
 
-                scriptProc.Start();
+                        foreach(string var in userInputtedVariables)
+                        {
+                            ScriptVariable arg = (from vars in variableList
+                                                  where vars.VariableName == var
+                                                  select vars).FirstOrDefault();
 
-                scriptProc.WaitForExit();
+                            argList.Add(arg);
+                        }
 
-                if (v_applyToVariableName != "")
+                        result = InvokeTypeMember(invokingVar, memberToInvoke, argList);
+                    }
+                    else
+                    {
+                        // User wants to access a property
+                        PropertyInfo propInfo = invokingVar.GetType().GetProperty(memberToInvoke);
+                        result = propInfo.GetValue(invokingVar, null);
+                    }
+                } catch
                 {
-                    var output = scriptProc.StandardOutput.ReadToEnd();
-                    output.StoreInUserVariable(sender, v_applyToVariableName);
+                    throw new Exception("Failed to invoke member " + memberToInvoke + " for class: " + invokingVar.GetType().ToString());
                 }
-    
 
-                scriptProc.Close();
-
-
+                if(v_applyToVariableName.Length != 0)
+                {
+                    engine.AddVariable(v_applyToVariableName, result);
+                }
             }
-
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -116,5 +135,84 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue();
         }
+
+        private void compileAndExecute(string customCode, object sender)
+        {
+            //compile custom code
+            var compilerSvc = new CompilerServices();
+            var result = compilerSvc.CompileInput(customCode);
+
+            //check for errors
+            if (result.Errors.HasErrors)
+            {
+                //throw exception
+                var errors = string.Join(", ", result.Errors);
+                throw new Exception("Errors Occured: " + errors);
+            }
+            else
+            {
+                var arguments = v_Args.ConvertToUserVariable(sender);
+
+                //run code, taskt will wait for the app to exit before resuming
+                using (Process scriptProc = new Process())
+                {
+                    scriptProc.StartInfo.FileName = result.PathToAssembly;
+                    scriptProc.StartInfo.Arguments = arguments;
+
+                    if (v_applyToVariableName != "")
+                    {
+                        //redirect output
+                        scriptProc.StartInfo.RedirectStandardOutput = true;
+                        scriptProc.StartInfo.UseShellExecute = false;
+                    }
+
+                    scriptProc.Start();
+                    scriptProc.WaitForExit();
+
+                    if (v_applyToVariableName != "")
+                    {
+                        var output = scriptProc.StandardOutput.ReadToEnd();
+                        output.StoreInUserVariable(sender, v_applyToVariableName);
+                    }
+                }
+            }
+        }
+
+        private dynamic InvokeTypeMember(object invokingVar, string memberToInvoke, List<ScriptVariable> methodArgs)
+        {
+            dynamic result;
+            MethodInfo methodInfo;
+            Type type = invokingVar.GetType();
+
+            if (methodArgs.isEmpty())
+            {
+                // Retrieving the method info with restrictions to limit our search to method definitions
+                // without arguments to avoid ambigious matches.
+                methodInfo = type.GetMethods()
+                    .Single(method =>
+                        method.Name == memberToInvoke &&
+                        method.GetGenericArguments().Length == 0 &&
+                        method.GetParameters().Length == 0
+                        );
+                result = methodInfo.Invoke(invokingVar, null);
+            }
+            else
+            {
+                // Converts methodArgs, a list of ScriptVariables, into a list of objects
+                // which we can use to determine which method to invoke
+                object[] methodArgsValueArray = methodArgs.Select(arg => arg.VariableValue).ToArray();
+
+                // Converting our array of objects into an array of types to pass into GetMethod.
+                // This lets us select only the method who's argument types match our argument types.
+                Type[] argumentTypeArray = methodArgsValueArray.Select(variable => variable.GetType()).ToArray();
+                methodInfo = type.GetMethod(memberToInvoke, argumentTypeArray);
+
+                result = methodInfo.Invoke(invokingVar, methodArgsValueArray);
+            }
+
+            return result;
+        }
+
     }
 }
+

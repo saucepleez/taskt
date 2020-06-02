@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -34,16 +32,16 @@ namespace taskt.Core.Automation.Commands
         public int v_AutoCloseAfter { get; set; }
         public ShowMessageCommand()
         {
-            this.CommandName = "ShowMessageCommand";
-            this.SelectionName = "Show Message";
-            this.CommandEnabled = true;
-            this.v_AutoCloseAfter = 0;
-            this.CustomRendering = true;
+            CommandName = "MessageBoxCommand";
+            SelectionName = "Show Message";
+            CommandEnabled = true;
+            v_AutoCloseAfter = 0;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             string variableMessage = v_Message.ConvertToUserVariable(sender);
 
             variableMessage = variableMessage.Replace("\\n", Environment.NewLine);
@@ -51,7 +49,7 @@ namespace taskt.Core.Automation.Commands
             if (engine.tasktEngineUI == null)
             {
                 engine.ReportProgress("Complex Messagebox Supported With UI Only");
-                System.Windows.Forms.MessageBox.Show(variableMessage, "Message Box Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                MessageBox.Show(variableMessage, "Message Box Command", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -62,10 +60,9 @@ namespace taskt.Core.Automation.Commands
             }
 
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
-            {
-                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
-            }
-
+                {
+                    engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
+                }
             ));
 
         }
@@ -93,7 +90,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         //controls can be overriden and rendered individually
-        public System.Windows.Forms.TextBox v_MessageControl()
+        public TextBox v_MessageControl()
         {
             var Textbox = new TextBox();
             Textbox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
