@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocket4Net;
+using taskt.Core.Metrics;
 
 namespace taskt.UI.Forms
 {
@@ -306,7 +307,7 @@ namespace taskt.UI.Forms
 
         private void bgwMetrics_DoWork(object sender, DoWorkEventArgs e)
         {
-            e.Result = new Core.Metrics().ExecutionMetricsSummary();
+            e.Result = new Metric().ExecutionMetricsSummary();
         }
 
         private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -331,7 +332,7 @@ namespace taskt.UI.Forms
             {
 
 
-                var metricsSummary = (List<Core.ExecutionMetric>)(e.Result);
+                var metricsSummary = (List<ExecutionMetric>)(e.Result);
 
                 if (metricsSummary.Count == 0)
                 {
@@ -371,7 +372,7 @@ namespace taskt.UI.Forms
 
         private void btnClearMetrics_Click(object sender, EventArgs e)
         {
-            new Core.Metrics().ClearExecutionMetrics();
+            new Metric().ClearExecutionMetrics();
             bgwMetrics.RunWorkerAsync();
         }
 
@@ -463,7 +464,7 @@ namespace taskt.UI.Forms
             {
                 MessageBox.Show("Please open the task in order to publish it.");
             }
-          
+
         }
 
         private void label17_Click(object sender, EventArgs e)
@@ -475,7 +476,7 @@ namespace taskt.UI.Forms
         {
 
             if (Core.Server.LocalTCPListener.IsListening)
-            {     
+            {
                 lblListeningStatus.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
                 btnStopListening.Enabled = true;
                 btnStartListening.Enabled = false;
@@ -502,8 +503,8 @@ namespace taskt.UI.Forms
                 DisableListenerButtons();
                 Core.Server.LocalTCPListener.StartListening(portNumber);
             }
-           
- 
+
+
         }
 
         private void btnStopListening_Click(object sender, EventArgs e)

@@ -358,6 +358,8 @@
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\IO\Folders.cs" />
+    <Compile Include="Core\Metrics\ExecutionMetric.cs" />
+    <Compile Include="Core\Metrics\Metric.cs" />
     <Compile Include="Core\Project.cs" />
     <Compile Include="Core\Script\Script.cs" />
     <Compile Include="Core\Script\ScriptAction.cs" />
@@ -367,7 +369,6 @@
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\IO\JavaInterface.cs" />
     <Compile Include="Core\Logging.cs" />
-    <Compile Include="Core\Metrics.cs" />
     <Compile Include="Core\Theme.cs" />
     <Compile Include="Core\Server\WebSocketClient.cs" />
     <Compile Include="Core\Automation\User32\User32Functionas.cs" />
