@@ -895,21 +895,21 @@ namespace taskt.UI.Forms
             lstScriptActions.Items.Insert(insertionIndex, command);
 
             //special types also get a following command and comment
-            if ((selectedCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginListLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+            if ((selectedCommand is Core.Automation.Commands.LoopListCommand) || (selectedCommand is Core.Automation.Commands.LoopContinuouslyCommand) || (selectedCommand is Core.Automation.Commands.LoopNumberOfTimesCommand) || (selectedCommand is Core.Automation.Commands.BeginLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiLoopCommand))
             {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Items in this section will run within the loop" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndLoopCommand()));
             }
             else if ((selectedCommand is Core.Automation.Commands.BeginIfCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiIfCommand))
             {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndIfCommand()));
             }
             else if (selectedCommand is Core.Automation.Commands.TryCommand)
             {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will be handled if error occurs" }));
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Items in this section will be handled if error occurs" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.CatchExceptionCommand() { v_Comment = "Items in this section will run if error occurs" }));
-                lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "This section executes if error occurs above" }));
+                lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "This section executes if error occurs above" }));
                 lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndTryCommand()));
             }
 
@@ -936,7 +936,7 @@ namespace taskt.UI.Forms
                     continue;
                 }
 
-                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginListLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginContinousLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand) || (rowItem.Tag is Core.Automation.Commands.BeginLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiIfCommand) || (rowItem.Tag is Core.Automation.Commands.LoopListCommand) || (rowItem.Tag is Core.Automation.Commands.LoopContinuouslyCommand) || (rowItem.Tag is Core.Automation.Commands.LoopNumberOfTimesCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand) || (rowItem.Tag is Core.Automation.Commands.BeginLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
@@ -1045,7 +1045,7 @@ namespace taskt.UI.Forms
                         commandNameBrush = Brushes.MediumPurple;
                         commandBackgroundBrush = Brushes.Lavender;
                     }
-                    else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+                    else if ((command is Core.Automation.Commands.AddCodeCommentCommand) || (command.IsCommented))
                     {
                         //comments and commented command coloring
                         commandNameBrush = Brushes.ForestGreen;
@@ -1413,7 +1413,7 @@ namespace taskt.UI.Forms
                 var dateTimeNow = DateTime.Now.ToString();
 
                 //comment
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
 
                 //import
                 PopulateExecutionCommands(deserializedScript.Commands);
@@ -1426,7 +1426,7 @@ namespace taskt.UI.Forms
                 }
 
                 //comment
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
 
 
                 //format listview
@@ -1509,7 +1509,7 @@ namespace taskt.UI.Forms
             int tryCatchValidationCount = 0;
             foreach (ListViewItem item in lstScriptActions.Items)
             {
-                if ((item.Tag is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (item.Tag is Core.Automation.Commands.BeginListLoopCommand) || (item.Tag is Core.Automation.Commands.BeginContinousLoopCommand) ||(item.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (item.Tag is Core.Automation.Commands.BeginLoopCommand) || (item.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((item.Tag is Core.Automation.Commands.LoopListCommand) || (item.Tag is Core.Automation.Commands.LoopContinuouslyCommand) ||(item.Tag is Core.Automation.Commands.LoopNumberOfTimesCommand) || (item.Tag is Core.Automation.Commands.BeginLoopCommand) || (item.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     beginLoopValidationCount++;
                 }
@@ -2249,7 +2249,7 @@ namespace taskt.UI.Forms
                 string mainScriptPath = Path.Combine(scriptProjectPath, "Main.xml");
                 lstScriptActions.Items.Clear();
                 scriptVariables = new List<Core.Script.ScriptVariable>();
-                var helloWorldCommand = new MessageBoxCommand();
+                var helloWorldCommand = new ShowMessageCommand();
                 helloWorldCommand.v_Message = "Hello World";
                 lstScriptActions.Items.Insert(0, CreateScriptCommandListViewItem(helloWorldCommand));
 

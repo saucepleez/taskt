@@ -95,7 +95,7 @@ namespace taskt.UI.Forms
                             newSequence.v_scriptActions.Add(cmd);
                         }
                     }
-                    else if (cmd is SendKeysCommand)
+                    else if (cmd is SendKeystrokesCommand)
                     {
                         outputList.Add(newSequence);
                         newSequence = new Core.Automation.Commands.SequenceCommand();
@@ -125,7 +125,7 @@ namespace taskt.UI.Forms
 
 
 
-            var commentCommand = new Core.Automation.Commands.CommentCommand();
+            var commentCommand = new Core.Automation.Commands.AddCodeCommentCommand();
             commentCommand.v_Comment = "Sequence Recorded " + DateTime.Now.ToString();
             outputList.Insert(0, commentCommand);
 

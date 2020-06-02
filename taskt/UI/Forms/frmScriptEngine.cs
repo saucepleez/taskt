@@ -393,8 +393,8 @@ namespace taskt.UI.Forms
 
         }
 
-        public delegate List<string> ShowInputDelegate(Core.Automation.Commands.UserInputCommand inputs);
-        public List<string> ShowInput(Core.Automation.Commands.UserInputCommand inputs)
+        public delegate List<string> ShowInputDelegate(Core.Automation.Commands.InputCommand inputs);
+        public List<string> ShowInput(Core.Automation.Commands.InputCommand inputs)
         {
             if (InvokeRequired)
             {

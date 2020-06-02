@@ -76,11 +76,10 @@ namespace taskt.Core.Script
                 var command = (ScriptCommand)commandItem.Tag;
                 command.LineNumber = lineNumber;
 
-                if ((command is BeginNumberOfTimesLoopCommand) || (command is BeginContinousLoopCommand) ||
-                    (command is BeginListLoopCommand) || (command is BeginIfCommand) ||
-                    (command is BeginMultiIfCommand) || (command is BeginExcelDatasetLoopCommand) ||
-                    (command is TryCommand) || (command is BeginLoopCommand) ||
-                    (command is BeginMultiLoopCommand))
+                if ((command is LoopNumberOfTimesCommand) || (command is LoopContinuouslyCommand) ||
+                    (command is LoopListCommand) || (command is BeginIfCommand) ||
+                    (command is BeginMultiIfCommand) || (command is TryCommand) || 
+                    (command is BeginLoopCommand) || (command is BeginMultiLoopCommand))
                 {
                     //if this is the first loop
                     if (subCommands.Count == 0)

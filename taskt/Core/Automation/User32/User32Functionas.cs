@@ -669,10 +669,10 @@ namespace taskt.Core.Automation.User32
                 }
 
                 //generate sendkeys together
-                if ((generatedCommands.Count > 1) && (generatedCommands[generatedCommands.Count - 1] is SendKeysCommand))
+                if ((generatedCommands.Count > 1) && (generatedCommands[generatedCommands.Count - 1] is SendKeystrokesCommand))
                 {
 
-                    var lastCreatedSendKeysCommand = (SendKeysCommand)generatedCommands[generatedCommands.Count - 1];
+                    var lastCreatedSendKeysCommand = (SendKeystrokesCommand)generatedCommands[generatedCommands.Count - 1];
 
                     if (lastCreatedSendKeysCommand.v_TextToSend.Contains("{ENTER}"))
                     {
@@ -682,7 +682,7 @@ namespace taskt.Core.Automation.User32
                         BuildPauseCommand();
 
                         //build keyboard command
-                        var keyboardCommand = new SendKeysCommand
+                        var keyboardCommand = new SendKeystrokesCommand
                         {
                             v_TextToSend = selectedKey,
                             v_WindowName = "Current Window"
@@ -705,7 +705,7 @@ namespace taskt.Core.Automation.User32
                     BuildPauseCommand();
 
                     //build keyboard command
-                    var keyboardCommand = new SendKeysCommand
+                    var keyboardCommand = new SendKeystrokesCommand
                     {
                         v_TextToSend = selectedKey,
                         v_WindowName = "Current Window"
@@ -935,7 +935,7 @@ namespace taskt.Core.Automation.User32
 
                 sw.Stop();
                 var pauseTime = sw.ElapsedMilliseconds;
-                var pauseCommand = new Core.Automation.Commands.PauseCommand
+                var pauseCommand = new Core.Automation.Commands.PauseScriptCommand
                 {
                     v_PauseLength = pauseTime.ToString()
                 };

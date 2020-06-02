@@ -304,7 +304,7 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreInUserVariable(this String str, object sender, string targetVariable)
         {
-            Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
+            Core.Automation.Commands.SetVariableCommand newVariableCommand = new Core.Automation.Commands.SetVariableCommand
             {
                 v_userVariableName = targetVariable,
                 v_Input = str

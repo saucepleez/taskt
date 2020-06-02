@@ -259,7 +259,7 @@ namespace taskt.Core.Automation.Engine
 
 
             //bypass comments
-            if (parentCommand is Core.Automation.Commands.CommentCommand || parentCommand.IsCommented)
+            if (parentCommand is Core.Automation.Commands.AddCodeCommentCommand || parentCommand.IsCommented)
             {
                 ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue().ConvertToUserVariable(this));
                 return;
@@ -273,7 +273,7 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((parentCommand is Core.Automation.Commands.LoopNumberOfTimesCommand) || (parentCommand is Core.Automation.Commands.LoopContinuouslyCommand) || (parentCommand is Core.Automation.Commands.LoopListCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);
@@ -282,7 +282,7 @@ namespace taskt.Core.Automation.Engine
                 {
                     parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Core.Automation.Commands.StopTaskCommand)
+                else if (parentCommand is Core.Automation.Commands.StopCurrentTaskCommand)
                 {
                     IsCancellationPending = true;
                     return;
