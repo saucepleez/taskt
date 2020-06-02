@@ -157,11 +157,10 @@ namespace taskt.UI.Forms
 
         private void btnUpdateCheck_Click(object sender, EventArgs e)
         {
-            taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
-            Core.UpdateManifest manifest = new Core.UpdateManifest();
+            Core.ManifestUpdate manifest = new Core.ManifestUpdate();
             try
             {
-                manifest = updater.GetManifest();
+                manifest = Core.ManifestUpdate.GetManifest();
             }
             catch (Exception ex)
             {

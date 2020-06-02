@@ -1,16 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Windows.Forms;
 namespace taskt.Core
 {
-    public class ApplicationUpdate
+    public class ManifestUpdate
     {
+        //from manifest
+        private string _remoteVersion { get; set; }
+        public string PackageURL { get; private set; }
 
-       public UpdateManifest GetManifest()
+        //helpers
+        public bool RemoteVersionNewer { get; private set; }
+        public Version RemoteVersionProper { get; private set; }
+        public Version LocalVersionProper { get; private set; }
+
+        public ManifestUpdate()
+        {
+
+        }
+
+        public static ManifestUpdate GetManifest()
         {
             //create web client
             WebClient webClient = new WebClient();
@@ -28,11 +38,11 @@ namespace taskt.Core
             }
 
             //initialize config
-            UpdateManifest manifestConfig = new UpdateManifest();
+            ManifestUpdate manifestConfig = new ManifestUpdate();
 
             try
             {
-                 manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestData);
+                 manifestConfig = JsonConvert.DeserializeObject<ManifestUpdate>(manifestData);
             }
             catch (Exception)
             {
@@ -40,10 +50,9 @@ namespace taskt.Core
                 throw;
             }
 
-     
             //create versions
-            manifestConfig.RemoteVersionProper = new Version(manifestConfig.RemoteVersion);
-            manifestConfig.LocalVersionProper = new Version(System.Windows.Forms.Application.ProductVersion);
+            manifestConfig.RemoteVersionProper = new Version(manifestConfig._remoteVersion);
+            manifestConfig.LocalVersionProper = new Version(Application.ProductVersion);
 
             //determine comparison
             int versionCompare = manifestConfig.LocalVersionProper.CompareTo(manifestConfig.RemoteVersionProper);
@@ -58,24 +67,6 @@ namespace taskt.Core
             }
 
             return manifestConfig;
-
         }
-
     }
-
-
-
-    public class UpdateManifest
-    {
-        //from manifest
-        public string RemoteVersion { get; set; }
-        public string PackageURL { get; set; }
-
-        //helpers
-        public bool RemoteVersionNewer { get; set; }
-        public Version RemoteVersionProper { get; set; }
-        public Version LocalVersionProper { get; set; }
-
-    }
-   
 }

@@ -13,7 +13,7 @@ namespace taskt.UI.Forms.Supplement_Forms
     public partial class frmUpdate : UIForm
     {
       
-        public frmUpdate(Core.UpdateManifest manifest)
+        public frmUpdate(Core.ManifestUpdate manifest)
         {
 
             InitializeComponent();

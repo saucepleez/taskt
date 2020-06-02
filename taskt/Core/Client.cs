@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace taskt.Core
+﻿namespace taskt.Core
 {
     public static class Client
     {
-
-
-        private static bool engineBusy;
+        private static bool _engineBusy;
         public static bool EngineBusy
         {
             get
             {
-                return engineBusy;
+                return _engineBusy;
             }
             set
             {
-                engineBusy = value;
+                _engineBusy = value;
                // Core.Sockets.SocketClient.SendMessage("CLIENT_STATUS=" + ClientStatus);
             }
         }
