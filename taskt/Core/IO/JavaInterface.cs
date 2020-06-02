@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 
 namespace taskt.Core.IO
 {
     public class JavaInterface
     {
-        private System.Diagnostics.Process Create(string jarName, string args)
+        private Process Create(string jarName, string args)
         {
-            var jarLibary = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources", jarName);
+            var jarLibary = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Resources", jarName);
 
-            if (!System.IO.File.Exists(jarLibary))
+            if (!File.Exists(jarLibary))
             {
-                throw new System.IO.FileNotFoundException("JAR Library was not found at " + jarLibary);
+                throw new FileNotFoundException("JAR Library was not found at " + jarLibary);
             }
 
-
-            System.Diagnostics.Process javaProc = new System.Diagnostics.Process();
+            Process javaProc = new Process();
             javaProc.StartInfo.FileName = "java";
             javaProc.StartInfo.Arguments = string.Join(" ", "-jar", "\"" + jarLibary + "\"", args);
-            javaProc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            javaProc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             javaProc.StartInfo.UseShellExecute = false;
             javaProc.StartInfo.RedirectStandardOutput = true;
 
@@ -33,7 +30,7 @@ namespace taskt.Core.IO
 
             //create pdf path
             var pdfPath = "\"" + pdfFilePath + "\"";
-            
+
             //create args
             var args = string.Join(" ", pdfPath);
 
@@ -54,14 +51,6 @@ namespace taskt.Core.IO
 
             //return data
             return output;
-
-
         }
-
-
-       
-        
-     
-
     }
 }
