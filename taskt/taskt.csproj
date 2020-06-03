@@ -168,6 +168,17 @@
   <ItemGroup>
     <Compile Include="Core\ManifestUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Attributes\ClassAttributes\Description.cs" />
+    <Compile Include="Core\Automation\Attributes\ClassAttributes\Group.cs" />
+    <Compile Include="Core\Automation\Attributes\ClassAttributes\ImplementationDescription.cs" />
+    <Compile Include="Core\Automation\Attributes\ClassAttributes\UsesDescription.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes\InputSpecification.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes\PropertyDescription.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes\PropertySelectionChangeEvent.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes\PropertyUIHelper.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes\PropertyUISelectionOption.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes\Remarks.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes\SampleUsage.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary Commands\AddDictionaryItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\API Commands\ExecuteRESTAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\API Commands\QueryHTMLSourceCommand.cs" />
@@ -280,7 +291,6 @@
     <Compile Include="Core\Automation\Commands\Outlook Commands\ReplyToOutlookEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook Commands\SendOutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Regex Commands\GetRegexMatchesCommand.cs" />
-    <Compile Include="Core\Automation\Attributes\Attributes.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\MathCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Programs_Process Commands\RunCustomCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Programs_Process Commands\RunScriptCommand.cs" />

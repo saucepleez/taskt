@@ -74,7 +74,7 @@ namespace taskt.UI.CustomControls
             if (propertyAttributesAssigned.Length > 0)
             {
                 var attribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
-                inputLabel.Text = attribute.propertyDescription;
+                inputLabel.Text = attribute.Description;
             }
             else
             {
@@ -122,7 +122,7 @@ namespace taskt.UI.CustomControls
 
             foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption option in propertyAttributesAssigned)
             {
-                inputBox.Items.Add(option.uiOption);
+                inputBox.Items.Add(option.UIOption);
             }
 
             return inputBox;
@@ -163,9 +163,9 @@ namespace taskt.UI.CustomControls
                 helperControl.Font = new Font("Segoe UI Semilight", 10);
                 helperControl.Name = parameterName + "_helper";
                 helperControl.Tag = targetControls.FirstOrDefault();
-                helperControl.HelperType = attrib.additionalHelper;
+                helperControl.HelperType = attrib.AdditionalHelper;
 
-                switch (attrib.additionalHelper)
+                switch (attrib.AdditionalHelper)
                 {
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
                         //show variable selector
@@ -682,7 +682,7 @@ namespace taskt.UI.CustomControls
                 if (groupingAttribute.Length > 0)
                 {
                     var attributeFound = (Core.Automation.Attributes.ClassAttributes.Group)groupingAttribute[0];
-                    groupAttribute = attributeFound.groupName;
+                    groupAttribute = attributeFound.Name;
                 }
 
                 //Instantiate Class

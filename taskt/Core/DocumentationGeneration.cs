@@ -182,22 +182,22 @@ namespace taskt.Core
                 if (attributeFound is Core.Automation.Attributes.PropertyAttributes.PropertyDescription)
                 {
                     var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)attributeFound;
-                    return processedAttribute.propertyDescription;
+                    return processedAttribute.Description;
                 }
                 else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.InputSpecification)
                 {
                     var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.InputSpecification)attributeFound;
-                    return processedAttribute.inputSpecification;
+                    return processedAttribute.Specification;
                 }
                 else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.SampleUsage)
                 {
                     var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.SampleUsage)attributeFound;
-                    return processedAttribute.sampleUsage;
+                    return processedAttribute.Usage;
                 }
                 else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.Remarks)
                 {
                     var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.Remarks)attributeFound;
-                    return processedAttribute.remarks;
+                    return processedAttribute.Remark;
                 }
                 else
                 {
@@ -223,22 +223,18 @@ namespace taskt.Core
                 if (attributeFound is Core.Automation.Attributes.ClassAttributes.Group)
                 {
                     var processedAttribute = (Core.Automation.Attributes.ClassAttributes.Group)attributeFound;
-                    return processedAttribute.groupName;
+                    return processedAttribute.Name;
                 }
                 else if (attributeFound is Core.Automation.Attributes.ClassAttributes.Description)
                 {
                     var processedAttribute = (Core.Automation.Attributes.ClassAttributes.Description)attributeFound;
-                    return processedAttribute.commandFunctionalDescription;
+                    return processedAttribute.CommandFunctionalDescription;
                 }
                 else if (attributeFound is Core.Automation.Attributes.ClassAttributes.UsesDescription)
                 {
                     var processedAttribute = (Core.Automation.Attributes.ClassAttributes.UsesDescription)attributeFound;
-                    return processedAttribute.usesDescription;
+                    return processedAttribute.Description;
                 }
-    
-
-            
-
             }
 
             //string groupAttribute = "";
