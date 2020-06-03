@@ -12,6 +12,7 @@ using taskt.Core.Script;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Engine.EngineEventArgs;
 using Serilog.Core;
+using taskt.Core.Settings;
 
 namespace taskt.Core.Automation.Engine
 {

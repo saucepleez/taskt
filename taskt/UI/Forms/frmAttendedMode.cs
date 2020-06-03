@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Settings;
 
 namespace taskt.UI.Forms
 {
     public partial class frmAttendedMode : Form
     {
-        Core.ApplicationSettings appSettings { get; set; }
+        ApplicationSettings appSettings { get; set; }
         public frmAttendedMode()
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace taskt.UI.Forms
         private void frmAttendedMode_Load(object sender, EventArgs e)
         {
             //get app settings
-            appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
             //setup file system watcher
             attendedScriptWatcher.Path = appSettings.ClientSettings.AttendedTasksFolder;

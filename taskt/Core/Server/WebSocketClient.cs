@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using taskt.Core.Settings;
 
 namespace taskt.Core.Server
 {
@@ -52,7 +53,7 @@ namespace taskt.Core.Server
             reconnectTimer.Elapsed += ReconnectTimer_Elapsed;
 
             //get app settings
-            var appSettings = new Core.ApplicationSettings();
+            var appSettings = new ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
             //pull server settings
@@ -210,7 +211,7 @@ namespace taskt.Core.Server
                 publicKey = authPublicKey;
            
                 //add public key to app settings and save
-                var appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                var appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
                 appSettings.ServerSettings.ConnectToServerOnStartup = true;
                 appSettings.ServerSettings.ServerConnectionEnabled = true;
                 appSettings.ServerSettings.ServerPublicKey = authPublicKey;

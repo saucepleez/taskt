@@ -9,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using taskt.Core.Automation.Engine.EngineEventArgs;
+using taskt.Core.Settings;
+
 
 namespace taskt.Core.Server
 {
@@ -42,7 +44,7 @@ namespace taskt.Core.Server
 
             automationInstance = new Automation.Engine.AutomationEngineInstance();
 
-            var appSettings = new Core.ApplicationSettings();
+            var appSettings = new ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
             listenerSettings = appSettings.ListenerSettings;

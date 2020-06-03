@@ -32,6 +32,8 @@ using System.Xml;
 using System.Xml.Serialization;
 using taskt.Core;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Settings;
+
 
 namespace taskt.UI.Forms
 {
@@ -46,7 +48,7 @@ namespace taskt.UI.Forms
         private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
         bool editMode { get; set; }
         private ImageList uiImages; 
-        public Core.ApplicationSettings appSettings;
+        public ApplicationSettings appSettings;
         private List<List<ListViewItem>> undoList;
         private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
@@ -113,7 +115,7 @@ namespace taskt.UI.Forms
             undoList = new List<List<ListViewItem>>();
 
             //get app settings
-            appSettings = new Core.ApplicationSettings();
+            appSettings = new ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
             if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
@@ -1705,7 +1707,7 @@ namespace taskt.UI.Forms
             newSettings.ShowDialog();
 
             //reload app settings
-            appSettings = new Core.ApplicationSettings();
+            appSettings = new ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
             //reinit
@@ -2005,7 +2007,7 @@ namespace taskt.UI.Forms
           
             if ((this.WindowState == FormWindowState.Minimized) && (appSettings.ClientSettings.MinimizeToTray))
             {
-                appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
                 if (appSettings.ClientSettings.MinimizeToTray)
                 {
                     notifyTray.Visible = true;
@@ -2098,7 +2100,7 @@ namespace taskt.UI.Forms
             newSettings.ShowDialog();
 
             //reload app settings
-            appSettings = new Core.ApplicationSettings();
+            appSettings = new ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
 
             //reinit

@@ -26,6 +26,8 @@ using taskt.Core;
 using taskt.Core.Automation.Engine;
 using static taskt.Core.Automation.User32.User32Functions;
 using taskt.Core.Automation.Engine.EngineEventArgs;
+using taskt.Core.Settings;
+
 
 namespace taskt.UI.Forms
 {
@@ -33,7 +35,7 @@ namespace taskt.UI.Forms
     {
         //all variables used by this form
         #region Form Variables
-        private Core.EngineSettings _engineSettings;
+        private EngineSettings _engineSettings;
         public string filePath { get; set; }
         public string xmlData { get; set; }
         public Core.Server.Task remoteTask { get; set; }
@@ -65,7 +67,7 @@ namespace taskt.UI.Forms
             this.filePath = pathToFile;
 
             //get engine settings
-            _engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            _engineSettings = new ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
             //determine whether to show listbox or not
             advancedDebug = _engineSettings.ShowAdvancedDebugOutput;
@@ -110,7 +112,7 @@ namespace taskt.UI.Forms
             this.filePath = null;
 
             //get engine settings
-            _engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            _engineSettings = new ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
             //determine whether to show listbox or not
             advancedDebug = _engineSettings.ShowAdvancedDebugOutput;

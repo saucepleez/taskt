@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using taskt.Core;
+using taskt.Core.Settings;
 
 namespace taskt.UI.CustomControls
 {
@@ -345,7 +346,7 @@ namespace taskt.UI.CustomControls
                 //currently variable insertion is only available for simply textboxes
 
                 //load settings
-                var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
                 if (inputBox.Tag is TextBox)
                 {
@@ -409,7 +410,7 @@ namespace taskt.UI.CustomControls
         {
 
 
-            ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            ApplicationSettings settings = new ApplicationSettings().GetOrCreateApplicationSettings();
             var minimizePreference = settings.ClientSettings.MinimizeToTray;
 
             if (minimizePreference)

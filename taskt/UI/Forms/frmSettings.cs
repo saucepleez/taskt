@@ -24,13 +24,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocket4Net;
+using taskt.Core.Settings;
 using taskt.Core.Metrics;
 
 namespace taskt.UI.Forms
 {
     public partial class frmSettings : ThemedForm
     {
-        Core.ApplicationSettings newAppSettings;
+        ApplicationSettings newAppSettings;
         public frmScriptBuilder scriptBuilderForm;
         public frmSettings(frmScriptBuilder sender)
         {
@@ -40,7 +41,7 @@ namespace taskt.UI.Forms
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
-            newAppSettings = new Core.ApplicationSettings();
+            newAppSettings = new ApplicationSettings();
             newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
 
             var serverSettings = newAppSettings.ServerSettings;
@@ -428,7 +429,7 @@ namespace taskt.UI.Forms
 
                 if (pulledNewGUID)
                 {
-                    newAppSettings = new Core.ApplicationSettings();
+                    newAppSettings = new ApplicationSettings();
                     newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
                     txtHttpsAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
                     MessageBox.Show("Connected Successfully! GUID will be reloaded automatically the next time settings is loaded!");

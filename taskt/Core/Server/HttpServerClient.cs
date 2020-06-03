@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using taskt.Core.Settings;
+
 
 namespace taskt.Core.Server
 {
@@ -30,7 +32,7 @@ namespace taskt.Core.Server
         /// </summary>
         public static void Initialize()
         {
-            var settingClass = new Core.ApplicationSettings();
+            var settingClass = new ApplicationSettings();
             appSettings = settingClass.GetOrCreateApplicationSettings();
 
             if (appSettings.ServerSettings.ServerConnectionEnabled)

@@ -167,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ManifestUpdate.cs" />
-    <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\ClassAttributes\Description.cs" />
     <Compile Include="Core\Automation\Attributes\ClassAttributes\Group.cs" />
     <Compile Include="Core\Automation\Attributes\ClassAttributes\ImplementationDescription.cs" />
@@ -383,6 +382,12 @@
     <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\IO\JavaInterface.cs" />
     <Compile Include="Core\Logging.cs" />
+    <Compile Include="Core\Settings\ApplicationSettings.cs" />
+    <Compile Include="Core\Settings\ClientSettings.cs" />
+    <Compile Include="Core\Settings\EngineSettings.cs" />
+    <Compile Include="Core\Settings\LocalListenerSettings.cs" />
+    <Compile Include="Core\Settings\ServerSettings.cs" />
+    <Compile Include="Core\Settings\WhiteListIPSettings.cs" />
     <Compile Include="Core\Theme.cs" />
     <Compile Include="Core\Server\WebSocketClient.cs" />
     <Compile Include="Core\Automation\User32\User32Functionas.cs" />

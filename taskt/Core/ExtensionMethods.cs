@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using taskt.Core.Automation;
+using taskt.Core.Settings;
+
 namespace taskt.Core
 {
     public static class ExtensionMethods
