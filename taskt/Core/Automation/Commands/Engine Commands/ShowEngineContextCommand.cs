@@ -39,20 +39,20 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
 
-            if (engine.tasktEngineUI == null)
+            if (engine.TasktEngineUI == null)
             {           
                 return;
             }
 
             //automatically close messageboxes for server requests
-            if (engine.serverExecution && v_AutoCloseAfter <= 0)
+            if (engine.ServerExecution && v_AutoCloseAfter <= 0)
             {
                 v_AutoCloseAfter = 10;
             }
 
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            var result = engine.TasktEngineUI.Invoke(new Action(() =>
             {
-                engine.tasktEngineUI.ShowEngineContext(engine.GetEngineContext(), v_AutoCloseAfter);
+                engine.TasktEngineUI.ShowEngineContext(engine.GetEngineContext(), v_AutoCloseAfter);
             }
 
             ));

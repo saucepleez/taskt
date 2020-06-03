@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
                         
-            if (engine.tasktEngineUI == null)
+            if (engine.TasktEngineUI == null)
             {
                 engine.ReportProgress("UserInput Supported With UI Only");
                 System.Windows.Forms.MessageBox.Show("UserInput Supported With UI Only", "UserInput Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
@@ -107,11 +107,11 @@ namespace taskt.Core.Automation.Commands
 
 
             //invoke ui for data collection
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            var result = engine.TasktEngineUI.Invoke(new Action(() =>
             {
 
                 //get input from user
-              var userInputs =  engine.tasktEngineUI.ShowInput(clonedCommand);
+              var userInputs =  engine.TasktEngineUI.ShowInput(clonedCommand);
 
                 //check if user provided input
                 if (userInputs != null)
@@ -126,18 +126,18 @@ namespace taskt.Core.Automation.Commands
 
                         //if engine is expected to create variables, the user will not expect them to contain start/end markers
                         //ex. {vAge} should not be created, vAge should be created and then called by doing {vAge}
-                        if ((!string.IsNullOrEmpty(targetVariable)) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+                        if ((!string.IsNullOrEmpty(targetVariable)) && (engine.EngineSettings.CreateMissingVariablesDuringExecution))
                         {
                             //remove start markers
-                            if (targetVariable.StartsWith(engine.engineSettings.VariableStartMarker))
+                            if (targetVariable.StartsWith(engine.EngineSettings.VariableStartMarker))
                             {
-                                targetVariable = targetVariable.TrimStart(engine.engineSettings.VariableStartMarker.ToCharArray());
+                                targetVariable = targetVariable.TrimStart(engine.EngineSettings.VariableStartMarker.ToCharArray());
                             }
 
                             //remove end markers
-                            if (targetVariable.EndsWith(engine.engineSettings.VariableEndMarker))
+                            if (targetVariable.EndsWith(engine.EngineSettings.VariableEndMarker))
                             {
-                                targetVariable = targetVariable.TrimEnd(engine.engineSettings.VariableEndMarker.ToCharArray());
+                                targetVariable = targetVariable.TrimEnd(engine.EngineSettings.VariableEndMarker.ToCharArray());
                             }
                         }
 

@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
 
             var forbiddenMarkers = new List<string> { "[", "]" };
 
-            if (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableStartMarker) || (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableEndMarker)))
+            if (forbiddenMarkers.Any(f => f == engine.EngineSettings.VariableStartMarker) || (forbiddenMarkers.Any(f => f == engine.EngineSettings.VariableEndMarker)))
             {
                 throw new Exception("Cannot use Parse JSON command with square bracket variable markers [ ]");
             }

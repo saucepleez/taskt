@@ -106,10 +106,10 @@ namespace taskt.Core.Automation.Commands
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataRowToSet).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_DataRowToSet.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DataRowToSet.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            if ((requiredVariable == null) && (v_DataRowToSet.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (v_DataRowToSet.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
-                var reformattedVariable = v_DataRowToSet.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                var reformattedVariable = v_DataRowToSet.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 

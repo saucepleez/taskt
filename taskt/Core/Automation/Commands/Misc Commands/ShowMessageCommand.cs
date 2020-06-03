@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
 
             variableMessage = variableMessage.Replace("\\n", Environment.NewLine);
 
-            if (engine.tasktEngineUI == null)
+            if (engine.TasktEngineUI == null)
             {
                 engine.ReportProgress("Complex Messagebox Supported With UI Only");
                 MessageBox.Show(variableMessage, "Message Box Command", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -54,14 +54,14 @@ namespace taskt.Core.Automation.Commands
             }
 
             //automatically close messageboxes for server requests
-            if (engine.serverExecution && v_AutoCloseAfter <= 0)
+            if (engine.ServerExecution && v_AutoCloseAfter <= 0)
             {
                 v_AutoCloseAfter = 10;
             }
 
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            var result = engine.TasktEngineUI.Invoke(new Action(() =>
                 {
-                    engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
+                    engine.TasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
                 }
             ));
 

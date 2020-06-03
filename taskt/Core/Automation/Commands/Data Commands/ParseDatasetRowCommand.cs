@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             //try to find dataset based on variable name
-            var dataSourceVariable = engine.VariableList.FirstOrDefault(f => engine.engineSettings.VariableStartMarker + f.VariableName + engine.engineSettings.VariableEndMarker == v_DatasetName);
+            var dataSourceVariable = engine.VariableList.FirstOrDefault(f => engine.EngineSettings.VariableStartMarker + f.VariableName + engine.EngineSettings.VariableEndMarker == v_DatasetName);
 
             if (dataSourceVariable == null)
             {

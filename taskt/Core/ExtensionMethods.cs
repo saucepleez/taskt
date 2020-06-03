@@ -40,8 +40,8 @@ namespace taskt.Core
 
 
             //custom variable markers
-            var startVariableMarker = engine.engineSettings.VariableStartMarker;
-            var endVariableMarker = engine.engineSettings.VariableEndMarker;
+            var startVariableMarker = engine.EngineSettings.VariableStartMarker;
+            var endVariableMarker = engine.EngineSettings.VariableEndMarker;
 
             //split by custom markers
             string[] potentialVariables = str.Split(new string[] { startVariableMarker, endVariableMarker }, StringSplitOptions.None);

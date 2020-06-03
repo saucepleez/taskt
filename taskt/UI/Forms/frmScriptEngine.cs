@@ -25,6 +25,7 @@ using System.Xml.Serialization;
 using taskt.Core;
 using taskt.Core.Automation.Engine;
 using static taskt.Core.Automation.User32.User32Functions;
+using taskt.Core.Automation.Engine.EngineEventArgs;
 
 namespace taskt.UI.Forms
 {
@@ -32,7 +33,7 @@ namespace taskt.UI.Forms
     {
         //all variables used by this form
         #region Form Variables
-        public Core.EngineSettings engineSettings;
+        private Core.EngineSettings _engineSettings;
         public string filePath { get; set; }
         public string xmlData { get; set; }
         public Core.Server.Task remoteTask { get; set; }
@@ -64,10 +65,10 @@ namespace taskt.UI.Forms
             this.filePath = pathToFile;
 
             //get engine settings
-            engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            _engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
             //determine whether to show listbox or not
-            advancedDebug = engineSettings.ShowAdvancedDebugOutput;
+            advancedDebug = _engineSettings.ShowAdvancedDebugOutput;
 
             //if listbox should be shown
             if (advancedDebug)
@@ -87,7 +88,7 @@ namespace taskt.UI.Forms
 
 
             //apply debug window setting
-            if (!engineSettings.ShowDebugWindow)
+            if (!_engineSettings.ShowDebugWindow)
             {
                 this.Visible = false;
                 this.Opacity = 0;
@@ -95,7 +96,7 @@ namespace taskt.UI.Forms
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-            GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
+            GlobalHook.StartEngineCancellationHook(_engineSettings.CancellationKey);
 
 
 
@@ -109,10 +110,10 @@ namespace taskt.UI.Forms
             this.filePath = null;
 
             //get engine settings
-            engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            _engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
             //determine whether to show listbox or not
-            advancedDebug = engineSettings.ShowAdvancedDebugOutput;
+            advancedDebug = _engineSettings.ShowAdvancedDebugOutput;
 
             //if listbox should be shown
             if (advancedDebug)
@@ -132,7 +133,7 @@ namespace taskt.UI.Forms
 
 
             //apply debug window setting
-            if (!engineSettings.ShowDebugWindow)
+            if (!_engineSettings.ShowDebugWindow)
             {
                 this.Visible = false;
                 this.Opacity = 0;
@@ -140,7 +141,7 @@ namespace taskt.UI.Forms
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-            GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
+            GlobalHook.StartEngineCancellationHook(_engineSettings.CancellationKey);
 
 
 
@@ -148,7 +149,7 @@ namespace taskt.UI.Forms
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
             //move engine form to bottom right and bring to front
-            if (engineSettings.ShowDebugWindow)
+            if (_engineSettings.ShowDebugWindow)
             {
                 this.BringToFront();
                 MoveFormToBottomRight(this);
@@ -159,9 +160,9 @@ namespace taskt.UI.Forms
             engineInstance.ReportProgressEvent += Engine_ReportProgress;
             engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
             engineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
-            engineInstance.taskModel = remoteTask;
-            engineInstance.tasktEngineUI = this;
-            engineInstance.serverExecution = this.serverExecution;
+            engineInstance.TaskModel = remoteTask;
+            engineInstance.TasktEngineUI = this;
+            engineInstance.ServerExecution = this.serverExecution;
             Core.Server.LocalTCPListener.automationInstance = engineInstance;
 
             if (xmlData == null)
@@ -239,7 +240,7 @@ namespace taskt.UI.Forms
 
             if(CloseWhenDone)
             {
-                engineInstance.tasktEngineUI.Invoke((Action)delegate () { this.Close(); });
+                engineInstance.TasktEngineUI.Invoke((Action)delegate () { this.Close(); });
             }
 
         }
@@ -331,7 +332,7 @@ namespace taskt.UI.Forms
                     callBackForm.DebugLine = 0;
 
                 //begin auto close
-                if ((engineSettings.AutoCloseDebugWindow) || (serverExecution))
+                if ((_engineSettings.AutoCloseDebugWindow) || (serverExecution))
                     tmrNotify.Enabled = true;
 
             }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Automation.Engine.EngineEventArgs;
 
 namespace taskt.Core.Server
 {
@@ -421,7 +422,7 @@ namespace taskt.Core.Server
             }
         }
 
-        private static void AutomationInstance_ScriptFinishedEvent(object sender, Automation.Engine.ScriptFinishedEventArgs e)
+        private static void AutomationInstance_ScriptFinishedEvent(object sender, ScriptFinishedEventArgs e)
         {
             //set result once script completes
             TasktResult = automationInstance.TasktResult;

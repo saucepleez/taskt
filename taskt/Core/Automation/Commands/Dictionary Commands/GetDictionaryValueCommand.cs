@@ -79,10 +79,10 @@ namespace taskt.Core.Automation.Commands
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputData).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
-                var reformattedVariable = v_InputData.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                var reformattedVariable = v_InputData.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 

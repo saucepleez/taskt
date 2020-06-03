@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
             {
                 //log to the standard engine logs
                 var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-                engine.engineLogger.Information(textToLog);
+                engine.EngineLogger.Information(textToLog);
             }
             else
             {

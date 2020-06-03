@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             
-            var v_receivingVariable = v_applyConvertToUserVariableName.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+            var v_receivingVariable = v_applyConvertToUserVariableName.Replace(engine.EngineSettings.VariableStartMarker, "").Replace(engine.EngineSettings.VariableEndMarker, "");
             //get complex variable from engine and assign
             var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
 

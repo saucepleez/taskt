@@ -77,9 +77,9 @@ namespace taskt.Core.Automation.Commands
             var height = int.Parse(v_RDPHeight.ConvertToUserVariable(sender));
 
 
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            var result = engine.TasktEngineUI.Invoke(new Action(() =>
             {
-                engine.tasktEngineUI.LaunchRDPSession(machineName, userName, password, width, height);
+                engine.TasktEngineUI.LaunchRDPSession(machineName, userName, password, width, height);
             }));
 
 

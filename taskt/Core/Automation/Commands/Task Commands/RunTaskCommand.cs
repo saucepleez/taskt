@@ -112,7 +112,7 @@ namespace taskt.Core.Automation.Commands
             UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true);
             
             //Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
-            currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = false; });
+            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.TasktEngineUI.TopMost = false; });
             Application.Run(newEngine);
 
             //get new variable list from the new task engine after it finishes running
@@ -137,7 +137,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //currentScriptEngine.tasktEngineUI.TopMost = false;
-            currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = true; });
+            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.TasktEngineUI.TopMost = true; });
         }
 
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance, string lookupVariable )
@@ -146,10 +146,10 @@ namespace taskt.Core.Automation.Commands
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == lookupVariable).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (lookupVariable.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (lookupVariable.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            if ((requiredVariable == null) && (lookupVariable.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (lookupVariable.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
-                var reformattedVariable = lookupVariable.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                var reformattedVariable = lookupVariable.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 

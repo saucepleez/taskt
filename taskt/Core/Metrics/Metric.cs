@@ -5,7 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using taskt.Core.IO;
-using taskt.Core.Automation.Engine;
+using taskt.Core.Automation.Engine.EngineEventArgs;
 
 namespace taskt.Core.Metrics
 {

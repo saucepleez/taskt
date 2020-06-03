@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
             var requiredVariable = LookupVariable(engine);
 
             //if still not found and user has elected option, create variable at runtime
-            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            if ((requiredVariable == null) && (engine.EngineSettings.CreateMissingVariablesDuringExecution))
             {
                 engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
                 requiredVariable = LookupVariable(engine);
@@ -70,10 +70,10 @@ namespace taskt.Core.Automation.Commands
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
-                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                var reformattedVariable = v_userVariableName.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 

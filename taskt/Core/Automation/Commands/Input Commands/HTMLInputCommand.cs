@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
 
-            if (engine.tasktEngineUI == null)
+            if (engine.TasktEngineUI == null)
             {
                 engine.ReportProgress("HTML UserInput Supported With UI Only");
                 System.Windows.Forms.MessageBox.Show("HTML UserInput Supported With UI Only", "UserInput Command", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
@@ -62,13 +62,13 @@ namespace taskt.Core.Automation.Commands
             }
 
             //invoke ui for data collection
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            var result = engine.TasktEngineUI.Invoke(new Action(() =>
             {
 
                 //sample for temp testing
                 var htmlInput = v_InputHTML.ConvertToUserVariable(sender);
 
-                var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
+                var variables = engine.TasktEngineUI.ShowHTMLInput(htmlInput);
 
                 //if user selected Ok then process variables
                 //null result means user cancelled/closed

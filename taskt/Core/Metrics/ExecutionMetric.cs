@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using taskt.Core.Automation.Engine;
+using taskt.Core.Automation.Engine.EngineEventArgs;
 
 namespace taskt.Core.Metrics
 {

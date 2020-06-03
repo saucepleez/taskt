@@ -348,6 +348,10 @@
     <Compile Include="Core\Automation\Commands\Word Commands\WordReplaceTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordSaveDocumentAsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordSaveDocumentCommand.cs" />
+    <Compile Include="Core\Automation\Engine\EngineEventArgs\LineNumberChangedEventArgs.cs" />
+    <Compile Include="Core\Automation\Engine\EngineEventArgs\ReportProgressEventArgs.cs" />
+    <Compile Include="Core\Automation\Engine\ScriptError.cs" />
+    <Compile Include="Core\Automation\Engine\EngineEventArgs\ScriptFinishedEventArgs.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
     <Compile Include="Core\GlobalAppInstances.cs" />

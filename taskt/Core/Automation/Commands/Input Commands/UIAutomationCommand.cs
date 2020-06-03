@@ -365,7 +365,7 @@ namespace taskt.Core.Automation.Commands
 
 
                     //remove brackets from variable
-                    applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+                    applyToVariable = applyToVariable.Replace(engine.EngineSettings.VariableStartMarker, "").Replace(engine.EngineSettings.VariableEndMarker, "");
 
                     //declare search result
                     string searchResult = "";
@@ -439,7 +439,7 @@ namespace taskt.Core.Automation.Commands
                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                     //remove brackets from variable
-                    applyToVariable2 = applyToVariable2.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+                    applyToVariable2 = applyToVariable2.Replace(engine.EngineSettings.VariableStartMarker, "").Replace(engine.EngineSettings.VariableEndMarker, "");
 
                     //get required value
                     var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
