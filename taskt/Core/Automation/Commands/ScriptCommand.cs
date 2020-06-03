@@ -7,6 +7,7 @@ using System.Windows.Forms;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
+    [XmlInclude(typeof(PingCommand))]
     [XmlInclude(typeof(SendKeysCommand))]
     [XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]
     [XmlInclude(typeof(CreateDictionaryCommand))]
