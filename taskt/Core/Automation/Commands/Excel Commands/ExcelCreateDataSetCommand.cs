@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using System.Data.OleDb;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -40,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate if Header Row Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]    
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary indicator")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Yes**, **NO**.  Data will be loaded as column headers if **YES** is selected.")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -48,20 +50,21 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCreateDataSetCommand()
         {
-            this.CommandName = "ExcelCreateDataSetCommand";
-            this.SelectionName = "Create DataSet";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "ExcelCreateDataSetCommand";
+            SelectionName = "Create DataSet";
+            CommandEnabled = true;
+            CustomRendering = true;
             v_ContainsHeaderRow = "Yes";
         }
 
         public override void RunCommand(object sender)
         {
+            DataTable requiredData = CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                v_FilePath.ConvertToUserVariable(sender) +
+                $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ConvertToUserVariable(sender)};IMEX=1""",
+                "Select * From [" + v_SheetName.ConvertToUserVariable(sender) + "$]");
 
-            DatasetCommands dataSetCommand = new DatasetCommands();
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + v_FilePath.ConvertToUserVariable(sender) + $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ConvertToUserVariable(sender)};IMEX=1""", "Select * From [" + v_SheetName.ConvertToUserVariable(sender) + "$]");
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
 
             Script.ScriptVariable newDataset = new Script.ScriptVariable
             {
@@ -72,6 +75,27 @@ namespace taskt.Core.Automation.Commands
             engine.VariableList.Add(newDataset);
 
         }
+        public DataTable CreateDataTable(string connection, string query)
+        {
+            //create vars
+            var dataTable = new DataTable();
+            var oleConnection = new OleDbConnection(connection);
+            var oleCommand = new OleDbCommand(query, oleConnection);
+
+            //get data
+            OleDbDataAdapter adapter = new OleDbDataAdapter(oleCommand);
+            oleConnection.Open();
+            adapter.Fill(dataTable);
+            oleConnection.Close();
+
+            //clean up
+            oleConnection.Dispose();
+            adapter.Dispose();
+            oleCommand.Dispose();
+
+            return dataTable;
+        }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -82,7 +106,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ContainsHeaderRow", this, editor));
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()

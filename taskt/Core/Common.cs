@@ -11,7 +11,6 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,12 +21,12 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Drawing.Imaging;
 using taskt.Core.IO;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
+using taskt.Core.Automation.User32;
 
 namespace taskt.Core
 {
@@ -43,12 +42,10 @@ namespace taskt.Core
                 throw new ArgumentException("The type must be serializable.", "source");
             }
 
-
             if (source == null)
             {
                 return default(T);
             }
-
 
             using (MemoryStream ms = new MemoryStream())
             {
@@ -58,9 +55,6 @@ namespace taskt.Core
                 ms.Position = 0;
                 return (T)formatter.Deserialize(ms);
             }
-
-
-
 
             ////output to xml file
             //XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -124,13 +118,13 @@ namespace taskt.Core
         public static List<IGrouping<Attribute, Type>> GetGroupedCommands()
         {
             var groupedCommands = Assembly.GetExecutingAssembly().GetTypes()
-                          .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
-                          .Where(t => t.Name != "ScriptCommand")
-                          .Where(t => t.IsAbstract == false)
-                          .Where(t => t.BaseType.Name == "ScriptCommand")
-                          .Where(t => CommandEnabled(t))
-                          .GroupBy(t => t.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group)))
-                          .ToList();
+                                          .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+                                          .Where(t => t.Name != "ScriptCommand")
+                                          .Where(t => t.IsAbstract == false)
+                                          .Where(t => t.BaseType.Name == "ScriptCommand")
+                                          .Where(t => CommandEnabled(t))
+                                          .GroupBy(t => t.GetCustomAttribute(typeof(Automation.Attributes.ClassAttributes.Group)))
+                                          .ToList();
 
             return groupedCommands;
         }
@@ -139,62 +133,61 @@ namespace taskt.Core
         /// </summary>
         private static bool CommandEnabled(Type cmd)
         {
-            var scriptCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(cmd);
+            var scriptCommand = (ScriptCommand)Activator.CreateInstance(cmd);
             return scriptCommand.CommandEnabled;
         }
         /// <summary>
         /// Returns a list of system-generated variables for use with automation.
         /// </summary>
-        public static List<Core.Script.ScriptVariable> GenerateSystemVariables()
+        public static List<ScriptVariable> GenerateSystemVariables()
         {
-            List<Core.Script.ScriptVariable> systemVariableList = new List<Core.Script.ScriptVariable>();
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.RootFolder)});
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM")});
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Year", VariableValue = DateTime.Now.ToString("yy") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.YearLong", VariableValue = DateTime.Now.ToString("yyyy") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Hour", VariableValue = DateTime.Now.ToString("HH") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Minute", VariableValue = DateTime.Now.ToString("mm") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Second", VariableValue = DateTime.Now.ToString("ss") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "System.InputLanguage", VariableValue = InputLanguage.CurrentInputLanguage.Culture.Name });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "System.KeyboardLayout", VariableValue = InputLanguage.CurrentInputLanguage.LayoutName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Message", VariableValue = "An Error Occured!" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Line", VariableValue = "1" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "An Error Occured + StackTrace" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.Automation.User32.User32Functions.GetActiveWindowTitle() });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.Location", VariableValue = System.Reflection.Assembly.GetEntryAssembly().Location });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            List<ScriptVariable> systemVariableList = new List<ScriptVariable>();
+            systemVariableList.Add(new ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Folders.GetFolder(Folders.FolderType.RootFolder)});
+            systemVariableList.Add(new ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM")});
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.Year", VariableValue = DateTime.Now.ToString("yy") });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.YearLong", VariableValue = DateTime.Now.ToString("yyyy") });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.Hour", VariableValue = DateTime.Now.ToString("HH") });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.Minute", VariableValue = DateTime.Now.ToString("mm") });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.Second", VariableValue = DateTime.Now.ToString("ss") });
+            systemVariableList.Add(new ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
+            systemVariableList.Add(new ScriptVariable { VariableName = "System.InputLanguage", VariableValue = InputLanguage.CurrentInputLanguage.Culture.Name });
+            systemVariableList.Add(new ScriptVariable { VariableName = "System.KeyboardLayout", VariableValue = InputLanguage.CurrentInputLanguage.LayoutName });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Error.Message", VariableValue = "An Error Occured!" });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Error.Line", VariableValue = "1" });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "An Error Occured + StackTrace" });
+            systemVariableList.Add(new ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
+            systemVariableList.Add(new ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
+            systemVariableList.Add(new ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = User32Functions.GetActiveWindowTitle() });
+            systemVariableList.Add(new ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" });
+            systemVariableList.Add(new ScriptVariable { VariableName = "taskt.Location", VariableValue = Assembly.GetEntryAssembly().Location });
+            systemVariableList.Add(new ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
             return systemVariableList;
         }
         public static string ImageToBase64(Image image)
         {
-
             using (MemoryStream m = new MemoryStream())
             {
-                image.Save(m, System.Drawing.Imaging.ImageFormat.Bmp);
+                image.Save(m, ImageFormat.Bmp);
                 byte[] imageBytes = m.ToArray();
                 var base64String = Convert.ToBase64String(imageBytes);
                 return base64String;
             }
-
         }
+
         public static Image Base64ToImage(string base64String)
         {
             byte[] imageBytes = Convert.FromBase64String(base64String);
             MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
             ms.Write(imageBytes, 0, imageBytes.Length);
-            System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
+            Image image = Image.FromStream(ms, true);
             return image;
         }
 
@@ -213,15 +206,12 @@ namespace taskt.Core
                 }
             }
 
-
             SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
 
             foreach (SHDocVw.InternetExplorer window in shellWindows)
             {
                 windowList.Add("Windows Explorer - " + window.LocationName);
             }
-
-
             windowList.Sort();
 
             return windowList;
@@ -453,7 +443,7 @@ namespace taskt.Core
                 case Keys.HanjaMode:
                 case Keys.JunjaMode:
                 case Keys.HangulMode:
-                case Keys.FinalMode:    //duplicate values: Hanguel, Kana, Kanji  
+                case Keys.FinalMode:    //duplicate values: Hangul, Kana, Kanji
                 case Keys.IMEAccept:
                 case Keys.IMEConvert:   //duplicate: IMEAceept
                 case Keys.IMEModeChange:
@@ -470,20 +460,20 @@ namespace taskt.Core
                 case Keys.Zoom:
                     return "Zoom";
 
-                //oem keys 
+                //oem keys
                 case Keys.OemSemicolon: //oem1
                     return ";";
                 case Keys.OemQuestion:  //oem2
                     return "?";
                 case Keys.Oemtilde:     //oem3
                     return "~";
-                case Keys.OemOpenBrackets:  //oem4
+                case Keys.OemOpenBrackets:      //oem4
                     return "[";
-                case Keys.OemPipe:  //oem5
+                case Keys.OemPipe:      //oem5
                     return "|";
-                case Keys.OemCloseBrackets:    //oem6
+                case Keys.OemCloseBrackets:     //oem6
                     return "]";
-                case Keys.OemQuotes:        //oem7
+                case Keys.OemQuotes:    //oem7
                     return "'";
                 case Keys.OemBackslash: //oem102
                     return "/";
@@ -539,24 +529,18 @@ namespace taskt.Core
 
             foreach (string name in Enum.GetNames(typeof(Keys)))
             {
-
                 object value = Enum.Parse(typeof(Keys), name);
-
                 var keyValue = (Keys)value;
-
-               
-                string description = Core.Common.GetKeyDescription((Keys)value);
+                string description = GetKeyDescription((Keys)value);
 
                 if (description != null)
                 {
                     keyDescriptionList.Add(string.Concat(description, " [", keyValue, "]"));
                 }
-
             }
 
             return keyDescriptionList;
         }
-
     }
 }
 
