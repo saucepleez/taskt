@@ -69,15 +69,15 @@ namespace taskt.UI.Forms.Supplemental
             if (hWnd != IntPtr.Zero)
             {
                 //set window state and move to 0,0
-                User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
+                User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SwShowNormal);
                 User32Functions.SetForegroundWindow(hWnd);
                 User32Functions.SetWindowPosition(hWnd, 0, 0);
 
                 //start global hook and wait for left mouse down event
-                User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
-                User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
-                User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
-                User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
+                GlobalHook.StartEngineCancellationHook(Keys.F2);
+                GlobalHook.HookStopped += GlobalHook_HookStopped;
+                GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
+                GlobalHook.MouseEvent += GlobalHook_MouseEvent;
             }
         }
 

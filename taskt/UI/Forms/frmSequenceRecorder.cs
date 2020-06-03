@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
-using static taskt.Core.Automation.User32.User32Functions;
+using taskt.Core.Automation.User32;
 
 namespace taskt.UI.Forms
 {
@@ -53,7 +53,7 @@ namespace taskt.UI.Forms
         private void FinalizeRecording()
         {
 
-            var commandList = GlobalHook.generatedCommands;
+            var commandList = GlobalHook.GeneratedCommands;
 
 
             var outputList = new List<Core.Automation.Commands.ScriptCommand>();

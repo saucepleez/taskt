@@ -303,6 +303,11 @@
     <Compile Include="Core\Automation\Commands\Data Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\ParseJSONArrayCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
+    <Compile Include="Core\Automation\User32\GlobalHook.cs" />
+    <Compile Include="Core\Automation\User32\MouseCoordinateEventArgs.cs" />
+    <Compile Include="Core\Automation\User32\Rect.cs" />
+    <Compile Include="Core\Automation\User32\User32Functions.cs" />
+    <Compile Include="Core\Automation\User32\WindowHandleInfo.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\ModifyStringCommand.cs" />
     <Compile Include="Core\Automation\Commands\System Commands\EnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\System Commands\LaunchRemoteDesktopCommand.cs" />
@@ -390,7 +395,6 @@
     <Compile Include="Core\Settings\WhiteListIPSettings.cs" />
     <Compile Include="Core\Theme.cs" />
     <Compile Include="Core\Server\WebSocketClient.cs" />
-    <Compile Include="Core\Automation\User32\User32Functionas.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

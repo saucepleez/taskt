@@ -54,19 +54,19 @@ namespace taskt.Core.Automation.Commands
             //loop each window and set the window state
             foreach (var targetedWindow in targetWindows)
             {
-                User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SW_SHOWNORMAL;
+                User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SwShowNormal;
                 switch (v_WindowState)
                 {
                     case "Maximize":
-                        WINDOW_STATE = User32Functions.WindowState.SW_MAXIMIZE;
+                        WINDOW_STATE = User32Functions.WindowState.SwMaximize;
                         break;
 
                     case "Minimize":
-                        WINDOW_STATE = User32Functions.WindowState.SW_MINIMIZE;
+                        WINDOW_STATE = User32Functions.WindowState.SwMinimize;
                         break;
 
                     case "Restore":
-                        WINDOW_STATE = User32Functions.WindowState.SW_RESTORE;
+                        WINDOW_STATE = User32Functions.WindowState.SwRestore;
                         break;
 
                     default:

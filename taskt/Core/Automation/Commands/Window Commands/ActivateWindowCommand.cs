@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             //loop each window
             foreach (var targetedWindow in targetWindows)
             {
-                User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
+                User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SwShowNormal);
                 User32Functions.SetForegroundWindow(targetedWindow);
             }
 

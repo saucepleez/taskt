@@ -48,9 +48,9 @@ namespace taskt.UI.Forms.Supplemental
             searchParameters.Rows.Clear();
 
             //start global hook and wait for left mouse down event
-            User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
-            User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
-            User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
+            GlobalHook.StartEngineCancellationHook(Keys.F2);
+            GlobalHook.HookStopped += GlobalHook_HookStopped;
+            GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
             webBrowser1.Document.Click += new HtmlElementEventHandler(Document_Click);
             
         }

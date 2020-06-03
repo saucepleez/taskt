@@ -24,7 +24,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using taskt.Core;
 using taskt.Core.Automation.Engine;
-using static taskt.Core.Automation.User32.User32Functions;
+using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Engine.EngineEventArgs;
 using taskt.Core.Settings;
 
