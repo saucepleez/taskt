@@ -166,6 +166,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\App\GlobalAppInstances.cs" />
     <Compile Include="Core\ManifestUpdate.cs" />
     <Compile Include="Core\Automation\Attributes\ClassAttributes\Description.cs" />
     <Compile Include="Core\Automation\Attributes\ClassAttributes\Group.cs" />
@@ -368,7 +369,6 @@
     <Compile Include="Core\Automation\Engine\EngineEventArgs\ScriptFinishedEventArgs.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
-    <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />
@@ -383,9 +383,7 @@
     <Compile Include="Core\Script\ScriptVariable.cs" />
     <Compile Include="Core\Server\LocalTCPListener.cs" />
     <Compile Include="Core\Server\HttpServerClient.cs" />
-    <Compile Include="Core\ImageRecognition.cs" />
     <Compile Include="Core\IO\JavaInterface.cs" />
-    <Compile Include="Core\Logging.cs" />
     <Compile Include="Core\Settings\ApplicationSettings.cs" />
     <Compile Include="Core\Settings\ClientSettings.cs" />
     <Compile Include="Core\Settings\EngineSettings.cs" />
@@ -394,6 +392,8 @@
     <Compile Include="Core\Settings\WhiteListIPSettings.cs" />
     <Compile Include="Core\Theme.cs" />
     <Compile Include="Core\Server\WebSocketClient.cs" />
+    <Compile Include="Core\Utilities\CommandUtilities\ImageRecognitionFingerPrint.cs" />
+    <Compile Include="Core\Utilities\CommonUtilities\Logging.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

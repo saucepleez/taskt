@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.Core.Settings;
 
 namespace taskt.Core.Server
@@ -28,7 +29,7 @@ namespace taskt.Core.Server
         public static Serilog.Core.Logger socketLogger;
         static SocketClient()
         {
-            socketLogger = new Core.Logging().CreateLogger("Socket", Serilog.RollingInterval.Day);
+            socketLogger = new Logging().CreateLogger("Socket", Serilog.RollingInterval.Day);
         }
         /// <summary>
         /// Initializes the Socket Client

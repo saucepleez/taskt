@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -57,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 //create new logger and log to custom file
-                using (var logger = new Core.Logging().CreateLogger(logFile, Serilog.RollingInterval.Infinite))
+                using (var logger = new Logging().CreateLogger(logFile, Serilog.RollingInterval.Infinite))
                 {
                     logger.Information(textToLog);
                 }

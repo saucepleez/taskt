@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.Core.Settings;
-
 
 namespace taskt.Core.Server
 {
@@ -23,7 +23,7 @@ namespace taskt.Core.Server
 
         static HttpServerClient()
         {
-            httpLogger = new Core.Logging().CreateLogger("HTTP", Serilog.RollingInterval.Day);
+            httpLogger = new Logging().CreateLogger("HTTP", Serilog.RollingInterval.Day);
             Initialize();
         }
 

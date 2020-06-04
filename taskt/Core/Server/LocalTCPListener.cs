@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.Core.Automation.Engine.EngineEventArgs;
 using taskt.Core.Settings;
 
@@ -33,7 +34,7 @@ namespace taskt.Core.Server
         public static event EventHandler ListeningStopped;
         static LocalTCPListener()
         {
-            automationLogger = new Core.Logging().CreateLogger("Automation Client", Serilog.RollingInterval.Day);
+            automationLogger = new Logging().CreateLogger("Automation Client", Serilog.RollingInterval.Day);
             ExecuteCommandEngine = new Automation.Engine.AutomationEngineInstance();
         }
 

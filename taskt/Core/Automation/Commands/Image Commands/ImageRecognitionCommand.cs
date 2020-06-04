@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Utilities.CommandUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -121,9 +122,9 @@ namespace taskt.Core.Automation.Commands
                 int y = random.Next(userImage.Height);
                 Color color = sampleOut.GetPixel(x, y);
 
-                if ((lastcolor != color) && (!uniqueFingerprint.Any(f => f.xLocation == x && f.yLocation == y)))
+                if ((lastcolor != color) && (!uniqueFingerprint.Any(f => f.XLocation == x && f.YLocation == y)))
                 {
-                    uniqueFingerprint.Add(new ImageRecognitionFingerPrint() { PixelColor = color, xLocation = x, yLocation = y });
+                    uniqueFingerprint.Add(new ImageRecognitionFingerPrint() { PixelColor = color, XLocation = x, YLocation = y });
                     sampleUpdate.DrawRectangle(Pens.Yellow, x, y, 1, 1);
                 }
 
@@ -142,7 +143,7 @@ namespace taskt.Core.Automation.Commands
             for (int rowPixel = 0; rowPixel < desktopImage.Height - 1; rowPixel++)
             {
 
-                if (rowPixel + uniqueFingerprint.First().yLocation >= desktopImage.Height)
+                if (rowPixel + uniqueFingerprint.First().YLocation >= desktopImage.Height)
                     continue;
 
 
@@ -155,7 +156,7 @@ namespace taskt.Core.Automation.Commands
                         throw new Exception("Image recognition command ran out of time searching for image");
                     }
 
-                    if (columnPixel + uniqueFingerprint.First().xLocation >= desktopImage.Width)
+                    if (columnPixel + uniqueFingerprint.First().XLocation >= desktopImage.Width)
                         continue;
 
 
@@ -168,7 +169,7 @@ namespace taskt.Core.Automation.Commands
 
                         //get the current pixel from current row and column
                         // userImageFingerPrint.First() for now will always be from top left (0,0)
-                        var currentPixel = desktopImage.GetPixel(columnPixel + uniqueFingerprint.First().xLocation, rowPixel + uniqueFingerprint.First().yLocation);
+                        var currentPixel = desktopImage.GetPixel(columnPixel + uniqueFingerprint.First().XLocation, rowPixel + uniqueFingerprint.First().YLocation);
 
                         //compare to see if desktop pixel matches top left pixel from user image
                         if (currentPixel == uniqueFingerprint.First().PixelColor)
@@ -179,7 +180,7 @@ namespace taskt.Core.Automation.Commands
                             for (int item = 0; item < uniqueFingerprint.Count; item++)
                             {
                                 //find pixel color from offset X,Y relative to current position of row and column
-                                currentPixel = desktopImage.GetPixel(columnPixel + uniqueFingerprint[item].xLocation, rowPixel + uniqueFingerprint[item].yLocation);
+                                currentPixel = desktopImage.GetPixel(columnPixel + uniqueFingerprint[item].XLocation, rowPixel + uniqueFingerprint[item].YLocation);
 
                                 //if color matches
                                 if (uniqueFingerprint[item].PixelColor == currentPixel)
@@ -188,7 +189,7 @@ namespace taskt.Core.Automation.Commands
 
                                     //draw on output to demonstrate finding
                                     if (testMode)
-                                        screenShotUpdate.DrawRectangle(Pens.Blue, columnPixel + uniqueFingerprint[item].xLocation, rowPixel + uniqueFingerprint[item].yLocation, 5, 5);
+                                        screenShotUpdate.DrawRectangle(Pens.Blue, columnPixel + uniqueFingerprint[item].XLocation, rowPixel + uniqueFingerprint[item].YLocation, 5, 5);
                                 }
                                 else
                                 {
@@ -198,7 +199,7 @@ namespace taskt.Core.Automation.Commands
 
                                     //draw on output to demonstrate finding
                                     if (testMode)
-                                        screenShotUpdate.DrawRectangle(Pens.OrangeRed, columnPixel + uniqueFingerprint[item].xLocation, rowPixel + uniqueFingerprint[item].yLocation, 5, 5);
+                                        screenShotUpdate.DrawRectangle(Pens.OrangeRed, columnPixel + uniqueFingerprint[item].XLocation, rowPixel + uniqueFingerprint[item].YLocation, 5, 5);
                                 }
 
                             }
