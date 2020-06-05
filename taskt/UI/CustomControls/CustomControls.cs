@@ -589,7 +589,7 @@ namespace taskt.UI
             uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_dictionary);
-
+            uiImages.Add("PingCommand", taskt.Properties.Resources.command_web);
             return uiImages;
         }
         public static ImageList UIImageList()
