@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharpCompress.Common;
+using SharpCompress.Readers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,22 +19,9 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ExtractFileCommand : ScriptCommand
     {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select file type")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("zip")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("7z")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("xz")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("bzip2")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("tar")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("wim")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("iso")]
-        [Attributes.PropertyAttributes.InputSpecification("Select source file type")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Type file**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_FileType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the file path or file URL to be extract")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the file location (https:// is supported)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
         [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.zip , [vFilePath] or https://temp.com/myfile.zip")]
@@ -40,16 +29,7 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePathOrigin { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select source file")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("File Path")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("File URL")]
-        [Attributes.PropertyAttributes.InputSpecification("Select source path")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **File Path**, **File URL**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_FileSourceType { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the file path to be send after extract")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the extraction folder (ex. C:\\temp\\myzip\\")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
         [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\ or [vFilePath]")]
@@ -57,7 +37,15 @@ namespace taskt.Core.Automation.Commands
         public string v_PathDestination { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the list of extract files")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate the archive password")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("L.")]
+        [Attributes.PropertyAttributes.SampleUsage(@"mypass or {vPass}")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_Password { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate the variable to receive a list of extracted file names")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
@@ -67,25 +55,29 @@ namespace taskt.Core.Automation.Commands
         public ExtractFileCommand()
         {
             this.CommandName = "ExtractFileCommand";
-            this.SelectionName = "File Extraction";
+            this.SelectionName = "Extract File";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            // get  type of file either from a physical file or from a URL
-            var vFileType = v_FileType.ConvertToUserVariable(sender);
-            //get variable path or URL to source file
-            var vSourceFilePathOrigin = v_FilePathOrigin.ConvertToUserVariable(sender);
-            // get source type of file either from a physical file or from a URL
-            var vSourceFileType = v_FileSourceType.ConvertToUserVariable(sender);
-            // get file path to destination files
-            var vFilePathDestination = v_PathDestination.ConvertToUserVariable(sender);
-            // get file path to destination files
-            var v_VariableName = v_applyToVariableName.ConvertToUserVariable(sender);
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            if (vSourceFileType == "File URL")
+            //get absolute variable path or URL to source file
+            var vSourceFile = v_FilePathOrigin.ConvertToUserVariable(sender);
+            //track local file location
+            string vLocalSourceFile = vSourceFile;
+            //get file path to destination files
+            var vExtractionFolder = v_PathDestination.ConvertToUserVariable(sender);
+            //get optional password
+            var vPassword = v_Password.ConvertToUserVariable(sender);
+            //auto-detect extension
+            var vFileType = Path.GetExtension(vSourceFile);
+            //create tracking list
+            var fileList = new List<string>();
+
+            if (vSourceFile.StartsWith("http://") || vSourceFile.StartsWith("https://") || vSourceFile.StartsWith("www."))
             {
                 //create temp directory
                 var tempDir = Core.IO.Folders.GetFolder(Folders.FolderType.TempFolder);
@@ -99,13 +91,14 @@ namespace taskt.Core.Automation.Commands
 
                 // Create webClient to download the file for extraction
                 var webclient = new System.Net.WebClient();
-                var uri = new Uri(vSourceFilePathOrigin);
+                var uri = new Uri(vSourceFile);
                 webclient.DownloadFile(uri, tempFile);
 
                 // check if file is downloaded successfully
-                if (System.IO.File.Exists(tempFile))
+                if (File.Exists(tempFile))
                 {
-                    vSourceFilePathOrigin = tempFile;
+                    //override source file location
+                    vLocalSourceFile = tempFile;
                 }
 
                 // Free not needed resources
@@ -117,69 +110,60 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
+
             // Check if file exists before proceeding
-            if (!System.IO.File.Exists(vSourceFilePathOrigin))
+            if (!System.IO.File.Exists(vLocalSourceFile))
             {
-                throw new System.IO.FileNotFoundException("Could not find file: " + vSourceFilePathOrigin);
+                throw new FileNotFoundException($"Could not find file: {vLocalSourceFile}");
             }
-
-            // Get 7Z app
-            var zPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources", "7z.exe");
-
+    
             // If the directory doesn't exist, create it.
-            if (!Directory.Exists(vFilePathDestination))
-                Directory.CreateDirectory(vFilePathDestination);
-
-            var result = "";
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            if (!Directory.Exists(vExtractionFolder))
+                Directory.CreateDirectory(vExtractionFolder);
 
             try
             {
-                var temp = Guid.NewGuid();
-                //Extract in temp to get list files and directories and delete
-                ProcessStartInfo pro = new ProcessStartInfo();
-                pro.WindowStyle = ProcessWindowStyle.Hidden;
-                pro.UseShellExecute = false;
-                pro.FileName = zPath;
-                pro.RedirectStandardOutput = true;
-                pro.Arguments = "x " + vSourceFilePathOrigin + " -o" + vFilePathDestination + "/" + temp + " -aoa";
-                process.StartInfo = pro;
-                process.Start();
-                process.WaitForExit();
-                string[] dirPaths = Directory.GetDirectories(vFilePathDestination + "/" + temp, "*", SearchOption.TopDirectoryOnly);
-                string[] filePaths = Directory.GetFiles(vFilePathDestination + "/" + temp, "*", SearchOption.TopDirectoryOnly);
-
-                foreach (var item in dirPaths)
+    
+                using (Stream stream = File.OpenRead(vLocalSourceFile))
                 {
-                    result = result + item + Environment.NewLine;
+                    IReader reader;
+
+                    //check if password is needed
+                    if (string.IsNullOrEmpty(vPassword))
+                    {
+                        //password not required
+                        reader = ReaderFactory.Open(stream);
+                    }
+                    else
+                    {
+                        //password required
+                        reader = ReaderFactory.Open(stream, new ReaderOptions() { Password = vPassword });
+                    }
+           
+
+                    while (reader.MoveToNextEntry())
+                    {
+                        if (!reader.Entry.IsDirectory)
+                        {
+                            Console.WriteLine(reader.Entry.Key);
+                            reader.WriteEntryToDirectory(vExtractionFolder, new ExtractionOptions() { ExtractFullPath = true, Overwrite = true });
+                            fileList.Add(vExtractionFolder + reader.Entry.Key.Replace("/", "\\"));
+
+                        }
+                    }
                 }
-                foreach (var item in filePaths)
+
+                if (!string.IsNullOrEmpty(v_applyToVariableName))
                 {
-                    result = result + item + Environment.NewLine;
+                    engine.StoreComplexObjectInVariable(v_applyToVariableName, fileList);
                 }
-                result = result.Replace("/" + temp, "");
-                Directory.Delete(vFilePathDestination + "/" + temp, true);
-
-                //Extract 
-                pro.Arguments = "x " + vSourceFilePathOrigin + " -o" + vFilePathDestination + " -aoa";
-                process.StartInfo = pro;
-                process.Start();
-                process.WaitForExit();
 
 
-                result.StoreInUserVariable(sender, v_applyToVariableName);
             }
-            catch (System.Exception Ex)
+            catch (Exception)
             {
-                process.Kill();
-                v_applyToVariableName = Ex.Message;
+                throw; 
             }
-
-
-
-
-
-
 
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -187,10 +171,10 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePathOrigin", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileSourceType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_PathDestination", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Password", this, editor));
+
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
@@ -202,7 +186,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Extract From '" + v_FilePathOrigin + " to " + v_PathDestination + "' and apply result to '" + v_applyToVariableName + "'";
+            return base.GetDisplayValue() + $" [Source File: '{v_FilePathOrigin}', Destination Folder: '{v_PathDestination}'";
         }
     }
 }
