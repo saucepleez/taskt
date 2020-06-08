@@ -39,7 +39,6 @@
             this.Text = "ThemedForm";
             this.Load += new System.EventHandler(this.ThemedForm_Load);
             this.ResumeLayout(false);
-
         }
 
         #endregion

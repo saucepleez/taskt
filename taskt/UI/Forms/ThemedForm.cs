@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core;
 
 namespace taskt.UI.Forms
 {
     public partial class ThemedForm : Form
     {
+        public Theme Theme { get; set; }
+
         public ThemedForm()
         {
             InitializeComponent();
@@ -26,27 +22,28 @@ namespace taskt.UI.Forms
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (this.ClientSize.Height > Screen.PrimaryScreen.WorkingArea.Height - this.CurrentAutoScaleDimensions.Height) // Resizes if too tall to fit
+            // Resizes if too tall to fit
+            if (ClientSize.Height > Screen.PrimaryScreen.WorkingArea.Height - CurrentAutoScaleDimensions.Height)
             {
-                this.ClientSize = new Size(this.ClientSize.Width, Screen.PrimaryScreen.WorkingArea.Height - (int)this.CurrentAutoScaleDimensions.Height);
-            }
-        }
+                int width = ClientSize.Width;
+                int height = Screen.PrimaryScreen.WorkingArea.Height - (int)CurrentAutoScaleDimensions.Height;
 
-        private taskt.Core.Theme _Theme = new taskt.Core.Theme();
-        public taskt.Core.Theme Theme
-        {
-            get { return _Theme; }
-            set { _Theme = value; }
+                ClientSize = new Size(width, height);
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(this.Theme.CreateGradient(this.ClientRectangle), this.ClientRectangle);
+            e.Graphics.FillRectangle(Theme.CreateGradient(ClientRectangle), ClientRectangle);
             base.OnPaint(e);
         }
+
         public static void MoveFormToBottomRight(Form sender)
         {
-            sender.Location = new Point(Screen.FromPoint(sender.Location).WorkingArea.Right - sender.Width, Screen.FromPoint(sender.Location).WorkingArea.Bottom - sender.Height);
+            int x = Screen.FromPoint(sender.Location).WorkingArea.Right - sender.Width;
+            int y = Screen.FromPoint(sender.Location).WorkingArea.Bottom - sender.Height;
+
+            sender.Location = new Point(x, y);
         }
     }
 }

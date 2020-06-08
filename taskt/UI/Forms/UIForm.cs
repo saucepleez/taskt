@@ -12,90 +12,93 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+using System.ComponentModel;
 
 namespace taskt.UI.Forms
 {
-    public class UIForm : System.Windows.Forms.Form
+    public class UIForm : Form
     {
-        private int backgroundChangeIndex;
+        private int _backgroundChangeIndex;
         public int BackgroundChangeIndex
         {
             get
             {
-                if (backgroundChangeIndex <= 0)
-                {
-                    return (this.Height / 2);
-                }
+                if (_backgroundChangeIndex <= 0)
+                    return (Height / 2);
                 else
-                {
-                    return backgroundChangeIndex;
-                }
+                    return _backgroundChangeIndex;
             }
             set
             {
-                this.backgroundChangeIndex = value;
-                this.Invalidate();
-            }
-        }
-
-        protected override void OnPaintBackground(System.Windows.Forms.PaintEventArgs e)
-        {
-            base.OnPaintBackground(e);
-
-            //using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush
-            //      (new Rectangle(0, 0, this.Width, BackgroundChangeIndex), Color.SteelBlue, Color.FromArgb(106, 160, 204), System.Drawing.Drawing2D.LinearGradientMode.Vertical))
-            //{
-            //    e.Graphics.FillRectangle(brush, 0, 0, this.Width, BackgroundChangeIndex);
-            //}
-
-            //using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush
-
-            //(new Rectangle(0, BackgroundChangeIndex, this.Width, this.Height), Color.FromArgb(255, 214, 88), Color.Orange, System.Drawing.Drawing2D.LinearGradientMode.Vertical))
-            //{
-            //    e.Graphics.FillRectangle(brush, 0, BackgroundChangeIndex, this.Width, this.Height);
-            //}
-            var topColor = Color.FromArgb(49, 49, 49);
-            using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush
-                  (new Rectangle(0, 0, this.Width, BackgroundChangeIndex), topColor, topColor, System.Drawing.Drawing2D.LinearGradientMode.Vertical))
-            {
-                e.Graphics.FillRectangle(brush, 0, 0, this.Width, BackgroundChangeIndex);
-            }
-
-            using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush
-
-            (new Rectangle(0, BackgroundChangeIndex, this.Width, this.Height), Color.SteelBlue, Color.LightSteelBlue, System.Drawing.Drawing2D.LinearGradientMode.Vertical))
-            {
-                e.Graphics.FillRectangle(brush, 0, BackgroundChangeIndex, this.Width, this.Height);
+                _backgroundChangeIndex = value;
+                Invalidate();
             }
         }
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UIForm));
-            this.SuspendLayout();
-            // 
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(UIForm));
+            SuspendLayout();
+
             // UIForm
-            // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "UIForm";
-            this.Load += new System.EventHandler(this.UIForm_Load);
-            this.ResumeLayout(false);
+            ClientSize = new Size(284, 261);
+            Icon = ((Icon)(resources.GetObject("$Icon")));
+            Name = "UIForm";
+            Load += new EventHandler(UIForm_Load);
+            ResumeLayout(false);
 
         }
-
         private void UIForm_Load(object sender, EventArgs e)
         {
+
         }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            base.OnPaintBackground(e);
+
+            //using (var brush = new LinearGradientBrush
+            //      (new Rectangle(0, 0, Width, BackgroundChangeIndex), Color.SteelBlue, Color.FromArgb(106, 160, 204),
+            //      LinearGradientMode.Vertical))
+            //{
+            //    e.Graphics.FillRectangle(brush, 0, 0, Width, BackgroundChangeIndex);
+            //}
+
+            //using (var brush = new LinearGradientBrush
+
+            //(new Rectangle(0, BackgroundChangeIndex, Width, Height), Color.FromArgb(255, 214, 88), Color.Orange,
+            //LinearGradientMode.Vertical))
+            //{
+            //    e.Graphics.FillRectangle(brush, 0, BackgroundChangeIndex, Width, Height);
+            //}
+
+            var topColor = Color.FromArgb(49, 49, 49);
+            using (var brush = new LinearGradientBrush(
+                new Rectangle(0, 0, Width, BackgroundChangeIndex),
+                topColor,
+                topColor,
+                LinearGradientMode.Vertical))
+            {
+                e.Graphics.FillRectangle(brush, 0, 0, Width, BackgroundChangeIndex);
+            }
+
+            using (var brush = new LinearGradientBrush(
+                new Rectangle(0, BackgroundChangeIndex, Width, Height),
+                Color.SteelBlue, Color.LightSteelBlue,
+                LinearGradientMode.Vertical))
+            {
+                e.Graphics.FillRectangle(brush, 0, BackgroundChangeIndex, Width, Height);
+            }
+        }
+
         public static void MoveFormToBottomRight(Form sender)
         {
-            sender.Location = new Point(Screen.FromPoint(sender.Location).WorkingArea.Right - sender.Width, Screen.FromPoint(sender.Location).WorkingArea.Bottom - sender.Height);
+            int x = Screen.FromPoint(sender.Location).WorkingArea.Right - sender.Width;
+            int y = Screen.FromPoint(sender.Location).WorkingArea.Bottom - sender.Height;
+            sender.Location = new Point(x, y);
         }
     }
 }
