@@ -12,25 +12,28 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using taskt.UI.Forms;
+using taskt.UI.Forms.Supplemental;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Diagnostics;
 
 namespace taskt
 {
     static class Program
     {
+        [DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
+        public static frmSplash SplashForm { get; set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main(string[] args)
         {
-
             //SetProcessDPIAware();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -43,49 +46,43 @@ namespace taskt
             {
                 string filePath = args[0];
 
-
-                if (!System.IO.File.Exists(filePath))
+                if (!File.Exists(filePath))
                 {
-                    using (System.Diagnostics.EventLog eventLog = new System.Diagnostics.EventLog("Application"))
+                    using (EventLog eventLog = new EventLog("Application"))
                     {
                         eventLog.Source = "Application";
-                        eventLog.WriteEntry("An attempt was made to run a taskt script file from '" + filePath + "' but the file was not found.  Please verify that the file exists at the path indicated.", System.Diagnostics.EventLogEntryType.Error, 101, 1);
+                        eventLog.WriteEntry("An attempt was made to run a taskt script file from '" + filePath +
+                            "' but the file was not found.  Please verify that the file exists at the path indicated.",
+                            EventLogEntryType.Error, 101, 1);
                     }
 
                     Application.Exit();
                     return;
                 }
 
-                Application.Run(new UI.Forms.frmScriptEngine(filePath, null, null, true));
+                Application.Run(new frmScriptEngine(filePath, null, null, true));
             }
             else
             {
                 //clean up updater
                 var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
 
-                if (System.IO.File.Exists(updaterExecutableDestination))
+                if (File.Exists(updaterExecutableDestination))
                 {
-                    System.IO.File.Delete(updaterExecutableDestination);
+                    File.Delete(updaterExecutableDestination);
                 }
 
-                SplashForm = new UI.Forms.Supplemental.frmSplash();
+                SplashForm = new frmSplash();
                 SplashForm.Show();
 
                 Application.DoEvents();
-
-                Application.Run(new UI.Forms.frmScriptBuilder());
+                Application.Run(new frmScriptBuilder());
             }
         }
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool SetProcessDPIAware();
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             MessageBox.Show("An unhandled exception occured: " + (e.ExceptionObject as Exception).ToString(), "Oops");
         }
-
-        public static UI.Forms.Supplemental.frmSplash SplashForm { get; set; }
-
-
     }
 }
