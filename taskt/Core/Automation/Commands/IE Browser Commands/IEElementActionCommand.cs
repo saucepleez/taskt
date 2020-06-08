@@ -13,6 +13,7 @@ using SHDocVw;
 using System.Data;
 using MSHTML;
 using taskt.Core.Automation.User32;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {

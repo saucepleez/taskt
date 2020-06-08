@@ -6,6 +6,8 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Utilities.CommandUtilities;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -73,12 +75,12 @@ namespace taskt.Core.Automation.Commands
             if (v_EncryptionType.ConvertToUserVariable(sender) == "Encrypt")
             {
                 //encrypt data
-                resultData = Core.EncryptionServices.EncryptString(variableInput, passphrase);
+                resultData = EncryptionServices.EncryptString(variableInput, passphrase);
             }
             else if (v_EncryptionType.ConvertToUserVariable(sender) == "Decrypt")
             {
                 //encrypt data
-                resultData = Core.EncryptionServices.DecryptString(variableInput, passphrase);
+                resultData = EncryptionServices.DecryptString(variableInput, passphrase);
             }
             else
             {

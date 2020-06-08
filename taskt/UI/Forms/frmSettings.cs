@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using WebSocket4Net;
 using taskt.Core.Settings;
 using taskt.Core.Metrics;
+using taskt.Core.Documentation;
 
 namespace taskt.UI.Forms
 {
@@ -378,7 +379,7 @@ namespace taskt.UI.Forms
 
         private void btnGenerateWikiDocs_Click(object sender, EventArgs e)
         {
-            Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
+            DocumentationGeneration docGeneration = new DocumentationGeneration();
             var docsRoot = docGeneration.GenerateMarkdownFiles();
             System.Diagnostics.Process.Start(docsRoot);
         }

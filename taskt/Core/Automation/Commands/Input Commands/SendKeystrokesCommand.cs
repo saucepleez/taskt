@@ -6,6 +6,8 @@ using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Utilities.CommandUtilities;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -67,7 +69,7 @@ namespace taskt.Core.Automation.Commands
 
             if (v_EncryptionOption == "Encrypted")
             {
-                textToSend = Core.EncryptionServices.DecryptString(textToSend, "TASKT");
+                textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
             }
 
             if (textToSend == "{WIN_KEY}")

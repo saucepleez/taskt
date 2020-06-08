@@ -9,6 +9,7 @@ using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using System.Drawing;
 using System.Text;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {

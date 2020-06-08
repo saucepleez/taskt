@@ -13,9 +13,9 @@ namespace taskt.Core.Automation.User32
 {
     public static class User32Functions
     {
-        private const int KeyEventFExtendedKey = 1;
-        private const int KeyEventFKeyUp = 2;
-        private const uint CfUnicodeText = 13;
+        private const int _keyEventFExtendedKey = 1;
+        private const int _keyEventFKeyUp = 2;
+        private const uint _cfUnicodeText = 13;
 
         [DllImport("user32.dll")]
         public static extern bool LockWorkStation();
@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.User32
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);
 
-        private enum MouseEvents
+        private enum _mouseEvents
         {
             MouseEventFLeftDown = 0x02,
             MouseEventFLeftUp = 0x04,
@@ -287,49 +287,49 @@ namespace taskt.Core.Automation.User32
             switch (clickType)
             {
                 case "Double Left Click":
-                    mouse_event((int)MouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
-                    mouse_event((int)MouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
-                    mouse_event((int)MouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
-                    mouse_event((int)MouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Left Click":
-                    mouse_event((int)MouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
-                    mouse_event((int)MouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Right Click":
-                    mouse_event((int)MouseEvents.MouseEventFRightDown, xMousePosition, yMousePosition, 0, 0);
-                    mouse_event((int)MouseEvents.MouseEventFRightUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFRightDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFRightUp, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Middle Click":
-                    mouse_event((int)MouseEvents.MouseEventFMiddleDown, xMousePosition, yMousePosition, 0, 0);
-                    mouse_event((int)MouseEvents.MouseEventFMiddleUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFMiddleDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFMiddleUp, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Left Down":
-                    mouse_event((int)MouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftDown, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Right Down":
-                    mouse_event((int)MouseEvents.MouseEventFRightDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFRightDown, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Middle Down":
-                    mouse_event((int)MouseEvents.MouseEventFMiddleDown, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFMiddleDown, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Left Up":
-                    mouse_event((int)MouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFLeftUp, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Right Up":
-                    mouse_event((int)MouseEvents.MouseEventFRightUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFRightUp, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 case "Middle Up":
-                    mouse_event((int)MouseEvents.MouseEventFMiddleUp, xMousePosition, yMousePosition, 0, 0);
+                    mouse_event((int)_mouseEvents.MouseEventFMiddleUp, xMousePosition, yMousePosition, 0, 0);
                     break;
 
                 default:
@@ -339,12 +339,12 @@ namespace taskt.Core.Automation.User32
 
         public static void KeyDown(Keys vKey)
         {
-            keybd_event((byte)vKey, 0, KeyEventFExtendedKey, 0);
+            keybd_event((byte)vKey, 0, _keyEventFExtendedKey, 0);
         }
 
         public static void KeyUp(Keys vKey)
         {
-            keybd_event((byte)vKey, 0, KeyEventFExtendedKey | KeyEventFKeyUp, 0);
+            keybd_event((byte)vKey, 0, _keyEventFExtendedKey | _keyEventFKeyUp, 0);
         }
 
         public static Rect GetWindowPosition(IntPtr hWnd)
@@ -364,13 +364,13 @@ namespace taskt.Core.Automation.User32
 
         public static string GetClipboardText()
         {
-            if (!IsClipboardFormatAvailable(CfUnicodeText))
+            if (!IsClipboardFormatAvailable(_cfUnicodeText))
                 return null;
             if (!OpenClipboard(IntPtr.Zero))
                 return null;
 
             string data = null;
-            var hGlobal = GetClipboardData(CfUnicodeText);
+            var hGlobal = GetClipboardData(_cfUnicodeText);
             if (hGlobal != IntPtr.Zero)
             {
                 var lpwcstr = GlobalLock(hGlobal);

@@ -11,6 +11,8 @@ using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using System.Drawing;
 using System.Threading;
+using taskt.Core.Utilities.CommandUtilities;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -280,7 +282,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     if (encryptedData == "Encrypted")
                     {
-                        textToSet = Core.EncryptionServices.DecryptString(textToSet, "TASKT");
+                        textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
                     }
                     textToSet = textToSet.ConvertToUserVariable(sender);
 

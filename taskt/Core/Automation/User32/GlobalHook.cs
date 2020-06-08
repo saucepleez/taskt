@@ -10,8 +10,8 @@ namespace taskt.Core.Automation.User32
 {
     public class GlobalHook
     {
-        private const int WhKeyboardLl = 13;
-        private const int WmKeyDown = 0x0100;
+        private const int _whKeyboardLl = 13;
+        private const int _wmKeyDown = 0x0100;
         private static readonly LowLevelKeyboardProc _kbProc = KeyboardHookEvent;
         private static readonly LowLevelMouseProc _mouseProc = MouseHookEvent;
         private static readonly LowLevelMouseProc _mouseLeftUpProc = MouseHookForLeftClickUpEvent;
@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.User32
 
         #region User32 Window 
 
-        enum SystemEvents
+        private enum _systemEvents
         {
             EventMin = 0x00000001,       //MIN
             EventMax = 0x7FFFFFFF,          //MAX
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.User32
         }
 
         [DllImport("user32.dll")]
-        private static extern IntPtr SetWinEventHook(SystemEvents eventMin, SystemEvents eventMax, IntPtr hmodWinEventProc, SystemEventHandler lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+        private static extern IntPtr SetWinEventHook(_systemEvents eventMin, _systemEvents eventMax, IntPtr hmodWinEventProc, SystemEventHandler lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.User32
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
-        private delegate void SystemEventHandler(IntPtr hWinEventHook, SystemEvents @event, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+        private delegate void SystemEventHandler(IntPtr hWinEventHook, _systemEvents @event, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 
         #endregion
 
@@ -99,17 +99,17 @@ namespace taskt.Core.Automation.User32
 
 
         //enums and structs
-        private const int WhMouseLl = 14;
+        private const int _whMouseLl = 14;
 
         [Flags]
-        private enum KeyStates
+        private enum _keyStates
         {
             None = 0,
             Down = 1,
             Toggled = 2
         }
 
-        private enum MouseMessages
+        private enum _mouseMessages
         {
             WmLButtonDown = 0x0201,
             WmLButtonUp = 0x0202,
@@ -176,7 +176,7 @@ namespace taskt.Core.Automation.User32
             if (_performWindowCapture)
             {
                 _winEventHookHandler = new SystemEventHandler(BuildWindowCommand);
-                _winEventHook = SetWinEventHook(SystemEvents.EventMin, SystemEvents.EventMax, IntPtr.Zero, _winEventHookHandler, 0, 0, 0);
+                _winEventHook = SetWinEventHook(_systemEvents.EventMin, _systemEvents.EventMax, IntPtr.Zero, _winEventHookHandler, 0, 0, 0);
             }
 
             //start stopwatch for timing all event occurences
@@ -207,7 +207,7 @@ namespace taskt.Core.Automation.User32
         //mouse and keyboard hook event triggers
         private static IntPtr KeyboardHookEvent(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && wParam == (IntPtr)WmKeyDown)
+            if (nCode >= 0 && wParam == (IntPtr)_wmKeyDown)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 BuildKeyboardCommand((Keys)vkCode);
@@ -223,9 +223,9 @@ namespace taskt.Core.Automation.User32
         {
             if (nCode >= 0)
             {
-                var message = (MouseMessages)wParam;
+                var message = (_mouseMessages)wParam;
 
-                if (message == MouseMessages.WmLButtonDown)
+                if (message == _mouseMessages.WmLButtonDown)
                 {
                     if (StopOnClick)
                     {
@@ -247,7 +247,7 @@ namespace taskt.Core.Automation.User32
         {
             if (nCode >= 0)
             {
-                BuildMouseCommand(lParam, (MouseMessages)wParam);
+                BuildMouseCommand(lParam, (_mouseMessages)wParam);
             }
 
             return CallNextHookEx(_mouseHookID, nCode, wParam, lParam);
@@ -385,18 +385,18 @@ namespace taskt.Core.Automation.User32
         }
 
         //build mouse command
-        private static void BuildMouseCommand(IntPtr lParam, MouseMessages mouseMessage)
+        private static void BuildMouseCommand(IntPtr lParam, _mouseMessages mouseMessage)
         {
             string mouseEventClickType = string.Empty;
             switch (mouseMessage)
             {
-                case MouseMessages.WmLButtonDown:
+                case _mouseMessages.WmLButtonDown:
                     mouseEventClickType = "Left Down";
                     break;
-                case MouseMessages.WmLButtonUp:
+                case _mouseMessages.WmLButtonUp:
                     mouseEventClickType = "Left Up";
                     break;
-                case MouseMessages.WmMouseMove:
+                case _mouseMessages.WmMouseMove:
                     mouseEventClickType = "None";
 
                     if (_lastMouseMove.ElapsedMilliseconds >= _msResolution)
@@ -408,10 +408,10 @@ namespace taskt.Core.Automation.User32
                         return;
                     }
                     break;
-                case MouseMessages.WmRButtonDown:
+                case _mouseMessages.WmRButtonDown:
                     mouseEventClickType = "Right Down";
                     break;
-                case MouseMessages.WmRButtonUp:
+                case _mouseMessages.WmRButtonUp:
                     mouseEventClickType = "Right Up";
                     break;
                 default:
@@ -462,21 +462,21 @@ namespace taskt.Core.Automation.User32
         }
 
         //build window command
-        private static void BuildWindowCommand(IntPtr hWinEventHook, SystemEvents @event, 
+        private static void BuildWindowCommand(IntPtr hWinEventHook, _systemEvents @event, 
             IntPtr hwnd, int idObject, int idChild, 
             uint dwEventThread, uint dwmsEventTime)
         {
             switch (@event)
             {
-                case SystemEvents.EventMin:
+                case _systemEvents.EventMin:
                     return;
-                case SystemEvents.EventMax:
+                case _systemEvents.EventMax:
                     return;
-                case SystemEvents.EventSystemForeGround:
+                case _systemEvents.EventSystemForeGround:
                     break;
-                case SystemEvents.MinimizeEnd:
+                case _systemEvents.MinimizeEnd:
                     return;
-                case SystemEvents.MinimizeStart:
+                case _systemEvents.MinimizeStart:
                     return;
                 default:
                     return;
@@ -591,7 +591,7 @@ namespace taskt.Core.Automation.User32
 
             using (ProcessModule curModule = curProcess.MainModule)
             {
-                return SetWindowsHookEx(WhKeyboardLl, proc,
+                return SetWindowsHookEx(_whKeyboardLl, proc,
 
                     GetModuleHandle(curModule.ModuleName), 0);
             }
@@ -603,26 +603,26 @@ namespace taskt.Core.Automation.User32
 
             using (ProcessModule curModule = curProcess.MainModule)
             {
-                return SetWindowsHookEx(WhMouseLl, proc, GetModuleHandle(curModule.ModuleName), 0);
+                return SetWindowsHookEx(_whMouseLl, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
         }
 
 
         #region User32 Keyboard Mouse
-        private static KeyStates GetKeyState(Keys key)
+        private static _keyStates GetKeyState(Keys key)
         {
-            KeyStates state = KeyStates.None;
+            _keyStates state = _keyStates.None;
 
             short retVal = GetKeyState((int)key);
 
             //If the high-order bit is 1, the key is down
             //otherwise, it is up.
             if ((retVal & 0x8000) == 0x8000)
-                state |= KeyStates.Down;
+                state |= _keyStates.Down;
 
             //If the low-order bit is 1, the key is toggled.
             if ((retVal & 1) == 1)
-                state |= KeyStates.Toggled;
+                state |= _keyStates.Toggled;
 
             return state;
         }
@@ -630,12 +630,12 @@ namespace taskt.Core.Automation.User32
         //helper checks
         public static bool IsKeyDown(Keys key)
         {
-            return KeyStates.Down == (GetKeyState(key) & KeyStates.Down);
+            return _keyStates.Down == (GetKeyState(key) & _keyStates.Down);
         }
 
         public static bool IsKeyToggled(Keys key)
         {
-            return KeyStates.Toggled == (GetKeyState(key) & KeyStates.Toggled);
+            return _keyStates.Toggled == (GetKeyState(key) & _keyStates.Toggled);
         }
         #endregion
     }

@@ -1,17 +1,16 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using taskt.Core.Automation;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Settings;
 
-namespace taskt.Core
+namespace taskt.Core.Utilities.CommonUtilities
 {
-    public static class ExtensionMethods
+    public static class VariableMethods
     {
         /// <summary>
         /// Replaces variable placeholders ([variable]) with variable text.
@@ -30,16 +29,14 @@ namespace taskt.Core
                 return str;
             }
 
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
 
             var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
 
-            var searchList = new List<Core.Script.ScriptVariable>();
+            var searchList = new List<ScriptVariable>();
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
-
 
             //custom variable markers
             var startVariableMarker = engine.EngineSettings.VariableStartMarker;
@@ -50,7 +47,6 @@ namespace taskt.Core
 
             foreach (var potentialVariable in potentialVariables)
             {
-
                 //complex variable handling
                 if (potentialVariable.Contains("=>"))
                 {
@@ -74,8 +70,6 @@ namespace taskt.Core
                         }
 
                     }
-
-
 
                     //split by json select token pointer
                     var element = complexJsonVariable.Split(new string[] { "=>" }, StringSplitOptions.None);
@@ -112,7 +106,7 @@ namespace taskt.Core
                                 else
                                 {
                                     //attempt to match object based on user defined pattern
-                                    JObject parsedObject = JObject.Parse(complexJson);        
+                                    JObject parsedObject = JObject.Parse(complexJson);
                                     match = parsedObject.SelectToken(jsonPattern);
                                 }
 
@@ -123,7 +117,7 @@ namespace taskt.Core
                                     str = str.Replace(startVariableMarker + potentialVariable + endVariableMarker, match.ToString());
                                     continue;
                                 }
-                        
+
                             }
                         }
                     }
@@ -134,6 +128,7 @@ namespace taskt.Core
                 string[] aPotentialVariable = potentialVariable.Split(new string[] { "[", "]" }, StringSplitOptions.None);
                 int directElementIndex = 0;
                 bool useDirectElementIndex = false;
+
                 if (aPotentialVariable.Length == 3 && int.TryParse(aPotentialVariable[1], out directElementIndex))
                 {
                     varcheckname = aPotentialVariable[0];
@@ -148,16 +143,13 @@ namespace taskt.Core
                                 where vars.VariableName == varcheckname
                                 select vars).FirstOrDefault();
 
-
                 if (potentialVariable.Length == 0)
                     continue;
-
 
                 if (potentialVariable == "taskt.EngineContext")
                 {
                     varCheck.VariableValue = engine.GetEngineContext();
                 }
-
 
                 if (varCheck != null)
                 {
@@ -209,14 +201,12 @@ namespace taskt.Core
                         {
                             str = str.Replace(potentialVariable, (string)varCheck.GetDisplayValue());
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-
+                            throw ex;
                         }
-                       
                     }
                 }
-
                 else if ((potentialVariable.Contains("ds") && (potentialVariable.Contains("."))))
                 {
                     //peform dataset check
@@ -249,12 +239,8 @@ namespace taskt.Core
                             str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnRequired];
                         }
                     }
-
                 }
-
-
             }
-
 
             if (!engine.AutoCalculateVariables)
             {
@@ -296,9 +282,8 @@ namespace taskt.Core
                     return str;
                 }
             }
-
-           
         }
+
         /// <summary>
         /// Stores value of the string to a user-defined variable.
         /// </summary>
@@ -306,15 +291,16 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreInUserVariable(this String str, object sender, string targetVariable)
         {
-            Core.Automation.Commands.SetVariableCommand newVariableCommand = new Core.Automation.Commands.SetVariableCommand
+            SetVariableCommand newVariableCommand = new SetVariableCommand
             {
                 v_userVariableName = targetVariable,
                 v_Input = str
             };
             newVariableCommand.RunCommand(sender);
         }
+
         /// <summary>
-        /// Formats item as a variable (enclosing brackets)s
+        /// Formats item as a variable (enclosing brackets)
         /// </summary>
         /// <param name="str">The string to be wrapped as a variable</param>
         public static string ApplyVariableFormatting(this String str)
@@ -323,46 +309,5 @@ namespace taskt.Core
 
             return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
         }
-
-
-        public static string ToBase64(this string text)
-        {
-            return ToBase64(text, Encoding.UTF8);
-        }
-
-        public static string ToBase64(this string text, Encoding encoding)
-        {
-            byte[] textAsBytes = encoding.GetBytes(text);
-            return Convert.ToBase64String(textAsBytes);
-        }
-
-        public static bool TryParseBase64(this string text, out string decodedText)
-        {
-            return TryParseBase64(text, Encoding.UTF8, out decodedText);
-        }
-
-        public static bool TryParseBase64(this string text, Encoding encoding, out string decodedText)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                decodedText = text;
-                return false;
-            }
-
-            try
-            {
-                byte[] textAsBytes = Convert.FromBase64String(text);
-                decodedText = encoding.GetString(textAsBytes);
-                return true;
-            }
-            catch (Exception)
-            {
-                decodedText = null;
-                return false;
-            }
-        }
     }
-
-
 }
-

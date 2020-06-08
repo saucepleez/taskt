@@ -13,6 +13,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Utilities.CommandUtilities;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -261,7 +263,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (encryptedData == "Encrypted")
                     {
-                        textToSet = Core.EncryptionServices.DecryptString(textToSet, "TASKT");
+                        textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
                     }
                    
                     string[] potentialKeyPresses = textToSet.Split('{', '}');
