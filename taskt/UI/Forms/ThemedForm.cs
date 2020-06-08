@@ -7,7 +7,7 @@ namespace taskt.UI.Forms
 {
     public partial class ThemedForm : Form
     {
-        public Theme Theme { get; set; }
+        public Theme Theme { get; set; } = new Theme();
 
         public ThemedForm()
         {
