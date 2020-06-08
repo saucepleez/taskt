@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             v_VariableAssignments = new DataTable();
-            v_VariableAssignments.Columns.Add("VariableName"); 
+            v_VariableAssignments.Columns.Add("VariableName");
             v_VariableAssignments.Columns.Add("VariableValue");
             v_VariableAssignments.Columns.Add("VariableReturn");
             v_VariableAssignments.TableName = "RunTaskCommandInputParameters" + DateTime.Now.ToString("MMddyyhhmmss");
@@ -111,13 +111,13 @@ namespace taskt.Core.Automation.Commands
             }
 
             UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true);
-            
+
             //Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
             currentScriptEngine.TasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.TasktEngineUI.TopMost = false; });
             Application.Run(newEngine);
 
             //get new variable list from the new task engine after it finishes running
-            var newVariableList = newEngine.engineInstance.VariableList;
+            var newVariableList = newEngine.EngineInstance.VariableList;
             foreach (var variable in variableReturnList)
             {
                 //check if the variables we wish to return are in the new variable list
@@ -128,13 +128,13 @@ namespace taskt.Core.Automation.Commands
                     //check if that variable previously existed in the current engine
                     if (currentScriptEngine.VariableList.Exists(x => x.VariableName == newTemp.VariableName))
                     {
-                        //if yes, overwrite it 
+                        //if yes, overwrite it
                         Script.ScriptVariable currentTemp = currentScriptEngine.VariableList.Where(x => x.VariableName == newTemp.VariableName).FirstOrDefault();
                         currentScriptEngine.VariableList.Remove(currentTemp);
                     }
-                    //Add to current engine variable list    
+                    //Add to current engine variable list
                     currentScriptEngine.VariableList.Add(newTemp);
-                }  
+                }
             }
 
             //currentScriptEngine.tasktEngineUI.TopMost = false;
@@ -175,7 +175,7 @@ namespace taskt.Core.Automation.Commands
             PassParameters.Text = "I want to assign variables on startup";
             PassParameters.Font = new Font("Segoe UI Light", 12);
             PassParameters.ForeColor = Color.White;
-   
+
             PassParameters.DataBindings.Add("Checked", this, "v_AssignVariables", false, DataSourceUpdateMode.OnPropertyChanged);
             PassParameters.CheckedChanged += PassParametersCheckbox_CheckedChanged;
             RenderedControls.Add(PassParameters);
@@ -196,28 +196,28 @@ namespace taskt.Core.Automation.Commands
             var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);
 
             var Sender = (CheckBox)sender;
-            
+
             AssignmentsGridViewHelper.Visible = Sender.Checked;
 
             //load variables if selected and file exists
             if ((Sender.Checked) && (System.IO.File.Exists(startFile)))
             {
-              
+
                 Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile);
-                
+
                 foreach (var variable in deserializedScript.Variables)
                 {
                     DataRow[] foundVariables  = v_VariableAssignments.Select("VariableName = '" + variable.VariableName + "'");
                     if (foundVariables.Length == 0)
                     {
                         v_VariableAssignments.Rows.Add(variable.VariableName, variable.VariableValue);
-                        
-                    }                  
+
+                    }
                 }
 
                 AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
 
-                
+
                 for (int i = 0; i<AssignmentsGridViewHelper.Rows.Count-1; i++)
                 {
                     DataGridViewComboBoxCell returnComboBox = new DataGridViewComboBoxCell();

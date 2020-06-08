@@ -188,7 +188,7 @@ namespace taskt.Core.Server
                                 }
                                 else if (authKey != listenerSettings.AuthKey)
                                 {
-                                    //auth key invalid   
+                                    //auth key invalid
                                     automationLogger.Information($"Closing Client Connection due to Invalid Auth Key");
                                     SendResponse(ResponseCode.Unauthorized, $"Invalid Auth Key", stream);
                                     break;
@@ -313,8 +313,8 @@ namespace taskt.Core.Server
                 associatedBuilder.Invoke(new MethodInvoker(delegate ()
                 {
                     UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
-                    newEngine.xmlData = dataParameter;
-                    newEngine.callBackForm = null;
+                    newEngine.XmlData = dataParameter;
+                    newEngine.CallBackForm = null;
                     //instance = newEngine.engineInstance;
                     newEngine.Show();
                 }));

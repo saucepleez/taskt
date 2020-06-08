@@ -157,22 +157,22 @@ namespace taskt.Core.Server
                             if (deserialized.ScheduledTask.ExecutionType == "Local")
                             {
                                 UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
-                                newEngine.remoteTask = deserialized.ScheduledTask;
-                                newEngine.serverExecution = true;
+                                newEngine.RemoteTask = deserialized.ScheduledTask;
+                                newEngine.ServerExecution = true;
                                 newEngine.Show();
                             }
                             else
                             {
                                 UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
-                                newEngine.xmlData = deserialized.PublishedScript.ScriptData;
-                                newEngine.remoteTask = deserialized.ScheduledTask;
-                                newEngine.serverExecution = true;
+                                newEngine.XmlData = deserialized.PublishedScript.ScriptData;
+                                newEngine.RemoteTask = deserialized.ScheduledTask;
+                                newEngine.ServerExecution = true;
                                 newEngine.Show();
                             }
-        
-                           
+
+
                         }));
-                 
+
                     }
 
 
@@ -331,7 +331,7 @@ namespace taskt.Core.Server
                     {
                         script.OverwriteExisting = false;
                     }
-                   
+
                 }
                 else
                 {
@@ -356,7 +356,7 @@ namespace taskt.Core.Server
                 webClient.Headers["Content-Type"] = "application/json";
                 webClient.UploadStringCompleted +=
                     new UploadStringCompletedEventHandler(PublishTaskCompleted);
-               
+
                 var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Publish");
 
                 webClient.UploadStringAsync(api, "POST", scriptJson);
@@ -379,7 +379,7 @@ namespace taskt.Core.Server
             {
                var result = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(e.Result);
                 MessageBox.Show(result, "Task Published", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //e.result fetches you the response against your POST request.         
+                //e.result fetches you the response against your POST request.
             }
             catch (Exception ex)
             {
@@ -399,7 +399,7 @@ namespace taskt.Core.Server
             var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(botStoreModel);
 
             httpLogger.Information("Posting Json to Upload API: " + scriptJson);
-            
+
             //create webclient and upload
             WebClient webClient = new WebClient();
             webClient.Headers["Content-Type"] = "application/json";

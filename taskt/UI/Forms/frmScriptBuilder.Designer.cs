@@ -31,10 +31,10 @@ namespace taskt.UI.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme2 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
-            this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
+            this.msTasktMenu = new taskt.UI.CustomControls.UIMenuStrip();
             this.fileActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,34 +48,35 @@ namespace taskt.UI.Forms
             this.variablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showSearchBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutTasktToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAndRunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.tsSearchButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSearchResult = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlDivider = new System.Windows.Forms.Panel();
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
             this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
             this.lblFilesMissing = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbRecentFiles = new System.Windows.Forms.PictureBox();
+            this.pbLinks = new System.Windows.Forms.PictureBox();
+            this.pbTasktLogo = new System.Windows.Forms.PictureBox();
             this.lblRecentFiles = new System.Windows.Forms.Label();
             this.lnkGitWiki = new System.Windows.Forms.LinkLabel();
             this.lnkGitIssue = new System.Windows.Forms.LinkLabel();
             this.lnkGitLatestReleases = new System.Windows.Forms.LinkLabel();
             this.lnkGitProject = new System.Windows.Forms.LinkLabel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblNote = new System.Windows.Forms.Label();
+            this.lblWelcomeToTaskt = new System.Windows.Forms.Label();
+            this.lblWelcomeDescription = new System.Windows.Forms.Label();
             this.lstScriptActions = new taskt.UI.CustomControls.UIListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.commandColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.pnlMain = new taskt.UI.CustomControls.UIPanel();
             this.lblMainLogo = new System.Windows.Forms.Label();
@@ -90,7 +91,7 @@ namespace taskt.UI.Forms
             this.grpSaveClose = new taskt.UI.CustomControls.UIGroupBox();
             this.btnSequenceImport = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnKeep = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiPictureButton3 = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnClose = new taskt.UI.CustomControls.UIPictureButton();
             this.grpFileActions = new taskt.UI.CustomControls.UIGroupBox();
             this.uiBtnProject = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnImport = new taskt.UI.CustomControls.UIPictureButton();
@@ -118,15 +119,15 @@ namespace taskt.UI.Forms
             this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.tlpControls.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.msTasktMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.pnlCommandHelper.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRecentFiles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLinks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTasktLogo)).BeginInit();
             this.pnlHeader.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
@@ -135,7 +136,7 @@ namespace taskt.UI.Forms
             this.grpSaveClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnClose)).BeginInit();
             this.grpFileActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnProject)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).BeginInit();
@@ -161,8 +162,8 @@ namespace taskt.UI.Forms
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 319F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 655F));
-            this.tlpControls.Controls.Add(this.menuStrip1, 0, 1);
-            this.tlpControls.Controls.Add(this.panel1, 0, 3);
+            this.tlpControls.Controls.Add(this.msTasktMenu, 0, 1);
+            this.tlpControls.Controls.Add(this.pnlDivider, 0, 3);
             this.tlpControls.Controls.Add(this.splitContainer1, 0, 4);
             this.tlpControls.Controls.Add(this.pnlHeader, 0, 0);
             this.tlpControls.Controls.Add(this.pnlStatus, 0, 5);
@@ -181,25 +182,25 @@ namespace taskt.UI.Forms
             this.tlpControls.Size = new System.Drawing.Size(1311, 698);
             this.tlpControls.TabIndex = 2;
             // 
-            // menuStrip1
+            // msTasktMenu
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.tlpControls.SetColumnSpan(this.menuStrip1, 3);
-            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msTasktMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.tlpControls.SetColumnSpan(this.msTasktMenu, 3);
+            this.msTasktMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.msTasktMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.msTasktMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileActionsToolStripMenuItem,
             this.modifyToolStripMenuItem,
             this.scriptActionsToolStripMenuItem,
-            this.toolStripMenuItem1,
+            this.saveAndRunToolStripMenuItem,
             this.tsSearchBox,
             this.tsSearchButton,
             this.tsSearchResult});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 51);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1311, 38);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.msTasktMenu.Location = new System.Drawing.Point(0, 51);
+            this.msTasktMenu.Name = "msTasktMenu";
+            this.msTasktMenu.Size = new System.Drawing.Size(1311, 38);
+            this.msTasktMenu.TabIndex = 1;
+            this.msTasktMenu.Text = "menuStrip1";
             // 
             // fileActionsToolStripMenuItem
             // 
@@ -296,7 +297,8 @@ namespace taskt.UI.Forms
             this.modifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.variablesToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.showSearchBarToolStripMenuItem});
+            this.showSearchBarToolStripMenuItem,
+            this.aboutTasktToolStripMenuItem});
             this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
@@ -324,11 +326,20 @@ namespace taskt.UI.Forms
             // showSearchBarToolStripMenuItem
             // 
             this.showSearchBarToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.showSearchBarToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.showSearchBarToolStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
             this.showSearchBarToolStripMenuItem.Name = "showSearchBarToolStripMenuItem";
             this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
             this.showSearchBarToolStripMenuItem.Text = "Show Search Bar";
             this.showSearchBarToolStripMenuItem.Click += new System.EventHandler(this.showSearchBarToolStripMenuItem_Click);
+            // 
+            // aboutTasktToolStripMenuItem
+            // 
+            this.aboutTasktToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.aboutTasktToolStripMenuItem.Image = global::taskt.Properties.Resources.item_header;
+            this.aboutTasktToolStripMenuItem.Name = "aboutTasktToolStripMenuItem";
+            this.aboutTasktToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.aboutTasktToolStripMenuItem.Text = "About taskt";
+            this.aboutTasktToolStripMenuItem.Click += new System.EventHandler(this.aboutTasktToolStripMenuItem_Click);
             // 
             // scriptActionsToolStripMenuItem
             // 
@@ -369,14 +380,14 @@ namespace taskt.UI.Forms
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // saveAndRunToolStripMenuItem
             // 
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
-            this.toolStripMenuItem1.Image = global::taskt.Properties.Resources.action_bar_run;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(132, 34);
-            this.toolStripMenuItem1.Text = "Save and Run";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.saveAndRunToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.saveAndRunToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
+            this.saveAndRunToolStripMenuItem.Name = "saveAndRunToolStripMenuItem";
+            this.saveAndRunToolStripMenuItem.Size = new System.Drawing.Size(132, 34);
+            this.saveAndRunToolStripMenuItem.Text = "Save and Run";
+            this.saveAndRunToolStripMenuItem.Click += new System.EventHandler(this.saveAndRunToolStripMenuItem_Click);
             // 
             // tsSearchBox
             // 
@@ -403,16 +414,16 @@ namespace taskt.UI.Forms
             this.tsSearchResult.Size = new System.Drawing.Size(14, 34);
             this.tsSearchResult.Visible = false;
             // 
-            // panel1
+            // pnlDivider
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
-            this.tlpControls.SetColumnSpan(this.panel1, 4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 190);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1311, 6);
-            this.panel1.TabIndex = 13;
+            this.pnlDivider.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.tlpControls.SetColumnSpan(this.pnlDivider, 4);
+            this.pnlDivider.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDivider.Location = new System.Drawing.Point(0, 190);
+            this.pnlDivider.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlDivider.Name = "pnlDivider";
+            this.pnlDivider.Size = new System.Drawing.Size(1311, 6);
+            this.pnlDivider.TabIndex = 13;
             // 
             // splitContainer1
             // 
@@ -459,16 +470,16 @@ namespace taskt.UI.Forms
             this.pnlCommandHelper.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.pnlCommandHelper.Controls.Add(this.flwRecentFiles);
             this.pnlCommandHelper.Controls.Add(this.lblFilesMissing);
-            this.pnlCommandHelper.Controls.Add(this.pictureBox4);
-            this.pnlCommandHelper.Controls.Add(this.pictureBox3);
-            this.pnlCommandHelper.Controls.Add(this.pictureBox1);
+            this.pnlCommandHelper.Controls.Add(this.pbRecentFiles);
+            this.pnlCommandHelper.Controls.Add(this.pbLinks);
+            this.pnlCommandHelper.Controls.Add(this.pbTasktLogo);
             this.pnlCommandHelper.Controls.Add(this.lblRecentFiles);
             this.pnlCommandHelper.Controls.Add(this.lnkGitWiki);
             this.pnlCommandHelper.Controls.Add(this.lnkGitIssue);
             this.pnlCommandHelper.Controls.Add(this.lnkGitLatestReleases);
             this.pnlCommandHelper.Controls.Add(this.lnkGitProject);
-            this.pnlCommandHelper.Controls.Add(this.label1);
-            this.pnlCommandHelper.Controls.Add(this.lblNote);
+            this.pnlCommandHelper.Controls.Add(this.lblWelcomeToTaskt);
+            this.pnlCommandHelper.Controls.Add(this.lblWelcomeDescription);
             this.pnlCommandHelper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCommandHelper.Location = new System.Drawing.Point(0, 0);
             this.pnlCommandHelper.Margin = new System.Windows.Forms.Padding(4);
@@ -501,38 +512,38 @@ namespace taskt.UI.Forms
             this.lblFilesMissing.Text = "there were no script files found in your script directory.";
             this.lblFilesMissing.Visible = false;
             // 
-            // pictureBox4
+            // pbRecentFiles
             // 
-            this.pictureBox4.Image = global::taskt.Properties.Resources.recent_files;
-            this.pictureBox4.Location = new System.Drawing.Point(15, 262);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(105, 105);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 15;
-            this.pictureBox4.TabStop = false;
+            this.pbRecentFiles.Image = global::taskt.Properties.Resources.recent_files;
+            this.pbRecentFiles.Location = new System.Drawing.Point(15, 262);
+            this.pbRecentFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.pbRecentFiles.Name = "pbRecentFiles";
+            this.pbRecentFiles.Size = new System.Drawing.Size(105, 105);
+            this.pbRecentFiles.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbRecentFiles.TabIndex = 15;
+            this.pbRecentFiles.TabStop = false;
             // 
-            // pictureBox3
+            // pbLinks
             // 
-            this.pictureBox3.Image = global::taskt.Properties.Resources.links_header;
-            this.pictureBox3.Location = new System.Drawing.Point(15, 135);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(105, 105);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
+            this.pbLinks.Image = global::taskt.Properties.Resources.links_header;
+            this.pbLinks.Location = new System.Drawing.Point(15, 135);
+            this.pbLinks.Margin = new System.Windows.Forms.Padding(4);
+            this.pbLinks.Name = "pbLinks";
+            this.pbLinks.Size = new System.Drawing.Size(105, 105);
+            this.pbLinks.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbLinks.TabIndex = 14;
+            this.pbLinks.TabStop = false;
             // 
-            // pictureBox1
+            // pbTasktLogo
             // 
-            this.pictureBox1.Image = global::taskt.Properties.Resources.item_header;
-            this.pictureBox1.Location = new System.Drawing.Point(15, 10);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(105, 105);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
+            this.pbTasktLogo.Image = global::taskt.Properties.Resources.item_header;
+            this.pbTasktLogo.Location = new System.Drawing.Point(15, 10);
+            this.pbTasktLogo.Margin = new System.Windows.Forms.Padding(4);
+            this.pbTasktLogo.Name = "pbTasktLogo";
+            this.pbTasktLogo.Size = new System.Drawing.Size(105, 105);
+            this.pbTasktLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbTasktLogo.TabIndex = 13;
+            this.pbTasktLogo.TabStop = false;
             // 
             // lblRecentFiles
             // 
@@ -610,28 +621,28 @@ namespace taskt.UI.Forms
             this.lnkGitProject.VisitedLinkColor = System.Drawing.Color.LightSteelBlue;
             this.lnkGitProject.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGitProject_LinkClicked);
             // 
-            // label1
+            // lblWelcomeToTaskt
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semilight", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.AliceBlue;
-            this.label1.Location = new System.Drawing.Point(139, 5);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(227, 37);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Welcome to taskt!";
+            this.lblWelcomeToTaskt.AutoSize = true;
+            this.lblWelcomeToTaskt.Font = new System.Drawing.Font("Segoe UI Semilight", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWelcomeToTaskt.ForeColor = System.Drawing.Color.AliceBlue;
+            this.lblWelcomeToTaskt.Location = new System.Drawing.Point(139, 5);
+            this.lblWelcomeToTaskt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblWelcomeToTaskt.Name = "lblWelcomeToTaskt";
+            this.lblWelcomeToTaskt.Size = new System.Drawing.Size(227, 37);
+            this.lblWelcomeToTaskt.TabIndex = 2;
+            this.lblWelcomeToTaskt.Text = "Welcome to taskt!";
             // 
-            // lblNote
+            // lblWelcomeDescription
             // 
-            this.lblNote.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNote.ForeColor = System.Drawing.Color.White;
-            this.lblNote.Location = new System.Drawing.Point(142, 40);
-            this.lblNote.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblNote.Name = "lblNote";
-            this.lblNote.Size = new System.Drawing.Size(350, 94);
-            this.lblNote.TabIndex = 1;
-            this.lblNote.Text = "Start building automation by double-clicking a command from the list to the left." +
+            this.lblWelcomeDescription.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWelcomeDescription.ForeColor = System.Drawing.Color.White;
+            this.lblWelcomeDescription.Location = new System.Drawing.Point(142, 40);
+            this.lblWelcomeDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblWelcomeDescription.Name = "lblWelcomeDescription";
+            this.lblWelcomeDescription.Size = new System.Drawing.Size(350, 94);
+            this.lblWelcomeDescription.TabIndex = 1;
+            this.lblWelcomeDescription.Text = "Start building automation by double-clicking a command from the list to the left." +
     "";
             // 
             // lstScriptActions
@@ -642,7 +653,7 @@ namespace taskt.UI.Forms
             this.lstScriptActions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.commandColumn});
+            this.clmCommand});
             this.lstScriptActions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstScriptActions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstScriptActions.FullRowSelect = true;
@@ -670,10 +681,10 @@ namespace taskt.UI.Forms
             // 
             this.columnHeader2.Width = 20;
             // 
-            // commandColumn
+            // clmCommand
             // 
-            this.commandColumn.Text = "Script Commands";
-            this.commandColumn.Width = 800;
+            this.clmCommand.Text = "Script Commands";
+            this.clmCommand.Width = 800;
             // 
             // pnlHeader
             // 
@@ -697,9 +708,9 @@ namespace taskt.UI.Forms
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(1311, 51);
             this.pnlMain.TabIndex = 2;
-            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme2;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -834,7 +845,7 @@ namespace taskt.UI.Forms
             this.grpSaveClose.BackColor = System.Drawing.Color.Transparent;
             this.grpSaveClose.Controls.Add(this.btnSequenceImport);
             this.grpSaveClose.Controls.Add(this.uiBtnKeep);
-            this.grpSaveClose.Controls.Add(this.uiPictureButton3);
+            this.grpSaveClose.Controls.Add(this.uiBtnClose);
             this.grpSaveClose.Location = new System.Drawing.Point(1045, 4);
             this.grpSaveClose.Margin = new System.Windows.Forms.Padding(4);
             this.grpSaveClose.Name = "grpSaveClose";
@@ -885,23 +896,23 @@ namespace taskt.UI.Forms
             this.uiBtnKeep.Text = "Keep";
             this.uiBtnKeep.Click += new System.EventHandler(this.uiBtnKeep_Click);
             // 
-            // uiPictureButton3
+            // uiBtnClose
             // 
-            this.uiPictureButton3.BackColor = System.Drawing.Color.Transparent;
-            this.uiPictureButton3.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiPictureButton3.DisplayText = "Close";
-            this.uiPictureButton3.DisplayTextBrush = System.Drawing.Color.AliceBlue;
-            this.uiPictureButton3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiPictureButton3.Image = global::taskt.Properties.Resources.action_bar_schedule;
-            this.uiPictureButton3.IsMouseOver = false;
-            this.uiPictureButton3.Location = new System.Drawing.Point(68, 22);
-            this.uiPictureButton3.Margin = new System.Windows.Forms.Padding(4);
-            this.uiPictureButton3.Name = "uiPictureButton3";
-            this.uiPictureButton3.Size = new System.Drawing.Size(65, 62);
-            this.uiPictureButton3.TabIndex = 13;
-            this.uiPictureButton3.TabStop = false;
-            this.uiPictureButton3.Text = "Close";
-            this.uiPictureButton3.Click += new System.EventHandler(this.uiPictureButton3_Click);
+            this.uiBtnClose.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnClose.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnClose.DisplayText = "Close";
+            this.uiBtnClose.DisplayTextBrush = System.Drawing.Color.AliceBlue;
+            this.uiBtnClose.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnClose.Image = global::taskt.Properties.Resources.action_bar_schedule;
+            this.uiBtnClose.IsMouseOver = false;
+            this.uiBtnClose.Location = new System.Drawing.Point(68, 22);
+            this.uiBtnClose.Margin = new System.Windows.Forms.Padding(4);
+            this.uiBtnClose.Name = "uiBtnClose";
+            this.uiBtnClose.Size = new System.Drawing.Size(65, 62);
+            this.uiBtnClose.TabIndex = 13;
+            this.uiBtnClose.TabStop = false;
+            this.uiBtnClose.Text = "Close";
+            this.uiBtnClose.Click += new System.EventHandler(this.uiBtnClose_Click);
             // 
             // grpFileActions
             // 
@@ -1276,9 +1287,10 @@ namespace taskt.UI.Forms
             this.Controls.Add(this.tlpControls);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.msTasktMenu;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmScriptBuilder";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "taskt";
             this.Load += new System.EventHandler(this.frmScriptBuilder_Load);
             this.Shown += new System.EventHandler(this.frmScriptBuilder_Shown);
@@ -1286,18 +1298,17 @@ namespace taskt.UI.Forms
             this.Resize += new System.EventHandler(this.frmScriptBuilder_Resize);
             this.tlpControls.ResumeLayout(false);
             this.tlpControls.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.msTasktMenu.ResumeLayout(false);
+            this.msTasktMenu.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.StartPosition = FormStartPosition.CenterScreen;
             this.pnlCommandHelper.ResumeLayout(false);
             this.pnlCommandHelper.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRecentFiles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLinks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTasktLogo)).EndInit();
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
@@ -1309,7 +1320,7 @@ namespace taskt.UI.Forms
             this.grpSaveClose.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnClose)).EndInit();
             this.grpFileActions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnProject)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).EndInit();
@@ -1336,7 +1347,7 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.Panel pnlStatus;
         private System.Windows.Forms.Label lblMainLogo;
         private taskt.UI.CustomControls.UIListView lstScriptActions;
-        private System.Windows.Forms.ColumnHeader commandColumn;
+        private System.Windows.Forms.ColumnHeader clmCommand;
         private System.Windows.Forms.Timer tmrNotify;
         private System.Windows.Forms.ContextMenuStrip lstContextStrip;
         private System.Windows.Forms.ToolStripMenuItem enableSelectedCodeToolStripMenuItem;
@@ -1357,26 +1368,26 @@ namespace taskt.UI.Forms
         private CustomControls.UIGroupBox grpVariable;
         private CustomControls.UIGroupBox grpRecordRun;
         private System.Windows.Forms.Panel pnlCommandHelper;
-        private System.Windows.Forms.Label lblNote;
+        private System.Windows.Forms.Label lblWelcomeDescription;
         private System.Windows.Forms.ToolStripMenuItem copySelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteSelectedToolStripMenuItem;
         private System.Windows.Forms.LinkLabel lnkGitProject;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblWelcomeToTaskt;
         private System.Windows.Forms.LinkLabel lnkGitIssue;
         private System.Windows.Forms.LinkLabel lnkGitLatestReleases;
         private System.Windows.Forms.LinkLabel lnkGitWiki;
         private System.Windows.Forms.Label lblRecentFiles;
         private CustomControls.UIFlowLayoutPanel flwRecentFiles;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pbTasktLogo;
+        private System.Windows.Forms.Panel pnlDivider;
+        private System.Windows.Forms.PictureBox pbRecentFiles;
+        private System.Windows.Forms.PictureBox pbLinks;
         private System.Windows.Forms.Label lblFilesMissing;
         private CustomControls.UIPictureButton uiBtnRecordSequence;
         private CustomControls.UIPictureButton uiBtnClearAll;
         private CustomControls.UIGroupBox grpSaveClose;
         private CustomControls.UIPictureButton uiBtnKeep;
-        private CustomControls.UIPictureButton uiPictureButton3;
+        private CustomControls.UIPictureButton uiBtnClose;
         private CustomControls.UIGroupBox grpSearch;
         private System.Windows.Forms.TextBox txtCommandSearch;
         private System.Windows.Forms.Label lblCurrentlyViewing;
@@ -1391,7 +1402,7 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.ToolStripMenuItem moveToParentToolStripMenuItem;
         private CustomControls.UIPictureButton btnSequenceImport;
         private System.Windows.Forms.NotifyIcon notifyTray;
-        private taskt.UI.CustomControls.UIMenuStrip menuStrip1;
+        private taskt.UI.CustomControls.UIMenuStrip msTasktMenu;
         private System.Windows.Forms.ToolStripMenuItem fileActionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -1405,7 +1416,7 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.ToolStripMenuItem recordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scheduleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saveAndRunToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restartApplicationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeApplicationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showSearchBarToolStripMenuItem;
@@ -1414,7 +1425,8 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.ToolStripMenuItem tsSearchResult;
         private System.Windows.Forms.ToolStripMenuItem viewCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addProjectToolStripMenuItem;
-        private CustomControls.UIPictureButton uiBtnProject;
+        private taskt.UI.CustomControls.UIPictureButton uiBtnProject;
+        private System.Windows.Forms.ToolStripMenuItem aboutTasktToolStripMenuItem;
     }
 }
 

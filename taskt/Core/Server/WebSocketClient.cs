@@ -36,7 +36,7 @@ namespace taskt.Core.Server
         /// </summary>
         public static void Initialize()
         {
-          
+
             //socketLogger.Information("Socket Client Initialized");
             //LoadSettings();
         }
@@ -63,8 +63,8 @@ namespace taskt.Core.Server
             retryOnFail = serverSettings.RetryServerConnectionOnFail;
             publicKey = serverSettings.ServerPublicKey;
             bypassCertificationValidation = serverSettings.BypassCertificateValidation;
-            
-           
+
+
             //try to connect to server
             if ((serverSettings.ServerConnectionEnabled) && (serverSettings.ConnectToServerOnStartup))
             {
@@ -72,7 +72,7 @@ namespace taskt.Core.Server
                 Connect(serverSettings.ServerURL);
             }
 
-      
+
 
         }
 
@@ -85,7 +85,7 @@ namespace taskt.Core.Server
             try
             {
 
-              
+
 
                 if (bypassCertificationValidation)
                 {
@@ -97,7 +97,7 @@ namespace taskt.Core.Server
                 //reset connection exception
                 connectionException = string.Empty;
 
-              
+
                 //handle if insecure or invalid connection is defined
                 if (!serverUri.ToLower().StartsWith("wss://"))
                 {
@@ -135,13 +135,13 @@ namespace taskt.Core.Server
         /// <param name="e"></param>
         private static void ConnectionOpened(object sender, EventArgs e)
         {
-            //send message       
+            //send message
             socketLogger.Information("Socket Client Sending Connection Opened Successfully");
             connectionOpened = DateTime.Now;
             SendMessage("CONN_REQUEST");
             reconnectTimer.Enabled = true;
 
-                          
+
         }
 
         private static void ReconnectTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -158,12 +158,12 @@ namespace taskt.Core.Server
         private static void ConnectionClosed(object sender, EventArgs e)
         {
             socketLogger.Information("Socket Client Connection Closed");
-      
-          
+
+
 
             if (retryOnFail)
             {
-                reconnectTimer.Enabled = true;          
+                reconnectTimer.Enabled = true;
             }
 
 
@@ -175,7 +175,7 @@ namespace taskt.Core.Server
         /// <param name="e"></param>
         private static void ConnectionError(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
         {
-           
+
             connectionException = e.Exception.Message;
             socketLogger.Information("Socket Client Connection Error: " + connectionException);
 
@@ -210,7 +210,7 @@ namespace taskt.Core.Server
             {
                 var authPublicKey = e.Message.Replace("ACCEPT_KEY=", "");
                 publicKey = authPublicKey;
-           
+
                 //add public key to app settings and save
                 var appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
                 appSettings.ServerSettings.ConnectToServerOnStartup = true;
@@ -219,10 +219,10 @@ namespace taskt.Core.Server
 
                 appSettings.Save(appSettings);
 
-           
+
             }
 
-           
+
 
         }
         public static void SendExecutionLog(string executionLog)
@@ -264,7 +264,7 @@ namespace taskt.Core.Server
             }
 
 
-                
+
 
 
             //}).Start();
@@ -273,7 +273,7 @@ namespace taskt.Core.Server
 
         public static void SendMessage(string message)
         {
-        
+
             if (webSocket == null)
             {
                 return;
@@ -284,7 +284,7 @@ namespace taskt.Core.Server
             {
                 return;
             }
-    
+
 
 
             //create message package
@@ -337,15 +337,15 @@ namespace taskt.Core.Server
             associatedBuilder.Invoke(new MethodInvoker(delegate ()
             {
                 UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
-                newEngine.xmlData = scriptData;
-                newEngine.callBackForm = null;
+                newEngine.XmlData = scriptData;
+                newEngine.CallBackForm = null;
                 newEngine.Show();
-            }));            
+            }));
 
         }
     }
 
-  
+
     /// <summary>
     /// Model for sending data to taskt Server
     /// </summary>

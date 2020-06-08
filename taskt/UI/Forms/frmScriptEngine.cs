@@ -13,21 +13,17 @@
 //limitations under the License.
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
-using taskt.Core;
 using taskt.Core.Automation.Engine;
 using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Engine.EngineEventArgs;
 using taskt.Core.Settings;
-
+using taskt.Core.Script;
+using taskt.Core.Server;
+using taskt.UI.Forms.Supplemental;
+using taskt.UI.Forms.Supplement_Forms;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms
 {
@@ -36,44 +32,45 @@ namespace taskt.UI.Forms
         //all variables used by this form
         #region Form Variables
         private EngineSettings _engineSettings;
-        public string filePath { get; set; }
-        public string xmlData { get; set; }
-        public Core.Server.Task remoteTask { get; set; }
-        public bool serverExecution { get; set; }
-        public frmScriptBuilder callBackForm { get; set; }
-        private bool advancedDebug { get; set; }
-        public AutomationEngineInstance engineInstance { get; set; }
-        private List<Core.Script.ScriptVariable> Variables { get; set; }
-        public bool CloseWhenDone = false;
+        public string FilePath { get; set; }
+        public string XmlData { get; set; }
+        public Task RemoteTask { get; set; }
+        public bool ServerExecution { get; set; }
+        public frmScriptBuilder CallBackForm { get; set; }
+        private bool _advancedDebug;
+        public AutomationEngineInstance EngineInstance { get; set; }
+        private List<ScriptVariable> _scriptVariableList;
+        private bool _closeWhenDone = false;
         #endregion
         public string Result { get; set; }
         //events and methods
         #region Form Events/Methods
-        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false)
+        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<ScriptVariable> variables = null,
+            bool blnCloseWhenDone = false)
         {
             InitializeComponent();
 
             if (variables != null)
             {
-                Variables = variables;
+                _scriptVariableList = variables;
             }
 
-            CloseWhenDone = blnCloseWhenDone;
+            _closeWhenDone = blnCloseWhenDone;
 
             //set callback form
-            callBackForm = builderForm;
+            CallBackForm = builderForm;
 
             //set file
-            this.filePath = pathToFile;
+            FilePath = pathToFile;
 
             //get engine settings
             _engineSettings = new ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
             //determine whether to show listbox or not
-            advancedDebug = _engineSettings.ShowAdvancedDebugOutput;
+            _advancedDebug = _engineSettings.ShowAdvancedDebugOutput;
 
             //if listbox should be shown
-            if (advancedDebug)
+            if (_advancedDebug)
             {
                 lstSteppingCommands.Show();
                 lblMainLogo.Show();
@@ -88,37 +85,32 @@ namespace taskt.UI.Forms
                 lblAction.Show();
             }
 
-
             //apply debug window setting
             if (!_engineSettings.ShowDebugWindow)
             {
-                this.Visible = false;
-                this.Opacity = 0;
+                Visible = false;
+                Opacity = 0;
             }
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(_engineSettings.CancellationKey);
-
-
-
         }
         public frmScriptEngine()
         {
             InitializeComponent();
 
-
             //set file
-            this.filePath = null;
+            FilePath = null;
 
             //get engine settings
             _engineSettings = new ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
 
             //determine whether to show listbox or not
-            advancedDebug = _engineSettings.ShowAdvancedDebugOutput;
+            _advancedDebug = _engineSettings.ShowAdvancedDebugOutput;
 
             //if listbox should be shown
-            if (advancedDebug)
+            if (_advancedDebug)
             {
                 lstSteppingCommands.Show();
                 lblMainLogo.Show();
@@ -133,53 +125,46 @@ namespace taskt.UI.Forms
                 lblAction.Show();
             }
 
-
             //apply debug window setting
             if (!_engineSettings.ShowDebugWindow)
             {
-                this.Visible = false;
-                this.Opacity = 0;
+                Visible = false;
+                Opacity = 0;
             }
 
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(_engineSettings.CancellationKey);
-
-
-
         }
+
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
             //move engine form to bottom right and bring to front
             if (_engineSettings.ShowDebugWindow)
             {
-                this.BringToFront();
+                BringToFront();
                 MoveFormToBottomRight(this);
             }
 
             //start running
-            engineInstance = new Core.Automation.Engine.AutomationEngineInstance();
-            engineInstance.ReportProgressEvent += Engine_ReportProgress;
-            engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
-            engineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
-            engineInstance.TaskModel = remoteTask;
-            engineInstance.TasktEngineUI = this;
-            engineInstance.ServerExecution = this.serverExecution;
-            Core.Server.LocalTCPListener.automationInstance = engineInstance;
+            EngineInstance = new AutomationEngineInstance();
+            EngineInstance.ReportProgressEvent += Engine_ReportProgress;
+            EngineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
+            EngineInstance.LineNumberChangedEvent += EngineInstance_LineNumberChangedEvent;
+            EngineInstance.TaskModel = RemoteTask;
+            EngineInstance.TasktEngineUI = this;
+            EngineInstance.ServerExecution = ServerExecution;
+            LocalTCPListener.automationInstance = EngineInstance;
 
-            if (xmlData == null)
+            if (XmlData == null)
             {
-                engineInstance.ExecuteScriptAsync(this, filePath, Variables);
+                EngineInstance.ExecuteScriptAsync(this, FilePath, _scriptVariableList);
             }
             else
             {
-                engineInstance.ExecuteScriptXML(xmlData);
+                EngineInstance.ExecuteScriptXML(XmlData);
             }
-
-
         }
-
-
 
         /// <summary>
         /// Triggers the automation engine to stop based on a hooked key press
@@ -190,10 +175,8 @@ namespace taskt.UI.Forms
         {
             uiBtnCancel_Click(null, null);
             GlobalHook.HookStopped -= new EventHandler(OnHookStopped);
-            engineInstance.CancelScript();
-
+            EngineInstance.CancelScript();
         }
-
         #endregion
 
         //engine event handlers
@@ -207,6 +190,7 @@ namespace taskt.UI.Forms
         {
             AddStatus(e.ProgressUpdate);
         }
+
         /// <summary>
         /// Handles Script Finished Event raised by Automation Engine
         /// </summary>
@@ -214,7 +198,6 @@ namespace taskt.UI.Forms
         /// <param name="e"></param>
         private void Engine_ScriptFinishedEvent(object sender, ScriptFinishedEventArgs e)
         {
-
             switch (e.Result)
             {
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
@@ -234,17 +217,13 @@ namespace taskt.UI.Forms
                     break;
             }
 
-
-            Result = engineInstance.TasktResult;
-
-
+            Result = EngineInstance.TasktResult;
             AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
 
-            if(CloseWhenDone)
+            if(_closeWhenDone)
             {
-                engineInstance.TasktEngineUI.Invoke((Action)delegate () { this.Close(); });
+                EngineInstance.TasktEngineUI.Invoke((Action)delegate () { Close(); });
             }
-
         }
 
         private void EngineInstance_LineNumberChangedEvent(object sender, LineNumberChangedEventArgs e)
@@ -277,11 +256,9 @@ namespace taskt.UI.Forms
                 lblAction.Text = text + "..";
                 lstSteppingCommands.Items.Add(DateTime.Now.ToString("MM/dd/yy hh:mm:ss.fff") + " | " + text + "..");
                 lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
-
-
             }
-
         }
+
         /// <summary>
         /// Delegate for updating UI after Automation Engine finishes
         /// </summary>
@@ -293,7 +270,6 @@ namespace taskt.UI.Forms
         /// <param name="mainLogoText"></param>
         private void UpdateUI(string mainLogoText)
         {
-
             if (InvokeRequired)
             {
                 var d = new UpdateUIDelegate(UpdateUI);
@@ -301,7 +277,6 @@ namespace taskt.UI.Forms
             }
             else
             {
-
                 //set main logo text
                 lblMainLogo.Text = mainLogoText;
 
@@ -310,45 +285,43 @@ namespace taskt.UI.Forms
                 uiBtnCancel.DisplayText = "Close";
                 uiBtnCancel.Visible = true;
 
-
-                if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
+                if ((!_advancedDebug) && (mainLogoText.Contains("(error)")))
                 {
                     pbBotIcon.Image = Properties.Resources.error;
                 }
 
                 if (mainLogoText.Contains("(error)"))
                 {
-                    this.Theme.BgGradientStartColor = Color.OrangeRed;
-                    this.Theme.BgGradientEndColor = Color.OrangeRed;
-                    this.Invalidate();
+                    Theme.BgGradientStartColor = Color.OrangeRed;
+                    Theme.BgGradientEndColor = Color.OrangeRed;
+                    Invalidate();
                 }
                 else if (mainLogoText.Contains("(success)"))
                 {
-                    this.Theme.BgGradientStartColor = Color.Green;
-                    this.Theme.BgGradientEndColor = Color.Green;
-                    this.Invalidate();
+                    Theme.BgGradientStartColor = Color.Green;
+                    Theme.BgGradientEndColor = Color.Green;
+                    Invalidate();
                 }
 
                 //reset debug line
-                if (callBackForm != null)
-                    callBackForm.DebugLine = 0;
+                if (CallBackForm != null)
+                    CallBackForm.DebugLine = 0;
 
                 //begin auto close
-                if ((_engineSettings.AutoCloseDebugWindow) || (serverExecution))
+                if ((_engineSettings.AutoCloseDebugWindow) || (ServerExecution))
                     tmrNotify.Enabled = true;
-
             }
-
         }
+
         /// <summary>
         /// Delegate for showing message box
         /// </summary>
         /// <param name="message"></param>
-        public delegate void ShowMessageDelegate(string message, string title, UI.Forms.Supplemental.frmDialog.DialogType dialogType, int closeAfter);
+        public delegate void ShowMessageDelegate(string message, string title, frmDialog.DialogType dialogType, int closeAfter);
         /// <summary>
         /// Used by the automation engine to show a message to the user on-screen. If UI is not available, a standard messagebox will be invoked instead.
         /// </summary>
-        public void ShowMessage(string message, string title, UI.Forms.Supplemental.frmDialog.DialogType dialogType, int closeAfter)
+        public void ShowMessage(string message, string title, frmDialog.DialogType dialogType, int closeAfter)
         {
             if (InvokeRequired)
             {
@@ -357,11 +330,11 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter);
+                var confirmationForm = new frmDialog(message, title, dialogType, closeAfter);
                 confirmationForm.ShowDialog();
             }
-
         }
+
         /// <summary>
         /// Delegate for showing engine context form
         /// </summary>
@@ -379,25 +352,23 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var contextForm = new UI.Forms.Supplement_Forms.frmEngineContextViewer(context, closeAfter);
+                var contextForm = new frmEngineContextViewer(context, closeAfter);
                 contextForm.ShowDialog();
             }
-
         }
+
         public void LaunchRDPSession(string machineName, string userName, string password, int width, int height)
         {
             if (InvokeRequired)
             {
-                this.Invoke((Action)(() => LaunchRDPSession(machineName, userName, password, width, height)));
+                Invoke((Action)(() => LaunchRDPSession(machineName, userName, password, width, height)));
             }
-
-            var remoteDesktopForm = new UI.Forms.Supplemental.frmRemoteDesktopViewer(machineName, userName, password, width, height, false, false);
+            var remoteDesktopForm = new frmRemoteDesktopViewer(machineName, userName, password, width, height, false, false);
             remoteDesktopForm.Show();
-
         }
 
-        public delegate List<string> ShowInputDelegate(Core.Automation.Commands.InputCommand inputs);
-        public List<string> ShowInput(Core.Automation.Commands.InputCommand inputs)
+        public delegate List<string> ShowInputDelegate(InputCommand inputs);
+        public List<string> ShowInput(InputCommand inputs)
         {
             if (InvokeRequired)
             {
@@ -407,15 +378,12 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var inputForm = new Supplemental.frmUserInput();
+                var inputForm = new frmUserInput();
                 inputForm.InputCommand = inputs;
-
-
                 var dialogResult = inputForm.ShowDialog();
 
                 if (dialogResult == DialogResult.OK)
                 {
-
                     var responses = new List<string>();
                     foreach (var ctrl in inputForm.InputControls)
                     {
@@ -428,24 +396,18 @@ namespace taskt.UI.Forms
                         {
                             responses.Add(ctrl.Text);
                         }
-
-
                     }
-
                     return responses;
                 }
                 else
                 {
                     return null;
                 }
-
-
-
             }
-
         }
-        public delegate List<Core.Script.ScriptVariable> ShowHTMLInputDelegate(string htmlTemplate);
-        public List<Core.Script.ScriptVariable> ShowHTMLInput(string htmlTemplate)
+
+        public delegate List<ScriptVariable> ShowHTMLInputDelegate(string htmlTemplate);
+        public List<ScriptVariable> ShowHTMLInput(string htmlTemplate)
         {
             if (InvokeRequired)
             {
@@ -455,29 +417,21 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var inputForm = new Supplemental.frmHTMLDisplayForm();
+                var inputForm = new frmHTMLDisplayForm();
                 inputForm.TemplateHTML = htmlTemplate;
-
-
                 var dialogResult = inputForm.ShowDialog();
 
                 if (inputForm.Result == DialogResult.OK)
                 {
                     var variables = inputForm.GetVariablesFromHTML("input");
-
                     variables.AddRange(inputForm.GetVariablesFromHTML("select"));
-
                     return variables;
                 }
                 else
                 {
                     return null;
                 }
-
-
-
             }
-
         }
 
         public delegate void SetLineNumber(int lineNumber);
@@ -490,18 +444,16 @@ namespace taskt.UI.Forms
             }
             else
             {
-                if (callBackForm != null)
+                if (CallBackForm != null)
                 {
-                    callBackForm.DebugLine = lineNumber;
+                    CallBackForm.DebugLine = lineNumber;
                 }
-
             }
         }
         #endregion
 
         //various small UI methods
         #region UI Elements
-
         private void lblClose_MouseEnter(object sender, EventArgs e)
         {
             Cursor = Cursors.Hand;
@@ -514,44 +466,42 @@ namespace taskt.UI.Forms
 
         private void autoCloseTimer_Tick(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             if (uiBtnCancel.DisplayText == "Close")
             {
-                this.Close();
+                Close();
                 return;
             }
 
             uiBtnPause.Visible = false;
             uiBtnCancel.Visible = false;
             lblKillProcNote.Text = "Cancelling...";
-            engineInstance.ResumeScript();
+            EngineInstance.ResumeScript();
             lstSteppingCommands.Items.Add("[User Requested Cancellation]");
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
             lblMainLogo.Text = "debug info (cancelling)";
-            engineInstance.CancelScript();
+            EngineInstance.CancelScript();
         }
 
         private void uiBtnPause_Click(object sender, EventArgs e)
         {
-
-
             if (uiBtnPause.DisplayText == "Pause")
             {
                 lstSteppingCommands.Items.Add("[User Requested Pause]");
                 uiBtnPause.Image = Properties.Resources.action_bar_run;
                 uiBtnPause.DisplayText = "Resume";
-                engineInstance.PauseScript();
+                EngineInstance.PauseScript();
             }
             else
             {
                 lstSteppingCommands.Items.Add("[User Requested Resume]");
                 uiBtnPause.Image = Properties.Resources.command_pause;
                 uiBtnPause.DisplayText = "Pause";
-                engineInstance.ResumeScript();
+                EngineInstance.ResumeScript();
             }
 
             lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
@@ -563,15 +513,11 @@ namespace taskt.UI.Forms
             lblMainLogo.Show();
             lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
+
         private void lstSteppingCommands_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             MessageBox.Show(lstSteppingCommands.SelectedItem.ToString(), "Item Status");
         }
         #endregion UI Elements
-
-
     }
-
-
-
 }

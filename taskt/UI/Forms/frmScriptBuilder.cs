@@ -12,69 +12,93 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using Newtonsoft.Json;
-using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.WebSockets;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
 using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Settings;
-
+using taskt.UI.CustomControls;
+using taskt.Core.Script;
+using taskt.Core.Server;
+using taskt.UI.Forms.Supplemental;
+using taskt.Core.IO;
+using Newtonsoft.Json;
 
 namespace taskt.UI.Forms
 {
-
     public partial class frmScriptBuilder : Form
     //Form tracks the overall configuration and enables script editing, saving, and running
     //Features ability to add, drag/drop reorder commands
     {
-        #region Instance and Form Events
-        private List<ListViewItem> rowsSelectedForCopy { get; set; }
-        private List<Core.Script.ScriptVariable> scriptVariables;
-        private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
-        bool editMode { get; set; }
-        private ImageList uiImages; 
-        public ApplicationSettings appSettings;
-        private List<List<ListViewItem>> undoList;
-        private DateTime lastAntiIdleEvent;
-        private int undoIndex = -1;
-        private int reqdIndex;
-        private int selectedIndex = -1;
+        #region Instance Variables
+        private List<ListViewItem> _rowsSelectedForCopy;
+        private List<ScriptVariable> _scriptVariables;
+        private List<AutomationCommand> _automationCommands;
+        private bool _editMode;
+        private ImageList _uiImages;
+        private ApplicationSettings _appSettings;
+        private List<List<ListViewItem>> _undoList;
+        private DateTime _lastAntiIdleEvent;
+        private int _undoIndex = -1;
+        private int _reqdIndex;
+        private int _selectedIndex = -1;
+        private List<int> _matchingSearchIndex = new List<int>();
+        private int _currentIndex = -1;
+        private frmScriptBuilder _parentBuilder;
 
-        private List<int> matchingSearchIndex = new List<int>();
-        private int currentIndex = -1;
-        private frmScriptBuilder parentBuilder { get; set; }
-
-        private string scriptFilePath;
+        private string _scriptFilePath;
         public string ScriptFilePath
         {
             get
             {
-                return scriptFilePath;
+                return _scriptFilePath;
             }
             set
             {
-                scriptFilePath = value;
+                _scriptFilePath = value;
                 UpdateWindowTitle();
             }
         }
-        private Project scriptProject { get; set; }
-        private string scriptProjectPath { get; set; }
+        private Project _scriptProject;
+        private string _scriptProjectPath;
+        private int _debugLine;
+        public int DebugLine
+        {
+            get
+            {
+                return _debugLine;
+            }
+            set
+            {
+                _debugLine = value;
+                if (_debugLine > 0)
+                {
+                    try
+                    {
+                        lstScriptActions.EnsureVisible(_debugLine - 1);
+                    }
+                    catch (Exception)
+                    {
+                        //log exception?
+                    }
+                }
+                lstScriptActions.Invalidate();
+                //FormatCommandListView();
+            }
+        }
+        private List<string> _notificationList = new List<string>();
+        private DateTime _notificationExpires;
+        private bool _isDisplaying;
+        private string _notificationText;
+        #endregion
 
+        #region Form Events
         public frmScriptBuilder()
         {
             InitializeComponent();
@@ -85,11 +109,11 @@ namespace taskt.UI.Forms
             if (ScriptFilePath != null)
             {
                 FileInfo scriptFileInfo = new FileInfo(ScriptFilePath);
-                Text = "taskt - (Project: " + scriptProject.GetProjectName() + " - Script: " + scriptFileInfo.Name + ")";
+                Text = "taskt - (Project: " + _scriptProject.GetProjectName() + " - Script: " + scriptFileInfo.Name + ")";
             }
-            else if (scriptProject.GetProjectName() != null)
+            else if (_scriptProject.GetProjectName() != null)
             {
-                Text = "taskt - (Project: " + scriptProject.GetProjectName() + ")";
+                Text = "taskt - (Project: " + _scriptProject.GetProjectName() + ")";
             }
             else
             {
@@ -100,8 +124,7 @@ namespace taskt.UI.Forms
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
             //load all commands
-            automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
-
+            _automationCommands = CommandControls.GenerateCommandsandControls();
 
             //set controls double buffered
             foreach (Control control in Controls)
@@ -112,41 +135,39 @@ namespace taskt.UI.Forms
             }
 
             //create undo list
-            undoList = new List<List<ListViewItem>>();
+            _undoList = new List<List<ListViewItem>>();
 
             //get app settings
-            appSettings = new ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
+            _appSettings = new ApplicationSettings();
+            _appSettings = _appSettings.GetOrCreateApplicationSettings();
 
-            if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
-            {              
-                Core.Server.HttpServerClient.GetGuid();
-            }
-            else if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid != Guid.Empty)
+            if (_appSettings.ServerSettings.ServerConnectionEnabled && _appSettings.ServerSettings.HTTPGuid == Guid.Empty)
             {
-                 Core.Server.HttpServerClient.CheckIn();
+                HttpServerClient.GetGuid();
+            }
+            else if (_appSettings.ServerSettings.ServerConnectionEnabled && _appSettings.ServerSettings.HTTPGuid != Guid.Empty)
+            {
+                HttpServerClient.CheckIn();
             }
 
-             Core.Server.HttpServerClient.associatedBuilder = this;
+            HttpServerClient.associatedBuilder = this;
 
-            Core.Server.LocalTCPListener.Initialize(this);
+            LocalTCPListener.Initialize(this);
             //Core.Sockets.SocketClient.Initialize();
             //Core.Sockets.SocketClient.associatedBuilder = this;
-
 
             //handle action bar preference
             //hide action panel
 
-            if (this.editMode)
+            if (_editMode)
             {
                 tlpControls.RowStyles[1].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[1].Height = 0;
 
                 tlpControls.RowStyles[2].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[2].Height = 81;
-
             }
-            else if (appSettings.ClientSettings.UseSlimActionBar)
+            else if (_appSettings.ClientSettings.UseSlimActionBar)
             {
                 tlpControls.RowStyles[2].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[2].Height = 0;
@@ -157,21 +178,19 @@ namespace taskt.UI.Forms
                 tlpControls.RowStyles[1].Height = 0;
             }
 
-
-
-
-
-
             //get scripts folder
-            var rpaScriptsFolder = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+            var rpaScriptsFolder = Folders.GetFolder(Folders.FolderType.ScriptsFolder);
 
-            if (!System.IO.Directory.Exists(rpaScriptsFolder))
+            if (!Directory.Exists(rpaScriptsFolder))
             {
-                UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0);
+                frmDialog userDialog = new frmDialog("Would you like to create a folder to save your scripts in now? " +
+                    "A script folder is required to save scripts generated with this application. " +
+                    "The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!",
+                    frmDialog.DialogType.YesNo, 0);
 
                 if (userDialog.ShowDialog() == DialogResult.OK)
                 {
-                    System.IO.Directory.CreateDirectory(rpaScriptsFolder);
+                    Directory.CreateDirectory(rpaScriptsFolder);
                 }
             }
 
@@ -182,29 +201,25 @@ namespace taskt.UI.Forms
             HideNotificationRow();
 
             //instantiate for script variables
-            if (!editMode)
+            if (!_editMode)
             {
-                scriptVariables = new List<Core.Script.ScriptVariable>();
+                _scriptVariables = new List<ScriptVariable>();
             }
-
-
             //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
 
             //instantiate and populate display icons for commands
-            uiImages = UI.Images.UIImageList();
+            _uiImages = Images.UIImageList();
 
             //set image list
-            lstScriptActions.SmallImageList = uiImages;
-
+            lstScriptActions.SmallImageList = _uiImages;
 
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
 
-            var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
+            var groupedCommands = _automationCommands.GroupBy(f => f.DisplayGroup);
 
             foreach (var cmd in groupedCommands)
             {
-
                 TreeNode newGroup = new TreeNode(cmd.Key);
 
                 foreach (var subcmd in cmd)
@@ -215,37 +230,31 @@ namespace taskt.UI.Forms
                     {
                         subNode.ForeColor = Color.Red;
                     }
-                    
-
                     newGroup.Nodes.Add(subNode);
                 }
 
                 tvCommands.Nodes.Add(newGroup);
-
             }
 
             tvCommands.Sort();
-
             //tvCommands.ImageList = uiImages;
 
             //start attended mode if selected
-            if (appSettings.ClientSettings.StartupMode == "Attended Task Mode")
+            if (_appSettings.ClientSettings.StartupMode == "Attended Task Mode")
             {
-
-                this.WindowState = FormWindowState.Minimized;
+                WindowState = FormWindowState.Minimized;
                 var frmAttended = new frmAttendedMode();
                 frmAttended.Show();
-
             }
         }
+
         private void GenerateRecentFiles()
         {
             flwRecentFiles.Controls.Clear();
 
+            var scriptPath = Folders.GetFolder(Folders.FolderType.ScriptsFolder);
 
-            var scriptPath = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-
-            if (!System.IO.Directory.Exists(scriptPath))
+            if (!Directory.Exists(scriptPath))
             {
                 lblRecentFiles.Text = "Script Folder does not exist";
                 lblFilesMissing.Text = "Directory Not Found: " + scriptPath;
@@ -256,13 +265,10 @@ namespace taskt.UI.Forms
                 return;
             }
 
-
-
-            var directory = new System.IO.DirectoryInfo(scriptPath);
-
+            var directory = new DirectoryInfo(scriptPath);
             var recentFiles = directory.GetFiles()
-                .OrderByDescending(file => file.LastWriteTime).Select(f => f.Name);
-
+                                       .OrderByDescending(file => file.LastWriteTime)
+                                       .Select(f => f.Name);
 
             if (recentFiles.Count() == 0)
             {
@@ -294,21 +300,21 @@ namespace taskt.UI.Forms
                     newFileLink.Margin = new Padding(0, 0, 0, 0);
                     newFileLink.LinkClicked += NewFileLink_LinkClicked;
                     flwRecentFiles.Controls.Add(newFileLink);
-
                 }
             }
         }
+
         private void frmScriptBuilder_Shown(object sender, EventArgs e)
         {
+            Program.SplashForm.Hide();
 
-            taskt.Program.SplashForm.Hide();
-
-            if (editMode)
+            if (_editMode)
                 return;
 
             AddProject();
             Notify("Welcome! Press 'Add Command' to get started!");
         }
+
         private void pnlControlContainer_Paint(object sender, PaintEventArgs e)
         {
 
@@ -323,37 +329,57 @@ namespace taskt.UI.Forms
             ////e.Graphics.DrawLine(steelBluePen, 0, 0, pnlControlContainer.Width, 0);
             //e.Graphics.DrawLine(lightSteelBluePen, 0, 0, pnlControlContainer.Width, 0);
             //e.Graphics.DrawLine(lightSteelBluePen, 0, pnlControlContainer.Height - 1, pnlControlContainer.Width, pnlControlContainer.Height - 1);
-
         }
+
         private void lblMainLogo_Click(object sender, EventArgs e)
         {
             Supplemental.frmAbout aboutForm = new Supplemental.frmAbout();
             aboutForm.Show();
         }
+
         private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if (!appSettings.ClientSettings.InsertCommandsInline)
+            if (!_appSettings.ClientSettings.InsertCommandsInline)
                 return;
 
             //check to see if an item has been selected last
             if (lstScriptActions.SelectedItems.Count > 0)
             {
-                selectedIndex = lstScriptActions.SelectedItems[0].Index;
+                _selectedIndex = lstScriptActions.SelectedItems[0].Index;
                 //FormatCommandListView();
             }
             else
             {
                 //nothing is selected
-                selectedIndex = -1;
+                _selectedIndex = -1;
             }
 
+        }
+
+        private void frmScriptBuilder_SizeChanged(object sender, EventArgs e)
+        {
+            lstScriptActions.Columns[2].Width = Width - 340;
+        }
+
+        private void frmScriptBuilder_Resize(object sender, EventArgs e)
+        {
+            //check when minimized
+            if ((WindowState == FormWindowState.Minimized) && (_appSettings.ClientSettings.MinimizeToTray))
+            {
+                _appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
+                if (_appSettings.ClientSettings.MinimizeToTray)
+                {
+                    notifyTray.Visible = true;
+                    notifyTray.ShowBalloonTip(3000);
+                    ShowInTaskbar = false;
+                }
+            }
+            pnlMain.Invalidate();
         }
         #endregion
 
         #region ListView Events
         #region ListView DragDrop
-
         private void lstScriptActions_ItemDrag(object sender, ItemDragEventArgs e)
         {
             lstScriptActions.DoDragDrop(lstScriptActions.SelectedItems, DragDropEffects.Move);
@@ -375,7 +401,6 @@ namespace taskt.UI.Forms
 
         private void lstScriptActions_DragDrop(object sender, DragEventArgs e)
         {
-
             //Return if the items are not selected in the ListView control.
             if (lstScriptActions.SelectedItems.Count == 0)
             {
@@ -394,15 +419,15 @@ namespace taskt.UI.Forms
             }
 
             //drag and drop for sequence
-            if ((dragToItem.Tag is Core.Automation.Commands.SequenceCommand) && (appSettings.ClientSettings.EnableSequenceDragDrop))
+            if ((dragToItem.Tag is SequenceCommand) && (_appSettings.ClientSettings.EnableSequenceDragDrop))
             {
                 //sequence command for drag drop
-                var sequence = (Core.Automation.Commands.SequenceCommand)dragToItem.Tag;
+                var sequence = (SequenceCommand)dragToItem.Tag;
 
                 //add command to script actions
                 for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
                 {
-                    var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
+                    var command = (ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
                     sequence.v_scriptActions.Add(command);
                 }
 
@@ -416,32 +441,21 @@ namespace taskt.UI.Forms
                 return;
             }
 
-
-
-
             //Obtain the index of the item at the mouse pointer.
             int dragIndex = dragToItem.Index;
 
-
             //foreach (ListViewItem command in lstScriptActions.SelectedItems)
             //{
-
-            //    if (command.Tag is Core.Automation.Commands.EndLoopCommand)
+            //    if (command.Tag is EndLoopCommand)
             //    {
             //        for (int i = 0; i < dragIndex; i++)
             //        {
-            //            if (lstScriptActions.Items[i].Tag is Core.Automation.Commands.BeginLoopCommand)
+            //            if (lstScriptActions.Items[i].Tag is BeginLoopCommand)
             //            {
-
             //            }
             //        }
-
-
             //    }
-
             //}
-
-
 
             ListViewItem[] sel = new ListViewItem[lstScriptActions.SelectedItems.Count];
             for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
@@ -461,6 +475,7 @@ namespace taskt.UI.Forms
                     itemIndex++;
                 else
                     itemIndex = dragIndex + i;
+
                 //Insert the item at the mouse pointer.
                 ListViewItem insertItem = (ListViewItem)dragItem.Clone();
                 lstScriptActions.Items.Insert(itemIndex, insertItem);
@@ -470,7 +485,6 @@ namespace taskt.UI.Forms
                 //FormatCommandListView();
                 lstScriptActions.Invalidate();
             }
-
         }
 
         #endregion
@@ -495,250 +509,67 @@ namespace taskt.UI.Forms
                 //if user presses enter simulate double click event
                 lstScriptActions_DoubleClick(null, null);
             }
-            else if ((e.Control) && (e.KeyCode == Keys.X))
-            {     
-                CutRows();
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.C))
+            else if (e.Control)
             {
-                CopyRows();
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.V))
-            {        
-                PasteRows();
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.Z))
-            {
-
-                UndoChange();
-
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.R))
-            {
-
-                RedoChange();
-
-            }
-
-            else if ((e.Control) && (e.KeyCode == Keys.A))
-            {
-
-                foreach (ListViewItem item in lstScriptActions.Items)
+                switch (e.KeyCode)
                 {
-                    item.Selected = true;
+                    case Keys.X:
+                        CutRows();
+                        break;
+                    case Keys.C:
+                        CopyRows();
+                        break;
+                    case Keys.V:
+                        PasteRows();
+                        break;
+                    case Keys.Z:
+                        UndoChange();
+                        break;
+                    case Keys.R:
+                        RedoChange();
+                        break;
+                    case Keys.A:
+                        foreach (ListViewItem item in lstScriptActions.Items)
+                        {
+                            item.Selected = true;
+                        }
+                        break;
                 }
-
             }
-
-
-        }
-
-        private void CutRows()
-        {
-
-            //initialize list of items to copy   
-            if (rowsSelectedForCopy == null)
-            {
-                rowsSelectedForCopy = new List<ListViewItem>();
-            }
-            else
-            {
-                rowsSelectedForCopy.Clear();
-            }
-
-            //copy into list for all selected            
-            if (lstScriptActions.SelectedItems.Count >= 1)
-            {
-                foreach (ListViewItem item in lstScriptActions.SelectedItems)
-                {
-                    rowsSelectedForCopy.Add(item);
-                    lstScriptActions.Items.Remove(item);
-                }
-
-                Notify(rowsSelectedForCopy.Count + " item(s) cut to clipboard!");
-            }
-        }
-
-        private void CopyRows()
-        {
-
-            //initialize list of items to copy   
-            if (rowsSelectedForCopy == null)
-            {
-                rowsSelectedForCopy = new List<ListViewItem>();
-            }
-            else
-            {
-                rowsSelectedForCopy.Clear();
-            }
-
-            //copy into list for all selected            
-            if (lstScriptActions.SelectedItems.Count >= 1)
-            {
-                foreach (ListViewItem item in lstScriptActions.SelectedItems)
-                {
-                    rowsSelectedForCopy.Add(item);
-                }
-
-                Notify(rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
-
-            }
-        }
-
-        private void PasteRows()
-        {
-
-            if (rowsSelectedForCopy != null)
-            {
-
-                if (lstScriptActions.SelectedItems.Count == 0)
-                {
-                    MessageBox.Show("In order to paste, you must first select a command to paste under.", "Select Command To Paste Under");
-                    return;
-                }
-
-                int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
-                
-                foreach (ListViewItem item in rowsSelectedForCopy)
-                {
-                    Core.Automation.Commands.ScriptCommand duplicatedCommand = (Core.Automation.Commands.ScriptCommand)Core.Common.Clone(item.Tag);
-                    duplicatedCommand.GenerateID();
-                    lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
-                    destinationIndex += 1;                  
-                }
-
-                lstScriptActions.Invalidate();
-
-                Notify(rowsSelectedForCopy.Count + " item(s) pasted!");
-            }
-
-         
-
-        }
-
-        private void UndoChange()
-        {
-
-            if (undoList.Count > 0)
-            {
-
-                if ((undoIndex < 0) || (undoIndex >= undoList.Count))
-                {
-                    undoIndex = undoList.Count - 1;
-                }
-
-
-                lstScriptActions.Items.Clear();
-
-                foreach (ListViewItem rowItem in undoList[undoIndex])
-                {
-                    lstScriptActions.Items.Add(rowItem);
-                }
-
-                undoIndex--;
-
-                lstScriptActions.Invalidate();
-
-            }
-
-        }
-
-        private void RedoChange()
-        {
-            if (undoList.Count > 0)
-            {
-
-                undoIndex++;
-
-                if (undoIndex > undoList.Count - 1)
-                {
-                    undoIndex = undoList.Count - 1;
-                }
-
-
-
-                lstScriptActions.Items.Clear();
-
-                foreach (ListViewItem rowItem in undoList[undoIndex])
-                {
-                    lstScriptActions.Items.Add(rowItem);
-                }
-
-
-                lstScriptActions.Invalidate();
-
-
-            }
-
-        }
-
-        private void CreateUndoSnapshot()
-        {
-
-
-
-
-
-
-            List<ListViewItem> itemList = new List<ListViewItem>();
-            foreach (ListViewItem rowItem in lstScriptActions.Items)
-            {
-                itemList.Add(rowItem);
-            }
-
-            undoList.Add(itemList);
-
-            if (undoList.Count > 10)
-            {
-                undoList.RemoveAt(0);
-            }
-
-
-            undoIndex = itemList.Count - 1;
-
-
-
         }
 
         private void lstScriptActions_DoubleClick(object sender, EventArgs e)
         {
-
             if (lstScriptActions.SelectedItems.Count != 1)
             {
                 return;
             }
 
-
             //bring up edit mode to edit the action
             ListViewItem selectedCommandItem = lstScriptActions.SelectedItems[0];
 
-
             //set selected command from the listview item tag object which was assigned to the command
-            var currentCommand = (Core.Automation.Commands.ScriptCommand)selectedCommandItem.Tag;
-
+            var currentCommand = (ScriptCommand)selectedCommandItem.Tag;
 
             //check if editing a sequence
-            if (currentCommand is Core.Automation.Commands.SequenceCommand)
+            if (currentCommand is SequenceCommand)
             {
-
-                if (editMode)
+                if (_editMode)
                 {
                     MessageBox.Show("Embedding Sequence Commands within Sequence Commands not yet supported.");
                     return;
                 }
 
-
                 //get sequence events
-                Core.Automation.Commands.SequenceCommand sequence = (Core.Automation.Commands.SequenceCommand)currentCommand;
+                SequenceCommand sequence = (SequenceCommand)currentCommand;
                 frmScriptBuilder newBuilder = new frmScriptBuilder();
 
                 //add variables
+                newBuilder._scriptVariables = new List<ScriptVariable>();
 
-                newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
-
-                foreach (var variable in this.scriptVariables)
+                foreach (var variable in _scriptVariables)
                 {
-                    newBuilder.scriptVariables.Add(variable);
+                    newBuilder._scriptVariables.Add(variable);
                 }
 
                 //append to new builder
@@ -747,23 +578,21 @@ namespace taskt.UI.Forms
                     newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
                 }
 
-
                 //apply editor style format
                 newBuilder.ApplyEditorFormat();
 
-                newBuilder.parentBuilder = this;
+                newBuilder._parentBuilder = this;
 
                 //if data has been changed
                 if (newBuilder.ShowDialog() == DialogResult.OK)
                 {
-
                     //create updated list
-                    List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
+                    List<ScriptCommand> updatedList = new List<ScriptCommand>();
 
                     //update to list
                     for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
                     {
-                        var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
+                        var command = (ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
                         updatedList.Add(command);
                     }
 
@@ -772,29 +601,24 @@ namespace taskt.UI.Forms
 
                     //update label
                     selectedCommandItem.Text = sequence.GetDisplayValue();
-
                 }
-
-             
-
             }
             else
             {
-
                 //create new command editor form
-                UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands());
+                frmCommandEditor editCommand = new frmCommandEditor(_automationCommands, GetConfiguredCommands());
 
                 //creation mode edit locks form to current command
-                editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
+                editCommand.creationMode = frmCommandEditor.CreationMode.Edit;
 
                 //editCommand.defaultStartupCommand = currentCommand.SelectionName;
                 editCommand.editingCommand = currentCommand;
 
                 //create clone of current command so databinding does not affect if changes are not saved
-                editCommand.originalCommand = Core.Common.Clone(currentCommand);
+                editCommand.originalCommand = Common.Clone(currentCommand);
 
                 //set variables
-                editCommand.scriptVariables = this.scriptVariables;
+                editCommand.scriptVariables = _scriptVariables;
 
                 //show edit command form and save changes on OK result
                 if (editCommand.ShowDialog() == DialogResult.OK)
@@ -804,62 +628,166 @@ namespace taskt.UI.Forms
                     selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
                 }
             }
-
-
-
-
-
         }
 
-
-
-
-
-        #endregion
-
-        #region Editor Mode
         private void ApplyEditorFormat()
         {
-            editMode = true;
-            this.Text = "edit sequence";
+            _editMode = true;
+            Text = "edit sequence";
             lblMainLogo.Text = "edit sequence";
-
             lstScriptActions.Invalidate();
             pnlCommandHelper.Hide();
-
-
             grpSaveClose.Location = grpFileActions.Location;
-
             grpRecordRun.Hide();
             grpFileActions.Hide();
             grpVariable.Hide();
             grpSaveClose.Show();
-
             grpSearch.Left = grpSaveClose.Right + 20;
-
             moveToParentToolStripMenuItem.Visible = true;
-
-
         }
 
-
-        private void uiBtnKeep_Click(object sender, EventArgs e)
+        private void CutRows()
         {
-            this.DialogResult = DialogResult.OK;
+            //initialize list of items to copy
+            if (_rowsSelectedForCopy == null)
+            {
+                _rowsSelectedForCopy = new List<ListViewItem>();
+            }
+            else
+            {
+                _rowsSelectedForCopy.Clear();
+            }
+
+            //copy into list for all selected
+            if (lstScriptActions.SelectedItems.Count >= 1)
+            {
+                foreach (ListViewItem item in lstScriptActions.SelectedItems)
+                {
+                    _rowsSelectedForCopy.Add(item);
+                    lstScriptActions.Items.Remove(item);
+                }
+
+                Notify(_rowsSelectedForCopy.Count + " item(s) cut to clipboard!");
+            }
         }
 
-        private void uiPictureButton3_Click(object sender, EventArgs e)
+        private void CopyRows()
         {
-            this.DialogResult = DialogResult.Cancel;
+
+            //initialize list of items to copy
+            if (_rowsSelectedForCopy == null)
+            {
+                _rowsSelectedForCopy = new List<ListViewItem>();
+            }
+            else
+            {
+                _rowsSelectedForCopy.Clear();
+            }
+
+            //copy into list for all selected
+            if (lstScriptActions.SelectedItems.Count >= 1)
+            {
+                foreach (ListViewItem item in lstScriptActions.SelectedItems)
+                {
+                    _rowsSelectedForCopy.Add(item);
+                }
+
+                Notify(_rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
+            }
         }
 
+        private void PasteRows()
+        {
+            if (_rowsSelectedForCopy != null)
+            {
 
+                if (lstScriptActions.SelectedItems.Count == 0)
+                {
+                    MessageBox.Show("In order to paste, you must first select a command to paste under.",
+                        "Select Command To Paste Under");
+                    return;
+                }
 
+                int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
+
+                foreach (ListViewItem item in _rowsSelectedForCopy)
+                {
+                    ScriptCommand duplicatedCommand = (ScriptCommand)Common.Clone(item.Tag);
+                    duplicatedCommand.GenerateID();
+                    lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
+                    destinationIndex += 1;
+                }
+
+                lstScriptActions.Invalidate();
+                Notify(_rowsSelectedForCopy.Count + " item(s) pasted!");
+            }
+        }
+
+        private void UndoChange()
+        {
+            if (_undoList.Count > 0)
+            {
+                if ((_undoIndex < 0) || (_undoIndex >= _undoList.Count))
+                {
+                    _undoIndex = _undoList.Count - 1;
+                }
+
+                lstScriptActions.Items.Clear();
+
+                foreach (ListViewItem rowItem in _undoList[_undoIndex])
+                {
+                    lstScriptActions.Items.Add(rowItem);
+                }
+
+                _undoIndex--;
+
+                lstScriptActions.Invalidate();
+            }
+        }
+
+        private void RedoChange()
+        {
+            if (_undoList.Count > 0)
+            {
+                _undoIndex++;
+
+                if (_undoIndex > _undoList.Count - 1)
+                {
+                    _undoIndex = _undoList.Count - 1;
+                }
+
+                lstScriptActions.Items.Clear();
+
+                foreach (ListViewItem rowItem in _undoList[_undoIndex])
+                {
+                    lstScriptActions.Items.Add(rowItem);
+                }
+
+                lstScriptActions.Invalidate();
+            }
+        }
+
+        private void CreateUndoSnapshot()
+        {
+            List<ListViewItem> itemList = new List<ListViewItem>();
+            foreach (ListViewItem rowItem in lstScriptActions.Items)
+            {
+                itemList.Add(rowItem);
+            }
+
+            _undoList.Add(itemList);
+
+            if (_undoList.Count > 10)
+            {
+                _undoList.RemoveAt(0);
+            }
+
+            _undoIndex = itemList.Count - 1;
+        }
         #endregion
 
         #region ListView Create Item
-
-        private ListViewItem CreateScriptCommandListViewItem(Core.Automation.Commands.ScriptCommand cmdDetails)
+        private ListViewItem CreateScriptCommandListViewItem(ScriptCommand cmdDetails)
         {
             ListViewItem newCommand = new ListViewItem();
             newCommand.Text = cmdDetails.GetDisplayValue();
@@ -869,62 +797,9 @@ namespace taskt.UI.Forms
             newCommand.Tag = cmdDetails;
             newCommand.ForeColor = cmdDetails.DisplayForeColor;
             newCommand.BackColor = Color.DimGray;
-            newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
+            newCommand.ImageIndex = _uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
             return newCommand;
         }
-
-        public void AddCommandToListView(Core.Automation.Commands.ScriptCommand selectedCommand)
-        {
-            if (pnlCommandHelper.Visible)
-            {
-                pnlCommandHelper.Hide();
-            }
-
-            var command = CreateScriptCommandListViewItem(selectedCommand);
-
-            //insert to end by default
-            var insertionIndex = lstScriptActions.Items.Count;
-
-            //verify setting to insert inline is selected and if an item is currently selected
-            if ((appSettings.ClientSettings.InsertCommandsInline) && (lstScriptActions.SelectedItems.Count > 0))
-            {
-                //insert inline
-                insertionIndex = lstScriptActions.SelectedItems[0].Index + 1;            
-            }
-
-
-            //insert command
-            lstScriptActions.Items.Insert(insertionIndex, command);
-
-            //special types also get a following command and comment
-            if ((selectedCommand is Core.Automation.Commands.LoopListCommand) || (selectedCommand is Core.Automation.Commands.LoopContinuouslyCommand) || (selectedCommand is Core.Automation.Commands.LoopNumberOfTimesCommand) || (selectedCommand is Core.Automation.Commands.BeginLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiLoopCommand))
-            {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Items in this section will run within the loop" }));
-                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndLoopCommand()));
-            }
-            else if ((selectedCommand is Core.Automation.Commands.BeginIfCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiIfCommand))
-            {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
-                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndIfCommand()));
-            }
-            else if (selectedCommand is Core.Automation.Commands.TryCommand)
-            {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Items in this section will be handled if error occurs" }));
-                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.CatchExceptionCommand() { v_Comment = "Items in this section will run if error occurs" }));
-                lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "This section executes if error occurs above" }));
-                lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndTryCommand()));
-            }
-
-           
-
-            CreateUndoSnapshot();
-
-            lstScriptActions.Invalidate();
-
-            AutoSizeLineNumberColumn();
-
-        }
-
         #endregion
 
         #region ListView Comment, Coloring, ToolStrip
@@ -938,13 +813,17 @@ namespace taskt.UI.Forms
                     continue;
                 }
 
-                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiIfCommand) || (rowItem.Tag is Core.Automation.Commands.LoopListCommand) || (rowItem.Tag is Core.Automation.Commands.LoopContinuouslyCommand) || (rowItem.Tag is Core.Automation.Commands.LoopNumberOfTimesCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand) || (rowItem.Tag is Core.Automation.Commands.BeginLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((rowItem.Tag is BeginIfCommand) || (rowItem.Tag is BeginMultiIfCommand) ||
+                    (rowItem.Tag is LoopListCommand) || (rowItem.Tag is LoopContinuouslyCommand) ||
+                    (rowItem.Tag is LoopNumberOfTimesCommand) || (rowItem.Tag is TryCommand) ||
+                    (rowItem.Tag is BeginLoopCommand) || (rowItem.Tag is BeginMultiLoopCommand))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
                     indent += 2;
                 }
-                else if ((rowItem.Tag is Core.Automation.Commands.EndLoopCommand) || (rowItem.Tag is Core.Automation.Commands.EndIfCommand) || (rowItem.Tag is Core.Automation.Commands.EndTryCommand))
+                else if ((rowItem.Tag is EndLoopCommand) || (rowItem.Tag is EndIfCommand) ||
+                    (rowItem.Tag is EndTryCommand))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -952,7 +831,8 @@ namespace taskt.UI.Forms
                     indent -= 2;
                     if (indent < 0) indent = 0;
                 }
-                else if ((rowItem.Tag is Core.Automation.Commands.ElseCommand) || (rowItem.Tag is Core.Automation.Commands.CatchExceptionCommand) || (rowItem.Tag is Core.Automation.Commands.FinallyCommand))
+                else if ((rowItem.Tag is ElseCommand) || (rowItem.Tag is CatchExceptionCommand) ||
+                    (rowItem.Tag is FinallyCommand))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -967,6 +847,7 @@ namespace taskt.UI.Forms
 
             }
         }
+
         private void AutoSizeLineNumberColumn()
         {
             //auto adjust column width based on # of commands
@@ -976,20 +857,17 @@ namespace taskt.UI.Forms
 
         private void lstScriptActions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-
             //handle indents
             IndentListViewItems();
 
             //auto size line numbers based on command count
             AutoSizeLineNumberColumn();
 
-
             //get listviewitem
             ListViewItem item = e.Item;
 
             //get script command reference
-            var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
-
+            var command = (ScriptCommand)item.Tag;
 
             //create modified bounds
             var modifiedBounds = e.Bounds;
@@ -1002,34 +880,31 @@ namespace taskt.UI.Forms
                     //draw row number
                     e.Graphics.DrawString((e.ItemIndex + 1).ToString(),
                         lstScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
-
                     break;
                 case 1:
                     //draw command icon
-                    var img = uiImages.Images[command.GetType().Name];
+                    var img = _uiImages.Images[command.GetType().Name];
                     if (img != null)
                     {
                         e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
                     }
-
                     break;
-
                 case 2:
                     //write command text
                     Brush commandNameBrush, commandBackgroundBrush;
-                    if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
+                    if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1))
                     {
                         //debugging coloring
                         commandNameBrush = Brushes.White;
                         commandBackgroundBrush = Brushes.OrangeRed;
                     }
-                    else if ((currentIndex >= 0) && (e.ItemIndex == currentIndex))
+                    else if ((_currentIndex >= 0) && (e.ItemIndex == _currentIndex))
                     {
                         //search primary item coloring
                         commandNameBrush = Brushes.Black;
                         commandBackgroundBrush = Brushes.Goldenrod;
                     }
-                    else if (matchingSearchIndex.Contains(e.ItemIndex))
+                    else if (_matchingSearchIndex.Contains(e.ItemIndex))
                     {
                         //search match item coloring
                         commandNameBrush = Brushes.Black;
@@ -1047,7 +922,7 @@ namespace taskt.UI.Forms
                         commandNameBrush = Brushes.MediumPurple;
                         commandBackgroundBrush = Brushes.Lavender;
                     }
-                    else if ((command is Core.Automation.Commands.AddCodeCommentCommand) || (command.IsCommented))
+                    else if ((command is AddCodeCommentCommand) || (command.IsCommented))
                     {
                         //comments and commented command coloring
                         commandNameBrush = Brushes.ForestGreen;
@@ -1063,8 +938,6 @@ namespace taskt.UI.Forms
                     //fille with background color
                     e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
 
-
-
                     //get indent count
                     var indentPixels = (item.IndentCount * 15);
 
@@ -1074,11 +947,8 @@ namespace taskt.UI.Forms
                     //draw string
                     e.Graphics.DrawString(command.GetDisplayValue(),
                                    lstScriptActions.Font, commandNameBrush, modifiedBounds);
-
                     break;
             }
-
-
         }
 
         private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
@@ -1086,37 +956,8 @@ namespace taskt.UI.Forms
             lstScriptActions.Invalidate();
         }
 
-        private int debugLine;
-        public int DebugLine
-        {
-            get
-            {
-                return debugLine;
-            }
-            set
-            {
-                debugLine = value;
-                if (debugLine > 0)
-                {
-                    try
-                    {
-                        lstScriptActions.EnsureVisible(debugLine - 1);
-                    }
-                    catch (Exception)
-                    {
-                        //log exception?
-                    }
-  
-                }
-
-                lstScriptActions.Invalidate();
-
-                //FormatCommandListView();
-            }
-        }
         private void lstScriptActions_MouseClick(object sender, MouseEventArgs e)
         {
-       
             if (e.Button == MouseButtons.Right)
             {
                 if (lstScriptActions.FocusedItem.Bounds.Contains(e.Location) == true)
@@ -1124,12 +965,10 @@ namespace taskt.UI.Forms
                     lstContextStrip.Show(Cursor.Position);
                 }
             }
-
-
         }
+
         private void SetSelectedCodeToCommented(bool setCommented)
         {
-
             //warn if nothing was selected
             if (lstScriptActions.SelectedItems.Count == 0)
             {
@@ -1139,7 +978,7 @@ namespace taskt.UI.Forms
             //get each item and set appropriately
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
-                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
+                var selectedCommand = (ScriptCommand)item.Tag;
                 selectedCommand.IsCommented = setCommented;
             }
 
@@ -1148,11 +987,10 @@ namespace taskt.UI.Forms
 
             //clear selection
             lstScriptActions.SelectedIndices.Clear();
-
         }
+
         private void SetPauseBeforeExecution()
         {
-
             //warn if nothing was selected
             if (lstScriptActions.SelectedItems.Count == 0)
             {
@@ -1162,89 +1000,288 @@ namespace taskt.UI.Forms
             //get each item and set appropriately
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
-                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
+                var selectedCommand = (ScriptCommand)item.Tag;
                 selectedCommand.PauseBeforeExeucution = !selectedCommand.PauseBeforeExeucution;
             }
 
             //recolor
             //FormatCommandListView();
-
             lstScriptActions.Invalidate();
 
             //clear selection
             lstScriptActions.SelectedIndices.Clear();
-
         }
+
         private void disableSelectedCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSelectedCodeToCommented(true);
         }
+
         private void enableSelectedCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSelectedCodeToCommented(false);
         }
+
         private void pauseBeforeExecutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetPauseBeforeExecution();
         }
+
         private void cutSelectedActionssToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CutRows();
         }
+
         private void copySelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyRows();
         }
+
         private void pasteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PasteRows();
         }
+
+        private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //create command list
+            var commandList = new List<ScriptCommand>();
+
+            //loop each
+            for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                //add to list and remove existing
+                commandList.Add((ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
+                lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+            }
+
+            //reverse commands only if not inserting inline
+            if (!_appSettings.ClientSettings.InsertCommandsInline)
+            {
+                commandList.Reverse();
+            }
+
+            //add to parent
+            commandList.ForEach(x => _parentBuilder.AddCommandToListView(x));
+        }
+
+        public void AddCommandToListView(ScriptCommand selectedCommand)
+        {
+            if (pnlCommandHelper.Visible)
+            {
+                pnlCommandHelper.Hide();
+            }
+            var command = CreateScriptCommandListViewItem(selectedCommand);
+
+            //insert to end by default
+            var insertionIndex = lstScriptActions.Items.Count;
+
+            //verify setting to insert inline is selected and if an item is currently selected
+            if ((_appSettings.ClientSettings.InsertCommandsInline) && (lstScriptActions.SelectedItems.Count > 0))
+            {
+                //insert inline
+                insertionIndex = lstScriptActions.SelectedItems[0].Index + 1;
+            }
+
+            //insert command
+            lstScriptActions.Items.Insert(insertionIndex, command);
+
+            //special types also get a following command and comment
+            if ((selectedCommand is LoopListCommand) || (selectedCommand is LoopContinuouslyCommand) ||
+                (selectedCommand is LoopNumberOfTimesCommand) || (selectedCommand is BeginLoopCommand) ||
+                (selectedCommand is BeginMultiLoopCommand))
+            {
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
+                {
+                    v_Comment = "Items in this section will run within the loop"
+                }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new EndLoopCommand()));
+            }
+            else if ((selectedCommand is BeginIfCommand) || (selectedCommand is BeginMultiIfCommand))
+            {
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
+                {
+                    v_Comment = "Items in this section will run if the statement is true"
+                }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new EndIfCommand()));
+            }
+            else if (selectedCommand is TryCommand)
+            {
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
+                {
+                    v_Comment = "Items in this section will be handled if error occurs"
+                }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new CatchExceptionCommand()
+                {
+                    v_Comment = "Items in this section will run if error occurs"
+                }));
+                lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
+                {
+                    v_Comment = "This section executes if error occurs above"
+                }));
+                lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new EndTryCommand()));
+            }
+
+            CreateUndoSnapshot();
+            lstScriptActions.Invalidate();
+            AutoSizeLineNumberColumn();
+        }
+
+        private void pnlStatus_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawString(_notificationText, pnlStatus.Font, Brushes.White, 30, 4);
+            e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
+        }
         #endregion
 
+        #region ListView Search
+        private void txtCommandSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (lstScriptActions.Items.Count == 0)
+                return;
+
+            _reqdIndex = 0;
+
+            if (txtCommandSearch.Text == "")
+            {
+                //hide info
+                HideSearchInfo();
+
+                //clear indexes
+                _matchingSearchIndex.Clear();
+                _currentIndex = -1;
+
+                //repaint
+                lstScriptActions.Invalidate();
+            }
+            else
+            {
+                lblCurrentlyViewing.Show();
+                lblTotalResults.Show();
+                SearchForItemInListView();
+
+                //repaint
+                lstScriptActions.Invalidate();
+            }
+        }
+
+        private void HideSearchInfo()
+        {
+            lblCurrentlyViewing.Hide();
+            lblTotalResults.Hide();
+        }
+
+        private void pbSearch_Click(object sender, EventArgs e)
+        {
+            if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
+            {
+                _reqdIndex++;
+                SearchForItemInListView();
+            }
+        }
+
+        private void SearchForItemInListView()
+        {
+            var searchCriteria = txtCommandSearch.Text;
+
+            if (searchCriteria == "")
+            {
+                searchCriteria = tsSearchBox.Text;
+            }
+
+            var matchingItems = lstScriptActions.Items.OfType<ListViewItem>()
+                                                      .Where(x => x.Text.Contains(searchCriteria))
+                                                      .ToList();
+
+            int? matchCount = matchingItems.Count();
+            int totalMatches = matchCount ?? 0;
+
+            if ((_reqdIndex == matchingItems.Count) || (_reqdIndex < 0))
+            {
+                _reqdIndex = 0;
+            }
+
+            lblTotalResults.Show();
+
+            if (totalMatches == 0)
+            {
+                _reqdIndex = -1;
+                lblTotalResults.Text = "No Matches Found";
+                lblCurrentlyViewing.Hide();
+                //clear indexes
+                _matchingSearchIndex.Clear();
+                _reqdIndex = -1;
+                lstScriptActions.Invalidate();
+                return;
+            }
+            else
+            {
+                lblCurrentlyViewing.Text = "Viewing " + (_reqdIndex + 1) + " of " + totalMatches + "";
+                tsSearchResult.Text = "Viewing " + (_reqdIndex + 1) + " of " + totalMatches + "";
+                lblTotalResults.Text = totalMatches + " total results found";
+            }
+
+            _matchingSearchIndex = new List<int>();
+            foreach (ListViewItem itm in matchingItems)
+            {
+                _matchingSearchIndex.Add(itm.Index);
+                itm.BackColor = Color.LightGoldenrodYellow;
+            }
+
+            _currentIndex = matchingItems[_reqdIndex].Index;
+
+            lstScriptActions.Invalidate();
+            lstScriptActions.EnsureVisible(_currentIndex);
+        }
+
+        private void pbSearch_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Hand;
+        }
+
+        private void pbSearch_MouseLeave(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Arrow;
+        }
+        #endregion
         #endregion
 
         #region Bottom Notification Panel
-        List<string> notificationList = new List<string>();
-        private DateTime notificationExpires;
-        private bool isDisplaying;
-
-
         private void tmrNotify_Tick(object sender, EventArgs e)
         {
-            if (appSettings ==  null)
+            if (_appSettings ==  null)
             {
                 return;
             }
 
-            if ((notificationExpires < DateTime.Now) && (isDisplaying))
+            if ((_notificationExpires < DateTime.Now) && (_isDisplaying))
             {
                 HideNotification();
             }
 
-            if ((appSettings.ClientSettings.AntiIdleWhileOpen) && (DateTime.Now > lastAntiIdleEvent.AddMinutes(1)))
+            if ((_appSettings.ClientSettings.AntiIdleWhileOpen) && (DateTime.Now > _lastAntiIdleEvent.AddMinutes(1)))
             {
                 PerformAntiIdle();
             }
 
-
             //check if notification is required
-            if ((notificationList.Count > 0) && (notificationExpires < DateTime.Now))
+            if ((_notificationList.Count > 0) && (_notificationExpires < DateTime.Now))
             {
-                var itemToDisplay = notificationList[0];
-                notificationList.RemoveAt(0);
-                notificationExpires = DateTime.Now.AddSeconds(2);
+                var itemToDisplay = _notificationList[0];
+                _notificationList.RemoveAt(0);
+                _notificationExpires = DateTime.Now.AddSeconds(2);
                 ShowNotification(itemToDisplay);
             }
-
-
         }
+
         public void Notify(string notificationText)
         {
-            notificationList.Add(notificationText);
+            _notificationList.Add(notificationText);
         }
+
         private void ShowNotification(string textToDisplay)
         {
-            notificationText = textToDisplay;
+            _notificationText = textToDisplay;
             //lblStatus.Left = 20;
             //lblStatus.Text = textToDisplay;
 
@@ -1255,11 +1292,11 @@ namespace taskt.UI.Forms
             //}
             ShowNotificationRow();
             pnlStatus.ResumeLayout();
-            isDisplaying = true;
+            _isDisplaying = true;
         }
+
         private void HideNotification()
         {
-
             pnlStatus.SuspendLayout();
             //for (int i = 30; i > 0; i--)
             //{
@@ -1267,498 +1304,46 @@ namespace taskt.UI.Forms
             //}
             HideNotificationRow();
             pnlStatus.ResumeLayout();
-
-            isDisplaying = false;
+            _isDisplaying = false;
         }
 
         private void HideNotificationRow()
         {
             tlpControls.RowStyles[5].Height = 0;
         }
+
         private void ShowNotificationRow()
         {
             tlpControls.RowStyles[5].Height = 30;
         }
-        public string notificationText { get; set; }
-        private void pnlStatus_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.DrawString(notificationText, pnlStatus.Font, Brushes.White, 30, 4);
-            e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
-
-        }
-
-        private void btnManageVariables_Click(object sender, EventArgs e)
-        {
-
-            UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            {
-                this.scriptVariables = scriptVariableEditor.scriptVariables;
-            }
-
-        }
-
-        private void frmScriptBuilder_SizeChanged(object sender, EventArgs e)
-        {
-            lstScriptActions.Columns[2].Width = this.Width - 340;
-        }
-        #endregion
-
-        #region Open, Save, Parse File
-        private void uiBtnOpen_Click(object sender, EventArgs e)
-        {
-            //show ofd
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = scriptProjectPath;
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
-
-            //if user selected file
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                //open file
-                OpenFile(openFileDialog.FileName);
-            }
-        }
-        private void OpenFile(string filePath)
-        {
-
-            try
-            {
-                
-                //get deserialized script
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
-
-                //check if script is a part of the currently opened project
-                string openScriptProjectName = deserializedScript.ProjectName;
-
-                if (openScriptProjectName != scriptProject.GetProjectName())
-                    throw new Exception("Attempted to load a script not part of the currently open project");
-
-                //reinitialize
-                lstScriptActions.Items.Clear();
-                scriptVariables = new List<Core.Script.ScriptVariable>();
-
-                if (deserializedScript.Commands.Count == 0)
-                {
-                    Notify("Error Parsing File: Commands not found!");
-                }
-
-                //update file path and reflect in title bar
-                this.ScriptFilePath = filePath;
-
-                //assign ProjectPath variable
-                var projectPathVariable = new Core.Script.ScriptVariable
-                {
-                    VariableName = "ProjectPath",
-                    VariableValue = scriptProjectPath
-                };
-                scriptVariables.Add(projectPathVariable);
-
-                //assign variables
-                scriptVariables.AddRange(deserializedScript.Variables);
-
-                //populate commands
-                PopulateExecutionCommands(deserializedScript.Commands);
-
-                //format listview
-               
-
-                //notify
-                Notify("Script Loaded Successfully!");
-            }
-            catch (Exception ex)
-            {
-                //signal an error has happened
-                Notify("An Error Occured: " + ex.Message);
-            }
-        }
-        private void uiBtnImport_Click(object sender, EventArgs e)
-        {
-            BeginImportProcess();
-        }
-        private void BeginImportProcess()
-        {
-            //show ofd
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
-
-            //if user selected file
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                //import
-                Cursor.Current = Cursors.WaitCursor;
-                Import(openFileDialog.FileName);
-                Cursor.Current = Cursors.Default;
-            }
-
-        }
-        private void Import(string filePath)
-        {
-
-            try
-            {
-                //deserialize file      
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
-
-                if (deserializedScript.Commands.Count == 0)
-                {
-                    Notify("Error Parsing File: Commands not found!");
-                }
-
-                //variables for comments
-                var fileName = new System.IO.FileInfo(filePath).Name;
-                var dateTimeNow = DateTime.Now.ToString();
-
-                //comment
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
-
-                //import
-                PopulateExecutionCommands(deserializedScript.Commands);
-                foreach (Core.Script.ScriptVariable var in deserializedScript.Variables)
-                {
-                    if (scriptVariables.Find(alreadyExists => alreadyExists.VariableName == var.VariableName) == null)
-                    {
-                        scriptVariables.Add(var);
-                    }
-                }
-
-                //comment
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.AddCodeCommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
-
-
-                //format listview
-     
-
-                //notify
-                Notify("Script Imported Successfully!");
-            }
-            catch (Exception ex)
-            {
-                //signal an error has happened
-                Notify("An Error Occured: " + ex.Message);
-            }
-        }
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            for (int i = 30; i > 0; i--)
-            {
-                tlpControls.RowStyles[4].Height = i;
-            }
-        }
-
-        public void PopulateExecutionCommands(List<Core.Script.ScriptAction> commandDetails)
-        {
-            
-
-            foreach (Core.Script.ScriptAction item in commandDetails)
-            {
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand));
-                if (item.AdditionalScriptCommands.Count > 0) PopulateExecutionCommands(item.AdditionalScriptCommands);
-            }
-
-            if (pnlCommandHelper.Visible)
-            {
-                pnlCommandHelper.Hide();
-            }
-
-        }
-        private void ClearSelectedListViewItems()
-        {
-            lstScriptActions.SelectedItems.Clear();
-            selectedIndex = -1;
-            lstScriptActions.Invalidate();
-        }
-
-        private void uiBtnSave_Click(object sender, EventArgs e)
-        {
-            //clear selected items
-            ClearSelectedListViewItems();
-            SaveToFile(false);
-        }
-        private void uiBtnSaveAs_Click(object sender, EventArgs e)
-        {
-            //clear selected items
-            ClearSelectedListViewItems();
-            SaveToFile(true);
-        }
-
-        private List<Core.Automation.Commands.ScriptCommand> GetConfiguredCommands()
-        {
-            List<Core.Automation.Commands.ScriptCommand> ConfiguredCommands = new List<Core.Automation.Commands.ScriptCommand>();
-            foreach (ListViewItem item in lstScriptActions.Items)
-            {
-                ConfiguredCommands.Add(item.Tag as Core.Automation.Commands.ScriptCommand);
-            }
-
-            return ConfiguredCommands;
-        }
-
-        private void SaveToFile(bool saveAs)
-        {
-            if (lstScriptActions.Items.Count == 0)
-            {
-                Notify("You must have at least 1 automation command to save.");
-                return;
-            }
-
-            int beginLoopValidationCount = 0;
-            int beginIfValidationCount = 0;
-            int tryCatchValidationCount = 0;
-            foreach (ListViewItem item in lstScriptActions.Items)
-            {
-                if ((item.Tag is Core.Automation.Commands.LoopListCommand) || (item.Tag is Core.Automation.Commands.LoopContinuouslyCommand) ||(item.Tag is Core.Automation.Commands.LoopNumberOfTimesCommand) || (item.Tag is Core.Automation.Commands.BeginLoopCommand) || (item.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
-                {
-                    beginLoopValidationCount++;
-                }
-                else if (item.Tag is Core.Automation.Commands.EndLoopCommand)
-                {
-                    beginLoopValidationCount--;
-                }
-                else if ((item.Tag is Core.Automation.Commands.BeginIfCommand) || (item.Tag is Core.Automation.Commands.BeginMultiIfCommand))
-                {
-                    beginIfValidationCount++;
-                }
-                else if (item.Tag is Core.Automation.Commands.EndIfCommand)
-                {
-                    beginIfValidationCount--;
-                }
-                else if(item.Tag is Core.Automation.Commands.TryCommand)
-                {
-                    tryCatchValidationCount++;
-                }
-                else if (item.Tag is Core.Automation.Commands.EndTryCommand)
-                {
-                    tryCatchValidationCount--;
-                }
-
-                if (tryCatchValidationCount < 0)
-                {
-                    Notify("Please verify the ordering of your try/catch blocks.");
-                    return;
-                }
-
-                //end loop was found first
-                if (beginLoopValidationCount < 0)
-                {
-                    Notify("Please verify the ordering of your loops.");
-                    return;
-                }
-
-                //end if was found first
-                if (beginIfValidationCount < 0)
-                {
-                    Notify("Please verify the ordering of your ifs.");
-                    return;
-                }
-
-
-
-            }
-
-            //extras were found
-            if (beginLoopValidationCount != 0)
-            {
-                Notify("Please verify the ordering of your loops.");
-                return;
-            }
-            //extras were found
-            if (beginIfValidationCount != 0)
-            {
-                Notify("Please verify the ordering of your ifs.");
-                return;
-            }
-
-            if (tryCatchValidationCount != 0)
-            {
-                Notify("Please verify the ordering of your try/catch blocks.");
-                return;
-            }
-
-            //define default output path
-            if ((this.ScriptFilePath == null) || (saveAs))
-            {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.InitialDirectory = scriptProjectPath;
-                saveFileDialog.RestoreDirectory = true;
-                saveFileDialog.Filter = "Xml (*.xml)|*.xml";
-
-                if (saveFileDialog.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
-
-                if (!saveFileDialog.FileName.ToString().Contains(scriptProjectPath))
-                {
-                    Notify("An Error Occured: Attempted to save script outside of project directory");
-                    return;
-                }
-                    
-                this.ScriptFilePath = saveFileDialog.FileName;
-
-            }
-
-            //serialize script
-            try
-            {
-                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, this.ScriptFilePath, scriptProject.GetProjectName());
-                scriptProject.SaveProject(ScriptFilePath, exportedScript);
-            
-                //show success dialog
-                Notify("File has been saved successfully!");
-            }
-            catch (Exception ex)
-            {
-                Notify("An Error Occured: " + ex.Message);
-            }
-
-
-        }
-
-        #endregion
-
-        #region UI Buttons
-
-        private void uiBtnAddVariable_Click(object sender, EventArgs e)
-        {
-            UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            {
-                this.scriptVariables = scriptVariableEditor.scriptVariables;
-            }
-        }
-
-        private void uiBtnRunScript_Click(object sender, EventArgs e)
-        {
-
-            if (lstScriptActions.Items.Count == 0)
-            {
-                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
-                Notify("You must first build the script by adding commands!");
-                return;
-            }
-
-
-            if (ScriptFilePath == null)
-            {
-                //MessageBox.Show("You must first save your script before you can run it!", "Please Save Script");
-                Notify("You must first save your script before you can run it!");
-                return;
-            }
-
-            //clear selected items
-            ClearSelectedListViewItems();
-
-            SaveToFile(false); // Save & Run!
-
-            Notify("Running Script..");
-
-
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
-
-            //this.executionManager = new ScriptExectionManager();
-            //executionManager.CurrentlyExecuting = true;
-            //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
-
-            newEngine.callBackForm = this;
-            newEngine.Show();
-           
-        }
-
-        private void uiBtnNew_Click(object sender, EventArgs e)
-        {
-            this.ScriptFilePath = null;
-            lstScriptActions.Items.Clear();
-            HideSearchInfo();
-            scriptVariables = new List<Core.Script.ScriptVariable>();
-            //assign ProjectPath variable
-            var projectPathVariable = new Core.Script.ScriptVariable
-            {
-                VariableName = "ProjectPath",
-                VariableValue = scriptProjectPath
-            };
-            scriptVariables.Add(projectPathVariable);
-            GenerateRecentFiles();
-            pnlCommandHelper.Show();
-        }
-
-        private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
-        {
-            UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement();
-            scheduleManager.Show();
-        }
-
-        private void uiBtnAbout_Click(object sender, EventArgs e)
-        {
-            UI.Forms.Supplemental.frmAbout frmAboutForm = new UI.Forms.Supplemental.frmAbout();
-            frmAboutForm.Show();
-        }
-
-        private void uiBtnSettings_Click(object sender, EventArgs e)
-        {
-            //show settings dialog
-            frmSettings newSettings = new frmSettings(this);
-            newSettings.ShowDialog();
-
-            //reload app settings
-            appSettings = new ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
-
-            //reinit
-             Core.Server.HttpServerClient.Initialize();
-
-
-
-
-        }
 
         private void PerformAntiIdle()
         {
-
-            lastAntiIdleEvent = DateTime.Now;
-            var mouseMove = new Core.Automation.Commands.SendMouseMoveCommand();
+            _lastAntiIdleEvent = DateTime.Now;
+            var mouseMove = new SendMouseMoveCommand();
             mouseMove.v_XMousePosition = (Cursor.Position.X + 1).ToString();
             mouseMove.v_YMousePosition = (Cursor.Position.Y + 1).ToString();
             Notify("Anti-Idle Triggered");
         }
 
-        private void uiBtnRecordSequence_Click(object sender, EventArgs e)
+        private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
-            this.Hide();
-            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
-            sequenceRecorder.callBackForm = this;
-            sequenceRecorder.ShowDialog();
-
-            pnlCommandHelper.Hide();
-
-            this.Show();
-            this.BringToFront();
-
-
+            if (_appSettings.ClientSettings.MinimizeToTray)
+            {
+                WindowState = FormWindowState.Normal;
+                ShowInTaskbar = true;
+                notifyTray.Visible = false;
+            }
         }
-
-        private void uiBtnClearAll_Click(object sender, EventArgs e)
-        {
-            HideSearchInfo();
-            lstScriptActions.Items.Clear();
-        }
-
         #endregion
 
         #region Create Command Logic
         private void AddNewCommand(string specificCommand = "")
         {
             //bring up new command configuration form
-            var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands());
-            newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
-            newCommandForm.scriptVariables = this.scriptVariables;
+            var newCommandForm = new frmCommandEditor(_automationCommands, GetConfiguredCommands());
+            newCommandForm.creationMode = frmCommandEditor.CreationMode.Add;
+            newCommandForm.scriptVariables = _scriptVariables;
             if (specificCommand != "")
                 newCommandForm.defaultStartupCommand = specificCommand;
 
@@ -1768,7 +1353,15 @@ namespace taskt.UI.Forms
                 //add to listview
                 AddCommandToListView(newCommandForm.selectedCommand);
             }
-
+        }
+        private List<ScriptCommand> GetConfiguredCommands()
+        {
+            List<ScriptCommand> ConfiguredCommands = new List<ScriptCommand>();
+            foreach (ListViewItem item in lstScriptActions.Items)
+            {
+                ConfiguredCommands.Add(item.Tag as ScriptCommand);
+            }
+            return ConfiguredCommands;
         }
         #endregion
 
@@ -1780,18 +1373,16 @@ namespace taskt.UI.Forms
             {
                 return;
             }
-
             AddNewCommand(tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text);
-
         }
-       private void tvCommands_KeyPress(object sender, KeyPressEventArgs e)
+
+        private void tvCommands_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
                 e.Handled = true;
                 tvCommands_DoubleClick(this, null);
             }
-
         }
         #endregion
 
@@ -1815,243 +1406,44 @@ namespace taskt.UI.Forms
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel senderLink = (LinkLabel)sender;
-            OpenFile(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text);
+            OpenFile(Folders.GetFolder(Folders.FolderType.ScriptsFolder) + senderLink.Text);
         }
-
         #endregion
 
-        #region ListView Search
-
-        private void txtCommandSearch_TextChanged(object sender, EventArgs e)
+        #region UI Buttons
+        #region File Actions Tool Strip and Buttons
+        private void uiBtnNew_Click(object sender, EventArgs e)
         {
-
-   
-
-            if (lstScriptActions.Items.Count == 0)
-                return;
-
-            reqdIndex = 0;
-
-            if (txtCommandSearch.Text == "")
-            {
-                //hide info
-                HideSearchInfo();
-
-                //clear indexes
-                matchingSearchIndex.Clear();
-                currentIndex = -1;
-
-                //repaint
-                lstScriptActions.Invalidate();
-            }
-            else
-            {
-                lblCurrentlyViewing.Show();
-                lblTotalResults.Show();
-                SearchForItemInListView();
-
-                //repaint
-                lstScriptActions.Invalidate();
-            }
-
-        }
-
-        private void HideSearchInfo()
-        {
-            lblCurrentlyViewing.Hide();
-            lblTotalResults.Hide();
-        }
-
-        private void pbSearch_Click(object sender, EventArgs e)
-        {
-            if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
-            {
-                reqdIndex++;
-                SearchForItemInListView();
-            }
-
-        }
-
-        private void SearchForItemInListView()
-        {
-
-
-            var searchCriteria = txtCommandSearch.Text;
-
-            if (searchCriteria == "")
-            {
-                searchCriteria = tsSearchBox.Text;
-            }
-
-            var matchingItems = (from ListViewItem itm in lstScriptActions.Items
-                                 where itm.Text.Contains(searchCriteria)
-                                 select itm).ToList();
-
-
-            int? matchCount = matchingItems.Count();
-            int totalMatches = matchCount ?? 0;
-
-
-            if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
-            {
-                reqdIndex = 0;
-            }
-
-            lblTotalResults.Show();
-
-            if (totalMatches == 0)
-            {
-                reqdIndex = -1;
-                lblTotalResults.Text = "No Matches Found";
-                lblCurrentlyViewing.Hide();
-                //clear indexes
-                matchingSearchIndex.Clear();
-                reqdIndex = -1;
-                lstScriptActions.Invalidate();
-                return;
-            }
-            else
-            {
-                lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-                tsSearchResult.Text =  "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-                lblTotalResults.Text = totalMatches + " total results found";
-            }
-
-
-
-
-
-            matchingSearchIndex = new List<int>();
-            foreach (ListViewItem itm in matchingItems)
-            {
-                matchingSearchIndex.Add(itm.Index);
-                itm.BackColor = Color.LightGoldenrodYellow;
-            }
-
-           
-
-            currentIndex = matchingItems[reqdIndex].Index;
-
-
-            lstScriptActions.Invalidate();
-
-
-
-
-            lstScriptActions.EnsureVisible(currentIndex);
-
-
-
-
-
-        }
-
-        private void pbSearch_MouseEnter(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.Hand;
-        }
-
-        private void pbSearch_MouseLeave(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.Arrow;
-        }
-
-
-        #endregion
-
-        #region Automation Engine Delegate
-
-        #endregion
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder();
-            recorder.ShowDialog();
-        }
-
-        private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            //create command list
-            var commandList = new List<Core.Automation.Commands.ScriptCommand>();
-
-           //loop each
-            for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
-            {
-                //add to list and remove existing
-                commandList.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
-                lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
-            }
-
-            //reverse commands only if not inserting inline
-            if (!appSettings.ClientSettings.InsertCommandsInline)
-            {
-                commandList.Reverse();
-            }
-         
-            //add to parent
-            commandList.ForEach(x => parentBuilder.AddCommandToListView(x));
-
-
-        }
-
-        private void btnSequenceImport_Click(object sender, EventArgs e)
-        {
-            BeginImportProcess();
-        }
-
-        private void frmScriptBuilder_Resize(object sender, EventArgs e)
-        {
-            //check when minimized
-          
-            if ((this.WindowState == FormWindowState.Minimized) && (appSettings.ClientSettings.MinimizeToTray))
-            {
-                appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
-                if (appSettings.ClientSettings.MinimizeToTray)
-                {
-                    notifyTray.Visible = true;
-                    notifyTray.ShowBalloonTip(3000);
-                    this.ShowInTaskbar = false;
-                }        
-            }
-
-            pnlMain.Invalidate();
-
-        }
-
-        private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (appSettings.ClientSettings.MinimizeToTray)
-            {
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
-                notifyTray.Visible = false;
-            }        
+            NewFile();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.ScriptFilePath = null;
+            NewFile();
+        }
+
+        private void NewFile()
+        {
+            ScriptFilePath = null;
             lstScriptActions.Items.Clear();
             HideSearchInfo();
-            scriptVariables = new List<Core.Script.ScriptVariable>();
+            _scriptVariables = new List<ScriptVariable>();
             //assign ProjectPath variable
-            var projectPathVariable = new Core.Script.ScriptVariable
+            var projectPathVariable = new ScriptVariable
             {
                 VariableName = "ProjectPath",
-                VariableValue = scriptProjectPath
+                VariableValue = _scriptProjectPath
             };
-            scriptVariables.Add(projectPathVariable);
+            _scriptVariables.Add(projectPathVariable);
             GenerateRecentFiles();
             pnlCommandHelper.Show();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void uiBtnOpen_Click(object sender, EventArgs e)
         {
             //show ofd
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = scriptProjectPath;
+            openFileDialog.InitialDirectory = _scriptProjectPath;
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Filter = "Xml (*.xml)|*.xml";
 
@@ -2063,9 +1455,84 @@ namespace taskt.UI.Forms
             }
         }
 
-        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BeginImportProcess();
+            //show ofd
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = _scriptProjectPath;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+
+            //if user selected file
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //open file
+                OpenFile(openFileDialog.FileName);
+            }
+        }
+
+        private void OpenFile(string filePath)
+        {
+            try
+            {
+                //get deserialized script
+                Script deserializedScript = Script.DeserializeFile(filePath);
+
+                //check if script is a part of the currently opened project
+                string openScriptProjectName = deserializedScript.ProjectName;
+
+                if (openScriptProjectName != _scriptProject.GetProjectName())
+                    throw new Exception("Attempted to load a script not part of the currently open project");
+
+                //reinitialize
+                lstScriptActions.Items.Clear();
+                _scriptVariables = new List<ScriptVariable>();
+
+                if (deserializedScript.Commands.Count == 0)
+                {
+                    Notify("Error Parsing File: Commands not found!");
+                }
+
+                //update file path and reflect in title bar
+                ScriptFilePath = filePath;
+
+                //assign ProjectPath variable
+                var projectPathVariable = new ScriptVariable
+                {
+                    VariableName = "ProjectPath",
+                    VariableValue = _scriptProjectPath
+                };
+
+                _scriptVariables.Add(projectPathVariable);
+
+                //assign variables
+                _scriptVariables.AddRange(deserializedScript.Variables);
+
+                //populate commands
+                PopulateExecutionCommands(deserializedScript.Commands);
+
+                //notify
+                Notify("Script Loaded Successfully!");
+            }
+            catch (Exception ex)
+            {
+                //signal an error has happened
+                Notify("An Error Occured: " + ex.Message);
+            }
+        }
+
+        private void uiBtnSave_Click(object sender, EventArgs e)
+        {
+            //clear selected items
+            ClearSelectedListViewItems();
+            SaveToFile(false);
+        }
+
+        private void uiBtnSaveAs_Click(object sender, EventArgs e)
+        {
+            //clear selected items
+            ClearSelectedListViewItems();
+            SaveToFile(true);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2082,88 +1549,222 @@ namespace taskt.UI.Forms
             SaveToFile(true);
         }
 
-        private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToFile(bool saveAs)
         {
-            UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            {
-                this.scriptVariables = scriptVariableEditor.scriptVariables;
-            }
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //show settings dialog
-            frmSettings newSettings = new frmSettings(this);
-            newSettings.ShowDialog();
-
-            //reload app settings
-            appSettings = new ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
-
-            //reinit
-            Core.Server.HttpServerClient.Initialize();
-        }
-
-        private void recordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
-            sequenceRecorder.callBackForm = this;
-            sequenceRecorder.ShowDialog();
-
-            pnlCommandHelper.Hide();
-
-            this.Show();
-            this.BringToFront();
-        }
-
-        private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement();
-            scheduleManager.Show();
-        }
-
-        private void runToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
             if (lstScriptActions.Items.Count == 0)
             {
-                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
-                Notify("You must first build the script by adding commands!");
+                Notify("You must have at least 1 automation command to save.");
                 return;
             }
 
-
-            if (ScriptFilePath == null)
+            int beginLoopValidationCount = 0;
+            int beginIfValidationCount = 0;
+            int tryCatchValidationCount = 0;
+            foreach (ListViewItem item in lstScriptActions.Items)
             {
-                //MessageBox.Show("You must first save your script before you can run it!", "Please Save Script");
-                Notify("You must first save your script before you can run it!");
+                if ((item.Tag is LoopListCommand) || (item.Tag is LoopContinuouslyCommand) || (item.Tag is LoopNumberOfTimesCommand) || (item.Tag is BeginLoopCommand) || (item.Tag is BeginMultiLoopCommand))
+                {
+                    beginLoopValidationCount++;
+                }
+                else if (item.Tag is EndLoopCommand)
+                {
+                    beginLoopValidationCount--;
+                }
+                else if ((item.Tag is BeginIfCommand) || (item.Tag is BeginMultiIfCommand))
+                {
+                    beginIfValidationCount++;
+                }
+                else if (item.Tag is EndIfCommand)
+                {
+                    beginIfValidationCount--;
+                }
+                else if (item.Tag is TryCommand)
+                {
+                    tryCatchValidationCount++;
+                }
+                else if (item.Tag is EndTryCommand)
+                {
+                    tryCatchValidationCount--;
+                }
+
+                if (tryCatchValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your try/catch blocks.");
+                    return;
+                }
+
+                //end loop was found first
+                if (beginLoopValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your loops.");
+                    return;
+                }
+
+                //end if was found first
+                if (beginIfValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your ifs.");
+                    return;
+                }
+            }
+
+            //extras were found
+            if (beginLoopValidationCount != 0)
+            {
+                Notify("Please verify the ordering of your loops.");
                 return;
             }
 
-            //clear selected items
-            ClearSelectedListViewItems();
+            //extras were found
+            if (beginIfValidationCount != 0)
+            {
+                Notify("Please verify the ordering of your ifs.");
+                return;
+            }
 
-            Notify("Running Script..");
+            if (tryCatchValidationCount != 0)
+            {
+                Notify("Please verify the ordering of your try/catch blocks.");
+                return;
+            }
 
+            //define default output path
+            if ((ScriptFilePath == null) || (saveAs))
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.InitialDirectory = _scriptProjectPath;
+                saveFileDialog.RestoreDirectory = true;
+                saveFileDialog.Filter = "Xml (*.xml)|*.xml";
 
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
+                if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
 
-            //this.executionManager = new ScriptExectionManager();
-            //executionManager.CurrentlyExecuting = true;
-            //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
+                if (!saveFileDialog.FileName.ToString().Contains(_scriptProjectPath))
+                {
+                    Notify("An Error Occured: Attempted to save script outside of project directory");
+                    return;
+                }
 
-            newEngine.callBackForm = this;
-            newEngine.Show();
+                ScriptFilePath = saveFileDialog.FileName;
+            }
+
+            //serialize script
+            try
+            {
+                var exportedScript = Script.SerializeScript(lstScriptActions.Items, _scriptVariables, ScriptFilePath, _scriptProject.GetProjectName());
+                _scriptProject.SaveProject(ScriptFilePath, exportedScript);
+
+                //show success dialog
+                Notify("File has been saved successfully!");
+            }
+            catch (Exception ex)
+            {
+                Notify("An Error Occured: " + ex.Message);
+            }
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ClearSelectedListViewItems()
         {
-            saveToolStripMenuItem_Click(null, null);
-            runToolStripMenuItem_Click(null, null);
+            lstScriptActions.SelectedItems.Clear();
+            _selectedIndex = -1;
+            lstScriptActions.Invalidate();
+        }
+
+        private void uiBtnImport_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
+        }
+
+        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
+        }
+
+        private void btnSequenceImport_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
+        }
+
+        private void BeginImportProcess()
+        {
+            //show ofd
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Folders.GetFolder(Folders.FolderType.ScriptsFolder);
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+
+            //if user selected file
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //import
+                Cursor.Current = Cursors.WaitCursor;
+                Import(openFileDialog.FileName);
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void Import(string filePath)
+        {
+            try
+            {
+                //deserialize file
+                Script deserializedScript = Script.DeserializeFile(filePath);
+
+                if (deserializedScript.Commands.Count == 0)
+                {
+                    Notify("Error Parsing File: Commands not found!");
+                }
+
+                //variables for comments
+                var fileName = new FileInfo(filePath).Name;
+                var dateTimeNow = DateTime.Now.ToString();
+
+                //comment
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new AddCodeCommentCommand()
+                {
+                    v_Comment = "Imported From " + fileName + " @ " + dateTimeNow
+                }));
+
+                //import
+                PopulateExecutionCommands(deserializedScript.Commands);
+                foreach (ScriptVariable var in deserializedScript.Variables)
+                {
+                    if (_scriptVariables.Find(alreadyExists => alreadyExists.VariableName == var.VariableName) == null)
+                    {
+                        _scriptVariables.Add(var);
+                    }
+                }
+
+                //comment
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new AddCodeCommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
+
+                //format listview
+                //notify
+                Notify("Script Imported Successfully!");
+            }
+            catch (Exception ex)
+            {
+                //signal an error has happened
+                Notify("An Error Occured: " + ex.Message);
+            }
+        }
+
+        public void PopulateExecutionCommands(List<ScriptAction> commandDetails)
+        {
+            foreach (ScriptAction item in commandDetails)
+            {
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand));
+                if (item.AdditionalScriptCommands.Count > 0)
+                    PopulateExecutionCommands(item.AdditionalScriptCommands);
+            }
+
+            if (pnlCommandHelper.Visible)
+            {
+                pnlCommandHelper.Hide();
+            }
+
         }
 
         private void restartApplicationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2171,9 +1772,64 @@ namespace taskt.UI.Forms
             Application.Restart();
         }
 
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            for (int i = 30; i > 0; i--)
+            {
+                tlpControls.RowStyles[4].Height = i;
+            }
+        }
+
         private void closeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+        #endregion
+
+        #region Options Tool Strip and Buttons
+        private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenVariableManager();
+        }
+
+        private void uiBtnAddVariable_Click(object sender, EventArgs e)
+        {
+            OpenVariableManager();
+        }
+
+        private void OpenVariableManager()
+        {
+            frmScriptVariables scriptVariableEditor = new frmScriptVariables();
+            scriptVariableEditor.scriptVariables = _scriptVariables;
+
+            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            {
+                _scriptVariables = scriptVariableEditor.scriptVariables;
+            }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSettingsManager();
+        }
+
+        private void uiBtnSettings_Click(object sender, EventArgs e)
+        {
+            OpenSettingsManager();
+        }
+
+        private void OpenSettingsManager()
+        {
+            //show settings dialog
+            frmSettings newSettings = new frmSettings(this);
+            newSettings.ShowDialog();
+
+            //reload app settings
+            _appSettings = new ApplicationSettings();
+            _appSettings = _appSettings.GetOrCreateApplicationSettings();
+
+            //reinit
+            HttpServerClient.Initialize();
         }
 
         private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2196,32 +1852,130 @@ namespace taskt.UI.Forms
             {
                 showSearchBarToolStripMenuItem.Text = "Show Search Bar";
             }
-
         }
 
-        private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
+        private void uiBtnClearAll_Click(object sender, EventArgs e)
         {
-            if (notifyTray != null)
-            {
-                notifyTray.Visible = false;
-                notifyTray.Dispose();
-            }
-                              
+            HideSearchInfo();
+            lstScriptActions.Items.Clear();
         }
 
+        private void aboutTasktToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAbout frmAboutForm = new frmAbout();
+            frmAboutForm.Show();
+        }
+        #endregion
+
+        #region Script Actions Tool Strip and Buttons
+        private void recordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RecordSequence();
+        }
+
+        private void uiBtnRecordSequence_Click(object sender, EventArgs e)
+        {
+            RecordSequence();
+        }
+
+        private void RecordSequence()
+        {
+            Hide();
+            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
+            sequenceRecorder.callBackForm = this;
+            sequenceRecorder.ShowDialog();
+            pnlCommandHelper.Hide();
+
+            Show();
+            BringToFront();
+        }
+
+        private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmScheduleManagement scheduleManager = new frmScheduleManagement();
+            scheduleManager.Show();
+        }
+
+        private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
+        {
+            frmScheduleManagement scheduleManager = new frmScheduleManagement();
+            scheduleManager.Show();
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RunScript();
+        }
+
+        private void uiBtnRunScript_Click(object sender, EventArgs e)
+        {
+            RunScript();
+        }
+
+        private void RunScript()
+        {
+            if (lstScriptActions.Items.Count == 0)
+            {
+                Notify("You must first build the script by adding commands!");
+                return;
+            }
+
+            if (ScriptFilePath == null)
+            {
+                Notify("You must first save your script before you can run it!");
+                return;
+            }
+
+            //clear selected items
+            ClearSelectedListViewItems();
+            SaveToFile(false); // Save & Run!
+            Notify("Running Script..");
+
+            frmScriptEngine newEngine = new frmScriptEngine(ScriptFilePath, this);
+
+            //executionManager = new ScriptExectionManager();
+            //executionManager.CurrentlyExecuting = true;
+            //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
+
+            newEngine.CallBackForm = this;
+            newEngine.Show();
+        }
+        #endregion
+
+        #region Save And Run Tool Strip and Buttons
+        private void saveAndRunToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem_Click(null, null);
+            runToolStripMenuItem_Click(null, null);
+        }
+        #endregion
+
+        #region Save And Close Buttons
+        private void uiBtnKeep_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
+        private void uiBtnClose_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
+        #endregion
+
+        #region View Code Tool Strip
         private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-         
             var currentCommand = lstScriptActions.SelectedItems[0].Tag;
-
-            var jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(currentCommand, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
-
-            var dialog = new Supplemental.frmDialog(jsonText, "Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0);
+            var jsonText = JsonConvert.SerializeObject(currentCommand, new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+            var dialog = new frmDialog(jsonText, "Command Code", frmDialog.DialogType.OkOnly, 0);
             dialog.ShowDialog();
-
-
         }
+        #endregion
 
+        #region Project Builder in Tool Strip and Buttons
         private void addProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddProject();
@@ -2238,7 +1992,7 @@ namespace taskt.UI.Forms
             projectBuilder.ShowDialog();
 
             //Close taskt if add project form is closed at startup
-            if (projectBuilder.DialogResult == DialogResult.Cancel && scriptProject == null)
+            if (projectBuilder.DialogResult == DialogResult.Cancel && _scriptProject == null)
             {
                 Application.Exit();
             }
@@ -2246,11 +2000,11 @@ namespace taskt.UI.Forms
             //Create new taskt project
             else if (projectBuilder.createProject == true)
             {
-                scriptProjectPath = projectBuilder.newProjectPath;
+                _scriptProjectPath = projectBuilder.newProjectPath;
                 //Create new main script
-                string mainScriptPath = Path.Combine(scriptProjectPath, "Main.xml");
+                string mainScriptPath = Path.Combine(_scriptProjectPath, "Main.xml");
                 lstScriptActions.Items.Clear();
-                scriptVariables = new List<Core.Script.ScriptVariable>();
+                _scriptVariables = new List<ScriptVariable>();
                 var helloWorldCommand = new ShowMessageCommand();
                 helloWorldCommand.v_Message = "Hello World";
                 lstScriptActions.Items.Insert(0, CreateScriptCommandListViewItem(helloWorldCommand));
@@ -2261,16 +2015,16 @@ namespace taskt.UI.Forms
                 try
                 {
                     //Serialize main script
-                    var mainScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, mainScriptPath, projectBuilder.newProjectName);
+                    var mainScript = Script.SerializeScript(lstScriptActions.Items, _scriptVariables, mainScriptPath, projectBuilder.newProjectName);
                     //Create new project
                     Project proj = new Project(projectBuilder.newProjectName);
                     //Save new project
                     proj.SaveProject(mainScriptPath, mainScript);
                     //Open new project
-                    scriptProject = Project.OpenProject(mainScriptPath);
+                    _scriptProject = Project.OpenProject(mainScriptPath);
                     //Open main script
                     OpenFile(mainScriptPath);
-                    scriptFilePath = mainScriptPath;
+                    ScriptFilePath = mainScriptPath;
                     //Show success dialog
                     Notify("Project has been created successfully!");
                 }
@@ -2286,8 +2040,8 @@ namespace taskt.UI.Forms
                 try
                 {
                     //Open project
-                    scriptProject = Project.OpenProject(projectBuilder.existingMainPath);
-                    scriptProjectPath = Path.GetDirectoryName(projectBuilder.existingMainPath);
+                    _scriptProject = Project.OpenProject(projectBuilder.existingMainPath);
+                    _scriptProjectPath = Path.GetDirectoryName(projectBuilder.existingMainPath);
                     //Open Main.xml
                     OpenFile(projectBuilder.existingMainPath);
                     //show success dialog
@@ -2300,10 +2054,10 @@ namespace taskt.UI.Forms
                     //Try adding project again
                     AddProject();
                 }
-
             }
         }
+        #endregion
+        #endregion
     }
-
 }
 
