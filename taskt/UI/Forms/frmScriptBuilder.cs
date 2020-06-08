@@ -1800,11 +1800,11 @@ namespace taskt.UI.Forms
         private void OpenVariableManager()
         {
             frmScriptVariables scriptVariableEditor = new frmScriptVariables();
-            scriptVariableEditor.scriptVariables = _scriptVariables;
+            scriptVariableEditor.ScriptVariables = _scriptVariables;
 
             if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
             {
-                _scriptVariables = scriptVariableEditor.scriptVariables;
+                _scriptVariables = scriptVariableEditor.ScriptVariables;
             }
         }
 
@@ -1881,8 +1881,8 @@ namespace taskt.UI.Forms
         private void RecordSequence()
         {
             Hide();
-            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
-            sequenceRecorder.callBackForm = this;
+            frmScreenRecorder sequenceRecorder = new frmScreenRecorder();
+            sequenceRecorder.CallBackForm = this;
             sequenceRecorder.ShowDialog();
             pnlCommandHelper.Hide();
 

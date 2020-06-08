@@ -11,22 +11,19 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebSocket4Net;
 using taskt.Core.Settings;
 using taskt.Core.Metrics;
 using taskt.Core.Documentation;
+using taskt.Core.Server;
+using taskt.UI.Forms.Supplement_Forms;
+using taskt.UI.Forms.Supplemental;
+using taskt.Core;
 
 namespace taskt.UI.Forms
 {
@@ -68,10 +65,8 @@ namespace taskt.UI.Forms
             chkOverrideInstances.DataBindings.Add("Checked", engineSettings, "OverrideExistingAppInstances", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutoCalcVariables.DataBindings.Add("Checked", engineSettings, "AutoCalcVariables", false, DataSourceUpdateMode.OnPropertyChanged);
 
-
             cboCancellationKey.DataSource = Enum.GetValues(typeof(Keys));
             cboCancellationKey.DataBindings.Add("Text", engineSettings, "CancellationKey", false, DataSourceUpdateMode.OnPropertyChanged);
-
 
             var listenerSettings = newAppSettings.ListenerSettings;
             chkAutoStartListener.DataBindings.Add("Checked", listenerSettings, "StartListenerOnStartup", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -95,18 +90,18 @@ namespace taskt.UI.Forms
             chkPreloadCommands.DataBindings.Add("Checked", clientSettings, "PreloadBuilderCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkSlimActionBar.DataBindings.Add("Checked", clientSettings, "UseSlimActionBar", false, DataSourceUpdateMode.OnPropertyChanged);
 
-
             //get metrics
             bgwMetrics.RunWorkerAsync();
 
-            Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
-            Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
+            LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
+            LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
         }
+
         public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
         public delegate void AutomationTCPListener_StoppedDelegate(object sender, EventArgs e);
         private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStopped);
                 Invoke(stoppedDelegate, new object[] { sender, e });
@@ -115,12 +110,11 @@ namespace taskt.UI.Forms
             {
                 SetupListeningUI();
             }
-
         }
 
         private void AutomationTCPListener_ListeningStarted(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 var startedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStarted);
                 Invoke(startedDelegate, new object[] { sender, e });
@@ -134,7 +128,7 @@ namespace taskt.UI.Forms
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            Core.Server.SocketClient.Connect(txtServerURL.Text);
+            SocketClient.Connect(txtServerURL.Text);
         }
 
 
@@ -153,16 +147,16 @@ namespace taskt.UI.Forms
             Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
             newAppSettings.EngineSettings.CancellationKey = key;
             newAppSettings.Save(newAppSettings);
-            Core.Server.SocketClient.LoadSettings();
-            this.Close();
+            SocketClient.LoadSettings();
+            Close();
         }
 
         private void btnUpdateCheck_Click(object sender, EventArgs e)
         {
-            Core.ManifestUpdate manifest = new Core.ManifestUpdate();
+            ManifestUpdate manifest = new ManifestUpdate();
             try
             {
-                manifest = Core.ManifestUpdate.GetManifest();
+                manifest = ManifestUpdate.GetManifest();
             }
             catch (Exception ex)
             {
@@ -170,79 +164,73 @@ namespace taskt.UI.Forms
                 return;
             }
 
-
             if (manifest.RemoteVersionNewer)
             {
-                Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
+                frmUpdate frmUpdate = new frmUpdate(manifest);
                 if (frmUpdate.ShowDialog() == DialogResult.OK)
                 {
-
                     //move update exe to root folder for execution
                     var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
                     var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
 
-
-                    if (!System.IO.File.Exists(updaterExecutionResources))
+                    if (!File.Exists(updaterExecutionResources))
                     {
                         MessageBox.Show("taskt-updater.exe not found in resources directory!");
                         return;
                     }
                     else
                     {
-                        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
+                        File.Copy(updaterExecutionResources, updaterExecutableDestination);
                     }
 
-                    var updateProcess = new System.Diagnostics.Process();
+                    var updateProcess = new Process();
                     updateProcess.StartInfo.FileName = updaterExecutableDestination;
                     updateProcess.StartInfo.Arguments = manifest.PackageURL;
-
                     updateProcess.Start();
                     Application.Exit();
-
                 }
-
             }
             else
             {
                 MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
             }
-
         }
 
         private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
         {
-            lblStatus.Text = "Socket Status: " + Core.Server.SocketClient.GetSocketState();
-            if (Core.Server.SocketClient.connectionException != string.Empty)
+            lblStatus.Text = "Socket Status: " + SocketClient.GetSocketState();
+            if (SocketClient.connectionException != string.Empty)
             {
                 lblSocketException.Show();
-                lblSocketException.Text = Core.Server.SocketClient.connectionException;
+                lblSocketException.Text = SocketClient.connectionException;
             }
             else
             {
                 lblSocketException.Hide();
             }
-
         }
 
         private void btnCloseConnection_Click(object sender, EventArgs e)
         {
-            Core.Server.SocketClient.Disconnect();
+            SocketClient.Disconnect();
         }
 
         private void chkBypassValidation_CheckedChanged(object sender, EventArgs e)
         {
             if (chkBypassValidation.Checked)
             {
-                MessageBox.Show("Bypassing SSL Certificate Validation procedures is inherently insecure as the client will trust any server certificate.  Please consider issuing proper SSL Certificates.", "Warning - Insecure", MessageBoxButtons.OK);
+                MessageBox.Show("Bypassing SSL Certificate Validation procedures is inherently insecure" +
+                    " as the client will trust any server certificate. Please consider issuing proper SSL Certificates.",
+                    "Warning - Insecure", MessageBoxButtons.OK);
             }
         }
 
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
-
             //prompt user to confirm they want to select a new folder
-            var updateFolderRequest = MessageBox.Show("Would you like to change the default root folder that taskt uses to store tasks and information? " + Environment.NewLine + Environment.NewLine +
-                "Current Root Folder: " + txtAppFolderPath.Text, "Change Default Root Folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var updateFolderRequest = MessageBox.Show("Would you like to change the default root folder that taskt uses" +
+                " to store tasks and information? " + Environment.NewLine + Environment.NewLine + "Current Root Folder: " +
+                txtAppFolderPath.Text, "Change Default Root Folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             //if user does not want to update folder then exit
             if (updateFolderRequest == DialogResult.No)
@@ -257,51 +245,49 @@ namespace taskt.UI.Forms
                 {
                     //create references to old and new root folders
                     var oldRootFolder = txtAppFolderPath.Text;
-                    var newRootFolder = System.IO.Path.Combine(fbd.SelectedPath, "taskt");
+                    var newRootFolder = Path.Combine(fbd.SelectedPath, "taskt");
 
                     //ask user to confirm
-                    var confirmNewFolderSelection = MessageBox.Show("Please confirm the changes below:" + Environment.NewLine + Environment.NewLine +
-                    "Old Root Folder: " + oldRootFolder + Environment.NewLine + Environment.NewLine +
-                    "New Root Folder: " + newRootFolder, "Change Default Root Folder", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    var confirmNewFolderSelection = MessageBox.Show("Please confirm the changes below:" +
+                        Environment.NewLine + Environment.NewLine + "Old Root Folder: " + oldRootFolder +
+                        Environment.NewLine + Environment.NewLine + "New Root Folder: " + newRootFolder,
+                        "Change Default Root Folder", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
                     //handle if user decides to cancel
                     if (confirmNewFolderSelection == DialogResult.Cancel)
                         return;
 
                     //ask if we should migrate the data
-                    var migrateCopyData = MessageBox.Show("Would you like to attempt to move the data from the old folder to the new folder?  Please note, depending on how many files you have, this could take a few minutes.", "Migrate Data?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var migrateCopyData = MessageBox.Show("Would you like to attempt to move the data from" +
+                        " the old folder to the new folder?  Please note, depending on how many files you have," +
+                        " this could take a few minutes.", "Migrate Data?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     //check if user wants to migrate data
                     if (migrateCopyData == DialogResult.Yes)
                     {
-
                         try
                         {
                             //find and copy files
-                            foreach (string dirPath in System.IO.Directory.GetDirectories(oldRootFolder, "*", SearchOption.AllDirectories))
+                            foreach (string dirPath in Directory.GetDirectories(oldRootFolder, "*", SearchOption.AllDirectories))
                             {
-                                System.IO.Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
+                                Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
                             }
                             foreach (string newPath in Directory.GetFiles(oldRootFolder, "*.*", SearchOption.AllDirectories))
                             {
-                                System.IO.File.Copy(newPath, newPath.Replace(oldRootFolder, newRootFolder), true);
+                                File.Copy(newPath, newPath.Replace(oldRootFolder, newRootFolder), true);
                             }
 
-                            MessageBox.Show("Data Migration Complete", "Data Migration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                            MessageBox.Show("Data Migration Complete", "Data Migration Complete", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
                             //handle any unexpected errors
                             MessageBox.Show("An Error Occured during Data Migration Copy: " + ex.ToString());
                         }
-
                     }
-
                     //update textbox which will be updated once user selects "Ok"
                     txtAppFolderPath.Text = newRootFolder;
-
-
                 }
             }
         }
@@ -310,45 +296,37 @@ namespace taskt.UI.Forms
         {
             e.Result = new Metric().ExecutionMetricsSummary();
         }
-
         private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-
-
         {
-
             if (e.Error != null)
             {
-                if (e.Error is System.IO.FileNotFoundException)
+                if (e.Error is FileNotFoundException)
                 {
-                    lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
+                    lblGettingMetrics.Text = "Metrics Unavailable - Metrics are only available after running" +
+                        " tasks which will generate metrics logs";
                 }
                 else
                 {
-                    lblMetrics.Text = "Metrics Unavailable: " + e.Error.ToString();
+                    lblGettingMetrics.Text = "Metrics Unavailable: " + e.Error.ToString();
                 }
-
-
             }
             else
             {
-
-
                 var metricsSummary = (List<ExecutionMetric>)(e.Result);
 
                 if (metricsSummary.Count == 0)
                 {
-                    lblMetrics.Text = "No Metrics Found";
-                    lblMetrics.Show();
+                    lblGettingMetrics.Text = "No Metrics Found";
+                    lblGettingMetrics.Show();
                     tvExecutionTimes.Hide();
                     btnClearMetrics.Hide();
                 }
                 else
                 {
-                    lblMetrics.Hide();
+                    lblGettingMetrics.Hide();
                     tvExecutionTimes.Show();
                     btnClearMetrics.Show();
                 }
-
 
                 foreach (var metric in metricsSummary)
                 {
@@ -361,14 +339,9 @@ namespace taskt.UI.Forms
                         subNode.Text = string.Join(" - ", metricItem.LoggedOn.ToString("MM/dd/yy hh:mm"), metricItem.ExecutionTime);
                         rootNode.Nodes.Add(subNode);
                     }
-
                     tvExecutionTimes.Nodes.Add(rootNode);
-
                 }
             }
-
-
-
         }
 
         private void btnClearMetrics_Click(object sender, EventArgs e)
@@ -376,19 +349,17 @@ namespace taskt.UI.Forms
             new Metric().ClearExecutionMetrics();
             bgwMetrics.RunWorkerAsync();
         }
-
         private void btnGenerateWikiDocs_Click(object sender, EventArgs e)
         {
             DocumentationGeneration docGeneration = new DocumentationGeneration();
             var docsRoot = docGeneration.GenerateMarkdownFiles();
-            System.Diagnostics.Process.Start(docsRoot);
+            Process.Start(docsRoot);
         }
 
         private void txtVariableStartMarker_TextChanged(object sender, EventArgs e)
         {
             lblVariableDisplay.Text = txtVariableStartMarker.Text + "myVariable" + txtVariableEndMarker.Text;
         }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -398,7 +369,7 @@ namespace taskt.UI.Forms
         {
             var frmAttended = new frmAttendedMode();
             frmAttended.Show();
-            this.Close();
+            Close();
         }
 
         private void btnSelectAttendedTaskFolder_Click(object sender, EventArgs e)
@@ -407,7 +378,7 @@ namespace taskt.UI.Forms
             {
                 if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);
+                    var newAttendedTaskFolder = Path.Combine(fbd.SelectedPath);
                     txtAttendedTaskFolder.Text = newAttendedTaskFolder;
                 }
             }
@@ -415,18 +386,18 @@ namespace taskt.UI.Forms
 
         private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
         {
-            Supplemental.frmDisplayManager displayManager = new Supplemental.frmDisplayManager();
+            frmDisplayManager displayManager = new frmDisplayManager();
             displayManager.Show();
-            this.Close();
+            Close();
         }
 
         private void btnGetGUID_Click(object sender, EventArgs e)
         {
-            var successfulConnection =  Core.Server.HttpServerClient.TestConnection(txtHttpsAddress.Text);
+            var successfulConnection =  HttpServerClient.TestConnection(txtHttpsAddress.Text);
 
             if (successfulConnection)
             {
-                var pulledNewGUID =  Core.Server.HttpServerClient.GetGuid();
+                var pulledNewGUID =  HttpServerClient.GetGuid();
 
                 if (pulledNewGUID)
                 {
@@ -435,50 +406,36 @@ namespace taskt.UI.Forms
                     txtHttpsAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
                     MessageBox.Show("Connected Successfully! GUID will be reloaded automatically the next time settings is loaded!");
                 }
-
                 MessageBox.Show("Connected Successfully!");
-
-
-
             }
             else
             {
                 MessageBox.Show("Unable To Connect!");
             }
-
         }
 
         private void btnGetBotGUID_Click(object sender, EventArgs e)
         {
-            var newGUID =  Core.Server.HttpServerClient.GetGuid();
-
-
+            var newGUID =  HttpServerClient.GetGuid();
         }
 
         private void btnTaskPublish_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(scriptBuilderForm.ScriptFilePath))
+            if (File.Exists(scriptBuilderForm.ScriptFilePath))
             {
-                 Core.Server.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.Server.PublishedScript.PublishType.ServerReference);
+                 HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, PublishedScript.PublishType.ServerReference);
             }
             else
             {
                 MessageBox.Show("Please open the task in order to publish it.");
             }
-
-        }
-
-        private void label17_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void SetupListeningUI()
         {
-
-            if (Core.Server.LocalTCPListener.IsListening)
+            if (LocalTCPListener.IsListening)
             {
-                lblListeningStatus.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
+                lblListeningStatus.Text = $"Client is Listening at Endpoint '{LocalTCPListener.GetListeningAddress()}'.";
                 btnStopListening.Enabled = true;
                 btnStartListening.Enabled = false;
             }
@@ -488,7 +445,6 @@ namespace taskt.UI.Forms
                 btnStopListening.Enabled = false;
                 btnStartListening.Enabled = true;
             }
-
             lblListeningStatus.Show();
         }
 
@@ -502,24 +458,21 @@ namespace taskt.UI.Forms
         {
             if (int.TryParse(txtListeningPort.Text, out var portNumber)){
                 DisableListenerButtons();
-                Core.Server.LocalTCPListener.StartListening(portNumber);
+                LocalTCPListener.StartListening(portNumber);
             }
-
-
         }
 
         private void btnStopListening_Click(object sender, EventArgs e)
         {
             DisableListenerButtons();
-            Core.Server.LocalTCPListener.StopAutomationListener();
+            LocalTCPListener.StopAutomationListener();
         }
 
         private void btnWhiteList_Click(object sender, EventArgs e)
         {
-            //newAppSettings.ListenerSettings.IPWhiteList.Add(new Core.WhiteListIP("127.0.0.1"));
+            //newAppSettings.ListenerSettings.IPWhiteList.Add(new WhiteListIPSettings("127.0.0.1"));
             //Supplement_Forms.frmGridView frmWhitelist = new Supplement_Forms.frmGridView(newAppSettings.ListenerSettings.IPWhiteList);
             //frmWhitelist.ShowDialog();
         }
-
     }
 }

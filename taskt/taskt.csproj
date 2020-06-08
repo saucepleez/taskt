@@ -424,11 +424,11 @@
     <Compile Include="UI\Forms\frmAttendedMode.Designer.cs">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\frmSequenceRecorder.cs">
+    <Compile Include="UI\Forms\frmScreenRecorder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\frmSequenceRecorder.Designer.cs">
-      <DependentUpon>frmSequenceRecorder.cs</DependentUpon>
+    <Compile Include="UI\Forms\frmScreenRecorder.Designer.cs">
+      <DependentUpon>frmScreenRecorder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\frmSettings.cs">
       <SubType>Form</SubType>
@@ -621,8 +621,8 @@
     <EmbeddedResource Include="UI\Forms\frmScriptBuilder.ru.resx">
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmSequenceRecorder.resx">
-      <DependentUpon>frmSequenceRecorder.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\frmScreenRecorder.resx">
+      <DependentUpon>frmScreenRecorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>

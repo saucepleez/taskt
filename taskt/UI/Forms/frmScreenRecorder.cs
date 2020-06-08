@@ -1,41 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.User32;
+using taskt.Properties;
 
 namespace taskt.UI.Forms
 {
-    public partial class frmSequenceRecorder : UIForm
+    public partial class frmScreenRecorder : UIForm
     {
+        public frmScriptBuilder CallBackForm { get; set; }
+        private List<ScriptCommand> _scriptCommandList;
+        private bool _isRecording;
 
-        public static List<Core.Automation.Commands.ScriptCommand> commandList;
-        public frmScriptBuilder callBackForm { get; set; }
-        private bool isRecording { get; set; }
-        public frmSequenceRecorder()
+        public frmScreenRecorder()
         {
             InitializeComponent();
         }
 
-        private void btnStartRecording_Click(object sender, EventArgs e)
+        private void OnHookStopped(object sender, EventArgs e)
         {
-
-
-
-        }
-        void OnHookStopped(object sender, EventArgs e)
-        {
-
-          //  isRecording = false;
-
+            //isRecording = false;
             GlobalHook.HookStopped -= new EventHandler(OnHookStopped);
 
             //if (!isRecording)
@@ -43,51 +27,42 @@ namespace taskt.UI.Forms
             //    return;
             //}
 
-
             pnlOptions.Show();
             lblRecording.Hide();
-
             FinalizeRecording();
         }
 
         private void FinalizeRecording()
         {
-
-            var commandList = GlobalHook.GeneratedCommands;
-
-
-            var outputList = new List<Core.Automation.Commands.ScriptCommand>();
-
+            _scriptCommandList = GlobalHook.GeneratedCommands;
+            var outputList = new List<ScriptCommand>();
 
             if (chkGroupIntoSequence.Checked)
             {
-                var newSequence = new Core.Automation.Commands.SequenceCommand();
+                var newSequence = new SequenceCommand();
 
-                foreach (Core.Automation.Commands.ScriptCommand cmd in commandList)
+                foreach (ScriptCommand cmd in _scriptCommandList)
                 {
                     newSequence.v_scriptActions.Add(cmd);
                 }
 
-
                 if (newSequence.v_scriptActions.Count > 0)
                     outputList.Add(newSequence);
-
-
             }
             else if (chkGroupMovesIntoSequences.Checked)
             {
-                var newSequence = new Core.Automation.Commands.SequenceCommand();
+                var newSequence = new SequenceCommand();
 
-                foreach (Core.Automation.Commands.ScriptCommand cmd in commandList)
+                foreach (ScriptCommand cmd in _scriptCommandList)
                 {
 
-                    if (cmd is Core.Automation.Commands.SendMouseMoveCommand)
+                    if (cmd is SendMouseMoveCommand)
                     {
-                        var sendMouseCmd = (Core.Automation.Commands.SendMouseMoveCommand)cmd;
+                        var sendMouseCmd = (SendMouseMoveCommand)cmd;
                         if (sendMouseCmd.v_MouseClick != "None")
                         {
                             outputList.Add(newSequence);
-                            newSequence = new Core.Automation.Commands.SequenceCommand();
+                            newSequence = new SequenceCommand();
                             outputList.Add(cmd);
                         }
                         else
@@ -98,64 +73,53 @@ namespace taskt.UI.Forms
                     else if (cmd is SendKeystrokesCommand)
                     {
                         outputList.Add(newSequence);
-                        newSequence = new Core.Automation.Commands.SequenceCommand();
+                        newSequence = new SequenceCommand();
                         outputList.Add(cmd);
                     }
                     else
                     {
                         newSequence.v_scriptActions.Add(cmd);
                     }
-
-
                 }
 
                 if (newSequence.v_scriptActions.Count > 0)
                     outputList.Add(newSequence);
-
-
             }
 
             else
             {
-                outputList = commandList;
+                outputList = _scriptCommandList;
             }
 
-
-
-
-
-
-            var commentCommand = new Core.Automation.Commands.AddCodeCommentCommand();
+            var commentCommand = new AddCodeCommentCommand();
             commentCommand.v_Comment = "Sequence Recorded " + DateTime.Now.ToString();
             outputList.Insert(0, commentCommand);
 
             foreach (var cmd in outputList)
             {
-                callBackForm.AddCommandToListView(cmd);
+                CallBackForm.AddCommandToListView(cmd);
             }
+            Close();
+        }
 
-            this.Close();
+        private void btnStartRecording_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnStopRecording_Click(object sender, EventArgs e)
         {
-
-
-
             GlobalHook.StopHook();
             //FinalizeRecording();
-
-
         }
 
         private void frmSequenceRecorder_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void chkGroupIntoSequences_CheckedChanged(object sender, EventArgs e)
         {
-
 
         }
 
@@ -169,33 +133,28 @@ namespace taskt.UI.Forms
         {
             if (uiBtnRecord.DisplayText == "Start")
             {
-                this.Height = 150;
-                this.BringToFront();
+                Height = 150;
+                BringToFront();
                 MoveFormToBottomRight(this);
-                this.TopMost = true;
+                TopMost = true;
                 uiBtnRecord.Top = lblRecording.Top + 50;
-
                 pnlOptions.Hide();
-
                 lblRecording.Show();
-
 
                 int.TryParse(txtHookResolution.Text, out int samplingResolution);
 
-
                 GlobalHook.HookStopped += new EventHandler(OnHookStopped);
-                GlobalHook.StartScreenRecordingHook(chkCaptureClicks.Checked, chkCaptureMouse.Checked, chkGroupMovesIntoSequences.Checked, chkCaptureKeyboard.Checked, chkCaptureWindowEvents.Checked, chkActivateTopLeft.Checked, chkTrackWindowSize.Checked, chkTrackWindowsOpenLocation.Checked, samplingResolution, txtHookStop.Text);
+                GlobalHook.StartScreenRecordingHook(chkCaptureClicks.Checked, chkCaptureMouse.Checked,
+                    chkGroupMovesIntoSequences.Checked, chkCaptureKeyboard.Checked, chkCaptureWindowEvents.Checked,
+                    chkActivateTopLeft.Checked, chkTrackWindowSize.Checked, chkTrackWindowsOpenLocation.Checked,
+                    samplingResolution, txtHookStop.Text);
                 lblRecording.Text = "Press '" + txtHookStop.Text + "' key to stop recording!";
-               // WindowHook.StartHook();
+                // WindowHook.StartHook();
 
-
-
-                commandList = new List<Core.Automation.Commands.ScriptCommand>();
-
+                _scriptCommandList = new List<ScriptCommand>();
 
                 uiBtnRecord.DisplayText = "Stop";
-                uiBtnRecord.Image = taskt.Properties.Resources.various_stop_button;
-
+                uiBtnRecord.Image = Resources.various_stop_button;
             }
             else
             {
@@ -218,10 +177,10 @@ namespace taskt.UI.Forms
 }
 
 
-    
 
 
-    
+
+
 
 
 

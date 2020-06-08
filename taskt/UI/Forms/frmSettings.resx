@@ -331,7 +331,7 @@
         N+EBtTfxnv8PrNbZfV4FQpcAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="label14.Text" xml:space="preserve">
+  <data name="lblServerSettingsDesc.Text" xml:space="preserve">
     <value>Enable this functionality to connect to a local instance of taskt server for workforce management.  After testing the connection, the client will be assigned a new GUID which must be approved by an administrator in the server.</value>
   </data>
   <metadata name="tmrGetSocketStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

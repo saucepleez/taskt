@@ -13,24 +13,21 @@
 //limitations under the License.
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Script;
+using taskt.Core;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.UI.Forms
 {
     public partial class frmScriptVariables : ThemedForm
     {
-        public List<Core.Script.ScriptVariable> scriptVariables { get; set; }
-        TreeNode userVariableParentNode;
-        public string leadingValue = "Default Value: ";
-        public string emptyValue = "(no default value)";
-        #region Initialization and Form Load
+        public List<ScriptVariable> ScriptVariables { get; set; }
+        private TreeNode _userVariableParentNode;
+        private string _leadingValue = "Default Value: ";
+        private string _emptyValue = "(no default value)";
 
+        #region Initialization and Form Load
         public frmScriptVariables()
         {
             InitializeComponent();
@@ -38,13 +35,12 @@ namespace taskt.UI.Forms
         private void frmScriptVariables_Load(object sender, EventArgs e)
         {
            //initialize
-            userVariableParentNode = InitializeNodes("My Task Variables", scriptVariables);
-            InitializeNodes("Default Task Variables", Core.Common.GenerateSystemVariables());
+            _userVariableParentNode = InitializeNodes("My Task Variables", ScriptVariables);
+            InitializeNodes("Default Task Variables", Common.GenerateSystemVariables());
         }
 
-        private TreeNode InitializeNodes(string parentName, List<Core.Script.ScriptVariable> variables)
+        private TreeNode InitializeNodes(string parentName, List<ScriptVariable> variables)
         {
-
             //create a root node (parent)
             TreeNode parentNode = new TreeNode(parentName);
 
@@ -66,58 +62,48 @@ namespace taskt.UI.Forms
         #region Add/Cancel Buttons
         private void uiBtnOK_Click(object sender, EventArgs e)
         {
-
             //remove all variables
-            scriptVariables.Clear();
+            ScriptVariables.Clear();
 
             //loop each variable and add
-            for (int i = 0; i < userVariableParentNode.Nodes.Count; i++)
+            for (int i = 0; i < _userVariableParentNode.Nodes.Count; i++)
             {
                 //get name and value
-                var VariableName = userVariableParentNode.Nodes[i].Text;
-                var VariableValue = userVariableParentNode.Nodes[i].Nodes[0].Text.Replace(leadingValue, "").Replace(emptyValue, "");
+                var VariableName = _userVariableParentNode.Nodes[i].Text;
+                var VariableValue = _userVariableParentNode.Nodes[i].Nodes[0].Text.Replace(_leadingValue, "").Replace(_emptyValue, "");
 
                 //add to list
-                scriptVariables.Add(new Core.Script.ScriptVariable() { VariableName = VariableName, VariableValue = VariableValue });
-        
-
+                ScriptVariables.Add(new ScriptVariable() { VariableName = VariableName, VariableValue = VariableValue });
             }
 
             //return success result
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             //cancel and close
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
-
         #endregion
 
         #region Add/Edit Variables
-
         private void uiBtnNew_Click(object sender, EventArgs e)
         {
             //create variable editing form
-            Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable();
+            frmAddVariable addVariableForm = new frmAddVariable();
             ExpandUserVariableNode();
 
             //validate if user added variable
             if (addVariableForm.ShowDialog() == DialogResult.OK)
             {
                 //add newly edited node
-                AddUserVariableNode(userVariableParentNode, addVariableForm.txtVariableName.Text, addVariableForm.txtDefaultValue.Text);
+                AddUserVariableNode(_userVariableParentNode, addVariableForm.txtVariableName.Text, addVariableForm.txtDefaultValue.Text);
             }
-
-
         }
-
-        
 
         private void tvScriptVariables_DoubleClick(object sender, EventArgs e)
         {
-
             //handle double clicks outside
             if (tvScriptVariables.SelectedNode == null)
             {
@@ -141,21 +127,22 @@ namespace taskt.UI.Forms
 
             string VariableName, VariableValue;
             TreeNode parentNode;
+
             if(tvScriptVariables.SelectedNode.Nodes.Count == 0)
             {
                 parentNode = tvScriptVariables.SelectedNode.Parent;
                 VariableName = tvScriptVariables.SelectedNode.Parent.Text;
-                VariableValue = tvScriptVariables.SelectedNode.Text.Replace(leadingValue, "").Replace(emptyValue, "");
+                VariableValue = tvScriptVariables.SelectedNode.Text.Replace(_leadingValue, "").Replace(_emptyValue, "");
             }
             else
             {
                 parentNode = tvScriptVariables.SelectedNode;
                 VariableName = tvScriptVariables.SelectedNode.Text;
-                VariableValue = tvScriptVariables.SelectedNode.Nodes[0].Text.Replace(leadingValue, "").Replace(emptyValue, "");
+                VariableValue = tvScriptVariables.SelectedNode.Nodes[0].Text.Replace(_leadingValue, "").Replace(_emptyValue, "");
             }
 
             //create variable editing form
-            Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable(VariableName, VariableValue);
+            frmAddVariable addVariableForm = new frmAddVariable(VariableName, VariableValue);
             ExpandUserVariableNode();
 
             //validate if user added variable
@@ -165,10 +152,10 @@ namespace taskt.UI.Forms
                 parentNode.Remove();
 
                 //add newly edited node
-                AddUserVariableNode(userVariableParentNode, addVariableForm.txtVariableName.Text, addVariableForm.txtDefaultValue.Text);
+                AddUserVariableNode(_userVariableParentNode, addVariableForm.txtVariableName.Text, addVariableForm.txtDefaultValue.Text);
             }
-
         }
+
         private void AddUserVariableNode(TreeNode parentNode, string VariableName, string variableText)
         {
             //add new node and sort
@@ -176,26 +163,23 @@ namespace taskt.UI.Forms
 
             if (variableText == string.Empty)
             {
-                variableText = emptyValue;
+                variableText = _emptyValue;
             }
 
-            childNode.Nodes.Add(leadingValue + variableText);
+            childNode.Nodes.Add(_leadingValue + variableText);
             parentNode.Nodes.Add(childNode);
             tvScriptVariables.Sort();
             ExpandUserVariableNode();
-
         }
 
         private void ExpandUserVariableNode()
         {
-            if (userVariableParentNode != null)
+            if (_userVariableParentNode != null)
             {
-                userVariableParentNode.ExpandAll();
+                _userVariableParentNode.ExpandAll();
             }
         }
 
-
- 
         private void tvScriptVariables_KeyDown(object sender, KeyEventArgs e)
         {
             //handling outside
@@ -249,9 +233,9 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void pnlBottom_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(this.Theme.CreateGradient(panel2.ClientRectangle), panel2.ClientRectangle);
+            e.Graphics.FillRectangle(Theme.CreateGradient(pnlBottom.ClientRectangle), pnlBottom.ClientRectangle);
         }
     }
 }
