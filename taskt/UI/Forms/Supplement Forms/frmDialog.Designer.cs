@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmDialog
     {
@@ -32,12 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDialog));
             this.autoCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.lblAutoClose = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.pnlControlContainer = new taskt.UI.CustomControls.UIPanel();
-            this.txtMessage = new System.Windows.Forms.RichTextBox();
             this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.txtMessage = new System.Windows.Forms.RichTextBox();
+            this.tlpMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
@@ -62,23 +62,23 @@
             this.lblAutoClose.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblAutoClose.Visible = false;
             // 
-            // tableLayoutPanel1
+            // tlpMain
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.pnlControlContainer, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblAutoClose, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtMessage, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(668, 373);
-            this.tableLayoutPanel1.TabIndex = 20;
+            this.tlpMain.BackColor = System.Drawing.Color.White;
+            this.tlpMain.ColumnCount = 1;
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.Controls.Add(this.pnlControlContainer, 0, 2);
+            this.tlpMain.Controls.Add(this.lblAutoClose, 0, 0);
+            this.tlpMain.Controls.Add(this.txtMessage, 0, 1);
+            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Location = new System.Drawing.Point(0, 0);
+            this.tlpMain.Name = "tlpMain";
+            this.tlpMain.RowCount = 3;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            this.tlpMain.Size = new System.Drawing.Size(668, 373);
+            this.tlpMain.TabIndex = 20;
             // 
             // pnlControlContainer
             // 
@@ -145,15 +145,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(668, 373);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tlpMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDialog";
             this.Text = "Dialog";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmDialog_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmDialog_KeyDown);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tlpMain.ResumeLayout(false);
+            this.tlpMain.PerformLayout();
             this.pnlControlContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
@@ -167,7 +167,7 @@
         private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
         private System.Windows.Forms.Timer autoCloseTimer;
         private System.Windows.Forms.Label lblAutoClose;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
         private taskt.UI.CustomControls.UIPanel pnlControlContainer;
         private System.Windows.Forms.RichTextBox txtMessage;
     }

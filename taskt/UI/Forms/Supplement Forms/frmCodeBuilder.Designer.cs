@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmCodeBuilder
     {
@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCodeBuilder));
             this.tlpBuilder = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlTop = new System.Windows.Forms.Panel();
             this.uiBtnSample = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnSave = new taskt.UI.CustomControls.UIPictureButton();
             this.chkRunAfterCompile = new System.Windows.Forms.CheckBox();
@@ -39,7 +39,7 @@
             this.lstCompilerResults = new System.Windows.Forms.ListBox();
             this.rtbCode = new System.Windows.Forms.RichTextBox();
             this.tlpBuilder.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSample)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSave)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCompile)).BeginInit();
@@ -50,7 +50,7 @@
             this.tlpBuilder.BackColor = System.Drawing.Color.DimGray;
             this.tlpBuilder.ColumnCount = 1;
             this.tlpBuilder.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.5F));
-            this.tlpBuilder.Controls.Add(this.panel1, 0, 0);
+            this.tlpBuilder.Controls.Add(this.pnlTop, 0, 0);
             this.tlpBuilder.Controls.Add(this.lstCompilerResults, 0, 2);
             this.tlpBuilder.Controls.Add(this.rtbCode, 0, 1);
             this.tlpBuilder.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -63,18 +63,18 @@
             this.tlpBuilder.Size = new System.Drawing.Size(827, 451);
             this.tlpBuilder.TabIndex = 0;
             // 
-            // panel1
+            // pnlTop
             // 
-            this.panel1.Controls.Add(this.uiBtnSample);
-            this.panel1.Controls.Add(this.uiBtnSave);
-            this.panel1.Controls.Add(this.chkRunAfterCompile);
-            this.panel1.Controls.Add(this.lblHeader);
-            this.panel1.Controls.Add(this.uiBtnCompile);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(821, 54);
-            this.panel1.TabIndex = 2;
+            this.pnlTop.Controls.Add(this.uiBtnSample);
+            this.pnlTop.Controls.Add(this.uiBtnSave);
+            this.pnlTop.Controls.Add(this.chkRunAfterCompile);
+            this.pnlTop.Controls.Add(this.lblHeader);
+            this.pnlTop.Controls.Add(this.uiBtnCompile);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTop.Location = new System.Drawing.Point(3, 3);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(821, 54);
+            this.pnlTop.TabIndex = 2;
             // 
             // uiBtnSample
             // 
@@ -181,8 +181,8 @@
             this.Text = "Code Builder";
             this.Load += new System.EventHandler(this.frmCodeBuilder_Load);
             this.tlpBuilder.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlTop.ResumeLayout(false);
+            this.pnlTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSample)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSave)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCompile)).EndInit();
@@ -193,7 +193,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tlpBuilder;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlTop;
         private CustomControls.UIPictureButton uiBtnCompile;
         private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.ListBox lstCompilerResults;

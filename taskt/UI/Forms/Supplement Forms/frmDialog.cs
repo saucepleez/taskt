@@ -12,27 +12,29 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmDialog : Form
     {
-        public int closeTicks;
-        public int ticksPassed;
+        public int CloseTicks;
+        public int TicksPassed;
+
+        public enum DialogType
+        {
+            YesNo,
+            OkCancel,
+            OkOnly
+        }
+
         public frmDialog(string message, string title, DialogType dialogType, int closeAfterSeconds)
         {
             InitializeComponent();
 
             txtMessage.Text = message;
-            this.Text = title;
+            Text = title;
             switch (dialogType)
             {
                 case DialogType.YesNo:
@@ -50,67 +52,62 @@ namespace taskt.UI.Forms.Supplemental
 
             if (closeAfterSeconds > 0)
             {
-                closeTicks = closeAfterSeconds;
+                CloseTicks = closeAfterSeconds;
                 CalculateCloseTime();
                 lblAutoClose.Show();
                 autoCloseTimer.Interval = 1000;
                 autoCloseTimer.Enabled = true;
             }
             pnlControlContainer.BackColor = Color.SteelBlue;
-            this.txtMessage.SelectionStart = txtMessage.Text.Length;
-        }
-        private void CalculateCloseTime()
-        {
-            lblAutoClose.Text = "closing in " + (closeTicks - ticksPassed) + " sec(s)";
+            txtMessage.SelectionStart = txtMessage.Text.Length;
         }
 
-        public enum DialogType
+        private void CalculateCloseTime()
         {
-            YesNo,
-            OkCancel,
-            OkOnly
+            lblAutoClose.Text = "closing in " + (CloseTicks - TicksPassed) + " sec(s)";
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void autoCloseTimer_Tick(object sender, EventArgs e)
         {
-            if (closeTicks == ticksPassed)
+            if (CloseTicks == TicksPassed)
             {
-                this.Close();
+                Close();
             }
             else
             {
-                ticksPassed++;
+                TicksPassed++;
                 CalculateCloseTime();
             }
         }
 
         private void frmDialog_Load(object sender, EventArgs e)
         {
-            this.Focus();
+            Focus();
         }
 
         private void frmDialog_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                Close();
             }
         }      
+
         private void txtMessage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                Close();
             }
         }
     }

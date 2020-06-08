@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmCodeBuilder : Form
     {
@@ -17,6 +13,7 @@ namespace taskt.UI.Forms.Supplemental
         {
             InitializeComponent();
         }
+
         public frmCodeBuilder(string code)
         {
             InitializeComponent();
@@ -26,7 +23,6 @@ namespace taskt.UI.Forms.Supplemental
                 rtbCode.Text = code;
                 rtbCode_TextChanged(null, null);
             }
-
         }
 
         private void frmCodeBuilder_Load(object sender, EventArgs e)
@@ -38,7 +34,6 @@ namespace taskt.UI.Forms.Supplemental
         {
             //Credits to Apex for RegEx Highlighting Sample
             //http://www.codingvision.net/interface/c-simple-syntax-highlighting
-
 
             // getting keywords/functions
             string keywords = @"\b(public|private|partial|static|namespace|class|using|void|foreach|in)\b";
@@ -113,7 +108,7 @@ namespace taskt.UI.Forms.Supplemental
 
             lstCompilerResults.Items.Add("Initializing Compiler Services..");
 
-            var compilerSvc = new Core.CompilerServices();
+            var compilerSvc = new CompilerServices();
 
             lstCompilerResults.Items.Add("Compiling..");
             var result = compilerSvc.CompileInput(rtbCode.Text);
@@ -130,18 +125,13 @@ namespace taskt.UI.Forms.Supplemental
                 lstCompilerResults.Items.Add("Compiled Successfully!");
 
                 if (chkRunAfterCompile.Checked)
-                    System.Diagnostics.Process.Start(result.PathToAssembly);
-              
-
+                    Process.Start(result.PathToAssembly);
             }
-
-
-
         }
 
         private void uiBtnSave_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnSample_Click(object sender, EventArgs e)

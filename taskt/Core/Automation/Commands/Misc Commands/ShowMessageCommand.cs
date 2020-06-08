@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -62,7 +63,7 @@ namespace taskt.Core.Automation.Commands
 
             var result = engine.TasktEngineUI.Invoke(new Action(() =>
                 {
-                    engine.TasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
+                    engine.TasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
                 }
             ));
 

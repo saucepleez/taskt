@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmDisplayManager
     {
@@ -40,19 +40,19 @@
             this.btnAddMachine = new System.Windows.Forms.Button();
             this.tmrCheck = new System.Windows.Forms.Timer(this.components);
             this.tlpDisplayManager = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlBottom = new System.Windows.Forms.Panel();
             this.lblResolution = new System.Windows.Forms.Label();
             this.txtHeight = new System.Windows.Forms.TextBox();
             this.txtWidth = new System.Windows.Forms.TextBox();
             this.chkStartMinimized = new System.Windows.Forms.CheckBox();
             this.chkHideScreen = new System.Windows.Forms.CheckBox();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.pnlTop = new System.Windows.Forms.Panel();
             this.lblScheduledScripts = new System.Windows.Forms.Label();
             this.lblHeader = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMachines)).BeginInit();
             this.tlpDisplayManager.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.pnlBottom.SuspendLayout();
+            this.pnlTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // lstEventLogs
@@ -146,10 +146,10 @@
             this.tlpDisplayManager.ColumnCount = 2;
             this.tlpDisplayManager.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpDisplayManager.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpDisplayManager.Controls.Add(this.panel1, 0, 2);
+            this.tlpDisplayManager.Controls.Add(this.pnlBottom, 0, 2);
             this.tlpDisplayManager.Controls.Add(this.dgvMachines, 0, 1);
             this.tlpDisplayManager.Controls.Add(this.lstEventLogs, 0, 3);
-            this.tlpDisplayManager.Controls.Add(this.panel2, 0, 0);
+            this.tlpDisplayManager.Controls.Add(this.pnlTop, 0, 0);
             this.tlpDisplayManager.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpDisplayManager.Location = new System.Drawing.Point(0, 0);
             this.tlpDisplayManager.Name = "tlpDisplayManager";
@@ -161,21 +161,21 @@
             this.tlpDisplayManager.Size = new System.Drawing.Size(1017, 654);
             this.tlpDisplayManager.TabIndex = 5;
             // 
-            // panel1
+            // pnlBottom
             // 
-            this.tlpDisplayManager.SetColumnSpan(this.panel1, 2);
-            this.panel1.Controls.Add(this.lblResolution);
-            this.panel1.Controls.Add(this.txtHeight);
-            this.panel1.Controls.Add(this.txtWidth);
-            this.panel1.Controls.Add(this.chkStartMinimized);
-            this.panel1.Controls.Add(this.chkHideScreen);
-            this.panel1.Controls.Add(this.btnStart);
-            this.panel1.Controls.Add(this.btnStop);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 371);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1011, 34);
-            this.panel1.TabIndex = 6;
+            this.tlpDisplayManager.SetColumnSpan(this.pnlBottom, 2);
+            this.pnlBottom.Controls.Add(this.lblResolution);
+            this.pnlBottom.Controls.Add(this.txtHeight);
+            this.pnlBottom.Controls.Add(this.txtWidth);
+            this.pnlBottom.Controls.Add(this.chkStartMinimized);
+            this.pnlBottom.Controls.Add(this.chkHideScreen);
+            this.pnlBottom.Controls.Add(this.btnStart);
+            this.pnlBottom.Controls.Add(this.btnStop);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBottom.Location = new System.Drawing.Point(3, 371);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(1011, 34);
+            this.pnlBottom.TabIndex = 6;
             // 
             // lblResolution
             // 
@@ -230,19 +230,19 @@
             this.chkHideScreen.Text = "Hide Screen";
             this.chkHideScreen.UseVisualStyleBackColor = true;
             // 
-            // panel2
+            // pnlTop
             // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.tlpDisplayManager.SetColumnSpan(this.panel2, 2);
-            this.panel2.Controls.Add(this.lblScheduledScripts);
-            this.panel2.Controls.Add(this.lblHeader);
-            this.panel2.Controls.Add(this.btnAddMachine);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1017, 72);
-            this.panel2.TabIndex = 7;
+            this.pnlTop.BackColor = System.Drawing.Color.Transparent;
+            this.tlpDisplayManager.SetColumnSpan(this.pnlTop, 2);
+            this.pnlTop.Controls.Add(this.lblScheduledScripts);
+            this.pnlTop.Controls.Add(this.lblHeader);
+            this.pnlTop.Controls.Add(this.btnAddMachine);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlTop.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(1017, 72);
+            this.pnlTop.TabIndex = 7;
             // 
             // lblScheduledScripts
             // 
@@ -281,10 +281,10 @@
             this.Load += new System.EventHandler(this.frmDisplayManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMachines)).EndInit();
             this.tlpDisplayManager.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.pnlBottom.ResumeLayout(false);
+            this.pnlBottom.PerformLayout();
+            this.pnlTop.ResumeLayout(false);
+            this.pnlTop.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -298,10 +298,10 @@
         private System.Windows.Forms.Button btnAddMachine;
         private System.Windows.Forms.Timer tmrCheck;
         private System.Windows.Forms.TableLayoutPanel tlpDisplayManager;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.CheckBox chkHideScreen;
         private System.Windows.Forms.CheckBox chkStartMinimized;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.Label lblScheduledScripts;
         private System.Windows.Forms.Label lblResolution;
