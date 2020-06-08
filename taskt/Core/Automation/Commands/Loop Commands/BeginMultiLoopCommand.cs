@@ -115,7 +115,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //get script variables for feeding into loop builder form
-            ScriptVariables = editor.scriptVariables;
+            ScriptVariables = editor.ScriptVariables;
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_LoopConditionsTable", this, editor);
@@ -164,15 +164,15 @@ namespace taskt.Core.Automation.Commands
 
                     var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
                     frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
-                    editor.selectedCommand = loopCommand;
-                    editor.editingCommand = loopCommand;
-                    editor.originalCommand = loopCommand;
-                    editor.creationMode = frmCommandEditor.CreationMode.Edit;
-                    editor.scriptVariables = ScriptVariables;
+                    editor.SelectedCommand = loopCommand;
+                    editor.EditingCommand = loopCommand;
+                    editor.OriginalCommand = loopCommand;
+                    editor.CreationModeInstance = frmCommandEditor.CreationMode.Edit;
+                    editor.ScriptVariables = ScriptVariables;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {
-                        var editedCommand = editor.editingCommand as BeginLoopCommand;
+                        var editedCommand = editor.EditingCommand as BeginLoopCommand;
                         var displayText = editedCommand.GetDisplayValue();
                         var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(editedCommand);
 
@@ -202,13 +202,13 @@ namespace taskt.Core.Automation.Commands
             var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
 
             frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
-            editor.selectedCommand = new BeginLoopCommand();
+            editor.SelectedCommand = new BeginLoopCommand();
             var res = editor.ShowDialog();
 
             if (res == DialogResult.OK)
             {
                 //get data
-                var configuredCommand = editor.selectedCommand as BeginLoopCommand;
+                var configuredCommand = editor.SelectedCommand as BeginLoopCommand;
                 var displayText = configuredCommand.GetDisplayValue();
                 var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(configuredCommand);
 

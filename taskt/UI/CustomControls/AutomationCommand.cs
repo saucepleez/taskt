@@ -111,7 +111,7 @@ namespace taskt.UI.CustomControls
                     switch (control.HelperType)
                     {
                         case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
-                            control.DataSource = editor.scriptVariables;
+                            control.DataSource = editor.ScriptVariables;
                             break;
                         default:
                             break;
@@ -128,7 +128,7 @@ namespace taskt.UI.CustomControls
                 {
                     var variableCbo = (ComboBox)ctrl;
                     variableCbo.Items.Clear();
-                    foreach (var var in editor.scriptVariables)
+                    foreach (var var in editor.ScriptVariables)
                     {
                         variableCbo.Items.Add(var.VariableName);
                     }

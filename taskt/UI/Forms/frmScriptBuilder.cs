@@ -609,23 +609,23 @@ namespace taskt.UI.Forms
                 frmCommandEditor editCommand = new frmCommandEditor(_automationCommands, GetConfiguredCommands());
 
                 //creation mode edit locks form to current command
-                editCommand.creationMode = frmCommandEditor.CreationMode.Edit;
+                editCommand.CreationModeInstance = frmCommandEditor.CreationMode.Edit;
 
                 //editCommand.defaultStartupCommand = currentCommand.SelectionName;
-                editCommand.editingCommand = currentCommand;
+                editCommand.EditingCommand = currentCommand;
 
                 //create clone of current command so databinding does not affect if changes are not saved
-                editCommand.originalCommand = Common.Clone(currentCommand);
+                editCommand.OriginalCommand = Common.Clone(currentCommand);
 
                 //set variables
-                editCommand.scriptVariables = _scriptVariables;
+                editCommand.ScriptVariables = _scriptVariables;
 
                 //show edit command form and save changes on OK result
                 if (editCommand.ShowDialog() == DialogResult.OK)
                 {
-                    selectedCommandItem.Tag = editCommand.selectedCommand;
-                    selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
-                    selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
+                    selectedCommandItem.Tag = editCommand.SelectedCommand;
+                    selectedCommandItem.Text = editCommand.SelectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
+                    selectedCommandItem.SubItems.Add(editCommand.SelectedCommand.GetDisplayValue());
                 }
             }
         }
@@ -1342,16 +1342,16 @@ namespace taskt.UI.Forms
         {
             //bring up new command configuration form
             var newCommandForm = new frmCommandEditor(_automationCommands, GetConfiguredCommands());
-            newCommandForm.creationMode = frmCommandEditor.CreationMode.Add;
-            newCommandForm.scriptVariables = _scriptVariables;
+            newCommandForm.CreationModeInstance = frmCommandEditor.CreationMode.Add;
+            newCommandForm.ScriptVariables = _scriptVariables;
             if (specificCommand != "")
-                newCommandForm.defaultStartupCommand = specificCommand;
+                newCommandForm.DefaultStartupCommand = specificCommand;
 
             //if a command was selected
             if (newCommandForm.ShowDialog() == DialogResult.OK)
             {
                 //add to listview
-                AddCommandToListView(newCommandForm.selectedCommand);
+                AddCommandToListView(newCommandForm.SelectedCommand);
             }
         }
         private List<ScriptCommand> GetConfiguredCommands()

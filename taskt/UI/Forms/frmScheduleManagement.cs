@@ -11,24 +11,21 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
-using Microsoft.Win32.TaskScheduler;
-using taskt.Core;
 using taskt.Core.IO;
 
 namespace taskt.UI.Forms
 {
     public partial class frmScheduleManagement : UIForm
     {
-        string rpaScriptsFolder;
+        private string _rpaScriptsFolder;
+
         public frmScheduleManagement()
         {
             InitializeComponent();
@@ -39,16 +36,16 @@ namespace taskt.UI.Forms
         private void frmScheduleManagement_Load(object sender, EventArgs e)
         {
             //get path to executing assembly
-            txtAppPath.Text = System.Reflection.Assembly.GetEntryAssembly().Location;
+            txtAppPath.Text = Assembly.GetEntryAssembly().Location;
 
             //get path to scripts folder
-            rpaScriptsFolder = Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+            _rpaScriptsFolder = Folders.GetFolder(Folders.FolderType.ScriptsFolder);
 
-            var files = System.IO.Directory.GetFiles(rpaScriptsFolder);
+            var files = Directory.GetFiles(_rpaScriptsFolder);
 
             foreach (var fil in files)
             {
-                System.IO.FileInfo newFileInfo = new System.IO.FileInfo(fil);
+                FileInfo newFileInfo = new FileInfo(fil);
                 cboSelectedScript.Items.Add(newFileInfo.Name);
             }
 
@@ -58,6 +55,7 @@ namespace taskt.UI.Forms
             //call bgw to pull schedule info
             RefreshTasks();
         }
+
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(txtRecurCount.Text))
@@ -78,7 +76,7 @@ namespace taskt.UI.Forms
                 return;
             }
 
-            var selectedFile = rpaScriptsFolder + cboSelectedScript.Text;
+            var selectedFile = _rpaScriptsFolder + cboSelectedScript.Text;
 
             using (TaskService ts = new TaskService())
             {
@@ -130,11 +128,13 @@ namespace taskt.UI.Forms
                 ts.RootFolder.RegisterTaskDefinition(@"taskt-" + cboSelectedScript.Text, td);
             }
         }
+
         private void uiBtnShowScheduleManager_Click(object sender, EventArgs e)
         {
             using (TaskService ts = new TaskService())
                 ts.StartSystemTaskSchedulerManager();
         }
+
         private void dgvScheduledTasks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvScheduledTasks.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
@@ -158,18 +158,20 @@ namespace taskt.UI.Forms
         {
             bgwGetSchedulingInfo.RunWorkerAsync();
         }
+
         private void tmrGetSchedulingInfo_Tick(object sender, EventArgs e)
         {
             if (!bgwGetSchedulingInfo.IsBusy)
                 bgwGetSchedulingInfo.RunWorkerAsync();
         }
+
         private void bgwGetSchedulingInfo_DoWork(object sender, DoWorkEventArgs e)
         {
             List<Object[]> scheduledTaskList = new List<Object[]>();
 
             using (TaskService ts = new TaskService())
             {
-                foreach (Microsoft.Win32.TaskScheduler.Task task in ts.RootFolder.Tasks)
+                foreach (Task task in ts.RootFolder.Tasks)
                 {
                     if (task.Name.Contains("taskt"))
                     {
@@ -177,7 +179,15 @@ namespace taskt.UI.Forms
                         if (task.Enabled)
                             currentState = "disable";
 
-                        var scheduleItem = new object[] { task.Name, task.LastRunTime, task.LastTaskResult, task.NextRunTime, task.IsActive, currentState };
+                        var scheduleItem = new object[] 
+                        { 
+                            task.Name, 
+                            task.LastRunTime, 
+                            task.LastTaskResult, 
+                            task.NextRunTime, 
+                            task.IsActive, 
+                            currentState 
+                        };
                         scheduledTaskList.Add(scheduleItem);
                     }
                 }
@@ -185,6 +195,7 @@ namespace taskt.UI.Forms
 
             e.Result = scheduledTaskList;
         }
+
         private void bgwGetSchedulingInfo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             dgvScheduledTasks.Rows.Clear();

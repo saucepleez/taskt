@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using taskt.Core.Settings;
 
@@ -13,7 +8,15 @@ namespace taskt.UI.Forms
 {
     public partial class frmAttendedMode : Form
     {
-        ApplicationSettings appSettings { get; set; }
+        #region Variables
+        private ApplicationSettings _appSettings;
+        private int _flashCount = 0;
+        private bool _dragging = false;
+        private Point _dragCursorPoint;
+        private Point _dragFormPoint;
+        #endregion
+
+        #region Form Events
         public frmAttendedMode()
         {
             InitializeComponent();
@@ -22,10 +25,10 @@ namespace taskt.UI.Forms
         private void frmAttendedMode_Load(object sender, EventArgs e)
         {
             //get app settings
-            appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            _appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
             //setup file system watcher
-            attendedScriptWatcher.Path = appSettings.ClientSettings.AttendedTasksFolder;
+            attendedScriptWatcher.Path = _appSettings.ClientSettings.AttendedTasksFolder;
 
             //move form to default location
             MoveToDefaultFormLocation();
@@ -55,23 +58,35 @@ namespace taskt.UI.Forms
             this.Left = (area.Width - this.Width) / 2;
         }
 
+        private void uiBtnRun_Click(object sender, EventArgs e)
+        {
+            //build script path and execute
+            var scriptFilePath = Path.Combine(_appSettings.ClientSettings.AttendedTasksFolder, cboSelectedScript.Text);
+            frmScriptEngine newEngine = new frmScriptEngine(scriptFilePath, null);
+            newEngine.Show();
+        }
+
+        private void attendedScriptWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            LoadAttendedScripts();
+        }
+
         private void LoadAttendedScripts()
         {
             //clear script list
             cboSelectedScript.Items.Clear();
         
             //get script files
-            var files = System.IO.Directory.GetFiles(appSettings.ClientSettings.AttendedTasksFolder);
+            var files = Directory.GetFiles(_appSettings.ClientSettings.AttendedTasksFolder);
 
             //loop each file and add to potential
             foreach (var fil in files)
             {
-                var filInfo = new System.IO.FileInfo(fil);
+                var filInfo = new FileInfo(fil);
                 cboSelectedScript.Items.Add(filInfo.Name);
             }
-
-
         }
+        #endregion
 
         #region Flashing Animation
         private void frmAttendedMode_Shown(object sender, EventArgs e)
@@ -79,11 +94,8 @@ namespace taskt.UI.Forms
             tmrBackColorFlash.Enabled = true;
         }
 
-        private int flashCount = 0;
         private void tmrBackColorFlash_Tick(object sender, EventArgs e)
         {
-
-            ;
             if (this.BackColor == Color.FromArgb(59, 59, 59))
             {
                 this.BackColor = Color.LightYellow;
@@ -97,57 +109,36 @@ namespace taskt.UI.Forms
                 uiBtnRun.DisplayTextBrush = Color.White;
             }
 
-            flashCount++;
+            _flashCount++;
 
-            if (flashCount == 6)
+            if (_flashCount == 6)
             {
                 tmrBackColorFlash.Enabled = false;
             }
-
         }
-
         #endregion
 
         #region Form Dragging
-        private bool dragging = false;
-        private Point dragCursorPoint;
-        private Point dragFormPoint;
-
         private void frmAttendedMode_MouseMove(object sender, MouseEventArgs e)
         {
-
-            if (dragging)
+            if (_dragging)
             {
-                Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
-                this.Location = Point.Add(dragFormPoint, new Size(dif));
+                Point dif = Point.Subtract(Cursor.Position, new Size(_dragCursorPoint));
+                this.Location = Point.Add(_dragFormPoint, new Size(dif));
             }
         }
 
         private void frmAttendedMode_MouseDown(object sender, MouseEventArgs e)
         {
-            dragging = true;
-            dragCursorPoint = Cursor.Position;
-            dragFormPoint = this.Location;
+            _dragging = true;
+            _dragCursorPoint = Cursor.Position;
+            _dragFormPoint = this.Location;
         }
 
         private void frmAttendedMode_MouseUp(object sender, MouseEventArgs e)
         {
-            dragging = false;
+            _dragging = false;
         }
-
         #endregion
-
-        private void uiBtnRun_Click(object sender, EventArgs e)
-        {
-            //build script path and execute
-            var scriptFilePath = System.IO.Path.Combine(appSettings.ClientSettings.AttendedTasksFolder, cboSelectedScript.Text);
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(scriptFilePath, null);
-            newEngine.Show();
-        }
-
-        private void attendedScriptWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
-        {
-            LoadAttendedScripts();
-        }
     }
 }

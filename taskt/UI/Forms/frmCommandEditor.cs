@@ -11,22 +11,15 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using SHDocVw;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using taskt.Core.Automation.Attributes;
-using System.IO;
 using taskt.Core;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
 using taskt.UI.CustomControls;
 
 namespace taskt.UI.Forms
@@ -34,27 +27,21 @@ namespace taskt.UI.Forms
     public partial class frmCommandEditor : ThemedForm
     {
         //list of available commands
-        List<AutomationCommand> commandList = new List<AutomationCommand>();
+        private List<AutomationCommand> _commandList = new List<AutomationCommand>();
         //list of variables, assigned from frmScriptBuilder
-        public List<Core.Script.ScriptVariable> scriptVariables;
+        public List<ScriptVariable> ScriptVariables;
         //reference to currently selected command
-        public Core.Automation.Commands.ScriptCommand selectedCommand;
+        public ScriptCommand SelectedCommand;
         //reference to original command
-        public Core.Automation.Commands.ScriptCommand originalCommand;
+        public ScriptCommand OriginalCommand;
         //assigned by frmScriptBuilder to restrict inputs for editing existing commands
-        public CreationMode creationMode;
+        public CreationMode CreationModeInstance;
         //startup command, assigned from frmScriptBuilder
-        public string defaultStartupCommand;
+        public string DefaultStartupCommand;
         //editing command, assigned from frmScriptBuilder when editing a command
-        public Core.Automation.Commands.ScriptCommand editingCommand;
+        public ScriptCommand EditingCommand;
         //track existing commands for visibility
-        public List<Core.Automation.Commands.ScriptCommand> configuredCommands;
-        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
-        {
-            InitializeComponent();
-            commandList = commands;
-            configuredCommands = existingCommands;
-        }
+        public List<ScriptCommand> ConfiguredCommands;
 
         public enum CreationMode
         {
@@ -63,42 +50,47 @@ namespace taskt.UI.Forms
         }
 
         #region Form Events
-
         //handle events for the form
+
+        public frmCommandEditor(List<AutomationCommand> commands, List<ScriptCommand> existingCommands)
+        {
+            InitializeComponent();
+            _commandList = commands;
+            ConfiguredCommands = existingCommands;
+        }
+
         private void frmNewCommand_Load(object sender, EventArgs e)
         {
             //declare loaded editor
             CommandControls.CurrentEditor = this;
 
             //order list
-            commandList = commandList.OrderBy(itm => itm.FullName).ToList();
+            _commandList = _commandList.OrderBy(itm => itm.FullName).ToList();
 
             //set command list
-            cboSelectedCommand.DataSource = commandList;
+            cboSelectedCommand.DataSource = _commandList;
 
             //Set DisplayMember to track DisplayValue from the class
             cboSelectedCommand.DisplayMember = "FullName";
 
-            if ((creationMode == CreationMode.Add) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName == defaultStartupCommand).Count() > 0))
+            if ((CreationModeInstance == CreationMode.Add) && (DefaultStartupCommand != null) && (_commandList.Where(x => x.FullName == DefaultStartupCommand).Count() > 0))
             {
-                cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(defaultStartupCommand);
+                cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(DefaultStartupCommand);
             }
-            else if (creationMode == CreationMode.Edit)
+            else if (CreationModeInstance == CreationMode.Edit)
             {
                 // var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault(); //&& x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
 
-                var requiredCommand = commandList.Where(x => x.Command.ToString() == editingCommand.ToString()).FirstOrDefault();
+                var requiredCommand = _commandList.Where(x => x.Command.ToString() == EditingCommand.ToString()).FirstOrDefault();
 
                 if (requiredCommand == null)
                 {
-                    MessageBox.Show("Command was not found! " + defaultStartupCommand);
+                    MessageBox.Show("Command was not found! " + DefaultStartupCommand);
                 }
                 else
                 {
                     cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.FullName);
                 }
-
-               
             }
             else
             {
@@ -109,10 +101,10 @@ namespace taskt.UI.Forms
             cboSelectedCommand_SelectionChangeCommitted(null, null);
 
             //apply original variables if command is being updated
-            if (originalCommand != null)
+            if (OriginalCommand != null)
             {
                 //copy original properties
-                CopyPropertiesTo(originalCommand, selectedCommand);
+                CopyPropertiesTo(OriginalCommand, SelectedCommand);
 
                 //update bindings
                 foreach (Control c in flw_InputVariables.Controls)
@@ -127,30 +119,70 @@ namespace taskt.UI.Forms
                     {
                         var typedControl = (UIPictureBox)c;
 
-                        var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
+                        var cmd = (ImageRecognitionCommand)SelectedCommand;
 
                         if (!string.IsNullOrEmpty(cmd.v_ImageCapture))
                         {
-                            typedControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
+                            typedControl.Image = Common.Base64ToImage(cmd.v_ImageCapture);
                         }
-
-
-
                     }
-
-
                 }
-
-
                 //handle selection change events
-
-
             }
 
             //gracefully handle post initialization setups (drop downs, etc)
             AfterFormInitialization();
-
         }
+
+        private void frmCommandEditor_Shown(object sender, EventArgs e)
+        {
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+        }
+
+        private void frmCommandEditor_Resize(object sender, EventArgs e)
+        {
+            foreach (Control item in flw_InputVariables.Controls)
+            {
+                item.Width = this.Width - 70;
+            }
+        }
+
+        private void cboSelectedCommand_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            //clear controls
+            flw_InputVariables.Controls.Clear();
+
+            //find underlying command item
+            var selectedCommandItem = cboSelectedCommand.Text;
+
+            //get command
+            var userSelectedCommand = _commandList.Where(itm => itm.FullName == selectedCommandItem).FirstOrDefault();
+
+            //create new command for binding
+            SelectedCommand = (ScriptCommand)Activator.CreateInstance(userSelectedCommand.CommandClass);
+
+            //Todo: MAKE OPTION TO RENDER ON THE FLY
+
+            //if (true)
+            //{
+            //    var renderedControls = selectedCommand.Render(null);
+            //    userSelectedCommand.UIControls = new List<Control>();
+            //    userSelectedCommand.UIControls.AddRange(renderedControls);
+            //}
+
+            //update data source
+            userSelectedCommand.Command = SelectedCommand;
+
+            //bind controls to new data source
+            userSelectedCommand.Bind(this);
+
+            //add each control
+            foreach (var ctrl in userSelectedCommand.UIControls)
+            {
+                flw_InputVariables.Controls.Add(ctrl);
+            }
+        }
+
         private void CopyPropertiesTo(object fromObject, object toObject)
         {
             PropertyInfo[] toObjectProperties = toObject.GetType().GetProperties();
@@ -166,7 +198,6 @@ namespace taskt.UI.Forms
                 {
                     throw ex;
                 }
-
             }
         }
 
@@ -175,53 +206,7 @@ namespace taskt.UI.Forms
             //force control resizing
             frmCommandEditor_Resize(null, null);
         }
-
-        private void frmCommandEditor_Shown(object sender, EventArgs e)
-        {
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-        }
-
         #endregion Form Events
-
-        private void cboSelectedCommand_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            //clear controls
-            flw_InputVariables.Controls.Clear();
-
-            //find underlying command item
-            var selectedCommandItem = cboSelectedCommand.Text;
-
-            //get command
-            var userSelectedCommand = commandList.Where(itm => itm.FullName == selectedCommandItem).FirstOrDefault();
-
-            //create new command for binding
-            selectedCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(userSelectedCommand.CommandClass);
-
-
-            //Todo: MAKE OPTION TO RENDER ON THE FLY
-
-            //if (true)
-            //{
-            //    var renderedControls = selectedCommand.Render(null);
-            //    userSelectedCommand.UIControls = new List<Control>();
-            //    userSelectedCommand.UIControls.AddRange(renderedControls);
-            //}
-
-
-            //update data source
-            userSelectedCommand.Command = selectedCommand;
-
-            //bind controls to new data source
-            userSelectedCommand.Bind(this);
-
-            //add each control
-            foreach (var ctrl in userSelectedCommand.UIControls)
-            {
-                flw_InputVariables.Controls.Add(ctrl);
-            }
-        
-        }
-
 
         #region Save/Close Buttons
 
@@ -241,11 +226,9 @@ namespace taskt.UI.Forms
                 if (ctrl is UIPictureBox)
                 {
                     var typedControl = (UIPictureBox)ctrl;
-                    var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
+                    var cmd = (ImageRecognitionCommand)SelectedCommand;
                     cmd.v_ImageCapture = typedControl.EncodedImage;
                 }
-
-
             }
 
             this.DialogResult = DialogResult.OK;
@@ -258,19 +241,5 @@ namespace taskt.UI.Forms
 
         #endregion Save/Close Buttons
 
-
-        private void frmCommandEditor_Resize(object sender, EventArgs e)
-        {
-            foreach (Control item in flw_InputVariables.Controls)
-            {
-                item.Width = this.Width - 70;
-            }
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

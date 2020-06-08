@@ -304,7 +304,7 @@ namespace taskt.UI.CustomControls
                 CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
 
                 //find current command and add to underlying class
-                SendMouseMoveCommand cmd = (SendMouseMoveCommand)CurrentEditor.selectedCommand;
+                SendMouseMoveCommand cmd = (SendMouseMoveCommand)CurrentEditor.SelectedCommand;
                 cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
                 cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
             }
@@ -316,7 +316,7 @@ namespace taskt.UI.CustomControls
             frmItemSelector newVariableSelector = new frmItemSelector();
 
             //get copy of user variables and append system variables, then load to combobox
-            var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
+            var variableList = CurrentEditor.ScriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
             newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
 
@@ -474,7 +474,7 @@ namespace taskt.UI.CustomControls
         private static void ShowElementRecorder(object sender, EventArgs e, frmCommandEditor editor)
         {
             //get command reference
-            UIAutomationCommand cmd = (UIAutomationCommand)editor.selectedCommand;
+            UIAutomationCommand cmd = (UIAutomationCommand)editor.SelectedCommand;
 
             //create recorder
             frmThickAppElementRecorder newElementRecorder = new frmThickAppElementRecorder();
@@ -492,7 +492,7 @@ namespace taskt.UI.CustomControls
 
         private static void GenerateDLLParameters(object sender, EventArgs e)
         {
-            ExecuteDLLCommand cmd = (ExecuteDLLCommand)CurrentEditor.selectedCommand;
+            ExecuteDLLCommand cmd = (ExecuteDLLCommand)CurrentEditor.SelectedCommand;
 
             var filePath = CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text;
             var className = CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text;
@@ -560,7 +560,7 @@ namespace taskt.UI.CustomControls
             {
                 //user accepted the selections
                 //declare command
-                ExecuteDLLCommand cmd = (ExecuteDLLCommand)CurrentEditor.selectedCommand;
+                ExecuteDLLCommand cmd = (ExecuteDLLCommand)CurrentEditor.SelectedCommand;
 
                 //add file name
                 if (!string.IsNullOrEmpty(dllExplorer.FileName))
@@ -713,7 +713,7 @@ namespace taskt.UI.CustomControls
             {
                 cbo.Items.Clear();
 
-                foreach (var variable in editor.scriptVariables)
+                foreach (var variable in editor.ScriptVariables)
                 {
                     cbo.Items.Add(variable.VariableName);
                 }

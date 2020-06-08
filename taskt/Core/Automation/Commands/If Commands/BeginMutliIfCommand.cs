@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
             
             //get script variables for feeding into if builder form
-            ScriptVariables = editor.scriptVariables;
+            ScriptVariables = editor.ScriptVariables;
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_IfConditionsTable", this, editor);
@@ -177,15 +177,15 @@ namespace taskt.Core.Automation.Commands
 
                     var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
                     frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
-                    editor.selectedCommand = ifCommand;
-                    editor.editingCommand = ifCommand;
-                    editor.originalCommand = ifCommand;
-                    editor.creationMode = frmCommandEditor.CreationMode.Edit;
-                    editor.scriptVariables = ScriptVariables;
+                    editor.SelectedCommand = ifCommand;
+                    editor.EditingCommand = ifCommand;
+                    editor.OriginalCommand = ifCommand;
+                    editor.CreationModeInstance = frmCommandEditor.CreationMode.Edit;
+                    editor.ScriptVariables = ScriptVariables;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {
-                        var editedCommand = editor.editingCommand as BeginIfCommand;
+                        var editedCommand = editor.EditingCommand as BeginIfCommand;
                         var displayText = editedCommand.GetDisplayValue();
                         var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(editedCommand);
 
@@ -215,13 +215,13 @@ namespace taskt.Core.Automation.Commands
             var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
 
             frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
-            editor.selectedCommand = new BeginIfCommand();
+            editor.SelectedCommand = new BeginIfCommand();
             var res = editor.ShowDialog();
 
             if (res == DialogResult.OK)
             {
                 //get data
-                var configuredCommand = editor.selectedCommand as BeginIfCommand;
+                var configuredCommand = editor.SelectedCommand as BeginIfCommand;
                 var displayText = configuredCommand.GetDisplayValue();
                 var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(configuredCommand);
 

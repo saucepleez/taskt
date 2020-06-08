@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
             loadSchemaControl.Click += LoadSchemaControl_Click;
             RenderedControls.Add(loadSchemaControl);
 
-            DataTableCreationCommands = editor.configuredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
+            DataTableCreationCommands = editor.ConfiguredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
 
 
 
