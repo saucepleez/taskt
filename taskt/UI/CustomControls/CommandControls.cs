@@ -64,7 +64,7 @@ namespace taskt.UI.CustomControls
 
             return controlList;
         }
-        
+
         public static Control CreateDefaultLabelFor(string parameterName, ScriptCommand parent)
         {
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
@@ -88,7 +88,7 @@ namespace taskt.UI.CustomControls
             inputLabel.Name = "lbl_" + parameterName;
             return inputLabel;
         }
-        
+
         public static Control CreateDefaultInputFor(string parameterName, ScriptCommand parent, int height = 30, int width = 300)
         {
             var inputBox = new TextBox();
@@ -105,7 +105,7 @@ namespace taskt.UI.CustomControls
             inputBox.Name = parameterName;
             return inputBox;
         }
-        
+
         public static Control CreateDropdownFor(string parameterName, ScriptCommand parent)
         {
             var inputBox = new ComboBox();
@@ -125,7 +125,7 @@ namespace taskt.UI.CustomControls
 
             return inputBox;
         }
-        
+
         public static ComboBox CreateStandardComboboxFor(string parameterName, ScriptCommand parent)
         {
             var inputBox = new ComboBox();
@@ -138,7 +138,8 @@ namespace taskt.UI.CustomControls
             return inputBox;
         }
 
-        public static List<Control> CreateUIHelpersFor(string parameterName, ScriptCommand parent, Control[] targetControls, frmCommandEditor editor)
+        public static List<Control> CreateUIHelpersFor(string parameterName, ScriptCommand parent, Control[] targetControls,
+            frmCommandEditor editor)
         {
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
             var propertyUIHelpers = variableProperties.GetCustomAttributes(typeof(PropertyUIHelper), true);
@@ -263,7 +264,7 @@ namespace taskt.UI.CustomControls
 
             return controlList;
         }
-      
+
         public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName)
         {
             var gridView = new DataGridView();
@@ -313,7 +314,7 @@ namespace taskt.UI.CustomControls
         public static void ShowVariableSelector(object sender, EventArgs e)
         {
             //create variable selector form
-            frmItemSelector newVariableSelector = new frmItemSelector();
+            frmVariableSelector newVariableSelector = new frmVariableSelector();
 
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.ScriptVariables.Select(f => f.VariableName).ToList();
@@ -342,13 +343,15 @@ namespace taskt.UI.CustomControls
                 {
                     TextBox targetTextbox = (TextBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = targetTextbox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    targetTextbox.Text = targetTextbox.Text + string.Concat(settings.EngineSettings.VariableStartMarker,
+                        newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is ComboBox)
                 {
                     ComboBox targetCombobox = (ComboBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetCombobox.Text = targetCombobox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    targetCombobox.Text = targetCombobox.Text + string.Concat(settings.EngineSettings.VariableStartMarker,
+                        newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is DataGridView)
                 {
@@ -356,7 +359,8 @@ namespace taskt.UI.CustomControls
 
                     if (targetDGV.SelectedCells.Count == 0)
                     {
-                        MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting" +
+                            " to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -366,7 +370,9 @@ namespace taskt.UI.CustomControls
                         return;
                     }
 
-                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value +
+                        string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(),
+                        settings.EngineSettings.VariableEndMarker);
                 }
 
 
@@ -412,7 +418,11 @@ namespace taskt.UI.CustomControls
 
             HideAllForms();
 
-            var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
+            var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the" +
+                " current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing" +
+                " the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start" +
+                " the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle." +
+                " Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
 
             if (userAcceptance == DialogResult.Yes)
             {
@@ -513,7 +523,8 @@ namespace taskt.UI.CustomControls
                 //verify type was found
                 if (t == null)
                 {
-                    MessageBox.Show("The class '" + className + "' was not found in assembly loaded at '" + filePath + "'", "Class Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("The class '" + className + "' was not found in assembly loaded at '" + filePath + "'",
+                        "Class Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
@@ -523,7 +534,8 @@ namespace taskt.UI.CustomControls
                 //verify method found
                 if (m == null)
                 {
-                    MessageBox.Show("The method '" + methodName + "' was not found in assembly loaded at '" + filePath + "'", "Method Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("The method '" + methodName + "' was not found in assembly loaded at '" + filePath + "'",
+                        "Method Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
@@ -540,7 +552,8 @@ namespace taskt.UI.CustomControls
                 }
                 else
                 {
-                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
             }
@@ -583,7 +596,8 @@ namespace taskt.UI.CustomControls
                 cmd.v_MethodParameters.Rows.Clear();
 
                 //add parameters
-                if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
+                if ((dllExplorer.lstParameters.Items.Count > 0) &&
+                    (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
                 {
                     foreach (var param in dllExplorer.SelectedParameters)
                     {
@@ -673,7 +687,7 @@ namespace taskt.UI.CustomControls
                         //newAutomationCommand.RenderUIComponents();
                     }
 
-                    //call RenderUIComponents to render UI controls              
+                    //call RenderUIComponents to render UI controls
                     commandList.Add(newAutomationCommand);
                 }
             }

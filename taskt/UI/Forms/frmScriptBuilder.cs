@@ -1998,9 +1998,9 @@ namespace taskt.UI.Forms
             }
 
             //Create new taskt project
-            else if (projectBuilder.createProject == true)
+            else if (projectBuilder.CreateProject == true)
             {
-                _scriptProjectPath = projectBuilder.newProjectPath;
+                _scriptProjectPath = projectBuilder.NewProjectPath;
                 //Create new main script
                 string mainScriptPath = Path.Combine(_scriptProjectPath, "Main.xml");
                 lstScriptActions.Items.Clear();
@@ -2015,9 +2015,9 @@ namespace taskt.UI.Forms
                 try
                 {
                     //Serialize main script
-                    var mainScript = Script.SerializeScript(lstScriptActions.Items, _scriptVariables, mainScriptPath, projectBuilder.newProjectName);
+                    var mainScript = Script.SerializeScript(lstScriptActions.Items, _scriptVariables, mainScriptPath, projectBuilder.NewProjectName);
                     //Create new project
-                    Project proj = new Project(projectBuilder.newProjectName);
+                    Project proj = new Project(projectBuilder.NewProjectName);
                     //Save new project
                     proj.SaveProject(mainScriptPath, mainScript);
                     //Open new project
@@ -2035,15 +2035,15 @@ namespace taskt.UI.Forms
             }
 
             //Open existing taskt project
-            else if (projectBuilder.openProject == true)
+            else if (projectBuilder.OpenProject == true)
             {
                 try
                 {
                     //Open project
-                    _scriptProject = Project.OpenProject(projectBuilder.existingMainPath);
-                    _scriptProjectPath = Path.GetDirectoryName(projectBuilder.existingMainPath);
+                    _scriptProject = Project.OpenProject(projectBuilder.ExistingMainPath);
+                    _scriptProjectPath = Path.GetDirectoryName(projectBuilder.ExistingMainPath);
                     //Open Main.xml
-                    OpenFile(projectBuilder.existingMainPath);
+                    OpenFile(projectBuilder.ExistingMainPath);
                     //show success dialog
                     Notify("Project has been opened successfully!");
                 }

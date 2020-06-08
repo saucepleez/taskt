@@ -36,10 +36,10 @@ namespace taskt.UI.CustomControls
                     label.ForeColor = Color.Red;
                     label.AutoSize = true;
                     label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
-                    label.Text = "No Controls are defined for rendering!  " 
-                        + "If you intend to override with custom controls, " 
-                        + "you must handle the Render() method of this command!  " 
-                        + "If you do not wish to override with your own custom controls " 
+                    label.Text = "No Controls are defined for rendering!  "
+                        + "If you intend to override with custom controls, "
+                        + "you must handle the Render() method of this command!  "
+                        + "If you do not wish to override with your own custom controls "
                         + "then set 'CustomRendering' to False.";
                     UIControls.Add(label);
                 }

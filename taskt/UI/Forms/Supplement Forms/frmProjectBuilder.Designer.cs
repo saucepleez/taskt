@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace taskt.UI.Forms.Supplement_Forms
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmProjectBuilder
     {

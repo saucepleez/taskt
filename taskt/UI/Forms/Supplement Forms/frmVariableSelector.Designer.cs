@@ -1,6 +1,6 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
-    partial class frmItemSelector
+    partial class frmVariableSelector
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmItemSelector));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVariableSelector));
             this.lstVariables = new System.Windows.Forms.ListBox();
             this.lblHeader = new System.Windows.Forms.Label();
             this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();

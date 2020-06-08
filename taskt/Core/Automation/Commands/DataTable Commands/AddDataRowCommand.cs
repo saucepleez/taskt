@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -114,7 +115,7 @@ namespace taskt.Core.Automation.Commands
 
         private void LoadSchemaControl_Click(object sender, EventArgs e)
         {
-            UI.Forms.Supplemental.frmItemSelector selectionForm = new UI.Forms.Supplemental.frmItemSelector();
+            frmVariableSelector selectionForm = new frmVariableSelector();
             selectionForm.Text = "Load Schema";
             selectionForm.lblHeader.Text = "Select a table from the list";
             foreach (var item in DataTableCreationCommands)

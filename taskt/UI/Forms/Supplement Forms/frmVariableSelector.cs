@@ -12,20 +12,13 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
-    public partial class frmItemSelector : ThemedForm
+    public partial class frmVariableSelector : ThemedForm
     {
-        public frmItemSelector()
+        public frmVariableSelector()
         {
             InitializeComponent();
         }
@@ -41,18 +34,17 @@ namespace taskt.UI.Forms.Supplemental
                 MessageBox.Show("There are no item(s) selected! Select an item and Ok or select Cancel");
                 return;
             }
-
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void lstVariables_DoubleClick(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
     }
 }

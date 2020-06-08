@@ -498,12 +498,6 @@
     <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.Designer.cs">
-      <DependentUpon>frmKeysBuilder.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -534,11 +528,11 @@
     <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.cs">
+    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.Designer.cs">
-      <DependentUpon>frmItemSelector.cs</DependentUpon>
+    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.Designer.cs">
+      <DependentUpon>frmVariableSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmUpdate.cs">
       <SubType>Form</SubType>
@@ -684,9 +678,6 @@
     <EmbeddedResource Include="UI\Forms\frmScriptVariables.resx">
       <DependentUpon>frmScriptVariables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmKeysBuilder.resx">
-      <DependentUpon>frmKeysBuilder.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -710,8 +701,8 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmItemSelector.resx">
-      <DependentUpon>frmItemSelector.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
+      <DependentUpon>frmVariableSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUpdate.resx">
       <DependentUpon>frmUpdate.cs</DependentUpon>

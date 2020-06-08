@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmProjectBuilder : ThemedForm
     {
-        public bool createProject { get; private set; }
-        public bool openProject { get; private set; }
-        public string newProjectName { get; private set; }
-        public string newProjectPath { get; private set; }
-        public string existingProjectPath { get; private set; }
-        public string existingMainPath { get; private set; }
+        public bool CreateProject { get; private set; }
+        public bool OpenProject { get; private set; }
+        public string NewProjectName { get; private set; }
+        public string NewProjectPath { get; private set; }
+        public string ExistingProjectPath { get; private set; }
+        public string ExistingMainPath { get; private set; }
+
         public frmProjectBuilder()
         {
             InitializeComponent();
@@ -27,27 +21,26 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void btnCreateProject_Click(object sender, EventArgs e)
         {
-            
             string newProjectLocation = txtNewProjectLocation.Text.Trim();
-            newProjectName = txtNewProjectName.Text.Trim();
+            NewProjectName = txtNewProjectName.Text.Trim();
 
-            if (String.IsNullOrEmpty(newProjectName) || String.IsNullOrEmpty(newProjectLocation) || !Directory.Exists(newProjectLocation))
+            if (String.IsNullOrEmpty(NewProjectName) || String.IsNullOrEmpty(newProjectLocation) || !Directory.Exists(newProjectLocation))
             {
                 lblError.Text = "Error: Please enter a valid project name and location";
             }
             else {
-                try { 
-                    newProjectPath = Path.Combine(newProjectLocation, newProjectName);
-                    bool isInvalidProjectName = new[] { @"/", @"\" }.Any(c => newProjectName.Contains(c));
+                try {
+                    NewProjectPath = Path.Combine(newProjectLocation, NewProjectName);
+                    bool isInvalidProjectName = new[] { @"/", @"\" }.Any(c => NewProjectName.Contains(c));
                     if (isInvalidProjectName)
                         throw new Exception("Illegal characters in path");
 
-                    if (!Directory.Exists(newProjectPath))
+                    if (!Directory.Exists(NewProjectPath))
                     {
-                        Directory.CreateDirectory(newProjectPath);
-                        createProject = true;
+                        Directory.CreateDirectory(NewProjectPath);
+                        CreateProject = true;
                         DialogResult = DialogResult.OK;
-                    }    
+                    }
                     else
                         lblError.Text = "Error: Project already exists";
                 }
@@ -60,26 +53,24 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void btnOpenProject_Click(object sender, EventArgs e)
         {
-            existingMainPath = txtExistingProjectLocation.Text.Trim();
-            if (existingMainPath == string.Empty || !File.Exists(existingMainPath))
+            ExistingMainPath = txtExistingProjectLocation.Text.Trim();
+            if (ExistingMainPath == string.Empty || !File.Exists(ExistingMainPath))
             {
                 lblError.Text = "Error: Please enter a valid project path";
             }
             else
             {
-                FileInfo mainFileInfo = new FileInfo(existingMainPath);
+                FileInfo mainFileInfo = new FileInfo(ExistingMainPath);
                 string mainFileName = mainFileInfo.Name;
                 if (mainFileName != "Main.xml")
                     lblError.Text = "Error: Please enter a path containing Main.xml";
                 else
                 {
-                    existingProjectPath = Directory.GetParent(existingMainPath).ToString();
-                    openProject = true;
+                    ExistingProjectPath = Directory.GetParent(ExistingMainPath).ToString();
+                    OpenProject = true;
                     DialogResult = DialogResult.OK;
                 }
-                
-            }   
-
+            }
         }
 
         private void btnFolderManager_Click(object sender, EventArgs e)
