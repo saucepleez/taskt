@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
                 var awaitPreference = v_ExecuteAwait.ConvertToUserVariable(sender);
                 var timeout = v_RequestTimeout.ConvertToUserVariable(sender);
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference);
+                var response = Server.LocalTCPClient.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference);
 
                 response.StoreInUserVariable(sender, v_userVariableName);
 

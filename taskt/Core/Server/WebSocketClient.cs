@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Threading;
+using WebSocket4Net; // Used for WebSocket and MessageReceivedEventArgs
+using SuperSocket.ClientEngine; // Used for ErrorEventArgs in Connection Error
+using Serilog;
+using Serilog.Core;
+using Newtonsoft.Json;
 using taskt.Core.Utilities.CommonUtilities;
 using taskt.Core.Settings;
+using taskt.Core.Server.Models;
+using taskt.Core.Server.Exceptions;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Server
 {
@@ -17,41 +20,43 @@ namespace taskt.Core.Server
     /// </summary>
    public static class SocketClient
     {
-        public static UI.Forms.frmScriptBuilder associatedBuilder;
-        private static string publicKey;
-        private static string serverURI;
-        private static DateTime connectionOpened;
-        private static WebSocket4Net.WebSocket webSocket;
-        public static string connectionException;
-        private static bool retryOnFail;
-        private static System.Timers.Timer reconnectTimer;
-        private static bool bypassCertificationValidation;
-        public static Serilog.Core.Logger socketLogger;
+        public static frmScriptBuilder AssociatedBuilder;
+        public static string ConnectionException;
+        public static Logger SocketLogger;
+
+        private static string _publicKey;
+        private static string _serverURI;
+        private static DateTime _connectionOpened;
+        private static WebSocket _webSocket;
+        private static bool _retryOnFail;
+        private static System.Timers.Timer _reconnectTimer;
+        private static bool _bypassCertificationValidation;
+
         static SocketClient()
         {
-            socketLogger = new Logging().CreateLogger("Socket", Serilog.RollingInterval.Day);
+            SocketLogger = new Logging().CreateLogger("Socket", RollingInterval.Day);
         }
+
         /// <summary>
         /// Initializes the Socket Client
         /// </summary>
         public static void Initialize()
         {
-
             //socketLogger.Information("Socket Client Initialized");
             //LoadSettings();
         }
+
         /// <summary>
         /// Loads Settings used for the Socket Client
         /// </summary>
         public static void LoadSettings()
         {
-
-            socketLogger.Information("Socket Client Loading Settings");
+            SocketLogger.Information("Socket Client Loading Settings");
 
             //setup heartbeat to the server
-            reconnectTimer = new System.Timers.Timer();
-            reconnectTimer.Interval = 60000;
-            reconnectTimer.Elapsed += ReconnectTimer_Elapsed;
+            _reconnectTimer = new System.Timers.Timer();
+            _reconnectTimer.Interval = 60000;
+            _reconnectTimer.Elapsed += ReconnectTimer_Elapsed;
 
             //get app settings
             var appSettings = new ApplicationSettings();
@@ -59,21 +64,18 @@ namespace taskt.Core.Server
 
             //pull server settings
             var serverSettings = appSettings.ServerSettings;
-            serverURI = serverSettings.ServerURL;
-            retryOnFail = serverSettings.RetryServerConnectionOnFail;
-            publicKey = serverSettings.ServerPublicKey;
-            bypassCertificationValidation = serverSettings.BypassCertificateValidation;
 
+            _serverURI = serverSettings.ServerURL;
+            _retryOnFail = serverSettings.RetryServerConnectionOnFail;
+            _publicKey = serverSettings.ServerPublicKey;
+            _bypassCertificationValidation = serverSettings.BypassCertificateValidation;
 
             //try to connect to server
-            if ((serverSettings.ServerConnectionEnabled) && (serverSettings.ConnectToServerOnStartup))
+            if (serverSettings.ServerConnectionEnabled && serverSettings.ConnectToServerOnStartup)
             {
-                socketLogger.Information("Socket Client Connecting on Startup");
+                SocketLogger.Information("Socket Client Connecting on Startup");
                 Connect(serverSettings.ServerURL);
             }
-
-
-
         }
 
         /// <summary>
@@ -84,48 +86,43 @@ namespace taskt.Core.Server
         {
             try
             {
-
-
-
-                if (bypassCertificationValidation)
+                if (_bypassCertificationValidation)
                 {
-                    socketLogger.Information("Socket Client Bypasses SSL Validation");
+                    SocketLogger.Information("Socket Client Bypasses SSL Validation");
                     //trust all certificates -- for self signed certificates, etc.
-                    System.Net.ServicePointManager.ServerCertificateValidationCallback = (a, b, c, d) => true;
+                    ServicePointManager.ServerCertificateValidationCallback = (a, b, c, d) => true;
                 }
 
                 //reset connection exception
-                connectionException = string.Empty;
-
+                ConnectionException = string.Empty;
 
                 //handle if insecure or invalid connection is defined
                 if (!serverUri.ToLower().StartsWith("wss://"))
                 {
-                    socketLogger.Information("Socket Client URI Invalid");
-                    throw new InvalidSocketURI("Socket connections must begin with wss://");
+                    SocketLogger.Information("Socket Client URI Invalid");
+                    throw new InvalidSocketUriException("Socket connections must begin with wss://");
                 }
 
                 //create socket connection
-                webSocket = new WebSocket4Net.WebSocket(serverUri);
-                webSocket.Error += new EventHandler<SuperSocket.ClientEngine.ErrorEventArgs>(ConnectionError);
-                webSocket.Opened += new EventHandler(ConnectionOpened);
-                webSocket.Closed += new EventHandler(ConnectionClosed);
-                webSocket.MessageReceived += new EventHandler<WebSocket4Net.MessageReceivedEventArgs>(MessageReceived);
+                _webSocket = new WebSocket(serverUri);
+                _webSocket.Error += new EventHandler<ErrorEventArgs>(ConnectionError);
+                _webSocket.Opened += new EventHandler(ConnectionOpened);
+                _webSocket.Closed += new EventHandler(ConnectionClosed);
+                _webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(MessageReceived);
 
-                socketLogger.Information("Socket Client Opening Connection To: " + serverUri);
-                webSocket.Open();
-
+                SocketLogger.Information("Socket Client Opening Connection To: " + serverUri);
+                _webSocket.Open();
             }
             catch (Exception ex)
             {
-                socketLogger.Information("Connection Error: " + ex.ToString());
+                SocketLogger.Information("Connection Error: " + ex.ToString());
             }
         }
 
         public static void Disconnect()
         {
-            socketLogger.Information("Socket Client Disconnecting");
-            webSocket.Close();
+            SocketLogger.Information("Socket Client Disconnecting");
+            _webSocket.Close();
         }
 
         /// <summary>
@@ -136,18 +133,16 @@ namespace taskt.Core.Server
         private static void ConnectionOpened(object sender, EventArgs e)
         {
             //send message
-            socketLogger.Information("Socket Client Sending Connection Opened Successfully");
-            connectionOpened = DateTime.Now;
+            SocketLogger.Information("Socket Client Sending Connection Opened Successfully");
+            _connectionOpened = DateTime.Now;
             SendMessage("CONN_REQUEST");
-            reconnectTimer.Enabled = true;
-
-
+            _reconnectTimer.Enabled = true;
         }
 
         private static void ReconnectTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            socketLogger.Information("Retrying Socket Connection");
-            Connect(serverURI);
+            SocketLogger.Information("Retrying Socket Connection");
+            Connect(_serverURI);
         }
 
         /// <summary>
@@ -157,42 +152,37 @@ namespace taskt.Core.Server
         /// <param name="e"></param>
         private static void ConnectionClosed(object sender, EventArgs e)
         {
-            socketLogger.Information("Socket Client Connection Closed");
+            SocketLogger.Information("Socket Client Connection Closed");
 
-
-
-            if (retryOnFail)
+            if (_retryOnFail)
             {
-                reconnectTimer.Enabled = true;
+                _reconnectTimer.Enabled = true;
             }
-
-
         }
         /// <summary>
         /// Occurs when a connection error happens.  This can fire if taskt server is down or not responding.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void ConnectionError(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
+        private static void ConnectionError(object sender, ErrorEventArgs e)
         {
+            ConnectionException = e.Exception.Message;
+            SocketLogger.Information("Socket Client Connection Error: " + ConnectionException);
 
-            connectionException = e.Exception.Message;
-            socketLogger.Information("Socket Client Connection Error: " + connectionException);
-
-            if (retryOnFail)
+            if (_retryOnFail)
             {
-                reconnectTimer.Enabled = true;
+                _reconnectTimer.Enabled = true;
             }
         }
+
         /// <summary>
         /// Occurs when a message is received from taskt server.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void MessageReceived(object sender, WebSocket4Net.MessageReceivedEventArgs e)
+        private static void MessageReceived(object sender, MessageReceivedEventArgs e)
         {
-
-            socketLogger.Information("Socket Message Received: " + e.Message);
+            SocketLogger.Information("Socket Message Received: " + e.Message);
 
             //server responded with script
             if (e.Message.Contains("?xml"))
@@ -209,7 +199,7 @@ namespace taskt.Core.Server
             else if (e.Message.Contains("ACCEPT_KEY"))
             {
                 var authPublicKey = e.Message.Replace("ACCEPT_KEY=", "");
-                publicKey = authPublicKey;
+                _publicKey = authPublicKey;
 
                 //add public key to app settings and save
                 var appSettings = new ApplicationSettings().GetOrCreateApplicationSettings();
@@ -218,112 +208,84 @@ namespace taskt.Core.Server
                 appSettings.ServerSettings.ServerPublicKey = authPublicKey;
 
                 appSettings.Save(appSettings);
-
-
             }
-
-
-
         }
+
         public static void SendExecutionLog(string executionLog)
         {
             //new Thread(() =>
             //{
             //    Thread.CurrentThread.IsBackground = true;
-
-            try
+            if (_webSocket?.State == WebSocketState.Open)
             {
-                if (SocketClient.webSocket?.State == WebSocket4Net.WebSocketState.Open)
+                try
                 {
+                    //create server uri for logging
+                    var apiUri = _serverURI;
+                    apiUri = apiUri.Replace("wss://", "https://").Replace("/ws", "/api/WriteLog");
+
                     using (WebClient client = new WebClient())
                     {
-                        try
-                        {
+                        client.QueryString.Add("ClientName", _publicKey);
+                        client.QueryString.Add("LogData", executionLog);
 
-                            client.QueryString.Add("ClientName", SocketClient.publicKey);
-                            client.QueryString.Add("LogData", executionLog);
-
-                            //create server uri for logging
-                            var apiUri = SocketClient.serverURI;
-                            apiUri = apiUri.Replace("wss://", "https://").Replace("/ws", "/api/WriteLog");
-
-
-                            byte[] responsebytes = client.UploadValues(apiUri, "POST", client.QueryString);
-                            string responsebody = Encoding.UTF8.GetString(responsebytes);
-                        }
-                        catch (Exception)
-                        {
-                            //throw
-                        }
+                        byte[] responsebytes = client.UploadValues(apiUri, "POST", client.QueryString);
+                        string responsebody = Encoding.UTF8.GetString(responsebytes);
                     }
                 }
+                catch (Exception)
+                {
+                    //throw
+                }
             }
-            catch (Exception)
-            {
-                //throw;
-            }
-
-
-
-
-
             //}).Start();
-
         }
 
         public static void SendMessage(string message)
         {
-
-            if (webSocket == null)
+            // If the connection isn't open don't send
+            if (_webSocket == null || _webSocket.State != WebSocketState.Open)
             {
                 return;
             }
-
-            //if connection isnt open don't bother sending
-            if ((webSocket.State != WebSocket4Net.WebSocketState.Open))
-            {
-                return;
-            }
-
-
 
             //create message package
             var socketPkg = new SocketPackage();
-            socketPkg.PUBLIC_KEY = publicKey;
-            socketPkg.MESSAGE = message;
-            socketPkg.MACHINE_NAME = System.Environment.MachineName;
-            socketPkg.USER_NAME = System.Environment.UserName;
+            socketPkg.PublicKey = _publicKey;
+            socketPkg.Message = message;
+            socketPkg.MachineName = Environment.MachineName;
+            socketPkg.UserName = Environment.UserName;
 
             //serialize
-            var jsonPackage = Newtonsoft.Json.JsonConvert.SerializeObject(socketPkg);
+            var jsonPackage = JsonConvert.SerializeObject(socketPkg);
 
-            socketLogger.Information("Sending Socket Message: " + jsonPackage);
+            SocketLogger.Information("Sending Socket Message: " + jsonPackage);
             //send message
-            webSocket.Send(jsonPackage);
+            _webSocket.Send(jsonPackage);
         }
 
         public static string GetSocketState()
         {
-            if (webSocket == null)
+            if (_webSocket == null)
             {
                 return "Unknown";
             }
 
-            switch (webSocket.State)
+            switch (_webSocket.State)
             {
-                case WebSocket4Net.WebSocketState.None:
+                case WebSocketState.None:
                     return "Disconnected";
-                case WebSocket4Net.WebSocketState.Connecting:
+                case WebSocketState.Connecting:
                     return "Connecting";
-                case WebSocket4Net.WebSocketState.Open:
-                    TimeSpan ts = DateTime.Now - connectionOpened;
+                case WebSocketState.Open:
+                    TimeSpan ts = DateTime.Now - _connectionOpened;
                     int hours = (int)ts.TotalHours;
                     int minutes = ts.Minutes;
                     int seconds = ts.Seconds;
                     return "Connected - " + hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
-                case WebSocket4Net.WebSocketState.Closing:
+                case WebSocketState.Closing:
                     return "Closing";
-                case WebSocket4Net.WebSocketState.Closed:
+                case WebSocketState.Closed:
                     return "Closed";
                 default:
                     return "Unknown";
@@ -332,42 +294,14 @@ namespace taskt.Core.Server
 
         private static void RunXMLScript(string scriptData)
         {
-
-
-            associatedBuilder.Invoke(new MethodInvoker(delegate ()
-            {
-                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
-                newEngine.XmlData = scriptData;
-                newEngine.CallBackForm = null;
-                newEngine.Show();
-            }));
-
-        }
-    }
-
-
-    /// <summary>
-    /// Model for sending data to taskt Server
-    /// </summary>
-    public class SocketPackage
-    {
-        public string PUBLIC_KEY { get; set; }
-        public string MACHINE_NAME { get; set; }
-        public string USER_NAME { get; set; }
-        public string MESSAGE { get; set; }
-    }
-    /// <summary>
-    /// Exception defines Invalid Socket URI passed by user
-    /// </summary>
-    public class InvalidSocketURI : Exception
-    {
-        public InvalidSocketURI()
-        {
-        }
-
-        public InvalidSocketURI(string message)
-            : base(message)
-        {
+            AssociatedBuilder.Invoke(new MethodInvoker(delegate ()
+                {
+                    frmScriptEngine newEngine = new frmScriptEngine();
+                    newEngine.XmlData = scriptData;
+                    newEngine.CallBackForm = null;
+                    newEngine.Show();
+                })
+            );
         }
     }
 }

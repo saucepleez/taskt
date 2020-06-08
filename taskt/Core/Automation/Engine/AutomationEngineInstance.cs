@@ -15,6 +15,7 @@ using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Engine.EngineEventArgs;
 using Serilog.Core;
 using taskt.Core.Settings;
+using taskt.Core.Server.Models;
 
 namespace taskt.Core.Automation.Engine
 {

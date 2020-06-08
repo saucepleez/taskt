@@ -21,6 +21,7 @@ using taskt.Core.Settings;
 using taskt.Core.Metrics;
 using taskt.Core.Documentation;
 using taskt.Core.Server;
+using taskt.Core.Server.Models;
 using taskt.UI.Forms.Supplement_Forms;
 using taskt.UI.Forms.Supplemental;
 using taskt.Core;
@@ -93,8 +94,8 @@ namespace taskt.UI.Forms
             //get metrics
             bgwMetrics.RunWorkerAsync();
 
-            LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
-            LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
+            LocalTCPClient.ListeningStarted += AutomationTCPListener_ListeningStarted;
+            LocalTCPClient.ListeningStopped += AutomationTCPListener_ListeningStopped;
         }
 
         public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
@@ -198,11 +199,12 @@ namespace taskt.UI.Forms
 
         private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
         {
+
             lblStatus.Text = "Socket Status: " + SocketClient.GetSocketState();
-            if (SocketClient.connectionException != string.Empty)
+            if (SocketClient.ConnectionException != string.Empty)
             {
                 lblSocketException.Show();
-                lblSocketException.Text = SocketClient.connectionException;
+                lblSocketException.Text = SocketClient.ConnectionException;
             }
             else
             {
@@ -433,9 +435,9 @@ namespace taskt.UI.Forms
 
         private void SetupListeningUI()
         {
-            if (LocalTCPListener.IsListening)
+            if (LocalTCPClient.IsListening)
             {
-                lblListeningStatus.Text = $"Client is Listening at Endpoint '{LocalTCPListener.GetListeningAddress()}'.";
+                lblListeningStatus.Text = $"Client is Listening at Endpoint '{LocalTCPClient.GetListeningAddress()}'.";
                 btnStopListening.Enabled = true;
                 btnStartListening.Enabled = false;
             }
@@ -458,14 +460,15 @@ namespace taskt.UI.Forms
         {
             if (int.TryParse(txtListeningPort.Text, out var portNumber)){
                 DisableListenerButtons();
-                LocalTCPListener.StartListening(portNumber);
+
+                LocalTCPClient.StartListening(portNumber);
             }
         }
 
         private void btnStopListening_Click(object sender, EventArgs e)
         {
             DisableListenerButtons();
-            LocalTCPListener.StopAutomationListener();
+            LocalTCPClient.StopAutomationListener();
         }
 
         private void btnWhiteList_Click(object sender, EventArgs e)

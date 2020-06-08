@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using taskt.Core.Server;
+using taskt.Core.Server.Models;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Utilities.CommonUtilities;
@@ -68,14 +69,14 @@ namespace taskt.Core.Automation.Commands
             var keyName = v_KeyName.ConvertToUserVariable(sender);
             var dataOption = v_DataOption.ConvertToUserVariable(sender);
 
-            BotStoreRequest.RequestType requestType;
+            BotStoreRequest.BotStoreRequestType requestType;
             if (dataOption == "Retrieve Entire Record")
             {
-                requestType = BotStoreRequest.RequestType.BotStoreModel;
+                requestType = BotStoreRequest.BotStoreRequestType.BotStoreModel;
             }
             else
             {
-                requestType = BotStoreRequest.RequestType.BotStoreValue;
+                requestType = BotStoreRequest.BotStoreRequestType.BotStoreValue;
             }
 
 
@@ -83,7 +84,7 @@ namespace taskt.Core.Automation.Commands
             {
                 var result = HttpServerClient.GetData(keyName, requestType);
 
-                if (requestType == BotStoreRequest.RequestType.BotStoreValue)
+                if (requestType == BotStoreRequest.BotStoreRequestType.BotStoreValue)
                 {
                     result = JsonConvert.DeserializeObject<string>(result);
                 }

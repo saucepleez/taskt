@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using Serilog;
+using Serilog.Core;
+using Newtonsoft.Json;
 using taskt.Core.Utilities.CommonUtilities;
 using taskt.Core.Settings;
+using taskt.UI.Forms;
+using taskt.Core.Server.Models;
 
 namespace taskt.Core.Server
 {
@@ -16,14 +17,14 @@ namespace taskt.Core.Server
     /// </summary>
     public static class HttpServerClient
     {
-        public static UI.Forms.frmScriptBuilder associatedBuilder;
-        private static Serilog.Core.Logger httpLogger;
-        private static System.Timers.Timer heartbeatTimer { get; set; }
-        private static ApplicationSettings appSettings { get; set; }
+        public static frmScriptBuilder AssociatedBuilder;
+        private static Logger _httpLogger;
+        private static System.Timers.Timer _heartbeatTimer;
+        private static ApplicationSettings _appSettings;
 
         static HttpServerClient()
         {
-            httpLogger = new Logging().CreateLogger("HTTP", Serilog.RollingInterval.Day);
+            _httpLogger = new Logging().CreateLogger("HTTP", RollingInterval.Day);
             Initialize();
         }
 
@@ -33,22 +34,21 @@ namespace taskt.Core.Server
         public static void Initialize()
         {
             var settingClass = new ApplicationSettings();
-            appSettings = settingClass.GetOrCreateApplicationSettings();
+            _appSettings = settingClass.GetOrCreateApplicationSettings();
 
-            if (appSettings.ServerSettings.ServerConnectionEnabled)
+            if (_appSettings.ServerSettings.ServerConnectionEnabled)
             {
-
                 //handle for reinitialization
-                if (heartbeatTimer != null)
+                if (_heartbeatTimer != null)
                 {
-                    heartbeatTimer.Elapsed -= Heartbeat_Elapsed;
+                    _heartbeatTimer.Elapsed -= Heartbeat_Elapsed;
                 }
 
                 //setup heartbeat to the server
-                heartbeatTimer = new System.Timers.Timer();
-                heartbeatTimer.Interval = 5000;
-                heartbeatTimer.Elapsed += Heartbeat_Elapsed;
-                heartbeatTimer.Enabled = true;
+                _heartbeatTimer = new System.Timers.Timer();
+                _heartbeatTimer.Interval = 5000;
+                _heartbeatTimer.Elapsed += Heartbeat_Elapsed;
+                _heartbeatTimer.Enabled = true;
             }
         }
 
@@ -61,18 +61,18 @@ namespace taskt.Core.Server
         {
             try
             {
-                if (appSettings.ServerSettings.ServerConnectionEnabled && associatedBuilder != null)
+                if (_appSettings.ServerSettings.ServerConnectionEnabled && AssociatedBuilder != null)
                 {
                     CheckIn();
                 }
                 else
                 {
-                    heartbeatTimer.Enabled = false;
+                    _heartbeatTimer.Enabled = false;
                 }
             }
             catch (Exception ex)
             {
-                httpLogger.Information("Heartbeat Error:" + ex.ToString());
+                _httpLogger.Information("Heartbeat Error:" + ex.ToString());
             }
 
 
@@ -86,40 +86,44 @@ namespace taskt.Core.Server
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                if (!_appSettings.ServerSettings.ServerConnectionEnabled)
                     return false;
 
-                httpLogger.Information("Client attempting to retrieve a GUID from the server, override " + overrideExisting);
+                _httpLogger.Information("Client attempting to retrieve a GUID from the server, override " + overrideExisting);
 
-
-
-
-
-                if (appSettings.ServerSettings.HTTPGuid == Guid.Empty || overrideExisting)
+                if (_appSettings.ServerSettings.HTTPGuid == Guid.Empty || overrideExisting)
                 {
-                    httpLogger.Information("Requesting GUID from the application server");
+                    _httpLogger.Information("Requesting GUID from the application server");
                     var client = new WebClient();
 
                     var userName = Environment.UserName;
                     var machineName = Environment.MachineName;
-                    var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Workers/New?userName=" + userName + "&machineName=" + machineName);
 
-                    httpLogger.Information("Received /api/Workers/New response: " + content);
-                    var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Worker>(content);
+                    string uri = _appSettings.ServerSettings.HTTPServerURL +
+                        "/api/Workers/New?userName=" + userName +
+                        "&machineName=" + machineName;
 
-                    appSettings.ServerSettings.HTTPGuid = deserialized.WorkerID;
-                    new ApplicationSettings().Save(appSettings);
+                    var content = client.DownloadString(uri);
+
+                    _httpLogger.Information("Received /api/Workers/New response: " + content);
+                    var deserialized = JsonConvert.DeserializeObject<Worker>(content);
+
+                    _appSettings.ServerSettings.HTTPGuid = deserialized.WorkerID;
+                    new ApplicationSettings().Save(_appSettings);
                     return true;
                 }
                 else
                 {
-                    httpLogger.Information("Client has an assigned GUID or override existing GUID set to false. To retrieve a new GUID, the existing setting must be cleared.");
+                    _httpLogger.Information(
+                        "Client has an assigned GUID or override existing GUID set to false." +
+                        "To retrieve a new GUID, the existing setting must be cleared."
+                        );
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                httpLogger.Information("Error Getting GUID: " + ex.ToString());
+                _httpLogger.Information("Error Getting GUID: " + ex.ToString());
                 return false;
             }
         }
@@ -131,62 +135,58 @@ namespace taskt.Core.Server
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled) || associatedBuilder == null)
+                if (!_appSettings.ServerSettings.ServerConnectionEnabled || AssociatedBuilder == null)
                     return false;
 
-                httpLogger.Information("Client is attempting to check in with the server");
-
-
-                var workerID = appSettings.ServerSettings.HTTPGuid;
+                _httpLogger.Information("Client is attempting to check in with the server");
+                var workerID = _appSettings.ServerSettings.HTTPGuid;
 
                 if (workerID != Guid.Empty)
                 {
-                    httpLogger.Information("Requesting to check in with the server");
+                    _httpLogger.Information("Requesting to check in with the server");
                     var client = new WebClient();
-                    var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Workers/CheckIn?workerID=" + workerID + "&engineBusy=" + Core.Client.EngineBusy);
-                    httpLogger.Information("Received /api/Workers/CheckIn response: " + content);
-                    var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<CheckInResponse>(content);
+
+                    string uri = _appSettings.ServerSettings.HTTPServerURL +
+                        "/api/Workers/CheckIn?workerID=" + workerID +
+                        "&engineBusy=" + Client.EngineBusy;
+
+                    var content = client.DownloadString(uri);
+                    _httpLogger.Information("Received /api/Workers/CheckIn response: " + content);
+                    var deserialized = JsonConvert.DeserializeObject<CheckInResponse>(content);
 
                     if (deserialized.ScheduledTask != null)
                     {
-
-                        associatedBuilder.Invoke(new MethodInvoker(delegate ()
+                        var scheduledTask = new MethodInvoker(delegate ()
                         {
-
-
+                            frmScriptEngine newEngine;
                             if (deserialized.ScheduledTask.ExecutionType == "Local")
                             {
-                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
-                                newEngine.RemoteTask = deserialized.ScheduledTask;
-                                newEngine.ServerExecution = true;
-                                newEngine.Show();
+                                newEngine = new frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
                             }
                             else
                             {
-                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                                newEngine = new frmScriptEngine();
                                 newEngine.XmlData = deserialized.PublishedScript.ScriptData;
-                                newEngine.RemoteTask = deserialized.ScheduledTask;
-                                newEngine.ServerExecution = true;
-                                newEngine.Show();
                             }
 
+                            newEngine.RemoteTask = deserialized.ScheduledTask;
+                            newEngine.ServerExecution = true;
+                            newEngine.Show();
+                        });
 
-                        }));
-
+                        AssociatedBuilder.Invoke(scheduledTask);
                     }
-
-
                     return true;
                 }
                 else
                 {
-                    httpLogger.Information("Client unable to check in because the client does not have a GUID");
+                    _httpLogger.Information("Client unable to check in because the client does not have a GUID");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                httpLogger.Information("Error Checking In: " + ex.ToString());
+                _httpLogger.Information("Error Checking In: " + ex.ToString());
                 return false;
             }
 
@@ -200,27 +200,26 @@ namespace taskt.Core.Server
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                if (!_appSettings.ServerSettings.ServerConnectionEnabled)
                     return false;
 
-                httpLogger.Information("Client is testing connection to server");
-
+                _httpLogger.Information("Client is testing connection to server");
 
                 var client = new WebClient();
                 var content = client.DownloadString(HTTPServerURL + "/api/Test");
 
-                httpLogger.Information("Received /api/Test response: " + content);
+                _httpLogger.Information("Received /api/Test response: " + content);
 
-                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                var deserialized = JsonConvert.DeserializeObject(content);
 
-                appSettings.ServerSettings.HTTPServerURL = HTTPServerURL;
-                new ApplicationSettings().Save(appSettings);
+                _appSettings.ServerSettings.HTTPServerURL = HTTPServerURL;
+                new ApplicationSettings().Save(_appSettings);
 
                 return true;
             }
             catch (Exception ex)
             {
-                httpLogger.Information("Error Testing Connection: " + ex.ToString());
+                _httpLogger.Information("Error Testing Connection: " + ex.ToString());
                 return false;
             }
 
@@ -234,29 +233,33 @@ namespace taskt.Core.Server
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                if (!_appSettings.ServerSettings.ServerConnectionEnabled)
                     return null;
 
-                httpLogger.Information("Client is attempting to add task data to server");
+                _httpLogger.Information("Client is attempting to add task data to server");
 
-
-
-                var workerID = appSettings.ServerSettings.HTTPGuid;
+                var workerID = _appSettings.ServerSettings.HTTPGuid;
 
                 var userName = Environment.UserName;
                 var machineName = Environment.MachineName;
 
-
                 var client = new WebClient();
-                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/New?workerID=" + workerID + "&taskName=" + taskName + "&userName=" + userName + "&machineName=" + machineName);
-                httpLogger.Information("Received /api/Tasks/New response: " + content);
 
-                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Task>(content);
+                string uri = _appSettings.ServerSettings.HTTPServerURL +
+                    "/api/Tasks/New?workerID=" + workerID +
+                    "&taskName=" + taskName +
+                    "&userName=" + userName +
+                    "&machineName=" + machineName;
+
+                var content = client.DownloadString(uri);
+                _httpLogger.Information("Received /api/Tasks/New response: " + content);
+
+                var deserialized = JsonConvert.DeserializeObject<Task>(content);
                 return deserialized;
             }
             catch (Exception ex)
             {
-                httpLogger.Information("Error Adding Task: " + ex.ToString());
+                _httpLogger.Information("Error Adding Task: " + ex.ToString());
                 return null;
             }
 
@@ -271,57 +274,67 @@ namespace taskt.Core.Server
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                if (!_appSettings.ServerSettings.ServerConnectionEnabled)
                     return null;
 
-                httpLogger.Information("Client is update a previously added task to server");
+                _httpLogger.Information("Client is update a previously added task to server");
 
-                var workerID = appSettings.ServerSettings.HTTPGuid;
+                var workerID = _appSettings.ServerSettings.HTTPGuid;
 
                 var userName = Environment.UserName;
                 var machineName = Environment.MachineName;
 
                 var client = new WebClient();
-                var content = client.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Tasks/Update?taskID=" + taskID + "&workerID=" + workerID + "&status=" + status + "&userName=" + userName + "&machineName=" + machineName + "&remark=" + remark);
-                httpLogger.Information("Received /api/Tasks/Update response: " + content);
-                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Task>(content);
+
+                string uri = _appSettings.ServerSettings.HTTPServerURL +
+                    "/api/Tasks/Update?taskID=" + taskID +
+                    "&workerID=" + workerID +
+                    "&status=" + status +
+                    "&userName=" + userName +
+                    "&machineName=" + machineName +
+                    "&remark=" + remark;
+
+                var content = client.DownloadString(uri);
+                _httpLogger.Information("Received /api/Tasks/Update response: " + content);
+                var deserialized = JsonConvert.DeserializeObject<Task>(content);
 
                 return deserialized;
             }
             catch (Exception ex)
             {
-                httpLogger.Information("Error Updating Task: " + ex.ToString());
+                _httpLogger.Information("Error Updating Task: " + ex.ToString());
                 return null;
             }
-
-
         }
 
        public static void PublishScript(string scriptPath, PublishedScript.PublishType publishType)
         {
             try
             {
-                if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                if (!_appSettings.ServerSettings.ServerConnectionEnabled)
                     return;
 
-                httpLogger.Information("Client is publishing a script to the server");
-
+                _httpLogger.Information("Client is publishing a script to the server");
 
                 var script = new PublishedScript();
-                script.WorkerID = appSettings.ServerSettings.HTTPGuid;
+                script.WorkerID = _appSettings.ServerSettings.HTTPGuid;
                 script.ScriptType = publishType;
                 script.FriendlyName = new System.IO.FileInfo(scriptPath).Name;
 
-
-
                 WebClient webClient = new WebClient();
-                var content = webClient.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Exists?workerID=" + script.WorkerID + "&friendlyName=" + script.FriendlyName);
 
-                var scriptExists = Newtonsoft.Json.JsonConvert.DeserializeObject<bool>(content);
+                string uri = _appSettings.ServerSettings.HTTPServerURL +
+                    "/api/Scripts/Exists?workerID=" + script.WorkerID +
+                    "&friendlyName=" + script.FriendlyName;
+
+                var content = webClient.DownloadString(uri);
+                var scriptExists = JsonConvert.DeserializeObject<bool>(content);
 
                 if (scriptExists)
                 {
-                    var overwritePreference = MessageBox.Show("It appears this task has already been published.  Should we overwrite the existing task on the server?", "Overwrite Existing Task?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var messageText = "It appears this task has already been published.  Should we overwrite the existing task on the server?";
+                    var messageCaption = "Overwrite Existing Task?";
+                    var overwritePreference = MessageBox.Show(messageText, messageCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (overwritePreference == DialogResult.Yes)
                     {
@@ -338,7 +351,6 @@ namespace taskt.Core.Server
                     script.OverwriteExisting = false;
                 }
 
-
                 //based on publish type upload local reference or whole task
                 if (publishType == PublishedScript.PublishType.ClientReference)
                 {
@@ -349,35 +361,32 @@ namespace taskt.Core.Server
                     script.ScriptData = System.IO.File.ReadAllText(scriptPath);
                 }
 
-                var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(script);
+                var scriptJson = JsonConvert.SerializeObject(script);
 
-                httpLogger.Information("Posting Json to Publish API: " + scriptJson);
+                _httpLogger.Information("Posting Json to Publish API: " + scriptJson);
                 //create webclient and upload
                 webClient.Headers["Content-Type"] = "application/json";
                 webClient.UploadStringCompleted +=
                     new UploadStringCompletedEventHandler(PublishTaskCompleted);
 
-                var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Publish");
+                var api = new Uri(_appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Publish");
 
                 webClient.UploadStringAsync(api, "POST", scriptJson);
 
-
                 return;
-
             }
             catch (Exception ex)
             {
-                httpLogger.Information("Publish Error: " + ex.ToString());
+                _httpLogger.Information("Publish Error: " + ex.ToString());
                 MessageBox.Show("Publish Error: " + ex.ToString());
             }
-
-
         }
+
        private static void PublishTaskCompleted(object sender, UploadStringCompletedEventArgs e)
         {
             try
             {
-               var result = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(e.Result);
+               var result = JsonConvert.DeserializeObject<string>(e.Result);
                 MessageBox.Show(result, "Task Published", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //e.result fetches you the response against your POST request.
             }
@@ -390,121 +399,39 @@ namespace taskt.Core.Server
 
         public static string UploadData(string key, string value)
         {
-            var botStoreModel = new BotStoreModel();
+            var botStoreModel = new BotStore();
             botStoreModel.BotStoreName = key;
             botStoreModel.BotStoreValue = value;
-            botStoreModel.LastUpdatedBy = appSettings.ServerSettings.HTTPGuid;
+            botStoreModel.LastUpdatedBy = _appSettings.ServerSettings.HTTPGuid;
             botStoreModel.LastUpdatedOn = DateTime.Now;
 
-            var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(botStoreModel);
+            var scriptJson = JsonConvert.SerializeObject(botStoreModel);
 
-            httpLogger.Information("Posting Json to Upload API: " + scriptJson);
+            _httpLogger.Information("Posting Json to Upload API: " + scriptJson);
 
             //create webclient and upload
             WebClient webClient = new WebClient();
             webClient.Headers["Content-Type"] = "application/json";
-           var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Add");
+           var api = new Uri(_appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Add");
 
            return webClient.UploadString(api, "POST", scriptJson);
-
         }
-        public static string GetData(string key, BotStoreRequest.RequestType requestType)
+
+        public static string GetData(string key, BotStoreRequest.BotStoreRequestType requestType)
         {
             var botStoreRequest = new BotStoreRequest();
             botStoreRequest.BotStoreName = key;
-            botStoreRequest.workerID = appSettings.ServerSettings.HTTPGuid;
-            botStoreRequest.requestType = requestType;
+            botStoreRequest.WorkerID = _appSettings.ServerSettings.HTTPGuid;
+            botStoreRequest.RequestType = requestType;
 
-            var scriptJson = Newtonsoft.Json.JsonConvert.SerializeObject(botStoreRequest);
+            var scriptJson = JsonConvert.SerializeObject(botStoreRequest);
 
             //create webclient and upload
             WebClient webClient = new WebClient();
             webClient.Headers["Content-Type"] = "application/json";
-            var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Get");
+            var api = new Uri(_appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Get");
 
             return webClient.UploadString(api, "POST", scriptJson);
-
-
-
-        }
-
-
-    }
-
-    #region tasktServer Models
-
-    public class Worker
-    {
-        public Guid WorkerID { get; set; }
-        public string MachineName { get; set; }
-        public string UserName { get; set; }
-        public DateTime LastCheckIn { get; set; }
-        public WorkerStatus Status { get; set; }
-    }
-
-    public enum WorkerStatus
-    {
-        Pending = 0,
-        Authorized = 1,
-        Revoked = 2
-    }
-
-    public class Task
-    {
-        public Guid TaskID { get; set; }
-        public Guid WorkerID { get; set; }
-        public string MachineName { get; set; }
-        public string UserName { get; set; }
-        public string IPAddress { get; set; }
-        public string ExecutionType { get; set; }
-        public string Script { get; set; }
-        public string Status { get; set; }
-        public DateTime TaskStarted { get; set; }
-        public DateTime TaskFinished { get; set; }
-
-    }
-
-    public class CheckInResponse
-    {
-        public Task ScheduledTask { get; set; }
-        public PublishedScript PublishedScript { get; set; }
-        public Worker Worker { get; set; }
-    }
-
-    public class PublishedScript
-    {
-        public Guid WorkerID { get; set; }
-        public PublishType ScriptType { get; set; }
-        public string ScriptData { get; set; }
-        public string FriendlyName { get; set; }
-        public bool OverwriteExisting { get; set; }
-        public enum PublishType
-        {
-            ClientReference,
-            ServerReference,
         }
     }
-
-    public class BotStoreModel
-    {
-        public Guid StoreID { get; set; }
-        public string BotStoreName { get; set; }
-        public string BotStoreValue { get; set; }
-        public DateTime LastUpdatedOn { get; set; }
-        public Guid LastUpdatedBy { get; set; }
-    }
-
-    public class BotStoreRequest
-    {
-        public Guid workerID { get; set; }
-        public string BotStoreName { get; set; }
-        public RequestType requestType { get; set; }
-       public enum RequestType
-        {
-            BotStoreValue,
-            BotStoreModel
-        }
-    }
-
-    #endregion
 }

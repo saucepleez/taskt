@@ -150,9 +150,9 @@ namespace taskt.UI.Forms
                 HttpServerClient.CheckIn();
             }
 
-            HttpServerClient.associatedBuilder = this;
+            HttpServerClient.AssociatedBuilder = this;
 
-            LocalTCPListener.Initialize(this);
+            LocalTCPClient.Initialize(this);
             //Core.Sockets.SocketClient.Initialize();
             //Core.Sockets.SocketClient.associatedBuilder = this;
 

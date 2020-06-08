@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
                 var paramType = v_ParameterType.ConvertToUserVariable(sender);
                 var timeout = v_RequestTimeout.ConvertToUserVariable(sender);
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout);
+                var response = Server.LocalTCPClient.SendAutomationTask(server, paramType, timeout);
 
                 response.StoreInUserVariable(sender, v_userVariableName);
 

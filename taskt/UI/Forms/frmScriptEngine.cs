@@ -19,8 +19,9 @@ using taskt.Core.Automation.Engine;
 using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Engine.EngineEventArgs;
 using taskt.Core.Settings;
-using taskt.Core.Script;
 using taskt.Core.Server;
+using taskt.Core.Server.Models;
+using taskt.Core.Script;
 using taskt.UI.Forms.Supplemental;
 using taskt.UI.Forms.Supplement_Forms;
 using taskt.Core.Automation.Commands;
@@ -41,6 +42,7 @@ namespace taskt.UI.Forms
         public AutomationEngineInstance EngineInstance { get; set; }
         private List<ScriptVariable> _scriptVariableList;
         private bool _closeWhenDone = false;
+
         #endregion
         public string Result { get; set; }
         //events and methods
@@ -147,6 +149,7 @@ namespace taskt.UI.Forms
             }
 
             //start running
+
             EngineInstance = new AutomationEngineInstance();
             EngineInstance.ReportProgressEvent += Engine_ReportProgress;
             EngineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
@@ -154,7 +157,7 @@ namespace taskt.UI.Forms
             EngineInstance.TaskModel = RemoteTask;
             EngineInstance.TasktEngineUI = this;
             EngineInstance.ServerExecution = ServerExecution;
-            LocalTCPListener.automationInstance = EngineInstance;
+            LocalTCPClient.AutomationInstance = EngineInstance;
 
             if (XmlData == null)
             {
