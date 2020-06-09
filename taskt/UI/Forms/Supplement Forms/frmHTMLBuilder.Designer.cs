@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmHTMLBuilder
     {
@@ -29,39 +29,39 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHTMLBuilder));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.flwAcceptIcons = new System.Windows.Forms.FlowLayoutPanel();
             this.rtbHTML = new System.Windows.Forms.RichTextBox();
             this.webBrowserHTML = new System.Windows.Forms.WebBrowser();
             this.uiBtnOK = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tlpMain.SuspendLayout();
             this.flwAcceptIcons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // tlpMain
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.webBrowserHTML, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flwAcceptIcons, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.rtbHTML, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1620, 697);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tlpMain.BackColor = System.Drawing.Color.White;
+            this.tlpMain.ColumnCount = 2;
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpMain.Controls.Add(this.webBrowserHTML, 1, 0);
+            this.tlpMain.Controls.Add(this.flwAcceptIcons, 0, 1);
+            this.tlpMain.Controls.Add(this.rtbHTML, 0, 0);
+            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Location = new System.Drawing.Point(0, 0);
+            this.tlpMain.Name = "tlpMain";
+            this.tlpMain.RowCount = 2;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tlpMain.Size = new System.Drawing.Size(1620, 697);
+            this.tlpMain.TabIndex = 0;
             // 
             // flwAcceptIcons
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.flwAcceptIcons, 2);
+            this.tlpMain.SetColumnSpan(this.flwAcceptIcons, 2);
             this.flwAcceptIcons.Controls.Add(this.uiBtnOK);
             this.flwAcceptIcons.Controls.Add(this.uiBtnCancel);
             this.flwAcceptIcons.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -128,11 +128,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1620, 697);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tlpMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmHTMLBuilder";
             this.Text = "taskt HTML Builder";
-            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tlpMain.ResumeLayout(false);
             this.flwAcceptIcons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
@@ -142,7 +142,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
         private System.Windows.Forms.WebBrowser webBrowserHTML;
         private System.Windows.Forms.FlowLayoutPanel flwAcceptIcons;
         private CustomControls.UIPictureButton uiBtnOK;

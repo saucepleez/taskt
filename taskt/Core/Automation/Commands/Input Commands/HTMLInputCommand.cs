@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -120,7 +121,7 @@ namespace taskt.Core.Automation.Commands
         }
         private void ShowHTMLBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
-            var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder();
+            var htmlForm = new frmHTMLBuilder();
 
             htmlForm.rtbHTML.Text = HtmlInput.Text;
 
