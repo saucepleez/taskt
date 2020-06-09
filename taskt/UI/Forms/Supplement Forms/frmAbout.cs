@@ -12,17 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Reflection;
+using System.IO;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmAbout : ThemedForm
     {
@@ -33,8 +28,10 @@ namespace taskt.UI.Forms.Supplemental
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            lblAppVersion.Text = "version: " + new Version(System.Windows.Forms.Application.ProductVersion);
-            lblBuildDate.Text = "build date: " + System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("MM.dd.yy hh.mm.ss");
+            DateTime buildDate = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location);
+
+            lblAppVersion.Text = "version: " + new Version(Application.ProductVersion);
+            lblBuildDate.Text = "build date: " + buildDate.ToString("MM.dd.yy hh.mm.ss");
         }
 
         private void lblOneNote_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -44,7 +41,7 @@ namespace taskt.UI.Forms.Supplemental
 
         private void lblSelenium_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/SeleniumHQ/selenium");          
+            Process.Start("https://github.com/SeleniumHQ/selenium");
         }
 
         private void lblTaskScheduler_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

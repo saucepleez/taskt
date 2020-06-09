@@ -27,6 +27,7 @@ using taskt.UI.CustomControls;
 using taskt.Core.Script;
 using taskt.Core.Server;
 using taskt.UI.Forms.Supplemental;
+using taskt.UI.Forms.Supplement_Forms;
 using taskt.Core.IO;
 using Newtonsoft.Json;
 using taskt.UI.Forms.Supplement_Forms;
@@ -334,7 +335,7 @@ namespace taskt.UI.Forms
 
         private void lblMainLogo_Click(object sender, EventArgs e)
         {
-            Supplemental.frmAbout aboutForm = new Supplemental.frmAbout();
+            frmAbout aboutForm = new frmAbout();
             aboutForm.Show();
         }
 

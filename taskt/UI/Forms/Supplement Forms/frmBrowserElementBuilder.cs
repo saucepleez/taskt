@@ -12,19 +12,14 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 using SHDocVw;
 using MSHTML;
-using System.Runtime.InteropServices;
+using taskt.Core.Automation.Commands;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmBrowserElementBuilder : UIForm
     {
@@ -32,8 +27,8 @@ namespace taskt.UI.Forms.Supplemental
 
         #region Form Events
 
-        InternetExplorer ie;
-        DataTable searchParameters;
+        private InternetExplorer _ie;
+        private DataTable _searchParameters;
 
         //public delegate void SearchParametersDelegate(DataTable searchParams);
         public frmBrowserElementBuilder()
@@ -73,60 +68,67 @@ namespace taskt.UI.Forms.Supplemental
         private void cboIEWindow_SelectionChangeCommitted(object sender, EventArgs e)
         {
             var shellWindows = new ShellWindows();
+
             foreach (IWebBrowser2 shellWindow in shellWindows)
             {
-                if (shellWindow.Document is MSHTML.HTMLDocument)
+                if (shellWindow.Document is HTMLDocument)
                 {
                     if (shellWindow.Document.Title == cboIEWindow.Text)
                     {
-                        ie = shellWindow.Application;
-                        var events = (HTMLDocumentEvents2_Event)ie.Document;
+                        _ie = shellWindow.Application;
+                        var events = (HTMLDocumentEvents2_Event)_ie.Document;
 
                         events.onclick += (evt) =>
                         {
-                            searchParameters = new DataTable();
-                            searchParameters.Columns.Add("Enabled");
-                            searchParameters.Columns.Add("Property Name");
-                            searchParameters.Columns.Add("Property Value");
+                            _searchParameters = new DataTable();
+                            _searchParameters.Columns.Add("Enabled");
+                            _searchParameters.Columns.Add("Property Name");
+                            _searchParameters.Columns.Add("Property Value");
 
                             if (evt.srcElement is IHTMLElement)
-
                             {
                                 IHTMLElement srcInfo = evt.srcElement;
                                 var elementProperties = srcInfo.GetType().GetProperties();
 
-                                foreach (System.Reflection.PropertyInfo prp in elementProperties)
+                                foreach (PropertyInfo prp in elementProperties)
                                 {
-                                    if ((prp.PropertyType == typeof(string)) && (!prp.Name.Contains("IHTML")) || (prp.PropertyType == typeof(int)) && (!prp.Name.Contains("IHTML")))
+                                    var propIsString = prp.PropertyType == typeof(string);
+                                    var propIsInt = prp.PropertyType == typeof(int);
+
+                                    if ((propIsString || propIsInt) && !prp.Name.Contains("IHTML"))
                                     {
                                         string propName = prp.Name;
                                         string propValue = Convert.ToString(prp.GetValue(srcInfo));
-                                        searchParameters.Rows.Add(false, propName, propValue);
+                                        _searchParameters.Rows.Add(false, propName, propValue);
                                     }
                                 }
 
-                                dgvSearchParameters.Invoke((MethodInvoker)(() => dgvSearchParameters.DataSource = searchParameters));
+                                dgvSearchParameters.Invoke(new MethodInvoker(() =>
+                                    {
+                                        dgvSearchParameters.DataSource = _searchParameters;
+                                    })
+                                );
                             }
 
                             return false;
                         };
 
-                        var activateWindow = new Core.Automation.Commands.ActivateWindowCommand();
+                        var activateWindow = new ActivateWindowCommand();
                         activateWindow.v_WindowName = cboIEWindow.Text + " - Internet Explorer";
                         activateWindow.RunCommand(null);
 
-                        var moveWindow = new Core.Automation.Commands.MoveWindowCommand();
+                        var moveWindow = new MoveWindowCommand();
                         moveWindow.v_WindowName = cboIEWindow.Text + " - Internet Explorer";
                         moveWindow.v_XWindowPosition = "0";
                         moveWindow.v_YWindowPosition = "0";
                         moveWindow.RunCommand(null);
 
                         MoveFormToBottomRight(this);
-                        this.TopMost = true;
+                        TopMost = true;
 
                         foreach (Form frm in Application.OpenForms)
                         {
-                            if (frm.Name != this.Name)
+                            if (frm.Name != Name)
                             {
                                 frm.WindowState = FormWindowState.Minimized;
                             }
@@ -179,6 +181,7 @@ namespace taskt.UI.Forms.Supplemental
             dgvSearchParameters.DataSource = null;
             FindIEWindows();
         }
+
         private void FindIEWindows()
         {
             //cboIEWindow.Items.Clear();
@@ -187,14 +190,15 @@ namespace taskt.UI.Forms.Supplemental
             {
                 try
                 {
-                    if (shellWindow.Document is MSHTML.HTMLDocument)
+                    if (shellWindow.Document is HTMLDocument)
                     {
                         string windowTitle = shellWindow.Document.Title;
                         cboIEWindow.Items.Add(windowTitle);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    throw e;
                 }
             }
         }
@@ -208,12 +212,12 @@ namespace taskt.UI.Forms.Supplemental
         private void uiBtnOK_Click(object sender, EventArgs e)
         {
             dgvSearchParameters.EndEdit();
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         #endregion Ok/Cancel Buttons
