@@ -1,65 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Windows.Automation;
 using System.Windows.Forms;
-using taskt.Core.Automation.Commands;
+using taskt.Core;
 using taskt.Core.Automation.User32;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmThickAppElementRecorder : UIForm
     {
-        
+        public DataTable SearchParameters;
+        public string LastItemClicked;
+
         public frmThickAppElementRecorder()
         {
             InitializeComponent();
         }
-
-        public DataTable searchParameters;
-        public string LastItemClicked;
+        
         private void frmThickAppElementRecorder_Load(object sender, EventArgs e)
         {
             //create data source from windows
-            cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            
+            cboWindowTitle.DataSource = Common.GetAvailableWindowNames();
         }
 
-
-      
         private void pbRecord_Click(object sender, EventArgs e)
         {
-
             // this.WindowState = FormWindowState.Minimized;
 
             if (!chkStopOnClick.Checked)
             {
                 lblDescription.Text = $"Recording.  Press F2 to stop recording!";
                 MoveFormToBottomRight(this);
-                this.TopMost = true;
+                TopMost = true;
             }
             else
             {
-                this.WindowState = FormWindowState.Minimized;
+                WindowState = FormWindowState.Minimized;
             }
          
-            this.Size = new Size(540, 156);
-
-
-            this.searchParameters = new DataTable();
-            this.searchParameters.Columns.Add("Enabled");
-            this.searchParameters.Columns.Add("Parameter Name");
-            this.searchParameters.Columns.Add("Parameter Value");
-            this.searchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-
+            Size = new Size(540, 156);
+            SearchParameters = new DataTable();
+            SearchParameters.Columns.Add("Enabled");
+            SearchParameters.Columns.Add("Parameter Name");
+            SearchParameters.Columns.Add("Parameter Value");
+            SearchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
             //clear all
-            searchParameters.Rows.Clear();
+            SearchParameters.Rows.Clear();
 
             //get window name and find window
             string windowName = cboWindowTitle.Text;
@@ -84,7 +73,7 @@ namespace taskt.UI.Forms.Supplemental
         private void GlobalHook_HookStopped(object sender, EventArgs e)
         {
             GlobalHook_MouseEvent(null, null);
-            this.Close();
+            Close();
         }
 
         private void GlobalHook_MouseEvent(object sender, MouseCoordinateEventArgs e)
@@ -94,38 +83,36 @@ namespace taskt.UI.Forms.Supplemental
             //invoke UIA
             try
             {
-            
-                System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
-                System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
+                AutomationElement element = AutomationElement.FromPoint(e.MouseCoordinates);
+                AutomationElement.AutomationElementInformation elementProperties = element.Current;
 
                 LastItemClicked = $"[Name:{element.Current.Name}].[ID:{element.Current.AutomationId.ToString()}].[Class:{element.Current.ClassName}]";
                 lblSubHeader.Text = LastItemClicked;
 
-                searchParameters.Rows.Clear();
+                SearchParameters.Rows.Clear();
 
                 //get properties from class via reflection
-                System.Reflection.PropertyInfo[] properties = typeof(System.Windows.Automation.AutomationElement.AutomationElementInformation).GetProperties();
+                PropertyInfo[] properties = typeof(AutomationElement.AutomationElementInformation).GetProperties();
                 Array.Sort(properties, (x, y) => String.Compare(x.Name, y.Name));
 
                 //loop through each property and get value from the element
-                foreach (System.Reflection.PropertyInfo property in properties)
+                foreach (PropertyInfo property in properties)
                 {
                     try
-                    {         
-                    var propName = property.Name;
-                    var propValue = property.GetValue(elementProperties, null);
-
-                    //if property is a basic type then display
-                    if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
                     {
-                        searchParameters.Rows.Add(false, propName, propValue);
-                    }
+                        var propName = property.Name;
+                        var propValue = property.GetValue(elementProperties, null);
+
+                        //if property is a basic type then display
+                        if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
+                        {
+                            SearchParameters.Rows.Add(false, propName, propValue);
+                        }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Error Iterating over properties in window: " + ex.ToString());
                     }
-
                 }
             }
             catch (Exception)
@@ -136,30 +123,24 @@ namespace taskt.UI.Forms.Supplemental
 
             if (chkStopOnClick.Checked)
             {
-                this.Close();     
+                Close();     
             }
-              
-            
-           
-
-
         }
 
         private void pbRefresh_Click(object sender, EventArgs e)
         {
             //handle window refresh requests
-            cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+            cboWindowTitle.DataSource = Common.GetAvailableWindowNames();
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
         {       
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
     }
-
 }

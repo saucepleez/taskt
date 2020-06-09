@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmUserInput
     {
@@ -33,11 +33,11 @@
             this.lblHeader = new System.Windows.Forms.Label();
             this.lblDirections = new System.Windows.Forms.Label();
             this.tlpInputs = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlBottom = new System.Windows.Forms.Panel();
             this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.tlpInputs.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.SuspendLayout();
@@ -86,7 +86,7 @@
             this.tlpInputs.Controls.Add(this.lblDirections, 0, 1);
             this.tlpInputs.Controls.Add(this.flwInputControls, 0, 2);
             this.tlpInputs.Controls.Add(this.lblHeader, 0, 0);
-            this.tlpInputs.Controls.Add(this.panel1, 0, 3);
+            this.tlpInputs.Controls.Add(this.pnlBottom, 0, 3);
             this.tlpInputs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpInputs.Location = new System.Drawing.Point(0, 0);
             this.tlpInputs.Name = "tlpInputs";
@@ -98,16 +98,16 @@
             this.tlpInputs.Size = new System.Drawing.Size(534, 509);
             this.tlpInputs.TabIndex = 1;
             // 
-            // panel1
+            // pnlBottom
             // 
-            this.panel1.BackColor = System.Drawing.Color.DimGray;
-            this.panel1.Controls.Add(this.uiBtnOk);
-            this.panel1.Controls.Add(this.uiBtnCancel);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 450);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(528, 56);
-            this.panel1.TabIndex = 2;
+            this.pnlBottom.BackColor = System.Drawing.Color.DimGray;
+            this.pnlBottom.Controls.Add(this.uiBtnOk);
+            this.pnlBottom.Controls.Add(this.uiBtnCancel);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBottom.Location = new System.Drawing.Point(3, 450);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(528, 56);
+            this.pnlBottom.TabIndex = 2;
             // 
             // uiBtnOk
             // 
@@ -124,6 +124,7 @@
             this.uiBtnOk.Size = new System.Drawing.Size(88, 49);
             this.uiBtnOk.TabIndex = 20;
             this.uiBtnOk.TabStop = false;
+            this.uiBtnOk.Text = "Accept";
             this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // uiBtnCancel
@@ -141,6 +142,7 @@
             this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
             this.uiBtnCancel.TabIndex = 21;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // frmUserInput
@@ -156,7 +158,7 @@
             this.Load += new System.EventHandler(this.frmUserInput_Load);
             this.tlpInputs.ResumeLayout(false);
             this.tlpInputs.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.pnlBottom.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.ResumeLayout(false);
@@ -169,7 +171,7 @@
         private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.Label lblDirections;
         private System.Windows.Forms.TableLayoutPanel tlpInputs;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlBottom;
         private CustomControls.UIPictureButton uiBtnOk;
         private CustomControls.UIPictureButton uiBtnCancel;
     }

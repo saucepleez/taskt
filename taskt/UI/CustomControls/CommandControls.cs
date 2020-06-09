@@ -488,7 +488,7 @@ namespace taskt.UI.CustomControls
 
             //create recorder
             frmThickAppElementRecorder newElementRecorder = new frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
+            newElementRecorder.SearchParameters = cmd.v_UIASearchParameters;
 
             //show form
             newElementRecorder.ShowDialog();

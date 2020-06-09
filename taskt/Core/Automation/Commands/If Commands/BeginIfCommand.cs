@@ -10,6 +10,7 @@ using taskt.UI.CustomControls;
 using System.Drawing;
 using System.Text;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -841,8 +842,8 @@ namespace taskt.Core.Automation.Commands
             Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
 
             //create recorder
-            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
+            frmThickAppElementRecorder newElementRecorder = new frmThickAppElementRecorder();
+            newElementRecorder.SearchParameters = cmd.v_UIASearchParameters;
 
             //show form
             newElementRecorder.ShowDialog();

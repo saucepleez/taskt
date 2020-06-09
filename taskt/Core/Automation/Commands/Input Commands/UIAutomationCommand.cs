@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Threading;
 using taskt.Core.Utilities.CommandUtilities;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -544,8 +545,8 @@ namespace taskt.Core.Automation.Commands
         {
             //get command reference
             //create recorder
-            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = this.v_UIASearchParameters;
+            frmThickAppElementRecorder newElementRecorder = new frmThickAppElementRecorder();
+            newElementRecorder.SearchParameters = this.v_UIASearchParameters;
 
             //show form
             newElementRecorder.ShowDialog();
@@ -553,7 +554,7 @@ namespace taskt.Core.Automation.Commands
             WindowNameControl.Text = newElementRecorder.cboWindowTitle.Text;
 
             this.v_UIASearchParameters.Rows.Clear();
-            foreach (DataRow rw in newElementRecorder.searchParameters.Rows)
+            foreach (DataRow rw in newElementRecorder.SearchParameters.Rows)
             {
                 this.v_UIASearchParameters.ImportRow(rw);
             }

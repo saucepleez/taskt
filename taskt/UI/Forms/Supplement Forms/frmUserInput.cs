@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Automation.Commands;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmUserInput : UIForm
     {
-        public Core.Automation.Commands.InputCommand InputCommand { get; set; }
+        public InputCommand InputCommand { get; set; }
         public List<Control> InputControls;
+
         public frmUserInput()
         {
             InitializeComponent();
@@ -21,13 +19,11 @@ namespace taskt.UI.Forms.Supplemental
 
         private void frmUserInput_Load(object sender, EventArgs e)
         {
-
             InputControls = new List<Control>();
 
-
             //get presentation data from command
-            this.lblHeader.Text = InputCommand.v_InputHeader;
-            this.lblDirections.Text = InputCommand.v_InputDirections;
+            lblHeader.Text = InputCommand.v_InputHeader;
+            lblDirections.Text = InputCommand.v_InputDirections;
 
             //get input table
             var inputTable = InputCommand.v_UserInputConfig;
@@ -75,7 +71,6 @@ namespace taskt.UI.Forms.Supplemental
                         label.Text = fieldLabel;
                         flwInputControls.Controls.Add(label);
 
-
                         var combobox = new ComboBox();
 
                         try
@@ -107,7 +102,6 @@ namespace taskt.UI.Forms.Supplemental
                     case "CheckBox":
                         var checkBox = new CheckBox();
 
-
                         try
                         {
                             checkBox.Checked = bool.Parse(defaultFieldValue);
@@ -116,7 +110,6 @@ namespace taskt.UI.Forms.Supplemental
                         {
                             checkBox.Checked = false;
                         }
-
 
                         checkBox.Width = fieldWidth;
                         checkBox.Height = fieldHeight;
@@ -152,29 +145,17 @@ namespace taskt.UI.Forms.Supplemental
                         flwInputControls.Controls.Add(textBox);
                         break;
                 }
-
-
-
-
             }
-
-
-
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
-    }
-
-    public class UserInput
-    {
-        public Control RenderedControl { get; set; }
     }
 }
