@@ -86,7 +86,42 @@ namespace taskt.UI.CustomControls
             inputLabel.Font = new Font("Segoe UI Light", 12);
             inputLabel.ForeColor = Color.White;
             inputLabel.Name = "lbl_" + parameterName;
+            CreateDefaultToolTipFor(parameterName, parent, inputLabel);
             return inputLabel;
+        }
+
+        public static void CreateDefaultToolTipFor(string parameterName, ScriptCommand parent, Control label)
+        {
+            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            var inputSpecificationAttributesAssigned = variableProperties.GetCustomAttributes(typeof(InputSpecification), true);
+            var sampleUsageAttributesAssigned = variableProperties.GetCustomAttributes(typeof(SampleUsage), true);
+            var remarksAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Remarks), true);
+
+            string toolTipText = "";
+            if (inputSpecificationAttributesAssigned.Length > 0)
+            {
+                var attribute = (InputSpecification)inputSpecificationAttributesAssigned[0];
+                toolTipText = attribute.Specification;
+            }
+            if (sampleUsageAttributesAssigned.Length > 0)
+            {
+                var attribute = (SampleUsage)sampleUsageAttributesAssigned[0];
+                if (attribute.Usage.Length > 0)
+                    toolTipText += "\n\n" + attribute.Usage;
+            }
+            if (remarksAttributesAssigned.Length > 0)
+            {
+                var attribute = (Remarks)remarksAttributesAssigned[0];
+                if (attribute.Remark.Length > 0)
+                    toolTipText += "\n\n" + attribute.Remark;
+            }
+
+            ToolTip inputToolTip = new ToolTip();
+            inputToolTip.ToolTipIcon = ToolTipIcon.Info;
+            inputToolTip.IsBalloon = true;
+            inputToolTip.ShowAlways = true;
+            inputToolTip.ToolTipTitle = label.Text;
+            inputToolTip.SetToolTip(label, toolTipText);
         }
 
         public static Control CreateDefaultInputFor(string parameterName, ScriptCommand parent, int height = 30, int width = 300)
