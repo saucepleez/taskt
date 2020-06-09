@@ -15,6 +15,7 @@ using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Utilities.CommandUtilities;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -265,7 +266,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
                     }
-                   
+
                     string[] potentialKeyPresses = textToSet.Split('{', '}');
 
                     Type seleniumKeys = typeof(OpenQA.Selenium.Keys);
@@ -315,7 +316,7 @@ namespace taskt.Core.Automation.Commands
                         var optionValue = option.GetAttribute(attribName);
                         optionsItems.Add(optionValue);
                     }
-                 
+
                     var requiredVariable = engine.VariableList.Where(x => x.VariableName == applyToVarName).FirstOrDefault();
 
                     if (requiredVariable == null)
@@ -344,7 +345,7 @@ namespace taskt.Core.Automation.Commands
 
                     var el = (IWebElement)element;
                     var selectionElement = new SelectElement(el);
-                
+
                     switch (selectionType)
                     {
                         case "Select By Index":
@@ -394,7 +395,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         elementValue = "1";
                         if (element is ReadOnlyCollection<IWebElement>)
-                            elementValue = ((ReadOnlyCollection<IWebElement>)element).Count().ToString(); 
+                            elementValue = ((ReadOnlyCollection<IWebElement>)element).Count().ToString();
                     }
                     else
                     {
@@ -614,7 +615,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SeleniumSearchType", this, editor));
-            
+
             SearchParameterControls = new List<Control>();
             SearchParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumSearchParameter", this));
             SearchParameterControls.Add(helperControl);
@@ -646,7 +647,7 @@ namespace taskt.Core.Automation.Commands
         {
             //get command reference
             //create recorder
-            UI.Forms.Supplemental.frmHTMLElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmHTMLElementRecorder();
+            frmHTMLElementRecorder newElementRecorder = new frmHTMLElementRecorder();
 
             //show form
             newElementRecorder.ShowDialog();
@@ -654,14 +655,13 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 string seleniumSearchType = Regex.Matches(v_SeleniumSearchType, @"(?<=By )[\w\s]+")[0].ToString();
-                var searchParameter = newElementRecorder.searchParameters.AsEnumerable().Where(s => s[0].ToString() == seleniumSearchType).SingleOrDefault();
+                var searchParameter = newElementRecorder.SearchParameters.AsEnumerable().Where(s => s[0].ToString() == seleniumSearchType).SingleOrDefault();
                 this.SearchParameterControls[2].Text = searchParameter[1].ToString();
             }
             catch (Exception)
             {
                 //Search parameter not found
             }
-            
         }
 
         public void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
@@ -832,13 +832,13 @@ namespace taskt.Core.Automation.Commands
                     return;
 
                 var warning = MessageBox.Show($"Warning! Text should only be encrypted one time and is not reversible in the builder.  Would you like to proceed and convert '{targetElement.Value.ToString()}' to an encrypted value?", "Encryption Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-               
+
                 if (warning == DialogResult.Yes)
                 {
                     targetElement.Value = EncryptionServices.EncryptString(targetElement.Value.ToString(), "TASKT");
                     ElementsGridViewHelper.Rows[2].Cells[1].Value = "Encrypted";
                 }
-               
+
             }
         }
 

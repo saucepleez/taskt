@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmHTMLElementRecorder
     {
@@ -38,7 +38,7 @@ namespace taskt.UI.Forms.Supplemental
             this.pgGo = new System.Windows.Forms.PictureBox();
             this.tbURL = new System.Windows.Forms.TextBox();
             this.lblURL = new System.Windows.Forms.Label();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.wbElementRecorder = new System.Windows.Forms.WebBrowser();
             this.pbRefresh = new System.Windows.Forms.PictureBox();
             this.pbRecord = new System.Windows.Forms.PictureBox();
             this.lblDescription = new System.Windows.Forms.Label();
@@ -77,7 +77,7 @@ namespace taskt.UI.Forms.Supplemental
             this.pnlHeader.Controls.Add(this.pgGo);
             this.pnlHeader.Controls.Add(this.tbURL);
             this.pnlHeader.Controls.Add(this.lblURL);
-            this.pnlHeader.Controls.Add(this.webBrowser1);
+            this.pnlHeader.Controls.Add(this.wbElementRecorder);
             this.pnlHeader.Controls.Add(this.pbRefresh);
             this.pnlHeader.Controls.Add(this.pbRecord);
             this.pnlHeader.Controls.Add(this.lblDescription);
@@ -149,18 +149,18 @@ namespace taskt.UI.Forms.Supplemental
             this.lblURL.TabIndex = 22;
             this.lblURL.Text = "Enter URL:";
             // 
-            // webBrowser1
+            // wbElementRecorder
             // 
-            this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.wbElementRecorder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser1.Location = new System.Drawing.Point(0, 195);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(1403, 494);
-            this.webBrowser1.TabIndex = 21;
-            this.webBrowser1.Url = new System.Uri("https://www.google.com/", System.UriKind.Absolute);
+            this.wbElementRecorder.Location = new System.Drawing.Point(0, 195);
+            this.wbElementRecorder.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbElementRecorder.Name = "wbElementRecorder";
+            this.wbElementRecorder.ScriptErrorsSuppressed = true;
+            this.wbElementRecorder.Size = new System.Drawing.Size(1403, 494);
+            this.wbElementRecorder.TabIndex = 21;
+            this.wbElementRecorder.Url = new System.Uri("https://www.google.com/", System.UriKind.Absolute);
             // 
             // pbRefresh
             // 
@@ -269,7 +269,7 @@ namespace taskt.UI.Forms.Supplemental
         private System.Windows.Forms.PictureBox pgGo;
         private System.Windows.Forms.TextBox tbURL;
         private System.Windows.Forms.Label lblURL;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.WebBrowser wbElementRecorder;
         private System.Windows.Forms.PictureBox pbRefresh;
         private System.Windows.Forms.PictureBox pbRecord;
         private System.Windows.Forms.Label lblDescription;

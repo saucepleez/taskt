@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmImageCapture));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbMainImage = new System.Windows.Forms.PictureBox();
             this.pnlMouseContainer = new System.Windows.Forms.Panel();
             this.uiAccept = new taskt.UI.CustomControls.UIPictureButton();
             this.uiClose = new taskt.UI.CustomControls.UIPictureButton();
@@ -38,7 +38,7 @@
             this.pbTaggedImage = new System.Windows.Forms.PictureBox();
             this.tabSearchResult = new System.Windows.Forms.TabPage();
             this.pbSearchResult = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).BeginInit();
             this.pnlMouseContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiAccept)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiClose)).BeginInit();
@@ -49,24 +49,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbSearchResult)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // pbMainImage
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(843, 363);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.pbMainImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbMainImage.Location = new System.Drawing.Point(0, 0);
+            this.pbMainImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbMainImage.Name = "pbMainImage";
+            this.pbMainImage.Size = new System.Drawing.Size(1124, 447);
+            this.pbMainImage.TabIndex = 0;
+            this.pbMainImage.TabStop = false;
+            this.pbMainImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbMainImage_MouseDown);
+            this.pbMainImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbMainImage_MouseMove);
             // 
             // pnlMouseContainer
             // 
             this.pnlMouseContainer.Controls.Add(this.uiAccept);
             this.pnlMouseContainer.Controls.Add(this.uiClose);
-            this.pnlMouseContainer.Location = new System.Drawing.Point(12, 12);
+            this.pnlMouseContainer.Location = new System.Drawing.Point(16, 15);
+            this.pnlMouseContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlMouseContainer.Name = "pnlMouseContainer";
-            this.pnlMouseContainer.Size = new System.Drawing.Size(105, 55);
+            this.pnlMouseContainer.Size = new System.Drawing.Size(140, 68);
             this.pnlMouseContainer.TabIndex = 3;
             this.pnlMouseContainer.MouseEnter += new System.EventHandler(this.pnlMouseContainer_MouseEnter);
             // 
@@ -79,11 +81,13 @@
             this.uiAccept.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.uiAccept.Image = global::taskt.Properties.Resources.action_bar_save;
             this.uiAccept.IsMouseOver = false;
-            this.uiAccept.Location = new System.Drawing.Point(3, 3);
+            this.uiAccept.Location = new System.Drawing.Point(4, 4);
+            this.uiAccept.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.uiAccept.Name = "uiAccept";
-            this.uiAccept.Size = new System.Drawing.Size(48, 48);
+            this.uiAccept.Size = new System.Drawing.Size(64, 59);
             this.uiAccept.TabIndex = 1;
             this.uiAccept.TabStop = false;
+            this.uiAccept.Text = "Accept";
             this.uiAccept.Click += new System.EventHandler(this.uiAccept_Click);
             // 
             // uiClose
@@ -95,11 +99,13 @@
             this.uiClose.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.uiClose.Image = global::taskt.Properties.Resources.command_error;
             this.uiClose.IsMouseOver = false;
-            this.uiClose.Location = new System.Drawing.Point(53, 3);
+            this.uiClose.Location = new System.Drawing.Point(71, 4);
+            this.uiClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.uiClose.Name = "uiClose";
-            this.uiClose.Size = new System.Drawing.Size(48, 48);
+            this.uiClose.Size = new System.Drawing.Size(64, 59);
             this.uiClose.TabIndex = 2;
             this.uiClose.TabStop = false;
+            this.uiClose.Text = "Close";
             this.uiClose.Click += new System.EventHandler(this.uiClose_Click);
             // 
             // tabTestMode
@@ -109,18 +115,20 @@
             this.tabTestMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabTestMode.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabTestMode.Location = new System.Drawing.Point(0, 0);
+            this.tabTestMode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabTestMode.Name = "tabTestMode";
             this.tabTestMode.SelectedIndex = 0;
-            this.tabTestMode.Size = new System.Drawing.Size(843, 363);
+            this.tabTestMode.Size = new System.Drawing.Size(1124, 447);
             this.tabTestMode.TabIndex = 4;
             // 
             // tabFingerPrintImage
             // 
             this.tabFingerPrintImage.Controls.Add(this.pbTaggedImage);
-            this.tabFingerPrintImage.Location = new System.Drawing.Point(4, 24);
+            this.tabFingerPrintImage.Location = new System.Drawing.Point(4, 29);
+            this.tabFingerPrintImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabFingerPrintImage.Name = "tabFingerPrintImage";
-            this.tabFingerPrintImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFingerPrintImage.Size = new System.Drawing.Size(835, 335);
+            this.tabFingerPrintImage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabFingerPrintImage.Size = new System.Drawing.Size(1116, 414);
             this.tabFingerPrintImage.TabIndex = 0;
             this.tabFingerPrintImage.Text = "Tagged Image";
             this.tabFingerPrintImage.UseVisualStyleBackColor = true;
@@ -128,19 +136,21 @@
             // pbTaggedImage
             // 
             this.pbTaggedImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbTaggedImage.Location = new System.Drawing.Point(3, 3);
+            this.pbTaggedImage.Location = new System.Drawing.Point(4, 4);
+            this.pbTaggedImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbTaggedImage.Name = "pbTaggedImage";
-            this.pbTaggedImage.Size = new System.Drawing.Size(829, 329);
+            this.pbTaggedImage.Size = new System.Drawing.Size(1108, 406);
             this.pbTaggedImage.TabIndex = 0;
             this.pbTaggedImage.TabStop = false;
             // 
             // tabSearchResult
             // 
             this.tabSearchResult.Controls.Add(this.pbSearchResult);
-            this.tabSearchResult.Location = new System.Drawing.Point(4, 24);
+            this.tabSearchResult.Location = new System.Drawing.Point(4, 29);
+            this.tabSearchResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabSearchResult.Name = "tabSearchResult";
-            this.tabSearchResult.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSearchResult.Size = new System.Drawing.Size(835, 335);
+            this.tabSearchResult.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabSearchResult.Size = new System.Drawing.Size(1116, 414);
             this.tabSearchResult.TabIndex = 1;
             this.tabSearchResult.Text = "Search Result";
             this.tabSearchResult.UseVisualStyleBackColor = true;
@@ -148,26 +158,28 @@
             // pbSearchResult
             // 
             this.pbSearchResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbSearchResult.Location = new System.Drawing.Point(3, 3);
+            this.pbSearchResult.Location = new System.Drawing.Point(4, 4);
+            this.pbSearchResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbSearchResult.Name = "pbSearchResult";
-            this.pbSearchResult.Size = new System.Drawing.Size(829, 329);
+            this.pbSearchResult.Size = new System.Drawing.Size(1108, 406);
             this.pbSearchResult.TabIndex = 1;
             this.pbSearchResult.TabStop = false;
             // 
             // frmImageCapture
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 363);
+            this.ClientSize = new System.Drawing.Size(1124, 447);
             this.Controls.Add(this.tabTestMode);
             this.Controls.Add(this.pnlMouseContainer);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pbMainImage);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmImageCapture";
             this.Text = "Capture Image";
             this.Load += new System.EventHandler(this.frmImageCapture_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmImageCapture_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainImage)).EndInit();
             this.pnlMouseContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiAccept)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiClose)).EndInit();
@@ -183,7 +195,7 @@
         #endregion
         private CustomControls.UIPictureButton uiAccept;
         private CustomControls.UIPictureButton uiClose;
-        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.PictureBox pbMainImage;
         private System.Windows.Forms.Panel pnlMouseContainer;
         private System.Windows.Forms.TabControl tabTestMode;
         private System.Windows.Forms.TabPage tabFingerPrintImage;

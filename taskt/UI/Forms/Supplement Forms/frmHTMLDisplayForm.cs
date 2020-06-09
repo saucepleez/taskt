@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Script;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class frmHTMLDisplayForm : Form
     {
         public DialogResult Result { get; set; }
         public string TemplateHTML { get; set; }
+
         public frmHTMLDisplayForm()
         {
             InitializeComponent();
@@ -25,29 +21,26 @@ namespace taskt.UI.Forms.Supplemental
             webBrowserHTML.ScriptErrorsSuppressed = true;
             webBrowserHTML.ObjectForScripting = this;
             webBrowserHTML.DocumentText = TemplateHTML;
-            this.TopMost = true;
+            TopMost = true;
         }
 
         public void OK()
         {
             //Todo: figure out why return DialogResult not working for some reason
-
             Result = DialogResult.OK;
-            this.Close();
+            Close();
         }
         public void Cancel()
         {
             //Todo: figure out why return DialogResult not working for some reason
-
             Result = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
-        public List<Core.Script.ScriptVariable> GetVariablesFromHTML(string tagSearch)
+        public List<ScriptVariable> GetVariablesFromHTML(string tagSearch)
         {
+            var varList = new List<ScriptVariable>();
 
-            var varList = new List<Core.Script.ScriptVariable>();
-  
             HtmlElementCollection collection = webBrowserHTML.Document.GetElementsByTagName(tagSearch);
             for (int i = 0; i < collection.Count; i++)
             {
@@ -59,12 +52,11 @@ namespace taskt.UI.Forms.Supplemental
 
                     if (tagSearch == "select")
                     {
-                      
                         foreach (HtmlElement item in parentElement.Children)
                         {
                             if (item.GetAttribute("selected") == "True")
                             {
-                                varList.Add(new Core.Script.ScriptVariable() { VariableName = variableName, VariableValue = item.InnerText });
+                                varList.Add(new ScriptVariable() { VariableName = variableName, VariableValue = item.InnerText });
                             }
                         }
                     }
@@ -73,30 +65,17 @@ namespace taskt.UI.Forms.Supplemental
                         if (parentElement.GetAttribute("type") == "checkbox")
                         {
                             var inputValue = collection[i].GetAttribute("checked");
-                            varList.Add(new Core.Script.ScriptVariable() { VariableName = variableName, VariableValue = inputValue });
+                            varList.Add(new ScriptVariable() { VariableName = variableName, VariableValue = inputValue });
                         }
                         else
                         {
                             var inputValue = collection[i].GetAttribute("value");
-                            varList.Add(new Core.Script.ScriptVariable() { VariableName = variableName, VariableValue = inputValue });
+                            varList.Add(new ScriptVariable() { VariableName = variableName, VariableValue = inputValue });
                         }
-
-                      
                     }
-
-
-                    
-
-
-
-
                 }
-
-               
             }
-
             return varList;
-
         }
     }
 }
