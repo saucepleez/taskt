@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.Supplement_Forms
 {
     partial class frmShowCursorPosition
     {
@@ -46,9 +46,10 @@
             this.lblhelperText.BackColor = System.Drawing.Color.Transparent;
             this.lblhelperText.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblhelperText.ForeColor = System.Drawing.Color.White;
-            this.lblhelperText.Location = new System.Drawing.Point(5, 95);
+            this.lblhelperText.Location = new System.Drawing.Point(30, 118);
+            this.lblhelperText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblhelperText.Name = "lblhelperText";
-            this.lblhelperText.Size = new System.Drawing.Size(353, 43);
+            this.lblhelperText.Size = new System.Drawing.Size(471, 37);
             this.lblhelperText.TabIndex = 2;
             this.lblhelperText.Text = "hint: With this window focused, press the spacebar to capture the current mouse p" +
     "osition";
@@ -59,9 +60,10 @@
             this.lblYPosition.BackColor = System.Drawing.Color.Transparent;
             this.lblYPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblYPosition.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblYPosition.Location = new System.Drawing.Point(12, 44);
+            this.lblYPosition.Location = new System.Drawing.Point(15, 48);
+            this.lblYPosition.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblYPosition.Name = "lblYPosition";
-            this.lblYPosition.Size = new System.Drawing.Size(128, 29);
+            this.lblYPosition.Size = new System.Drawing.Size(159, 36);
             this.lblYPosition.TabIndex = 1;
             this.lblYPosition.Text = "Y Position:";
             // 
@@ -71,24 +73,26 @@
             this.lblXPosition.BackColor = System.Drawing.Color.Transparent;
             this.lblXPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblXPosition.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblXPosition.Location = new System.Drawing.Point(11, 9);
+            this.lblXPosition.Location = new System.Drawing.Point(15, 5);
+            this.lblXPosition.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblXPosition.Name = "lblXPosition";
-            this.lblXPosition.Size = new System.Drawing.Size(129, 29);
+            this.lblXPosition.Size = new System.Drawing.Size(160, 36);
             this.lblXPosition.TabIndex = 0;
             this.lblXPosition.Text = "X Position:";
             // 
             // frmShowCursorPosition
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.BackgroundChangeIndex = 92;
-            this.ClientSize = new System.Drawing.Size(398, 145);
+            this.ClientSize = new System.Drawing.Size(531, 178);
             this.Controls.Add(this.lblhelperText);
             this.Controls.Add(this.lblYPosition);
             this.Controls.Add(this.lblXPosition);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmShowCursorPosition";
             this.Text = "Cursor Position Tracker";
             this.TopMost = true;

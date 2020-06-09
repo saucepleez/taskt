@@ -430,6 +430,7 @@
     <Compile Include="UI\DTOs\Method.cs" />
     <Compile Include="UI\DTOs\Parameter.cs" />
     <Compile Include="UI\DTOs\MachineConfiguration.cs" />
+    <Compile Include="UI\FormEventArgs\LoginResultEventArgs.cs" />
     <Compile Include="UI\Forms\frmAttendedMode.cs">
       <SubType>Form</SubType>
     </Compile>

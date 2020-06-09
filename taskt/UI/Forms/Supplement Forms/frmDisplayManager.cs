@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using taskt.UI.FormEventArgs;
 using taskt.UI.DTOs;
-using taskt.UI.Forms.Supplemental;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
@@ -44,7 +44,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             dgvMachines.ReadOnly = true;
             btnStart.Enabled = false;
             btnStop.Enabled = true;
-            tmrCheck.Enabled = true;      
+            tmrCheck.Enabled = true;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -54,7 +54,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             dgvMachines.ReadOnly = false;
             btnStart.Enabled = true;
             btnStop.Enabled = false;
-         
         }
 
         private void tmrCheck_Tick(object sender, EventArgs e)
@@ -63,8 +62,8 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             foreach (var machine in _machines)
             {
-                if ((string.IsNullOrEmpty(machine.MachineName)) || 
-                    (string.IsNullOrEmpty(machine.UserName)) || 
+                if ((string.IsNullOrEmpty(machine.MachineName)) ||
+                    (string.IsNullOrEmpty(machine.UserName)) ||
                     (string.IsNullOrEmpty(machine.Password)))
                 {
                     continue;
@@ -84,17 +83,17 @@ namespace taskt.UI.Forms.Supplement_Forms
                         windowHeight = 1080;
                     }
 
-                    LogEvent("Machine '" + machine.MachineName + "' is due for desktop login");          
+                    LogEvent("Machine '" + machine.MachineName + "' is due for desktop login");
                     machine.LastKnownStatus = "Attempting to login";
                     machine.NextConnectionDue = DateTime.Now.AddMinutes(2);
                     LogEvent("Next Connection for Machine '" + machine.MachineName + "' due at '" + machine.NextConnectionDue + "'");
                     frmRemoteDesktopViewer viewer = new frmRemoteDesktopViewer(
-                        machine.MachineName, 
-                        machine.UserName, 
-                        machine.Password, 
-                        windowWidth, 
-                        windowHeight, 
-                        chkHideScreen.Checked, 
+                        machine.MachineName,
+                        machine.UserName,
+                        machine.Password,
+                        windowWidth,
+                        windowHeight,
+                        chkHideScreen.Checked,
                         chkStartMinimized.Checked
                         );
                     viewer.LoginUpdateEvent += Viewer_LoginUpdateEvent;
@@ -103,7 +102,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
         }
 
-        private void Viewer_LoginUpdateEvent(object sender, LoginResultArgs e)
+        private void Viewer_LoginUpdateEvent(object sender, LoginResultEventArgs e)
         {
             //var frmViewer = (Supplement_Forms.frmRemoteDesktopViewer)sender;
             var connResult = e.Result.ToString();
@@ -119,7 +118,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             machine.LastKnownStatus = status;
 
-            if (e.Result == LoginResultArgs.LoginResultCode.Failed)
+            if (e.Result == LoginResultEventArgs.LoginResultCode.Failed)
             {
                 var frmSender = (frmRemoteDesktopViewer)sender;
                 frmSender.Close();

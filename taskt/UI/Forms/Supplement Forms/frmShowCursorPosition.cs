@@ -12,59 +12,57 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmShowCursorPosition : UIForm
     {
-        public POINT lpPoint;
-        public int xPos { get; set; }
-        public int yPos { get; set; }
-        public frmShowCursorPosition()
-        {
-            InitializeComponent();
-        }
+        public MousePoint LPPoint;
+        public int XPosition { get; set; }
+        public int YPosition { get; set; }
+
         [DllImport("user32.dll")]
-        public static extern bool GetCursorPos(out POINT lpPoint);
-        private void tmrGetPosition_Tick(object sender, EventArgs e)
-        {
-            GetCursorPos(out lpPoint);
-            lblXPosition.Text = "X Position: " + lpPoint.X;
-            lblYPosition.Text = "Y Position: " + lpPoint.Y;
-            xPos = lpPoint.X;
-            yPos = lpPoint.Y;
-        }
+        public static extern bool GetCursorPos(out MousePoint lpPoint);
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct POINT
+        public struct MousePoint
         {
             public int X;
             public int Y;
 
-            public static implicit operator Point(POINT point)
+            public static implicit operator Point(MousePoint point)
             {
                 return new Point(point.X, point.Y);
             }
+        }
+
+        public frmShowCursorPosition()
+        {
+            InitializeComponent();
+        }
+
+        private void ShowCursorPosition_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void tmrGetPosition_Tick(object sender, EventArgs e)
+        {
+            GetCursorPos(out LPPoint);
+            lblXPosition.Text = "X Position: " + LPPoint.X;
+            lblYPosition.Text = "Y Position: " + LPPoint.Y;
+            XPosition = LPPoint.X;
+            YPosition = LPPoint.Y;
         }
 
         private void ShowCursorPosition_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
             }
-        }
-
-        private void ShowCursorPosition_Load(object sender, EventArgs e)
-        {
         }
 
         private void frmShowCursorPosition_MouseEnter(object sender, EventArgs e)

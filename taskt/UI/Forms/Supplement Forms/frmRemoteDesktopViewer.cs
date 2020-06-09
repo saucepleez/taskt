@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.UI.FormEventArgs;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmRemoteDesktopViewer : Form
     {
-        public event EventHandler<LoginResultArgs> LoginUpdateEvent;
-        public frmRemoteDesktopViewer(string machineName, string userName, string password, int totalWidth, int totalHeight, bool hideDisplay, bool minimizeOnStart)
+        public event EventHandler<LoginResultEventArgs> LoginUpdateEvent;
+
+        public frmRemoteDesktopViewer(string machineName, string userName, string password, int totalWidth,
+            int totalHeight, bool hideDisplay, bool minimizeOnStart)
         {
             InitializeComponent();
 
@@ -28,9 +24,9 @@ namespace taskt.UI.Forms.Supplemental
             }
 
             //set text and form properties
-            this.Text = "Remote Desktop - Machine: " + machineName + " | User: " + userName; 
-            this.Width = totalWidth;
-            this.Height = totalHeight;
+            Text = "Remote Desktop - Machine: " + machineName + " | User: " + userName;
+            Width = totalWidth;
+            Height = totalHeight;
 
             //declare credentials
             axRDP.Server = machineName;
@@ -50,13 +46,12 @@ namespace taskt.UI.Forms.Supplemental
 
             if (minimizeOnStart)
             {
-                this.WindowState = FormWindowState.Minimized;
+                WindowState = FormWindowState.Minimized;
             }
         }
 
         private void frmRemoteDesktopViewer_Load(object sender, EventArgs e)
         {
-           
         }
 
         private void axRDP_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
@@ -64,47 +59,28 @@ namespace taskt.UI.Forms.Supplemental
             //codes https://social.technet.microsoft.com/wiki/contents/articles/37870.rds-remote-desktop-client-disconnect-codes-and-reasons.aspx
             if (e.discReason != 3)
             {
-                LoginUpdateEvent?.Invoke(this, new LoginResultArgs(axRDP.Server, LoginResultArgs.LoginResultCode.Failed, e.discReason.ToString()));
+                LoginUpdateEvent?.Invoke(this, new LoginResultEventArgs(axRDP.Server, LoginResultEventArgs.LoginResultCode.Failed,
+                    e.discReason.ToString()));
             }
 
-            this.Close();
+            Close();
         }
 
         private void axRDP_OnLoginComplete(object sender, EventArgs e)
         {
            tmrLoginFailure.Enabled = false;
-           LoginUpdateEvent?.Invoke(this, new LoginResultArgs(axRDP.Server, LoginResultArgs.LoginResultCode.Success, ""));
+           LoginUpdateEvent?.Invoke(this, new LoginResultEventArgs(axRDP.Server, LoginResultEventArgs.LoginResultCode.Success, ""));
         }
+
         private void tmrLoginFailure_Tick(object sender, EventArgs e)
         {
             tmrLoginFailure.Enabled = false;
-            LoginUpdateEvent?.Invoke(this, new LoginResultArgs(axRDP.Server, LoginResultArgs.LoginResultCode.Failed, "Timeout"));
+            LoginUpdateEvent?.Invoke(this, new LoginResultEventArgs(axRDP.Server, LoginResultEventArgs.LoginResultCode.Failed, "Timeout"));
         }
 
         private void pnlCover_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             pnlCover.Hide();
-        }
-
-
-    }
-
-    public class LoginResultArgs
-    {
-       
-        public LoginResultArgs(string userName, LoginResultCode result, string additionalDetail)
-        {
-            this.MachineName = userName;
-            this.Result = result;
-            this.AdditionalDetail = additionalDetail;
-        }
-        public LoginResultCode Result;
-        public string MachineName { get; set; }
-        public string AdditionalDetail { get; set; }
-        public enum LoginResultCode
-        {
-            Success,
-            Failed
         }
     }
 }

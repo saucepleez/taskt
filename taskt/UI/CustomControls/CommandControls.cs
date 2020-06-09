@@ -301,13 +301,13 @@ namespace taskt.UI.CustomControls
                 //Todo - ideally one function to add to textbox which adds to class
 
                 //add selected variables to associated control text
-                CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
-                CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
+                CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.XPosition.ToString();
+                CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.YPosition.ToString();
 
                 //find current command and add to underlying class
                 SendMouseMoveCommand cmd = (SendMouseMoveCommand)CurrentEditor.SelectedCommand;
-                cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
-                cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
+                cmd.v_XMousePosition = frmShowCursorPos.XPosition.ToString();
+                cmd.v_YMousePosition = frmShowCursorPos.YPosition.ToString();
             }
         }
 
