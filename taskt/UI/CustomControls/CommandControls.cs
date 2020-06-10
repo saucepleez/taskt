@@ -36,6 +36,19 @@ namespace taskt.UI.CustomControls
             return controlList;
         }
 
+        public static List<Control> CreateDefaultOutputGroupFor(string parameterName, ScriptCommand parent, frmCommandEditor editor)
+        {
+            var controlList = new List<Control>();
+            var label = CreateDefaultLabelFor(parameterName, parent);
+            var variableNameControl = CreateStandardComboboxFor(parameterName, parent).AddVariableNames(editor);
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { variableNameControl }, editor);
+
+            controlList.Add(label);
+            controlList.AddRange(helpers);
+            controlList.Add(variableNameControl);
+            return controlList;
+        }
+
         public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, ScriptCommand parent, frmCommandEditor editor)
         {
             //Todo: Test
@@ -107,13 +120,13 @@ namespace taskt.UI.CustomControls
             {
                 var attribute = (SampleUsage)sampleUsageAttributesAssigned[0];
                 if (attribute.Usage.Length > 0)
-                    toolTipText += "\n\n" + attribute.Usage;
+                    toolTipText += "\nSample: " + attribute.Usage;
             }
             if (remarksAttributesAssigned.Length > 0)
             {
                 var attribute = (Remarks)remarksAttributesAssigned[0];
                 if (attribute.Remark.Length > 0)
-                    toolTipText += "\n\n" + attribute.Remark;
+                    toolTipText += "\n" + attribute.Remark;
             }
 
             ToolTip inputToolTip = new ToolTip();
