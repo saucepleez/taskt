@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,13 +23,12 @@ using System.Reflection;
 using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Commands;
-using taskt.Core.Settings;
-using taskt.UI.CustomControls;
+using taskt.Core.IO;
 using taskt.Core.Script;
 using taskt.Core.Server;
+using taskt.Core.Settings;
+using taskt.UI.CustomControls;
 using taskt.UI.Forms.Supplement_Forms;
-using taskt.Core.IO;
-using Newtonsoft.Json;
 
 namespace taskt.UI.Forms
 {
@@ -1496,17 +1496,22 @@ namespace taskt.UI.Forms
                 //update file path and reflect in title bar
                 ScriptFilePath = filePath;
 
-                //assign ProjectPath variable
-                var projectPathVariable = new ScriptVariable
-                {
-                    VariableName = "ProjectPath",
-                    VariableValue = _scriptProjectPath
-                };
-
-                _scriptVariables.Add(projectPathVariable);
-
                 //assign variables
                 _scriptVariables.AddRange(deserializedScript.Variables);
+
+                //update ProjectPath variable
+                var projectPathVariable = _scriptVariables.Where(v => v.VariableName == "ProjectPath").SingleOrDefault();
+                if (projectPathVariable != null)
+                    projectPathVariable.VariableValue = _scriptProjectPath;
+                else
+                {
+                    projectPathVariable = new ScriptVariable
+                    {
+                        VariableName = "ProjectPath",
+                        VariableValue = _scriptProjectPath
+                    };
+                    _scriptVariables.Add(projectPathVariable);
+                }
 
                 //populate commands
                 PopulateExecutionCommands(deserializedScript.Commands);
