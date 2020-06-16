@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteDLLCommand" CommandID="d1f2d1f6-bc83-4973-b55f-30c256008d89" CommandName="ExecuteDLLCommand" IsCommented="false" SelectionName="Execute DLL" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="{ProjectPath}\Sample.dll" v_ClassName="tasktTesting.RobotWorker" v_MethodName="System.String SaySomething()" v_OutputUserVariableName="DLLOut" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="fbff4fe8-5ac2-45ce-afae-3607e1b6bcfe" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{DLLOut}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExecuteRESTAPICommand" CommandID="29eec2be-922c-4270-bad0-c1fed92202ea" CommandName="ExecuteRESTAPICommand" IsCommented="false" SelectionName="Execute REST API" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_BaseURL="https://jsonplaceholder.typicode.com" v_APIEndPoint="/todos/1" v_APIMethodType="GET" v_RequestFormat="Json" v_OutputUserVariableName="APIOut">
+        <v_RESTParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="RESTPara20Table061220.022018">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="RESTPara20Table061220.022018" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="RESTPara20Table061220.022018" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_RESTParameters>
+        <v_AdvancedParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="A12vRESTPara20Table061220.022018">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  <xs:element name="Content_x0020_Type" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Type" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="A12vRESTPara20Table061220.022018" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="A12vRESTPara20Table061220.022018" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_AdvancedParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="1dcb708f-9cf1-40e2-bc79-0af7f7a70072" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{APIOut}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <FileName>Main.xml</FileName>
+  <ProjectName>API Commands</ProjectName>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>ProjectPath</VariableName>
+      <VariableValue xsi:type="xsd:string">C:\Users\Francesca\Documents\TasktTeam\taskt\taskt\Sample Scripts\4.x Use Case Samples\API Commands</VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

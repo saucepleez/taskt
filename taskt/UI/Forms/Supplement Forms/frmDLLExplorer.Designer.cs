@@ -137,7 +137,7 @@
             this.upbLoadDLL.TabIndex = 8;
             this.upbLoadDLL.TabStop = false;
             this.upbLoadDLL.Text = "Load DLL";
-            this.upbLoadDLL.Click += new System.EventHandler(this.uiPictureButton1_Click);
+            this.upbLoadDLL.Click += new System.EventHandler(this.upbLoadDLL_Click);
             // 
             // uiBtnOk
             // 

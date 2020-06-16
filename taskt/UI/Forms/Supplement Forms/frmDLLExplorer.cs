@@ -22,7 +22,10 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void lstClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstMethods.Items.Clear();
-            var availableMethods = Classes.Where(f => f.ClassName == (string)lstClasses.SelectedItem).Select(f => f.Methods).FirstOrDefault();
+            var availableMethods = Classes.Where(f => f.ClassName == (string)lstClasses.SelectedItem)
+                                          .Select(f => f.Methods)
+                                          .FirstOrDefault()
+                                          .OrderBy(m => m.MethodName);
 
             foreach (var method in availableMethods)
             {
@@ -52,11 +55,12 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
         }
 
-        private void uiPictureButton1_Click(object sender, EventArgs e)
+        private void upbLoadDLL_Click(object sender, EventArgs e)
         {
             try
             {
                 OpenFileDialog ofd = new OpenFileDialog();
+                ofd.RestoreDirectory = false;
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     if (!ofd.FileName.ToLower().Contains(".dll"))
@@ -108,7 +112,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
                 //populate class listbox
                 lstClasses.Items.Clear();
-                foreach (var className in Classes)
+                foreach (var className in Classes.OrderBy(c => c.ClassName))
                 {
                     lstClasses.Items.Add(className.ClassName);
                 }

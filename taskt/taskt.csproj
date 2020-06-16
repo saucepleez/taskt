@@ -183,8 +183,8 @@
     <Compile Include="Core\Automation\Attributes\PropertyAttributes\SampleUsage.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary Commands\AddDictionaryItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\API Commands\ExecuteRESTAPICommand.cs" />
-    <Compile Include="Core\Automation\Commands\API Commands\QueryHTMLSourceCommand.cs" />
-    <Compile Include="Core\Automation\Commands\API Commands\GetHTMLSourceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Web Browser Commands\QueryHTMLSourceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Web Browser Commands\GetHTMLSourceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\ParseJSONModelCommand.cs" />
     <Compile Include="Core\Automation\Commands\Database Commands\DefineDatabaseConnectionCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable Commands\AddDataRowCommand.cs" />
