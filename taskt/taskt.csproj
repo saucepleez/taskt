@@ -197,7 +197,6 @@
     <Compile Include="Core\Automation\Commands\DataTable Commands\WriteDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary Commands\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary Commands\GetDictionaryValueCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Dictionary Commands\LoadDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine Commands\ErrorHandlingCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine Commands\GetBotStoreDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine Commands\PauseScriptCommand.cs" />

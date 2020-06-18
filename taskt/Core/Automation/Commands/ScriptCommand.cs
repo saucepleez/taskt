@@ -27,7 +27,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(CreateDataTableCommand))]
     [XmlInclude(typeof(MergeDataTableCommand))]
     [XmlInclude(typeof(GetDictionaryValueCommand))]
-    [XmlInclude(typeof(LoadDictionaryCommand))]
     [XmlInclude(typeof(AddDataRowCommand))]
     [XmlInclude(typeof(GetDataRowCommand))]
     [XmlInclude(typeof(GetDataRowValueCommand))]

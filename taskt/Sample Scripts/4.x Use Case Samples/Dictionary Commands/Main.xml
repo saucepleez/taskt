@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="3fb09a2a-ff0a-4881-ad13-4f1f39652064" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="**Create Dictionary** (Command)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDictionaryCommand" CommandID="c899fedf-1e79-4f72-8fc1-a3830a9ebc2f" CommandName="CreateDictionaryCommand" IsCommented="false" SelectionName="Create Dictionary" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="vNewDictionary">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ColumnNamesDataTable061520.101427">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                  <xs:element name="Values" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNamesDataTable061520.101427" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ColumnNamesDataTable061520.101427" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNamesDataTable061520.101427 diffgr:id="ColumnNamesDataTable061520.1014271" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Keys>First Name</Keys>
+                <Values>John</Values>
+              </ColumnNamesDataTable061520.101427>
+              <ColumnNamesDataTable061520.101427 diffgr:id="ColumnNamesDataTable061520.1014272" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Keys>Last Name</Keys>
+                <Values>Doe</Values>
+              </ColumnNamesDataTable061520.101427>
+              <ColumnNamesDataTable061520.101427 diffgr:id="ColumnNamesDataTable061520.1014273" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Keys>Age</Keys>
+                <Values>25</Values>
+              </ColumnNamesDataTable061520.101427>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="b471efd6-d383-4ffb-b1a1-e47ec1a66e0c" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="**Add Dictionary Item** (Command)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddDictionaryItemCommand" CommandID="4d44d6a5-1e82-4489-b03c-02f767d9c211" CommandName="AddDictionaryItemCommand" IsCommented="false" SelectionName="Add Dictionary Item" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="{vNewDictionary}">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ColumnNamesDataTable061520.101827">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                  <xs:element name="Values" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNamesDataTable061520.101827" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ColumnNamesDataTable061520.101827" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNamesDataTable061520.101827 diffgr:id="ColumnNamesDataTable061520.1018271" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Keys>Country</Keys>
+                <Values>US</Values>
+              </ColumnNamesDataTable061520.101827>
+              <ColumnNamesDataTable061520.101827 diffgr:id="ColumnNamesDataTable061520.1018272" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Keys>State</Keys>
+                <Values>California</Values>
+              </ColumnNamesDataTable061520.101827>
+              <ColumnNamesDataTable061520.101827 diffgr:id="ColumnNamesDataTable061520.1018273" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Keys>Occupation</Keys>
+                <Values>Merchant</Values>
+              </ColumnNamesDataTable061520.101827>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="c969a13f-55d8-4f78-9ae4-1ee2cd0aa807" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="**Get Dictionary Value** (Command)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="314c7263-6233-41a2-97e5-872810dfb731" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Value" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDictionary="{vNewDictionary}" v_Key="First Name" v_OutputUserVariableName="vDictValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="7b7bdc45-094a-45c5-bbd4-7a56cb6b72d1" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key: 'First Name' , Value: '{vDictValue}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="22d10ed1-390f-4a38-84ce-cc3affc45936" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Value" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDictionary="{vNewDictionary}" v_Key="Last Name" v_OutputUserVariableName="vDictValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="824855ac-0b95-4eda-aef8-80801d35d276" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key: 'Last Name' , Value: '{vDictValue}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="6224689f-6a9d-473d-8f59-8d67c7be8aed" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Value" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDictionary="{vNewDictionary}" v_Key="Age" v_OutputUserVariableName="vDictValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="65574b73-4fd1-4b40-a670-c9699d3a6cf5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key: 'Age' , Value: '{vDictValue}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="84181e1a-839e-4522-90a8-acd1f5e87bc0" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Value" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDictionary="{vNewDictionary}" v_Key="Country" v_OutputUserVariableName="vDictValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="dc5ff743-bd29-4943-99dc-13216e7e25e1" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key: 'Country' , Value: '{vDictValue}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="19ad2929-02bf-46cc-8b72-2945e00f0462" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Value" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDictionary="{vNewDictionary}" v_Key="State" v_OutputUserVariableName="vDictValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="77eef5e0-aaff-4640-95e5-4035621edbe7" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key: 'State' , Value: '{vDictValue}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="edd84ca0-a35c-4059-a8ff-5dec24c393d5" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Value" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDictionary="{vNewDictionary}" v_Key="Occupation" v_OutputUserVariableName="vDictValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="ac6d003b-0eae-4d14-8b65-4e4a6f538d16" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key: 'Occupation' , Value: '{vDictValue}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <FileName>Main.xml</FileName>
+  <ProjectName>Dictionary Commands</ProjectName>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>ProjectPath</VariableName>
+      <VariableValue xsi:type="xsd:string">D:\Projects\RPA\Taskt\Git\Development\taskt\taskt\Sample Scripts\4.x Use Case Samples\Dictionary Commands</VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vDictValue</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

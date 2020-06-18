@@ -1,110 +1,104 @@
 ﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Dictionary Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]
+    [Group("Dictionary Commands")]
+    [Description("This command returns a dictionary value based on a specified key.")]
     public class GetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the output variable")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_OutputVariable { get; set; }
+        [PropertyDescription("Dictionary")]
+        [InputSpecification("Specify the dictionary variable to get a value from.")]
+        [SampleUsage("{vDictionary}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputDictionary { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input The Dictionary")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("myData")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_InputData { get; set; }
-
-
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("key1")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Key")]
+        [InputSpecification("Specify the key to get the value for.")]
+        [SampleUsage("SomeKey || {vKey}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Key { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Output Value Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                 " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public GetDictionaryValueCommand()
         {
-            this.CommandName = "GetDictionaryValueCommand";
-            this.SelectionName = "Get Dictionary Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "GetDictionaryValueCommand";
+            SelectionName = "Get Dictionary Value";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             //Retrieve Dictionary by name
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
             var vKey = v_Key.ConvertToUserVariable(sender);
-            var dataSetVariable = LookupVariable(engine);
+            var dictionaryVariable = LookupVariable(engine);
 
             //Declare local dictionary and assign output
-            Dictionary<string,string> dict = (Dictionary<string,string>)dataSetVariable.VariableValue;
-            Script.ScriptVariable Output = new Script.ScriptVariable
-            {
-                VariableName = v_OutputVariable,
-                VariableValue = dict[vKey]
-            };
+            Dictionary<string,string> dict = (Dictionary<string,string>)dictionaryVariable.VariableValue;
+            var dictValue = dict[vKey].ConvertToUserVariable(sender);
 
-            //Overwrites variable if it already exists
-            if (engine.VariableList.Exists(x => x.VariableName == Output.VariableName))
-            {
-                Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == Output.VariableName).FirstOrDefault();
-                engine.VariableList.Remove(temp);
-            }
-            //Add to variable list
-            engine.VariableList.Add(Output);
+            engine.AddVariable(v_OutputUserVariableName, dictValue);
         }
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputData).FirstOrDefault();
-
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_InputData.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
-
-            return requiredVariable;
-        }
+        
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputVariable", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputDictionary", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Key", this, editor));
-
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From: {v_InputData}, Get: {v_Key}, Store In: {v_OutputVariable}]";
+            return base.GetDisplayValue() + $" [From '{v_InputDictionary}' for Key '{v_Key}' - Store Value in '{v_OutputUserVariableName}']";
+        }
+
+        private ScriptVariable LookupVariable(AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputDictionary).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && 
+                (v_InputDictionary.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && 
+                (v_InputDictionary.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_InputDictionary
+                    .Replace(sendingInstance.EngineSettings.VariableStartMarker, "")
+                    .Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
     }
 }

@@ -1,91 +1,73 @@
 ﻿using System;
-using System.Xml.Serialization;
-using System.Data;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
+using System.Data;
 using System.Linq;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Dictionary Commands")]
-    [Attributes.ClassAttributes.Description("This command Adds a key and value to a existing Dictionary")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add to a dictionary")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Dictionary Commands")]
+    [Description("This command adds an item (key and value pair) to a Dictionary.")]
     public class AddDictionaryItemCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Dictionary Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate a Dictionary to add to")]
-        [Attributes.PropertyAttributes.SampleUsage("vMyDictionary")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Dictionary")]
+        [InputSpecification("Select the dictionary variable to add an item to.")]
+        [SampleUsage("{vMyDictionary}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Define Keys and Values")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the Keys and Values required for your dictionary")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Keys and Values")]
+        [InputSpecification("Enter Keys and Values required for the dictionary.")]
+        [SampleUsage("[FirstName | John] || [{vKey} | {vValue}]")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_ColumnNameDataTable { get; set; }
-
 
         public AddDictionaryItemCommand()
         {
-            this.CommandName = "AddDictionaryItemCommand";
-            this.SelectionName = "Add Dictionary Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "AddDictionaryItemCommand";
+            SelectionName = "Add Dictionary Item";
+            CommandEnabled = true;
+            CustomRendering = true;
 
             //initialize Datatable
-            this.v_ColumnNameDataTable = new System.Data.DataTable
+            v_ColumnNameDataTable = new DataTable
             {
                 TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
             };
 
-            this.v_ColumnNameDataTable.Columns.Add("Keys");
-            this.v_ColumnNameDataTable.Columns.Add("Values");
-
-
-
+            v_ColumnNameDataTable.Columns.Add("Keys");
+            v_ColumnNameDataTable.Columns.Add("Values");
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
-            var dataSetVariable = LookupVariable(engine);
+            var engine = (AutomationEngineInstance)sender;
+            var dictionaryVariable = LookupVariable(engine);
 
-
-            Dictionary<string, string> outputDictionary = (Dictionary<string, string>)dataSetVariable.VariableValue;
+            Dictionary<string, string> outputDictionary = (Dictionary<string, string>)dictionaryVariable.VariableValue;
 
             foreach (DataRow rwColumnName in v_ColumnNameDataTable.Rows)
             {
-                outputDictionary.Add(rwColumnName.Field<string>("Keys"), rwColumnName.Field<string>("Values"));
+                outputDictionary.Add(
+                    rwColumnName.Field<string>("Keys").ConvertToUserVariable(engine), 
+                    rwColumnName.Field<string>("Values").ConvertToUserVariable(engine));
             }
-            dataSetVariable.VariableValue = outputDictionary;
-
-
+            dictionaryVariable.VariableValue = outputDictionary;
         }
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
 
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_DictionaryName.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (v_DictionaryName.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_DictionaryName.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
-
-            return requiredVariable;
-        }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -94,12 +76,32 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
+            return base.GetDisplayValue() + $" [Add {v_ColumnNameDataTable.Rows.Count} Item(s) in '{v_DictionaryName}']";
+        }
+
+        private ScriptVariable LookupVariable(AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && 
+                (v_DictionaryName.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && 
+                (v_DictionaryName.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_DictionaryName
+                    .Replace(sendingInstance.EngineSettings.VariableStartMarker, "")
+                    .Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
+
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
     }
 }
