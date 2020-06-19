@@ -1,45 +1,46 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command logs data to files.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to log custom data to a file for debugging or analytical purposes.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    [Group("Data Commands")]
+    [Description("This command logs text data to either an engine file or a custom file.")]
     public class LogDataCommand : ScriptCommand
     {
-
-
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select existing log file or enter a custom name.")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Logs")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate the file name where logs should be appended to")]
-        [Attributes.PropertyAttributes.SampleUsage("Select 'Engine Logs' or specify your own file")]
-        [Attributes.PropertyAttributes.Remarks("Date and Time will be automatically appended to the file name.  Logs are all saved in taskt Root\\Logs folder")]
+        [PropertyDescription("Write Log To")]
+        [InputSpecification("Specify the corresponding logging option to save logs to Engine Logs or to a custom File.")]
+        [SampleUsage("Engine Logs || Custom File Name || {vFileVariable}")]
+        [Remarks("Selecting 'Engine Logs' will result in writing execution logs in the 'Engine Logs'. " +
+            "The current Date and Time will be automatically appended to a local file if a custom file name is provided. " +
+            "Logs are all saved in the TaskT Root Folder in the 'Logs' folder.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_LogFile { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the text to log.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate the value of the text to be saved.")]
-        [Attributes.PropertyAttributes.SampleUsage("Third Step Complete, [vVariable], etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Log Text")]
+        [InputSpecification("Specify the log text.")]
+        [SampleUsage("Third Step is Complete || {vLogText}")]
+        [Remarks("Provide only text data.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_LogText { get; set; }
 
         public LogDataCommand()
         {
-            this.CommandName = "LogDataCommand";
-            this.SelectionName = "Log Data";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "LogDataCommand";
+            SelectionName = "Log Data";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -52,20 +53,19 @@ namespace taskt.Core.Automation.Commands
             if (v_LogFile == "Engine Logs")
             {
                 //log to the standard engine logs
-                var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+                var engine = (AutomationEngineInstance)sender;
                 engine.EngineLogger.Information(textToLog);
             }
             else
             {
                 //create new logger and log to custom file
-                using (var logger = new Logging().CreateLogger(logFile, Serilog.RollingInterval.Infinite))
+                using (var logger = new Logging().CreateLogger(logFile, RollingInterval.Infinite))
                 {
                     logger.Information(textToLog);
                 }
             }
-
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -75,24 +75,21 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_LogText", this, editor));
 
             return RenderedControls;
-
         }
-
 
         public override string GetDisplayValue()
         {
             string logFileName;
             if (v_LogFile == "Engine Logs")
             {
-                logFileName = "taskt Engine Logs.txt";
+                logFileName = "taskt_Engine_Logs.txt";
             }
             else
             {
-                logFileName = "taskt " + v_LogFile + " Logs.txt";
+                logFileName = $"taskt_{v_LogFile}_Logs.txt";
             }
 
-
-            return base.GetDisplayValue() + " [Write Log to 'taskt\\Logs\\" + logFileName + "']";
+            return base.GetDisplayValue() + $" [Write Log '{v_LogText}' to 'taskt\\Logs\\{logFileName}']";
         }
     }
 }

@@ -1,83 +1,82 @@
 ﻿using System;
-using System.Xml.Serialization;
-using System.IO;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using System.Data;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to perform a math calculation and apply it to a variable.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a math calculation.")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Data Commands")]
+    [Description("This command performs a math calculation and saves the result in a variable.")]
     public class MathCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the input to be computed (ex. (2 + 1)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains valid math.")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("You can use known numbers or variables.")]
-        public string v_InputValue { get; set; }
+        [PropertyDescription("Math Expression")]
+        [InputSpecification("Specify either text or a variable that contains a valid math expression.")]
+        [SampleUsage("(2 + 5) * 3 || ({vNumber1} + {vNumber2}) * {vNumber3}")]
+        [Remarks("You can use known numbers or variables.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_MathExpression { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate Thousand Seperator")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the seperator used to identify decimal places")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("Typically a comma or a decimal point (period)")]
-        public string v_ThousandSeperator { get; set; }
+        [PropertyDescription("Thousand Separator (Optional)")]
+        [InputSpecification("Specify the seperator used to identify decimal places.")]
+        [SampleUsage(", || . || {vThousandSeparator}")]
+        [Remarks("Typically a comma or a decimal point (period), like in 100,000, ',' is a thousand separator.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_ThousandSeparator { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate Decimal Seperator")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the seperator used to identify decimal places")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("Typically a comma or a decimal point (period)")]
-        public string v_DecimalSeperator { get; set; }
+        [PropertyDescription("Decimal Separator (Optional)")]
+        [InputSpecification("Specify the seperator used to identify decimal places.")]
+        [SampleUsage(". || , || {vDecimalSeparator}")]
+        [Remarks("Typically a comma or a decimal point (period), like in 60.99, '.' is a decimal separator.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_DecimalSeparator { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the math calculation")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("Output Result Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public MathCalculationCommand()
         {
-            this.CommandName = "MathCalculationCommand";
-            this.SelectionName = "Math Calculation";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "MathCalculationCommand";
+            SelectionName = "Math Calculation";
+            CommandEnabled = true;
+            CustomRendering = true;
 
-            this.v_InputValue = "(2 + 5) * 3";
-            this.v_DecimalSeperator = ".";
-            this.v_ThousandSeperator = ",";
+            v_MathExpression = "(2 + 5) * 3";
+            v_DecimalSeparator = ".";
+            v_ThousandSeparator = ",";
         }
 
         public override void RunCommand(object sender)
         {
             //get variablized string
-            var variableMath = v_InputValue.ConvertToUserVariable(sender);
+            var variableMath = v_MathExpression.ConvertToUserVariable(sender);
 
             try
             {
-                var decimalSeperator = v_DecimalSeperator.ConvertToUserVariable(sender);
-                var thousandSeperator = v_ThousandSeperator.ConvertToUserVariable(sender);
+                var decimalSeparator = v_DecimalSeparator.ConvertToUserVariable(sender);
+                var thousandSeparator = v_ThousandSeparator.ConvertToUserVariable(sender);
 
                 //remove thousandths markers
-                variableMath = variableMath.Replace(thousandSeperator, "");
+                variableMath = variableMath.Replace(thousandSeparator, "");
 
                 //check decimal seperator
-                if (decimalSeperator != ".")
+                if (decimalSeparator != ".")
                 {
-                    variableMath = variableMath.Replace(decimalSeperator, ".");
+                    variableMath = variableMath.Replace(decimalSeparator, ".");
                 }
 
                 //perform compute
@@ -85,14 +84,13 @@ namespace taskt.Core.Automation.Commands
                 var result = dt.Compute(variableMath, "");
 
                 //restore decimal seperator
-                if (decimalSeperator != ".")
+                if (decimalSeparator != ".")
                 {
-                    result = result.ToString().Replace(".", decimalSeperator);
+                    result = result.ToString().Replace(".", decimalSeparator);
                 }
-
                
                 //store string in variable
-                result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+                result.ToString().StoreInUserVariable(sender, v_OutputUserVariableName);
             }
             catch (Exception ex)
             {
@@ -100,28 +98,23 @@ namespace taskt.Core.Automation.Commands
                 throw ex;
             }
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ThousandSeperator", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DecimalSeperator", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MathExpression", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ThousandSeparator", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DecimalSeparator", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Apply Calculation Result to '{v_applyToVariableName}']";
+            return base.GetDisplayValue() + $" [Compute '{v_MathExpression}' - Store Result in '{v_OutputUserVariableName}']";
         }
     }
 }

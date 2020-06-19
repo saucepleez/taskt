@@ -441,13 +441,12 @@ namespace taskt.UI
             uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("NewVariableCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("ParseDatasetRowCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("ModifyStringCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("MathCalculationCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("TextExtractionCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetPDFTextCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetTextLengthCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetListCountCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetListItemCommand", taskt.Properties.Resources.command_function);
@@ -576,7 +575,6 @@ namespace taskt.UI
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
             uiImages.Add("ExecuteRESTAPICommand", taskt.Properties.Resources.command_run_code);
-            uiImages.Add("ParseJSONItemCommand", taskt.Properties.Resources.command_parse);
             uiImages.Add("ParseJSONModelCommand", taskt.Properties.Resources.command_parse);
             uiImages.Add("ParseJSONArrayCommand", taskt.Properties.Resources.command_parse);
             uiImages.Add("UploadBotStoreDataCommand", taskt.Properties.Resources.command_server);

@@ -1,64 +1,64 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to parse a JSON Array into a list.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Data Commands")]
+    [Description("This command parses a JSON array into a list.")]
     public class ParseJSONArrayCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the JSON Array or Variable (ex. {someVariable})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or json array value")]
-        [Attributes.PropertyAttributes.SampleUsage("**[{obj1},{obj2}]** or **{vArrayVariable}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_InputValue { get; set; }
+        [PropertyDescription("JSON Array")]
+        [InputSpecification("Provide a variable or JSON array value.")]
+        [SampleUsage("[{\"rect\":{\"length\":10, \"width\":5}}] || {vArrayVariable}")]
+        [Remarks("Providing data of a type other than a 'JSON Array' will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_JsonArrayName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the list")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("Output List Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public ParseJSONArrayCommand()
         {
-            this.CommandName = "ParseJSONArrayCommand";
-            this.SelectionName = "Parse JSON Array";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-          
+            CommandName = "ParseJSONArrayCommand";
+            SelectionName = "Parse JSON Array";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
+            var engine = (AutomationEngineInstance)sender;
 
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(sender);
-
+            var variableInput = v_JsonArrayName.ConvertToUserVariable(sender);
 
             //create objects
-            Newtonsoft.Json.Linq.JArray arr;
+            JArray arr;
             List<string> resultList = new List<string>();
 
             //parse json
             try
             {
-                arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
+                arr = JArray.Parse(variableInput);
             }
             catch (Exception ex)
             {
@@ -72,41 +72,38 @@ namespace taskt.Core.Automation.Commands
             }
 
             //get variable
-            var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
+            var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_OutputUserVariableName).FirstOrDefault();
 
             //create if var does not exist
             if (requiredComplexVariable == null)
             {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_applyToVariableName, CurrentPosition = 0 });
-                requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
+                engine.VariableList.Add(
+                    new ScriptVariable() 
+                    { 
+                        VariableName = v_OutputUserVariableName, 
+                        CurrentPosition = 0 
+                    });
+                requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_OutputUserVariableName).FirstOrDefault();
             }
 
             //assign value to variable
             requiredComplexVariable.VariableValue = resultList;
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_JsonArrayName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
-
-
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply Result(s) To List Variable: " + v_applyToVariableName + "]";
+            return base.GetDisplayValue() + $" [Parse '{v_JsonArrayName}' - Store List in '{v_OutputUserVariableName}']";
         }
     }
 }

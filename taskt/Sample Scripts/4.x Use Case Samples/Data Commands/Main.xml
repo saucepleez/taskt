@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="e374df98-0104-4d6c-b18f-50a024908021" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="**Date Calculation**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="27991768-cb41-49b1-92a4-e3d43fc8f90f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Date Calculation" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="DateCalculationCommand" CommandID="541f0d19-be97-4c82-9289-74c03b5b81ad" CommandName="DateCalculationCommand" IsCommented="false" SelectionName="Date Calculation" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDate="{DateTime.Now}" v_CalculationMethod="Add Days" v_Increment="30" v_ToStringFormat="MM/dd/yyyy" v_OutputUserVariableName="vDate" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="971b1099-218e-4315-857f-575578dd2159" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Date after 30 days from today is '{vDate}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="5ff64f48-ea7a-4393-8826-188e68fe1516" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="**Format Data**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="222f2515-6a73-4de7-974b-036e3f6eaff8" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Format Data" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatDataCommand" CommandID="7e7fc0e2-7bc9-4a8a-989f-19d547095c5c" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InputData="{DateTime.Now}" v_FormatType="Date" v_ToStringFormat="dddd, dd MMMM yyyy" v_OutputUserVariableName="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="20acee54-8c20-4259-9442-4850cc44160e" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Formatted Date is '{vText}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="4a422bd6-06a5-42d9-ac6e-ec1d1718eb69" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="**Get List Count**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="905bd351-f906-4d19-8d39-b40462379fa6" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Get List Count" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="f37e8fcd-4fbb-44af-b6ed-a9285963eb17" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vSampleText" v_Input="A sample text; to be splitted up; by semicolon delimiter" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SplitTextCommand" CommandID="38a19ec0-def4-44a4-b163-b3f6d0fefdc5" CommandName="SplitTextCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InputText="{vSampleText}" v_SplitCharacter=";" v_OutputUserVariableName="vList" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetListCountCommand" CommandID="05bdde4a-3e62-4b72-a684-e164051cd818" CommandName="GetListCountCommand" IsCommented="false" SelectionName="Get List Count" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vList}" v_OutputUserVariableName="vCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="2a9a15f9-61ce-40f5-b8a2-bb571da5e580" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="List Count is '{vCount}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="23e79e2e-6d16-46dd-94c8-ca8d1a58ff34" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" v_Comment="**Get List Item**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="5b358d7c-b27c-403d-aa7f-551174703ade" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Get List Item" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="4c262d26-d3d2-4275-9313-d6cf2b875bfa" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vIndex" v_Input="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetListItemCommand" CommandID="2de94239-d33a-44c0-84c3-985797836289" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vList}" v_ItemIndex="{vIndex}" v_OutputUserVariableName="vListItem" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="840c3a3c-08e9-4852-b706-b66853fdf87f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="List item at index '{vIndex}' is '{vListItem}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="d8b2cce9-5d2d-44af-bf8a-c384053714f6" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" v_Comment="**Get PDF Text**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="ac79e8a2-10f6-45b6-ad11-0a52a282e138" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Get PDF Text" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="bf639f3e-1f37-4d58-b1aa-71a7d2f1e8a1" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vFilePath" v_Input="http://www.africau.edu/images/default/sample.pdf" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetPDFTextCommand" CommandID="94c83ef9-364d-42e3-a3b9-7f920707a25e" CommandName="GetPDFTextCommand" IsCommented="false" SelectionName="Get PDF Text" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_FileSourceType="File URL" v_FilePath="{vFilePath}" v_OutputUserVariableName="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="31c56d08-aee8-41e9-ad5a-55a2f6d91d04" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vText}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="54cc576c-ff97-4f18-85ff-4c05efec2c4d" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="25" PauseBeforeExeucution="false" v_Comment="**Get Word Count**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="7789e20a-bf81-475c-8b4c-c9b51ad01529" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="26" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Get Word Count" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="c3226a90-9e68-456d-90cc-0eb5d4ca0d3e" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vText" v_Input="Sample Text for Testing" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetWordCountCommand" CommandID="dd9d6d69-10bb-4e49-9d2e-6a5fa211506c" CommandName="GetWordCountCommand" IsCommented="false" SelectionName="Get Word Count" DefaultPause="0" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="{vText}" v_OutputUserVariableName="vCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="f54180aa-454b-4b6a-b027-1a8642af5c7d" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="29" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Words count in '{vText}' is '{vCount}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="e339e4b6-5270-4bcf-9a14-59706250d435" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="30" PauseBeforeExeucution="false" v_Comment="**Get Text Length**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="7ff645f3-163b-445f-8ab3-3296bab46d45" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="31" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Get Text Length" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetTextLengthCommand" CommandID="e86d1d68-15f4-43aa-8d36-52184a7cac2e" CommandName="GetTextLengthCommand" IsCommented="false" SelectionName="Get Text Length" DefaultPause="0" LineNumber="32" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="{vText}" v_OutputUserVariableName="vLength" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="ab9cec7b-e8a0-4563-94f3-e66974b535f7" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="33" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Length of the text '{vText}' is '{vLength}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="0e0d8d89-40da-4fb2-bb95-c57aba869174" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="34" PauseBeforeExeucution="false" v_Comment="**Log Data**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="4f1ae9b8-25de-4472-8628-5c73305e78b0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="35" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Log Data" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="6754e10e-9228-4a39-8cea-2a83d805fd8c" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="36" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vFileName" v_Input="DataCommands" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="LogDataCommand" CommandID="0b18e5c0-9ab4-4fa1-9de9-dc88abf45691" CommandName="LogDataCommand" IsCommented="false" SelectionName="Log Data" DefaultPause="0" LineNumber="37" PauseBeforeExeucution="false" CommandEnabled="true" v_LogFile="{vFileName}" v_LogText="The program ran successfully." />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="4faab0ce-d9e3-4077-b743-ee646f618fc1" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="38" PauseBeforeExeucution="false" v_Comment="**Math Calculation**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="1896f6e1-7c57-4a33-9ca7-e73f104b371b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="39" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Math Calculation" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MathCalculationCommand" CommandID="b495402e-488d-410f-b23a-d7b567ed34f6" CommandName="MathCalculationCommand" IsCommented="false" SelectionName="Math Calculation" DefaultPause="0" LineNumber="40" PauseBeforeExeucution="false" CommandEnabled="true" v_MathExpression="(2.5 + 5.5) * 3" v_ThousandSeperator="," v_DecimalSeperator="." v_OutputUserVariableName="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="42e7350e-0d20-4d57-8654-ffdaffbd0af3" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="41" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Math Calculation Result is '{vResult}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="47f47eec-a207-4e39-b98f-1ae38f3ecec4" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="42" PauseBeforeExeucution="false" v_Comment="**Modify String**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="ff3261ce-d4d1-4503-8d7e-7e0d6fc844e9" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="43" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Modify String" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="f1b34722-1265-459f-933a-8746a33caecc" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="44" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vText" v_Input="Sample Text for Testing" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ModifyStringCommand" CommandID="5156f2a4-39e9-4e58-ab45-7609bcdb4a81" CommandName="ModifyStringCommand" IsCommented="false" SelectionName="Modify String" DefaultPause="0" LineNumber="45" PauseBeforeExeucution="false" CommandEnabled="true" v_InputText="{vText}" v_TextOperation="To Upper Case" v_OutputUserVariableName="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="03c31d6c-d3a4-4423-9097-81eaee55ec71" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="46" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Modified Text is '{vResult}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="376d7ec5-d6ee-4a41-8b9d-0f95de7ff525" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="47" PauseBeforeExeucution="false" v_Comment="**Parse Dataset Row**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="061f0b33-1c20-439c-bb03-e102feb1aed4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="48" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Parse Dataset Row" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDataTableCommand" CommandID="5da4c031-19e8-4ed6-a9f7-9c7e84287dee" CommandName="CreateDataTableCommand" IsCommented="false" SelectionName="Create DataTable" DefaultPause="0" LineNumber="49" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="vDataTable">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ColumnNamesDataTable061320.034432">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNamesDataTable061320.034432" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ColumnNamesDataTable061320.034432" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNamesDataTable061320.034432 diffgr:id="ColumnNamesDataTable061320.0344321" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>First Name</Column_x0020_Name>
+              </ColumnNamesDataTable061320.034432>
+              <ColumnNamesDataTable061320.034432 diffgr:id="ColumnNamesDataTable061320.0344322" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Last Name</Column_x0020_Name>
+              </ColumnNamesDataTable061320.034432>
+              <ColumnNamesDataTable061320.034432 diffgr:id="ColumnNamesDataTable061320.0344323" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Age</Column_x0020_Name>
+              </ColumnNamesDataTable061320.034432>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddDataRowCommand" CommandID="735b30df-b139-4711-83d9-51d95574673d" CommandName="AddDataRowCommand" IsCommented="false" SelectionName="Add DataRow" DefaultPause="0" LineNumber="50" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="{vDataTable}">
+        <v_AddDataDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="AddDataDataTable061320.034739">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Data" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="AddDataDataTable061320.034739" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="AddDataDataTable061320.034739" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <AddDataDataTable061320.034739 diffgr:id="AddDataDataTable061320.0347391" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>First Name</Column_x0020_Name>
+                <Data>Cameron</Data>
+              </AddDataDataTable061320.034739>
+              <AddDataDataTable061320.034739 diffgr:id="AddDataDataTable061320.0347392" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Last Name</Column_x0020_Name>
+                <Data>Herwig</Data>
+              </AddDataDataTable061320.034739>
+              <AddDataDataTable061320.034739 diffgr:id="AddDataDataTable061320.0347393" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Age</Column_x0020_Name>
+                <Data>27</Data>
+              </AddDataDataTable061320.034739>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_AddDataDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddDataRowCommand" CommandID="032c0a55-c896-4a41-ae73-af5d1f82b734" CommandName="AddDataRowCommand" IsCommented="false" SelectionName="Add DataRow" DefaultPause="0" LineNumber="51" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="{vDataTable}">
+        <v_AddDataDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="AddDataDataTable061320.034739">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Data" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="AddDataDataTable061320.034739" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="AddDataDataTable061320.034739" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <AddDataDataTable061320.034739 diffgr:id="AddDataDataTable061320.0347391" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>First Name</Column_x0020_Name>
+                <Data>Miguel</Data>
+              </AddDataDataTable061320.034739>
+              <AddDataDataTable061320.034739 diffgr:id="AddDataDataTable061320.0347392" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Last Name</Column_x0020_Name>
+                <Data>Rios</Data>
+              </AddDataDataTable061320.034739>
+              <AddDataDataTable061320.034739 diffgr:id="AddDataDataTable061320.0347393" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Age</Column_x0020_Name>
+                <Data>26</Data>
+              </AddDataDataTable061320.034739>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_AddDataDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="3a075799-79fe-4f89-815d-0935512aaed2" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="53" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Dataset Parsing Result is '{vResult}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="401b71dd-d5ad-4d0f-b396-a55db5dcd536" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="54" PauseBeforeExeucution="false" v_Comment="**Parse JSON Array**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="948f5844-68a7-4d3a-9843-61122a267211" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="55" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Parse JSON Array" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="2b14d2d6-390f-427c-9c98-77e1d01efbda" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="56" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vJSONArray" v_Input="[{&quot;rect&quot;:{&quot;length&quot;:10,&quot;width&quot;:5}},{&quot;rect&quot;:{&quot;length&quot;:8,&quot;width&quot;:4}}]" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ParseJSONArrayCommand" CommandID="d5824b77-3b10-41ac-9de6-bb574945fd49" CommandName="ParseJSONArrayCommand" IsCommented="false" SelectionName="Parse JSON Array" DefaultPause="0" LineNumber="57" PauseBeforeExeucution="false" CommandEnabled="true" v_JsonArrayName="{vJSONArray}" v_OutputUserVariableName="vList" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetListCountCommand" CommandID="96c4451e-ac2a-487d-bed1-57028a23eaa2" CommandName="GetListCountCommand" IsCommented="false" SelectionName="Get List Count" DefaultPause="0" LineNumber="58" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vList}" v_OutputUserVariableName="vCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="LoopNumberOfTimesCommand" CommandID="7caf8a74-8259-4c6d-9104-f830b2328729" CommandName="LoopNumberOfTimesCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="0" LineNumber="59" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{vCount}" v_LoopStart="0" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="e3b67830-f4e0-48bc-933d-0a9bb0e6ad36" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="60" PauseBeforeExeucution="false" v_Comment="Items in this section will run within the loop" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetListItemCommand" CommandID="a4f394e1-16a2-43b2-8fb8-c55888c462f4" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="61" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vList}" v_ItemIndex="{Loop.CurrentIndex}-1" v_OutputUserVariableName="vText" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ShowMessageCommand" CommandID="733e3dab-4782-4cc5-b5bb-0aad0bcde2d5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="62" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vText}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="f06e263f-5a7d-4c21-82ba-e5a5ac6ef6db" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="63" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="3932c070-002c-47de-9bc2-e1955ddf1899" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="64" PauseBeforeExeucution="false" v_Comment="**Parse JSON Model**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="360682a6-4edf-495e-89be-eed2cbd0c43d" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="65" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Parse JSON Model" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ParseJSONModelCommand" CommandID="e130e0c0-9d05-45ac-a35e-d2d28bb6c021" CommandName="ParseJSONModelCommand" IsCommented="false" SelectionName="Parse JSON Model" DefaultPause="0" LineNumber="66" PauseBeforeExeucution="false" CommandEnabled="true" v_JsonObject="{vText}">
+        <v_ParseObjects>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ParseJsonObjectsTable061520040139">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Json_x0020_Selector" type="xs:string" minOccurs="0" />
+                  <xs:element name="Output_x0020_Variable" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ParseJsonObjectsTable061520040139" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ParseJsonObjectsTable061520040139" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ParseJsonObjectsTable061520040139 diffgr:id="ParseJsonObjectsTable0615200401391" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Json_x0020_Selector>$.rect.length</Json_x0020_Selector>
+                <Output_x0020_Variable>vRectLength</Output_x0020_Variable>
+              </ParseJsonObjectsTable061520040139>
+              <ParseJsonObjectsTable061520040139 diffgr:id="ParseJsonObjectsTable0615200401392" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Json_x0020_Selector>$.rect.width</Json_x0020_Selector>
+                <Output_x0020_Variable>vRectWidth</Output_x0020_Variable>
+              </ParseJsonObjectsTable061520040139>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_ParseObjects>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetListCountCommand" CommandID="b7583d22-6492-4131-9788-4a727b76146a" CommandName="GetListCountCommand" IsCommented="false" SelectionName="Get List Count" DefaultPause="0" LineNumber="67" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vRectLength}" v_OutputUserVariableName="vCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="LoopNumberOfTimesCommand" CommandID="afc8fe93-f011-40ed-bdd8-b50a49347acc" CommandName="LoopNumberOfTimesCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="0" LineNumber="68" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{vCount}" v_LoopStart="0" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="1c4b3e4c-6262-4c90-b68a-a205a22d4d81" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="69" PauseBeforeExeucution="false" v_Comment="Items in this section will run within the loop" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetListItemCommand" CommandID="6cd857b9-920d-4b2a-bb75-c498f6b94cc4" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="70" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vRectLength}" v_ItemIndex="{Loop.CurrentIndex}-1" v_OutputUserVariableName="vText" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ShowMessageCommand" CommandID="a2986506-c718-4a65-a09d-1c0ebf3df6ff" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="71" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Rectangle Length is '{vText}'" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetListItemCommand" CommandID="2c675f16-aef9-4c44-a60d-671944d1c8d9" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="72" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vRectWidth}" v_ItemIndex="{Loop.CurrentIndex}-1" v_OutputUserVariableName="vText" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ShowMessageCommand" CommandID="2d2ab137-e699-4305-91da-72019e9c4aff" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="73" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Rectangle Width is '{vText}'" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="fa2a3bc4-3306-47cf-8aef-0397ef3d8aff" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="74" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="6caa8173-6582-4b78-a278-98b813846af2" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="75" PauseBeforeExeucution="false" v_Comment="**Replace Text**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="e7479c32-1704-4c46-a021-b78b780a54e2" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="76" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Replace Text" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="71e6b34d-6d8d-4c4e-b539-237e2039fb19" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="77" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vText" v_Input="Sample Text for Testing Purpose" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ReplaceTextCommand" CommandID="ae8ca384-cd25-40a7-b3c5-7c39d610c2c9" CommandName="ReplaceTextCommand" IsCommented="false" SelectionName="Replace Text" DefaultPause="0" LineNumber="78" PauseBeforeExeucution="false" CommandEnabled="true" v_InputText="{vText}" v_OldText="Text" v_NewText="Script," v_OutputUserVariableName="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="137cc427-252b-4b70-91e2-ec88384ec82b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="79" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Text after replacement is '{vText}'" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="981436de-d89d-46b9-829b-1ca03d65fb24" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="80" PauseBeforeExeucution="false" v_Comment="**Split Text**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="44eca472-3d50-4ff7-8c5e-023ffd57fa9f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="81" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Split Text" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SplitTextCommand" CommandID="67475635-d373-4ae8-8405-eb72c6bd6666" CommandName="SplitTextCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="0" LineNumber="82" PauseBeforeExeucution="false" CommandEnabled="true" v_InputText="{vText}" v_SplitCharacter="," v_OutputUserVariableName="vList" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetListCountCommand" CommandID="55677c87-ce51-4596-a931-f08f6e513901" CommandName="GetListCountCommand" IsCommented="false" SelectionName="Get List Count" DefaultPause="0" LineNumber="83" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vList}" v_OutputUserVariableName="vCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="LoopNumberOfTimesCommand" CommandID="1b6dbea9-785e-466b-87fa-1c16698a84cd" CommandName="LoopNumberOfTimesCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="0" LineNumber="84" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{vCount}" v_LoopStart="0" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="4bead2b3-ff5b-4940-b9bb-eb65b91ea807" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="85" PauseBeforeExeucution="false" v_Comment="Items in this section will run within the loop" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetListItemCommand" CommandID="4da90a14-d803-4f53-a464-65f3d821534c" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="86" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="{vList}" v_ItemIndex="{Loop.CurrentIndex}-1" v_OutputUserVariableName="vText" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ShowMessageCommand" CommandID="3303fb60-b973-479c-bbf6-f619c4f051b5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="87" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vText}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="99800012-822b-4c93-8403-2950d47ec8dc" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="88" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="d72dafa5-edd3-488d-aba2-c0e82d7885d3" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="89" PauseBeforeExeucution="false" v_Comment="**Substring**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="debf0ad0-0279-4122-83f5-dfc77e8644c9" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="90" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Substring" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableCommand" CommandID="025944e6-5fb1-4709-95ce-f518c617f0e5" CommandName="SetVariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="91" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vText" v_Input="Sample Text for Testing Purpose" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SubstringCommand" CommandID="f356d548-2bd0-43ff-bf0a-8f14eb9fb00c" CommandName="SubstringCommand" IsCommented="false" SelectionName="Substring" DefaultPause="0" LineNumber="92" PauseBeforeExeucution="false" CommandEnabled="true" v_InputText="{vText}" v_StartIndex="6" v_StringLength="-1" v_OutputUserVariableName="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="8f6c41fb-cd3f-46c9-8009-400e585e6d72" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="93" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vText}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="5178dab2-ea17-4e6f-a27a-15c3a5e3e500" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="94" PauseBeforeExeucution="false" v_Comment="**Text Extraction**" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="65be3290-0fd5-43ee-a934-966ac1f12c90" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="95" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Command: Text Extraction" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TextExtractionCommand" CommandID="b8246140-c40b-42e2-85e5-7efabc9dee46" CommandName="TextExtractionCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="0" LineNumber="96" PauseBeforeExeucution="false" CommandEnabled="true" v_InputText="{vText}" v_TextExtractionType="Extract All After Text" v_OutputUserVariableName="vText">
+        <v_TextExtractionTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="TexPExPracPorPara35Table061520.043540">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara35Table061520.043540" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="TexPExPracPorPara35Table061520.043540" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <TexPExPracPorPara35Table061520.043540 diffgr:id="TexPExPracPorPara35Table061520.0435401" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Text</Parameter_x0020_Value>
+              </TexPExPracPorPara35Table061520.043540>
+              <TexPExPracPorPara35Table061520.043540 diffgr:id="TexPExPracPorPara35Table061520.0435402" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </TexPExPracPorPara35Table061520.043540>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_TextExtractionTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="f6e482ee-beb5-4b79-9ed4-6c1cab2b4b4e" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="97" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vText}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <FileName>Main.xml</FileName>
+  <ProjectName>Data Commands</ProjectName>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>ProjectPath</VariableName>
+      <VariableValue xsi:type="xsd:string">D:\Projects\RPA\Taskt\Git\Development\taskt\taskt\Sample Scripts\4.x Use Case Samples\Data Commands</VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vCount</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vDate</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vExpression</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vFileName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vFilePath</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vIndex</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vJPath1</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vJPath2</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vJSONArray</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vLength</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vListItem</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vSampleText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

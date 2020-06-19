@@ -1,83 +1,85 @@
 ﻿using System;
-using System.Xml.Serialization;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a date calculation.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Group("Data Commands")]
+    [Description("This command performs a specific operation on a date and saves the result in a variable.")]
     public class DateCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. [DateTime.Now]")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains the start date.")]
-        [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now] or 1/1/2000")]
-        [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
-        public string v_InputValue { get; set; }
+        [PropertyDescription("Date")]
+        [InputSpecification("Specify either text or a variable that contains the date.")]
+        [SampleUsage("1/1/2000 || {DateTime.Now}")]
+        [Remarks("You can use known text or variables.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputDate { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select a Calculation Method")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Seconds")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Minutes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Hours")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Days")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Years")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Seconds")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Minutes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Hours")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Days")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Years")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the necessary operation")]
-        [Attributes.PropertyAttributes.SampleUsage("Select From Add Seconds, Add Minutes, Add Hours, Add Days, Add Years, Subtract Seconds, Subtract Minutes, Subtract Hours, Subtract Days, Subtract Years ")]
+        [PropertyDescription("Calculation Method")]
+        [PropertyUISelectionOption("Add Seconds")]
+        [PropertyUISelectionOption("Add Minutes")]
+        [PropertyUISelectionOption("Add Hours")]
+        [PropertyUISelectionOption("Add Days")]
+        [PropertyUISelectionOption("Add Years")]
+        [PropertyUISelectionOption("Subtract Seconds")]
+        [PropertyUISelectionOption("Subtract Minutes")]
+        [PropertyUISelectionOption("Subtract Hours")]
+        [PropertyUISelectionOption("Subtract Days")]
+        [PropertyUISelectionOption("Subtract Years")]
+        [InputSpecification("Select the date operation.")]
+        [SampleUsage("")]
+        [Remarks("The selected operation will be applied to the input date value and result will be stored in the output variable.")]
         public string v_CalculationMethod { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter how many units to increment by")]
-        [Attributes.PropertyAttributes.SampleUsage("15, [vIncrement]")]
-        [Attributes.PropertyAttributes.Remarks("You can use negative numbers which will do the opposite, ex. Subtract Days and an increment of -5 will Add Days.")]
+        [PropertyDescription("Increment Value")]
+        [InputSpecification("Specify how many units to increment by.")]
+        [SampleUsage("15 || {vIncrement}")]
+        [Remarks("You can use negative numbers which will do the opposite, ex. Subtract Days and an increment of -5 will Add Days.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Increment { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify String Format")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Date Format (Optional)")]
+        [InputSpecification("Specify the output date format.")]
+        [SampleUsage("MM/dd/yy hh:mm:ss || MM/dd/yyyy || {vDateFormat}")]
+        [Remarks("You can specify either a valid DateTime, Date or Time Format; an invalid format will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the date calculation")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("Output Date Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public DateCalculationCommand()
         {
-            this.CommandName = "DateCalculationCommand";
-            this.SelectionName = "Date Calculation";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "DateCalculationCommand";
+            SelectionName = "Date Calculation";
+            CommandEnabled = true;
+            CustomRendering = true;
 
-            this.v_InputValue = "{DateTime.Now}";
-            this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
-
+            v_InputDate = "{DateTime.Now}";
+            v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
         }
 
         public override void RunCommand(object sender)
         {
             //get variablized string
-            var variableDateTime = v_InputValue.ConvertToUserVariable(sender);
+            var variableDateTime = v_InputDate.ConvertToUserVariable(sender);
 
             //convert to date time
             DateTime requiredDateTime;
@@ -133,36 +135,26 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            //handle if formatter is required     
+            //handle if formatter is required
             var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
             var stringDateFormatted = requiredDateTime.ToString(formatting);
 
-
-            //store string in variable
-            stringDateFormatted.StoreInUserVariable(sender, v_applyToVariableName);
-
+            //store string (Result) in variable
+            stringDateFormatted.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_CalculationMethod", this));
-            RenderedControls.Add(CommandControls.CreateDropdownFor("v_CalculationMethod", this));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputDate", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CalculationMethod", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Increment", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
@@ -178,15 +170,15 @@ namespace taskt.Core.Automation.Commands
                 string operandLanguage;
                 if (operand == "Add")
                 {
-                    operandLanguage = " to ";
+                    operandLanguage = "to";
                 }
                 else
                 {
-                    operandLanguage = " from ";
+                    operandLanguage = "from";
                 }
 
                 //return value
-                return base.GetDisplayValue() + " [" + operand + " " + v_Increment + " " + interval + operandLanguage + v_InputValue + ", Apply Result to Variable '" + v_applyToVariableName + "']";
+                return base.GetDisplayValue() + $" [{operand} '{v_Increment}' {interval} {operandLanguage} '{v_InputDate}' - Store Date in '{v_OutputUserVariableName}']";
             }
             else
             {

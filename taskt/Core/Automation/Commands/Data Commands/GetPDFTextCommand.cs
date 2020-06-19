@@ -1,81 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.IO;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows user to get text from a PDF File")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get all text from a PDF File into a variable")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Data Commands")]
+    [Description("This command reads all text from a PDF file and saves it into a variable.")]
     public class GetPDFTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path or PDF file URL")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.pdf , [vFilePath] or https://temp.com/myfile.pdf")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_FilePath { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select source type of PDF file")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("File Path")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("File URL")]
-        [Attributes.PropertyAttributes.InputSpecification("Select source type of PDF file")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **File Path**, **File URL**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Source Type")]
+        [PropertyUISelectionOption("File Path")]
+        [PropertyUISelectionOption("File URL")]
+        [InputSpecification("Select source type of PDF file.")]
+        [SampleUsage("")]
+        [Remarks("Select 'File Path' if the file is locally placed or 'File URL' to read a file from a web URL.")]
         public string v_FileSourceType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the PDF text")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("File Path / URL")]
+        [InputSpecification("Specify the local path or URL to the applicable PDF file.")]
+        [SampleUsage(@"C:\temp\myfile.pdf || https://temp.com/myfile.pdf || {vFilePath}")]
+        [Remarks("Providing an invalid File Path/URL will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_FilePath { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Output Text Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public GetPDFTextCommand()
         {
-            this.CommandName = "GetPDFTextCommand";
-            this.SelectionName = "Get PDF Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "GetPDFTextCommand";
+            SelectionName = "Get PDF Text";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-
             //get variable path or URL to source file
             var vSourceFilePath = v_FilePath.ConvertToUserVariable(sender);
-            // get source type of file either from a physical file or from a URL
-            var vSourceFileType = v_FileSourceType.ConvertToUserVariable(sender);
 
-            if (vSourceFileType == "File URL")
+            if (v_FileSourceType == "File URL")
             {
                 //create temp directory
-                var tempDir = Core.IO.Folders.GetFolder(Folders.FolderType.TempFolder);
-                var tempFile = System.IO.Path.Combine(tempDir, $"{ Guid.NewGuid()}.pdf");
+                var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);
+                var tempFile = Path.Combine(tempDir, $"{ Guid.NewGuid()}.pdf");
 
                 //check if directory does not exist then create directory
-                if (!System.IO.Directory.Exists(tempDir))
+                if (!Directory.Exists(tempDir))
                 {
-                    System.IO.Directory.CreateDirectory(tempDir);
+                    Directory.CreateDirectory(tempDir);
                 }
 
                 // Create webClient to download the file for extraction
-                var webclient = new System.Net.WebClient();
+                var webclient = new WebClient();
                 var uri = new Uri(vSourceFilePath);
                 webclient.DownloadFile(uri, tempFile);
 
                 // check if file is downloaded successfully
-                if (System.IO.File.Exists(tempFile))
+                if (File.Exists(tempFile))
                 {
                     vSourceFilePath = tempFile;
                 }
@@ -90,9 +90,9 @@ namespace taskt.Core.Automation.Commands
             }
 
             // Check if file exists before proceeding
-            if (!System.IO.File.Exists(vSourceFilePath))
+            if (!File.Exists(vSourceFilePath))
             {
-                throw new System.IO.FileNotFoundException("Could not find file: " + vSourceFilePath);
+                throw new FileNotFoundException("Could not find file: " + vSourceFilePath);
             }
 
             //create process interface
@@ -102,33 +102,24 @@ namespace taskt.Core.Automation.Commands
             var result = javaInterface.ExtractPDFText(vSourceFilePath);
 
             //apply to variable
-            result.StoreInUserVariable(sender, v_applyToVariableName);
-
-
-
+            result.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileSourceType", this, editor));
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Extract From '" + v_FilePath + "' and apply result to '" + v_applyToVariableName + "'" ;
+            return base.GetDisplayValue() + $" [Extract Text From '{v_FilePath}' - Store Text in '{v_OutputUserVariableName}']";
         }
     }
 }

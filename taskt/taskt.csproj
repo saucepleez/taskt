@@ -302,7 +302,6 @@
     <Compile Include="Core\Automation\Commands\Regex Commands\RegexSplitCommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote Commands\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote Commands\RemoteTaskCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data Commands\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\ParseJSONArrayCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\User32\GlobalHook.cs" />
@@ -326,9 +325,8 @@
     <Compile Include="Core\Automation\Commands\Data Commands\DateCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\FormatDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\GetWordCountCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data Commands\GetWordLengthCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data Commands\GetTextLengthCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\LogDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data Commands\ParseJSONItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\GetPDFTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\ReplaceTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\SplitTextCommand.cs" />

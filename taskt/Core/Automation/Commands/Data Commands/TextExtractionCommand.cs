@@ -1,88 +1,83 @@
 ﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to perform advanced string extraction.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract a piece of text from a larger text or variable")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements String.Substring Action on input text or variable to return substring.")]
+    [Description("This command performs advanced text extraction.")]
     public class TextExtractionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. [vSomeVariable])")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_InputValue { get; set; }
+        [PropertyDescription("Text Data")]
+        [InputSpecification("Provide a variable or text value.")]
+        [SampleUsage("Sample text to perform text extraction on || {vTextData}")]
+        [Remarks("Providing data of a type other than a 'String' will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputText { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select text extraction type")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the type of extraction that is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from Before Text, After Text, Between Text")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All After Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Before Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Between Text")]
+        [PropertyDescription("Text Extraction Type")]
+        [PropertyUISelectionOption("Extract All After Text")]
+        [PropertyUISelectionOption("Extract All Before Text")]
+        [PropertyUISelectionOption("Extract All Between Text")]
+        [InputSpecification("Select the type of extraction.")]
+        [SampleUsage("")]
+        [Remarks("For trailing text, use 'After Text'. For leading text, use 'Before Text'. For text between two substrings, use 'Between Text'.")]
         public string v_TextExtractionType { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Extraction Parameters")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Define the required extraction parameters, which is dependent on the type of extraction.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Extraction Parameters")]
+        [InputSpecification("Define the required extraction parameters, which is dependent on the type of extraction.")]
+        [SampleUsage("A substring from input text || {vSubstring}")]
+        [Remarks("Set parameter values for each parameter name based on the extraction type.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted text")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("Output Text Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private DataGridView ParametersGridViewHelper;
+        private DataGridView _parametersGridViewHelper;
 
         public TextExtractionCommand()
         {
-
-            this.CommandName = "TextExtractionCommand";
-            this.SelectionName = "Text Extraction";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "TextExtractionCommand";
+            SelectionName = "Text Extraction";
+            CommandEnabled = true;
+            CustomRendering = true;
 
             //define parameter table
-            this.v_TextExtractionTable = new System.Data.DataTable
+            v_TextExtractionTable = new DataTable
             {
                 TableName = DateTime.Now.ToString("TextExtractorParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
             };
 
-            this.v_TextExtractionTable.Columns.Add("Parameter Name");
-            this.v_TextExtractionTable.Columns.Add("Parameter Value");
-
-        
-
+            v_TextExtractionTable.Columns.Add("Parameter Name");
+            v_TextExtractionTable.Columns.Add("Parameter Value");
         }
 
         public override void RunCommand(object sender)
         {
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(sender);
-
+            var variableInput = v_InputText.ConvertToUserVariable(sender);
 
             string variableLeading, variableTrailing, skipOccurences, extractedText;
 
@@ -119,57 +114,52 @@ namespace taskt.Core.Automation.Commands
             }
 
             //store variable
-            extractedText.StoreInUserVariable(sender, v_applyToVariableName);
-
+            extractedText.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            ParametersGridViewHelper = new DataGridView();
-            ParametersGridViewHelper.AllowUserToAddRows = true;
-            ParametersGridViewHelper.AllowUserToDeleteRows = true;
-            ParametersGridViewHelper.Size = new Size(350, 125);
-            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputText", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionType", this));
             var selectionControl = (ComboBox)CommandControls.CreateDropdownFor("v_TextExtractionType", this);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionType", this, new Control[] { selectionControl }, editor));
-            selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
+            selectionControl.SelectionChangeCommitted += TextExtraction_SelectionChangeCommitted;
             RenderedControls.Add(selectionControl);
 
-
-            //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
+            _parametersGridViewHelper = new DataGridView();
+            _parametersGridViewHelper.AllowUserToAddRows = true;
+            _parametersGridViewHelper.AllowUserToDeleteRows = true;
+            _parametersGridViewHelper.Size = new Size(350, 125);
+            _parametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _parametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionTable", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionTable", this, new Control[] { ParametersGridViewHelper }, editor));
-            RenderedControls.Add(ParametersGridViewHelper);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionTable", this, new Control[] { _parametersGridViewHelper }, editor));
+            RenderedControls.Add(_parametersGridViewHelper);
 
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
         }
-        private void textExtraction_SelectionChangeCommitted(object sender, EventArgs e)
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + $" [Extract Text From '{v_InputText}' - Store Text in '{v_OutputUserVariableName}']";
+        }
+
+        private void TextExtraction_SelectionChangeCommitted(object sender, EventArgs e)
         {
             ComboBox extractionAction = (ComboBox)sender;
 
-            if ((ParametersGridViewHelper == null) || (extractionAction == null) || (ParametersGridViewHelper.DataSource == null))
+            if ((_parametersGridViewHelper == null) || 
+                (extractionAction == null) || 
+                (_parametersGridViewHelper.DataSource == null))
                 return;
 
-
-            var textParameters = (DataTable)ParametersGridViewHelper.DataSource;
-
+            var textParameters = (DataTable)_parametersGridViewHelper.DataSource;
             textParameters.Rows.Clear();
-
 
             switch (extractionAction.SelectedItem)
             {
@@ -196,11 +186,10 @@ namespace taskt.Core.Automation.Commands
             return ((from rw in v_TextExtractionTable.AsEnumerable()
                      where rw.Field<string>("Parameter Name") == parameterName
                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
         }
+
         private string ExtractLeadingText(string input, string substring, string occurences)
         {
-
             //verify the occurence index
             int leadingOccurenceIndex = 0;
 
@@ -215,7 +204,8 @@ namespace taskt.Core.Automation.Commands
             //handle if we are searching beyond what was found
             if (leadingOccurenceIndex >= leadingOccurencesFound.Count)
             {
-                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + leadingOccurencesFound.Count + " instances exist.");
+                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + 
+                    leadingOccurencesFound.Count + " instances exist.");
             }
 
             //declare start position
@@ -223,9 +213,8 @@ namespace taskt.Core.Automation.Commands
 
             //substring and apply to variable
             return input.Substring(startPosition);
-
-
         }
+
         private string ExtractTrailingText(string input, string substring, string occurences)
         {
             //verify the occurence index
@@ -241,7 +230,8 @@ namespace taskt.Core.Automation.Commands
             //handle if we are searching beyond what was found
             if (leadingOccurenceIndex >= trailingOccurencesFound.Count)
             {
-                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + trailingOccurencesFound.Count + " instances exist.");
+                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + 
+                    trailingOccurencesFound.Count + " instances exist.");
             }
 
             //declare start position
@@ -249,10 +239,6 @@ namespace taskt.Core.Automation.Commands
 
             //substring
             return input.Substring(0, endPosition);
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
         }
     }
 }

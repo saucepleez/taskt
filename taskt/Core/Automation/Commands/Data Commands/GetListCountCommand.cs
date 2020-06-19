@@ -1,66 +1,66 @@
-﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
+﻿using Microsoft.Office.Interop.Outlook;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using Microsoft.Office.Interop.Outlook;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get the item count of a List")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the item count of a List.")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Data Commands")]
+    [Description("This command returns the count of items contained in a list.")]
     public class GetListCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing List.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("List")]
+        [InputSpecification("Provide a list variable.")]
+        [SampleUsage("{vList}")]
+        [Remarks("Providing any type of variable other than a list will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_UserVariableName { get; set; }
+        [PropertyDescription("Output Count Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public GetListCountCommand()
         {
-            this.CommandName = "GetListCountCommand";
-            this.SelectionName = "Get List Count";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-
+            CommandName = "GetListCountCommand";
+            SelectionName = "Get List Count";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
             //get variable by regular name
-            Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == v_ListName).FirstOrDefault();
-
-
-         
-
-            //user may potentially include brackets []
-            if (listVariable == null)
-            {
-                listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting() == v_ListName).FirstOrDefault();
-            }
+            ScriptVariable listVariable = LookupVariable(engine);
 
             //if still null then throw exception
             if (listVariable == null)
             {
-                throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting() + "' not found. Ensure the variable exists before attempting to modify it.");
+                throw new System.Exception(
+                    "Complex Variable '" + v_ListName + "' or '" + 
+                    v_ListName.ApplyVariableFormatting() + 
+                    "' not found. Ensure the variable exists before attempting to modify it."
+                    );
             }
 
             dynamic listToCount; 
@@ -72,19 +72,23 @@ namespace taskt.Core.Automation.Commands
             {
                 listToCount = (List<MailItem>)listVariable.VariableValue;
             }
-            else if (listVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
+            else if (listVariable.VariableValue is List<IWebElement>)
             {
-                listToCount = (List<OpenQA.Selenium.IWebElement>)listVariable.VariableValue;
+                listToCount = (List<IWebElement>)listVariable.VariableValue;
             }
-            else if ((listVariable.VariableValue.ToString().StartsWith("[")) && (listVariable.VariableValue.ToString().EndsWith("]")) && (listVariable.VariableValue.ToString().Contains(",")))
+            else if (
+                (listVariable.VariableValue.ToString().StartsWith("[")) && 
+                (listVariable.VariableValue.ToString().EndsWith("]")) && 
+                (listVariable.VariableValue.ToString().Contains(","))
+                )
             {
                 //automatically handle if user has given a json array
-                Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
+                JArray jsonArray = JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as JArray;
 
                 var itemList = new List<string>();
                 foreach (var item in jsonArray)
                 {
-                    var value = (Newtonsoft.Json.Linq.JValue)item;
+                    var value = (JValue)item;
                     itemList.Add(value.ToString());
                 }
 
@@ -97,9 +101,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             string count = listToCount.Count.ToString();
-
-            count.StoreInUserVariable(sender, v_UserVariableName);
-
+            count.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
         
         public override List<Control> Render(frmCommandEditor editor)
@@ -107,19 +109,34 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ListName", this, editor));
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
         }
 
-
-
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From '{v_ListName}', Store In: '{v_UserVariableName}']";
+            return base.GetDisplayValue() + $" [From '{v_ListName}' - Store Count in '{v_OutputUserVariableName}']";
+        }
+
+        private ScriptVariable LookupVariable(AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_ListName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && 
+                (v_ListName.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && 
+                (v_ListName.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_ListName
+                    .Replace(sendingInstance.EngineSettings.VariableStartMarker, "")
+                    .Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
     }
 }

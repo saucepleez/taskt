@@ -1,61 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to modify a string")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify text")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command uses the String Functions to Modify Text.")]
+    [Group("Data Commands")]
+    [Description("This command performs a specified operation on a string to modify it.")]
     public class ModifyStringCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text to modify")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_userVariableName { get; set; }
+        [PropertyDescription("Text Data")]
+        [InputSpecification("Provide a variable or text value.")]
+        [SampleUsage("A sample text || {vStringVariable}")]
+        [Remarks("Providing data of a type other than a 'String' will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputText { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select the case type")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
-        [Attributes.PropertyAttributes.SampleUsage("-1 to keep remainder, 1 for 1 position after start index, etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Upper Case")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Lower Case")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Base64 String")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("From Base64 String")]
-        public string v_ConvertType { get; set; }
+        [PropertyDescription("String Function")]
+        [PropertyUISelectionOption("To Upper Case")]
+        [PropertyUISelectionOption("To Lower Case")]
+        [PropertyUISelectionOption("To Base64 String")]
+        [PropertyUISelectionOption("From Base64 String")]
+        [InputSpecification("Select a string function to apply to the input text or variable.")]
+        [SampleUsage("")]
+        [Remarks("Each function, when applied to text data, converts it to a specific format.")]
+        public string v_TextOperation { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("Output Text Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
+
         public ModifyStringCommand()
         {
-            this.CommandName = "ModifyStringCommand";
-            this.SelectionName = "Modify String";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-;
+            CommandName = "ModifyStringCommand";
+            SelectionName = "Modify String";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
+            var stringValue = v_InputText.ConvertToUserVariable(sender);
 
-
-            var stringValue = v_userVariableName.ConvertToUserVariable(sender);
-
-            var caseType = v_ConvertType.ConvertToUserVariable(sender);
-
-            switch (caseType)
+            switch (v_TextOperation)
             {
                 case "To Upper Case":
                     stringValue = stringValue.ToUpper();
@@ -64,43 +64,35 @@ namespace taskt.Core.Automation.Commands
                     stringValue = stringValue.ToLower();
                     break;
                 case "To Base64 String":
-                    byte[] textAsBytes = System.Text.Encoding.ASCII.GetBytes(stringValue);
+                    byte[] textAsBytes = Encoding.ASCII.GetBytes(stringValue);
                     stringValue = Convert.ToBase64String(textAsBytes);
                     break;
                 case "From Base64 String":
-                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(stringValue);
-                    stringValue = System.Text.ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
+                    byte[] encodedDataAsBytes = Convert.FromBase64String(stringValue);
+                    stringValue = ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
                     break;
                 default:
-                    throw new NotImplementedException("Conversion Type '" + caseType + "' not implemented!");
+                    throw new NotImplementedException("Conversion Type '" + v_TextOperation + "' not implemented!");
             }
 
-            stringValue.StoreInUserVariable(sender, v_applyToVariableName);
+            stringValue.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var userVariableName = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { userVariableName }, editor));
-            RenderedControls.Add(userVariableName);
-
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ConvertType", this, editor));
-
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputText", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_TextOperation", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Convert '" + v_userVariableName + "' " + v_ConvertType + "']";
+            return base.GetDisplayValue() + $" [Convert '{v_InputText}' {v_TextOperation} - Store Text in '{v_OutputUserVariableName}']";
         }
     }
 }

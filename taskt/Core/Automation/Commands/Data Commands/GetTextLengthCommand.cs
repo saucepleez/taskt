@@ -13,8 +13,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Group("Data Commands")]
-    [Description("This command returns the count of all words in a string.")]
-    public class GetWordCountCommand : ScriptCommand
+    [Description("This command returns the length of a string.")]
+    public class GetTextLengthCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Text Data")]
@@ -25,17 +25,17 @@ namespace taskt.Core.Automation.Commands
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Output Count Variable")]
+        [PropertyDescription("Output Length Variable")]
         [InputSpecification("Select or provide a variable from the variable list.")]
         [SampleUsage("vUserVariable")]
         [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
                   " to pre-define your variables; however, it is highly recommended.")]
         public string v_OutputUserVariableName { get; set; }
 
-        public GetWordCountCommand()
+        public GetTextLengthCommand()
         {
-            CommandName = "GetWordCountCommand";
-            SelectionName = "Get Word Count";
+            CommandName = "GetTextLengthCommand";
+            SelectionName = "Get Text Length";
             CommandEnabled = true;
             CustomRendering = true;
         }
@@ -46,13 +46,13 @@ namespace taskt.Core.Automation.Commands
             var engine = (AutomationEngineInstance)sender;
 
             //get input value
-            var stringRequiringCount = v_InputValue.ConvertToUserVariable(sender);
+            var stringRequiringLength = v_InputValue.ConvertToUserVariable(sender);
 
             //count number of words
-            var wordCount = stringRequiringCount.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries).Length;
+            var stringLength = stringRequiringLength.Length;
 
             //store word count into variable
-            wordCount.ToString().StoreInUserVariable(sender, v_OutputUserVariableName);
+            stringLength.ToString().StoreInUserVariable(sender, v_OutputUserVariableName);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From Text '{v_InputValue}' - Store Count in '{v_OutputUserVariableName}']";
+            return base.GetDisplayValue() + $" [Of Text '{v_InputValue}' - Store Length in '{v_OutputUserVariableName}']";
         }
     }
 }

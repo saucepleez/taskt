@@ -2,94 +2,96 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get substring from a string")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
+    [Group("Data Commands")]
+    [Description("This command returns a substring from a specified string.")]
     public class SubstringCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text to modify")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_userVariableName { get; set; }
+        [PropertyDescription("Text Data")]
+        [InputSpecification("Provide a variable or text value.")]
+        [SampleUsage("Sample text to extract substring from || {vTextData}")]
+        [Remarks("Providing data of a type other than a 'String' will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_InputText { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Start from Position")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate the starting position within the string")]
-        [Attributes.PropertyAttributes.SampleUsage("0 for beginning, 1 for first character, etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public int v_startIndex { get; set; }
+        [PropertyDescription("Starting Index")]
+        [InputSpecification("Indicate the starting position within the text.")]
+        [SampleUsage("0 || 1 || {vStartingIndex}")]
+        [Remarks("0 for beginning, 1 for first character, n for nth character")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_StartIndex { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Length (-1 to keep remainder)")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
-        [Attributes.PropertyAttributes.SampleUsage("-1 to keep remainder, 1 for 1 position after start index, etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public int v_stringLength { get; set; }
+        [PropertyDescription("Substring Length (Optional)")]
+        [InputSpecification("Indicate number of characters to extract.")]
+        [SampleUsage("-1 || 1 || {vSubstringLength}")]
+        [Remarks("-1 to keep remainder, 1 for 1 position after start index, etc.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_StringLength { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("Output Substring Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                  " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
+
         public SubstringCommand()
         {
-            this.CommandName = "SubstringCommand";
-            this.SelectionName = "Substring";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            v_stringLength = -1;
+            CommandName = "SubstringCommand";
+            SelectionName = "Substring";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_StringLength = "-1";
         }
+
         public override void RunCommand(object sender)
         {
-
-
-            var variableName = v_userVariableName.ConvertToUserVariable(sender);
+            var inputText = v_InputText.ConvertToUserVariable(sender);
+            var startIndex = int.Parse(v_StartIndex.ConvertToUserVariable(sender));
+            var stringLength = int.Parse(v_StringLength.ConvertToUserVariable(sender));
 
             //apply substring
-            if (v_stringLength >= 0)
+            if (stringLength >= 0)
             {
-                variableName = variableName.Substring(v_startIndex, v_stringLength);
+                inputText = inputText.Substring(startIndex, stringLength);
             }
             else
             {
-                variableName = variableName.Substring(v_startIndex);
+                inputText = inputText.Substring(startIndex);
             }
 
-            variableName.StoreInUserVariable(sender, v_applyToVariableName);
+            inputText.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var userVariableName = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { userVariableName }, editor));
-            RenderedControls.Add(userVariableName);
-
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_startIndex", this, editor));
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_stringLength", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputText", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_StartIndex", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_StringLength", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply Substring to '" + v_userVariableName + "']";
+            return base.GetDisplayValue() + $" [Get Substring From '{v_InputText}' - " +
+                $"Store Substring in '{v_OutputUserVariableName}']";
         }
     }
 }
