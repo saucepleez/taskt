@@ -1,65 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("File Operation Commands")]
-    [Attributes.ClassAttributes.Description("This command deletes a file from a specified destination")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to detete a file from a specific location.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Group("File Operation Commands")]
+    [Description("This command deletes a file from a specified destination.")]
     public class DeleteFileCommand : ScriptCommand
     {
-
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("File Path")]
+        [InputSpecification("Enter or Select the path to the file.")]
+        [SampleUsage(@"C:\temp\myfile.txt || {ProjectPath}\myfile.txt || {vFilePath}")]
+        [Remarks("{ProjectPath} is the directory path of the current project.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_SourceFilePath { get; set; }
-
-
 
         public DeleteFileCommand()
         {
-            this.CommandName = "DeleteFileCommand";
-            this.SelectionName = "Delete File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "DeleteFileCommand";
+            SelectionName = "Delete File";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-
             //apply variable logic
             var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
 
             //delete file
-            System.IO.File.Delete(sourceFile);
-
+            File.Delete(sourceFile);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
-
             return RenderedControls;
         }
 
-
-
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [delete " + v_SourceFilePath + "']";
+            return base.GetDisplayValue() + $" [Delete '{v_SourceFilePath}']";
         }
     }
 }

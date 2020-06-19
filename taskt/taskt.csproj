@@ -235,9 +235,9 @@
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelWriteRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Database Commands\ExecuteDatabaseQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\File Operation Commands\DeleteFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\File Operation Commands\FileExtractionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File Operation Commands\ExtractFilesCommand.cs" />
     <Compile Include="Core\Automation\Commands\File Operation Commands\GetFilesCommand.cs" />
-    <Compile Include="Core\Automation\Commands\File Operation Commands\MoveFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File Operation Commands\MoveCopyFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File Operation Commands\RenameFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File Operation Commands\WaitForFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder Operation Commands\CreateFolderCommand.cs" />

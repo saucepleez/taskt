@@ -117,7 +117,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(RunTaskCommand))]
     [XmlInclude(typeof(WriteTextFileCommand))]
     [XmlInclude(typeof(ReadTextFileCommand))]
-    [XmlInclude(typeof(MoveFileCommand))]
+    [XmlInclude(typeof(MoveCopyFileCommand))]
     [XmlInclude(typeof(DeleteFileCommand))]
     [XmlInclude(typeof(RenameFileCommand))]
     [XmlInclude(typeof(WaitForFileCommand))]
@@ -181,7 +181,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(EncryptionCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
     [XmlInclude(typeof(SetEnginePreferenceCommand))]
-    [XmlInclude(typeof(FileExtractionCommand))]
+    [XmlInclude(typeof(ExtractFilesCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]
