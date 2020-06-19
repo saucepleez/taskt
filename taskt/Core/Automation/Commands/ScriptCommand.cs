@@ -125,7 +125,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetFoldersCommand))]
     [XmlInclude(typeof(CreateFolderCommand))]
     [XmlInclude(typeof(DeleteFolderCommand))]
-    [XmlInclude(typeof(MoveFolderCommand))]
+    [XmlInclude(typeof(MoveCopyFolderCommand))]
     [XmlInclude(typeof(RenameFolderCommand))]
     [XmlInclude(typeof(RunCustomCodeCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]

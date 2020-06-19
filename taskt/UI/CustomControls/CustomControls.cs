@@ -570,7 +570,7 @@ namespace taskt.UI
             uiImages.Add("GetFoldersCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("CreateFolderCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("DeleteFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("MoveFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("MoveCopyFolderCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("RenameFolderCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
