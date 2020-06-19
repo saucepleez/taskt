@@ -1,68 +1,70 @@
 ﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to write a Value to a DataRow")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to write a Value to a DataRow.")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("DataTable Commands")]
+    [Description("This command writes a Value to a DataRow.")]
+
     public class WriteDataRowValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataRow Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to add rows to.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_DataRowName { get; set; }
+        [PropertyDescription("DataRow")]
+        [InputSpecification("Enter an existing DataRow to add values to.")]
+        [SampleUsage("{vDataRow}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_DataRow { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select value by Index or Column Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Select whether the DataRow value should be found by index or column name")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Index** or **Column Name**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Search Option")]
+        [PropertyUISelectionOption("Column Name")]
+        [PropertyUISelectionOption("Column Index")]
+        [InputSpecification("Select whether the DataRow value should be found by column index or column name.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_Option { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow Value")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or [vIndex]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Search Value")]
+        [InputSpecification("Enter a valid DataRow index or column name.")]
+        [SampleUsage("0 || {vIndex} || Column1 || {vColumnName}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_DataValueIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Value")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the value to write to the DataRow cell")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Cell Value")]
+        [InputSpecification("Enter the value to write to the DataRow cell.")]
+        [SampleUsage("value || {vValue}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_DataRowValue { get; set; }
 
         public WriteDataRowValueCommand()
         {
-            this.CommandName = "WriteDataRowValueCommand";
-            this.SelectionName = "Write DataRow Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            v_Option = "Index";
-
+            CommandName = "WriteDataRowValueCommand";
+            SelectionName = "Write DataRow Value";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_Option = "Column Index";
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
             var dataRowValue = v_DataRowValue.ConvertToUserVariable(sender);
 
             var dataRowVariable = LookupVariable(engine);
@@ -81,7 +83,7 @@ namespace taskt.Core.Automation.Commands
 
             var valueIndex = v_DataValueIndex.ConvertToUserVariable(sender);
 
-            if (v_Option == "Index")
+            if (v_Option == "Column Index")
             {
                 int index = int.Parse(valueIndex);
                 dataRow[index] = dataRowValue;
@@ -90,43 +92,43 @@ namespace taskt.Core.Automation.Commands
             else if (v_Option == "Column Name")
             {
                 string index = valueIndex;
-                dataRow.SetField<string>(index, dataRowValue);
+                dataRow.SetField(index, dataRowValue);
             }
-
         }
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataRowName).FirstOrDefault();
 
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_DataRowName.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (v_DataRowName.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_DataRowName.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
-
-            return requiredVariable;
-        }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataRowName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataRow", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Option", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataValueIndex", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataRowValue", this, editor));
 
-
             return RenderedControls;
         }
 
-
-
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Write Value '{v_DataRowValue}' to '{v_DataValueIndex}' in '{v_DataRowName}']";
+            return base.GetDisplayValue() + $" [Write '{v_DataRowValue}' to Column '{v_DataValueIndex}' in '{v_DataRow}']";
+        }
+
+        private ScriptVariable LookupVariable(AutomationEngineInstance sendingInstance)
+        {
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataRow).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if (requiredVariable == null && v_DataRow.StartsWith(sendingInstance.EngineSettings.VariableStartMarker) 
+                                         && v_DataRow.EndsWith(sendingInstance.EngineSettings.VariableEndMarker))
+            {
+                //reformat and attempt
+                var reformattedVariable = v_DataRow.Replace(sendingInstance.EngineSettings.VariableStartMarker, "")
+                                                   .Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
     }
 }

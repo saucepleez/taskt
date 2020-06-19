@@ -1,110 +1,83 @@
 ﻿using System;
-using System.Xml.Serialization;
-using System.Data;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
+using System.Data;
 using System.Linq;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new DataTable")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("DataTable Commands")]
+    [Description("This command creates a DataTable with the Column Names provided.")]
+
     public class CreateDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate DataTable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
-        [Attributes.PropertyAttributes.SampleUsage("vMyDatatable")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_DataTableName { get; set; }
+        [PropertyDescription("New DataTable Name")]
+        [InputSpecification("Indicate a unique reference name for later use.")]
+        [SampleUsage("MyDatatable")]
+        [Remarks("")]
+        public string v_DataTable { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Define Column Names")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the Column Names required for each column of data")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Column Names")]
+        [InputSpecification("Enter the Column Names required for each column of data.")]
+        [SampleUsage("MyColumn || {vColumn}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_ColumnNameDataTable { get; set; }
-
 
         public CreateDataTableCommand()
         {
-            this.CommandName = "CreateDataTableCommand";
-            this.SelectionName = "Create DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "CreateDataTableCommand";
+            SelectionName = "Create DataTable";
+            CommandEnabled = true;
+            CustomRendering = true;
 
             //initialize data table
-            this.v_ColumnNameDataTable = new System.Data.DataTable
+            v_ColumnNameDataTable = new DataTable
             {
                 TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
             };
 
-            this.v_ColumnNameDataTable.Columns.Add("Column Name");
-
-
+            v_ColumnNameDataTable.Columns.Add("Column Name");
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dataTableName = v_DataTableName.ConvertToUserVariable(sender);
-            if (dataTableName == "")
-            {
-                dataTableName = engine.VariableList.Where(x => x.VariableName == v_DataTableName).FirstOrDefault().VariableName;
-            }
+            var engine = (AutomationEngineInstance)sender;
 
             DataTable Dt = new DataTable();
 
             foreach(DataRow rwColumnName in v_ColumnNameDataTable.Rows)
             {
-                Dt.Columns.Add(rwColumnName.Field<string>("Column Name"));
+                Dt.Columns.Add(rwColumnName.Field<string>("Column Name").ConvertToUserVariable(sender));
             }
 
-
-            
-
-            //add or override existing variable
-            if (engine.VariableList.Any(f => f.VariableName == dataTableName))
-            {
-                var selectedVariable = engine.VariableList.Where(f => f.VariableName == dataTableName).FirstOrDefault();
-                selectedVariable.VariableValue = Dt;
-            }
-            else
-            {
-                Script.ScriptVariable newDataTable = new Script.ScriptVariable
-                {
-                    VariableName = dataTableName,
-                    VariableValue = Dt
-                };
-
-                engine.VariableList.Add(newDataTable);
-            }
-
-
-     
+            engine.AddVariable(v_DataTable, Dt);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTable", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
-            return RenderedControls;
 
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Name: '{v_DataTableName}' with {v_ColumnNameDataTable.Rows.Count} Columns]";
+            return base.GetDisplayValue() + $" [Create '{v_DataTable}' With {v_ColumnNameDataTable.Rows.Count} Column(s)]";
         }
     }
 }

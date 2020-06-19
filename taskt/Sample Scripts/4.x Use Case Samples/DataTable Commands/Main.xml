@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDataTableCommand" CommandID="e68f46b1-4ebe-43dd-b825-9342fb78f27f" CommandName="CreateDataTableCommand" IsCommented="false" SelectionName="Create DataTable" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="DataTableA">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNamesDataTable061520.100733" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="ColumnNamesDataTable061520.100733">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNamesDataTable061520.100733 diffgr:id="ColumnNamesDataTable061520.1007331" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col1</Column_x0020_Name>
+              </ColumnNamesDataTable061520.100733>
+              <ColumnNamesDataTable061520.100733 diffgr:id="ColumnNamesDataTable061520.1007332" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col2</Column_x0020_Name>
+              </ColumnNamesDataTable061520.100733>
+              <ColumnNamesDataTable061520.100733 diffgr:id="ColumnNamesDataTable061520.1007333" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col3</Column_x0020_Name>
+              </ColumnNamesDataTable061520.100733>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddDataRowCommand" CommandID="069726f5-7d23-490b-8ee1-7462e3025617" CommandName="AddDataRowCommand" IsCommented="false" SelectionName="Add DataRow" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTable="{DataTableA}">
+        <v_DataRowDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="AddDataDataTable061520.100851">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Data" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="AddDataDataTable061520.100851" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="AddDataDataTable061520.100851" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <AddDataDataTable061520.100851 diffgr:id="AddDataDataTable061520.1008511" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col1</Column_x0020_Name>
+                <Data>Hello</Data>
+              </AddDataDataTable061520.100851>
+              <AddDataDataTable061520.100851 diffgr:id="AddDataDataTable061520.1008512" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col2</Column_x0020_Name>
+                <Data>World</Data>
+              </AddDataDataTable061520.100851>
+              <AddDataDataTable061520.100851 diffgr:id="AddDataDataTable061520.1008513" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col3</Column_x0020_Name>
+                <Data>Taskt</Data>
+              </AddDataDataTable061520.100851>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_DataRowDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddDataRowCommand" CommandID="24420b4f-d382-42df-96b8-0c0488f8942e" CommandName="AddDataRowCommand" IsCommented="false" SelectionName="Add DataRow" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTable="{DataTableA}">
+        <v_DataRowDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="AddDataDataTable061520.101002" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="AddDataDataTable061520.101002">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Data" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <AddDataDataTable061520.101002 diffgr:id="AddDataDataTable061520.1010021" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col1</Column_x0020_Name>
+                <Data>Goodbye</Data>
+              </AddDataDataTable061520.101002>
+              <AddDataDataTable061520.101002 diffgr:id="AddDataDataTable061520.1010022" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col2</Column_x0020_Name>
+                <Data>World</Data>
+              </AddDataDataTable061520.101002>
+              <AddDataDataTable061520.101002 diffgr:id="AddDataDataTable061520.1010023" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>col3</Column_x0020_Name>
+                <Data>Taskt</Data>
+              </AddDataDataTable061520.101002>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_DataRowDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="338e2a45-eb19-4b2d-ab59-fd8fef3f5638" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Output selected DataTable value" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDataRowCommand" CommandID="b554d90a-fb7c-44e4-b215-5983fa22fe82" CommandName="GetDataRowCommand" IsCommented="false" SelectionName="Get DataRow" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="{DataTableA}" v_DataRowIndex="1" v_OutputUserVariableName="{DataRow}" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDataRowValueCommand" CommandID="3cfb0647-7b3a-4fe9-8a12-5d48ce695617" CommandName="GetDataRowValueCommand" IsCommented="false" SelectionName="Get DataRow Value" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_DataRow="{DataRow}" v_Option="Column Name" v_DataValueIndex="col1" v_OutputUserVariableName="DataRowValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="e0d79a46-179a-451a-8a11-ff550b0df93f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Value of row &quot;1&quot;, col &quot;col1&quot; is: {DataRowValue}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="c6fcd6de-ea58-49d4-8f79-050372b2c38e" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Modify DataTable value and output again" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WriteDataRowValueCommand" CommandID="98bbef9b-af96-48d7-8526-e7cfcfbbc436" CommandName="WriteDataRowValueCommand" IsCommented="false" SelectionName="Write DataRow Value" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_DataRowName="{DataRow}" v_Option="Index" v_DataValueIndex="0" v_DataRowValue="See You Later" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDataRowValueCommand" CommandID="e69186ed-6f36-4c80-93de-4190c809fbb4" CommandName="GetDataRowValueCommand" IsCommented="false" SelectionName="Get DataRow Value" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_DataRow="{DataRow}" v_Option="Column Name" v_DataValueIndex="col1" v_OutputUserVariableName="DataRowValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="c4ab5a0d-9f08-4307-9033-9cc4c2963a04" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Value of row &quot;1&quot;, col &quot;col1&quot; is: {DataRowValue}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="a6ddc441-6478-4a96-9446-fdb755d07ce1" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Filter DataTable and store in new variable" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FilterDataTableCommand" CommandID="01f75eb7-02eb-4364-abc1-366aa37a9d37" CommandName="FilterDataTableCommand" IsCommented="false" SelectionName="Filter DataTable" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTable="{DataTableA}" v_FilteredDataTableName="DataTableFiltered" v_SearchItem="(col1,Hello)" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDataRowCountCommand" CommandID="4dbfd341-07b7-49a8-85d1-7733a00c782c" CommandName="GetDataRowCountCommand" IsCommented="false" SelectionName="Get DataRow Count" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="{DataTableFiltered}" v_OutputUserVariableName="FilteredCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="fd446c3c-dd93-4349-80c5-f0cf712748a2" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Number of rows in Filtered DataTable: {FilteredCount}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="aebe300b-51dd-4b5f-acf7-43bfe8170e91" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Merge both DataTables together" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MergeDataTableCommand" CommandID="7bc47fd0-0218-448d-b78b-6a6d6b030297" CommandName="MergeDataTableCommand" IsCommented="false" SelectionName="Merge DataTable" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceDataTable="{DataTableFiltered}" v_DestinationDataTable="{DataTableA}" v_MissingSchemaAction="Add" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDataRowCountCommand" CommandID="76f7ec55-4287-4f86-a7e7-b60b3f4f0cce" CommandName="GetDataRowCountCommand" IsCommented="false" SelectionName="Get DataRow Count" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="{DataTableA}" v_OutputUserVariableName="MergedCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="620295ff-c5c7-485c-885c-d8784098c06e" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Number of rows in Merged DataTable: {MergedCount}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="170002f9-aee3-43b4-9719-71795df6e707" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Remove rows with 'Hello' in 'col1'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RemoveDataRowCommand" CommandID="5037611c-5df5-413b-81a5-3bdf9a178513" CommandName="RemoveDataRowCommand" IsCommented="false" SelectionName="Remove DataRow" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="{DataTableA}" v_SearchItem="(col1,Hello)" v_AndOr="Or" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDataRowCountCommand" CommandID="23d02d6d-8de7-4c93-aeb7-c95c9c05e4cc" CommandName="GetDataRowCountCommand" IsCommented="false" SelectionName="Get DataRow Count" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="{DataTableA}" v_OutputUserVariableName="RemovedCount" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="d0dbed1b-3b3b-4f36-94ec-4c3d88b3ed93" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Number of remaining rows in DataTable: {RemovedCount}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <FileName>Main.xml</FileName>
+  <ProjectName>DataTable Commands</ProjectName>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>ProjectPath</VariableName>
+      <VariableValue xsi:type="xsd:string">C:\Users\Francesca\Documents\TasktTeam\taskt\taskt\Sample Scripts\4.x Use Case Samples\DataTable Commands</VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>ProjectPath</VariableName>
+      <VariableValue xsi:type="xsd:string">C:\Users\Francesca\Documents\TasktTeam\taskt\taskt\Sample Scripts\4.x Use Case Samples\DataTable Commands</VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
