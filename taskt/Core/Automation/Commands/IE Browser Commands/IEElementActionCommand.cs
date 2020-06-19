@@ -1,158 +1,127 @@
-﻿using System;
+﻿using MSHTML;
+using SHDocVw;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
-using OpenQA.Selenium;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
-using SHDocVw;
-using System.Data;
-using MSHTML;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
 using taskt.Core.Automation.User32;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("IE Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to manipulate (get or set) elements within the HTML document of the associated IE web browser.  Features an assisting element capture form")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll and MSHTML.dll to achieve automation.")]
+    [Group("IE Browser Commands")]
+    [Description("This command provides a number of functionalities or actions to perform Automation on Web Elements through the IE Browser.")]
     public class IEElementActionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [PropertyDescription("IE Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Browser** command.")]
+        [SampleUsage("IEBrowser || {vIEBrowser}")]
+        [Remarks("Failure to enter the correct instance or failure to first call **Create Browser** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
+
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or capture element search parameters")]
-        public System.Data.DataTable v_WebSearchParameter { get; set; }
+        [PropertyDescription("Element Search Parameters")]
+        [InputSpecification("Select the element search parameters appropriately to target an element efficiently.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public DataTable v_WebSearchParameter { get; set; }
+
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("IE Element Action")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Invoke Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Attribute")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Fire onmousedown event")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Fire onmouseover event")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Set Text**, **Get Text**, **Get Attribute**")]
-        [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
+        [PropertyDescription("IE Element Action")]
+        [PropertyUISelectionOption("Invoke Click")]
+        [PropertyUISelectionOption("Left Click")]
+        [PropertyUISelectionOption("Middle Click")]
+        [PropertyUISelectionOption("Right Click")]
+        [PropertyUISelectionOption("Get Text")]
+        [PropertyUISelectionOption("Set Text")]
+        [PropertyUISelectionOption("Get Attribute")]
+        [PropertyUISelectionOption("Set Attribute")]
+        [PropertyUISelectionOption("Fire onmousedown event")]
+        [PropertyUISelectionOption("Fire onmouseover event")]
+        [InputSpecification("Select the appropriate action to perform on an element once it has been located.")]
+        [SampleUsage("")]
+        [Remarks("Selecting this field changes the parameters that will be required in the next step.")]
         public string v_WebAction { get; set; }
+
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Action Parameters")]
-        public System.Data.DataTable v_WebActionParameterTable { get; set; }
+        [PropertyDescription("Action Parameters")]
+        [InputSpecification("Enter the action parameter values based on the selection of an Element Action.")]
+        [SampleUsage("{vParameterValue}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public DataTable v_WebActionParameterTable { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private DataGridView ElementsGridViewHelper;
+        private DataGridView _elementsGridViewHelper;
 
         [XmlIgnore]
         [NonSerialized]
-        private ComboBox ElementActionDropdown;
+        private ComboBox _elementActionDropdown;
 
         [XmlIgnore]
         [NonSerialized]
-        private List<Control> SearchParameterControls;
+        private List<Control> _searchParameterControls;
 
         [XmlIgnore]
         [NonSerialized]
-        private DataGridView SearchGridViewHelper;
+        private DataGridView _searchGridViewHelper;
 
         [XmlIgnore]
         [NonSerialized]
-        private List<Control> ElementParameterControls;
+        private List<Control> _elementParameterControls;
 
         [XmlIgnore]
         [NonSerialized]
-        private static IHTMLElementCollection lastElementCollectionFound;
+        private static IHTMLElementCollection _lastElementCollectionFound;
 
         [XmlIgnore]
         [NonSerialized]
-        private static HTMLDocument lastDocFound;
+        private static HTMLDocument _lastDocFound;
 
         public IEElementActionCommand()
         {
-            this.CommandName = "IEElementActionCommand";
-            this.SelectionName = "Element Action";
-            this.CommandEnabled = true;
-            this.v_InstanceName = "default";
-            this.CustomRendering = true;
+            CommandName = "IEElementActionCommand";
+            SelectionName = "Element Action";
+            CommandEnabled = true;
+            v_InstanceName = "default";
+            CustomRendering = true;
 
-            this.v_WebSearchParameter = new System.Data.DataTable();
-            this.v_WebSearchParameter.TableName = DateTime.Now.ToString("WebSearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-            this.v_WebSearchParameter.Columns.Add("Enabled", typeof(Boolean));
-            this.v_WebSearchParameter.Columns.Add("Property Name");
-            this.v_WebSearchParameter.Columns.Add("Property Value");
+            v_WebSearchParameter = new DataTable();
+            v_WebSearchParameter.TableName = DateTime.Now.ToString("WebSearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+            v_WebSearchParameter.Columns.Add("Enabled", typeof(Boolean));
+            v_WebSearchParameter.Columns.Add("Property Name");
+            v_WebSearchParameter.Columns.Add("Property Value");
 
-            this.v_WebActionParameterTable = new System.Data.DataTable();
-            this.v_WebActionParameterTable.TableName = DateTime.Now.ToString("WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-            this.v_WebActionParameterTable.Columns.Add("Parameter Name");
-            this.v_WebActionParameterTable.Columns.Add("Parameter Value");
+            v_WebActionParameterTable = new DataTable();
+            v_WebActionParameterTable.TableName = DateTime.Now.ToString("WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+            v_WebActionParameterTable.Columns.Add("Parameter Name");
+            v_WebActionParameterTable.Columns.Add("Parameter Value");
 
-            SearchGridViewHelper = new DataGridView();
-            SearchGridViewHelper.AllowUserToAddRows = true;
-            SearchGridViewHelper.AllowUserToDeleteRows = true;
-            SearchGridViewHelper.Size = new Size(400, 250);
-            SearchGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            SearchGridViewHelper.DataBindings.Add("DataSource", this, "v_WebSearchParameter", false, DataSourceUpdateMode.OnPropertyChanged);
+            _searchGridViewHelper = new DataGridView();
+            _searchGridViewHelper.AllowUserToAddRows = true;
+            _searchGridViewHelper.AllowUserToDeleteRows = true;
+            _searchGridViewHelper.Size = new Size(400, 250);
+            _searchGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _searchGridViewHelper.DataBindings.Add("DataSource", this, "v_WebSearchParameter", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            ElementsGridViewHelper = new DataGridView();
-            ElementsGridViewHelper.AllowUserToAddRows = true;
-            ElementsGridViewHelper.AllowUserToDeleteRows = true;
-            ElementsGridViewHelper.Size = new Size(400, 250);
-            ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
-        }
-
-        private Boolean InspectFrame(IHTMLElementCollection elementCollection, EnumerableRowCollection<DataRow> elementSearchProperties, object sender, SHDocVw.InternetExplorer browserInstance)
-        {
-            bool qualifyingElementFound = false;
-            foreach (IHTMLElement element in elementCollection) // browserInstance.Document.All)
-            {
-                if (element.outerHTML != null)
-                {
-                    string outerHtml = element.outerHTML.ToLower().Trim();
-
-                    if (!outerHtml.StartsWith("<html") &&
-                        !outerHtml.StartsWith("<body") &&
-                        !outerHtml.StartsWith("<head") &&
-                        !outerHtml.StartsWith("<!doctype"))
-                    {
-                        qualifyingElementFound = FindQualifyingElement(elementSearchProperties, element);
-                        if (qualifyingElementFound)
-                        {
-                            RunCommandActions(element, sender, browserInstance);
-                            lastElementCollectionFound = elementCollection;
-                            return (true);
-                            //break;
-                        }
-                        if (element.outerHTML != null && element.outerHTML.ToLower().Trim().StartsWith("<frame "))
-                        {
-                            string frameId = element.getAttribute("id");
-                            if (frameId == null)
-                            {
-                                frameId = element.getAttribute("name");
-                            }
-                            if (frameId != null)
-                            {
-                                qualifyingElementFound = InspectFrame(browserInstance.Document.getElementById(frameId).contentDocument.all, elementSearchProperties, sender, browserInstance);
-                            }
-                        }
-                        if (qualifyingElementFound)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-            return (qualifyingElementFound);
+            _elementsGridViewHelper = new DataGridView();
+            _elementsGridViewHelper.AllowUserToAddRows = true;
+            _elementsGridViewHelper.AllowUserToDeleteRows = true;
+            _elementsGridViewHelper.Size = new Size(400, 250);
+            _elementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _elementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         [STAThread]
@@ -160,15 +129,13 @@ namespace taskt.Core.Automation.Commands
         {
             object browserObject = null;
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
             browserObject = engine.GetAppInstance(vInstance);
+            var browserInstance = (InternetExplorer)browserObject;
 
-            var browserInstance = (SHDocVw.InternetExplorer)browserObject;
-
-            DataTable searchTable = Core.Common.Clone<DataTable>(v_WebSearchParameter);
+            DataTable searchTable = Common.Clone<DataTable>(v_WebSearchParameter);
 
             DataColumn matchFoundColumn = new DataColumn();
             matchFoundColumn.ColumnName = "Match Found";
@@ -189,9 +156,9 @@ namespace taskt.Core.Automation.Commands
 
             HTMLDocument doc = browserInstance.Document;
 
-            if (doc == lastDocFound)
+            if (doc == _lastDocFound)
             {
-                qualifyingElementFound = InspectFrame(lastElementCollectionFound, elementSearchProperties, sender, browserInstance);
+                qualifyingElementFound = InspectFrame(_lastElementCollectionFound, elementSearchProperties, sender, browserInstance);
             }
             if (!qualifyingElementFound)
             {
@@ -199,13 +166,53 @@ namespace taskt.Core.Automation.Commands
             }
             if (qualifyingElementFound)
             {
-                lastDocFound = doc;
+                _lastDocFound = doc;
             }
 
             if (!qualifyingElementFound)
             {
                 throw new Exception("Could not find the element!");
             }
+        }
+        
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+
+            _searchParameterControls = new List<Control>();
+            _searchParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebSearchParameter", this));
+            _searchParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebSearchParameter", this, new Control[] { _searchGridViewHelper }, editor));
+
+            _searchParameterControls.Add(_searchGridViewHelper);
+            RenderedControls.AddRange(_searchParameterControls);
+
+            _elementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_WebAction", this);
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WebAction", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebAction", this, new Control[] { _elementActionDropdown }, editor));
+            _elementActionDropdown.SelectionChangeCommitted += ElementActionDropdown_SelectionChangeCommitted;
+            RenderedControls.Add(_elementActionDropdown);
+
+            _elementParameterControls = new List<Control>();
+            _elementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebActionParameterTable", this));
+            _elementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { _elementsGridViewHelper }, editor));
+            _elementParameterControls.Add(_elementsGridViewHelper);
+            RenderedControls.AddRange(_elementParameterControls);
+
+            return RenderedControls;
+        }
+
+        public override string GetDisplayValue()
+        {
+            string parameters = string.Empty;
+            //foreach (DataRow oRow in v_WebActionParameterTable.Rows)
+            foreach (DataRow oRow in v_WebSearchParameter.Rows)
+            {
+                parameters += ", " + oRow["Property Name"] + "=" + oRow["Property Value"];
+            }
+            if (parameters.Length > 0) parameters = parameters.Substring(1);
+            return base.GetDisplayValue() + $" [Perform Action '{v_WebAction} {parameters}' - Instance Name '{v_InstanceName}']";
         }
 
         private bool FindQualifyingElement(EnumerableRowCollection<DataRow> elementSearchProperties, IHTMLElement element)
@@ -224,7 +231,9 @@ namespace taskt.Core.Automation.Commands
                 try
                 {
                     //if (element.GetType().GetProperty(searchPropertyName) == null)
-                    if ((outerHTML == null) || (element.getAttribute(searchPropertyName) == null) || (System.Convert.IsDBNull(element.getAttribute(searchPropertyName))))
+                    if ((outerHTML == null) ||
+                        (element.getAttribute(searchPropertyName) == null) ||
+                        (Convert.IsDBNull(element.getAttribute(searchPropertyName))))
                     {
                         return false;
                     }
@@ -243,7 +252,10 @@ namespace taskt.Core.Automation.Commands
                                 seachCriteria.SetField<string>("Match Found", "False");
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
                     }
                     else
                     {
@@ -276,7 +288,10 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
             /*foreach (var seachCriteria in elementSearchProperties)
@@ -287,151 +302,11 @@ namespace taskt.Core.Automation.Commands
             return elementSearchProperties.Where(seachCriteria => seachCriteria.Field<string>("Match Found") == "True").Count() == elementSearchProperties.Count();
         }
 
-        private void RunCommandActions(IHTMLElement element, object sender, InternetExplorer browserInstance)
-        {
-            if (v_WebAction == "Fire onmousedown event")
-            {
-                ((IHTMLElement3)element).FireEvent("onmousedown");
-            }
-            else if (v_WebAction == "Fire onmouseover event")
-            {
-                ((IHTMLElement3)element).FireEvent("onmouseover");
-            }
-            else if (v_WebAction == "Invoke Click")
-            {
-                element.click();
-                IECreateBrowserCommand.WaitForReadyState(browserInstance);
-            }
-            else if ((v_WebAction == "Left Click") || (v_WebAction == "Middle Click") || (v_WebAction == "Right Click"))
-            {
-                int elementXposition = FindElementXPosition(element);
-                int elementYposition = FindElementYPosition(element);
-
-                //inputs need to be validated
-
-                int userXAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
-                                                   where rw.Field<string>("Parameter Name") == "X Adjustment"
-                                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                int userYAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
-                                                   where rw.Field<string>("Parameter Name") == "Y Adjustment"
-                                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
-
-                SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand();
-
-                newMouseMove.v_XMousePosition = ((elementXposition + ieClientLocation.left + 10) + userXAdjust).ToString(); // + 10 gives extra padding
-                newMouseMove.v_YMousePosition = ((elementYposition + ieClientLocation.top + 90 + System.Windows.Forms.SystemInformation.CaptionHeight) + userYAdjust).ToString(); // +90 accounts for title bar height
-                newMouseMove.v_MouseClick = v_WebAction;
-                newMouseMove.RunCommand(sender);
-            }
-            else if (v_WebAction == "Set Attribute")
-            {
-                string attributeName = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Attribute Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                string valueToSet = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                     where rw.Field<string>("Parameter Name") == "Value To Set"
-                                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                valueToSet = valueToSet.ConvertToUserVariable(sender);
-
-                element.setAttribute(attributeName, valueToSet);
-            }
-            else if (v_WebAction == "Set Text")
-            {
-                string attributeName = "value";
-
-                string textToSet = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "Text To Set"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                textToSet = textToSet.ConvertToUserVariable(sender);
-
-                element.setAttribute(attributeName, textToSet);
-            }
-            else if (v_WebAction == "Get Attribute")
-            {
-                string attributeName = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Attribute Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                string variableName = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Variable Name"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                string convertedAttribute = Convert.ToString(element.getAttribute(attributeName));
-
-                convertedAttribute.StoreInUserVariable(sender, variableName);
-            }
-        }
-
-        private int FindElementXPosition(MSHTML.IHTMLElement obj)
-        {
-            int curleft = 0;
-            if (obj.offsetParent != null)
-            {
-                while (obj.offsetParent != null)
-                {
-                    curleft += obj.offsetLeft;
-                    obj = obj.offsetParent;
-                }
-            }
-
-            return curleft;
-        }
-
-        public int FindElementYPosition(MSHTML.IHTMLElement obj)
-        {
-            int curtop = 0;
-            if (obj.offsetParent != null)
-            {
-                while (obj.offsetParent != null)
-                {
-                    curtop += obj.offsetTop;
-                    obj = obj.offsetParent;
-                }
-            }
-
-            return curtop;
-        }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-            SearchParameterControls = new List<Control>();
-            SearchParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebSearchParameter", this));
-            SearchParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebSearchParameter", this, new Control[] { SearchGridViewHelper }, editor));
-
-            SearchParameterControls.Add(SearchGridViewHelper);
-            RenderedControls.AddRange(SearchParameterControls);
-
-            ElementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_WebAction", this);
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WebAction", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebAction", this, new Control[] { ElementActionDropdown }, editor));
-            ElementActionDropdown.SelectionChangeCommitted += ElementActionDropdown_SelectionChangeCommitted;
-            RenderedControls.Add(ElementActionDropdown);
-
-            ElementParameterControls = new List<Control>();
-            ElementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebActionParameterTable", this));
-            ElementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { ElementsGridViewHelper }, editor));
-            ElementParameterControls.Add(ElementsGridViewHelper);
-            RenderedControls.AddRange(ElementParameterControls);
-
-            return RenderedControls;
-        }
-
         private void ElementActionDropdown_SelectionChangeCommitted(object sender, EventArgs e)
         {
 
             Core.Automation.Commands.IEElementActionCommand cmd = (Core.Automation.Commands.IEElementActionCommand)this;
             DataTable actionParameters = cmd.v_WebActionParameterTable;
-            DataGridViewComboBoxCell comparisonComboBox;
 
             if (sender != null)
             {
@@ -439,14 +314,14 @@ namespace taskt.Core.Automation.Commands
             }
 
 
-            switch (ElementActionDropdown.SelectedItem)
+            switch (_elementActionDropdown.SelectedItem)
             {
                 case "Invoke Click":
                 case "Fire onmousedown event":
                 case "Fire onmouseover event":
                 case "Clear Element":
 
-                    foreach (var ctrl in ElementParameterControls)
+                    foreach (var ctrl in _elementParameterControls)
                     {
                         ctrl.Hide();
                     }
@@ -454,33 +329,20 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "Set Text":
-                    foreach (var ctrl in ElementParameterControls)
+                    foreach (var ctrl in _elementParameterControls)
                     {
                         ctrl.Show();
                     }
                     if (sender != null)
                     {
                         actionParameters.Rows.Add("Text To Set");
-                        //actionParameters.Rows.Add("Clear Element Before Setting Text");
                     }
-
-                    //comparisonComboBox = new DataGridViewComboBoxCell();
-                    //comparisonComboBox.Items.Add("Yes");
-                    //comparisonComboBox.Items.Add("No");
-
-                    //assign cell as a combobox
-                    //if (sender != null)
-                    //{
-                    //    ElementsGridViewHelper.Rows[1].Cells[1].Value = "No";
-                    //}
-                    //ElementsGridViewHelper.Rows[1].Cells[1] = comparisonComboBox;
-
 
                     break;
 
                 case "Get Text":
                 case "Get Matching Elements":
-                    foreach (var ctrl in ElementParameterControls)
+                    foreach (var ctrl in _elementParameterControls)
                     {
                         ctrl.Show();
                     }
@@ -491,7 +353,7 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "Get Attribute":
-                    foreach (var ctrl in ElementParameterControls)
+                    foreach (var ctrl in _elementParameterControls)
                     {
                         ctrl.Show();
                     }
@@ -503,7 +365,7 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "Set Attribute":
-                    foreach (var ctrl in ElementParameterControls)
+                    foreach (var ctrl in _elementParameterControls)
                     {
                         ctrl.Show();
                     }
@@ -519,19 +381,161 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            ElementsGridViewHelper.DataSource = v_WebActionParameterTable;
+            _elementsGridViewHelper.DataSource = v_WebActionParameterTable;
         }
 
-        public override string GetDisplayValue()
+        private void RunCommandActions(IHTMLElement element, object sender, InternetExplorer browserInstance)
         {
-            string parameters = string.Empty;
-            //foreach (DataRow oRow in v_WebActionParameterTable.Rows)
-            foreach (DataRow oRow in v_WebSearchParameter.Rows)
+            switch (v_WebAction)
             {
-                parameters += ", " + oRow["Property Name"] + "=" + oRow["Property Value"];
+                case "Fire onmousedown event":
+                    ((IHTMLElement3)element).FireEvent("onmousedown");
+                    break;
+                case "Fire onmouseover event":
+                    ((IHTMLElement3)element).FireEvent("onmouseover");
+                    break;
+                case "Invoke Click":
+                    element.click();
+                    IECreateBrowserCommand.WaitForReadyState(browserInstance);
+                    break;
+
+                case "Left Click":
+                case "Middle Click":
+                case "Right Click":
+                    int elementXposition = FindElementXPosition(element);
+                    int elementYposition = FindElementYPosition(element);
+
+                    //inputs need to be validated
+
+                    int userXAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
+                                                       where rw.Field<string>("Parameter Name") == "X Adjustment"
+                                                       select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                    int userYAdjust = Convert.ToInt32((from rw in v_WebActionParameterTable.AsEnumerable()
+                                                       where rw.Field<string>("Parameter Name") == "Y Adjustment"
+                                                       select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                    var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
+
+                    SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand();
+
+                    newMouseMove.v_XMousePosition = ((elementXposition + ieClientLocation.left + 10) + userXAdjust).ToString(); // + 10 gives extra padding
+                    newMouseMove.v_YMousePosition = ((elementYposition + ieClientLocation.top + 90 + SystemInformation.CaptionHeight) + userYAdjust).ToString(); // +90 accounts for title bar height
+                    newMouseMove.v_MouseClick = v_WebAction;
+                    newMouseMove.RunCommand(sender);
+                    break;
+                case "Set Attribute":
+                    string setAttributeName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                               where rw.Field<string>("Parameter Name") == "Attribute Name"
+                                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string valueToSet = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                         where rw.Field<string>("Parameter Name") == "Value To Set"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    valueToSet = valueToSet.ConvertToUserVariable(sender);
+
+                    element.setAttribute(setAttributeName, valueToSet);
+                    break;
+                case "Set Text":
+                    string setTextAttributeName = "value";
+
+                    string textToSet = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Text To Set"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    textToSet = textToSet.ConvertToUserVariable(sender);
+
+                    element.setAttribute(setTextAttributeName, textToSet);
+                    break;
+                case "Get Attribute":
+                    string attributeName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                            where rw.Field<string>("Parameter Name") == "Attribute Name"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string variableName = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Variable Name"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string convertedAttribute = Convert.ToString(element.getAttribute(attributeName));
+
+                    convertedAttribute.StoreInUserVariable(sender, variableName);
+                    break;
             }
-            if (parameters.Length > 0) parameters = parameters.Substring(1);
-            return base.GetDisplayValue() + " [ Action: '" + v_WebAction + " " + parameters + "', Instance Name: '" + v_InstanceName + "']";
+        }
+
+        private int FindElementXPosition(IHTMLElement obj)
+        {
+            int curleft = 0;
+            if (obj.offsetParent != null)
+            {
+                while (obj.offsetParent != null)
+                {
+                    curleft += obj.offsetLeft;
+                    obj = obj.offsetParent;
+                }
+            }
+
+            return curleft;
+        }
+
+        private int FindElementYPosition(IHTMLElement obj)
+        {
+            int curtop = 0;
+            if (obj.offsetParent != null)
+            {
+                while (obj.offsetParent != null)
+                {
+                    curtop += obj.offsetTop;
+                    obj = obj.offsetParent;
+                }
+            }
+
+            return curtop;
+        }
+
+        private Boolean InspectFrame(IHTMLElementCollection elementCollection, EnumerableRowCollection<DataRow> elementSearchProperties, object sender, SHDocVw.InternetExplorer browserInstance)
+        {
+            bool qualifyingElementFound = false;
+            foreach (IHTMLElement element in elementCollection)
+            {
+                if (element.outerHTML != null)
+                {
+                    string outerHtml = element.outerHTML.ToLower().Trim();
+
+                    if (!outerHtml.StartsWith("<html") &&
+                        !outerHtml.StartsWith("<body") &&
+                        !outerHtml.StartsWith("<head") &&
+                        !outerHtml.StartsWith("<!doctype"))
+                    {
+                        qualifyingElementFound = FindQualifyingElement(elementSearchProperties, element);
+                        if (qualifyingElementFound)
+                        {
+                            RunCommandActions(element, sender, browserInstance);
+                            _lastElementCollectionFound = elementCollection;
+                            return (true);
+                            //break;
+                        }
+                        if (element.outerHTML != null && element.outerHTML.ToLower().Trim().StartsWith("<frame "))
+                        {
+                            string frameId = element.getAttribute("id");
+                            if (frameId == null)
+                            {
+                                frameId = element.getAttribute("name");
+                            }
+                            if (frameId != null)
+                            {
+                                qualifyingElementFound = InspectFrame(browserInstance.Document.getElementById(frameId).contentDocument.all, elementSearchProperties, sender, browserInstance);
+                            }
+                        }
+                        if (qualifyingElementFound)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            return (qualifyingElementFound);
         }
 
     }

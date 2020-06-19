@@ -1,42 +1,48 @@
-﻿using System;
+﻿using SHDocVw;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("IE Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to close the associated IE web browser")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll to achieve automation.")]
+    [Group("IE Browser Commands")]
+    [Description("This command closes the associated IE Web Browser.")]
     public class IECloseBrowserCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [PropertyDescription("IE Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Browser** command.")]
+        [SampleUsage("IEBrowser || {vIEBrowser}")]
+        [Remarks("Failure to enter the correct instance or failure to first call **Create Browser** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public IECloseBrowserCommand()
         {
-            this.CommandName = "IECloseBrowserCommand";
-            this.SelectionName = "Close Browser";
-            this.CommandEnabled = true;
-            this.v_InstanceName = "default";
-            this.CustomRendering = true;
+            CommandName = "IECloseBrowserCommand";
+            SelectionName = "Close Browser";
+            CommandEnabled = true;
+            v_InstanceName = "default";
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
             var browserObject = engine.GetAppInstance(vInstance);
 
-
-            var browserInstance = (SHDocVw.InternetExplorer)browserObject;
+            var browserInstance = (InternetExplorer)browserObject;
             browserInstance.Quit();
 
             engine.RemoveAppInstance(vInstance);
@@ -53,7 +59,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Instance Name '{v_InstanceName}']";
         }
     }
 

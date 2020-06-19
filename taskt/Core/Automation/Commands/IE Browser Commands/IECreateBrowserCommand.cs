@@ -1,87 +1,83 @@
-﻿using System;
+﻿using SHDocVw;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.App;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.App;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("IE Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to create a new IE web browser session.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll to achieve automation.")]
+    [Group("IE Browser Commands")]
+    [Description("This command creates a new IE Web Browser Session.")]
     public class IECreateBrowserCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [PropertyDescription("IE Instance Name")]
+        [InputSpecification("Enter a unique name that will represent the IE Browser instance.")]
+        [SampleUsage("MyIEInstance")]
+        [Remarks("This unique name allows you to refer to the instance by name in future commands, " +
+                 "ensuring that the commands you specify run against the correct IE Browser.")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Instance Tracking (after task ends)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Forget Instance")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Keep Instance Alive")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Forget Instance** to forget the instance or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
-        [Attributes.PropertyAttributes.Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
+        [PropertyDescription("Instance Tracking (after task ends)")]
+        [PropertyUISelectionOption("Forget Instance")]
+        [PropertyUISelectionOption("Keep Instance Alive")]
+        [InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
+        [SampleUsage("")]
+        [Remarks("Calling the **Close Browser** command or closing the application will end the instance.")]
         public string v_InstanceTracking { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Navigate to URL")]
+        [InputSpecification("Enter a Web URL to navigate to.")]
+        [SampleUsage("https://example.com/ || {vURL}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_URL { get; set; }
 
         public IECreateBrowserCommand()
         {
-            this.CommandName = "IECreateBrowserCommand";
-            this.SelectionName = "Create Browser";
-            this.v_InstanceName = "default";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "IECreateBrowserCommand";
+            SelectionName = "Create Browser";
+            v_InstanceName = "default";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
+            var webURL = v_URL.ConvertToUserVariable(sender);
 
-            var instanceName = v_InstanceName.ConvertToUserVariable(sender);
-
-            SHDocVw.InternetExplorer newBrowserSession = new SHDocVw.InternetExplorer();
+            InternetExplorer newBrowserSession = new InternetExplorer();
             try
             {
-                newBrowserSession.Navigate(v_URL.ConvertToUserVariable(sender));
+                newBrowserSession.Navigate(webURL);
                 WaitForReadyState(newBrowserSession);
                 newBrowserSession.Visible = true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
 
             //add app instance
-            engine.AddAppInstance(instanceName, newBrowserSession);
+            engine.AddAppInstance(v_InstanceName, newBrowserSession);
 
             //handle app instance tracking
             if (v_InstanceTracking == "Keep Instance Alive")
             {
-                GlobalAppInstances.AddInstance(instanceName, newBrowserSession);
+                GlobalAppInstances.AddInstance(v_InstanceName, newBrowserSession);
             }
-
-        }
-
-        public static void WaitForReadyState(SHDocVw.InternetExplorer ieInstance)
-        {
-            try
-            {
-                DateTime waitExpires = DateTime.Now.AddSeconds(15);
-
-                do
-                {
-                    System.Threading.Thread.Sleep(500);
-                }
-
-                while ((ieInstance.ReadyState != SHDocVw.tagREADYSTATE.READYSTATE_COMPLETE) && (waitExpires > DateTime.Now));
-            }
-            catch (Exception ex) { }
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -89,6 +85,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_InstanceTracking", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
 
             return RenderedControls;
@@ -96,8 +93,26 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Instance Name '{v_InstanceName}']";
+        }
+
+        public static void WaitForReadyState(InternetExplorer ieInstance)
+        {
+            try
+            {
+                DateTime waitExpires = DateTime.Now.AddSeconds(15);
+
+                do
+                {
+                    Thread.Sleep(500);
+                }
+
+                while ((ieInstance.ReadyState != tagREADYSTATE.READYSTATE_COMPLETE) && (waitExpires > DateTime.Now));
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
         }
     }
-
 }

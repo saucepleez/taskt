@@ -1,70 +1,66 @@
-﻿using System;
+﻿using SHDocVw;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
-
-  
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("IE Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to navigate a IE web browser session to a given URL or resource.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to navigate an existing IE instance to a known URL or web resource")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll to achieve automation.")]
+    [Group("IE Browser Commands")]
+    [Description("This command navigates an existing IE web browser session to a given URL or web resource.")]
     public class IENavigateToURLCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create IE Browser** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **IEInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create IE Browser** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("IE Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Browser** command.")]
+        [SampleUsage("IEBrowser || {vIEBrowser}")]
+        [Remarks("Failure to enter the correct instance or failure to first call **Create Browser** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the destination URL that you want the IE instance to navigate to")]
-        [Attributes.PropertyAttributes.SampleUsage("https://mycompany.com/orders")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Navigate to URL")]
+        [InputSpecification("Enter the destination URL that you want the IE instance to navigate to.")]
+        [SampleUsage("https://example.com/ || {vURL}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_URL { get; set; }
 
         public IENavigateToURLCommand()
         {
-            this.CommandName = "IENavigateToURLCommand";
-            this.SelectionName = "Navigate to URL";
-            this.v_InstanceName = "default";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "IENavigateToURLCommand";
+            SelectionName = "Navigate to URL";
+            v_InstanceName = "default";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             object browserObject = null;
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
             browserObject = engine.GetAppInstance(vInstance);
-
-            var browserInstance = (SHDocVw.InternetExplorer)browserObject;
+            var browserInstance = (InternetExplorer)browserObject;
 
             browserInstance.Navigate(v_URL.ConvertToUserVariable(sender));
-
             IECreateBrowserCommand.WaitForReadyState(browserInstance);
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
 
             return RenderedControls;
@@ -72,7 +68,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [URL: '" + v_URL + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Navigate to '{v_URL}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

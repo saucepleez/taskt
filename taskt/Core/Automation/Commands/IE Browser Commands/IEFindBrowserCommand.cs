@@ -1,43 +1,54 @@
-﻿using SHDocVw;
+﻿using MSHTML;
+using SHDocVw;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("IE Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to find and attach to an existing IE web browser session.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll to achieve automation.")]
+    [Group("IE Browser Commands")]
+    [Description("This command finds and attaches to an existing IE Web Browser session.")]
     public class IEFindBrowserCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [PropertyDescription("IE Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Browser** command.")]
+        [SampleUsage("IEBrowser || {vIEBrowser}")]
+        [Remarks("Failure to enter the correct instance or failure to first call **Create Browser** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select or Enter the Browser Name")]
+        [PropertyDescription("Browser Name (Title)")]
+        [InputSpecification("Select the Name (Title) of the IE Browser Instance to get attached to.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_IEBrowserName { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private ComboBox IEBrowerNameDropdown;
+        private ComboBox _ieBrowerNameDropdown;
 
         public IEFindBrowserCommand()
         {
-            this.CommandName = "IEFindBrowserCommand";
-            this.SelectionName = "Find Browser";
-            this.v_InstanceName = "default";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "IEFindBrowserCommand";
+            SelectionName = "Find Browser";
+            v_InstanceName = "default";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
 
             var instanceName = v_InstanceName.ConvertToUserVariable(sender);
 
@@ -45,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             var shellWindows = new ShellWindows();
             foreach (IWebBrowser2 shellWindow in shellWindows)
             {
-                if ((shellWindow.Document is MSHTML.HTMLDocument) && (v_IEBrowserName==null || shellWindow.Document.Title == v_IEBrowserName))
+                if ((shellWindow.Document is HTMLDocument) && (v_IEBrowserName==null || shellWindow.Document.Title == v_IEBrowserName))
                 {
                     engine.AddAppInstance(instanceName, shellWindow.Application);
                     browserFound = true;
@@ -58,7 +69,9 @@ namespace taskt.Core.Automation.Commands
             {
                 foreach (IWebBrowser2 shellWindow in shellWindows)
                 {
-                    if ((shellWindow.Document is MSHTML.HTMLDocument) && ((shellWindow.Document.Title.Contains(v_IEBrowserName) || shellWindow.Document.Url.Contains(v_IEBrowserName))))
+                    if ((shellWindow.Document is HTMLDocument) && 
+                        ((shellWindow.Document.Title.Contains(v_IEBrowserName) || 
+                        shellWindow.Document.Url.Contains(v_IEBrowserName))))
                     {
                         engine.AddAppInstance(instanceName, shellWindow.Application);
                         browserFound = true;
@@ -79,31 +92,23 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
-            IEBrowerNameDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_IEBrowserName", this);
+            _ieBrowerNameDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_IEBrowserName", this);
             var shellWindows = new ShellWindows();
             foreach (IWebBrowser2 shellWindow in shellWindows)
             {
-                if (shellWindow.Document is MSHTML.HTMLDocument)
-                    IEBrowerNameDropdown.Items.Add(shellWindow.Document.Title);
+                if (shellWindow.Document is HTMLDocument)
+                    _ieBrowerNameDropdown.Items.Add(shellWindow.Document.Title);
             }
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IEBrowserName", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IEBrowserName", this, new Control[] { IEBrowerNameDropdown }, editor));
-            //IEBrowerNameDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
-            RenderedControls.Add(IEBrowerNameDropdown);
-
-            //ElementParameterControls = new List<Control>();
-            //ElementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebActionParameterTable", this));
-            //ElementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { ElementsGridViewHelper }, editor));
-            //ElementParameterControls.Add(ElementsGridViewHelper);
-
-            //RenderedControls.AddRange(ElementParameterControls);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IEBrowserName", this, new Control[] { _ieBrowerNameDropdown }, editor));
+            RenderedControls.Add(_ieBrowerNameDropdown);
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Browser Name: '" + v_IEBrowserName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Having Title '{v_IEBrowserName}' - Instance Name '{v_InstanceName}']";
         }
     }
 
