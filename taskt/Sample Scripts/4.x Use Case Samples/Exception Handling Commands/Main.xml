@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TryCommand" CommandID="fdabd41a-d4b7-498b-af6f-31f17193980f" CommandName="TryCommand" IsCommented="false" SelectionName="Try" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="35f02b2c-4c1c-4132-b9ba-6b6d34a07ea4" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Items in this section will be handled if error occurs" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ThrowExceptionCommand" CommandID="c8ca4f01-b5bf-457f-a8e2-076938d2e6da" CommandName="ThrowExceptionCommand" IsCommented="false" SelectionName="Throw Exception" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CatchExceptionCommand" CommandID="38cb6c5a-9b01-40c1-a4df-02e39fffbd93" CommandName="CatchExceptionCommand" IsCommented="false" SelectionName="Catch Exception" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Items in this section will run if error occurs" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ShowMessageCommand" CommandID="9e2ce6b5-9b11-42ca-9cee-a9ced7417ae4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Caught an Exception!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="AddCodeCommentCommand" CommandID="3c148197-4a9a-489f-9612-bde0acdb5560" CommandName="AddCodeCommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="This section executes if error occurs above" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="FinallyCommand" CommandID="dcd5b32d-6d30-4253-9a09-5c31c6a570a6" CommandName="FinallyCommand" IsCommented="false" SelectionName="Finally" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetExceptionMessageCommand" CommandID="9d3bfe88-9789-42d8-a178-08a3d31502a0" CommandName="GetExceptionMessageCommand" IsCommented="false" SelectionName="Get Exception Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputUserVariableName="outputVar" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ShowMessageCommand" CommandID="d950c9fa-c943-4ece-af0c-d00a81f69edf" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{outputVar}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndTryCommand" CommandID="aa3599a3-4a2c-4447-b336-d48076e43613" CommandName="EndTryCommand" IsCommented="false" SelectionName="End Try" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <FileName>Main.xml</FileName>
+  <ProjectName>Exception Handling Commands</ProjectName>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>outputVar</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>ProjectPath</VariableName>
+      <VariableValue xsi:type="xsd:string">C:\Users\miguel\Documents\TaskT\taskt-fork\Sample Scripts\4.x Use Case Samples\Exception Handling Commands</VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

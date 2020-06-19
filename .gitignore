@@ -250,6 +250,7 @@ paket-files/
 .fake/
 
 # JetBrains Rider
+.editorconfig
 .idea/
 *.sln.iml
 
