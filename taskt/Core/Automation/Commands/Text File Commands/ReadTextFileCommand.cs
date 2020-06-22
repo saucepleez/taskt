@@ -1,43 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Text File Commands")]
-    [Attributes.ClassAttributes.Description("This command reads text data into a variable")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to read data from text files.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Group("Text File Commands")]
+    [Description("This command reads text data from a text file and stores it in a variable.")]
     public class ReadTextFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("File Path")]
+        [InputSpecification("Enter or Select the path to the text file.")]
+        [SampleUsage(@"C:\temp\myfile.txt || {ProjectPath}\myText.txt || {vTextFilePath}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define where the text should be stored")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_userVariableName { get; set; }
-
+        [PropertyDescription("Output Text Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not " +
+                 "required to pre-define your variables, however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public ReadTextFileCommand()
         {
-            this.CommandName = "ReadTextFileCommand";
-            this.SelectionName = "Read Text File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "ReadTextFileCommand";
+            SelectionName = "Read Text File";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -45,27 +46,26 @@ namespace taskt.Core.Automation.Commands
             //convert variables
             var filePath = v_FilePath.ConvertToUserVariable(sender);
             //read text from file
-            var textFromFile = System.IO.File.ReadAllText(filePath);
+            var textFromFile = File.ReadAllText(filePath);
             //assign text to user variable
-            textFromFile.StoreInUserVariable(sender, v_userVariableName);
+            textFromFile.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(
+                CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor)
+            );
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Read from '" + v_FilePath + "']";
+            return base.GetDisplayValue() + $" [Read Text From '{v_FilePath}' - Store Text in '{v_OutputUserVariableName}']";
         }
     }
 }
