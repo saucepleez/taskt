@@ -1,109 +1,115 @@
-﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
+﻿using Microsoft.Office.Interop.Outlook;
+using System;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using Microsoft.Office.Interop.Outlook;
-using Application = Microsoft.Office.Interop.Outlook.Application;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
+using Application = Microsoft.Office.Interop.Outlook.Application;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Outlook Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get emails and attachments with outlook")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get emails and attachments with your currenty logged in outlook account")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Outlook Commands")]
+    [Description("This command gets selected emails and their attachments from Outlook.")]
 
     public class GetOutlookEmailsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Provide the source mail folder name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the mail folder you want your emails to come from")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_Folder { get; set; }
+        [PropertyDescription("Source Mail Folder Name")]
+        [InputSpecification("Enter the name of the Outlook mail folder the emails are located in.")]
+        [SampleUsage("Inbox || {vFolderName}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_SourceFolder { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Provide a filter (Optional)")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter an outlook filter string")]
-        [Attributes.PropertyAttributes.SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe'")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Filter")]
+        [InputSpecification("Enter a valid Outlook filter string.")]
+        [SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe' || {vFilter}")]
+        [Remarks("This input is optional.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Filter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Get unread emails only")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether to retrieve unread email messages only")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Unread Only")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Specify whether to retrieve unread email messages only.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_GetUnreadOnly { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Mark emails as read")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether to retrieve unread email messages only")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Mark As Read")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Specify whether to mark retrieved emails as read.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_MarkAsRead { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the output directory for the messages")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or [vTextFolderPath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_MessageDirectory { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign MailItem List to variable")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_userVariableName { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Save messages and attachments")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether to save the email attachments to a local directory")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Save MailItems and Attachments")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Specify whether to save the email attachments to a local directory.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_SaveMessagesAndAttachments { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the output directory for the attachments")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or [vTextFolderPath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Output MailItem Directory")]   
+        [InputSpecification("Enter or Select the path of the directory to store the messages in.")]
+        [SampleUsage(@"C:\temp\myfolder || {vFolderPath} || {ProjectPath}\myFolder")]
+        [Remarks("This input is optional and will only be used if *Save MailItems and Attachments* is set to **Yes**.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        public string v_MessageDirectory { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Output Attachment Directory")]      
+        [InputSpecification("Enter or Select the path to the directory to store the attachments in.")]
+        [SampleUsage(@"C:\temp\myfolder\attachments || {vFolderPath} || {ProjectPath}\myFolder\attachments")]
+        [Remarks("This input is optional and will only be used if *Save MailItems and Attachments* is set to **Yes**.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         public string v_AttachmentDirectory { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Output MailItem List Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                 " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public GetOutlookEmailsCommand()
         {
-            this.CommandName = "GetOutlookEmailsCommand";
-            this.SelectionName = "Get Outlook Emails";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "GetOutlookEmailsCommand";
+            SelectionName = "Get Outlook Emails";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_GetUnreadOnly = "No";
+            v_MarkAsRead = "Yes";
+            v_SaveMessagesAndAttachments = "No";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            var vFolder = v_Folder.ConvertToUserVariable(sender);
+            var engine = (AutomationEngineInstance)sender;
+            var vFolder = v_SourceFolder.ConvertToUserVariable(sender);
             var vFilter = v_Filter.ConvertToUserVariable(sender);
             var vAttachmentDirectory = v_AttachmentDirectory.ConvertToUserVariable(sender);
             var vMessageDirectory = v_MessageDirectory.ConvertToUserVariable(sender);
 
-            if (vFolder == "") vFolder = "Inbox";
+            if (vFolder == "") 
+                vFolder = "Inbox";
 
             Application outlookApp = new Application();
             AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
@@ -116,12 +122,9 @@ namespace taskt.Core.Automation.Commands
                 Items filteredItems = null;
 
                 if (vFilter != "")
-                {
                     filteredItems = userFolder.Items.Restrict(vFilter);
-                }
-                else{
+                else
                     filteredItems = userFolder.Items;
-                }
 
                 List<MailItem> outMail = new List<MailItem>();
 
@@ -144,15 +147,31 @@ namespace taskt.Core.Automation.Commands
                         }   
                     }
                 }
-                //add list of datatables to output variable
-                Script.ScriptVariable mailItemList = new Script.ScriptVariable
-                {
-                    VariableName = v_userVariableName,
-                    VariableValue = outMail
-                };
-                engine.VariableList.Add(mailItemList);
+                engine.AddVariable(v_OutputUserVariableName, outMail);
             }
+        }      
+
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolder", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_GetUnreadOnly", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MarkAsRead", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SaveMessagesAndAttachments", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MessageDirectory", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_AttachmentDirectory", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
+
+            return RenderedControls;
         }
+
+        public override string GetDisplayValue()
+        {
+            return base.GetDisplayValue() + $" [From '{v_SourceFolder}' - Filter by '{v_Filter}' - Store MailItem List in '{v_OutputUserVariableName}']";
+        }
+
         private void ProcessEmail(MailItem mail, string msgDirectory, string attDirectory)
         {
             if (v_MarkAsRead == "Yes")
@@ -161,40 +180,16 @@ namespace taskt.Core.Automation.Commands
             }
             if (v_SaveMessagesAndAttachments == "Yes")
             {
-                if (System.IO.Directory.Exists(msgDirectory))
-                    mail.SaveAs(System.IO.Path.Combine(msgDirectory, mail.Subject + ".msg"));
-                if (System.IO.Directory.Exists(attDirectory))
+                if (Directory.Exists(msgDirectory))
+                    mail.SaveAs(Path.Combine(msgDirectory, mail.Subject + ".msg"));
+                if (Directory.Exists(attDirectory))
                 {
                     foreach (Attachment attachment in mail.Attachments)
                     {
-                        attachment.SaveAsFile(System.IO.Path.Combine(attDirectory, attachment.FileName));
+                        attachment.SaveAsFile(Path.Combine(attDirectory, attachment.FileName));
                     }
-                } 
+                }
             }
-        }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Folder", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_GetUnreadOnly", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MarkAsRead", this, editor));
-            //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SaveMessagesAndAttachments", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MessageDirectory", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_AttachmentDirectory", this, editor));
-           
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [From: {v_Folder}, To: {v_MessageDirectory}, Save Attachments To: {v_AttachmentDirectory}]";
         }
     }
 }

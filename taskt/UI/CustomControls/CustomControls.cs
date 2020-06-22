@@ -526,7 +526,7 @@ namespace taskt.UI
             uiImages.Add("SendSMTPEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("SendOutlookEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("GetOutlookEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("MoveOutlookEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("MoveCopyOutlookEmailsCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("DeleteOutlookEmailsCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ForwardOutlookEmailsCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ReplyToOutlookEmailsCommand", taskt.Properties.Resources.command_smtp);

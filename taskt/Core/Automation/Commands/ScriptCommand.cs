@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddDictionaryItemCommand))]
     [XmlInclude(typeof(SendOutlookEmailCommand))]
     [XmlInclude(typeof(GetOutlookEmailsCommand))]
-    [XmlInclude(typeof(MoveOutlookEmailsCommand))]
+    [XmlInclude(typeof(MoveCopyOutlookEmailsCommand))]
     [XmlInclude(typeof(DeleteOutlookEmailsCommand))]
     [XmlInclude(typeof(ForwardOutlookEmailsCommand))]
     [XmlInclude(typeof(ReplyToOutlookEmailsCommand))]

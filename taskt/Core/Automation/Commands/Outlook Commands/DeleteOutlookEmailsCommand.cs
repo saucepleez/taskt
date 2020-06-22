@@ -1,60 +1,62 @@
-﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
+﻿using Microsoft.Office.Interop.Outlook;
+using System;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using Microsoft.Office.Interop.Outlook;
-using Application = Microsoft.Office.Interop.Outlook.Application;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
+using Application = Microsoft.Office.Interop.Outlook.Application;
+
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Outlook Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to delete emails with outlook")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete emails with your currenty logged in outlook account")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Outlook Commands")]
+    [Description("This command deletes selected emails in Outlook.")]
 
     public class DeleteOutlookEmailsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Provide the source mail folder name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the mail folder you want your emails to come from")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Source Mail Folder Name")]
+        [InputSpecification("Enter the name of the Outlook mail folder the emails are located in.")]
+        [SampleUsage("Inbox || {vFolderName}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SourceFolder { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Provide a filter (Required)")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter an outlook filter string")]
-        [Attributes.PropertyAttributes.SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe'")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Filter")]
+        [InputSpecification("Enter a valid Outlook filter string.")]
+        [SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe' || {vFilter}")]
+        [Remarks("A filter is required to delete emails. Failure to include one will result in a thrown exception.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Filter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Delete read emails only")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether to delete read email messages only")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Delete Read Emails Only")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Specify whether to delete read email messages only.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_DeleteReadOnly { get; set; }
 
         public DeleteOutlookEmailsCommand()
         {
-            this.CommandName = "DeleteOutlookEmailsCommand";
-            this.SelectionName = "Delete Outlook Emails";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "DeleteOutlookEmailsCommand";
+            SelectionName = "Delete Outlook Emails";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_DeleteReadOnly = "Yes";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
             var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
             var vFilter = v_Filter.ConvertToUserVariable(sender);
 
@@ -69,13 +71,9 @@ namespace taskt.Core.Automation.Commands
                 Items filteredItems = null;
 
                 if (vFilter != "")
-                {
                     filteredItems = sourceFolder.Items.Restrict(vFilter);
-                }
                 else
-                {
                     throw new System.Exception("No filter found. Filter required for deleting emails.");
-                }
 
                 List<MailItem> tempItems = new List<MailItem>();
                 foreach (object _obj in filteredItems)
@@ -87,9 +85,7 @@ namespace taskt.Core.Automation.Commands
                         if (v_DeleteReadOnly == "Yes")
                         {
                             if (tempMail.UnRead == false)
-                            {
                                 tempItems.Add(tempMail);
-                            }
                         }
                         else
                         {
@@ -108,15 +104,17 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolder", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteReadOnly", this, editor));
+
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From: {v_SourceFolder}]";
+            return base.GetDisplayValue() + $" [From '{v_SourceFolder}' - Filter by '{v_Filter}']";
         }
     }
 }
