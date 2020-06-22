@@ -136,7 +136,7 @@ namespace taskt.UI.Forms
 
         private void frmCommandEditor_Shown(object sender, EventArgs e)
         {
-            this.FormBorderStyle = FormBorderStyle.Sizable;
+            FormBorderStyle = FormBorderStyle.Sizable;
         }
 
         private void frmCommandEditor_Resize(object sender, EventArgs e)
@@ -211,7 +211,6 @@ namespace taskt.UI.Forms
         #region Save/Close Buttons
 
         //handles returning DialogResult
-
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             //commit any datagridviews
@@ -230,16 +229,13 @@ namespace taskt.UI.Forms
                     cmd.v_ImageCapture = typedControl.EncodedImage;
                 }
             }
-
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
-
         #endregion Save/Close Buttons
-
     }
 }

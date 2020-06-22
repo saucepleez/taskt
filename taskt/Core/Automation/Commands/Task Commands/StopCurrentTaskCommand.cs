@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Task Commands")]
-    [Attributes.ClassAttributes.Description("This command stops the current task.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to stop the current running task.")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Task Commands")]
+    [Description("This command stops the currently running task.")]
+
     public class StopCurrentTaskCommand : ScriptCommand
     {
-
-
         public StopCurrentTaskCommand()
         {
-            this.CommandName = "StopCurrentTaskCommand";
-            this.SelectionName = "Stop Current Task";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "StopCurrentTaskCommand";
+            SelectionName = "Stop Current Task";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

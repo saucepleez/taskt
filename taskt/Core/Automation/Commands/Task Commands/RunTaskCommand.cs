@@ -2,60 +2,66 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("Task Commands")]
-    [Attributes.ClassAttributes.Description("This command runs tasks.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run another task.")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Task Commands")]
+    [Description("This command executes a Task.")]
+
     public class RunTaskCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select a Task to run")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the valid path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("c:\\temp\\mytask.xml or [vScriptPath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Task File Path")]     
+        [InputSpecification("Enter or select a valid path to the Task file.")]
+        [SampleUsage(@"C:\temp\mytask.xml || {vScriptPath} || {ProjectPath}\mytask.xml")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_taskPath { get; set; }
 
-        [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign Variables")]
-        [Attributes.PropertyAttributes.InputSpecification("Input required assignments.")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public DataTable v_VariableAssignments { get; set; }
-
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign Variables")]
-        [Attributes.PropertyAttributes.InputSpecification("User Preference for assigning variables")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Assign Variables")]
+        [InputSpecification("Select to assign variables to the Task.")]
+        [SampleUsage("")]
+        [Remarks("If selected, variables will be automatically generated from the Task's *Variable Manager*.")]
         public bool v_AssignVariables { get; set; }
 
+        [XmlElement]
+        [PropertyDescription("Task Variables")]
+        [InputSpecification("Enter a VariableValue for each input variable.")]
+        [SampleUsage("Hello World || {vVariableValue}")]
+        [Remarks("For inputs, set VariableReturn to *No*. For outputs, set VariableReturn to *Yes*. " +
+                 "Failure to assign a VariableReturn value will result in an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)] 
+        public DataTable v_VariableAssignments { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private DataGridView AssignmentsGridViewHelper;
+        private CheckBox _passParameters;
 
         [XmlIgnore]
         [NonSerialized]
-        private CheckBox PassParameters;
+        private DataGridView _assignmentsGridViewHelper;
 
         public RunTaskCommand()
         {
-            this.CommandName = "RunTaskCommand";
-            this.SelectionName = "Run Task";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "RunTaskCommand";
+            SelectionName = "Run Task";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_taskPath = "{ProjectPath}";
 
             v_VariableAssignments = new DataTable();
             v_VariableAssignments.Columns.Add("VariableName");
@@ -63,23 +69,23 @@ namespace taskt.Core.Automation.Commands
             v_VariableAssignments.Columns.Add("VariableReturn");
             v_VariableAssignments.TableName = "RunTaskCommandInputParameters" + DateTime.Now.ToString("MMddyyhhmmss");
 
-            AssignmentsGridViewHelper = new DataGridView();
-            AssignmentsGridViewHelper.AllowUserToAddRows = true;
-            AssignmentsGridViewHelper.AllowUserToDeleteRows = true;
-            AssignmentsGridViewHelper.Size = new Size(400, 250);
-            AssignmentsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
-            AssignmentsGridViewHelper.Hide();
+            _assignmentsGridViewHelper = new DataGridView();
+            _assignmentsGridViewHelper.AllowUserToAddRows = true;
+            _assignmentsGridViewHelper.AllowUserToDeleteRows = true;
+            _assignmentsGridViewHelper.Size = new Size(400, 250);
+            _assignmentsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _assignmentsGridViewHelper.DataSource = v_VariableAssignments;
+            _assignmentsGridViewHelper.Hide();
         }
 
         public override void RunCommand(object sender)
         {
-            Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            AutomationEngineInstance currentScriptEngine = (AutomationEngineInstance)sender;
             var startFile = v_taskPath.ConvertToUserVariable(sender);
 
             //create variable list
-            var variableList = new List<Script.ScriptVariable>();
-            var variableReturnList = new List<Script.ScriptVariable>();
+            var variableList = new List<ScriptVariable>();
+            var variableReturnList = new List<ScriptVariable>();
 
             foreach (DataRow rw in v_VariableAssignments.Rows)
             {
@@ -89,31 +95,35 @@ namespace taskt.Core.Automation.Commands
                 {
                     variableValue = LookupVariable(currentScriptEngine, (string)rw.ItemArray[1]).VariableValue;
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
                     variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender);
                 }
                 var variableReturn = (string)rw.ItemArray[2];
-                variableList.Add(new Script.ScriptVariable
+
+                variableList.Add(new ScriptVariable
                 {
                     VariableName = variableName,
                     VariableValue = variableValue
                 });
+
                 if (variableReturn == "Yes")
                 {
-                    variableReturnList.Add(new Script.ScriptVariable
+                    variableReturnList.Add(new ScriptVariable
                     {
                         VariableName = variableName,
                         VariableValue = variableValue
                     });
                 }
-
             }
 
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true);
+            frmScriptEngine newEngine = new frmScriptEngine(startFile, null, variableList, true);
 
             //Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
-            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.TasktEngineUI.TopMost = false; });
+            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate() 
+            { 
+                currentScriptEngine.TasktEngineUI.TopMost = false; 
+            });
             Application.Run(newEngine);
 
             //get new variable list from the new task engine after it finishes running
@@ -124,37 +134,23 @@ namespace taskt.Core.Automation.Commands
                 if (newVariableList.Exists(x => x.VariableName == variable.VariableName))
                 {
                     //if yes, get that variable from the new list
-                    Script.ScriptVariable newTemp = newVariableList.Where(x => x.VariableName == variable.VariableName).FirstOrDefault();
+                    ScriptVariable newTemp = newVariableList.Where(x => x.VariableName == variable.VariableName).FirstOrDefault();
                     //check if that variable previously existed in the current engine
                     if (currentScriptEngine.VariableList.Exists(x => x.VariableName == newTemp.VariableName))
                     {
                         //if yes, overwrite it
-                        Script.ScriptVariable currentTemp = currentScriptEngine.VariableList.Where(x => x.VariableName == newTemp.VariableName).FirstOrDefault();
+                        ScriptVariable currentTemp = currentScriptEngine.VariableList.Where(x => x.VariableName == newTemp.VariableName).FirstOrDefault();
                         currentScriptEngine.VariableList.Remove(currentTemp);
                     }
                     //Add to current engine variable list
                     currentScriptEngine.VariableList.Add(newTemp);
                 }
             }
-
             //currentScriptEngine.tasktEngineUI.TopMost = false;
-            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.TasktEngineUI.TopMost = true; });
-        }
-
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance, string lookupVariable )
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == lookupVariable).FirstOrDefault();
-
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (lookupVariable.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)) && (lookupVariable.EndsWith(sendingInstance.EngineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = lookupVariable.Replace(sendingInstance.EngineSettings.VariableStartMarker, "").Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
-
-            return requiredVariable;
+            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate() 
+            { 
+                currentScriptEngine.TasktEngineUI.TopMost = true; 
+            });
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -162,48 +158,52 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create file path and helpers
-            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_taskPath", this));
-            var taskPathControl = UI.CustomControls.CommandControls.CreateDefaultInputFor("v_taskPath", this);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_taskPath", this, new Control[] { taskPathControl }, editor));
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_taskPath", this));
+            var taskPathControl = CommandControls.CreateDefaultInputFor("v_taskPath", this);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_taskPath", this, new Control[] { taskPathControl }, editor));
             RenderedControls.Add(taskPathControl);
-
             taskPathControl.TextChanged += TaskPathControl_TextChanged;
 
-            //
-            PassParameters = new CheckBox();
-            PassParameters.AutoSize = true;
-            PassParameters.Text = "I want to assign variables on startup";
-            PassParameters.Font = new Font("Segoe UI Light", 12);
-            PassParameters.ForeColor = Color.White;
+            _passParameters = new CheckBox();
+            _passParameters.AutoSize = true;
+            _passParameters.Text = "Assign Variables";
+            _passParameters.Font = new Font("Segoe UI Light", 12);
+            _passParameters.ForeColor = Color.White;
+            _passParameters.DataBindings.Add("Checked", this, "v_AssignVariables", false, DataSourceUpdateMode.OnPropertyChanged);
+            _passParameters.CheckedChanged += (sender, e) => PassParametersCheckbox_CheckedChanged(sender, e, editor.ScriptVariables);
+            CommandControls.CreateDefaultToolTipFor("v_AssignVariables", this, _passParameters);
+            RenderedControls.Add(_passParameters);
 
-            PassParameters.DataBindings.Add("Checked", this, "v_AssignVariables", false, DataSourceUpdateMode.OnPropertyChanged);
-            PassParameters.CheckedChanged += PassParametersCheckbox_CheckedChanged;
-            RenderedControls.Add(PassParameters);
-
-            RenderedControls.Add(AssignmentsGridViewHelper);
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_VariableAssignments", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_VariableAssignments", this, new Control[] { _assignmentsGridViewHelper }, editor));
+            RenderedControls.Add(_assignmentsGridViewHelper);
 
             return RenderedControls;
         }
 
-        private void TaskPathControl_TextChanged(object sender, EventArgs e)
+        public override string GetDisplayValue()
         {
-            PassParameters.Checked = false;
+            return base.GetDisplayValue() + $" [Run '{v_taskPath}']";
         }
 
-        private void PassParametersCheckbox_CheckedChanged(object sender, EventArgs e)
+        private void TaskPathControl_TextChanged(object sender, EventArgs e)
         {
-            Engine.AutomationEngineInstance currentScriptEngine = new Engine.AutomationEngineInstance();
-            var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);
+            _passParameters.Checked = false;
+        }
 
+        private void PassParametersCheckbox_CheckedChanged(object sender, EventArgs e, List<ScriptVariable> variables)
+        {
+            AutomationEngineInstance currentScriptEngine = new AutomationEngineInstance();
+            currentScriptEngine.VariableList.AddRange(variables);
+            var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);
             var Sender = (CheckBox)sender;
 
-            AssignmentsGridViewHelper.Visible = Sender.Checked;
+            _assignmentsGridViewHelper.Visible = Sender.Checked;
 
             //load variables if selected and file exists
-            if ((Sender.Checked) && (System.IO.File.Exists(startFile)))
+            if (Sender.Checked && File.Exists(startFile))
             {
-
-                Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile);
+                Script.Script deserializedScript = Script.Script.DeserializeFile(startFile);
 
                 foreach (var variable in deserializedScript.Variables)
                 {
@@ -214,25 +214,34 @@ namespace taskt.Core.Automation.Commands
 
                     }
                 }
+                _assignmentsGridViewHelper.DataSource = v_VariableAssignments;
 
-                AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
-
-
-                for (int i = 0; i<AssignmentsGridViewHelper.Rows.Count-1; i++)
+                for (int i = 0; i < _assignmentsGridViewHelper.Rows.Count - 1; i++)
                 {
                     DataGridViewComboBoxCell returnComboBox = new DataGridViewComboBoxCell();
                     returnComboBox.Items.Add("Yes");
                     returnComboBox.Items.Add("No");
-                    AssignmentsGridViewHelper.Rows[i].Cells[2] = returnComboBox;
+                    _assignmentsGridViewHelper.Rows[i].Cells[2] = returnComboBox;
                 }
             }
-
-
         }
 
-        public override string GetDisplayValue()
+        private ScriptVariable LookupVariable(AutomationEngineInstance sendingInstance, string lookupVariable)
         {
-            return base.GetDisplayValue() + " [" + v_taskPath + "]";
+            //search for the variable
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == lookupVariable).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && lookupVariable.StartsWith(sendingInstance.EngineSettings.VariableStartMarker)
+                                           && lookupVariable.EndsWith(sendingInstance.EngineSettings.VariableEndMarker))
+            {
+                //reformat and attempt
+                var reformattedVariable = lookupVariable.Replace(sendingInstance.EngineSettings.VariableStartMarker, "")
+                                                        .Replace(sendingInstance.EngineSettings.VariableEndMarker, "");
+                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
         }
     }
 }
