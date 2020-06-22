@@ -1,79 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to save an Excel workbook.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a workbook to a file.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Group("Excel Commands")]
+    [Description("This command saves an Excel Workbook to a specific file.")]
+
     public class ExcelSaveWorkbookAsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Excel Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Application** command.")]
+        [SampleUsage("MyExcelInstance || {vExcelInstance}")]
+        [Remarks("Failure to enter the correct instance or failure to first call the **Create Application** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.xlsx or [vExcelFilePath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Workbook Location")]
+        [InputSpecification("Enter or Select the path of the folder to save the Workbook to.")]
+        [SampleUsage(@"C:\temp || {vFolderPath} || {ProjectPath}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        public string v_FolderPath { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Workbook File Name")]
+        [InputSpecification("Enter or Select the name of the Workbook file.")]
+        [SampleUsage("myFile.xlsx || {vFilename}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_FileName { get; set; }
 
         public ExcelSaveWorkbookAsCommand()
         {
-            this.CommandName = "ExcelSaveWorkbookAsCommand";
-            this.SelectionName = "Save Workbook As";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "ExcelSaveWorkbookAsCommand";
+            SelectionName = "Save Workbook As";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultExcel";
         }
+
         public override void RunCommand(object sender)
         {
-            //get engine context
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            //convert variables
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var fileName = v_FileName.ConvertToUserVariable(engine);
-
-            //get excel app object
+            var vFolderPath = v_FolderPath.ConvertToUserVariable(engine);
+            var vFileName = v_FileName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
-
-            //convert object
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            var excelInstance = (Application)excelObject;
 
             //overwrite and save
             excelInstance.DisplayAlerts = false;
-            excelInstance.ActiveWorkbook.SaveAs(fileName);
+            excelInstance.ActiveWorkbook.SaveAs(Path.Combine(vFolderPath, vFileName));
             excelInstance.DisplayAlerts = true;
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FolderPath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Save To '" + v_FileName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Save to '{v_FolderPath}\\{v_FileName}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

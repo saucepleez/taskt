@@ -476,17 +476,16 @@ namespace taskt.UI
             uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelAppendCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelAppendRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGoToCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelActivateCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelWriteRangeCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelWriteRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelCloseApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelCreateDataSetCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSetCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelWriteCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGetCellCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelRunMacroCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelSaveWorkbookAsCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelDeleteRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelDeleteCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelDeleteRangeCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGetLastRowIndexCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelSaveWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
@@ -505,7 +504,6 @@ namespace taskt.UI
             uiImages.Add("ExcelSplitRangeByColumnCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("GetDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetRangeAsDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGetRangeCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("GetDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("WriteDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
@@ -595,6 +593,7 @@ namespace taskt.UI
             uiImages.Add("AddDictionaryItemCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_spreadsheet);
 
             return uiImages;
         }

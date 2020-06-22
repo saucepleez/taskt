@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -14,9 +15,9 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Group("Excel Commands")]
-    [Description("This command closes an open Excel Workbook and Instance.")]
+    [Description("This command activates a specific cell in an Excel Worksheet.")]
 
-    public class ExcelCloseApplicationCommand : ScriptCommand
+    public class ExcelActivateCellCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Excel Instance Name")]
@@ -27,22 +28,20 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Save Workbook")]
-        [PropertyUISelectionOption("Yes")]
-        [PropertyUISelectionOption("No")]
-        [InputSpecification("Indicate whether the Workbook should be saved before closing.")]
-        [SampleUsage("")]
+        [PropertyDescription("Cell Location")]
+        [InputSpecification("Enter the location of the cell to activate.")]
+        [SampleUsage("A1 || {vCellLocation}")]
         [Remarks("")]
-        public string v_ExcelSaveOnExit { get; set; }
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_CellLocation { get; set; }
 
-        public ExcelCloseApplicationCommand()
+        public ExcelActivateCellCommand()
         {
-            CommandName = "ExcelCloseApplicationCommand";
-            SelectionName = "Close Excel Application";
+            CommandName = "ExcelActivateCellCommand";
+            SelectionName = "Activate Cell";
             CommandEnabled = true;
             CustomRendering = true;
             v_InstanceName = "DefaultExcel";
-            v_ExcelSaveOnExit = "Yes";
         }
 
         public override void RunCommand(object sender)
@@ -50,23 +49,11 @@ namespace taskt.Core.Automation.Commands
             var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
+            var vLocation = v_CellLocation.ConvertToUserVariable(sender);
             var excelInstance = (Application)excelObject;
-            bool saveOnExit;
-            if (v_ExcelSaveOnExit == "Yes")
-                saveOnExit = true;
-            else
-                saveOnExit = false;
 
-            //check if workbook exists and save
-            if (excelInstance.ActiveWorkbook != null)
-            {
-                excelInstance.ActiveWorkbook.Close(saveOnExit);
-            }
-
-            //close excel
-            excelInstance.Quit();
-            //remove instance
-            engine.RemoveAppInstance(vInstance);
+            Worksheet excelSheet = excelInstance.ActiveSheet;
+            excelSheet.Range[vLocation].Select();           
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -74,14 +61,14 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ExcelSaveOnExit", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_CellLocation", this, editor));
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Save on Close '{v_ExcelSaveOnExit}' - Instance Name '{v_InstanceName}']";
+            return base.GetDisplayValue() + $" [Activate '{v_CellLocation}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

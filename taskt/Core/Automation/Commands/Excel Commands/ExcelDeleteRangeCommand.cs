@@ -15,9 +15,9 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Group("Excel Commands")]
-    [Description("This command gets text from a specific cell in an Excel Worksheet.")]
+    [Description("This command deletes a specific cell or range in an Excel Worksheet.")]
 
-    public class ExcelGetCellCommand : ScriptCommand
+    public class ExcelDeleteRangeCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Excel Instance Name")]
@@ -28,28 +28,30 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Cell Location")]
-        [InputSpecification("Enter the location of the cell to extract.")]
-        [SampleUsage("A1 || {vCellLocation}")]
+        [PropertyDescription("Range")]
+        [InputSpecification("Enter the location of the cell or range to delete.")]
+        [SampleUsage("A1 || A1:B10 || A1: || {vRange} || {vStart}:{vEnd} || {vStart}:")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_CellLocation { get; set; }
+        public string v_Range { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Output Cell Value Variable")]
-        [InputSpecification("Select or provide a variable from the variable list.")]
-        [SampleUsage("vUserVariable")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
-                 " to pre-define your variables; however, it is highly recommended.")]
-        public string v_OutputUserVariableName { get; set; }
+        [PropertyDescription("Shift Cells Up")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Indicate whether the row(s) below will be shifted up to replace the old row(s).")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public string v_ShiftUp { get; set; }
 
-        public ExcelGetCellCommand()
+        public ExcelDeleteRangeCommand()
         {
-            CommandName = "ExcelGetCellCommand";
-            SelectionName = "Get Cell";
+            CommandName = "ExcelDeleteRangeCommand";
+            SelectionName = "Delete Range";
             CommandEnabled = true;
             CustomRendering = true;
             v_InstanceName = "DefaultExcel";
+            v_ShiftUp = "Yes";
         }
 
         public override void RunCommand(object sender)
@@ -57,12 +59,31 @@ namespace taskt.Core.Automation.Commands
             var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
-            var vTargetAddress = v_CellLocation.ConvertToUserVariable(sender);
             var excelInstance = (Application)excelObject;
             Worksheet excelSheet = excelInstance.ActiveSheet;
 
-            var cellValue = (string)excelSheet.Range[vTargetAddress].Text;
-            cellValue.StoreInUserVariable(sender, v_OutputUserVariableName);          
+            string vRange = v_Range.ConvertToUserVariable(sender);
+            var splitRange = vRange.Split(':');
+            Range cellRange;
+            //Delete a range of cells
+            try
+            {
+                Range last = excelSheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
+                if (splitRange[1] == "")
+                    cellRange = excelSheet.Range[splitRange[0], last];
+                else
+                    cellRange = excelSheet.Range[splitRange[0], splitRange[1]];
+            }
+            //Delete a cell
+            catch (Exception)
+            {
+                cellRange = excelSheet.Range[splitRange[0], Type.Missing];
+            }
+
+            if (v_ShiftUp == "Yes")
+                cellRange.Delete();          
+            else
+                cellRange.Clear();
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -70,15 +91,15 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_CellLocation", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Range", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ShiftUp", this, editor));
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Get Value From '{v_CellLocation}' - Store Cell Value in '{v_OutputUserVariableName}' - Instance Name '{v_InstanceName}']";
+            return base.GetDisplayValue() + $" [Delete Cells '{v_Range}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

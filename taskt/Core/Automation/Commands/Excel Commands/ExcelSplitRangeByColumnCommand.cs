@@ -1,118 +1,123 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using System.Data;
-using System.Text;
-using System.Linq;
-using System.IO;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Excel.Application;
+using DataTable = System.Data.DataTable;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range and splits it into separate ranges by column.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to split a range into separate ranges.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
+    [Group("Excel Commands")]
+    [Description("This command takes a specific Excel range, splits it into separate ranges by column, and stores them in new Workbooks.")]
+
     public class ExcelSplitRangeByColumnCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Excel Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Application** command.")]
+        [SampleUsage("MyExcelInstance || {vExcelInstance}")]
+        [Remarks("Failure to enter the correct instance or failure to first call the **Create Application** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_ExcelCellAddress1 { get; set; }
+        [PropertyDescription("Range")]
+        [InputSpecification("Enter the location of the range to split.")]
+        [SampleUsage("A1:B10 || A1: || {vRange} || {vStart}:{vEnd} || {vStart}:")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_Range { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2, Leave Blank for All)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_ExcelCellAddress2 { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Column Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the name of the column you wish to split by.")]
-        [Attributes.PropertyAttributes.SampleUsage("ColA, [vColumn]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Column to Split")]
+        [InputSpecification("Enter the name of the column you wish to split the selected range by.")]
+        [SampleUsage("ColA || {vColumnName}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ColumnName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the output directory")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the new directory for the split Excel Files.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\new path\\ or [vTextFolderPath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Split Range Output Directory")]
+        [InputSpecification("Enter or Select the new directory for the split range files.")]
+        [SampleUsage(@"C:\temp\Split Files\ || {vFolderPath} || {ProjectPath}\Split Files")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         public string v_OutputDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the File Type to save as")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("xlsx")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("csv")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify the file format type for the split ranges")]
-        [Attributes.PropertyAttributes.SampleUsage("Select either **xlsx* or **csv**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Output File Type")]
+        [PropertyUISelectionOption("xlsx")]
+        [PropertyUISelectionOption("csv")]
+        [InputSpecification("Specify the file format type for the split range files.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_FileType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign DataTable List to Variable")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_userVariableName { get; set; }
+        [PropertyDescription("Output DataTable List Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                 " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public ExcelSplitRangeByColumnCommand()
         {
-            this.CommandName = "ExcelSplitRangeByColumnCommand";
-            this.SelectionName = "Split Range By Column";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "ExcelSplitRangeByColumnCommand";
+            SelectionName = "Split Range By Column";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultExcel";
             v_FileType = "xlsx";
+            v_Range = "A1:";
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var vExcelObject = engine.GetAppInstance(vInstance);
-            var vTargetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
-            var vTargetAddress2 = v_ExcelCellAddress2.ConvertToUserVariable(sender);
+            var vRange = v_Range.ConvertToUserVariable(sender);
             var vColumnName = v_ColumnName.ConvertToUserVariable(sender);
             var vOutputDirectory = v_OutputDirectory.ConvertToUserVariable(sender);
+            var excelInstance = (Application)vExcelObject;
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)vExcelObject;
-            excelInstance.Visible = false;
             excelInstance.DisplayAlerts = false;
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            Worksheet excelSheet = excelInstance.ActiveSheet;
 
-            Microsoft.Office.Interop.Excel.Range cellValue;
-            if (vTargetAddress2 != "")
-                cellValue = excelSheet.Range[vTargetAddress1, vTargetAddress2];
-            else
+            var splitRange = vRange.Split(':');
+            Range cellRange;
+
+            try
             {
-                Microsoft.Office.Interop.Excel.Range last = excelSheet.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-                cellValue = excelSheet.Range[vTargetAddress1, last];
+                Range last = excelSheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
+                if (splitRange[1] == "")
+                    cellRange = excelSheet.Range[splitRange[0], last];
+                else
+                    cellRange = excelSheet.Range[splitRange[0], splitRange[1]];
+            }
+            //Attempt to extract a single cell
+            catch (Exception)
+            {
+                throw new Exception("Selected range is invalid");
             }
 
             //Convert Range to DataTable
             List<object> lst = new List<object>();
-            int rw = cellValue.Rows.Count;
-            int cl = cellValue.Columns.Count;
+            int rw = cellRange.Rows.Count;
+            int cl = cellRange.Columns.Count;
             int rCnt;
             int cCnt;
             string cName;
@@ -124,15 +129,15 @@ namespace taskt.Core.Automation.Commands
                 DataRow newRow = DT.NewRow();
                 for (cCnt = 1; cCnt <= cl; cCnt++)
                 {
-                    if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) != null)
+                    if (((cellRange.Cells[rCnt, cCnt] as Range).Value2) != null)
                     {
                         if (!DT.Columns.Contains(cCnt.ToString()))
                         {
                             DT.Columns.Add(cCnt.ToString());
                         }
-                        newRow[cCnt.ToString()] = ((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
+                        newRow[cCnt.ToString()] = ((cellRange.Cells[rCnt, cCnt] as Range).Value2).ToString();
                     }
-                    else if (((cellValue.Cells[rCnt, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) == null && ((cellValue.Cells[1, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2) != null)
+                    else if (((cellRange.Cells[rCnt, cCnt] as Range).Value2) == null && ((cellRange.Cells[1, cCnt] as Range).Value2) != null)
                     {
                         if (!DT.Columns.Contains(cCnt.ToString()))
                         {
@@ -140,7 +145,6 @@ namespace taskt.Core.Automation.Commands
                         }
                         newRow[cCnt.ToString()] = string.Empty;
                     }
-
                 }
                 DT.Rows.Add(newRow);
             }
@@ -148,7 +152,7 @@ namespace taskt.Core.Automation.Commands
             //Set column names
             for (cCnt = 1; cCnt <= cl; cCnt++)
             {
-                cName = ((cellValue.Cells[1, cCnt] as Microsoft.Office.Interop.Excel.Range).Value2).ToString();
+                cName = ((cellRange.Cells[1, cCnt] as Range).Value2).ToString();
                 DT.Columns[cCnt-1].ColumnName = cName;
             }
 
@@ -159,12 +163,7 @@ namespace taskt.Core.Automation.Commands
                                        .ToList();
 
             //add list of datatables to output variable
-            Script.ScriptVariable splitDataset = new Script.ScriptVariable
-            {
-                VariableName = v_userVariableName,
-                VariableValue = result
-            };
-            engine.VariableList.Add(splitDataset);
+            engine.AddVariable(v_OutputUserVariableName, result);
 
             //save split datatables in individual workbooks labeled by selected column data
             if (Directory.Exists(vOutputDirectory))
@@ -176,14 +175,13 @@ namespace taskt.Core.Automation.Commands
                     {
                         newName = newDT.Rows[0].Field<string>(vColumnName).ToString();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         continue;
                     }
-                     
-                    Console.WriteLine(newName);
-                    Microsoft.Office.Interop.Excel.Workbook newWorkBook = excelInstance.Workbooks.Add(Type.Missing);
-                    Microsoft.Office.Interop.Excel.Worksheet newSheet = newWorkBook.ActiveSheet;
+                    var splitExcelInstance = new Application();
+                    Workbook newWorkBook = splitExcelInstance.Workbooks.Add(Type.Missing);
+                    Worksheet newSheet = newWorkBook.ActiveSheet;
                     for (int i = 1; i < newDT.Columns.Count + 1; i++)
                     {
                         newSheet.Cells[1, i] = newDT.Columns[i - 1].ColumnName;
@@ -204,15 +202,15 @@ namespace taskt.Core.Automation.Commands
 
                     if (v_FileType == "csv" && !newName.Equals(string.Empty))
                     {
-                        newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName), Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV, Type.Missing, Type.Missing,
-                                        Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
-                                        Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing); 
+                        newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName), XlFileFormat.xlCSV, Type.Missing, Type.Missing,
+                                        Type.Missing, Type.Missing, XlSaveAsAccessMode.xlNoChange,
+                                        Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);                      
                     }
                     else if (!newName.Equals(string.Empty))
                     {
                         newWorkBook.SaveAs(Path.Combine(vOutputDirectory, newName + ".xlsx"));
                     }
-                    
+                    newWorkBook.Close();
                 }
             }   
         }
@@ -221,29 +219,19 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress1", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress2", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Range", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ColumnName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputDirectory", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileType", this, editor));
-            //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Output", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get Value Between '" + v_ExcelCellAddress1 + " and " + v_ExcelCellAddress2 + "' and apply to variable '" + v_userVariableName + "'from, Instance Name: '" + v_InstanceName + "', Split By Column: '" + v_ColumnName + "']";
+            return base.GetDisplayValue() + $" [Split Range '{v_Range}' by Column '{v_ColumnName}' - Store DataTable List in '{v_OutputUserVariableName}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

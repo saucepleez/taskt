@@ -78,6 +78,10 @@ namespace taskt.Core.Automation.Commands
             {
                 listToIndex = (List<string>)listVariable.VariableValue;
             }
+            else if (listVariable.VariableValue is List<DataTable>)
+            {
+                listToIndex = (List<DataTable>)listVariable.VariableValue;
+            }
             else if (listVariable.VariableValue is List<MailItem>)
             {
                 listToIndex = (List<MailItem>)listVariable.VariableValue;

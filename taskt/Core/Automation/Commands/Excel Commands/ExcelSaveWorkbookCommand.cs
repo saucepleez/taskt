@@ -2,65 +2,62 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to save an Excel workbook.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save changes to a workbook.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Group("Excel Commands")]
+    [Description("This command saves an Excel Workbook.")]
+
     public class ExcelSaveWorkbookCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Excel Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Application** command.")]
+        [SampleUsage("MyExcelInstance || {vExcelInstance}")]
+        [Remarks("Failure to enter the correct instance or failure to first call the **Create Application** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         public ExcelSaveWorkbookCommand()
         {
-            this.CommandName = "ExcelSaveWorkbookCommand";
-            this.SelectionName = "Save Workbook";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "ExcelSaveWorkbookCommand";
+            SelectionName = "Save Workbook";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultExcel";
         }
+
         public override void RunCommand(object sender)
         {
-            //get engine context
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            //convert variables
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
-            //get excel app object
             var excelObject = engine.GetAppInstance(vInstance);
-
-            //convert object
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            var excelInstance = (Application)excelObject;
 
             //save
             excelInstance.ActiveWorkbook.Save();
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
             return RenderedControls;
-
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            return base.GetDisplayValue() + $" [Instance Name '{v_InstanceName}']";
         }
     }
 }
