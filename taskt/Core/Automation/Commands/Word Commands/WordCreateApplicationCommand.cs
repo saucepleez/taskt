@@ -2,64 +2,74 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using Word = Microsoft.Office.Interop.Word;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command creates a Word Application.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Word.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Group("Word Commands")]
+    [Description("This command creates a Word Instance.")]
+
     public class WordCreateApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **wordInstance**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Word Instance Name")]
+        [InputSpecification("Enter a unique name that will represent the application instance.")]
+        [SampleUsage("MyWordInstance")]
+        [Remarks("This unique name allows you to refer to the instance by name in future commands, " +
+                 "ensuring that the commands you specify run against the correct application.")]
         public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Visible")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Indicate whether the Word automation should be visible or not.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public string v_Visible { get; set; }
 
         public WordCreateApplicationCommand()
         {
-            this.CommandName = "WordCreateApplicationCommand";
-            this.SelectionName = "Create Word Application";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "WordCreateApplicationCommand";
+            SelectionName = "Create Word Application";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultWord";
+            v_Visible = "No";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var engine = (AutomationEngineInstance)sender;
+            var newWordSession = new Application();
 
+            if (v_Visible == "Yes")
+                newWordSession.Visible = true;
+            else
+                newWordSession.Visible = false;
 
-            var newWordSession = new Word.Application
-            {
-                Visible = true
-            };
-
-            engine.AddAppInstance(vInstance, newWordSession);
-
+            engine.AddAppInstance(v_InstanceName, newWordSession);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Visible '{v_Visible}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

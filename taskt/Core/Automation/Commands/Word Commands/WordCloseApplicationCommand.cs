@@ -2,77 +2,85 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to close Word.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Word.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Group("Word Commands")]
+    [Description("This command closes an open Word Document and Instance.")]
+
     public class WordCloseApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **wordInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Word Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Application** command.")]
+        [SampleUsage("MyWordInstance || {vWordInstance}")]
+        [Remarks("Failure to enter the correct instance or failure to first call the **Create Application** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate if the Document should be saved")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a TRUE or FALSE value")]
-        [Attributes.PropertyAttributes.SampleUsage("'TRUE' or 'FALSE'")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public bool v_WordSaveOnExit { get; set; }
+        [PropertyDescription("Save Document")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Indicate whether the Document should be saved before closing.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public string v_WordSaveOnExit { get; set; }
+
         public WordCloseApplicationCommand()
         {
-            this.CommandName = "WordCloseApplicationCommand";
-            this.SelectionName = "Close Word Application";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "WordCloseApplicationCommand";
+            SelectionName = "Close Word Application";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultWord";
+            v_WordSaveOnExit = "Yes";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var wordObject = engine.GetAppInstance(vInstance);
-
-
-            Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
-
+            Application wordInstance = (Application)wordObject;
+            bool saveOnExit;
+            if (v_WordSaveOnExit == "Yes")
+                saveOnExit = true;
+            else
+                saveOnExit = false;
 
             //check if document exists and save
             if (wordInstance.Documents.Count >= 1)
-            {
-                wordInstance.ActiveDocument.Close(v_WordSaveOnExit);
-            }
+                wordInstance.ActiveDocument.Close(saveOnExit);
 
             //close word
             wordInstance.Quit();
 
             //remove instance
             engine.RemoveAppInstance(vInstance);
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WordSaveOnExit", this, editor));
 
             return RenderedControls;
-
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Save On Close: " + v_WordSaveOnExit + ", Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Save on Close '{v_WordSaveOnExit}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

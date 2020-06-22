@@ -1,81 +1,95 @@
 ﻿using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to export a Word document to a PDF.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a document to a PDF.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Group("Word Commands")]
+    [Description("This command exports a Word Document to a PDF file.")]
+
     public class WordExportToPDFCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **wordInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Word Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Application** command.")]
+        [SampleUsage("MyWordInstance || {vWordInstance}")]
+        [Remarks("Failure to enter the correct instance or failure to first call the **Create Application** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path of the new pdf")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.pdf or [vWordPDFFilePath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("PDF Location")]
+        [InputSpecification("Enter or Select the path of the folder to export the PDF to.")]
+        [SampleUsage(@"C:\temp || {vFolderPath} || {ProjectPath}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        public string v_FolderPath { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("PDF File Name")]
+        [InputSpecification("Enter or Select the name of the PDF file.")]
+        [SampleUsage("myFile.pdf || {vFilename}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_FileName { get; set; }
 
         public WordExportToPDFCommand()
         {
-            this.CommandName = "WordExportToPDFCommand";
-            this.SelectionName = "Export To PDF";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "WordExportToPDFCommand";
+            SelectionName = "Export To PDF";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultWord";
         }
+
         public override void RunCommand(object sender)
         {
-            //get engine context
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            //convert variables
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var fileName = v_FileName.ConvertToUserVariable(engine);
+            var vFileName = v_FileName.ConvertToUserVariable(engine);
+            var vFolderPath = v_FolderPath.ConvertToUserVariable(engine);
 
             //get word app object
             var wordObject = engine.GetAppInstance(vInstance);
 
             //convert object
-            Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
+            Application wordInstance = (Application)wordObject;
             Document wordDocument = wordInstance.ActiveDocument;
             
             object fileFormat = WdSaveFormat.wdFormatPDF;
-            wordDocument.SaveAs(fileName, ref fileFormat, Type.Missing, Type.Missing,
+            string pdfPath = Path.Combine(vFolderPath, vFileName);
+            wordDocument.SaveAs(pdfPath, ref fileFormat, Type.Missing, Type.Missing,
                                 Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                                 Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                                 Type.Missing, Type.Missing, Type.Missing, Type.Missing);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FolderPath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Save To '" + v_FileName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Export to '{v_FolderPath}\\{v_FileName}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

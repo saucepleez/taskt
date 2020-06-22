@@ -1,56 +1,60 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using System.Data;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Microsoft.Office.Interop.Word;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Word.Application;
+using Group = taskt.Core.Automation.Attributes.ClassAttributes.Group;
+
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command appends an image to a word document.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to append an image to a specific document.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Group("Word Commands")]
+    [Description("This command appends an image to a Word Document.")]
+
     public class WordAppendImageCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **wordInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Word Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Application** command.")]
+        [SampleUsage("MyWordInstance || {vWordInstance}")]
+        [Remarks("Failure to enter the correct instance or failure to first call the **Create Application** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the image")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the image.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myimage.png or [vTextFilePath]")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Image File Path")]    
+        [InputSpecification("Enter the file path of the image to append to the Document.")]
+        [SampleUsage(@"C:\temp\myImage.png || {vImageFilePath} || {ProjectPath}\myImage.png")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_ImagePath { get; set; }
 
         public WordAppendImageCommand()
         {
-            this.CommandName = "WordAppendImageCommand";
-            this.SelectionName = "Append Image";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "WordAppendImageCommand";
+            SelectionName = "Append Image";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultWord";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var vImagePath = v_ImagePath.ConvertToUserVariable(engine);
             var wordObject = engine.GetAppInstance(vInstance);
 
-            Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
+            Application wordInstance = (Application)wordObject;
             Document wordDocument = wordInstance.ActiveDocument;
 
             //Appends image after text/images
@@ -62,19 +66,20 @@ namespace taskt.Core.Automation.Commands
             Paragraph paragraph = wordDocument.Content.Paragraphs.Add();
             paragraph.Format.SpaceAfter = 10f;
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ImagePath", this, editor));
 
             return RenderedControls;
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " ['" + v_ImagePath + "' To Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Append '{v_ImagePath}' - Instance Name '{v_InstanceName}']";
         }
     }
 }

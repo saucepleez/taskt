@@ -3,79 +3,74 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
+using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to save a Word document.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save changes to a document.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Group("Word Commands")]
+    [Description("This command extracts text from a Word Document.")]
+
     public class WordReadDocumentCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **wordInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Word Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Application** command.")]
+        [SampleUsage("MyWordInstance || {vWordInstance}")]
+        [Remarks("Failure to enter the correct instance or failure to first call the **Create Application** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define where the text should be stored")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_UserVariableName { get; set; }
+        [PropertyDescription("Output Text Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                 " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public WordReadDocumentCommand()
         {
-            this.CommandName = "WordReadDocumentCommand";
-            this.SelectionName = "Read Document";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "WordReadDocumentCommand";
+            SelectionName = "Read Document";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultWord";
         }
+
         public override void RunCommand(object sender)
         {
-            //get engine context
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            //convert variables
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
-            //get word app object
             var wordObject = engine.GetAppInstance(vInstance);
 
-            //convert object
-            Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
+            Application wordInstance = (Application)wordObject;
             Document wordDocument = wordInstance.ActiveDocument;
 
             //store text in variable
             string textFromDocument = wordDocument.Content.Text;
-            textFromDocument.StoreInUserVariable(sender, v_UserVariableName);
+            textFromDocument.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
-
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [Store Text in '{v_OutputUserVariableName}' - Instance Name '{v_InstanceName}']";
         }
     }
 }
