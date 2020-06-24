@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.ClassAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("If Commands")]
-    [Attributes.ClassAttributes.Description("This command signifies the exit point of If actions.  Required for all Begin Ifs.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to signify the exit point of your if scenario")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command is used by the serializer to signify the end point of an if.")]
+    [Group("If Commands")]
+    [Description("This command signifies the exit point of If action(s) and is required for all the Begin If commands.")]
     public class EndIfCommand : ScriptCommand
     {
         public EndIfCommand()
         {
-            this.DefaultPause = 0;
-            this.CommandName = "EndIfCommand";
-            this.SelectionName = "End If";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            DefaultPause = 0;
+            CommandName = "EndIfCommand";
+            SelectionName = "End If";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

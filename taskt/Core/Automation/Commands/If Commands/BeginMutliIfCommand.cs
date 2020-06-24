@@ -1,69 +1,61 @@
-﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using taskt.Core.Automation.User32;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Windows.Forms;
-using taskt.UI.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Text;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("If Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently take an action based on either condition. Any 'BeginIf' command must have a following 'EndIf' command.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
+    [Group("If Commands")]
+    [Description("This command evaluates a group of combined logical statements to determine if the combined result of the statements is 'true' or 'false' and subsequently performs action(s) based on the result.")]
     public class BeginMultiIfCommand : ScriptCommand
     {
-
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Multiple If Conditions - All Must Be True")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Multiple If Conditions")]
+        [InputSpecification("Add new If condition(s).")]
+        [SampleUsage("")]
+        [Remarks("All of the conditions must be true to execute the If block.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder)]
         public DataTable v_IfConditionsTable { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private DataGridView IfConditionHelper;
+        private DataGridView _ifConditionHelper;
 
         [XmlIgnore]
-        private List<Script.ScriptVariable> ScriptVariables { get; set; }
+        private List<ScriptVariable> _scriptVariables { get; set; }
 
         public BeginMultiIfCommand()
         {
-            this.CommandName = "BeginMultiIfCommand";
-            this.SelectionName = "Begin Multi If";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "BeginMultiIfCommand";
+            SelectionName = "Begin Multi If";
+            CommandEnabled = true;
+            CustomRendering = true;
 
             v_IfConditionsTable = new DataTable();
             v_IfConditionsTable.TableName = DateTime.Now.ToString("MultiIfConditionTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
             v_IfConditionsTable.Columns.Add("Statement");
             v_IfConditionsTable.Columns.Add("CommandData");
-
         }
-
        
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(object sender, ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (AutomationEngineInstance)sender;
 
             bool isTrueStatement = true;
             foreach (DataRow rw in v_IfConditionsTable.Rows)
             {
                 var commandData = rw["CommandData"].ToString();
-                var ifCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginIfCommand>(commandData);
-
+                var ifCommand = JsonConvert.DeserializeObject<BeginIfCommand>(commandData);
                 var statementResult = ifCommand.DetermineStatementTruth(sender);
 
                 if (!statementResult)
@@ -84,9 +76,9 @@ namespace taskt.Core.Automation.Commands
             }
             
             int startIndex, endIndex, elseIndex;
-            if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.Automation.Commands.ElseCommand))
+            if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is ElseCommand))
             {
-                elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is Core.Automation.Commands.ElseCommand);
+                elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is ElseCommand);
 
                 if (isTrueStatement)
                 {
@@ -116,46 +108,53 @@ namespace taskt.Core.Automation.Commands
 
                 engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
             }
-
-
-
-
-          
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
             
             //get script variables for feeding into if builder form
-            ScriptVariables = editor.ScriptVariables;
+            _scriptVariables = editor.ScriptVariables;
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_IfConditionsTable", this, editor);
-            IfConditionHelper = controls[2] as DataGridView;
+            _ifConditionHelper = controls[2] as DataGridView;
 
             //handle helper click
-            var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
+            var helper = controls[1] as CommandItemControl;
             helper.Click += (sender, e) => CreateIfCondition(sender, e);
 
             //add for rendering
             RenderedControls.AddRange(controls);
 
             //define if condition helper
-            IfConditionHelper.Width = 450;
-            IfConditionHelper.Height = 200;
-            IfConditionHelper.AutoGenerateColumns = false;
-            IfConditionHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            IfConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Condition", DataPropertyName = "Statement", ReadOnly = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
-            IfConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "CommandData", DataPropertyName = "CommandData", ReadOnly = true, Visible = false });
-            IfConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Edit", UseColumnTextForButtonValue = true,  Text = "Edit", Width = 45 });
-            IfConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Delete", UseColumnTextForButtonValue = true, Text = "Delete", Width = 45 });
-            IfConditionHelper.AllowUserToAddRows = false;
-            IfConditionHelper.AllowUserToDeleteRows = true;
-            IfConditionHelper.CellContentClick += IfConditionHelper_CellContentClick;
-
+            _ifConditionHelper.Width = 450;
+            _ifConditionHelper.Height = 200;
+            _ifConditionHelper.AutoGenerateColumns = false;
+            _ifConditionHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            _ifConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Condition", DataPropertyName = "Statement", ReadOnly = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+            _ifConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "CommandData", DataPropertyName = "CommandData", ReadOnly = true, Visible = false });
+            _ifConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Edit", UseColumnTextForButtonValue = true,  Text = "Edit", Width = 45 });
+            _ifConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Delete", UseColumnTextForButtonValue = true, Text = "Delete", Width = 45 });
+            _ifConditionHelper.AllowUserToAddRows = false;
+            _ifConditionHelper.AllowUserToDeleteRows = true;
+            _ifConditionHelper.CellContentClick += IfConditionHelper_CellContentClick;
 
             return RenderedControls;
+        }
+
+        public override string GetDisplayValue()
+        {
+            if (v_IfConditionsTable.Rows.Count == 0)
+            {
+                return "If <Not Configured>";
+            }
+            else
+            {
+                var statements = v_IfConditionsTable.AsEnumerable().Select(f => f.Field<string>("Statement")).ToList();
+                return string.Join(" && ", statements);
+            }
         }
 
         private void IfConditionHelper_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -173,27 +172,25 @@ namespace taskt.Core.Automation.Commands
                     var statement = selectedRow["Statement"];
                     var commandData = selectedRow["CommandData"].ToString();
 
-                    var ifCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginIfCommand>(commandData);
+                    var ifCommand = JsonConvert.DeserializeObject<BeginIfCommand>(commandData);
 
-                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
+                    var automationCommands = CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
                     frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
                     editor.SelectedCommand = ifCommand;
                     editor.EditingCommand = ifCommand;
                     editor.OriginalCommand = ifCommand;
                     editor.CreationModeInstance = frmCommandEditor.CreationMode.Edit;
-                    editor.ScriptVariables = ScriptVariables;
+                    editor.ScriptVariables = _scriptVariables;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {
                         var editedCommand = editor.EditingCommand as BeginIfCommand;
                         var displayText = editedCommand.GetDisplayValue();
-                        var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(editedCommand);
+                        var serializedData = JsonConvert.SerializeObject(editedCommand);
 
                         selectedRow["Statement"] = displayText;
                         selectedRow["CommandData"] = serializedData;
                     }
-
-
                 }
                 else if (buttonSelected.Value.ToString() == "Delete")
                 {
@@ -204,15 +201,12 @@ namespace taskt.Core.Automation.Commands
                 {
                     throw new NotImplementedException("Requested Action is not implemented.");
                 }
-
             }
-  
         }
 
         private void CreateIfCondition(object sender, EventArgs e)
         {
-
-            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
+            var automationCommands = CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
 
             frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
             editor.SelectedCommand = new BeginIfCommand();
@@ -223,28 +217,13 @@ namespace taskt.Core.Automation.Commands
                 //get data
                 var configuredCommand = editor.SelectedCommand as BeginIfCommand;
                 var displayText = configuredCommand.GetDisplayValue();
-                var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(configuredCommand);
+                var serializedData = JsonConvert.SerializeObject(configuredCommand);
 
                 //add to list
                 v_IfConditionsTable.Rows.Add(displayText, serializedData);
-             
             }
-
         }
 
-        public override string GetDisplayValue()
-        {
-
-            if (v_IfConditionsTable.Rows.Count == 0)
-            {
-                return "If <Not Configured>";
-            }
-            else
-            {
-                var statements = v_IfConditionsTable.AsEnumerable().Select(f => f.Field<string>("Statement")).ToList();
-                return string.Join(" && ", statements);
-            }
-           
-        }
+       
     }
 }
