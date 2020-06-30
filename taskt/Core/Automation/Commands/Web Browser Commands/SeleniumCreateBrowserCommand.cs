@@ -1,86 +1,96 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.App;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.App;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Group("Web Browser Commands")]
+    [Description("This command creates a new Selenium web browser session which enables automation for websites.")]
+
     public class SeleniumCreateBrowserCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
-        [Attributes.PropertyAttributes.Remarks("**myInstance** or **seleniumInstance**")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Excel Instance Name")]
+        [InputSpecification("Enter a unique name that will represent the application instance.")]
+        [SampleUsage("MyExcelInstance")]
+        [Remarks("This unique name allows you to refer to the instance by name in future commands, " +
+                 "ensuring that the commands you specify run against the correct application.")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Instance Tracking (after task ends)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Forget Instance")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Keep Instance Alive")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Forget Instance** to forget the instance or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
-        [Attributes.PropertyAttributes.Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
+        [PropertyDescription("Browser Engine Type")]
+        [PropertyUISelectionOption("Chrome")]
+        [PropertyUISelectionOption("IE")]
+        [InputSpecification("Select the browser engine to execute the Selenium automation with.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public string v_EngineType { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Instance Tracking")]
+        [PropertyUISelectionOption("Forget Instance")]
+        [PropertyUISelectionOption("Keep Instance Alive")]
+        [InputSpecification("Select **Forget Instance** to forget the instance after execution finishes, " +
+                            "or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
+        [SampleUsage("")]
+        [Remarks("Calling the **Close Browser** command or ending the browser session will end the instance. " +
+                 "This command only works during the lifetime of the application. " +
+                 "If the application is closed, the references will be forgotten automatically.")]
         public string v_InstanceTracking { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select a Window State")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Normal")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Maximize")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the window state that the browser should start up with.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Normal** to start the browser in normal mode or **Maximize** to start the browser in maximized mode.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Window State")]
+        [PropertyUISelectionOption("Normal")]
+        [PropertyUISelectionOption("Maximize")]
+        [InputSpecification("Select the window state that the browser should start up with.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_BrowserWindowOption { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Selenium command line options (optional)")]
-        [Attributes.PropertyAttributes.InputSpecification("Select optional options to be passed to the Selenium command.")]
-        [Attributes.PropertyAttributes.SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Selenium Command Line Options")]
+        [InputSpecification("Select options to be passed to the Selenium command.")]
+        [SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile || {vOptions}")]
+        [Remarks("This input is optional.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SeleniumOptions { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select a Browser Engine Type")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Chrome")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("IE")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the window state that the browser should start up with.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Normal** to start the browser in normal mode or **Maximize** to start the browser in maximized mode.")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_EngineType { get; set; }
 
         public SeleniumCreateBrowserCommand()
         {
-            this.CommandName = "SeleniumCreateBrowserCommand";
-            this.SelectionName = "Create Browser";
-            this.v_InstanceName = "default";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_EngineType = "Chrome";
+            CommandName = "SeleniumCreateBrowserCommand";
+            SelectionName = "Create Browser";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultBrowser";
+            v_InstanceTracking = "Forget Instance";
+            v_BrowserWindowOption = "Maximize";
+            v_EngineType = "Chrome";
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources");
-            var seleniumEngine = v_EngineType.ConvertToUserVariable(sender);
-            var instanceName = v_InstanceName.ConvertToUserVariable(sender);
+            var engine = (AutomationEngineInstance)sender;
+            var driverPath =Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Resources");
 
-            OpenQA.Selenium.DriverService driverService;
-            OpenQA.Selenium.IWebDriver webDriver;
+            DriverService driverService;
+            IWebDriver webDriver;
 
-            if (seleniumEngine == "Chrome")
+            if (v_EngineType == "Chrome")
             {
-                OpenQA.Selenium.Chrome.ChromeOptions options = new OpenQA.Selenium.Chrome.ChromeOptions();
+                ChromeOptions options = new ChromeOptions();
 
                 if (!string.IsNullOrEmpty(v_SeleniumOptions))
                 {
@@ -88,25 +98,21 @@ namespace taskt.Core.Automation.Commands
                     options.AddArguments(convertedOptions);
                 }
 
-                driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-                webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, options);
+                driverService = ChromeDriverService.CreateDefaultService(driverPath);
+                webDriver = new ChromeDriver((ChromeDriverService)driverService, options);
             }
             else
             {
-                driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
-                webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());
+                driverService = InternetExplorerDriverService.CreateDefaultService(driverPath);
+                webDriver = new InternetExplorerDriver((InternetExplorerDriverService)driverService, new InternetExplorerOptions());
             }
 
-
             //add app instance
-            engine.AddAppInstance(instanceName, webDriver);
-
+            engine.AddAppInstance(v_InstanceName, webDriver);
 
             //handle app instance tracking
             if (v_InstanceTracking == "Keep Instance Alive")
-            {
-                GlobalAppInstances.AddInstance(instanceName, webDriver);
-            }
+                GlobalAppInstances.AddInstance(v_InstanceName, webDriver);
 
             //handle window type on startup - https://github.com/saucepleez/taskt/issues/22
             switch (v_BrowserWindowOption)
@@ -119,16 +125,11 @@ namespace taskt.Core.Automation.Commands
                 default:
                     break;
             }
-
-
-
-
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EngineType", this, editor));
@@ -141,7 +142,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return "Create " + v_EngineType + " Browser - [Instance Name: '" + v_InstanceName + "', Instance Tracking: " + v_InstanceTracking + "]";
+            return $"Create {v_EngineType} Browser [Instance Name '{v_InstanceName}']";
         }
     }
 }

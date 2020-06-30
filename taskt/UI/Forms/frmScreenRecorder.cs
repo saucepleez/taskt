@@ -10,7 +10,6 @@ namespace taskt.UI.Forms
     {
         public frmScriptBuilder CallBackForm { get; set; }
         private List<ScriptCommand> _scriptCommandList;
-        private bool _isRecording;
 
         public frmScreenRecorder()
         {

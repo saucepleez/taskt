@@ -41,7 +41,6 @@ namespace taskt.Core.Automation.Commands
                  " to pre-define your variables; however, it is highly recommended.")]
         public string v_OutputUserVariableName { get; set; }
 
-
         public QueryHTMLSourceCommand()
         {
             CommandName = "QueryHTMLSourceCommand";

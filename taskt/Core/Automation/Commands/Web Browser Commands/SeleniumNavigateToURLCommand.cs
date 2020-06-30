@@ -1,66 +1,64 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using SHDocVw;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
-
-  
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to navigate a Selenium web browser session to a given URL or resource.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to navigate an existing Selenium instance to a known URL or web resource")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Group("Web Browser Commands")]
+    [Description("This command allows you to navigate a Selenium web browser session to a given URL or resource.")]
+
     public class SeleniumNavigateToURLCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Browser Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Browser** command.")]
+        [SampleUsage("MyBrowserInstance || {vBrowserInstance}")]
+        [Remarks("Failure to enter the correct instance name or failure to first call the **Create Browser** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the destination URL that you want the selenium instance to navigate to")]
-        [Attributes.PropertyAttributes.SampleUsage("https://mycompany.com/orders")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("URL")]
+        [InputSpecification("Enter the URL that you want the selenium instance to navigate to.")]
+        [SampleUsage("https://mycompany.com/orders || {vURL}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_URL { get; set; }
 
         public SeleniumNavigateToURLCommand()
         {
-            this.CommandName = "SeleniumNavigateToURLCommand";
-            this.SelectionName = "Navigate to URL";
-            this.v_InstanceName = "default";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "SeleniumNavigateToURLCommand";
+            SelectionName = "Navigate to URL";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultBrowser";
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
             var browserObject = engine.GetAppInstance(vInstance);
-
-
-            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+            var seleniumInstance = (IWebDriver)browserObject;
             seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
 
             return RenderedControls;
@@ -68,19 +66,17 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [URL: '" + v_URL + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + $" [URL '{v_URL}' - Instance Name '{v_InstanceName}']";
         }
-        private void WaitForReadyState(SHDocVw.InternetExplorer ieInstance)
+
+        private void WaitForReadyState(InternetExplorer ieInstance)
         {
             DateTime waitExpires = DateTime.Now.AddSeconds(15);
-
             do
-
             {
-                System.Threading.Thread.Sleep(500);
+                Thread.Sleep(500);
             }
-
-            while ((ieInstance.ReadyState != SHDocVw.tagREADYSTATE.READYSTATE_COMPLETE) && (waitExpires > DateTime.Now));
+            while ((ieInstance.ReadyState != tagREADYSTATE.READYSTATE_COMPLETE) && (waitExpires > DateTime.Now));
         }
     }
 }

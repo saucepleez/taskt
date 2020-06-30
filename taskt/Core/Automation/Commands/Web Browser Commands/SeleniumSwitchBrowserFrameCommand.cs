@@ -1,71 +1,71 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Group("Web Browser Commands")]
+    [Description("This command switches between browser frames provided a valid search parameter.")]
+   
     public class SeleniumSwitchBrowserFrameCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
-        [Attributes.PropertyAttributes.Remarks("**myInstance** or **seleniumInstance**")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Browser Instance Name")]
+        [InputSpecification("Enter the unique instance that was specified in the **Create Browser** command.")]
+        [SampleUsage("MyBrowserInstance || {vBrowserInstance}")]
+        [Remarks("Failure to enter the correct instance name or failure to first call the **Create Browser** command will cause an error.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate Frame Selection Type")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Name or ID")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Parent Frame")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Default Content")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Alert")]
-        [Attributes.PropertyAttributes.InputSpecification("Select an option which best fits to the specification you would like to make.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select one of the provided options.")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Frame Search Type")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyUISelectionOption("Name or ID")]
+        [PropertyUISelectionOption("Parent Frame")]
+        [PropertyUISelectionOption("Default Content")]
+        [PropertyUISelectionOption("Alert")]
+        [InputSpecification("Select an option which best fits the search type you would like to use.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_SelectionType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Frame Search Parameter")]
-        [Attributes.PropertyAttributes.SampleUsage("Enter in a frame index or name")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Frame Search Parameter")]
+        [InputSpecification("Provide the parameter to match (ex. Index, Name or ID).")]
+        [SampleUsage("1 || name || {vSearchData}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_FrameParameter { get; set; }
 
         public SeleniumSwitchBrowserFrameCommand()
         {
-            this.CommandName = "SeleniumSwitchBrowserFrameCommand";
-            this.SelectionName = "Switch Browser Frame";
-            this.v_InstanceName = "default";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_SelectionType = "Index";
-            this.v_FrameParameter = "0";
+            CommandName = "SeleniumSwitchBrowserFrameCommand";
+            SelectionName = "Switch Browser Frame";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_InstanceName = "DefaultBrowser";
+            v_SelectionType = "Index";
+            v_FrameParameter = "0";
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
+            var engine = (AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(sender);
-
             var browserObject = engine.GetAppInstance(vInstance);
-            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+            var seleniumInstance = (IWebDriver)browserObject;
             var frameIndex = v_FrameParameter.ConvertToUserVariable(sender);
-            var selectionType = v_SelectionType.ConvertToUserVariable(sender);
 
-            switch (selectionType)
+            switch (v_SelectionType)
             {
                 case "Index":
                     var intFrameIndex = int.Parse(frameIndex);
@@ -84,28 +84,24 @@ namespace taskt.Core.Automation.Commands
                     seleniumInstance.SwitchTo().Alert();
                     break;
                 default:
-                    throw new NotImplementedException($"Logic to Select Frame '{selectionType}' Not Implemented");
+                    throw new NotImplementedException($"Logic to Select Frame '{v_SelectionType}' Not Implemented");
             }
-
-       
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SelectionType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FrameParameter", this, editor));
-
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return $"{base.GetDisplayValue()} - [Find {v_SelectionType}, Instance Name: '{v_InstanceName}']";
+            return base.GetDisplayValue() + $" [To {v_SelectionType} '{v_FrameParameter}' - Instance Name '{v_InstanceName}']";
         }
     }
 }
