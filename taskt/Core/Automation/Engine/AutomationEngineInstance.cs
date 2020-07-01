@@ -26,6 +26,9 @@ namespace taskt.Core.Automation.Engine
         public Dictionary<string, object> AppInstances { get; set; }
         public ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
+        public bool ChildScriptFailed { get; set; }
+        public bool ChildScriptErrorCaught { get; set; }
+        public ScriptCommand LastExecutedCommand { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
         public bool CurrentLoopContinuing { get; set; }
@@ -217,7 +220,10 @@ namespace taskt.Core.Automation.Engine
             //get command
             ScriptCommand parentCommand = command.ScriptCommand;
 
-           //update execution line numbers
+            //set LastCommadExecuted
+            LastExecutedCommand = command.ScriptCommand;
+
+            //update execution line numbers
             LineNumberChanged(parentCommand.LineNumber);
 
             //handle pause request
@@ -253,6 +259,10 @@ namespace taskt.Core.Automation.Engine
                 return;
             }
 
+            //If Child Script Failed and Child Script Error not Caught, next command should not be executed
+            if (ChildScriptFailed && !ChildScriptErrorCaught)
+                throw new Exception("Child Script Failed");
+
             //bypass comments
             if (parentCommand is AddCodeCommentCommand || parentCommand.IsCommented)
             {
@@ -271,7 +281,8 @@ namespace taskt.Core.Automation.Engine
                 if ((parentCommand is LoopNumberOfTimesCommand) || (parentCommand is LoopContinuouslyCommand) ||
                     (parentCommand is LoopListCommand) || (parentCommand is BeginIfCommand) ||
                     (parentCommand is BeginMultiIfCommand) || (parentCommand is TryCommand) ||
-                    (parentCommand is BeginLoopCommand) || (parentCommand is BeginMultiLoopCommand))
+                    (parentCommand is BeginLoopCommand) || (parentCommand is BeginMultiLoopCommand) ||
+                    (parentCommand is BeginRetryCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);
@@ -314,10 +325,23 @@ namespace taskt.Core.Automation.Engine
             }
             catch (Exception ex)
             {
-                ErrorsOccured.Add(new ScriptError() {
-                    LineNumber = parentCommand.LineNumber,
-                    ErrorMessage = ex.Message, StackTrace = ex.ToString()
-                });
+                if (!(LastExecutedCommand is RethrowCommand))
+                {
+                    if (ChildScriptFailed)
+                    {
+                        ChildScriptFailed = false;
+                        ErrorsOccured.Clear();
+                    }
+
+                    ErrorsOccured.Add(new ScriptError()
+                    {
+                        SourceFile = FileName,
+                        LineNumber = parentCommand.LineNumber,
+                        StackTrace = ex.ToString(),
+                        ErrorType = ex.GetType().Name,
+                        ErrorMessage = ex.Message
+                    });
+                }
 
                 //error occuured so decide what user selected
                 if (ErrorHandler != null)
@@ -489,6 +513,7 @@ namespace taskt.Core.Automation.Engine
 
             else
             {
+                error = ErrorsOccured.OrderByDescending(x => x.LineNumber).FirstOrDefault().StackTrace;
                 EngineLogger.Information("Error: " + error);
 
                 if (TaskModel != null)

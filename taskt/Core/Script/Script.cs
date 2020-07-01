@@ -79,7 +79,8 @@ namespace taskt.Core.Script
                 if ((command is LoopNumberOfTimesCommand) || (command is LoopContinuouslyCommand) ||
                     (command is LoopListCommand) || (command is BeginIfCommand) ||
                     (command is BeginMultiIfCommand) || (command is TryCommand) || 
-                    (command is BeginLoopCommand) || (command is BeginMultiLoopCommand))
+                    (command is BeginLoopCommand) || (command is BeginMultiLoopCommand) ||
+                    (command is BeginRetryCommand))
                 {
                     //if this is the first loop
                     if (subCommands.Count == 0)
@@ -100,7 +101,8 @@ namespace taskt.Core.Script
                     }
                 }
                 //if current loop scenario is ending
-                else if ((command is EndLoopCommand) || (command is EndIfCommand) ||(command is EndTryCommand))
+                else if ((command is EndLoopCommand) || (command is EndIfCommand) ||
+                    (command is EndTryCommand) || (command is EndRetryCommand))
                 {
                     //get reference to previous node
                     var parentCommand = subCommands[subCommands.Count - 1];

@@ -166,6 +166,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Automation\Commands\Error Handling Commands\BeginRetryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Error Handling Commands\EndRetryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Error Handling Commands\RethrowCommand.cs" />
     <Compile Include="Core\Documentation\CommandMetaData.cs" />
     <Compile Include="Core\Documentation\DocumentationGeneration.cs" />
     <Compile Include="Core\App\GlobalAppInstances.cs" />
@@ -206,11 +209,11 @@
     <Compile Include="Core\Automation\Commands\Engine Commands\ShowEngineContextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine Commands\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine Commands\UploadBotStoreDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Error Handling Commands\CatchExceptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Error Handling Commands\CatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error Handling Commands\EndTryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error Handling Commands\FinallyCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error Handling Commands\GetExceptionMessageCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Error Handling Commands\ThrowExceptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Error Handling Commands\ThrowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error Handling Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelActivateSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelAddWorkbookCommand.cs" />

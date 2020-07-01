@@ -146,6 +146,18 @@ namespace taskt.Core.Automation.Commands
                     currentScriptEngine.VariableList.Add(newTemp);
                 }
             }
+
+            //get errors from new engine (if any)
+            var newEngineErrors = newEngine.EngineInstance.ErrorsOccured;
+            if (newEngineErrors.Count > 0)
+            {
+                currentScriptEngine.ChildScriptFailed = true;
+                foreach (var error in newEngineErrors)
+                {
+                    currentScriptEngine.ErrorsOccured.Add(error);
+                }
+            }
+
             //currentScriptEngine.tasktEngineUI.TopMost = false;
             currentScriptEngine.TasktEngineUI.Invoke((Action)delegate() 
             { 

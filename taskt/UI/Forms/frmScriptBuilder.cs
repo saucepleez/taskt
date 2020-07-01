@@ -816,14 +816,15 @@ namespace taskt.UI.Forms
                 if ((rowItem.Tag is BeginIfCommand) || (rowItem.Tag is BeginMultiIfCommand) ||
                     (rowItem.Tag is LoopListCommand) || (rowItem.Tag is LoopContinuouslyCommand) ||
                     (rowItem.Tag is LoopNumberOfTimesCommand) || (rowItem.Tag is TryCommand) ||
-                    (rowItem.Tag is BeginLoopCommand) || (rowItem.Tag is BeginMultiLoopCommand))
+                    (rowItem.Tag is BeginLoopCommand) || (rowItem.Tag is BeginMultiLoopCommand) ||
+                    (rowItem.Tag is BeginRetryCommand))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
                     indent += 2;
                 }
                 else if ((rowItem.Tag is EndLoopCommand) || (rowItem.Tag is EndIfCommand) ||
-                    (rowItem.Tag is EndTryCommand))
+                    (rowItem.Tag is EndTryCommand) || (rowItem.Tag is EndRetryCommand))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -831,7 +832,7 @@ namespace taskt.UI.Forms
                     indent -= 2;
                     if (indent < 0) indent = 0;
                 }
-                else if ((rowItem.Tag is ElseCommand) || (rowItem.Tag is CatchExceptionCommand) ||
+                else if ((rowItem.Tag is ElseCommand) || (rowItem.Tag is CatchCommand) ||
                     (rowItem.Tag is FinallyCommand))
                 {
                     indent -= 2;
@@ -1111,15 +1112,23 @@ namespace taskt.UI.Forms
                 {
                     v_Comment = "Items in this section will be handled if error occurs"
                 }));
-                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new CatchExceptionCommand()
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new CatchCommand()
                 {
-                    v_Comment = "Items in this section will run if error occurs"
+                    //v_Comment = "Items in this section will run if error occurs"
                 }));
                 lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
                 {
                     v_Comment = "This section executes if error occurs above"
                 }));
                 lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new EndTryCommand()));
+            }
+            else if (selectedCommand is BeginRetryCommand)
+            {
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
+                {
+                    v_Comment = "Items in this section will be retried as long as the condition is not met or an error is thrown"
+                }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new EndRetryCommand()));
             }
 
             CreateUndoSnapshot();
@@ -1565,9 +1574,12 @@ namespace taskt.UI.Forms
             int beginLoopValidationCount = 0;
             int beginIfValidationCount = 0;
             int tryCatchValidationCount = 0;
+            int retryValidationCount = 0;
             foreach (ListViewItem item in lstScriptActions.Items)
             {
-                if ((item.Tag is LoopListCommand) || (item.Tag is LoopContinuouslyCommand) || (item.Tag is LoopNumberOfTimesCommand) || (item.Tag is BeginLoopCommand) || (item.Tag is BeginMultiLoopCommand))
+                if ((item.Tag is LoopListCommand) || (item.Tag is LoopContinuouslyCommand) || 
+                    (item.Tag is LoopNumberOfTimesCommand) || (item.Tag is BeginLoopCommand) || 
+                    (item.Tag is BeginMultiLoopCommand))
                 {
                     beginLoopValidationCount++;
                 }
@@ -1591,10 +1603,24 @@ namespace taskt.UI.Forms
                 {
                     tryCatchValidationCount--;
                 }
+                else if (item.Tag is BeginRetryCommand)
+                {
+                    retryValidationCount++;
+                }
+                else if (item.Tag is EndRetryCommand)
+                {
+                    retryValidationCount--;
+                }
 
                 if (tryCatchValidationCount < 0)
                 {
                     Notify("Please verify the ordering of your try/catch blocks.");
+                    return;
+                }
+
+                if (retryValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your retry blocks.");
                     return;
                 }
 
@@ -1630,6 +1656,12 @@ namespace taskt.UI.Forms
             if (tryCatchValidationCount != 0)
             {
                 Notify("Please verify the ordering of your try/catch blocks.");
+                return;
+            }
+
+            if (retryValidationCount != 0)
+            {
+                Notify("Please verify the ordering of your retry blocks.");
                 return;
             }
 

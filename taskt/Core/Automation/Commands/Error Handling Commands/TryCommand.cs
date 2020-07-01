@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.Core.Automation.Engine;
@@ -30,12 +31,12 @@ namespace taskt.Core.Automation.Commands
 
             //get indexes of commands
             var startIndex = 0;
-            var startCatchIndex =
-                parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is CatchExceptionCommand);
+            var catchIndices = FindAllCatchIndices(parentCommand.AdditionalScriptCommands);
+            var firstCatchIndex = catchIndices.First();
             var startFinallyIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is FinallyCommand);
             var endTryIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is EndTryCommand);
 
-            for (var tryIndex = startIndex; tryIndex < startCatchIndex; tryIndex++)
+            for (var tryIndex = startIndex; tryIndex < firstCatchIndex; tryIndex++)
             {
                 if (engine.IsCancellationPending || engine.CurrentLoopCancelled)
                     return;
@@ -47,21 +48,51 @@ namespace taskt.Core.Automation.Commands
                 }
                 catch (Exception ex)
                 {
-                    //error occured so start processing from catch index onwards
-                    var catchCommandItem = parentCommand.AdditionalScriptCommands[startCatchIndex];
-                    var catchCommand = (CatchExceptionCommand) catchCommandItem.ScriptCommand;
+                    var targetCatchIndex = -1;
+                    var generalCatchIndex = -1;
+                    var exceptionType = ex.GetType().Name;
+                    ScriptAction catchCommandItem;
+                    CatchCommand targetCatchCommand;
 
-                    catchCommand.StackTrace = ex.ToString();
-                    catchCommand.ErrorMessage = ex.Message;
-                    engine.AddVariable("Catch:StackTrace", catchCommand.StackTrace);
-                    engine.AddVariable("Catch:ErrorMessage", catchCommand.ErrorMessage);
+                    if(engine.ChildScriptFailed)
+                    {
+                        engine.ChildScriptErrorCaught = true;
+                        exceptionType = engine.ErrorsOccured.OrderByDescending(x => x.LineNumber).FirstOrDefault().ErrorType;
+                    }
 
+                    // get index of target catch
+                    foreach (var catchIndex in catchIndices)
+                    {
+                        catchCommandItem = parentCommand.AdditionalScriptCommands[catchIndex];
+                        targetCatchCommand = (CatchCommand)catchCommandItem.ScriptCommand;
+
+                        // Save Generic Exception Catch Index (If found)
+                        if (targetCatchCommand.v_ExceptionType.ToLower() == "exception")
+                        {
+                            generalCatchIndex = catchIndex;
+                        }
+                        // If the type of the Exception (occurred) matches with any of the Exception Types (in Automation Script)
+                        if (exceptionType.ToLower() == targetCatchCommand.v_ExceptionType.ToLower())
+                        {
+                            targetCatchIndex = catchIndex;
+                            break;
+                        }
+                    }
+
+                    // Index of Finally or EndTry (Where a Target Catch Block Ends)
                     var endCatch = startFinallyIndex != -1 ? startFinallyIndex : endTryIndex;
 
-                    for (var catchIndex = startCatchIndex; catchIndex < endCatch; catchIndex++)
+                    // If Target Catch Found
+                    if (targetCatchIndex != -1)
                     {
-                        engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[catchIndex]);
+                        ExecuteTargetCatchBlock(sender, parentCommand, targetCatchIndex, endCatch);
                     }
+                    // Else If Generic Exception Catch Found
+                    else if(generalCatchIndex != -1)
+                    {
+                        ExecuteTargetCatchBlock(sender, parentCommand, generalCatchIndex, endCatch);
+                    }
+
                     break;
                 }
             }
@@ -74,6 +105,8 @@ namespace taskt.Core.Automation.Commands
                     engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[finallyIndex]);
                 }
             }
+            // If Catch block executes smoothly
+            engine.ErrorsOccured.Clear();
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -86,6 +119,74 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue();
+        }
+
+        private List<int> FindAllCatchIndices(List<ScriptAction> additionalCommands)
+        {
+            // get the count of all (Enabled) Catch Commands
+            int totalCatchCommands = additionalCommands.FindAll(
+                action => action.ScriptCommand is CatchCommand && 
+                action.ScriptCommand.IsCommented == false
+                ).Count;
+
+            if (totalCatchCommands == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<int> catchIndices = new List<int>();
+                int startIndex = 0;
+
+                // get the indices of all (Enabled) Catch Commands
+                while (startIndex < additionalCommands.Count && (startIndex = additionalCommands.FindIndex(
+                    startIndex, (a => a.ScriptCommand is CatchCommand && a.ScriptCommand.IsCommented == false))) != -1)
+                {
+                    catchIndices.Add(startIndex++);
+                }
+
+                return catchIndices;
+            }
+        }
+
+        private int FindNextCatchIndex(List<int> catches, int currCatch)
+        {
+            int nextCatch;
+            var currentCatchIndex = catches.IndexOf(currCatch);
+
+            try
+            {
+                nextCatch = catches[currentCatchIndex + 1];
+            }
+            catch(Exception)
+            {
+                nextCatch = currCatch;
+            }
+
+            return nextCatch;
+        }
+
+        private void ExecuteTargetCatchBlock(object sender, ScriptAction parentCommand, int startCatchIndex, int endCatchIndex)
+        {
+            //get engine
+            var engine = (AutomationEngineInstance)sender;
+            var catchIndices = FindAllCatchIndices(parentCommand.AdditionalScriptCommands);
+
+            // Next Catch Index
+            var nextCatchIndex = FindNextCatchIndex(catchIndices, startCatchIndex);
+
+            // If Next Catch Exist
+            if (nextCatchIndex != startCatchIndex)
+            {
+                // Next Catch will be the end of the Target Catch
+                endCatchIndex = nextCatchIndex;
+            }
+
+            // Execute Target Catch Block
+            for (var catchIndex = startCatchIndex; catchIndex < endCatchIndex; catchIndex++)
+            {
+                engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[catchIndex]);
+            }
         }
     }
 }

@@ -9,24 +9,20 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Group("Error Handling Commands")]
-    [Description("This command defines a catch block whose commands will execute if an exception is thrown from the " +
-                 "associated try.")]
-    public class CatchExceptionCommand : ScriptCommand
+    [Description("This command rethrows an exception caught in a catch block.")]
+    public class RethrowCommand : ScriptCommand
     {
-        public string ErrorMessage { get; set; }
-        public string StackTrace { get; set; }
-
-        public CatchExceptionCommand()
+        public RethrowCommand()
         {
-            CommandName = "CatchExceptionCommand";
-            SelectionName = "Catch Exception";
+            CommandName = "RethrowCommand";
+            SelectionName = "Rethrow";
             CommandEnabled = true;
             CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            //no execution required, used as a marker by the Automation Engine
+            throw new Exception("Rethrowing Original Exception");
         }
 
         public override List<Control> Render(frmCommandEditor editor)

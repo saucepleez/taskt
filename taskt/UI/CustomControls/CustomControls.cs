@@ -532,10 +532,13 @@ namespace taskt.UI
             uiImages.Add("ReplyToOutlookEmailsCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
             uiImages.Add("TryCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("CatchExceptionCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("CatchCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("FinallyCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("EndTryCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("ThrowExceptionCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("ThrowCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("RethrowCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("BeginRetryCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("EndRetryCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("GetExceptionMessageCommand", taskt.Properties.Resources.command_try);
             uiImages.Add("SubstringCommand", taskt.Properties.Resources.command_string);
             uiImages.Add("SplitTextCommand", taskt.Properties.Resources.command_string);

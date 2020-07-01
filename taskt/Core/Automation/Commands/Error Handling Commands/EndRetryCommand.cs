@@ -9,23 +9,20 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Group("Error Handling Commands")]
-    [Description("This command throws an exception during script execution.")]
-    public class ThrowExceptionCommand : ScriptCommand
+    [Description("This command specifies the end of a retry block.")]
+    public class EndRetryCommand : ScriptCommand
     {
-        public string ErrorMessage { get; set; }
-        public string StackTrace { get; set; }
-
-        public ThrowExceptionCommand()
+        public EndRetryCommand()
         {
-            CommandName = "ThrowExceptionCommand";
-            SelectionName = "Throw Exception";
+            CommandName = "EndRetryCommand";
+            SelectionName = "End Retry";
             CommandEnabled = true;
             CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            throw new Exception();
+            //no execution required, used as a marker by the Automation Engine
         }
 
         public override List<Control> Render(frmCommandEditor editor)

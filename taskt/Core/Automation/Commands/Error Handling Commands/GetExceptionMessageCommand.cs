@@ -37,7 +37,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (AutomationEngineInstance)sender;
             var error = engine.ErrorsOccured.OrderByDescending(x => x.LineNumber).FirstOrDefault();
-            var errorMessage = engine.FileName + " Line " + error.LineNumber + ", Error: " + error.ErrorMessage;
+            string errorMessage = string.Empty;
+            if (error != null)
+                errorMessage = $"Source: {error.SourceFile}, Line: {error.LineNumber}, " +
+                    $"Exception Type: {error.ErrorType}, Exception Message: {error.ErrorMessage}";
             errorMessage.StoreInUserVariable(sender, v_OutputUserVariableName);
         }
 
