@@ -419,14 +419,24 @@ namespace taskt.Core.Automation.Commands
 
                     //Get Header Tags
                     var headers = doc.DocumentNode.SelectNodes("//tr/th");
-
                     DataTable DT = new DataTable();
-                    foreach (HtmlNode header in headers)
-                        DT.Columns.Add(Regex.Replace(header.InnerText, @"\t|\n|\r", "")); // create columns from th
+
+                    //If headers found
+                    if (headers != null && headers.Count != 0)
+                    {
+                        // add columns from th (headers)
+                        foreach (HtmlNode header in headers)
+                            DT.Columns.Add(Regex.Replace(header.InnerText, @"\t|\n|\r", "").Trim()); 
+                    }
+                    else
+                    {
+                        var columnsCount = doc.DocumentNode.SelectSingleNode("//tr[1]").ChildNodes.Where(node=>node.Name=="td").Count();
+                        DT.Columns.AddRange((Enumerable.Range(1, columnsCount).Select(dc => new DataColumn())).ToArray());
+                    }
 
                     // select rows with td elements and load each row (containing <td> tags) into DataTable
                     foreach (var row in doc.DocumentNode.SelectNodes("//tr[td]"))
-                        DT.Rows.Add(row.SelectNodes("td").Select(td => Regex.Replace(td.InnerText, @"\t|\n|\r", "")).ToArray());
+                        DT.Rows.Add(row.SelectNodes("td").Select(td => Regex.Replace(td.InnerText, @"\t|\n|\r", "").Trim()).ToArray());
 
                     engine.AddVariable(DTVariableName, DT);
                     break;
