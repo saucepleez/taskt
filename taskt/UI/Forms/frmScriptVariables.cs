@@ -23,6 +23,7 @@ namespace taskt.UI.Forms
     public partial class frmScriptVariables : ThemedForm
     {
         public List<ScriptVariable> ScriptVariables { get; set; }
+        public string ScriptName { get; set; }
         private TreeNode _userVariableParentNode;
         private string _leadingValue = "Default Value: ";
         private string _emptyValue = "(no default value)";
@@ -36,6 +37,7 @@ namespace taskt.UI.Forms
         {
            //initialize
             _userVariableParentNode = InitializeNodes("My Task Variables", ScriptVariables);
+            lblMainLogo.Text = ScriptName + " variables";
             InitializeNodes("Default Task Variables", Common.GenerateSystemVariables());
         }
 

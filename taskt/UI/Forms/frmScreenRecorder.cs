@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.User32;
 using taskt.Properties;
+using taskt.UI.Forms.ScriptBuilder_Forms;
 
 namespace taskt.UI.Forms
 {

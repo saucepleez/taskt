@@ -23,7 +23,7 @@ namespace taskt.Core.Settings
         {
             MinimizeToTray = false;
             AntiIdleWhileOpen = false;
-            InsertCommandsInline = false;
+            InsertCommandsInline = true;
             RootFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
             StartupMode = "Builder Mode";
             AttendedTasksFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");

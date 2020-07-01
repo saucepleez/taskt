@@ -24,6 +24,7 @@ using taskt.Core.Server.Models;
 using taskt.Core.Script;
 using taskt.UI.Forms.Supplement_Forms;
 using taskt.Core.Automation.Commands;
+using taskt.UI.Forms.ScriptBuilder_Forms;
 
 namespace taskt.UI.Forms
 {

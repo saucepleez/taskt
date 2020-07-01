@@ -27,8 +27,8 @@ namespace taskt.Core.Settings
         public EngineSettings()
         {
             ShowDebugWindow = true;
-            AutoCloseDebugWindow = true;
-            ShowAdvancedDebugOutput = false;
+            AutoCloseDebugWindow = false;
+            ShowAdvancedDebugOutput = true;
             CreateMissingVariablesDuringExecution = true;
             TrackExecutionMetrics = true;
             VariableStartMarker = "{";

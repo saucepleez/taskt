@@ -91,7 +91,7 @@
             this.lblOpenProjectDescription.Name = "lblOpenProjectDescription";
             this.lblOpenProjectDescription.Size = new System.Drawing.Size(355, 28);
             this.lblOpenProjectDescription.TabIndex = 20;
-            this.lblOpenProjectDescription.Text = "Open the Main.xml of an existing Project";
+            this.lblOpenProjectDescription.Text = "Open the Main of an existing Project";
             // 
             // txtExistingProjectLocation
             // 
@@ -231,7 +231,7 @@
             this.MinimizeBox = false;
             this.Name = "frmProjectBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Add Project";
+            this.Text = "Project Manager";
             ((System.ComponentModel.ISupportInitialize)(this.btnOpenProject)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCreateProject)).EndInit();
             this.ResumeLayout(false);

@@ -429,6 +429,7 @@
     <Compile Include="UI\DTOs\Method.cs" />
     <Compile Include="UI\DTOs\Parameter.cs" />
     <Compile Include="UI\DTOs\MachineConfiguration.cs" />
+    <Compile Include="UI\DTOs\ScriptActionTag.cs" />
     <Compile Include="UI\FormEventArgs\LoginResultEventArgs.cs" />
     <Compile Include="UI\Forms\frmAttendedMode.cs">
       <SubType>Form</SubType>
@@ -447,6 +448,15 @@
     </Compile>
     <Compile Include="UI\Forms\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderListView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderTabControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderUIButtons.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmProjectBuilder.cs">
       <SubType>Form</SubType>
@@ -595,10 +605,13 @@
     <Compile Include="UI\Forms\frmScriptEngine.Designer.cs">
       <DependentUpon>frmScriptEngine.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\frmScriptBuilder.cs">
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\frmScriptBuilder.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.Designer.cs">
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmShowCursorPosition.cs">
@@ -624,7 +637,7 @@
     <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmScriptBuilder.ru.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.ru.resx">
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScreenRecorder.resx">
@@ -651,7 +664,7 @@
     <EmbeddedResource Include="UI\Forms\frmScriptEngine.resx">
       <DependentUpon>frmScriptEngine.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmScriptBuilder.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.resx">
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

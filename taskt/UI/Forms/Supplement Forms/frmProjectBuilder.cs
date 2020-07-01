@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using taskt.Core.IO;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
@@ -17,6 +18,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         public frmProjectBuilder()
         {
             InitializeComponent();
+            txtNewProjectLocation.Text = Folders.GetFolder(Folders.FolderType.ScriptsFolder);
         }
 
         private void btnCreateProject_Click(object sender, EventArgs e)
@@ -24,7 +26,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             string newProjectLocation = txtNewProjectLocation.Text.Trim();
             NewProjectName = txtNewProjectName.Text.Trim();
 
-            if (String.IsNullOrEmpty(NewProjectName) || String.IsNullOrEmpty(newProjectLocation) || !Directory.Exists(newProjectLocation))
+            if (string.IsNullOrEmpty(NewProjectName) || string.IsNullOrEmpty(newProjectLocation) || !Directory.Exists(newProjectLocation))
             {
                 lblError.Text = "Error: Please enter a valid project name and location";
             }
@@ -60,16 +62,9 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             else
             {
-                FileInfo mainFileInfo = new FileInfo(ExistingMainPath);
-                string mainFileName = mainFileInfo.Name;
-                if (mainFileName != "Main.xml")
-                    lblError.Text = "Error: Please enter a path containing Main.xml";
-                else
-                {
-                    ExistingProjectPath = Directory.GetParent(ExistingMainPath).ToString();
-                    OpenProject = true;
-                    DialogResult = DialogResult.OK;
-                }
+                ExistingProjectPath = Directory.GetParent(ExistingMainPath).ToString();
+                OpenProject = true;
+                DialogResult = DialogResult.OK;
             }
         }
 
