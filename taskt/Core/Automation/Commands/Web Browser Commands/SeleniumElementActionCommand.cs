@@ -66,7 +66,15 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Element Search Parameter")]
         [InputSpecification("Enter the parameter text that matches the element based on the previously selected **Element Search Method**.")]
-        [SampleUsage("//*[@id=\"features\"]/div[2]/div/h2 || name || h2 || {vSearchParameter}")]
+        [SampleUsage("{vSearchParameter}" +
+                     "\n\tXPath : //*[@id=\"features\"]/div[2]/div/h2" +
+                     "\n\tID: 1" +
+                     "\n\tName: myName" +
+                     "\n\tTag Name: h1" +
+                     "\n\tClass Name: myClass" +
+                     "\n\tCSS Selector: [attribute=value]" +
+                     "\n\tLink Text: https://www.mylink.com/"
+                    )]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SeleniumSearchParameter { get; set; }
