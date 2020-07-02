@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.ClassAttributes;
@@ -35,6 +36,15 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         public string v_Visible { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Close All Existing Word Instances")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Indicate whether to close any existing Word instances before executing Word Automation.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public string v_CloseAllInstances { get; set; }
+
         public WordCreateApplicationCommand()
         {
             CommandName = "WordCreateApplicationCommand";
@@ -43,11 +53,22 @@ namespace taskt.Core.Automation.Commands
             CustomRendering = true;
             v_InstanceName = "DefaultWord";
             v_Visible = "No";
+            v_CloseAllInstances = "Yes";
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (AutomationEngineInstance)sender;
+
+            if (v_CloseAllInstances == "Yes")
+            {
+                var processes = Process.GetProcessesByName("winword");
+                foreach (var prc in processes)
+                {
+                    prc.Kill();
+                }
+            }
+
             var newWordSession = new Application();
 
             if (v_Visible == "Yes")
@@ -63,13 +84,15 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Visible", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CloseAllInstances", this, editor));
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Visible '{v_Visible}' - Instance Name '{v_InstanceName}']";
+            return base.GetDisplayValue() + $" [Visible '{v_Visible}' - Close Instances '{v_CloseAllInstances}' - New Instance Name '{v_InstanceName}']";
         }
     }
 }

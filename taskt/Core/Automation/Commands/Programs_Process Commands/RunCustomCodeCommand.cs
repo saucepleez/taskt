@@ -4,46 +4,51 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.Text.RegularExpressions;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Engine;
 using taskt.Core.Script;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
+using Group = taskt.Core.Automation.Attributes.ClassAttributes.Group;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to run C# code from the input")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run custom C# code commands.  The code in this command is compiled and run at runtime when this command is invoked.  This command only supports the standard framework classes.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
+    [Group("Programs/Process Commands")]
+    [Description("This command runs custom C# code. The code in this command is compiled and run at runtime when this command is invoked.")]
+
     public class RunCustomCodeCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Paste the C# code to execute")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the code to be executed or use the builder to create your custom C# code.  The builder contains a Hello World template that you can use to build from.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("C# Code")]
+        [InputSpecification("Enter the code to be executed or use the builder to create your custom C# code. "+
+                            "The builder contains a Hello World template that you can use to build from.")]
+        [SampleUsage("{vString}.Remove() || {vCode}")]
+        [Remarks("This command only supports the standard framework classes.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
         public string v_Code { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply Arguments (optional)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter arguments that the custom code will receive during execution, split them using commas")]
-        [Attributes.PropertyAttributes.SampleUsage("**vArg1**, **vArg2**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Arguments")]
+        [InputSpecification("Enter arguments that the custom code will receive during execution, split them using commas.")]
+        [SampleUsage("hello || {vArg} || hello,world || {vArg1},{vArg2}")]
+        [Remarks("This input is optional.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Args { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Select the variable to receive the output")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyDescription("Output Data Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                 " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
 
         public RunCustomCodeCommand()
         {
@@ -61,7 +66,7 @@ namespace taskt.Core.Automation.Commands
             if(customCode.Contains("static void Main"))
             {
                 //User entered a Main so compile and execute the code
-                compileAndExecute(customCode, sender);
+                CompileAndExecute(customCode, sender);
             } else
             {
                 // TODO: This branch of the functionality should be split into its own command, say Execute Method.
@@ -110,9 +115,9 @@ namespace taskt.Core.Automation.Commands
                     throw new Exception("Failed to invoke member " + memberToInvoke + " for class: " + invokingVar.GetType().ToString());
                 }
 
-                if(v_applyToVariableName.Length != 0)
+                if(v_OutputUserVariableName.Length != 0)
                 {
-                    engine.AddVariable(v_applyToVariableName, result);
+                    engine.AddVariable(v_OutputUserVariableName, result);
                 }
             }
         }
@@ -122,22 +127,18 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Code", this, editor));
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Args", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
 
             return RenderedControls;
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            return base.GetDisplayValue() + $" [Store Data in '{v_OutputUserVariableName}']";
         }
 
-        private void compileAndExecute(string customCode, object sender)
+        private void CompileAndExecute(string customCode, object sender)
         {
             //compile custom code
             var compilerSvc = new CompilerServices();
@@ -160,7 +161,7 @@ namespace taskt.Core.Automation.Commands
                     scriptProc.StartInfo.FileName = result.PathToAssembly;
                     scriptProc.StartInfo.Arguments = arguments;
 
-                    if (v_applyToVariableName != "")
+                    if (v_OutputUserVariableName != "")
                     {
                         //redirect output
                         scriptProc.StartInfo.RedirectStandardOutput = true;
@@ -170,10 +171,10 @@ namespace taskt.Core.Automation.Commands
                     scriptProc.Start();
                     scriptProc.WaitForExit();
 
-                    if (v_applyToVariableName != "")
+                    if (v_OutputUserVariableName != "")
                     {
                         var output = scriptProc.StandardOutput.ReadToEnd();
-                        output.StoreInUserVariable(sender, v_applyToVariableName);
+                        output.StoreInUserVariable(sender, v_OutputUserVariableName);
                     }
                 }
             }
@@ -210,10 +211,8 @@ namespace taskt.Core.Automation.Commands
 
                 result = methodInfo.Invoke(invokingVar, methodArgsValueArray);
             }
-
             return result;
         }
-
     }
 }
 

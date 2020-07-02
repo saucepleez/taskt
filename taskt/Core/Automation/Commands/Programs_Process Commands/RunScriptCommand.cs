@@ -1,57 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to run a script or program and wait for it to exit before proceeding.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a script (such as vbScript, javascript, or executable) but wait for it to close before taskt continues executing.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
+    [Group("Programs/Process Commands")]
+    [Description("This command runs a script or program and waits for it to exit before proceeding.")]
+
     public class RunScriptCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter the path to the script, or select a file.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a fully qualified path to the script, including the script extension.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myscript.vbs**")]
-        [Attributes.PropertyAttributes.Remarks("This command differs from **Start Process** because this command blocks execution until the script has completed.  If you do not want to stop while the script executes, consider using **Start Process** instead.")]
+        [PropertyDescription("Script Path")]
+        [InputSpecification("Enter a fully qualified path to the script, including the script extension.")]
+        [SampleUsage(@"C:\temp\myscript.ps1 || {vScriptPath} || {ProjectPath}\myscript.ps1")]
+        [Remarks("This command differs from *Start Process* because this command blocks execution until the script has completed. " +
+                 "If you do not want to stop while the script executes, consider using *Start Process* instead.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_ScriptPath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Script Type")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Powershell")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Python")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Default")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the type of script you want to execute.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select Powershell to run ps1 files, Default to run a file through the system default.")]
-        [Attributes.PropertyAttributes.Remarks("Default executes with the system default for that file type.")]
+        [PropertyDescription("Script Type")]
+        [PropertyUISelectionOption("Default")]
+        [PropertyUISelectionOption("Powershell")]
+        [PropertyUISelectionOption("Python")]
+        [InputSpecification("Select the type of script you want to execute.")]
+        [SampleUsage("")]
+        [Remarks("Default executes with the system default for that file type.")]
         public string v_ScriptType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter script arguments, if any.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter any arguments as a single string.")]
-        [Attributes.PropertyAttributes.SampleUsage("-message Hello -t 2")]
+        [PropertyDescription("Arguments")]
+        [InputSpecification("Enter any arguments as a single string.")]
+        [SampleUsage("-message Hello -t 2 || {vArguments}")]
+        [Remarks("This input is optional.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ScriptArgs { get; set; }
 
         public RunScriptCommand()
         {
-            this.CommandName = "RunScriptCommand";
-            this.SelectionName = "Run Script";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "RunScriptCommand";
+            SelectionName = "Run Script";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_ScriptType = "Default";
         }
 
         public override void RunCommand(object sender)
         {
-            System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
+            Process scriptProc = new Process();
 
             string scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
             string scriptArgs = v_ScriptArgs.ConvertToUserVariable(sender);
@@ -59,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             switch(v_ScriptType)
             {
                 case "Powershell":
-                    scriptProc.StartInfo = new System.Diagnostics.ProcessStartInfo()
+                    scriptProc.StartInfo = new ProcessStartInfo()
                     {
                         FileName = "powershell.exe",
                         Arguments = $"-NoProfile -ExecutionPolicy unrestricted -file \"{scriptPath}\" " + scriptArgs,
@@ -70,7 +75,7 @@ namespace taskt.Core.Automation.Commands
                     };
                     break;
                 case "Python":
-                    scriptProc.StartInfo = new System.Diagnostics.ProcessStartInfo()
+                    scriptProc.StartInfo = new ProcessStartInfo()
                     {
                         FileName = "python.exe",
                         Arguments = $"\"{scriptPath}\" " + scriptArgs,
@@ -81,10 +86,10 @@ namespace taskt.Core.Automation.Commands
                     };
                     break;
                 default:
-                    scriptProc.StartInfo = new System.Diagnostics.ProcessStartInfo()
+                    scriptProc.StartInfo = new ProcessStartInfo()
                     {
                         FileName = scriptPath,
-                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                        WindowStyle = ProcessWindowStyle.Hidden,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true
                     };
@@ -93,8 +98,8 @@ namespace taskt.Core.Automation.Commands
             scriptProc.Start();
             scriptProc.WaitForExit();
 
-            string output = scriptProc.StandardOutput.ReadToEnd();
-            string error = scriptProc.StandardError.ReadToEnd();
+            scriptProc.StandardOutput.ReadToEnd();
+            scriptProc.StandardError.ReadToEnd();
             scriptProc.Close();
         }
 
@@ -103,16 +108,15 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptPath", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptArgs", this, editor));
-
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ScriptType", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptArgs", this, editor));
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Script Path: " + v_ScriptPath + "]";
+            return base.GetDisplayValue() + $" [Script Path '{v_ScriptPath}']";
         }
     }
 }

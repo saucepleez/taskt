@@ -1,58 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
+    [Group("Programs/Process Commands")]
+    [Description("This command stops a program or process.")]
+
     public class StopProcessCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the name or path to the program to be stopped (ex. calc, notepad)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Provide the program process name as it appears as a process in Windows Task Manager")]
-        [Attributes.PropertyAttributes.SampleUsage("**notepad**, **calc**")]
-        [Attributes.PropertyAttributes.Remarks("The program name may vary from the actual process name.  You can use Thick App commands instead to close an application window.")]
-        public string v_ProgramShortName { get; set; }
+        [PropertyDescription("Program Name or Path")]
+        [InputSpecification("Provide a valid program name or enter a full path to the script/executable including the extension.")]
+        [SampleUsage(@"notepad || excel || {vApp} || C:\temp\myapp.exe || {ProjectPath}\myapp.exe")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_ProgramName { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Stop Option")]
+        [PropertyUISelectionOption("Close")]
+        [PropertyUISelectionOption("Kill")]
+        [InputSpecification("Indicate whether the program should be closed or killed.")]
+        [SampleUsage("")]
+        [Remarks("*Close* will close any open process windows while *Kill* will close all processes, including background ones.")]
+        public string v_StopOption { get; set; }
 
         public StopProcessCommand()
         {
-            this.CommandName = "StopProgramCommand";
-            this.SelectionName = "Stop Process";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "StopProgramCommand";
+            SelectionName = "Stop Process";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_StopOption = "Kill";
         }
 
         public override void RunCommand(object sender)
         {
-            string shortName = v_ProgramShortName.ConvertToUserVariable(sender);
-            var processes = System.Diagnostics.Process.GetProcessesByName(shortName);
+            string shortName = v_ProgramName.ConvertToUserVariable(sender);
+            var processes = Process.GetProcessesByName(shortName);
 
             foreach (var prc in processes)
-                prc.CloseMainWindow();
+            {
+                if (v_StopOption == "Close")
+                    prc.CloseMainWindow();
+                else if (v_StopOption == "Kill")
+                    prc.Kill();
+            }
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramShortName", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_StopOption", this, editor));
 
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Process: " + v_ProgramShortName + "]";
+            return base.GetDisplayValue() + $" [{v_StopOption} Process '{v_ProgramName}']";
         }
     }
 }

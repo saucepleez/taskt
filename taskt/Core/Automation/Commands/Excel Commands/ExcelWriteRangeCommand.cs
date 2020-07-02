@@ -80,7 +80,8 @@ namespace taskt.Core.Automation.Commands
             var excelSheet = (Worksheet)excelInstance.ActiveSheet;
 
             DataTable Dt = (DataTable)vDataSetVariable.VariableValue;
-            if (string.IsNullOrEmpty(vTargetAddress)) throw new ArgumentNullException("columnName");
+            if (string.IsNullOrEmpty(vTargetAddress) || vTargetAddress.Contains(":")) 
+                throw new Exception("Cell Location is invalid or empty");
           
             var numberOfRow = Regex.Match(vTargetAddress, @"\d+").Value;
             vTargetAddress = Regex.Replace(vTargetAddress, @"[\d-]", string.Empty);

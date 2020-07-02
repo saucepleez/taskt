@@ -1,76 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
-
- 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to start a program or a process.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to start applications by entering their name such as 'chrome.exe' or a fully qualified path to a file 'c:/some.exe'")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start'.")]
+    [Group("Programs/Process Commands")]
+    [Description("This command starts a program or process.")]
+
     public class StartProcessCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the name or path to the program to start (ex. notepad, calc)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Provide a valid program name or enter a full path to the script/executable including the extension")]
-        [Attributes.PropertyAttributes.SampleUsage("**notepad**, **calc**, **c:\\temp\\myapp.exe**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Program Name or Path")]
+        [InputSpecification("Provide a valid program name or enter a full path to the script/executable including the extension.")]
+        [SampleUsage(@"notepad || excel || {vApp} || C:\temp\myapp.exe || {ProjectPath}\myapp.exe")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_ProgramName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter any arguments (if applicable)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter any arguments or flags if applicable.")]
-        [Attributes.PropertyAttributes.SampleUsage(" **-a** or **-version**")]
-        [Attributes.PropertyAttributes.Remarks("You will need to consult documentation to determine if your executable supports arguments or flags on startup.")]
+        [PropertyDescription("Arguments")]
+        [InputSpecification("Enter any arguments or flags if applicable.")]
+        [SampleUsage("-a || -version || {vArg}")]
+        [Remarks("You will need to consult documentation to determine if your executable supports arguments or flags on startup.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ProgramArgs { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Wait for the process to complete?")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Wait For Exit.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select 'Yes' or 'No'")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Wait For Exit")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Indicate whether to wait for the process to be completed.")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_WaitForExit { get; set; }
 
         public StartProcessCommand()
         {
-            this.CommandName = "StartProcessCommand";
-            this.SelectionName = "Start Process";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "StartProcessCommand";
+            SelectionName = "Start Process";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_WaitForExit = "No";
         }
 
         public override void RunCommand(object sender)
         {
-
             string vProgramName = v_ProgramName.ConvertToUserVariable(sender);
             string vProgramArgs = v_ProgramArgs.ConvertToUserVariable(sender);
-            System.Diagnostics.Process p;
+            Process newProcess;
 
             if (v_ProgramArgs == "")
-            {
-                p = System.Diagnostics.Process.Start(vProgramName);
-            }
+                newProcess = Process.Start(vProgramName);
             else
-            {
-                p = System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
-            }
+                newProcess = Process.Start(vProgramName, vProgramArgs);
 
             if (v_WaitForExit == "Yes")
-            {
-                p.WaitForExit();
-            }
+                newProcess.WaitForExit();
 
-            System.Threading.Thread.Sleep(2000);
+            Thread.Sleep(2000);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -78,7 +75,6 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramName", this, editor));
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramArgs", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_WaitForExit", this, editor));
 
@@ -86,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Process: " + v_ProgramName + "]";
+            return base.GetDisplayValue() + $" [Process '{v_ProgramName}' - Wait For Exit '{v_WaitForExit}']";
         }
     }
 }
