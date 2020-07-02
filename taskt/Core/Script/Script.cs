@@ -77,7 +77,7 @@ namespace taskt.Core.Script
                 command.LineNumber = lineNumber;
 
                 if ((command is LoopNumberOfTimesCommand) || (command is LoopContinuouslyCommand) ||
-                    (command is LoopListCommand) || (command is BeginIfCommand) ||
+                    (command is LoopCollectionCommand) || (command is BeginIfCommand) ||
                     (command is BeginMultiIfCommand) || (command is TryCommand) || 
                     (command is BeginLoopCommand) || (command is BeginMultiLoopCommand) ||
                     (command is BeginRetryCommand))

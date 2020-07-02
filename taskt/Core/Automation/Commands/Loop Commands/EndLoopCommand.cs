@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -8,20 +9,19 @@ namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Loop Commands")]
-    [Attributes.ClassAttributes.Description("This command signifies the exit point of looped (repeated) actions.  Required for all loops.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to signify the end point of a loop command.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command is used by the serializer to signify the end point of a loop.")]
+    [Group("Loop Commands")]
+    [Description("This command signifies the exit point of Loop command(s) and is required for all the Loop commands.")]
     public class EndLoopCommand : ScriptCommand
     {
         public EndLoopCommand()
         {
-            this.DefaultPause = 0;
-            this.CommandName = "EndLoopCommand";
-            this.SelectionName = "End Loop";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            DefaultPause = 0;
+            CommandName = "EndLoopCommand";
+            SelectionName = "End Loop";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

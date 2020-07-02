@@ -180,10 +180,25 @@ namespace taskt.Core.Utilities.CommonUtilities
                                 cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnName).ToString();
                             }
 
+                            str = str.Replace(searchVariable, cellItem);
+                        }
+                        else if (varCheck.VariableValue is DataRow && potentialVariable.Split('.').Length == 2)
+                        {
+                            //user is trying to get data from column name or index
+                            string columnName = potentialVariable.Split('.')[1];
+                            var dr = varCheck.VariableValue as DataRow;
+
+                            string cellItem;
+                            if (int.TryParse(columnName, out var columnIndex))
+                            {
+                                cellItem = dr[columnIndex].ToString();
+                            }
+                            else
+                            {
+                                cellItem = dr[columnName].ToString();
+                            }
 
                             str = str.Replace(searchVariable, cellItem);
-
-
                         }
                         else if (potentialVariable.Split('.').Length == 2) // This handles vVariable.count 
                         {

@@ -279,7 +279,7 @@ namespace taskt.Core.Automation.Engine
             {
                 //determine type of command
                 if ((parentCommand is LoopNumberOfTimesCommand) || (parentCommand is LoopContinuouslyCommand) ||
-                    (parentCommand is LoopListCommand) || (parentCommand is BeginIfCommand) ||
+                    (parentCommand is LoopCollectionCommand) || (parentCommand is BeginIfCommand) ||
                     (parentCommand is BeginMultiIfCommand) || (parentCommand is TryCommand) ||
                     (parentCommand is BeginLoopCommand) || (parentCommand is BeginMultiLoopCommand) ||
                     (parentCommand is BeginRetryCommand))

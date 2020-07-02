@@ -1,65 +1,57 @@
-﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using taskt.Core.Automation.User32;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Windows.Forms;
-using taskt.UI.Forms;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Text;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("Loop Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true. The following actions will repeat continuously until that statement becomes false")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently loop actions based on either condition. Any 'BeginLoop' command must have a following 'EndLoop' command.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
+    [Group("Loop Commands")]
+    [Description("This command evaluates a group of specified logical statements and executes the contained commands repeatedly (in loop) " +
+        "until the result of the logical statements becomes false.")]
     public class BeginMultiLoopCommand : ScriptCommand
     {
-
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Multiple Loop Conditions - All Must Be True")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Multiple Loop Conditions")]
+        [InputSpecification("Add new Loop condition(s).")]
+        [SampleUsage("")]
+        [Remarks("All of the conditions must be true to execute the loop block.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder)]
         public DataTable v_LoopConditionsTable { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private DataGridView LoopConditionHelper;
+        private DataGridView _loopConditionHelper;
 
         [XmlIgnore]
-        private List<Script.ScriptVariable> ScriptVariables { get; set; }
+        private List<ScriptVariable> _scriptVariables { get; set; }
 
         public BeginMultiLoopCommand()
         {
-            this.CommandName = "BeginMultiLoopCommand";
-            this.SelectionName = "Begin Multi Loop";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "BeginMultiLoopCommand";
+            SelectionName = "Begin Multi Loop";
+            CommandEnabled = true;
+            CustomRendering = true;
 
             v_LoopConditionsTable = new DataTable();
             v_LoopConditionsTable.TableName = DateTime.Now.ToString("MultiLoopConditionTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
             v_LoopConditionsTable.Columns.Add("Statement");
             v_LoopConditionsTable.Columns.Add("CommandData");
-
         }
 
-
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(object sender, ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
+            var engine = (AutomationEngineInstance)sender;
             bool isTrueStatement = DetermineMultiStatementTruth(sender);
-
             engine.ReportProgress("Starting Loop");
 
             while (isTrueStatement)
@@ -87,9 +79,54 @@ namespace taskt.Core.Automation.Commands
                 }
                 isTrueStatement = DetermineMultiStatementTruth(sender);
             }
-
         }
 
+        public override List<Control> Render(frmCommandEditor editor)
+        {
+            base.Render(editor);
+
+            //get script variables for feeding into loop builder form
+            _scriptVariables = editor.ScriptVariables;
+
+            //create controls
+            var controls = CommandControls.CreateDataGridViewGroupFor("v_LoopConditionsTable", this, editor);
+            _loopConditionHelper = controls[2] as DataGridView;
+
+            //handle helper click
+            var helper = controls[1] as CommandItemControl;
+            helper.Click += (sender, e) => CreateLoopCondition(sender, e);
+
+            //add for rendering
+            RenderedControls.AddRange(controls);
+
+            //define if condition helper
+            _loopConditionHelper.Width = 450;
+            _loopConditionHelper.Height = 200;
+            _loopConditionHelper.AutoGenerateColumns = false;
+            _loopConditionHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            _loopConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Condition", DataPropertyName = "Statement", ReadOnly = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+            _loopConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "CommandData", DataPropertyName = "CommandData", ReadOnly = true, Visible = false });
+            _loopConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Edit", UseColumnTextForButtonValue = true, Text = "Edit", Width = 45 });
+            _loopConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Delete", UseColumnTextForButtonValue = true, Text = "Delete", Width = 45 });
+            _loopConditionHelper.AllowUserToAddRows = false;
+            _loopConditionHelper.AllowUserToDeleteRows = true;
+            _loopConditionHelper.CellContentClick += LoopConditionHelper_CellContentClick;
+
+            return RenderedControls;
+        }
+
+        public override string GetDisplayValue()
+        {
+            if (v_LoopConditionsTable.Rows.Count == 0)
+            {
+                return "Loop <Not Configured>";
+            }
+            else
+            {
+                var statements = v_LoopConditionsTable.AsEnumerable().Select(f => f.Field<string>("Statement")).ToList();
+                return string.Join(" && ", statements);
+            }
+        }
 
         private bool DetermineMultiStatementTruth(object sender)
         {
@@ -97,8 +134,7 @@ namespace taskt.Core.Automation.Commands
             foreach (DataRow rw in v_LoopConditionsTable.Rows)
             {
                 var commandData = rw["CommandData"].ToString();
-                var loopCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginLoopCommand>(commandData);
-
+                var loopCommand = JsonConvert.DeserializeObject<BeginLoopCommand>(commandData);
                 var statementResult = loopCommand.DetermineStatementTruth(sender);
 
                 if (!statementResult)
@@ -108,41 +144,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             return isTrueStatement;
-        }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            //get script variables for feeding into loop builder form
-            ScriptVariables = editor.ScriptVariables;
-
-            //create controls
-            var controls = CommandControls.CreateDataGridViewGroupFor("v_LoopConditionsTable", this, editor);
-            LoopConditionHelper = controls[2] as DataGridView;
-
-            //handle helper click
-            var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
-            helper.Click += (sender, e) => CreateLoopCondition(sender, e);
-
-            //add for rendering
-            RenderedControls.AddRange(controls);
-
-            //define if condition helper
-            LoopConditionHelper.Width = 450;
-            LoopConditionHelper.Height = 200;
-            LoopConditionHelper.AutoGenerateColumns = false;
-            LoopConditionHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            LoopConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Condition", DataPropertyName = "Statement", ReadOnly = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
-            LoopConditionHelper.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "CommandData", DataPropertyName = "CommandData", ReadOnly = true, Visible = false });
-            LoopConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Edit", UseColumnTextForButtonValue = true, Text = "Edit", Width = 45 });
-            LoopConditionHelper.Columns.Add(new DataGridViewButtonColumn() { HeaderText = "Delete", UseColumnTextForButtonValue = true, Text = "Delete", Width = 45 });
-            LoopConditionHelper.AllowUserToAddRows = false;
-            LoopConditionHelper.AllowUserToDeleteRows = true;
-            LoopConditionHelper.CellContentClick += LoopConditionHelper_CellContentClick;
-
-
-            return RenderedControls;
         }
 
         private void LoopConditionHelper_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -159,28 +160,25 @@ namespace taskt.Core.Automation.Commands
                     //launch editor
                     var statement = selectedRow["Statement"];
                     var commandData = selectedRow["CommandData"].ToString();
+                    var loopCommand = JsonConvert.DeserializeObject<BeginLoopCommand>(commandData);
 
-                    var loopCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginLoopCommand>(commandData);
-
-                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
+                    var automationCommands = CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
                     frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
                     editor.SelectedCommand = loopCommand;
                     editor.EditingCommand = loopCommand;
                     editor.OriginalCommand = loopCommand;
                     editor.CreationModeInstance = frmCommandEditor.CreationMode.Edit;
-                    editor.ScriptVariables = ScriptVariables;
+                    editor.ScriptVariables = _scriptVariables;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {
                         var editedCommand = editor.EditingCommand as BeginLoopCommand;
                         var displayText = editedCommand.GetDisplayValue();
-                        var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(editedCommand);
+                        var serializedData = JsonConvert.SerializeObject(editedCommand);
 
                         selectedRow["Statement"] = displayText;
                         selectedRow["CommandData"] = serializedData;
                     }
-
-
                 }
                 else if (buttonSelected.Value.ToString() == "Delete")
                 {
@@ -191,15 +189,12 @@ namespace taskt.Core.Automation.Commands
                 {
                     throw new NotImplementedException("Requested Action is not implemented.");
                 }
-
             }
-
         }
 
         private void CreateLoopCondition(object sender, EventArgs e)
         {
-
-            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
+            var automationCommands = CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
 
             frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
             editor.SelectedCommand = new BeginLoopCommand();
@@ -210,28 +205,11 @@ namespace taskt.Core.Automation.Commands
                 //get data
                 var configuredCommand = editor.SelectedCommand as BeginLoopCommand;
                 var displayText = configuredCommand.GetDisplayValue();
-                var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(configuredCommand);
+                var serializedData = JsonConvert.SerializeObject(configuredCommand);
 
                 //add to list
                 v_LoopConditionsTable.Rows.Add(displayText, serializedData);
-
             }
-
-        }
-
-        public override string GetDisplayValue()
-        {
-
-            if (v_LoopConditionsTable.Rows.Count == 0)
-            {
-                return "Loop <Not Configured>";
-            }
-            else
-            {
-                var statements = v_LoopConditionsTable.AsEnumerable().Select(f => f.Field<string>("Statement")).ToList();
-                return string.Join(" && ", statements);
-            }
-
         }
     }
 }

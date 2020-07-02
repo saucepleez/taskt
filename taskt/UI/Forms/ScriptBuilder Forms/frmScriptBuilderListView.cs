@@ -505,7 +505,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 }
 
                 if ((rowItem.Tag is BeginIfCommand) || (rowItem.Tag is BeginMultiIfCommand) ||
-                    (rowItem.Tag is LoopListCommand) || (rowItem.Tag is LoopContinuouslyCommand) ||
+                    (rowItem.Tag is LoopCollectionCommand) || (rowItem.Tag is LoopContinuouslyCommand) ||
                     (rowItem.Tag is LoopNumberOfTimesCommand) || (rowItem.Tag is TryCommand) ||
                     (rowItem.Tag is BeginLoopCommand) || (rowItem.Tag is BeginMultiLoopCommand) ||
                     (rowItem.Tag is BeginRetryCommand))
@@ -812,7 +812,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             _selectedTabScriptActions.Items.Insert(insertionIndex, command);
 
             //special types also get a following command and comment
-            if ((selectedCommand is LoopListCommand) || (selectedCommand is LoopContinuouslyCommand) ||
+            if ((selectedCommand is LoopCollectionCommand) || (selectedCommand is LoopContinuouslyCommand) ||
                 (selectedCommand is LoopNumberOfTimesCommand) || (selectedCommand is BeginLoopCommand) ||
                 (selectedCommand is BeginMultiLoopCommand))
             {

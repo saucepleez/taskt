@@ -273,7 +273,7 @@
     <Compile Include="Core\Automation\Commands\Loop Commands\EndLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop Commands\ExitLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop Commands\LoopContinuouslyCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Loop Commands\LoopListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Loop Commands\LoopCollectionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop Commands\LoopNumberOfTimesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop Commands\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable Commands\MergeDataTableCommand.cs" />

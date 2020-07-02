@@ -1,56 +1,63 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Outlook;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using Microsoft.Office.Interop.Outlook;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Loop Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to repeat actions several times (loop).  Any 'Begin Loop' command must have a following 'End Loop' command.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over each item in a list, or a series of items.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
-    public class LoopListCommand : ScriptCommand
+    [Group("Loop Commands")]
+    [Description("This command iterates over a collection to let user perform actions on the collection items.")]
+    public class LoopCollectionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input the list variable to be looped")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a variable which contains a list of items")]
-        [Attributes.PropertyAttributes.SampleUsage("[vMyList]")]
-        [Attributes.PropertyAttributes.Remarks("Use this command to iterate over the results of the Split command.")]
+        [PropertyDescription("Input Collection")]
+        [InputSpecification("Provide a collection variable.")]
+        [SampleUsage("{vMyCollection}")]
+        [Remarks("If the collection is a DataTable then the output item will be a DataRow and its column value can be accessed using the " +
+            "dot operator like {vDataRow.ColumnName}.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_LoopParameter { get; set; }
 
-        public LoopListCommand()
+        [XmlAttribute]
+        [PropertyDescription("Output Collection Item Variable")]
+        [InputSpecification("Select or provide a variable from the variable list.")]
+        [SampleUsage("vUserVariable")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required" +
+                 " to pre-define your variables; however, it is highly recommended.")]
+        public string v_OutputUserVariableName { get; set; }
+
+        public LoopCollectionCommand()
         {
-            this.CommandName = "LoopListCommand";
-            this.SelectionName = "Loop List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "LoopCollectionCommand";
+            SelectionName = "Loop Collection";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(object sender, ScriptAction parentCommand)
         {
-            Core.Automation.Commands.LoopListCommand loopCommand = (Core.Automation.Commands.LoopListCommand)parentCommand.ScriptCommand;
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            LoopCollectionCommand loopCommand = (LoopCollectionCommand)parentCommand.ScriptCommand;
+            var engine = (AutomationEngineInstance)sender;
 
             int loopTimes;
-            Script.ScriptVariable complexVariable = null;
-
+            ScriptVariable complexVariable = null;
 
             //get variable by regular name
             complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
-
-
-            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
-            }
 
             //user may potentially include brackets []
             if (complexVariable == null)
@@ -61,17 +68,18 @@ namespace taskt.Core.Automation.Commands
             //if still null then throw exception
             if (complexVariable == null)
             {
-                throw new System.Exception("Complex Variable '" + v_LoopParameter + "' or '" + v_LoopParameter.ApplyVariableFormatting() + "' not found. Ensure the variable exists before attempting to modify it.");
+                throw new System.Exception("Complex Variable '" + v_LoopParameter + "' or '" + v_LoopParameter.ApplyVariableFormatting() + 
+                    "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
             dynamic listToLoop;
             if (complexVariable.VariableValue is List<string>)
             {
-             listToLoop = (List<string>)complexVariable.VariableValue;
+                listToLoop = (List<string>)complexVariable.VariableValue;
             }
-            else if (complexVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
+            else if (complexVariable.VariableValue is List<IWebElement>)
             {
-              listToLoop = (List<OpenQA.Selenium.IWebElement>)complexVariable.VariableValue;
+                listToLoop = (List<IWebElement>)complexVariable.VariableValue;
             }
             else if (complexVariable.VariableValue is DataTable)
             {
@@ -81,15 +89,17 @@ namespace taskt.Core.Automation.Commands
             {
                 listToLoop = (List<MailItem>)complexVariable.VariableValue;
             }
-            else if ((complexVariable.VariableValue.ToString().StartsWith("[")) && (complexVariable.VariableValue.ToString().EndsWith("]")) && (complexVariable.VariableValue.ToString().Contains(",")))
+            else if ((complexVariable.VariableValue.ToString().StartsWith("[")) && 
+                (complexVariable.VariableValue.ToString().EndsWith("]")) && 
+                (complexVariable.VariableValue.ToString().Contains(",")))
             {
                 //automatically handle if user has given a json array
-                Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(complexVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
+                JArray jsonArray = JsonConvert.DeserializeObject(complexVariable.VariableValue.ToString()) as JArray;
 
                var itemList = new List<string>();
                 foreach (var item in jsonArray)
                 {
-                    var value = (Newtonsoft.Json.Linq.JValue)item;
+                    var value = (JValue)item;
                     itemList.Add(value.ToString());
                 }
 
@@ -101,28 +111,26 @@ namespace taskt.Core.Automation.Commands
                 throw new System.Exception("Complex Variable List Type<T> Not Supported");
             }
 
-
             loopTimes = listToLoop.Count;
-
 
             for (int i = 0; i < loopTimes; i++)
             {
-                if (complexVariable != null)
-                    complexVariable.CurrentPosition = i;
-
-             
-
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
-
+                
+                if(listToLoop[i] is string)
+                {
+                    ((string)listToLoop[i]).StoreInUserVariable(sender, v_OutputUserVariableName);
+                }
+                else
+                {
+                    engine.AddVariable(v_OutputUserVariableName, listToLoop[i]);
+                }
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
                     if (engine.IsCancellationPending)
                         return;
 
-                    (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
-
                     engine.ExecuteCommand(cmd);
-
 
                     if (engine.CurrentLoopCancelled)
                     {
@@ -142,18 +150,19 @@ namespace taskt.Core.Automation.Commands
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
             }
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_LoopParameter", this, editor));
-           
+            RenderedControls.AddRange(CommandControls.CreateDefaultOutputGroupFor("v_OutputUserVariableName", this, editor));
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return "Loop List Variable '" + v_LoopParameter + "'";
+            return "Loop Collection '" + v_LoopParameter + "'";
         }
     }
 }

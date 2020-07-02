@@ -222,7 +222,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
             foreach (ListViewItem item in _selectedTabScriptActions.Items)
             {
-                if ((item.Tag is LoopListCommand) || (item.Tag is LoopContinuouslyCommand) ||
+                if ((item.Tag is LoopCollectionCommand) || (item.Tag is LoopContinuouslyCommand) ||
                     (item.Tag is LoopNumberOfTimesCommand) || (item.Tag is BeginLoopCommand) ||
                     (item.Tag is BeginMultiLoopCommand))
                 {

@@ -553,7 +553,7 @@ namespace taskt.UI
             uiImages.Add("ImageRecognitionCommand", taskt.Properties.Resources.command_camera);
             uiImages.Add("GetHTMLSourceCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("QueryHTMLSourceCommand", taskt.Properties.Resources.command_search);
-            uiImages.Add("LoopListCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("LoopCollectionCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("LoopContinuouslyCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("LoopNumberOfTimesCommand", taskt.Properties.Resources.command_startloop);
             uiImages.Add("BeginLoopCommand", taskt.Properties.Resources.command_startloop);

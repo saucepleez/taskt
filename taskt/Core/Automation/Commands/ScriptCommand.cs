@@ -105,7 +105,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ImageRecognitionCommand))]
     [XmlInclude(typeof(SendMouseClickCommand))]
     [XmlInclude(typeof(LoopNumberOfTimesCommand))]
-    [XmlInclude(typeof(LoopListCommand))]
+    [XmlInclude(typeof(LoopCollectionCommand))]
     [XmlInclude(typeof(NextLoopCommand))]
     [XmlInclude(typeof(LoopContinuouslyCommand))]
     [XmlInclude(typeof(BeginLoopCommand))]

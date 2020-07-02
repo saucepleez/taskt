@@ -3,69 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("Loop Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to repeat actions several times (loop).  Any 'Begin Loop' command must have a following 'End Loop' command.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a series of commands a specified amount of times.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
+    [Group("Loop Commands")]
+    [Description("This command repeats the subsequent actions a specified number of times.")]
     public class LoopNumberOfTimesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter how many times to perform the loop")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the amount of times you would like to perform the encased commands.")]
-        [Attributes.PropertyAttributes.SampleUsage("**5** or **10**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Loop Count")]
+        [InputSpecification("Enter the amount of times you would like to execute the encased commands.")]
+        [SampleUsage("5 || {vLoopCount}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_LoopParameter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Define Start Index (Default: 0)")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the starting index of the loop.")]
-        [Attributes.PropertyAttributes.SampleUsage("**5** or **10**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Start Index")]
+        [InputSpecification("Enter the starting index of the loop.")]
+        [SampleUsage("5 || {vStartIndex}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_LoopStart { get; set; }
 
         public LoopNumberOfTimesCommand()
         {
-            this.CommandName = "LoopNumberOfTimesCommand";
-            this.SelectionName = "Loop Number Of Times";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_LoopStart = "0";
+            CommandName = "LoopNumberOfTimesCommand";
+            SelectionName = "Loop Number Of Times";
+            CommandEnabled = true;
+            CustomRendering = true;
+            v_LoopStart = "0";
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(object sender, ScriptAction parentCommand)
         {
-            Core.Automation.Commands.LoopNumberOfTimesCommand loopCommand = (Core.Automation.Commands.LoopNumberOfTimesCommand)parentCommand.ScriptCommand;
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            LoopNumberOfTimesCommand loopCommand = (LoopNumberOfTimesCommand)parentCommand.ScriptCommand;
+            var engine = (AutomationEngineInstance)sender;
 
             if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
             {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+                engine.VariableList.Add(new ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
             }
 
-
             int loopTimes;
-            Script.ScriptVariable complexVarible = null;
+            ScriptVariable complexVarible = null;
 
             var loopParameter = loopCommand.v_LoopParameter.ConvertToUserVariable(sender);
-
             loopTimes = int.Parse(loopParameter);
-
 
             int startIndex = 0;
             int.TryParse(v_LoopStart.ConvertToUserVariable(sender), out startIndex);
-
 
             for (int i = startIndex; i < loopTimes; i++)
             {
@@ -98,24 +93,17 @@ namespace taskt.Core.Automation.Commands
                         engine.CurrentLoopContinuing = false;
                         break;
                     }
-
-
                 }
-
-          
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
-
-       
-
             }
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_LoopParameter", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_LoopStart", this, editor));
-
             return RenderedControls;
         }
 
@@ -124,13 +112,11 @@ namespace taskt.Core.Automation.Commands
             if (v_LoopStart != "0")
             {
                 return "Loop From (" + v_LoopStart + "+1) to " + v_LoopParameter;
-
             }
             else
             {
                 return "Loop " +  v_LoopParameter + " Times";
             }
-         
         }
     }
 }

@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Loop Commands")]
-    [Attributes.ClassAttributes.Description("This command enables user to break and exit from the current loop")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to break from the current loop")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Group("Loop Commands")]
+    [Description("This command enables user to break and exit from the current loop.")]
     public class NextLoopCommand : ScriptCommand
     {
         public NextLoopCommand()
         {
-            this.DefaultPause = 0;
-            this.CommandName = "NextLoopCommand";
-            this.SelectionName = "Next Loop";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            DefaultPause = 0;
+            CommandName = "NextLoopCommand";
+            SelectionName = "Next Loop";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

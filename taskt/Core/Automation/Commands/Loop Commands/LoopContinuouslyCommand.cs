@@ -1,44 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
     [Serializable]
-    [Attributes.ClassAttributes.Group("Loop Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to repeat actions continuously.  Any 'Begin Loop' command must have a following 'End Loop' command.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a series of commands an endless amount of times.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
+    [Group("Loop Commands")]
+    [Description("This command repeats the execution of subsequent actions continuously.")]
     public class LoopContinuouslyCommand : ScriptCommand
     {
-
         public LoopContinuouslyCommand()
         {
-            this.CommandName = "LoopContinuouslyCommand";
-            this.SelectionName = "Loop Continuously";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            CommandName = "LoopContinuouslyCommand";
+            SelectionName = "Loop Continuously";
+            CommandEnabled = true;
+            CustomRendering = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(object sender, ScriptAction parentCommand)
         {
-            Core.Automation.Commands.LoopContinuouslyCommand loopCommand = (Core.Automation.Commands.LoopContinuouslyCommand)parentCommand.ScriptCommand;
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-
+            LoopContinuouslyCommand loopCommand = (LoopContinuouslyCommand)parentCommand.ScriptCommand;
+            var engine = (AutomationEngineInstance)sender;
             engine.ReportProgress("Starting Continous Loop From Line " + loopCommand.LineNumber);
 
             while (true)
             {
-
-
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
                     if (engine.IsCancellationPending)
@@ -62,6 +53,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
