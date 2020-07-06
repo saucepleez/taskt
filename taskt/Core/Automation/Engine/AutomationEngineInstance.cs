@@ -478,6 +478,11 @@ namespace taskt.Core.Automation.Engine
 
         public virtual void ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult result, string error = null)
         {
+            if (ChildScriptFailed && !ChildScriptErrorCaught)
+            {
+                error = "Terminate with failure";
+                result = ScriptFinishedEventArgs.ScriptFinishedResult.Error;
+            }
             EngineLogger.Information("Result Code: " + result.ToString());
 
             //add result variable if missing

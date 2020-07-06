@@ -45,6 +45,8 @@ namespace taskt.Core.Automation.Commands
                 {
                     var cmd = parentCommand.AdditionalScriptCommands[tryIndex];
                     engine.ExecuteCommand(cmd);
+                    if(cmd.ScriptCommand is RunTaskCommand && engine.ChildScriptFailed && !engine.ChildScriptErrorCaught)
+                        throw new Exception("Child Script Failed");
                 }
                 catch (Exception ex)
                 {
@@ -91,6 +93,10 @@ namespace taskt.Core.Automation.Commands
                     else if(generalCatchIndex != -1)
                     {
                         ExecuteTargetCatchBlock(sender, parentCommand, generalCatchIndex, endCatch);
+                    }
+                    else
+                    {
+                        throw new Exception("No Valid Catch found.");
                     }
 
                     break;
