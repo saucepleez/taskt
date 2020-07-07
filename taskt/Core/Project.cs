@@ -21,7 +21,7 @@ namespace taskt.Core
         {
             ScriptPaths = new List<string>();
             ProjectName = projectName;
-            Main = "Main.xml";
+            Main = "Main.json";
         }
 
         public void SaveProject(string scriptPath, Script.Script script, string mainName)
@@ -29,7 +29,7 @@ namespace taskt.Core
             //Looks through sequential parent directories to find one that matches the script's ProjectName and contains a Main
             string projectPath;
             string dirName;
-            string mainScriptPath; 
+            string mainScriptPath;
             do
             {
                 projectPath = Path.GetDirectoryName(scriptPath);
@@ -37,7 +37,6 @@ namespace taskt.Core
                 dirName = dirInfo.Name;
                 mainScriptPath = Path.Combine(projectPath, mainName);
                 scriptPath = projectPath;
-
             } while (dirName != script.ProjectName || !File.Exists(mainScriptPath));
 
             //If requirements are met, a project.config is created/updated
@@ -48,11 +47,11 @@ namespace taskt.Core
                 foreach (string scriptFullPath in scriptFullPaths)
                 {
                     string relativeScriptPath = scriptFullPath.Replace(projectPath, "");
-                    if (relativeScriptPath.Contains(".xml"))
+                    if (relativeScriptPath.Contains(".json"))
                         updatedScriptPaths.Add(relativeScriptPath);
                 }
                 ScriptPaths = updatedScriptPaths;
-                
+
                 string projectJSONFilePath = Path.Combine(projectPath, "project.config");
                 File.WriteAllText(projectJSONFilePath, JsonConvert.SerializeObject(this));
             }
@@ -81,7 +80,7 @@ namespace taskt.Core
                 foreach (string scriptFullPath in scriptFullPaths)
                 {
                     string relativeScriptPath = scriptFullPath.Replace(projectPath, "");
-                    if (relativeScriptPath.Contains(".xml"))
+                    if (relativeScriptPath.Contains(".json") && !relativeScriptPath.Contains("project.json"))
                         updatedScriptPaths.Add(relativeScriptPath);
                 }
                 openProject.ScriptPaths = updatedScriptPaths;

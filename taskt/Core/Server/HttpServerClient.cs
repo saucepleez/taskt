@@ -167,7 +167,7 @@ namespace taskt.Core.Server
                             else
                             {
                                 newEngine = new frmScriptEngine();
-                                newEngine.XmlData = deserialized.PublishedScript.ScriptData;
+                                newEngine.JsonData = deserialized.PublishedScript.ScriptData;
                             }
 
                             newEngine.RemoteTask = deserialized.ScheduledTask;

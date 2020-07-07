@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace taskt.Core.Script
 {
@@ -13,15 +13,18 @@ namespace taskt.Core.Script
         /// name that will be used to identify the variable
         /// </summary>
         public string VariableName { get; set; }
+
         /// <summary>
         /// index/position tracking for complex variables (list)
         /// </summary>
-        [XmlIgnore]
+        [JsonIgnore]
         public int CurrentPosition = 0;
+
         /// <summary>
         /// value of the variable or current index
         /// </summary>
         public object VariableValue { get; set; }
+
         /// <summary>
         /// retrieve value of the variable
         /// </summary>
@@ -45,7 +48,7 @@ namespace taskt.Core.Script
             {
                 DataTable dataTable = (DataTable)VariableValue;
                 var dataRow = dataTable.Rows[CurrentPosition];
-                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
+                return JsonConvert.SerializeObject(dataRow.ItemArray);
             }
             else if(VariableValue.GetType() != typeof(string))
             {
@@ -68,7 +71,7 @@ namespace taskt.Core.Script
                     case "ToJson":
                     case "toJson":
                     case "TOJSON":
-                        return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
+                        return JsonConvert.SerializeObject(requiredValue);
                     case "topipe":
                     case "ToPipe":
                     case "toPipe":

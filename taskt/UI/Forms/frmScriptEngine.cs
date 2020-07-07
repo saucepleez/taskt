@@ -34,7 +34,7 @@ namespace taskt.UI.Forms
         #region Form Variables
         private EngineSettings _engineSettings;
         public string FilePath { get; set; }
-        public string XmlData { get; set; }
+        public string JsonData { get; set; }
         public Task RemoteTask { get; set; }
         public bool ServerExecution { get; set; }
         public frmScriptBuilder CallBackForm { get; set; }
@@ -159,13 +159,13 @@ namespace taskt.UI.Forms
             EngineInstance.ServerExecution = ServerExecution;
             LocalTCPClient.AutomationInstance = EngineInstance;
 
-            if (XmlData == null)
+            if (JsonData == null)
             {
                 EngineInstance.ExecuteScriptAsync(this, FilePath, _scriptVariableList);
             }
             else
             {
-                EngineInstance.ExecuteScriptXML(XmlData);
+                EngineInstance.ExecuteScriptJson(JsonData);
             }
         }
 

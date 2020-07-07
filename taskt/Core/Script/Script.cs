@@ -11,17 +11,20 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
+using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using System.IO;
 using System.Windows.Forms;
-using System.Xml;
+using Newtonsoft.Json;
 using taskt.Core.Automation.Commands;
+
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace taskt.Core.Script
 {
     public class Script
     {
-        public string FileName { get; set; }
         public string ProjectName { get; set; }
         /// <summary>
         /// Contains user-defined variables
@@ -31,6 +34,7 @@ namespace taskt.Core.Script
         /// Contains user-selected commands
         /// </summary>
         public List<ScriptAction> Commands;
+        private string FileName { get; set; }
 
         public Script()
         {
@@ -49,7 +53,7 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
-        /// Converts and serializes the user-defined commands into an XML file
+        /// Converts and serializes the user-defined commands into an JSON file
         /// </summary>
         public static Script SerializeScript(
             ListView.ListViewItemCollection scriptCommands,
@@ -78,7 +82,7 @@ namespace taskt.Core.Script
 
                 if ((command is LoopNumberOfTimesCommand) || (command is LoopContinuouslyCommand) ||
                     (command is LoopCollectionCommand) || (command is BeginIfCommand) ||
-                    (command is BeginMultiIfCommand) || (command is TryCommand) || 
+                    (command is BeginMultiIfCommand) || (command is TryCommand) ||
                     (command is BeginLoopCommand) || (command is BeginMultiLoopCommand) ||
                     (command is BeginRetryCommand))
                 {
@@ -102,7 +106,7 @@ namespace taskt.Core.Script
                 }
                 //if current loop scenario is ending
                 else if ((command is EndLoopCommand) || (command is EndIfCommand) ||
-                    (command is EndTryCommand) || (command is EndRetryCommand))
+                         (command is EndTryCommand) || (command is EndRetryCommand))
                 {
                     //get reference to previous node
                     var parentCommand = subCommands[subCommands.Count - 1];
@@ -125,58 +129,51 @@ namespace taskt.Core.Script
                 lineNumber++;
             }
 
-            //output to xml file
-            XmlSerializer serializer = new XmlSerializer(typeof(Script));
-            var settings = new XmlWriterSettings
+            var serializerSettings = new JsonSerializerSettings()
             {
-                NewLineHandling = NewLineHandling.Entitize,
-                Indent = true
+                TypeNameHandling = TypeNameHandling.Objects
             };
+            JsonSerializer serializer = JsonSerializer.Create(serializerSettings);
 
+            //output to json file
             //if output path was provided
             if (scriptFilePath != "")
             {
                 //write to file
-                System.IO.FileStream fs;
-                using (fs = System.IO.File.Create(scriptFilePath))
+                using (StreamWriter sw = new StreamWriter(scriptFilePath))
+                using (JsonWriter writer = new JsonTextWriter(sw){ Formatting = Formatting.Indented })
                 {
-                    using (XmlWriter writer = XmlWriter.Create(fs, settings))
-                    {
-                        serializer.Serialize(writer, script);
-                    }
+                    serializer.Serialize(writer, script, typeof(Script));
                 }
             }
-
 
             return script;
         }
         /// <summary>
-        /// Deserializes a valid XML file back into user-defined commands
+        /// Deserializes a valid JSON file back into user-defined commands
         /// </summary>
         public static Script DeserializeFile(string scriptFilePath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Script));
-
-            System.IO.FileStream fs;
-
-            //open file stream from file
-            using (fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
+            using (StreamReader file = File.OpenText(scriptFilePath))
             {
-                //read and return data
-                XmlReader reader = XmlReader.Create(fs);
-                Script deserializedData = (Script)serializer.Deserialize(reader);
+                var serializerSettings = new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.Objects
+                };
+
+                JsonSerializer serializer = JsonSerializer.Create(serializerSettings);
+                Script deserializedData = (Script)serializer.Deserialize(file, typeof(Script));
+
                 return deserializedData;
             }
         }
+
         /// <summary>
-        /// Deserializes an XML string into user-defined commands (server sends a string to the client)
+        /// Deserializes an json string into user-defined commands (server sends a string to the client)
         /// </summary>
-        public static Script DeserializeXML(string scriptXML)
+        public static Script DeserializeJsonString(string jsonScript)
         {
-            System.IO.StringReader reader = new System.IO.StringReader(scriptXML);
-            XmlSerializer serializer = new XmlSerializer(typeof(Script));
-            Script deserializedData = (Script)serializer.Deserialize(reader);
-            return deserializedData;
+            return JsonConvert.DeserializeObject<Script>(jsonScript);
         }
     }
 }

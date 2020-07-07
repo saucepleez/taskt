@@ -55,36 +55,8 @@ namespace taskt.Core
                 ms.Position = 0;
                 return (T)formatter.Deserialize(ms);
             }
-
-            ////output to xml file
-            //XmlSerializer serializer = new XmlSerializer(typeof(T));
-            //var settings = new XmlWriterSettings
-            //{
-            //    NewLineHandling = NewLineHandling.Entitize,
-            //    Indent = true
-            //};
-
-            //StringBuilder xml = new StringBuilder();
-            //XmlWriter xmlWriter = XmlWriter.Create(xml);
-
-            //serializer.Serialize(xmlWriter, source);
-
-
-            //using (TextReader reader = new StringReader(xml.ToString()))
-            //{
-            //    T deserializedData = (T)serializer.Deserialize(reader);
-            //    return deserializedData;
-            //}
-
-            //System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            //Stream stream = new MemoryStream();
-            //using (stream)
-            //{
-            //    formatter.Serialize(stream, source);
-            //    stream.Seek(0, SeekOrigin.Begin);
-            //    return (T)formatter.Deserialize(stream);
-            //}
         }
+
         ///// <summary>
         ///// Returns a path to the underlying Script folder where script file objects are loaded and saved. Used when saved or loading files.
         ///// </summary>
@@ -128,6 +100,7 @@ namespace taskt.Core
 
             return groupedCommands;
         }
+
         /// <summary>
         /// Returns boolean indicating if the current command is enabled for use in automation.
         /// </summary>
@@ -136,6 +109,7 @@ namespace taskt.Core
             var scriptCommand = (ScriptCommand)Activator.CreateInstance(cmd);
             return scriptCommand.CommandEnabled;
         }
+
         /// <summary>
         /// Returns a list of system-generated variables for use with automation.
         /// </summary>
@@ -171,6 +145,7 @@ namespace taskt.Core
             systemVariableList.Add(new ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
             return systemVariableList;
         }
+
         public static string ImageToBase64(Image image)
         {
             using (MemoryStream m = new MemoryStream())

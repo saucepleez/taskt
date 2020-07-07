@@ -314,7 +314,7 @@ namespace taskt.Core.Server
                 _associatedBuilder.Invoke(new MethodInvoker(delegate ()
                     {
                         frmScriptEngine newEngine = new frmScriptEngine();
-                        newEngine.XmlData = dataParameter;
+                        newEngine.JsonData = dataParameter;
                         newEngine.CallBackForm = null;
                         //instance = newEngine.engineInstance;
                         newEngine.Show();

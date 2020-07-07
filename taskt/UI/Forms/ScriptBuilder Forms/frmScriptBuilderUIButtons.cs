@@ -167,7 +167,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 PopulateExecutionCommands(deserializedScript.Commands);
 
                 FileInfo scriptFileInfo = new FileInfo(_scriptFilePath);
-                uiScriptTabControl.SelectedTab.Text = scriptFileInfo.Name.Replace(".xml", "");
+                uiScriptTabControl.SelectedTab.Text = scriptFileInfo.Name.Replace(".json", "");
 
                 //notify
                 Notify("Script Loaded Successfully!");
@@ -440,7 +440,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             foreach (ScriptAction item in commandDetails)
             {
                 _selectedTabScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand));
-                if (item.AdditionalScriptCommands.Count > 0)
+                if (item.AdditionalScriptCommands?.Count > 0)
                     PopulateExecutionCommands(item.AdditionalScriptCommands);
             }
 

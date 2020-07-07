@@ -107,14 +107,14 @@ namespace taskt.Core.Automation.Engine
             }).Start();
         }
 
-        public void ExecuteScriptXML(string xmlData)
+        public void ExecuteScriptJson(string jsonData)
         {
             EngineLogger.Information("Client requesting to execute script independently");
 
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                ExecuteScript(xmlData, false);
+                ExecuteScript(jsonData, false);
             }).Start();
         }
 
@@ -144,8 +144,8 @@ namespace taskt.Core.Automation.Engine
                 }
                 else
                 {
-                    ReportProgress("Deserializing XML");
-                    automationScript = Script.Script.DeserializeXML(data);
+                    ReportProgress("Deserializing JSON");
+                    automationScript = Script.Script.DeserializeJsonString(data);
                 }
 
                 if (_serverSettings.ServerConnectionEnabled && TaskModel == null)

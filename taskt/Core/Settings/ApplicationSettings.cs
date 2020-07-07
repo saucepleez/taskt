@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using taskt.Core.IO;
-using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace taskt.Core.Settings
 {
@@ -29,22 +29,27 @@ namespace taskt.Core.Settings
             //create settings directory
             var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
 
-            //if directory does not exist then create directory
             if (!Directory.Exists(settingsDir))
             {
                 Directory.CreateDirectory(settingsDir);
             }
 
             //create file path
-            var filePath = Path.Combine(settingsDir, "AppSettings.xml");
+            var filePath = Path.Combine(settingsDir, "AppSettings.json");
 
-            //create filestream
-            var fileStream = File.Create(filePath);
+            var serializerSettings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Objects
+            };
+            JsonSerializer serializer = JsonSerializer.Create(serializerSettings);
 
-            //output to xml file
-            XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
-            serializer.Serialize(fileStream, appSettings);
-            fileStream.Close();
+            //output to json file
+            //if output path was provided
+            using (StreamWriter sw = new StreamWriter(filePath))
+            using (JsonWriter writer = new JsonTextWriter(sw){ Formatting = Formatting.Indented })
+            {
+                serializer.Serialize(writer, appSettings, typeof(ApplicationSettings));
+            }
         }
 
         public ApplicationSettings GetOrCreateApplicationSettings()
@@ -53,25 +58,29 @@ namespace taskt.Core.Settings
             var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
 
             //create file path
-            var filePath = Path.Combine(settingsDir, "AppSettings.xml");
+            var filePath = Path.Combine(settingsDir, "AppSettings.json");
 
             ApplicationSettings appSettings;
             if (File.Exists(filePath))
             {
                 //open file and return it or return new settings on error
-                var fileStream = File.Open(filePath, FileMode.Open);
-
                 try
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
-                    appSettings = (ApplicationSettings)serializer.Deserialize(fileStream);
+                    using (StreamReader file = File.OpenText(filePath))
+                    {
+                        var serializerSettings = new JsonSerializerSettings()
+                        {
+                            TypeNameHandling = TypeNameHandling.Objects
+                        };
+
+                        JsonSerializer serializer = JsonSerializer.Create(serializerSettings);
+                        appSettings = (ApplicationSettings)serializer.Deserialize(file, typeof(ApplicationSettings));
+                    }
                 }
                 catch (Exception)
                 {
                     appSettings = new ApplicationSettings();
                 }
-
-                fileStream.Close();
             }
             else
             {

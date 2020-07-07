@@ -186,10 +186,10 @@ namespace taskt.Core.Server
             SocketLogger.Information("Socket Message Received: " + e.Message);
 
             //server responded with script
-            if (e.Message.Contains("?xml"))
+            if (e.Message.Contains("taskt.Core.Script.Script"))
             {
                 //execute scripts
-                RunXMLScript(e.Message);
+                RunJsonScript(e.Message);
             }
             //server wants the client status
             else if (e.Message.Contains("CLIENT_STATUS"))
@@ -230,8 +230,8 @@ namespace taskt.Core.Server
                         client.QueryString.Add("ClientName", _publicKey);
                         client.QueryString.Add("LogData", executionLog);
 
-                        byte[] responsebytes = client.UploadValues(apiUri, "POST", client.QueryString);
-                        string responsebody = Encoding.UTF8.GetString(responsebytes);
+                        byte[] responseBytes = client.UploadValues(apiUri, "POST", client.QueryString);
+                        string responseBody = Encoding.UTF8.GetString(responseBytes);
                     }
                 }
                 catch (Exception)
@@ -293,12 +293,12 @@ namespace taskt.Core.Server
             }
         }
 
-        private static void RunXMLScript(string scriptData)
+        private static void RunJsonScript(string scriptData)
         {
             AssociatedBuilder.Invoke(new MethodInvoker(delegate ()
                 {
                     frmScriptEngine newEngine = new frmScriptEngine();
-                    newEngine.XmlData = scriptData;
+                    newEngine.JsonData = scriptData;
                     newEngine.CallBackForm = null;
                     newEngine.Show();
                 })
