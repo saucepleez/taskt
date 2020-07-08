@@ -27,6 +27,7 @@ using taskt.Core.Script;
 using taskt.Core.Server;
 using taskt.Core.Settings;
 using taskt.UI.CustomControls;
+using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms.Supplement_Forms;
 using Point = System.Drawing.Point;
 
@@ -207,7 +208,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
 
             //instantiate and populate display icons for commands
-            _uiImages = Images.UIImageList();
+            _uiImages = UIImage.UIImageList();
 
             //set image list
             _selectedTabScriptActions.SmallImageList = _uiImages;

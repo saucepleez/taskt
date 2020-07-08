@@ -34,9 +34,9 @@
             this.dgvSearchParameters = new System.Windows.Forms.DataGridView();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblParameterHeader = new System.Windows.Forms.Label();
-            this.uiBtnRefresh = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnOK = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnRefresh = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnCancel = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnOK = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.lblDirections = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearchParameters)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnRefresh)).BeginInit();
@@ -202,9 +202,9 @@
         private System.Windows.Forms.ComboBox cboIEWindow;
         private System.Windows.Forms.Label lblMainLogo;
         private System.Windows.Forms.Label lblParameterHeader;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnRefresh;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnOK;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnRefresh;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnCancel;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnOK;
         public System.Windows.Forms.DataGridView dgvSearchParameters;
         private System.Windows.Forms.Label lblDirections;
     }

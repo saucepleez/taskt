@@ -422,7 +422,37 @@
     <Compile Include="UI\CustomControls\CommandItemControl.Designer.cs">
       <DependentUpon>CommandItemControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CustomControls\CustomControls.cs">
+    <Compile Include="UI\CustomControls\CustomUIControls\UIElement.cs" />
+    <Compile Include="UI\CustomControls\CustomUIControls\UIFlowPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIImage.cs" />
+    <Compile Include="UI\CustomControls\CustomUIControls\UIListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIMenuStripColorTable.cs" />
+    <Compile Include="UI\CustomControls\CustomUIControls\UIPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIPictureButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UISplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UITabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UITreeView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\DTOs\Class.cs" />
@@ -627,9 +657,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControls\CommandItemControl.resx">
       <DependentUpon>CommandItemControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\CustomControls\CustomControls.resx">
-      <DependentUpon>CustomControls.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmAttendedMode.resx">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>

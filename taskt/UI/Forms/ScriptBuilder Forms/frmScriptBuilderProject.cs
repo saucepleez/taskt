@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using SimpleNLG.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +8,7 @@ using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Script;
-using taskt.UI.CustomControls;
+using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms.Supplement_Forms;
 using VBFileSystem = Microsoft.VisualBasic.FileIO.FileSystem;
 
@@ -48,30 +47,18 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 DialogResult result = CheckForUnsavedScripts();
                 if (result == DialogResult.Cancel)
                     return;
-
-                _scriptProjectPath = projectBuilder.NewProjectPath;
-                //Create new main script
+              
                 uiScriptTabControl.TabPages.Clear();
+                _scriptProjectPath = projectBuilder.NewProjectPath;
 
                 string mainScriptPath = Path.Combine(_scriptProjectPath, "Main.json");
                 string mainScriptName = Path.GetFileNameWithoutExtension(mainScriptPath);
+                UIListView mainScriptActions = NewLstScriptActions(mainScriptName);
+                List<ScriptVariable> mainScriptVariables = new List<ScriptVariable>();
+                ShowMessageCommand helloWorldCommand = new ShowMessageCommand();
 
-                TabPage newTabPage = new TabPage(mainScriptName);
-                uiScriptTabControl.Controls.Add(newTabPage);
-                newTabPage.Controls.Add(NewLstScriptActions(mainScriptName));
-                newTabPage.Controls.Add(pnlCommandHelper);
-
-                uiScriptTabControl.SelectedTab = newTabPage;
-                UpdateTabPage(newTabPage, mainScriptPath);
-
-                _selectedTabScriptActions = (UIListView)uiScriptTabControl.SelectedTab.Controls[0];
-                _selectedTabScriptActions.Items.Clear();
-                HideSearchInfo();
-
-                _scriptVariables = new List<ScriptVariable>();
-                var helloWorldCommand = new ShowMessageCommand();
                 helloWorldCommand.v_Message = "Hello World";
-                _selectedTabScriptActions.Items.Insert(0, CreateScriptCommandListViewItem(helloWorldCommand));
+                mainScriptActions.Items.Insert(0, CreateScriptCommandListViewItem(helloWorldCommand));
 
                 //Begin saving as main.xml
                 ClearSelectedListViewItems();
@@ -79,7 +66,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 try
                 {
                     //Serialize main script
-                    var mainScript = Script.SerializeScript(_selectedTabScriptActions.Items, _scriptVariables, mainScriptPath, projectBuilder.NewProjectName);
+                    var mainScript = Script.SerializeScript(mainScriptActions.Items, mainScriptVariables, 
+                                                            mainScriptPath, projectBuilder.NewProjectName);                  
                     //Create new project
                     Project proj = new Project(projectBuilder.NewProjectName);
                     _mainFileName = proj.Main;
@@ -137,7 +125,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             projectNode.Text = projectDirectoryInfo.Name;
             projectNode.Tag = projectDirectoryInfo.FullName;
             projectNode.Nodes.Add("Empty");
-            projectNode.ContextMenuStrip = cmsProjectFolderActions;
+            projectNode.ContextMenuStrip = cmsProjectMainFolderActions;          
             tvProject.Nodes.Add(projectNode);
             projectNode.Expand();
         }
@@ -188,7 +176,9 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 fileNode.Name = childFileInfo.Name;
                 fileNode.Text = childFileInfo.Name;
                 fileNode.Tag = childFileInfo.FullName;
-                fileNode.ContextMenuStrip = cmsProjectFileActions;
+                
+                if (fileNode.Name != _mainFileName && fileNode.Name != "project.config")
+                    fileNode.ContextMenuStrip = cmsProjectFileActions;
 
                 if (fileNode.Tag.ToString().ToLower().Contains(".json"))
                 {

@@ -36,8 +36,8 @@
             this.lblClasses = new System.Windows.Forms.Label();
             this.lblMethods = new System.Windows.Forms.Label();
             this.lblParameters = new System.Windows.Forms.Label();
-            this.upbLoadDLL = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
+            this.upbLoadDLL = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnOk = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             ((System.ComponentModel.ISupportInitialize)(this.upbLoadDLL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
             this.SuspendLayout();
@@ -186,8 +186,8 @@
         private System.Windows.Forms.Label lblClasses;
         private System.Windows.Forms.Label lblMethods;
         private System.Windows.Forms.Label lblParameters;
-        private CustomControls.UIPictureButton upbLoadDLL;
-        private CustomControls.UIPictureButton uiBtnOk;
+        private CustomControls.CustomUIControls.UIPictureButton upbLoadDLL;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnOk;
         public System.Windows.Forms.ListBox lstClasses;
         public System.Windows.Forms.ListBox lstMethods;
         public System.Windows.Forms.ListBox lstParameters;

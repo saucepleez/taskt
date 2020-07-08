@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Script;
 using taskt.UI.CustomControls;
+using taskt.UI.CustomControls.CustomUIControls;
 
 namespace taskt.UI.Forms.ScriptBuilder_Forms
 {

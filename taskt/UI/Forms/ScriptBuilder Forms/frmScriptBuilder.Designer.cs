@@ -38,8 +38,11 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiCopyFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMainNewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewScriptFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMainNewScriptFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPasteFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMainPasteFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRenameFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tmrNotify = new System.Windows.Forms.Timer(this.components);
             this.cmsScriptActions = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -53,45 +56,45 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.pnlControlContainer = new System.Windows.Forms.Panel();
-            this.grpSearch = new taskt.UI.CustomControls.UIGroupBox();
+            this.grpSearch = new taskt.UI.CustomControls.CustomUIControls.UIGroupBox();
             this.pbSearch = new System.Windows.Forms.PictureBox();
             this.lblCurrentlyViewing = new System.Windows.Forms.Label();
             this.lblTotalResults = new System.Windows.Forms.Label();
             this.txtCommandSearch = new System.Windows.Forms.TextBox();
-            this.grpSaveClose = new taskt.UI.CustomControls.UIGroupBox();
-            this.btnSequenceImport = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnKeep = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnClose = new taskt.UI.CustomControls.UIPictureButton();
-            this.grpFileActions = new taskt.UI.CustomControls.UIGroupBox();
-            this.uiBtnProject = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnImport = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnSaveAs = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnSave = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
-            this.grpRecordRun = new taskt.UI.CustomControls.UIGroupBox();
-            this.uiBtnRecordSequence = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnRunScript = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnScheduleManagement = new taskt.UI.CustomControls.UIPictureButton();
-            this.grpVariable = new taskt.UI.CustomControls.UIGroupBox();
-            this.uiBtnClearAll = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnSettings = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
+            this.grpSaveClose = new taskt.UI.CustomControls.CustomUIControls.UIGroupBox();
+            this.btnSequenceImport = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnKeep = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnClose = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.grpFileActions = new taskt.UI.CustomControls.CustomUIControls.UIGroupBox();
+            this.uiBtnProject = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnImport = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnSaveAs = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnSave = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnNew = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnOpen = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.grpRecordRun = new taskt.UI.CustomControls.CustomUIControls.UIGroupBox();
+            this.uiBtnRecordSequence = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnRunScript = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnScheduleManagement = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.grpVariable = new taskt.UI.CustomControls.CustomUIControls.UIGroupBox();
+            this.uiBtnClearAll = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnSettings = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnAddVariable = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
-            this.pnlMain = new taskt.UI.CustomControls.UIPanel();
+            this.pnlMain = new taskt.UI.CustomControls.CustomUIControls.UIPanel();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblCoordinatorInfo = new System.Windows.Forms.Label();
-            this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
-            this.uiPaneTabs = new taskt.UI.CustomControls.UITabControl();
+            this.splitContainer1 = new taskt.UI.CustomControls.CustomUIControls.UISplitContainer();
+            this.uiPaneTabs = new taskt.UI.CustomControls.CustomUIControls.UITabControl();
             this.tpProject = new System.Windows.Forms.TabPage();
-            this.tvProject = new taskt.UI.CustomControls.UITreeView();
+            this.tvProject = new taskt.UI.CustomControls.CustomUIControls.UITreeView();
             this.imgListProjectPane = new System.Windows.Forms.ImageList(this.components);
             this.tpCommands = new System.Windows.Forms.TabPage();
-            this.tvCommands = new taskt.UI.CustomControls.UITreeView();
-            this.uiScriptTabControl = new taskt.UI.CustomControls.UITabControl();
+            this.tvCommands = new taskt.UI.CustomControls.CustomUIControls.UITreeView();
+            this.uiScriptTabControl = new taskt.UI.CustomControls.CustomUIControls.UITabControl();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
-            this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
+            this.flwRecentFiles = new taskt.UI.CustomControls.CustomUIControls.UIFlowLayoutPanel();
             this.lblFilesMissing = new System.Windows.Forms.Label();
             this.pbRecentFiles = new System.Windows.Forms.PictureBox();
             this.pbLinks = new System.Windows.Forms.PictureBox();
@@ -107,7 +110,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pnlDivider = new System.Windows.Forms.Panel();
-            this.msTasktMenu = new taskt.UI.CustomControls.UIMenuStrip();
+            this.msTasktMenu = new taskt.UI.CustomControls.CustomUIControls.UIMenuStrip();
             this.fileActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,6 +142,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.cmsScriptTabActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiCloseTab = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCloseAllButThis = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsProjectMainFolderActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsProjectFolderActions.SuspendLayout();
             this.cmsScriptActions.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
@@ -221,6 +225,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiNewFolder.Text = "New Folder";
             this.tsmiNewFolder.Click += new System.EventHandler(this.tsmiNewFolder_Click);
             // 
+            // tsmiMainNewFolder
+            // 
+            this.tsmiMainNewFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiNewFolder.Image")));
+            this.tsmiMainNewFolder.Name = "tsmiMainNewFolder";
+            this.tsmiMainNewFolder.Size = new System.Drawing.Size(198, 28);
+            this.tsmiMainNewFolder.Text = "New Folder";
+            this.tsmiMainNewFolder.Click += new System.EventHandler(this.tsmiNewFolder_Click);
+            // 
             // tsmiNewScriptFile
             // 
             this.tsmiNewScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiNewScriptFile.Image")));
@@ -229,6 +241,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiNewScriptFile.Text = "New Script File";
             this.tsmiNewScriptFile.Click += new System.EventHandler(this.tsmiNewScriptFile_Click);
             // 
+            // tsmiMainNewScriptFile
+            // 
+            this.tsmiMainNewScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiNewScriptFile.Image")));
+            this.tsmiMainNewScriptFile.Name = "tsmiMainNewScriptFile";
+            this.tsmiMainNewScriptFile.Size = new System.Drawing.Size(198, 28);
+            this.tsmiMainNewScriptFile.Text = "New Script File";
+            this.tsmiMainNewScriptFile.Click += new System.EventHandler(this.tsmiNewScriptFile_Click);
+            // 
             // tsmiPasteFolder
             // 
             this.tsmiPasteFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiPasteFolder.Image")));
@@ -236,6 +256,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiPasteFolder.Size = new System.Drawing.Size(198, 28);
             this.tsmiPasteFolder.Text = "Paste";
             this.tsmiPasteFolder.Click += new System.EventHandler(this.tsmiPasteFolder_Click);
+            // 
+            // tsmiMainPasteFolder
+            // 
+            this.tsmiMainPasteFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiPasteFolder.Image")));
+            this.tsmiMainPasteFolder.Name = "tsmiMainPasteFolder";
+            this.tsmiMainPasteFolder.Size = new System.Drawing.Size(198, 28);
+            this.tsmiMainPasteFolder.Text = "Paste";
+            this.tsmiMainPasteFolder.Click += new System.EventHandler(this.tsmiPasteFolder_Click);
             // 
             // tsmiRenameFolder
             // 
@@ -1202,7 +1230,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.addProjectToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addProjectToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
             this.addProjectToolStripMenuItem.Name = "addProjectToolStripMenuItem";
-            this.addProjectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addProjectToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.addProjectToolStripMenuItem.Text = "Project Manager";
             this.addProjectToolStripMenuItem.Click += new System.EventHandler(this.addProjectToolStripMenuItem_Click);
             // 
@@ -1212,7 +1240,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.newToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.newToolStripMenuItem.Text = "New File";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -1221,7 +1249,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.openToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.openToolStripMenuItem.Text = "Open Existing File";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -1230,7 +1258,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.importFileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.importFileToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
             this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
-            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.importFileToolStripMenuItem.Text = "Import File";
             this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
             // 
@@ -1239,7 +1267,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.saveToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_save;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -1248,7 +1276,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.saveAsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.saveAsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_saveas;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -1257,7 +1285,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.restartApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.restartApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_restart;
             this.restartApplicationToolStripMenuItem.Name = "restartApplicationToolStripMenuItem";
-            this.restartApplicationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.restartApplicationToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.restartApplicationToolStripMenuItem.Text = "Restart Application";
             this.restartApplicationToolStripMenuItem.Click += new System.EventHandler(this.restartApplicationToolStripMenuItem_Click);
             // 
@@ -1266,7 +1294,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.closeApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.closeApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_close;
             this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
-            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.closeApplicationToolStripMenuItem.Text = "Close Application";
             this.closeApplicationToolStripMenuItem.Click += new System.EventHandler(this.closeApplicationToolStripMenuItem_Click);
             // 
@@ -1484,6 +1512,18 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiCloseAllButThis.Text = "Close All But This";
             this.tsmiCloseAllButThis.Click += new System.EventHandler(this.tsmiCloseAllButThis_Click);
             // 
+            // cmsProjectMainFolderActions
+            // 
+            this.cmsProjectMainFolderActions.AllowDrop = true;
+            this.cmsProjectMainFolderActions.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.cmsProjectMainFolderActions.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsProjectMainFolderActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiMainNewFolder,
+            this.tsmiMainNewScriptFile,
+            this.tsmiMainPasteFolder});
+            this.cmsProjectMainFolderActions.Name = "cmsProjectMainFolderActions";
+            this.cmsProjectMainFolderActions.Size = new System.Drawing.Size(211, 32);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1571,7 +1611,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         private ToolStripMenuItem tsmiRenameFolder;
         private Panel pnlControlContainer;
         private TableLayoutPanel tlpControls;
-        private CustomControls.UIMenuStrip msTasktMenu;
+        private CustomControls.CustomUIControls.UIMenuStrip msTasktMenu;
         private ToolStripMenuItem fileActionsToolStripMenuItem;
         private ToolStripMenuItem addProjectToolStripMenuItem;
         private ToolStripMenuItem newToolStripMenuItem;
@@ -1595,52 +1635,55 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         private ToolStripMenuItem tsSearchButton;
         private ToolStripMenuItem tsSearchResult;
         private Panel pnlDivider;
-        private CustomControls.UISplitContainer splitContainer1;
-        private CustomControls.UITabControl uiPaneTabs;
+        private CustomControls.CustomUIControls.UISplitContainer splitContainer1;
+        private CustomControls.CustomUIControls.UITabControl uiPaneTabs;
         private TabPage tpProject;
-        private CustomControls.UITreeView tvProject;
+        private CustomControls.CustomUIControls.UITreeView tvProject;
         private TabPage tpCommands;
-        private CustomControls.UITreeView tvCommands;
+        private CustomControls.CustomUIControls.UITreeView tvCommands;
         private Panel pnlHeader;
-        private CustomControls.UIPanel pnlMain;
+        private CustomControls.CustomUIControls.UIPanel pnlMain;
         private Label lblMainLogo;
         private Label lblCoordinatorInfo;
         private Panel pnlStatus;
-        private CustomControls.UIGroupBox grpSearch;
+        private CustomControls.CustomUIControls.UIGroupBox grpSearch;
         private PictureBox pbSearch;
         private Label lblCurrentlyViewing;
         private Label lblTotalResults;
         private TextBox txtCommandSearch;
-        private CustomControls.UIGroupBox grpSaveClose;
-        private CustomControls.UIPictureButton btnSequenceImport;
-        private CustomControls.UIPictureButton uiBtnKeep;
-        private CustomControls.UIPictureButton uiBtnClose;
-        private CustomControls.UIGroupBox grpFileActions;
-        private CustomControls.UIPictureButton uiBtnProject;
-        private CustomControls.UIPictureButton uiBtnImport;
-        private CustomControls.UIPictureButton uiBtnSaveAs;
-        private CustomControls.UIPictureButton uiBtnSave;
-        private CustomControls.UIPictureButton uiBtnNew;
-        private CustomControls.UIPictureButton uiBtnOpen;
-        private CustomControls.UIGroupBox grpRecordRun;
-        private CustomControls.UIPictureButton uiBtnRecordSequence;
-        private CustomControls.UIPictureButton uiBtnRunScript;
-        private CustomControls.UIPictureButton uiBtnScheduleManagement;
-        private CustomControls.UIGroupBox grpVariable;
-        private CustomControls.UIPictureButton uiBtnClearAll;
-        private CustomControls.UIPictureButton uiBtnSettings;
-        private CustomControls.UIPictureButton uiBtnAddVariable;
+        private CustomControls.CustomUIControls.UIGroupBox grpSaveClose;
+        private CustomControls.CustomUIControls.UIPictureButton btnSequenceImport;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnKeep;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnClose;
+        private CustomControls.CustomUIControls.UIGroupBox grpFileActions;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnProject;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnImport;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnSaveAs;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnSave;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnNew;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnOpen;
+        private CustomControls.CustomUIControls.UIGroupBox grpRecordRun;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnRecordSequence;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnRunScript;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnScheduleManagement;
+        private CustomControls.CustomUIControls.UIGroupBox grpVariable;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnClearAll;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnSettings;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnAddVariable;
         private ToolStripMenuItem tsmiNewFolder;
+        private ToolStripMenuItem tsmiMainNewFolder;
         private ToolStripMenuItem tsmiNewScriptFile;
+        private ToolStripMenuItem tsmiMainNewScriptFile;
         private ContextMenuStrip cmsProjectFileActions;
         private ToolStripMenuItem tsmiDeleteFile;
         private ToolStripMenuItem tsmiCopyFile;
         private ToolStripMenuItem tsmiRenameFile;
         private ToolStripMenuItem tsmiPasteFolder;
+        private ToolStripMenuItem tsmiMainPasteFolder;
         private ImageList imgListProjectPane;
-        private CustomControls.UITabControl uiScriptTabControl;
+        private CustomControls.CustomUIControls.UITabControl uiScriptTabControl;
         private Panel pnlCommandHelper;
-        private CustomControls.UIFlowLayoutPanel flwRecentFiles;
+        private CustomControls.CustomUIControls.UIFlowLayoutPanel flwRecentFiles;
         private Label lblFilesMissing;
         private PictureBox pbRecentFiles;
         private PictureBox pbLinks;
@@ -1659,6 +1702,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         private ContextMenuStrip cmsScriptTabActions;
         private ToolStripMenuItem tsmiCloseTab;
         private ToolStripMenuItem tsmiCloseAllButThis;
+        private ContextMenuStrip cmsProjectMainFolderActions;
     }
 }
 

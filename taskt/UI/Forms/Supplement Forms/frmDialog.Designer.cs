@@ -33,9 +33,9 @@
             this.autoCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.lblAutoClose = new System.Windows.Forms.Label();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlControlContainer = new taskt.UI.CustomControls.UIPanel();
-            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
+            this.pnlControlContainer = new taskt.UI.CustomControls.CustomUIControls.UIPanel();
+            this.uiBtnOk = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnCancel = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.txtMessage = new System.Windows.Forms.RichTextBox();
             this.tlpMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
@@ -163,12 +163,12 @@
 
         #endregion
 
-        private taskt.UI.CustomControls.UIPictureButton uiBtnOk;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnOk;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnCancel;
         private System.Windows.Forms.Timer autoCloseTimer;
         private System.Windows.Forms.Label lblAutoClose;
         private System.Windows.Forms.TableLayoutPanel tlpMain;
-        private taskt.UI.CustomControls.UIPanel pnlControlContainer;
+        private taskt.UI.CustomControls.CustomUIControls.UIPanel pnlControlContainer;
         private System.Windows.Forms.RichTextBox txtMessage;
     }
 }

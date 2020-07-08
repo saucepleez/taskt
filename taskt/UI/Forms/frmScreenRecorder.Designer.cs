@@ -48,7 +48,7 @@
             this.chkCaptureWindowEvents = new System.Windows.Forms.CheckBox();
             this.chkGroupIntoSequence = new System.Windows.Forms.CheckBox();
             this.chkCaptureClicks = new System.Windows.Forms.CheckBox();
-            this.uiBtnRecord = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnRecord = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.pnlOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnRecord)).BeginInit();
             this.SuspendLayout();
@@ -369,7 +369,7 @@
         private System.Windows.Forms.CheckBox chkCaptureKeyboard;
         private System.Windows.Forms.Label lblRecording;
         private System.Windows.Forms.Panel pnlOptions;
-        private CustomControls.UIPictureButton uiBtnRecord;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnRecord;
         private System.Windows.Forms.CheckBox chkCaptureClicks;
         private System.Windows.Forms.CheckBox chkGroupIntoSequence;
         private System.Windows.Forms.CheckBox chkCaptureWindowEvents;

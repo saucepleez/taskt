@@ -36,8 +36,8 @@
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblKillProcNote = new System.Windows.Forms.Label();
             this.lblAction = new System.Windows.Forms.Label();
-            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnPause = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnCancel = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnPause = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.pbBotIcon = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnPause)).BeginInit();
@@ -185,8 +185,8 @@
         private System.Windows.Forms.Timer tmrNotify;
         private System.Windows.Forms.Label lblCloseTimer;
         private System.Windows.Forms.Label lblMainLogo;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnPause;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnCancel;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnPause;
         private System.Windows.Forms.Label lblKillProcNote;
         private System.Windows.Forms.PictureBox pbBotIcon;
         private System.Windows.Forms.Label lblAction;

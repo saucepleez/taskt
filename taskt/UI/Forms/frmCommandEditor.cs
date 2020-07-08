@@ -21,6 +21,7 @@ using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Script;
 using taskt.UI.CustomControls;
+using taskt.UI.CustomControls.CustomUIControls;
 
 namespace taskt.UI.Forms
 {

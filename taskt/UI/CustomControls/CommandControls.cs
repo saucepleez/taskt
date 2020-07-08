@@ -11,9 +11,10 @@ using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Settings;
+using taskt.Properties;
+using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms;
 using taskt.UI.Forms.Supplement_Forms;
-using taskt.Properties;
 
 namespace taskt.UI.CustomControls
 {
@@ -134,6 +135,7 @@ namespace taskt.UI.CustomControls
             inputToolTip.IsBalloon = true;
             inputToolTip.ShowAlways = true;
             inputToolTip.ToolTipTitle = label.Text;
+            inputToolTip.AutoPopDelay = 15000;
             inputToolTip.SetToolTip(label, toolTipText);
         }
 

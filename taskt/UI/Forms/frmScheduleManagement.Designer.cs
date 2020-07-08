@@ -48,8 +48,8 @@
             this.colChangeTaskStatus = new System.Windows.Forms.DataGridViewButtonColumn();
             this.bgwGetSchedulingInfo = new System.ComponentModel.BackgroundWorker();
             this.tmrGetSchedulingInfo = new System.Windows.Forms.Timer(this.components);
-            this.uiBtnShowScheduleManager = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnShowScheduleManager = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnOk = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cboRecurType = new System.Windows.Forms.ComboBox();
             this.lblRecurrence = new System.Windows.Forms.Label();
@@ -417,7 +417,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtAppPath;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnOk;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnOk;
         private System.Windows.Forms.ComboBox cboSelectedScript;
         private System.Windows.Forms.Label lblMainLogo;
         private System.Windows.Forms.Label lblScheduledScripts;
@@ -432,7 +432,7 @@
         private System.Windows.Forms.DataGridViewButtonColumn colChangeTaskStatus;
         private System.ComponentModel.BackgroundWorker bgwGetSchedulingInfo;
         private System.Windows.Forms.Timer tmrGetSchedulingInfo;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnShowScheduleManager;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnShowScheduleManager;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DateTimePicker dtStartTime;
         private System.Windows.Forms.RadioButton rdoEndByDate;

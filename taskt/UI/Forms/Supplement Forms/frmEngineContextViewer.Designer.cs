@@ -33,7 +33,7 @@
             this.tlpContextViewer = new System.Windows.Forms.TableLayoutPanel();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.pnlDialogResult = new System.Windows.Forms.Panel();
-            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnOk = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.tlpContextViewer.SuspendLayout();
             this.pnlDialogResult.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
@@ -128,7 +128,7 @@
         private System.Windows.Forms.TreeView tvContext;
         private System.Windows.Forms.TableLayoutPanel tlpContextViewer;
         private System.Windows.Forms.Panel pnlDialogResult;
-        private CustomControls.UIPictureButton uiBtnOk;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnOk;
         private System.Windows.Forms.Label lblMainLogo;
     }
 }

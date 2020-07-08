@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptVariables));
             this.lblMainLogo = new System.Windows.Forms.Label();
-            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnOK = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnCancel = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnOK = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.tlpVariables = new System.Windows.Forms.TableLayoutPanel();
-            this.tvScriptVariables = new taskt.UI.CustomControls.UITreeView();
+            this.tvScriptVariables = new taskt.UI.CustomControls.CustomUIControls.UITreeView();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.lblDefineName = new System.Windows.Forms.Label();
-            this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnNew = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.pnlBottom = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
@@ -214,13 +214,13 @@
 
         #endregion
         private System.Windows.Forms.Label lblMainLogo;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnCancel;
-        private taskt.UI.CustomControls.UIPictureButton uiBtnOK;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnCancel;
+        private taskt.UI.CustomControls.CustomUIControls.UIPictureButton uiBtnOK;
         private System.Windows.Forms.TableLayoutPanel tlpVariables;
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Panel pnlBottom;
-        private CustomControls.UITreeView tvScriptVariables;
-        private CustomControls.UIPictureButton uiBtnNew;
+        private CustomControls.CustomUIControls.UITreeView tvScriptVariables;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnNew;
         private System.Windows.Forms.Label lblDefineName;
     }
 }

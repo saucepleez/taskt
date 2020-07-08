@@ -32,8 +32,8 @@
             this.lblXPosition = new System.Windows.Forms.Label();
             this.lblLocal = new System.Windows.Forms.Label();
             this.lblRemote = new System.Windows.Forms.Label();
-            this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnOk = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
+            this.uiBtnCancel = new taskt.UI.CustomControls.CustomUIControls.UIPictureButton();
             this.lblText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
@@ -150,8 +150,8 @@
         private System.Windows.Forms.Label lblXPosition;
         private System.Windows.Forms.Label lblLocal;
         private System.Windows.Forms.Label lblRemote;
-        private CustomControls.UIPictureButton uiBtnOk;
-        private CustomControls.UIPictureButton uiBtnCancel;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnOk;
+        private CustomControls.CustomUIControls.UIPictureButton uiBtnCancel;
         private System.Windows.Forms.Label lblText;
     }
 }
