@@ -847,6 +847,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\command-dictionary.png" />
+    <None Include="Resources\command-folders.png" />
+    <None Include="Resources\command-database2.png" />
+    <None Include="Resources\command-password.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

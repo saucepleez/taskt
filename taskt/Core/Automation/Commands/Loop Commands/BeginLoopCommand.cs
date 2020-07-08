@@ -17,6 +17,7 @@ using taskt.UI;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.UI.Forms.Supplement_Forms;
+using taskt.Properties;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -99,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             _recorderControl.Padding = new Padding(10, 0, 0, 0);
             _recorderControl.ForeColor = Color.AliceBlue;
             _recorderControl.Name = "guirecorder_helper";
-            _recorderControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+            _recorderControl.CommandImage = Resources.command_camera;
             _recorderControl.CommandDisplay = "Element Recorder";
             _recorderControl.Click += ShowLoopElementRecorder;
             _recorderControl.Hide();

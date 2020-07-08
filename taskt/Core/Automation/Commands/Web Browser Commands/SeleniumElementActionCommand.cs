@@ -20,6 +20,7 @@ using taskt.Core.Automation.Engine;
 using taskt.Core.Script;
 using taskt.Core.Utilities.CommandUtilities;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.Properties;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.UI.Forms.Supplement_Forms;
@@ -474,7 +475,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.Padding = new Padding(10, 0, 0, 0);
             helperControl.ForeColor = Color.AliceBlue;
             helperControl.Font = new Font("Segoe UI Semilight", 10);
-            helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            helperControl.CommandImage = Resources.command_camera;
             helperControl.CommandDisplay = "Element Recorder";
             helperControl.Click += ShowRecorder;
 

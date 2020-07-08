@@ -9,6 +9,7 @@ using System.Data.OleDb;
 using System.Drawing;
 using taskt.Core.Utilities.CommandUtilities;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.Properties;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -116,7 +117,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.ForeColor = Color.AliceBlue;
             helperControl.Font = new Font("Segoe UI Semilight", 10);
             helperControl.Name = "connection_helper";
-            helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            helperControl.CommandImage = Resources.command_database2;
             helperControl.CommandDisplay = "Build Connection String";
             helperControl.Click += (sender, e) => Button_Click(sender, e);
 
@@ -130,7 +131,7 @@ namespace taskt.Core.Automation.Commands
             testConnectionControl.ForeColor = Color.AliceBlue;
             testConnectionControl.Font = new Font("Segoe UI Semilight", 10);
             testConnectionControl.Name = "connection_helper";
-            testConnectionControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            testConnectionControl.CommandImage = Resources.command_database2;
             testConnectionControl.CommandDisplay = "Test Connection";
             testConnectionControl.Click += (sender, e) => TestConnection(sender, e);
             RenderedControls.Add(testConnectionControl);
@@ -154,7 +155,7 @@ namespace taskt.Core.Automation.Commands
             passwordHelperControl.ForeColor = Color.AliceBlue;
             passwordHelperControl.Font = new Font("Segoe UI Semilight", 10);
             passwordHelperControl.Name = "show_pass_helper";
-            passwordHelperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            passwordHelperControl.CommandImage = Resources.command_password;
             passwordHelperControl.CommandDisplay = "Show Password";
             passwordHelperControl.Click += (sender, e) => TogglePasswordChar(passwordHelperControl, e);
 
@@ -166,7 +167,7 @@ namespace taskt.Core.Automation.Commands
             encryptHelperControl.ForeColor = Color.AliceBlue;
             encryptHelperControl.Font = new Font("Segoe UI Semilight", 10);
             encryptHelperControl.Name = "show_pass_helper";
-            encryptHelperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            encryptHelperControl.CommandImage = Resources.command_password;
             encryptHelperControl.CommandDisplay = "Encrypt Password";
             encryptHelperControl.Click += (sender, e) => EncryptPassword(passwordHelperControl, e);
             RenderedControls.Add(encryptHelperControl);

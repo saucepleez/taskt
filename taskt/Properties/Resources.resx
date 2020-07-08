@@ -322,4 +322,13 @@
   <data name="command_dictionary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-dictionary.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="command_database2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-database2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_folders" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-folders.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_password" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-password.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

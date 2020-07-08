@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using System.Drawing;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.Properties;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -211,7 +212,7 @@ namespace taskt.Core.Automation.Commands
             AddRowControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             AddRowControl.ForeColor = Color.AliceBlue;
             AddRowControl.Font = new Font("Segoe UI Semilight", 10);
-            AddRowControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
+            AddRowControl.CommandImage = Resources.command_input;
             AddRowControl.CommandDisplay = "Add Input Parameter";
             AddRowControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
 

@@ -8,6 +8,7 @@ using taskt.UI.CustomControls;
 using System.Data.OleDb;
 using System.Drawing;
 using taskt.Core.Utilities.CommonUtilities;
+using taskt.Properties;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -247,7 +248,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.ForeColor = Color.AliceBlue;
             helperControl.Font = new Font("Segoe UI Semilight", 10);
             helperControl.Name = "add_param_helper";
-            helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
+            helperControl.CommandImage = Resources.command_database2;
             helperControl.CommandDisplay = "Add Parameter";
             helperControl.Click += (sender, e) => AddParameter(sender, e);
             QueryParametersControls.Add(helperControl);

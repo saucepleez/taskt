@@ -7,6 +7,7 @@ using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.Forms.Supplement_Forms;
+using taskt.Properties;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -102,7 +103,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             helperControl.ForeColor = Color.AliceBlue;
             helperControl.Font = new Font("Segoe UI Semilight", 10);
-            helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
+            helperControl.CommandImage = Resources.command_web;
             helperControl.CommandDisplay = "Launch HTML Builder";
             helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
 

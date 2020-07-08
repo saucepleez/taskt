@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $"[Folder Path '{Path.Combine(v_DestinationDirectory,v_NewFolderName)}']";
+            return base.GetDisplayValue() + $"[Folder Path '{v_DestinationDirectory}\\{v_NewFolderName}']";
         }
     }
 }

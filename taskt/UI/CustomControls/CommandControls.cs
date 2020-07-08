@@ -13,6 +13,7 @@ using taskt.Core.Automation.Commands;
 using taskt.Core.Settings;
 using taskt.UI.Forms;
 using taskt.UI.Forms.Supplement_Forms;
+using taskt.Properties;
 
 namespace taskt.UI.CustomControls
 {
@@ -211,28 +212,28 @@ namespace taskt.UI.CustomControls
                 {
                     case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
+                        helperControl.CommandImage = Resources.command_parse;
                         helperControl.CommandDisplay = "Insert Variable";
                         helperControl.Click += (sender, e) => ShowVariableSelector(sender, e);
                         break;
 
                     case PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
                         //show file selector
-                        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                        helperControl.CommandImage = Resources.command_files;
                         helperControl.CommandDisplay = "Select a File";
                         helperControl.Click += (sender, e) => ShowFileSelector(sender, e, editor);
                         break;
 
                     case PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
                         //show file selector
-                        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                        helperControl.CommandImage = Resources.command_folders;
                         helperControl.CommandDisplay = "Select a Folder";
                         helperControl.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
                         break;
 
                     case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
                         //show file selector
-                        helperControl.CommandImage = Images.GetUIImage("OCRCommand");
+                        helperControl.CommandImage = Resources.command_camera;
                         helperControl.CommandDisplay = "Capture Reference Image";
                         helperControl.Click += (sender, e) => ShowImageCapture(sender, e);
 
@@ -240,7 +241,7 @@ namespace taskt.UI.CustomControls
                         testRun.Padding = new Padding(10, 0, 0, 0);
                         testRun.ForeColor = Color.AliceBlue;
 
-                        testRun.CommandImage = Images.GetUIImage("OCRCommand");
+                        testRun.CommandImage = Resources.command_camera;
                         testRun.CommandDisplay = "Run Image Recognition Test";
                         testRun.ForeColor = Color.AliceBlue;
                         testRun.Tag = targetControls.FirstOrDefault();
@@ -250,54 +251,54 @@ namespace taskt.UI.CustomControls
 
                     case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("RunScriptCommand");
+                        helperControl.CommandImage = Resources.command_script;
                         helperControl.CommandDisplay = "Code Builder";
                         helperControl.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
                         break;
 
                     case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
-                        helperControl.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
+                        helperControl.CommandImage = Resources.command_input;
                         helperControl.CommandDisplay = "Capture Mouse Position";
                         helperControl.ForeColor = Color.AliceBlue;
                         helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
                         break;
                     case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                        helperControl.CommandImage = Resources.command_camera;
                         helperControl.CommandDisplay = "Element Recorder";
                         helperControl.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
                         break;
                     case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                        helperControl.CommandImage = Resources.command_run_code;
                         helperControl.CommandDisplay = "Generate Parameters";
                         helperControl.Click += (sender, e) => GenerateDLLParameters(sender, e);
                         break;
                     case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                        helperControl.CommandImage = Resources.command_run_code;
                         helperControl.CommandDisplay = "Launch DLL Explorer";
                         helperControl.Click += (sender, e) => ShowDLLExplorer(sender, e);
                         break;
                     case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                        helperControl.CommandImage = Resources.command_run_code;
                         helperControl.CommandDisplay = "Add Input Parameter";
                         helperControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
                         break;
                     case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
-                        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                        helperControl.CommandImage = Resources.command_web;
                         helperControl.CommandDisplay = "Launch HTML Builder";
                         helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
                         break;
                     case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
+                        helperControl.CommandImage = Resources.command_begin_if;
                         helperControl.CommandDisplay = "Add New If Statement";
                         break;
                     case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
                         //show variable selector
-                        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
+                        helperControl.CommandImage = Resources.command_startloop;
                         helperControl.CommandDisplay = "Add New Loop Statement";
                         break;
 

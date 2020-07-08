@@ -72,7 +72,7 @@ namespace taskt.UI.CustomControls
 
         private void CommandItemControl_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(taskt.Properties.Resources.taskt_command_helper, 0, 0, 16, 16);
+            e.Graphics.DrawImage(this.CommandImage, 0, 0, 16, 16);
             e.Graphics.DrawString(this.CommandDisplay, this.Font, new SolidBrush(this.ForeColor), 18, 0);
         }
 

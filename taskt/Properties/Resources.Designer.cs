@@ -253,6 +253,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_database2 {
+            get {
+                object obj = ResourceManager.GetObject("command_database2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_dictionary {
             get {
                 object obj = ResourceManager.GetObject("command_dictionary", resourceCulture);
@@ -323,6 +333,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_folders {
+            get {
+                object obj = ResourceManager.GetObject("command_folders", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_function {
             get {
                 object obj = ResourceManager.GetObject("command_function", resourceCulture);
@@ -366,6 +386,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_parse {
             get {
                 object obj = ResourceManager.GetObject("command_parse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_password {
+            get {
+                object obj = ResourceManager.GetObject("command_password", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
