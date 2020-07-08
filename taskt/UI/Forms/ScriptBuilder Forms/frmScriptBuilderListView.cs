@@ -14,6 +14,8 @@ using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.UI.Forms.ScriptBuilder_Forms
 {
+    using System.Windows.Forms.VisualStyles;
+
     public partial class frmScriptBuilder : Form
     {
         #region ListView Events
@@ -301,7 +303,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     CreateUndoSnapshot();
                     selectedCommandItem.Tag = editCommand.SelectedCommand;
                     selectedCommandItem.Text = editCommand.SelectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
-                    selectedCommandItem.SubItems.Add(editCommand.SelectedCommand.GetDisplayValue());                  
+                    selectedCommandItem.SubItems.Add(editCommand.SelectedCommand.GetDisplayValue());
                 }
             }
         }
@@ -391,7 +393,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
                 foreach (ListViewItem item in _rowsSelectedForCopy)
                 {
-                    ScriptCommand duplicatedCommand = (ScriptCommand)Common.Clone(item.Tag);
+                    dynamic duplicatedCommand = Common.Clone(item.Tag);
                     duplicatedCommand.GenerateID();
                     _selectedTabScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
                     destinationIndex += 1;
@@ -455,7 +457,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             ((ScriptActionTag)_selectedTabScriptActions.Tag).UndoList.Add(itemList);
 
             if (((ScriptActionTag)_selectedTabScriptActions.Tag).UndoList.Count > 10)
-                ((ScriptActionTag)_selectedTabScriptActions.Tag).UndoList.RemoveAt(0);         
+                ((ScriptActionTag)_selectedTabScriptActions.Tag).UndoList.RemoveAt(0);
         }
 
         private void CreateRedoSnapshot()
@@ -637,7 +639,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     modifiedBounds.X += indentPixels;
 
                     //draw string
-                    e.Graphics.DrawString(command.GetDisplayValue(), _selectedTabScriptActions.Font, 
+                    e.Graphics.DrawString(command.GetDisplayValue(), _selectedTabScriptActions.Font,
                                           commandNameBrush, modifiedBounds);
                     break;
             }

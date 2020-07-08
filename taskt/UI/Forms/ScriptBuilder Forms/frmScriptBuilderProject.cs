@@ -53,7 +53,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 //Create new main script
                 uiScriptTabControl.TabPages.Clear();
 
-                string mainScriptPath = Path.Combine(_scriptProjectPath, "Main.xml");
+                string mainScriptPath = Path.Combine(_scriptProjectPath, "Main.json");
                 string mainScriptName = Path.GetFileNameWithoutExtension(mainScriptPath);
 
                 TabPage newTabPage = new TabPage(mainScriptName);
@@ -79,7 +79,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 try
                 {
                     //Serialize main script
-                    var mainScript = Script.SerializeScript(_selectedTabScriptActions.Items, _scriptVariables, mainScriptPath, projectBuilder.NewProjectName);                  
+                    var mainScript = Script.SerializeScript(_selectedTabScriptActions.Items, _scriptVariables, mainScriptPath, projectBuilder.NewProjectName);
                     //Create new project
                     Project proj = new Project(projectBuilder.NewProjectName);
                     _mainFileName = proj.Main;
@@ -190,7 +190,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 fileNode.Tag = childFileInfo.FullName;
                 fileNode.ContextMenuStrip = cmsProjectFileActions;
 
-                if (fileNode.Tag.ToString().ToLower().Contains(".xml"))
+                if (fileNode.Tag.ToString().ToLower().Contains(".json"))
                 {
                     fileNode.ImageIndex = 1; //script file icon
                     fileNode.SelectedImageIndex = 1;
@@ -216,7 +216,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     fileNode.ImageIndex = 2; //default file icon
                     fileNode.SelectedImageIndex = 2;
                 }
-                
+
                 parentNode.Nodes.Add(fileNode);
             }
         }
@@ -241,9 +241,9 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 try
                 {
                     string selectedNodePath = tvProject.SelectedNode.Tag.ToString();
-                    string currentOpenScriptFilePath = _scriptFilePath;               
+                    string currentOpenScriptFilePath = _scriptFilePath;
 
-                    if (File.Exists(selectedNodePath) && selectedNodePath.ToLower().Contains(".xml"))                                                     
+                    if (File.Exists(selectedNodePath) && selectedNodePath.ToLower().Contains(".json"))
                         OpenFile(selectedNodePath);
                     else if (File.Exists(selectedNodePath))
                         Process.Start(selectedNodePath);
@@ -252,7 +252,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 {
                     Notify("An Error Occured: " + ex.Message);
                 }
-            }           
+            }
         }
 
         private void tvProject_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -290,8 +290,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         private void tsmiCopyFolder_Click(object sender, EventArgs e)
         {
             try
-            {                
-                string selectedNodePath = tvProject.SelectedNode.Tag.ToString();              
+            {
+                string selectedNodePath = tvProject.SelectedNode.Tag.ToString();
                 Clipboard.SetData(DataFormats.Text, selectedNodePath);
             }
             catch (Exception ex)
@@ -408,7 +408,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 }
                 else
                     throw new Exception("Attempted to paste something that isn't a file or folder");
-                
+
             }
             catch (Exception ex)
             {
@@ -422,7 +422,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             {
                 string selectedNodePath = tvProject.SelectedNode.Tag.ToString();
                 if (selectedNodePath != _scriptProjectPath)
-                {                    
+                {
                     DirectoryInfo selectedNodeDirectoryInfo = new DirectoryInfo(selectedNodePath);
                     string newName = Interaction.InputBox("Enter the new name of the folder", "Rename Folder");
 
@@ -445,7 +445,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     tvProject.SelectedNode.Text = newName;
                     tvProject.SelectedNode.Tag = newPath;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -458,7 +458,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             try
             {
                 string selectedNodePath = tvProject.SelectedNode.Tag.ToString();
-                string newFilePath = Path.Combine(selectedNodePath, "New Script.xml");
+                string newFilePath = Path.Combine(selectedNodePath, "New Script.json");
                 UIListView newScriptActions = NewLstScriptActions();
                 List<ScriptVariable> newScripVariables = new List<ScriptVariable>();
                 var helloWorldCommand = new ShowMessageCommand();
@@ -466,7 +466,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 newScriptActions.Items.Insert(0, CreateScriptCommandListViewItem(helloWorldCommand));
 
                 if (!File.Exists(newFilePath))
-                {                  
+                {
                     Script.SerializeScript(newScriptActions.Items, newScripVariables, newFilePath, _scriptProject.ProjectName);
                     NewNode(tvProject.SelectedNode, newFilePath, "file");
                     OpenFile(newFilePath);
@@ -479,14 +479,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     {
                         string newDirectoryPath = Path.GetDirectoryName(newFilePath);
                         string newFileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFilePath);
-                        newerFilePath = Path.Combine(newDirectoryPath, $"{newFileNameWithoutExtension} ({count}).xml");
+                        newerFilePath = Path.Combine(newDirectoryPath, $"{newFileNameWithoutExtension} ({count}).json");
                         count += 1;
                     }
                     Script.SerializeScript(newScriptActions.Items, newScripVariables, newerFilePath, _scriptProject.ProjectName);
                     NewNode(tvProject.SelectedNode, newerFilePath, "file");
                     OpenFile(newerFilePath);
                 }
-                
+
             }
             catch (Exception ex)
             {

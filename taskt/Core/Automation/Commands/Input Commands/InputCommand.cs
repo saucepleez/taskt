@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-                        
+
             if (engine.TasktEngineUI == null)
             {
                 engine.ReportProgress("UserInput Supported With UI Only");
@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
 
 
             //create clone of original
-            var clonedCommand = taskt.Core.Common.Clone(this);
+            dynamic clonedCommand = taskt.Core.Common.Clone(this);
 
             //translate variable
             clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ConvertToUserVariable(sender);
@@ -143,14 +143,14 @@ namespace taskt.Core.Automation.Commands
                             }
                         }
 
-                       
+
                         //store user data in variable
                         if (!string.IsNullOrEmpty(targetVariable))
                         {
                             userInputs[i].StoreInUserVariable(sender, targetVariable);
                         }
 
-                                  
+
                     }
 
 

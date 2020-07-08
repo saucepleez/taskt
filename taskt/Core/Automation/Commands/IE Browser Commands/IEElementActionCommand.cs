@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
             browserObject = engine.GetAppInstance(vInstance);
             var browserInstance = (InternetExplorer)browserObject;
 
-            DataTable searchTable = Common.Clone<DataTable>(v_WebSearchParameter);
+            DataTable searchTable = Common.Clone(v_WebSearchParameter);
 
             DataColumn matchFoundColumn = new DataColumn();
             matchFoundColumn.ColumnName = "Match Found";
@@ -174,7 +174,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Could not find the element!");
             }
         }
-        
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

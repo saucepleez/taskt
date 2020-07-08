@@ -74,7 +74,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             for (int i = 0; i < uiScriptTabControl.TabCount; i++)
             {
                 Rectangle tabRect = uiScriptTabControl.GetTabRect(i);
-                if (tabRect.Contains(uiScriptTabControl.PointToClient(_lastClickPosition)) 
+                if (tabRect.Contains(uiScriptTabControl.PointToClient(_lastClickPosition))
                     && uiScriptTabControl.TabCount > 1)
                 {
 
@@ -89,8 +89,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
         private void tsmiCloseAllButThis_Click(object sender, EventArgs e)
         {
-            //iterate through each tab, and check if it's the selected tab. 
-            //If it is, store and continue. If it isn't, check for unsaved changes. 
+            //iterate through each tab, and check if it's the selected tab.
+            //If it is, store and continue. If it isn't, check for unsaved changes.
             TabPage keepTab = new TabPage();
             for (int i = 0; i < uiScriptTabControl.TabCount; i++)
             {
@@ -100,7 +100,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     TabPage tab = uiScriptTabControl.TabPages[i];
                     DialogResult result = CheckForUnsavedScript(tab);
                     if (result == DialogResult.Cancel)
-                        return;              
+                        return;
                 }
                 else if (tabRect.Contains(uiScriptTabControl.PointToClient(_lastClickPosition)))
                     keepTab = uiScriptTabControl.TabPages[i];
@@ -139,8 +139,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             DialogResult result = new DialogResult();
             if (tab.Text.Contains(" *"))
             {
-                result = MessageBox.Show($"Would you like to save {tab.Name}.xml before closing this tab?",
-                                         $"Save {tab.Name}.xml", MessageBoxButtons.YesNoCancel);
+                result = MessageBox.Show($"Would you like to save {tab.Name}.json before closing this tab?",
+                                         $"Save {tab.Name}.json", MessageBoxButtons.YesNoCancel);
 
                 if (result == DialogResult.Yes)
                 {

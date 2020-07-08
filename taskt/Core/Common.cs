@@ -13,16 +13,14 @@
 //limitations under the License.
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using Newtonsoft.Json;
 using taskt.Core.IO;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Script;
@@ -35,26 +33,20 @@ namespace taskt.Core
         /// <summary>
         /// Creates a unique 'clone' of an item. Used to create unique clones of commands when changing/updating new parameters.
         /// </summary>
-        public static T Clone<T>(T source)
+        public static dynamic Clone<T>(T source)
         {
-            if (!typeof(T).IsSerializable)
-            {
-                throw new ArgumentException("The type must be serializable.", "source");
-            }
-
-            if (source == null)
+            if (ReferenceEquals(source, null))
             {
                 return default(T);
             }
 
-            using (MemoryStream ms = new MemoryStream())
+            var serializerSettings = new JsonSerializerSettings()
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Context = new StreamingContext(StreamingContextStates.Clone);
-                formatter.Serialize(ms, source);
-                ms.Position = 0;
-                return (T)formatter.Deserialize(ms);
-            }
+                TypeNameHandling =  TypeNameHandling.Objects
+            };
+
+            var serializedObject = JsonConvert.SerializeObject(source, serializerSettings);
+            return JsonConvert.DeserializeObject<T>(serializedObject, serializerSettings);
         }
 
         ///// <summary>

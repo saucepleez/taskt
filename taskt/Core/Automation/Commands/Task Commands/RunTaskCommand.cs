@@ -23,9 +23,9 @@ namespace taskt.Core.Automation.Commands
     public class RunTaskCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Task File Path")]     
+        [PropertyDescription("Task File Path")]
         [InputSpecification("Enter or select a valid path to the Task file.")]
-        [SampleUsage(@"C:\temp\mytask.xml || {vScriptPath} || {ProjectPath}\mytask.xml")]
+        [SampleUsage(@"C:\temp\mytask.json || {vScriptPath} || {ProjectPath}\mytask.json")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("Hello World || {vVariableValue}")]
         [Remarks("For inputs, set VariableReturn to *No*. For outputs, set VariableReturn to *Yes*. " +
                  "Failure to assign a VariableReturn value will result in an error.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)] 
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_VariableAssignments { get; set; }
 
         [XmlIgnore]
@@ -120,9 +120,9 @@ namespace taskt.Core.Automation.Commands
             frmScriptEngine newEngine = new frmScriptEngine(startFile, null, variableList, true);
 
             //Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
-            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate() 
-            { 
-                currentScriptEngine.TasktEngineUI.TopMost = false; 
+            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate()
+            {
+                currentScriptEngine.TasktEngineUI.TopMost = false;
             });
             Application.Run(newEngine);
 
@@ -159,9 +159,9 @@ namespace taskt.Core.Automation.Commands
             }
 
             //currentScriptEngine.tasktEngineUI.TopMost = false;
-            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate() 
-            { 
-                currentScriptEngine.TasktEngineUI.TopMost = true; 
+            currentScriptEngine.TasktEngineUI.Invoke((Action)delegate()
+            {
+                currentScriptEngine.TasktEngineUI.TopMost = true;
             });
         }
 

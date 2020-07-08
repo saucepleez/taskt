@@ -66,7 +66,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = _scriptProjectPath;
             openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+            openFileDialog.Filter = "Json (*.json)|*.json";
 
             //if user selected file
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -82,7 +82,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = _scriptProjectPath;
             openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+            openFileDialog.Filter = "Json (*.json)|*.json";
 
             //if user selected file
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -316,7 +316,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.InitialDirectory = _scriptProjectPath;
                 saveFileDialog.RestoreDirectory = true;
-                saveFileDialog.Filter = "Xml (*.xml)|*.xml";
+                saveFileDialog.Filter = "Json (*.json)|*.json";
 
                 if (saveFileDialog.ShowDialog() != DialogResult.OK)
                     return;
@@ -376,7 +376,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Folders.GetFolder(Folders.FolderType.ScriptsFolder);
             openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+            openFileDialog.Filter = "Json (*.json)|*.json";
 
             //if user selected file
             if (openFileDialog.ShowDialog() == DialogResult.OK)
