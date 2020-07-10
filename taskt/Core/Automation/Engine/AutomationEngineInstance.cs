@@ -32,7 +32,9 @@ namespace taskt.Core.Automation.Engine
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
         public bool CurrentLoopContinuing { get; set; }
-        private bool _isScriptPaused { get; set; }
+        public bool _isScriptPaused { get; private set; }
+        private bool _isScriptSteppedOver { get; set; }
+        private bool _isScriptSteppedInto { get; set; }
         [JsonIgnore]
         public frmScriptEngine TasktEngineUI { get; set; }
         private Stopwatch _stopWatch { get; set; }
@@ -127,7 +129,7 @@ namespace taskt.Core.Automation.Engine
                 _currentStatus = EngineStatus.Running;
 
                 //create stopwatch for metrics tracking
-                _stopWatch = new System.Diagnostics.Stopwatch();
+                _stopWatch = new Stopwatch();
                 _stopWatch.Start();
 
                 //log starting
@@ -227,7 +229,7 @@ namespace taskt.Core.Automation.Engine
             LineNumberChanged(parentCommand.LineNumber);
 
             //handle pause request
-            if (parentCommand.PauseBeforeExeucution)
+            if (parentCommand.PauseBeforeExecution)
             {
                 ReportProgress("Pausing Before Execution");
                 _isScriptPaused = true;
@@ -241,14 +243,28 @@ namespace taskt.Core.Automation.Engine
                 if (isFirstWait)
                 {
                     _currentStatus = EngineStatus.Paused;
-                    ReportProgress("Paused at Line " + parentCommand.LineNumber + " - " + parentCommand.GetDisplayValue());
                     ReportProgress("Paused on Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
                     ReportProgress("[Please select 'Resume' when ready]");
                     isFirstWait = false;
                 }
 
+                if (_isScriptSteppedInto && parentCommand.CommandName == "RunTaskCommand")
+                {
+                    parentCommand.IsSteppedInto = true;
+                    //TODO: Studio Step Into
+                    //((RunTaskCommand)parentCommand).CurrentScriptBuilder = TasktEngineUI.CallBackForm;
+                    _isScriptSteppedInto = false;
+                    break;
+                }
+                else if (_isScriptSteppedOver || _isScriptSteppedInto)
+                {
+                    _isScriptSteppedOver = false;
+                    _isScriptSteppedInto = false;
+                    break;
+                }
+               
                 //wait
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
             }
 
             _currentStatus = EngineStatus.Running;
@@ -461,6 +477,16 @@ namespace taskt.Core.Automation.Engine
         public void ResumeScript()
         {
             _isScriptPaused = false;
+        }
+
+        public void StepOverScript()
+        {
+            _isScriptSteppedOver = true;
+        }
+
+        public void StepIntoScript()
+        {
+            _isScriptSteppedInto = true;
         }
 
         public virtual void ReportProgress(string progress)

@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
         public string SelectionName { get; set; }
         public int DefaultPause { get; set; }
         public int LineNumber { get; set; }
-        public bool PauseBeforeExeucution { get; set; }
+        public bool PauseBeforeExecution { get; set; }
         public bool CommandEnabled { get; set; }
 
         [Attributes.PropertyAttributes.PropertyDescription("Comment Field (Optional)")]
@@ -32,6 +32,12 @@ namespace taskt.Core.Automation.Commands
 
         [JsonIgnore]
         public List<Control> RenderedControls;
+
+        [JsonIgnore]
+        public bool IsSteppedInto { get; set; }
+
+        [JsonIgnore]
+        public bool IsSteppedOver { get; set; }
 
         public ScriptCommand()
         {

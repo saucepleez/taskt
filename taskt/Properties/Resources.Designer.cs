@@ -233,6 +233,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_cancel {
+            get {
+                object obj = ResourceManager.GetObject("command_cancel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_comment {
             get {
                 object obj = ResourceManager.GetObject("command_comment", resourceCulture);
@@ -423,6 +433,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_resume {
+            get {
+                object obj = ResourceManager.GetObject("command_resume", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_run_code {
             get {
                 object obj = ResourceManager.GetObject("command_run_code", resourceCulture);
@@ -506,6 +526,26 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_startloop {
             get {
                 object obj = ResourceManager.GetObject("command_startloop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_step_into {
+            get {
+                object obj = ResourceManager.GetObject("command_step_into", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_step_over {
+            get {
+                object obj = ResourceManager.GetObject("command_step_over", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -226,6 +226,9 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
         private void tvProject_DoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            if (IsScriptRunning)
+                return;
+
             if (e == null || e.Button == MouseButtons.Left)
             {
                 try

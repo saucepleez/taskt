@@ -38,12 +38,12 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiCopyFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewFolder = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiMainNewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewScriptFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiMainNewScriptFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPasteFolder = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiMainPasteFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRenameFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMainNewFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMainNewScriptFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMainPasteFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tmrNotify = new System.Windows.Forms.Timer(this.components);
             this.cmsScriptActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,6 +130,10 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAndRunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stepOverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stepIntoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.tsSearchButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSearchResult = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,6 +188,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tlpControls.SuspendLayout();
             this.cmsProjectFileActions.SuspendLayout();
             this.cmsScriptTabActions.SuspendLayout();
+            this.cmsProjectMainFolderActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmsProjectFolderActions
@@ -225,14 +230,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiNewFolder.Text = "New Folder";
             this.tsmiNewFolder.Click += new System.EventHandler(this.tsmiNewFolder_Click);
             // 
-            // tsmiMainNewFolder
-            // 
-            this.tsmiMainNewFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiNewFolder.Image")));
-            this.tsmiMainNewFolder.Name = "tsmiMainNewFolder";
-            this.tsmiMainNewFolder.Size = new System.Drawing.Size(198, 28);
-            this.tsmiMainNewFolder.Text = "New Folder";
-            this.tsmiMainNewFolder.Click += new System.EventHandler(this.tsmiNewFolder_Click);
-            // 
             // tsmiNewScriptFile
             // 
             this.tsmiNewScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiNewScriptFile.Image")));
@@ -240,14 +237,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiNewScriptFile.Size = new System.Drawing.Size(198, 28);
             this.tsmiNewScriptFile.Text = "New Script File";
             this.tsmiNewScriptFile.Click += new System.EventHandler(this.tsmiNewScriptFile_Click);
-            // 
-            // tsmiMainNewScriptFile
-            // 
-            this.tsmiMainNewScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiNewScriptFile.Image")));
-            this.tsmiMainNewScriptFile.Name = "tsmiMainNewScriptFile";
-            this.tsmiMainNewScriptFile.Size = new System.Drawing.Size(198, 28);
-            this.tsmiMainNewScriptFile.Text = "New Script File";
-            this.tsmiMainNewScriptFile.Click += new System.EventHandler(this.tsmiNewScriptFile_Click);
             // 
             // tsmiPasteFolder
             // 
@@ -257,14 +246,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiPasteFolder.Text = "Paste";
             this.tsmiPasteFolder.Click += new System.EventHandler(this.tsmiPasteFolder_Click);
             // 
-            // tsmiMainPasteFolder
-            // 
-            this.tsmiMainPasteFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiPasteFolder.Image")));
-            this.tsmiMainPasteFolder.Name = "tsmiMainPasteFolder";
-            this.tsmiMainPasteFolder.Size = new System.Drawing.Size(198, 28);
-            this.tsmiMainPasteFolder.Text = "Paste";
-            this.tsmiMainPasteFolder.Click += new System.EventHandler(this.tsmiPasteFolder_Click);
-            // 
             // tsmiRenameFolder
             // 
             this.tsmiRenameFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiRenameFolder.Image")));
@@ -272,6 +253,30 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiRenameFolder.Size = new System.Drawing.Size(198, 28);
             this.tsmiRenameFolder.Text = "Rename";
             this.tsmiRenameFolder.Click += new System.EventHandler(this.tsmiRenameFolder_Click);
+            // 
+            // tsmiMainNewFolder
+            // 
+            this.tsmiMainNewFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMainNewFolder.Image")));
+            this.tsmiMainNewFolder.Name = "tsmiMainNewFolder";
+            this.tsmiMainNewFolder.Size = new System.Drawing.Size(198, 28);
+            this.tsmiMainNewFolder.Text = "New Folder";
+            this.tsmiMainNewFolder.Click += new System.EventHandler(this.tsmiNewFolder_Click);
+            // 
+            // tsmiMainNewScriptFile
+            // 
+            this.tsmiMainNewScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMainNewScriptFile.Image")));
+            this.tsmiMainNewScriptFile.Name = "tsmiMainNewScriptFile";
+            this.tsmiMainNewScriptFile.Size = new System.Drawing.Size(198, 28);
+            this.tsmiMainNewScriptFile.Text = "New Script File";
+            this.tsmiMainNewScriptFile.Click += new System.EventHandler(this.tsmiNewScriptFile_Click);
+            // 
+            // tsmiMainPasteFolder
+            // 
+            this.tsmiMainPasteFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMainPasteFolder.Image")));
+            this.tsmiMainPasteFolder.Name = "tsmiMainPasteFolder";
+            this.tsmiMainPasteFolder.Size = new System.Drawing.Size(198, 28);
+            this.tsmiMainPasteFolder.Text = "Paste";
+            this.tsmiMainPasteFolder.Click += new System.EventHandler(this.tsmiPasteFolder_Click);
             // 
             // tmrNotify
             // 
@@ -375,7 +380,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.pnlControlContainer.Location = new System.Drawing.Point(0, 89);
             this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
             this.pnlControlContainer.Name = "pnlControlContainer";
-            this.pnlControlContainer.Size = new System.Drawing.Size(1328, 101);
+            this.pnlControlContainer.Size = new System.Drawing.Size(1293, 101);
             this.pnlControlContainer.TabIndex = 7;
             this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
             // 
@@ -805,10 +810,10 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tlpControls.SetColumnSpan(this.pnlStatus, 3);
             this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlStatus.Location = new System.Drawing.Point(0, 657);
+            this.pnlStatus.Location = new System.Drawing.Point(0, 793);
             this.pnlStatus.Margin = new System.Windows.Forms.Padding(0);
             this.pnlStatus.Name = "pnlStatus";
-            this.pnlStatus.Size = new System.Drawing.Size(1328, 39);
+            this.pnlStatus.Size = new System.Drawing.Size(1293, 39);
             this.pnlStatus.TabIndex = 3;
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
             // 
@@ -822,7 +827,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1328, 51);
+            this.pnlHeader.Size = new System.Drawing.Size(1293, 51);
             this.pnlHeader.TabIndex = 2;
             // 
             // pnlMain
@@ -832,7 +837,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Margin = new System.Windows.Forms.Padding(0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1328, 51);
+            this.pnlMain.Size = new System.Drawing.Size(1293, 51);
             this.pnlMain.TabIndex = 2;
             theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
             theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
@@ -884,7 +889,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.splitContainer1.Panel2.Controls.Add(this.uiScriptTabControl);
-            this.splitContainer1.Size = new System.Drawing.Size(1320, 453);
+            this.splitContainer1.Size = new System.Drawing.Size(1285, 589);
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 4;
@@ -899,7 +904,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.uiPaneTabs.Margin = new System.Windows.Forms.Padding(4);
             this.uiPaneTabs.Name = "uiPaneTabs";
             this.uiPaneTabs.SelectedIndex = 0;
-            this.uiPaneTabs.Size = new System.Drawing.Size(238, 453);
+            this.uiPaneTabs.Size = new System.Drawing.Size(238, 589);
             this.uiPaneTabs.TabIndex = 26;
             // 
             // tpProject
@@ -910,7 +915,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tpProject.Location = new System.Drawing.Point(4, 32);
             this.tpProject.Name = "tpProject";
             this.tpProject.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProject.Size = new System.Drawing.Size(230, 417);
+            this.tpProject.Size = new System.Drawing.Size(230, 553);
             this.tpProject.TabIndex = 5;
             this.tpProject.Text = "Project";
             this.tpProject.UseVisualStyleBackColor = true;
@@ -927,7 +932,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tvProject.Name = "tvProject";
             this.tvProject.SelectedImageIndex = 0;
             this.tvProject.ShowLines = false;
-            this.tvProject.Size = new System.Drawing.Size(224, 411);
+            this.tvProject.Size = new System.Drawing.Size(224, 547);
             this.tvProject.TabIndex = 0;
             this.tvProject.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvProject_BeforeExpand);
             this.tvProject.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvProject_NodeMouseClick);
@@ -953,7 +958,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tpCommands.Location = new System.Drawing.Point(4, 32);
             this.tpCommands.Name = "tpCommands";
             this.tpCommands.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCommands.Size = new System.Drawing.Size(230, 417);
+            this.tpCommands.Size = new System.Drawing.Size(230, 553);
             this.tpCommands.TabIndex = 4;
             this.tpCommands.Text = "Commands";
             this.tpCommands.UseVisualStyleBackColor = true;
@@ -969,7 +974,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tvCommands.Margin = new System.Windows.Forms.Padding(4);
             this.tvCommands.Name = "tvCommands";
             this.tvCommands.ShowLines = false;
-            this.tvCommands.Size = new System.Drawing.Size(224, 411);
+            this.tvCommands.Size = new System.Drawing.Size(224, 547);
             this.tvCommands.TabIndex = 9;
             this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
             this.tvCommands.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tvCommands_KeyPress);
@@ -982,10 +987,11 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.uiScriptTabControl.Name = "uiScriptTabControl";
             this.uiScriptTabControl.SelectedIndex = 0;
             this.uiScriptTabControl.ShowToolTips = true;
-            this.uiScriptTabControl.Size = new System.Drawing.Size(1077, 453);
+            this.uiScriptTabControl.Size = new System.Drawing.Size(1042, 589);
             this.uiScriptTabControl.TabIndex = 3;
             this.uiScriptTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.uiScriptTabControl_DrawItem);
             this.uiScriptTabControl.SelectedIndexChanged += new System.EventHandler(this.uiScriptTabControl_SelectedIndexChanged);
+            this.uiScriptTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.uiScriptTabControl_Selecting);
             this.uiScriptTabControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.uiScriptTabControl_MouseClick);
             // 
             // pnlCommandHelper
@@ -1185,7 +1191,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.pnlDivider.Location = new System.Drawing.Point(0, 190);
             this.pnlDivider.Margin = new System.Windows.Forms.Padding(0);
             this.pnlDivider.Name = "pnlDivider";
-            this.pnlDivider.Size = new System.Drawing.Size(1328, 6);
+            this.pnlDivider.Size = new System.Drawing.Size(1293, 6);
             this.pnlDivider.TabIndex = 13;
             // 
             // msTasktMenu
@@ -1199,12 +1205,16 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.modifyToolStripMenuItem,
             this.scriptActionsToolStripMenuItem,
             this.saveAndRunToolStripMenuItem,
+            this.cancelToolStripMenuItem,
+            this.pauseToolStripMenuItem,
+            this.stepOverToolStripMenuItem,
+            this.stepIntoToolStripMenuItem,
             this.tsSearchBox,
             this.tsSearchButton,
             this.tsSearchResult});
             this.msTasktMenu.Location = new System.Drawing.Point(0, 51);
             this.msTasktMenu.Name = "msTasktMenu";
-            this.msTasktMenu.Size = new System.Drawing.Size(1328, 38);
+            this.msTasktMenu.Size = new System.Drawing.Size(1293, 38);
             this.msTasktMenu.TabIndex = 1;
             this.msTasktMenu.Text = "menuStrip1";
             // 
@@ -1395,6 +1405,41 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.saveAndRunToolStripMenuItem.Text = "Save and Run";
             this.saveAndRunToolStripMenuItem.Click += new System.EventHandler(this.saveAndRunToolStripMenuItem_Click);
             // 
+            // cancelToolStripMenuItem
+            // 
+            this.cancelToolStripMenuItem.Image = global::taskt.Properties.Resources.command_cancel;
+            this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
+            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(34, 34);
+            this.cancelToolStripMenuItem.Visible = false;
+            this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
+            // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Image = global::taskt.Properties.Resources.command_pause;
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(34, 34);
+            this.pauseToolStripMenuItem.Tag = "pause";
+            this.pauseToolStripMenuItem.Visible = false;
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            // 
+            // stepOverToolStripMenuItem
+            // 
+            this.stepOverToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.stepOverToolStripMenuItem.Image = global::taskt.Properties.Resources.command_step_over;
+            this.stepOverToolStripMenuItem.Name = "stepOverToolStripMenuItem";
+            this.stepOverToolStripMenuItem.Size = new System.Drawing.Size(34, 34);
+            this.stepOverToolStripMenuItem.Visible = false;
+            this.stepOverToolStripMenuItem.Click += new System.EventHandler(this.stepOverToolStripMenuItem_Click);
+            // 
+            // stepIntoToolStripMenuItem
+            // 
+            this.stepIntoToolStripMenuItem.Enabled = false;
+            this.stepIntoToolStripMenuItem.Image = global::taskt.Properties.Resources.command_step_into;
+            this.stepIntoToolStripMenuItem.Name = "stepIntoToolStripMenuItem";
+            this.stepIntoToolStripMenuItem.Size = new System.Drawing.Size(34, 34);
+            this.stepIntoToolStripMenuItem.Visible = false;
+            this.stepIntoToolStripMenuItem.Click += new System.EventHandler(this.stepIntoToolStripMenuItem_Click);
+            // 
             // tsSearchBox
             // 
             this.tsSearchBox.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1444,7 +1489,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 6F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tlpControls.Size = new System.Drawing.Size(1328, 696);
+            this.tlpControls.Size = new System.Drawing.Size(1293, 832);
             this.tlpControls.TabIndex = 2;
             // 
             // cmsProjectFileActions
@@ -1522,13 +1567,13 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tsmiMainNewScriptFile,
             this.tsmiMainPasteFolder});
             this.cmsProjectMainFolderActions.Name = "cmsProjectMainFolderActions";
-            this.cmsProjectMainFolderActions.Size = new System.Drawing.Size(211, 32);
+            this.cmsProjectMainFolderActions.Size = new System.Drawing.Size(199, 88);
             // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1328, 696);
+            this.ClientSize = new System.Drawing.Size(1293, 832);
             this.Controls.Add(this.tlpControls);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1589,6 +1634,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             this.tlpControls.PerformLayout();
             this.cmsProjectFileActions.ResumeLayout(false);
             this.cmsScriptTabActions.ResumeLayout(false);
+            this.cmsProjectMainFolderActions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1703,6 +1749,10 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         private ToolStripMenuItem tsmiCloseTab;
         private ToolStripMenuItem tsmiCloseAllButThis;
         private ContextMenuStrip cmsProjectMainFolderActions;
+        private ToolStripMenuItem stepOverToolStripMenuItem;
+        private ToolStripMenuItem pauseToolStripMenuItem;
+        private ToolStripMenuItem stepIntoToolStripMenuItem;
+        private ToolStripMenuItem cancelToolStripMenuItem;
     }
 }
 

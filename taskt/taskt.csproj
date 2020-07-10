@@ -479,6 +479,9 @@
     <Compile Include="UI\Forms\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderDebug.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderListView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -874,6 +877,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\command-dictionary.png" />
+    <None Include="Resources\command-step-over.png" />
+    <None Include="Resources\command-step-into.png" />
+    <None Include="Resources\command-resume.png" />
+    <None Include="Resources\command-cancel.png" />
     <None Include="Resources\command-folders.png" />
     <None Include="Resources\command-database2.png" />
     <None Include="Resources\command-password.png" />

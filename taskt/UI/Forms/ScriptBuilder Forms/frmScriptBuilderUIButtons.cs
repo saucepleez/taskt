@@ -9,7 +9,7 @@ using taskt.Core.IO;
 using taskt.Core.Script;
 using taskt.Core.Server;
 using taskt.Core.Settings;
-using taskt.UI.CustomControls;
+using taskt.Properties;
 using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms.Supplement_Forms;
 
@@ -93,91 +93,101 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
         }
 
-        private void OpenFile(string filePath)
+        //TODO: Studio Step Into
+        public delegate void OpenFileDelegate(string filepath);
+        public void OpenFile(string filePath)
         {
-            try
+            if (InvokeRequired)
             {
-                //create or switch to TabPage
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
-                var foundTab = uiScriptTabControl.TabPages.Cast<TabPage>().Where(t => t.ToolTipText == filePath)
-                                                                          .FirstOrDefault();
-
-                if (foundTab == null)
+                var d = new OpenFileDelegate(OpenFile);
+                Invoke(d, new object[] { filePath });
+            }
+            else
+            {
+                try
                 {
-                    TabPage newtabPage = new TabPage(fileName);
-                    newtabPage.Name = fileName;
-                    newtabPage.ToolTipText = filePath;
-                    uiScriptTabControl.Controls.Add(newtabPage);
-                    newtabPage.Controls.Add(NewLstScriptActions(fileName));
-                    uiScriptTabControl.SelectedTab = newtabPage;
-                }
-                else
-                {
-                    uiScriptTabControl.SelectedTab = foundTab;
-                    return;
-                }
+                    //create or switch to TabPage
+                    string fileName = Path.GetFileNameWithoutExtension(filePath);
+                    var foundTab = uiScriptTabControl.TabPages.Cast<TabPage>().Where(t => t.ToolTipText == filePath)
+                                                                              .FirstOrDefault();
 
-                _selectedTabScriptActions = (UIListView)uiScriptTabControl.SelectedTab.Controls[0];
-
-                //get deserialized script
-                Script deserializedScript = Script.DeserializeFile(filePath);
-
-                //check if script is a part of the currently opened project
-                string openScriptProjectName = deserializedScript.ProjectName;
-
-                if (openScriptProjectName != _scriptProject.ProjectName)
-                {
-                    uiScriptTabControl.TabPages.RemoveAt(uiScriptTabControl.TabCount - 1);
-                    throw new Exception("Attempted to load a script not part of the currently open project");
-                }
-
-                //reinitialize
-                _selectedTabScriptActions.Items.Clear();
-                _scriptVariables = new List<ScriptVariable>();
-
-                if (deserializedScript.Commands.Count == 0)
-                {
-                    Notify("Error Parsing File: Commands not found!");
-                }
-
-                //update file path and reflect in title bar
-                ScriptFilePath = filePath;
-
-                string scriptFileName = Path.GetFileNameWithoutExtension(ScriptFilePath);
-                _selectedTabScriptActions.Name = $"{scriptFileName}ScriptActions";
-
-                //assign variables
-                _scriptVariables.AddRange(deserializedScript.Variables);
-                uiScriptTabControl.SelectedTab.Tag = _scriptVariables;
-
-                //update ProjectPath variable
-                var projectPathVariable = _scriptVariables.Where(v => v.VariableName == "ProjectPath").SingleOrDefault();
-                if (projectPathVariable != null)
-                    projectPathVariable.VariableValue = _scriptProjectPath;
-                else
-                {
-                    projectPathVariable = new ScriptVariable
+                    if (foundTab == null)
                     {
-                        VariableName = "ProjectPath",
-                        VariableValue = _scriptProjectPath
-                    };
-                    _scriptVariables.Add(projectPathVariable);
+                        TabPage newtabPage = new TabPage(fileName);
+                        newtabPage.Name = fileName;
+                        newtabPage.ToolTipText = filePath;
+                        uiScriptTabControl.Controls.Add(newtabPage);
+                        newtabPage.Controls.Add(NewLstScriptActions(fileName));
+                        uiScriptTabControl.SelectedTab = newtabPage;
+                    }
+                    else
+                    {
+                        uiScriptTabControl.SelectedTab = foundTab;
+                        return;
+                    }
+
+                    _selectedTabScriptActions = (UIListView)uiScriptTabControl.SelectedTab.Controls[0];
+
+                    //get deserialized script
+                    Script deserializedScript = Script.DeserializeFile(filePath);
+
+                    //check if script is a part of the currently opened project
+                    string openScriptProjectName = deserializedScript.ProjectName;
+
+                    if (openScriptProjectName != _scriptProject.ProjectName)
+                    {
+                        uiScriptTabControl.TabPages.RemoveAt(uiScriptTabControl.TabCount - 1);
+                        throw new Exception("Attempted to load a script not part of the currently open project");
+                    }
+
+                    //reinitialize
+                    _selectedTabScriptActions.Items.Clear();
+                    _scriptVariables = new List<ScriptVariable>();
+
+                    if (deserializedScript.Commands.Count == 0)
+                    {
+                        Notify("Error Parsing File: Commands not found!");
+                    }
+
+                    //update file path and reflect in title bar
+                    ScriptFilePath = filePath;
+
+                    string scriptFileName = Path.GetFileNameWithoutExtension(ScriptFilePath);
+                    _selectedTabScriptActions.Name = $"{scriptFileName}ScriptActions";
+
+                    //assign variables
+                    _scriptVariables.AddRange(deserializedScript.Variables);
+                    uiScriptTabControl.SelectedTab.Tag = _scriptVariables;
+
+                    //update ProjectPath variable
+                    var projectPathVariable = _scriptVariables.Where(v => v.VariableName == "ProjectPath").SingleOrDefault();
+                    if (projectPathVariable != null)
+                        projectPathVariable.VariableValue = _scriptProjectPath;
+                    else
+                    {
+                        projectPathVariable = new ScriptVariable
+                        {
+                            VariableName = "ProjectPath",
+                            VariableValue = _scriptProjectPath
+                        };
+                        _scriptVariables.Add(projectPathVariable);
+                    }
+
+                    //populate commands
+                    PopulateExecutionCommands(deserializedScript.Commands);
+
+                    FileInfo scriptFileInfo = new FileInfo(_scriptFilePath);
+                    uiScriptTabControl.SelectedTab.Text = scriptFileInfo.Name.Replace(".json", "");
+
+                    //notify
+                    Notify("Script Loaded Successfully!");
                 }
-
-                //populate commands
-                PopulateExecutionCommands(deserializedScript.Commands);
-
-                FileInfo scriptFileInfo = new FileInfo(_scriptFilePath);
-                uiScriptTabControl.SelectedTab.Text = scriptFileInfo.Name.Replace(".json", "");
-
-                //notify
-                Notify("Script Loaded Successfully!");
-            }
-            catch (Exception ex)
-            {
-                //signal an error has happened
-                Notify("An Error Occured: " + ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    //signal an error has happened
+                    Notify("An Error Occured: " + ex.Message);
+                }
+            }           
         }
 
         private void uiBtnSave_Click(object sender, EventArgs e)
@@ -633,14 +643,21 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
             Notify("Running Script..");
 
-            frmScriptEngine newEngine = new frmScriptEngine(ScriptFilePath, this);
+            pauseToolStripMenuItem.Image = Resources.command_pause;
+            stepOverToolStripMenuItem.Visible = false;
+            stepIntoToolStripMenuItem.Visible = false;
+            pauseToolStripMenuItem.Visible = true;
+            pauseToolStripMenuItem.Tag = "pause";
+            cancelToolStripMenuItem.Visible = true;
+
+            _newEngine = new frmScriptEngine(ScriptFilePath, this);
 
             //executionManager = new ScriptExectionManager();
             //executionManager.CurrentlyExecuting = true;
             //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
 
-            newEngine.CallBackForm = this;
-            newEngine.Show();
+            _newEngine.CallBackForm = this;
+            _newEngine.Show();
         }
         #endregion
 
@@ -663,6 +680,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             DialogResult = DialogResult.Cancel;
         }
         #endregion
+
         #endregion
     }
 }

@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,7 @@ using taskt.Core.IO;
 using taskt.Core.Script;
 using taskt.Core.Server;
 using taskt.Core.Settings;
+using taskt.Properties;
 using taskt.UI.CustomControls;
 using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms.Supplement_Forms;
@@ -82,7 +84,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 {
                     try
                     {
-                        
+                        IsScriptRunning = true;
                         _selectedTabScriptActions.EnsureVisible(_debugLine - 1);
                     }
                     catch (Exception)
@@ -90,14 +92,50 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                         //log exception?
                     }
                 }
+                else if (_debugLine == 0)
+                {
+                    IsScriptRunning = false;
+                    IsScriptSteppedOver = false;
+                    IsScriptSteppedInto = false;
+                    stepIntoToolStripMenuItem.Visible = false;
+                    stepOverToolStripMenuItem.Visible = false;
+                    pauseToolStripMenuItem.Visible = false;
+                    cancelToolStripMenuItem.Visible = false;
+
+                    TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
+                                                                              .FirstOrDefault();
+
+                    if (debugTab != null)
+                        uiPaneTabs.TabPages.Remove(debugTab);
+                }
+
                 _selectedTabScriptActions.Invalidate();
                 //FormatCommandListView();
+
+                if (stepOverToolStripMenuItem.Visible)
+                    LoadDebugTab(uiPaneTabs.TabPages["DebugVariables"]);
+                else if (!stepOverToolStripMenuItem.Visible && _newEngine.EngineInstance._isScriptPaused)
+                {
+                    pauseToolStripMenuItem.Image = Resources.command_resume;
+                    pauseToolStripMenuItem.Tag = "resume";
+
+                }
+                else if (!stepOverToolStripMenuItem.Visible && !_newEngine.EngineInstance._isScriptPaused)
+                {
+                    pauseToolStripMenuItem.Image = Resources.command_pause;
+                    pauseToolStripMenuItem.Tag = "pause";
+                }
             }
         }
         private List<string> _notificationList = new List<string>();
         private DateTime _notificationExpires;
         private bool _isDisplaying;
         private string _notificationText;
+        private frmScriptEngine _newEngine;
+        public bool IsScriptRunning { get; set; }
+        public bool IsScriptPaused { get; set; }
+        public bool IsScriptSteppedOver { get; set; }
+        public bool IsScriptSteppedInto { get; set; }
         #endregion
 
         #region Form Events
@@ -509,26 +547,27 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         #region Link Labels
         private void lnkGitProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
+            Process.Start("https://github.com/saucepleez/taskt");
         }
         private void lnkGitLatestReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/releases");
+            Process.Start("https://github.com/saucepleez/taskt/releases");
         }
         private void lnkGitIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/issues/new");
+            Process.Start("https://github.com/saucepleez/taskt/issues/new");
         }
         private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://wiki.taskt.net/");
+            Process.Start("https://wiki.taskt.net/");
         }
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel senderLink = (LinkLabel)sender;
             OpenFile(Folders.GetFolder(Folders.FolderType.ScriptsFolder) + senderLink.Text);
         }
-        #endregion  
+
+        #endregion       
     }
 }
 

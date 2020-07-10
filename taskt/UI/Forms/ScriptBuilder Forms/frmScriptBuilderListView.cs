@@ -8,15 +8,13 @@ using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Script;
-using taskt.UI.CustomControls;
+using taskt.Properties;
 using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.DTOs;
 using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.UI.Forms.ScriptBuilder_Forms
 {
-    using System.Windows.Forms.VisualStyles;
-
     public partial class frmScriptBuilder : Form
     {
         #region ListView Events
@@ -587,11 +585,44 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 case 2:
                     //write command text
                     Brush commandNameBrush, commandBackgroundBrush;
-                    if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1))
+                    if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1) && !command.PauseBeforeExecution)
                     {
                         //debugging coloring
                         commandNameBrush = Brushes.White;
                         commandBackgroundBrush = Brushes.OrangeRed;
+                        IsScriptPaused = false;
+
+                        TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
+                                                                              .FirstOrDefault();
+
+                        if (debugTab != null && !IsScriptSteppedOver && !IsScriptSteppedInto)
+                        {
+                            uiPaneTabs.TabPages.Remove(debugTab);
+                            stepIntoToolStripMenuItem.Visible = false;
+                            stepOverToolStripMenuItem.Visible = false;
+                            pauseToolStripMenuItem.Image = Resources.command_pause;
+                            pauseToolStripMenuItem.Tag = "pause";
+                        }
+                    }
+                    else if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1) && command.PauseBeforeExecution)
+                    {
+                        commandNameBrush = Brushes.White;
+                        commandBackgroundBrush = Brushes.Indigo;
+
+                        TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
+                                                                              .FirstOrDefault();
+
+                        if (debugTab == null && !IsScriptPaused)
+                        {                           
+                            CreateDebugTab();
+                            stepIntoToolStripMenuItem.Visible = true;
+                            stepOverToolStripMenuItem.Visible = true;
+                            pauseToolStripMenuItem.Visible = true;
+                            cancelToolStripMenuItem.Visible = true;
+                            pauseToolStripMenuItem.Image = Resources.command_resume;
+                            pauseToolStripMenuItem.Tag = "resume";
+                            IsScriptPaused = true;
+                        }
                     }
                     else if ((_currentIndex >= 0) && (e.ItemIndex == _currentIndex))
                     {
@@ -611,7 +642,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                         commandNameBrush = Brushes.White;
                         commandBackgroundBrush = Brushes.DodgerBlue;
                     }
-                    else if (command.PauseBeforeExeucution)
+                    else if (command.PauseBeforeExecution)
                     {
                         //pause before execution coloring
                         commandNameBrush = Brushes.MediumPurple;
@@ -620,8 +651,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     else if ((command is AddCodeCommentCommand) || (command.IsCommented))
                     {
                         //comments and commented command coloring
-                        commandNameBrush = Brushes.ForestGreen;
-                        commandBackgroundBrush = Brushes.WhiteSmoke;
+                        commandNameBrush = Brushes.MediumSeaGreen;
+                        commandBackgroundBrush = Brushes.Honeydew;
                     }
                     else
                     {
@@ -630,7 +661,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                         commandBackgroundBrush = Brushes.WhiteSmoke;
                     }
 
-                    //fille with background color
+                    //fill with background color
                     e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
 
                     //get indent count
@@ -642,7 +673,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     //draw string
                     e.Graphics.DrawString(command.GetDisplayValue(), _selectedTabScriptActions.Font,
                                           commandNameBrush, modifiedBounds);
-                    break;
+                    break;  
             }
         }
 
@@ -714,7 +745,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             foreach (ListViewItem item in _selectedTabScriptActions.SelectedItems)
             {
                 var selectedCommand = (ScriptCommand)item.Tag;
-                selectedCommand.PauseBeforeExeucution = !selectedCommand.PauseBeforeExeucution;
+                selectedCommand.PauseBeforeExecution = !selectedCommand.PauseBeforeExecution;
             }
 
             //recolor

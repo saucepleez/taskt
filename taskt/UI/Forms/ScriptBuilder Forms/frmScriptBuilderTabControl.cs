@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Script;
-using taskt.UI.CustomControls;
 using taskt.UI.CustomControls.CustomUIControls;
 
 namespace taskt.UI.Forms.ScriptBuilder_Forms
@@ -21,6 +19,12 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 _selectedTabScriptActions = (UIListView)uiScriptTabControl.SelectedTab.Controls[0];
                 _scriptVariables = (List<ScriptVariable>)uiScriptTabControl.SelectedTab.Tag;
             }
+        }
+
+        private void uiScriptTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (IsScriptRunning)
+                e.Cancel = true;
         }
 
         //TODO Finish close button rendering
