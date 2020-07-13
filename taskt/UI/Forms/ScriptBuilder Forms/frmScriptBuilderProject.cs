@@ -417,12 +417,15 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 if (selectedNodePath != _scriptProjectPath)
                 {
                     DirectoryInfo selectedNodeDirectoryInfo = new DirectoryInfo(selectedNodePath);
-                    string newName = Interaction.InputBox("Enter the new name of the folder", "Rename Folder");
 
-                    if (DialogResult == DialogResult.OK)
+                    string newName = "";
+                    var newNameForm = new frmInputBox("Enter the new name of the folder", "Rename Folder");
+                    newNameForm.ShowDialog();
 
-                        if (string.IsNullOrEmpty(newName))
-                            return;
+                    if (newNameForm.DialogResult == DialogResult.OK)
+                        newName = newNameForm.txtInput.Text;
+                    else if (newNameForm.DialogResult == DialogResult.Cancel)
+                        return;
 
                     string newPath = Path.Combine(selectedNodeDirectoryInfo.Parent.FullName, newName);
                     bool isInvalidProjectName = new[] { @"/", @"\" }.Any(c => newName.Contains(c));
@@ -438,7 +441,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     tvProject.SelectedNode.Text = newName;
                     tvProject.SelectedNode.Tag = newPath;
                 }
-
             }
             catch (Exception ex)
             {
@@ -543,10 +545,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 if (selectedNodeName != _mainFileName && selectedNodeName != "project.config")
                 {
                     FileInfo selectedNodeDirectoryInfo = new FileInfo(selectedNodePath);
-                    string newNameWithoutExtension = Interaction.InputBox("Enter the new name of the file without extension",
-                                                                          "Rename File");
 
-                    if (string.IsNullOrEmpty(newNameWithoutExtension))
+                    string newNameWithoutExtension = "";
+                    var newNameForm = new frmInputBox("Enter the new name of the file without extension", "Rename File");
+                    newNameForm.ShowDialog();
+
+                    if (newNameForm.DialogResult == DialogResult.OK)
+                        newNameWithoutExtension = newNameForm.txtInput.Text;
+                    else if (newNameForm.DialogResult == DialogResult.Cancel)
                         return;
 
                     string newName = newNameWithoutExtension + selectedNodeFileExtension;

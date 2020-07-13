@@ -491,6 +491,12 @@
     <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderUIButtons.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInputBox.Designer.cs">
+      <DependentUpon>frmInputBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmProjectBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -678,6 +684,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInputBox.resx">
+      <DependentUpon>frmInputBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmProjectBuilder.resx">
       <DependentUpon>frmProjectBuilder.cs</DependentUpon>
@@ -891,9 +900,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\taskt-splash.png" />
+    <None Include="Resources\taskt-icon.png" />
+    <None Include="Resources\taskt-logo.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\taskt_icon.ico" />
     <Content Include="taskt_logo_alt.ico" />
     <None Include="Resources\item-header96.png" />
     <None Include="Resources\item-header.png" />
