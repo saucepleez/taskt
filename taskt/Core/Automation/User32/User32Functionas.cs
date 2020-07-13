@@ -300,6 +300,20 @@ namespace taskt.Core.Automation.User32
             MOUSEEVENTF_MIDDLEUP = 0x40
         }
 
+        public static void KeyDownKeyUp(Keys[] keys)
+        {
+            foreach (var key in keys)
+            {
+                KeyDown(key);
+            }
+
+            foreach (var key in keys)
+            {
+                KeyUp(key);
+            }
+        }
+
+
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
         private const int KEYEVENTF_EXTENDEDKEY = 1;

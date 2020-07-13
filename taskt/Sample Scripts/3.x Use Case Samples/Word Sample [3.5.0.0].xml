@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordCreateApplicationCommand" CommandID="acd0ea34-7a8f-4746-a56a-fb5bf2418c23" CommandName="WordOpenApplicationCommand" IsCommented="false" SelectionName="Create Word Application" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordOpenDocumentCommand" CommandID="36387141-ae98-4473-831c-3adc69a4d73a" CommandName="WordOpenDocumentCommand" IsCommented="true" SelectionName="Open Document" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_FilePath="C:\test.docx" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordAddDocumentCommand" CommandID="32e3b2ea-792d-434d-8b83-187a3c053108" CommandName="WordAddDocumentCommand" IsCommented="false" SelectionName="Add Document" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordAppendTextCommand" CommandID="59b7575a-3e3f-42ee-a23d-193961959393" CommandName="WordAppendTextCommand" IsCommented="false" SelectionName="Append Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_TextToSet="Hello World" v_FontName="Times New Roman" v_FontSize="40" v_FontBold="Yes" v_FontItalic="Yes" v_FontUnderline="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordAppendTextCommand" CommandID="92df4811-7c05-425c-8e58-5367c4e27743" CommandName="WordAppendTextCommand" IsCommented="false" SelectionName="Append Text" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_TextToSet="Hello World Again" v_FontName="Calibri" v_FontSize="11" v_FontBold="No" v_FontItalic="No" v_FontUnderline="No" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordSaveAsCommand" CommandID="72a0cf8b-5097-48f1-9d97-f9a505ba63b3" CommandName="WordSaveAsCommand" IsCommented="false" SelectionName="Save Document As" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_FileName="C:\test.docx" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordAppendImageCommand" CommandID="a5c3363f-27f1-4e13-a5d1-081f25144c8a" CommandName="WordAppendImageCommand" IsCommented="false" SelectionName="Append Image" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_ImagePath="C:\image.jpg" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDataTableCommand" CommandID="3a130ee6-5c6e-46f2-bb26-1f21558b19d1" CommandName="CreateDataTableCommand" IsCommented="false" SelectionName="Create DataTable" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="dataTable">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNamesDataTable031220.033538" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="ColumnNamesDataTable031220.033538">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNamesDataTable031220.033538 diffgr:id="ColumnNamesDataTable031220.0335381" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col1</Column_x0020_Name>
+              </ColumnNamesDataTable031220.033538>
+              <ColumnNamesDataTable031220.033538 diffgr:id="ColumnNamesDataTable031220.0335382" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col2</Column_x0020_Name>
+              </ColumnNamesDataTable031220.033538>
+              <ColumnNamesDataTable031220.033538 diffgr:id="ColumnNamesDataTable031220.0335383" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col3</Column_x0020_Name>
+              </ColumnNamesDataTable031220.033538>
+              <ColumnNamesDataTable031220.033538 diffgr:id="ColumnNamesDataTable031220.0335384" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col4</Column_x0020_Name>
+              </ColumnNamesDataTable031220.033538>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddDataRowCommand" CommandID="4b02484e-81c0-48b3-bbdd-4c2a52a8e63c" CommandName="AddDataRowCommand" IsCommented="false" SelectionName="Add DataRow" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="dataTable">
+        <v_AddDataDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="AddDataDataTable031220.033708">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Column_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Data" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="AddDataDataTable031220.033708" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="AddDataDataTable031220.033708" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <AddDataDataTable031220.033708 diffgr:id="AddDataDataTable031220.0337081" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col1</Column_x0020_Name>
+                <Data>data1</Data>
+              </AddDataDataTable031220.033708>
+              <AddDataDataTable031220.033708 diffgr:id="AddDataDataTable031220.0337082" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col2</Column_x0020_Name>
+                <Data>data2</Data>
+              </AddDataDataTable031220.033708>
+              <AddDataDataTable031220.033708 diffgr:id="AddDataDataTable031220.0337083" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col3</Column_x0020_Name>
+                <Data>data3</Data>
+              </AddDataDataTable031220.033708>
+              <AddDataDataTable031220.033708 diffgr:id="AddDataDataTable031220.0337084" msdata:rowOrder="3" diffgr:hasChanges="inserted">
+                <Column_x0020_Name>Col4</Column_x0020_Name>
+                <Data>data4</Data>
+              </AddDataDataTable031220.033708>
+            </DocumentElement>
+          </diffgr:diffgram>
+        </v_AddDataDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordAppendDataTableCommand" CommandID="f0a9419f-5dbd-4aa3-9ccb-29f1fde06428" CommandName="WordAppendDataTableCommand" IsCommented="false" SelectionName="Append Data Table" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_DataTableName="dataTable" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordReplaceTextCommand" CommandID="cfcaedc7-cc52-49e6-bd07-4a7cba8f0acd" CommandName="WordReplaceTextCommand" IsCommented="false" SelectionName="Replace Text" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_FindText="Hello" v_ReplaceWithText="Goodbye" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordSaveCommand" CommandID="06321e4d-64c3-4d14-b065-fd729d40872e" CommandName="WordSaveCommand" IsCommented="false" SelectionName="Save Document" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordExportToPDFCommand" CommandID="ed6f4210-23dc-4064-abfa-4476db560f96" CommandName="WordExportToPDFCommand" IsCommented="false" SelectionName="Export To PDF" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_FileName="C:\test.pdf" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddVariableCommand" CommandID="27b6e9da-4772-4ffb-a644-6a86b3be7152" CommandName="AddVariableCommand" IsCommented="false" SelectionName="New Variable" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="wordText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordReadDocumentCommand" CommandID="cfdf6b55-fd34-407e-a507-01ed7c790d7f" CommandName="WordReadDocumentCommand" IsCommented="false" SelectionName="Read Document" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_UserVariableName="wordText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="c7fea52d-5557-4511-bb85-5774efb80395" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="wordText" v_AutoCloseAfter="20" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WordCloseApplicationCommand" CommandID="813d108c-a145-45f6-8c2c-e92e2fc79d13" CommandName="WordCloseApplicationCommand" IsCommented="false" SelectionName="Close Word Application" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="wordInstance" v_WordSaveOnExit="false" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>

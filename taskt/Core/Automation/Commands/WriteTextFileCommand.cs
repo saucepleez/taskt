@@ -30,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the text to be written. [crLF] inserts a newline.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the text should be written to files.")]
         [Attributes.PropertyAttributes.SampleUsage("**[vText]** or **Hello World!**")]
         [Attributes.PropertyAttributes.Remarks("")]

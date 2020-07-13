@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="OutlookGetEmailsCommand" CommandID="aa52b03d-f0f8-4e60-b21f-54f30caeef34" CommandName="OutlookGetEmailsCommand" IsCommented="false" SelectionName="Get Outlook Emails" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_Folder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_GetUnreadOnly="Yes" v_MarkAsRead="Yes" v_MessageDirectory="C:\Users\Default\Documents" v_userVariableName="mailList" v_SaveMessagesAndAttachments="Yes" v_AttachmentDirectory="C:\Users\Default\Documents" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="OutlookReplyToEmailsCommand" CommandID="af199723-01bc-4ad4-95e4-dc057800a020" CommandName="OutlookReplyToEmailsCommand" IsCommented="false" SelectionName="Reply To Outlook Emails" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_OperationType="Reply" v_SourceFolder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_Body="Hello" v_BodyType="Plain" v_Attachment="C:\app.txt" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="OutlookDeleteEmailsCommand" CommandID="4a9042ea-eca6-4c04-a679-f41b7c6d4e75" CommandName="OutlookDeleteEmailsCommand" IsCommented="false" SelectionName="Delete Outlook Emails" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFolder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_DeleteReadOnly="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="OutlookMoveEmailsCommand" CommandID="d6889560-1b65-41a5-903d-32fcd2cf7b10" CommandName="OutlookMoveEmailsCommand" IsCommented="false" SelectionName="Move/Copy Outlook Emails" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_OperationType="Copy Emails" v_SourceFolder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_MoveUnreadOnly="No" v_DestinationFolder="Favorites" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="OutlookForwardEmailsCommand" CommandID="99812083-f909-491d-abc1-dc4bc3e9c8df" CommandName="OutlookForwardEmailsCommand" IsCommented="false" SelectionName="Forward Outlook Emails" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFolder="Inbox" v_Filter="[Subject] = 'Hello' and [SenderName] = 'Jane Doe'" v_Recipients="johnsmith1234@taskt.com" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="OutlookEmailCommand" CommandID="832fc420-0895-4635-9338-a9f225edaf9c" CommandName="OutlookEmailCommand" IsCommented="false" SelectionName="Send Outlook Email" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Recipients="johnsmith1234@taskt.com" v_Attachment="C:\app.txt" v_Subject="Hello" v_Body="How are you?" v_BodyType="Plain" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>

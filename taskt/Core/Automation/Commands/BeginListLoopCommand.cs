@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using Microsoft.Office.Interop.Outlook;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -59,7 +60,7 @@ namespace taskt.Core.Automation.Commands
             //if still null then throw exception
             if (complexVariable == null)
             {
-                throw new Exception("Complex Variable '" + v_LoopParameter + "' or '" + v_LoopParameter.ApplyVariableFormatting() + "' not found. Ensure the variable exists before attempting to modify it.");
+                throw new System.Exception("Complex Variable '" + v_LoopParameter + "' or '" + v_LoopParameter.ApplyVariableFormatting() + "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
             dynamic listToLoop;
@@ -74,6 +75,10 @@ namespace taskt.Core.Automation.Commands
             else if (complexVariable.VariableValue is DataTable)
             {
                 listToLoop = ((DataTable)complexVariable.VariableValue).Rows;
+            }
+            else if (complexVariable.VariableValue is List<MailItem>)
+            {
+                listToLoop = (List<MailItem>)complexVariable.VariableValue;
             }
             else if ((complexVariable.VariableValue.ToString().StartsWith("[")) && (complexVariable.VariableValue.ToString().EndsWith("]")) && (complexVariable.VariableValue.ToString().Contains(",")))
             {
@@ -92,7 +97,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Complex Variable List Type<T> Not Supported");
+                throw new System.Exception("Complex Variable List Type<T> Not Supported");
             }
 
 

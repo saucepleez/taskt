@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandID="24cc0975-b2e7-46e8-b135-d80caf238440" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="excelInstance" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelOpenWorkbookCommand" CommandID="0db8e48a-72ad-44fb-b05b-0621f56fb127" CommandName="ExcelOpenWorkbookCommand" IsCommented="false" SelectionName="Open Workbook" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="excelInstance" v_FilePath="C:\FileSplitter\SampleTemplate.csv" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSplitRangeByColumnCommand" CommandID="4ac91401-4a1d-45ae-aa52-e29548ba3fa0" CommandName="ExcelSplitRangeByColumnCommand" IsCommented="false" SelectionName="Split Range By Column" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="excelInstance" v_ExcelCellAddress1="A1" v_ExcelCellAddress2="G191" v_ColumnName="Department" v_OutputDirectory="C:\FileSplitter\SplitFiles" v_FileType="xlsx" v_userVariableName="SplitList" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCloseApplicationCommand" CommandID="9cfaa6b2-619e-47cf-932f-3ecaf34cbcb7" CommandName="ExcelCloseApplicationCommand" IsCommented="false" SelectionName="Close Excel Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="excelInstance" v_ExcelSaveOnExit="false" />
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>
