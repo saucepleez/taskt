@@ -30,8 +30,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("C:/screenshots/")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         public string v_SeleniumScreenshotPathParameter { get; set; }
 
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the screenshot file name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter file name for the screenshot")]
+        [Attributes.PropertyAttributes.SampleUsage("screenshot_001")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SeleniumScreenshotFileNameParameter { get; set; }
 
         public SeleniumBrowserTakeScreenshotCommand()
         {
@@ -39,7 +47,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Take Screenshot";
             this.v_InstanceName = "default";
             this.v_SeleniumScreenshotPathParameter = "";
-
+            this.v_SeleniumScreenshotFileNameParameter = "screenshot_001";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -52,9 +60,12 @@ namespace taskt.Core.Automation.Commands
             var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
             var screenshotPath = v_SeleniumScreenshotPathParameter.ConvertToUserVariable(sender);
+            var screenshotFileName = v_SeleniumScreenshotFileNameParameter.ConvertToUserVariable(sender);
 
+            // take the screenshot
             Screenshot image = ((ITakesScreenshot)seleniumInstance).GetScreenshot();
-            image.SaveAsFile(screenshotPath + "/Screenshot.png", OpenQA.Selenium.ScreenshotImageFormat.Png);
+            // save the screenshot to the entered folder by provided name for the screenshot file name
+            image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png", OpenQA.Selenium.ScreenshotImageFormat.Png);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -63,6 +74,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumScreenshotPathParameter", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumScreenshotFileNameParameter", this, editor));
 
             return RenderedControls;
         }
