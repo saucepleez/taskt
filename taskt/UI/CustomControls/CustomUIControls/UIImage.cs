@@ -30,6 +30,7 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("AddToVariableCommand", Resources.command_function);
             uiImages.Add("SetVariableIndexCommand", Resources.command_function);
             uiImages.Add("NewVariableCommand", Resources.command_function);
+            uiImages.Add("NewSecureStringCommand", Resources.command_function);
             uiImages.Add("FormatDataCommand", Resources.command_function);
             uiImages.Add("ModifyStringCommand", Resources.command_function);
             uiImages.Add("DateCalculationCommand", Resources.command_function);
@@ -40,6 +41,7 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("GetWordCountCommand", Resources.command_function);
             uiImages.Add("GetListCountCommand", Resources.command_function);
             uiImages.Add("GetListItemCommand", Resources.command_function);
+            uiImages.Add("AddListItemCommand", Resources.command_function);
             uiImages.Add("RunScriptCommand", Resources.command_script);
             uiImages.Add("RunCustomCodeCommand", Resources.command_script);
             uiImages.Add("RunTaskCommand", Resources.command_start_process);

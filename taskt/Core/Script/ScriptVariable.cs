@@ -26,6 +26,11 @@ namespace taskt.Core.Script
         public object VariableValue { get; set; }
 
         /// <summary>
+        /// To check if the value is a secure string
+        /// </summary>
+        public bool IsSecureString { get; set; }
+
+        /// <summary>
         /// retrieve value of the variable
         /// </summary>
         public string GetDisplayValue(string requiredProperty = "")

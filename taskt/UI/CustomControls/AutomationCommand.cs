@@ -50,6 +50,15 @@ namespace taskt.UI.CustomControls
                         UIControls.Add(ctrl);
                     }
 
+                    //generate Private Checkbox (Control) if user did not add it
+                    var checkBoxControlExists = renderedControls.Any(f => f.Name == "v_IsPrivate");
+
+                    if (!checkBoxControlExists)
+                    {
+                        UIControls.Add(CommandControls.CreateDefaultLabelFor("v_IsPrivate", Command));
+                        UIControls.Add(CommandControls.CreateCheckBoxFor("v_IsPrivate", Command));
+                    }
+
                     //generate comment command if user did not generate it
                     var commentControlExists = renderedControls.Any(f => f.Name == "v_Comment");
 

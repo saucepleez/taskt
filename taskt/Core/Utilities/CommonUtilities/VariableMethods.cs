@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Security;
+using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Engine;
 using taskt.Core.Script;
@@ -304,16 +307,63 @@ namespace taskt.Core.Utilities.CommonUtilities
         /// </summary>
         /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
-        public static void StoreInUserVariable(this String str, object sender, string targetVariable)
+        public static void StoreInUserVariable(this String value, object sender, string targetVariable)
         {
-            SetVariableCommand newVariableCommand = new SetVariableCommand
+            var engine = (AutomationEngineInstance)sender;
+            
+            var requiredVariable = LookupVariable(engine, targetVariable);
+
+            //if still not found and user has elected option, create variable at runtime
+            if ((requiredVariable == null) && (engine.EngineSettings.CreateMissingVariablesDuringExecution))
             {
-                v_userVariableName = targetVariable,
-                v_Input = str
-            };
-            newVariableCommand.RunCommand(sender);
+                engine.VariableList.Add(new ScriptVariable() { VariableName = targetVariable });
+                requiredVariable = LookupVariable(engine, targetVariable);
+            }
+
+            if (requiredVariable != null)
+            {
+                var sourceVariable = LookupVariable(engine, value);
+                if(sourceVariable != null)
+                {
+                    requiredVariable.VariableValue = sourceVariable.VariableValue;
+                }
+                else
+                {
+                    var variableValue = value.ConvertToUserVariable(engine);
+
+                    if (variableValue.StartsWith("{{") && variableValue.EndsWith("}}"))
+                    {
+                        var itemList = variableValue.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
+                        requiredVariable.VariableValue = itemList;
+                    }
+                    else
+                    {
+                        requiredVariable.VariableValue = variableValue;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within braces, ex. {vVariable}");
+            }
         }
 
+        public static ScriptVariable LookupVariable(AutomationEngineInstance engine, string variableName)
+        {
+            //search for the variable
+            var requiredVariable = engine.VariableList.Where(var => var.VariableName == variableName).FirstOrDefault();
+
+            //if variable was not found but it starts with variable naming pattern
+            if ((requiredVariable == null) && (variableName.StartsWith(engine.EngineSettings.VariableStartMarker)) && (variableName.EndsWith(engine.EngineSettings.VariableEndMarker)))
+            {
+                //reformat and attempt
+                var reformattedVariable = variableName.Replace(engine.EngineSettings.VariableStartMarker, "").Replace(engine.EngineSettings.VariableEndMarker, "");
+                requiredVariable = engine.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            }
+
+            return requiredVariable;
+        }
+        
         /// <summary>
         /// Formats item as a variable (enclosing brackets)
         /// </summary>
@@ -323,6 +373,22 @@ namespace taskt.Core.Utilities.CommonUtilities
             var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
             return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
+        }
+
+        /// <summary>
+        /// Converts a string to SecureString
+        /// </summary>
+        /// <param name="value">The string to be converted to SecureString</param>
+        public static SecureString GetSecureString(this string value)
+        {
+            var secureString = new System.Net.NetworkCredential(string.Empty, value).SecurePassword;
+            return secureString;
+        }
+
+        public static string ConvertSecureStringToString(this SecureString secureString)
+        {
+            var strValue = new System.Net.NetworkCredential(string.Empty, secureString).Password;
+            return strValue;
         }
     }
 }

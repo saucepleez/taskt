@@ -156,6 +156,18 @@ namespace taskt.UI.CustomControls
             return inputBox;
         }
 
+        public static CheckBox CreateCheckBoxFor(string parameterName, ScriptCommand parent)
+        {
+            var checkBox = new CheckBox();
+            checkBox.DataBindings.Add("Checked", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
+            checkBox.Name = parameterName;
+            checkBox.AutoSize = true;
+            checkBox.Size = new Size(15, 14);
+            checkBox.UseVisualStyleBackColor = true;
+
+            return checkBox;
+        }
+
         public static Control CreateDropdownFor(string parameterName, ScriptCommand parent)
         {
             var inputBox = new ComboBox();

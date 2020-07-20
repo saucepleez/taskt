@@ -10,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
@@ -88,6 +89,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Middle Click")]
         [PropertyUISelectionOption("Double Left Click")]
         [PropertyUISelectionOption("Set Text")]
+        [PropertyUISelectionOption("Set Secure Text")]
         [PropertyUISelectionOption("Get Text")]
         [PropertyUISelectionOption("Get Table")]
         [PropertyUISelectionOption("Get Count")]
@@ -269,6 +271,53 @@ namespace taskt.Core.Automation.Commands
                         if (fields.Any(f => f.Name == chunkedString))
                         {
                             string keyPress = (string)fields.Where(f => f.Name == chunkedString).FirstOrDefault().GetValue(null);
+                            element.SendKeys(keyPress);
+                        }
+                        else
+                        {
+                            //convert to user variable - https://github.com/saucepleez/taskt/issues/22
+                            var convertedChunk = chunkedString.ConvertToUserVariable(sender);
+                            element.SendKeys(convertedChunk);
+                        }
+                    }
+                    break;
+
+                case "Set Secure Text":
+                    var secureString = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Secure String Variable"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string _clearElement = (from rw in v_WebActionParameterTable.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    var secureStrVariable = VariableMethods.LookupVariable(engine, secureString);
+
+                    if (secureStrVariable.VariableValue is SecureString)
+                        secureString = ((SecureString)secureStrVariable.VariableValue).ConvertSecureStringToString();
+                    else
+                        throw new ArgumentException("Provided Argument is not a 'Secure String'");
+
+                    if (_clearElement == null)
+                        _clearElement = "No";
+
+                    if (_clearElement.ToLower() == "yes")
+                        element.Clear();
+
+                    string[] _potentialKeyPresses = secureString.Split('{', '}');
+
+                    Type _seleniumKeys = typeof(OpenQA.Selenium.Keys);
+                    FieldInfo[] _fields = _seleniumKeys.GetFields(BindingFlags.Static | BindingFlags.Public);
+
+                    //check if chunked string contains a key press command like {ENTER}
+                    foreach (string chunkedString in _potentialKeyPresses)
+                    {
+                        if (chunkedString == "")
+                            continue;
+
+                        if (_fields.Any(f => f.Name == chunkedString))
+                        {
+                            string keyPress = (string)_fields.Where(f => f.Name == chunkedString).FirstOrDefault().GetValue(null);
                             element.SendKeys(keyPress);
                         }
                         else
@@ -688,6 +737,26 @@ namespace taskt.Core.Automation.Commands
                         _elementsGridViewHelper.Rows[1].Cells[1].Value = "No";
 
                     _elementsGridViewHelper.Rows[1].Cells[1] = comparisonComboBox;
+                    break;
+
+                case "Set Secure Text":
+                    foreach (var ctrl in _elementParameterControls)
+                        ctrl.Show();
+
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Secure String Variable");
+                        actionParameters.Rows.Add("Clear Element Before Setting Text");
+                    }
+                    DataGridViewComboBoxCell _comparisonComboBox = new DataGridViewComboBoxCell();
+                    _comparisonComboBox.Items.Add("Yes");
+                    _comparisonComboBox.Items.Add("No");
+
+                    //assign cell as a combobox
+                    if (sender != null)
+                        _elementsGridViewHelper.Rows[1].Cells[1].Value = "No";
+
+                    _elementsGridViewHelper.Rows[1].Cells[1] = _comparisonComboBox;
                     break;
 
                 case "Get Text":

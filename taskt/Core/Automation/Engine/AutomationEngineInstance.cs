@@ -41,6 +41,7 @@ namespace taskt.Core.Automation.Engine
         private EngineStatus _currentStatus { get; set; }
         public EngineSettings EngineSettings { get; set; }
         private ServerSettings _serverSettings { get; set; }
+        private string _privateCommandLog { get; set; }
         public List<DataTable> DataTables { get; set; }
         public string FileName { get; set; }
         public Task TaskModel { get; set; }
@@ -59,6 +60,7 @@ namespace taskt.Core.Automation.Engine
             //initialize logger
             EngineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
             EngineLogger.Information("Engine Class has been initialized");
+            _privateCommandLog = "Can't log display value as the command contains sensitive data";
 
             //initialize error tracking list
             ErrorsOccured = new List<ScriptError>();
@@ -78,6 +80,7 @@ namespace taskt.Core.Automation.Engine
 
             //this value can be later overriden by script
             AutoCalculateVariables = EngineSettings.AutoCalcVariables;
+
         }
 
         public void ExecuteScriptAsync(frmScriptEngine scriptEngine, string filePath, List<ScriptVariable> variables = null)
@@ -243,7 +246,8 @@ namespace taskt.Core.Automation.Engine
                 if (isFirstWait)
                 {
                     _currentStatus = EngineStatus.Paused;
-                    ReportProgress("Paused on Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
+                    ReportProgress("Paused on Line " + parentCommand.LineNumber + ": "
+                        + (parentCommand.v_IsPrivate ? _privateCommandLog : parentCommand.GetDisplayValue()));
                     ReportProgress("[Please select 'Resume' when ready]");
                     isFirstWait = false;
                 }
@@ -283,12 +287,13 @@ namespace taskt.Core.Automation.Engine
             if (parentCommand is AddCodeCommentCommand || parentCommand.IsCommented)
             {
                 ReportProgress("Skipping Line " + parentCommand.LineNumber + ": "
-                    + parentCommand.GetDisplayValue().ConvertToUserVariable(this));
+                    + (parentCommand.v_IsPrivate ? _privateCommandLog : parentCommand.GetDisplayValue().ConvertToUserVariable(this)));
                 return;
             }
 
             //report intended execution
-            ReportProgress("Running Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
+            ReportProgress("Running Line " + parentCommand.LineNumber + ": "
+                + (parentCommand.v_IsPrivate ? _privateCommandLog : parentCommand.GetDisplayValue()));
 
             //handle any errors
             try

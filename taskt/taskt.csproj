@@ -169,6 +169,7 @@
     <Compile Include="Core\Automation\Commands\Error Handling Commands\BeginRetryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error Handling Commands\EndRetryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error Handling Commands\RethrowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Secure Data Commands\NewSecureStringCommand.cs" />
     <Compile Include="Core\Documentation\CommandMetaData.cs" />
     <Compile Include="Core\Documentation\DocumentationGeneration.cs" />
     <Compile Include="Core\App\GlobalAppInstances.cs" />
@@ -320,7 +321,7 @@
     <Compile Include="Core\Automation\Commands\Task Commands\StopCurrentTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text File Commands\ReadTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text File Commands\WriteTextFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Variable Commands\AddToVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data Commands\AddListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable Commands\NewVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable Commands\SetVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable Commands\SetVariableIndexCommand.cs" />

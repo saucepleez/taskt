@@ -18,8 +18,14 @@ namespace taskt.Core.Automation.Commands
         public bool PauseBeforeExecution { get; set; }
         public bool CommandEnabled { get; set; }
 
+        [Attributes.PropertyAttributes.PropertyDescription("Private (Optional)")]
+        [Attributes.PropertyAttributes.InputSpecification("Optional field to mark the command as private (data sensitive) in order to avoid its logging.")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public bool v_IsPrivate { get; set; }
+
         [Attributes.PropertyAttributes.PropertyDescription("Comment Field (Optional)")]
-        [Attributes.PropertyAttributes.InputSpecification("Optional field to enter a custom comment which could potentially describe this command or the need for this command, if required")]
+        [Attributes.PropertyAttributes.InputSpecification("Optional field to enter a custom comment which could potentially describe this command or the need for this command, if required.")]
         [Attributes.PropertyAttributes.SampleUsage("I am using this command to ...")]
         [Attributes.PropertyAttributes.Remarks("Optional")]
         public string v_Comment { get; set; }

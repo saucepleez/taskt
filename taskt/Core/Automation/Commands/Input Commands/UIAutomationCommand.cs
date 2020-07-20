@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security;
 using System.Threading;
 using System.Windows.Automation;
 using System.Windows.Forms;
@@ -28,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the action")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Click Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Secure Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
@@ -328,6 +330,71 @@ namespace taskt.Core.Automation.Commands
                             }
                             requiredHandle.SetFocus();
                             ((ValuePattern)valuePattern).SetValue(textToSet);
+                        }
+                    }
+                    break;
+                case "Set Secure Text":
+                    string secureString = (from rw in v_UIAActionParameters.AsEnumerable()
+                                        where rw.Field<string>("Parameter Name") == "Secure String Variable"
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    string _clearElement = (from rw in v_UIAActionParameters.AsEnumerable()
+                                           where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
+                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                    var secureStrVariable = VariableMethods.LookupVariable(engine, secureString);
+
+                    if (secureStrVariable.VariableValue is SecureString)
+                        secureString = ((SecureString)secureStrVariable.VariableValue).ConvertSecureStringToString();
+                    else
+                        throw new ArgumentException("Provided Argument is not a 'Secure String'");
+
+                    if (_clearElement == null)
+                    {
+                        _clearElement = "No";
+                    }
+
+                    if (requiredHandle.Current.IsEnabled && requiredHandle.Current.IsKeyboardFocusable)
+                    {
+                        object valuePattern = null;
+                        if (!requiredHandle.TryGetCurrentPattern(ValuePattern.Pattern, out valuePattern))
+                        {
+                            //The control does not support ValuePattern Using keyboard input
+
+                            // Set focus for input functionality and begin.
+                            requiredHandle.SetFocus();
+
+                            // Pause before sending keyboard input.
+                            Thread.Sleep(100);
+
+                            if (_clearElement.ToLower() == "yes")
+                            {
+                                // Delete existing content in the control and insert new content.
+                                SendKeys.SendWait("^{HOME}");   // Move to start of control
+                                SendKeys.SendWait("^+{END}");   // Select everything
+                                SendKeys.SendWait("{DEL}");     // Delete selection
+                            }
+                            SendKeys.SendWait(secureString);
+                        }
+                        else
+                        {
+                            if (_clearElement.ToLower() == "no")
+                            {
+                                string currentText;
+                                object tPattern = null;
+                                if (requiredHandle.TryGetCurrentPattern(TextPattern.Pattern, out tPattern))
+                                {
+                                    var textPattern = (TextPattern)tPattern;
+                                    currentText = textPattern.DocumentRange.GetText(-1).TrimEnd('\r').ToString(); // often there is an extra '\r' hanging off the end.
+                                }
+                                else
+                                {
+                                    currentText = requiredHandle.Current.Name.ToString();
+                                }
+                                secureString = currentText + secureString;
+                            }
+                            requiredHandle.SetFocus();
+                            ((ValuePattern)valuePattern).SetValue(secureString);
                         }
                     }
                     break;
@@ -632,6 +699,38 @@ namespace taskt.Core.Automation.Commands
                         actionParameterView.Rows[3].Cells[1].Value = "Encrypt Text";
                         actionParameterView.CellContentClick += ElementsGridViewHelper_CellContentClick;
                     }
+
+                    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+                    comparisonComboBox.Items.Add("Yes");
+                    comparisonComboBox.Items.Add("No");
+
+                    //assign cell as a combobox
+                    if (sender != null)
+                        actionParameterView.Rows[1].Cells[1].Value = "No";
+
+                    actionParameterView.Rows[1].Cells[1] = comparisonComboBox;
+
+                    break;
+                case "Set Secure Text":
+                    foreach (var ctrl in ElementParameterControls)
+                    {
+                        ctrl.Show();
+                    }
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Secure String Variable");
+                        actionParameters.Rows.Add("Clear Element Before Setting Text");
+                    }
+
+                    DataGridViewComboBoxCell _comparisonComboBox = new DataGridViewComboBoxCell();
+                    _comparisonComboBox.Items.Add("Yes");
+                    _comparisonComboBox.Items.Add("No");
+
+                    //assign cell as a combobox
+                    if (sender != null)
+                        actionParameterView.Rows[1].Cells[1].Value = "No";
+
+                    actionParameterView.Rows[1].Cells[1] = _comparisonComboBox;
                     break;
                 case "Get Text":
                 case "Check If Element Exists":
