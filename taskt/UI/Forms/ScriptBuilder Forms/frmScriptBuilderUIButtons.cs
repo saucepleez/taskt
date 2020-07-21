@@ -9,7 +9,6 @@ using taskt.Core.IO;
 using taskt.Core.Script;
 using taskt.Core.Server;
 using taskt.Core.Settings;
-using taskt.Properties;
 using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms.Supplement_Forms;
 
@@ -93,7 +92,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
         }
 
-        //TODO: Studio Step Into
         public delegate void OpenFileDelegate(string filepath);
         public void OpenFile(string filePath)
         {
@@ -603,14 +601,16 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             scheduleManager.Show();
         }
 
-        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveToolStripMenuItem_Click(null, null);
+            _isDebugMode = true;
             RunScript();
         }
 
-        private void uiBtnRunScript_Click(object sender, EventArgs e)
+        private void uiBtnDebugScript_Click(object sender, EventArgs e)
         {
-            RunScript();
+            debugToolStripMenuItem_Click(sender, e);
         }
 
         private void RunScript()
@@ -640,32 +640,28 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
             uiScriptTabControl.SelectedTab = currentTab;
 
-
             Notify("Running Script..");
 
-            pauseToolStripMenuItem.Image = Resources.command_pause;
-            stepOverToolStripMenuItem.Visible = false;
-            stepIntoToolStripMenuItem.Visible = false;
-            pauseToolStripMenuItem.Visible = true;
-            pauseToolStripMenuItem.Tag = "pause";
-            cancelToolStripMenuItem.Visible = true;
-
-            _newEngine = new frmScriptEngine(ScriptFilePath, this);
+            CurrentEngine = new frmScriptEngine(ScriptFilePath, this, null, false, _isDebugMode);
 
             //executionManager = new ScriptExectionManager();
             //executionManager.CurrentlyExecuting = true;
             //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
 
-            _newEngine.CallBackForm = this;
-            _newEngine.Show();
+            CurrentEngine.CallBackForm = this;
+            CurrentEngine.Show();
         }
-        #endregion
 
-        #region Save And Run Tool Strip and Buttons
-        private void saveAndRunToolStripMenuItem_Click(object sender, EventArgs e)
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveToolStripMenuItem_Click(null, null);
-            runToolStripMenuItem_Click(null, null);
+            _isDebugMode = false;
+            RunScript();
+        }
+
+        private void uiBtnRunScript_Click(object sender, EventArgs e)
+        {
+            runToolStripMenuItem_Click(sender, e);
         }
         #endregion
 

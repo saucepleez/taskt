@@ -157,8 +157,8 @@
   <data name="action-bar-import" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\action-bar-import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="action_bar_run" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\action-bar-run.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="action_bar_debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\action-bar-debug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="command_pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -348,5 +348,23 @@
   </data>
   <data name="taskt_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\taskt-logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="action_bar_run" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\action-bar-run.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="action_bar_project" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\action-bar-project.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_breakpoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-breakpoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_ignore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-ignore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

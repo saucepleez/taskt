@@ -289,16 +289,21 @@ namespace taskt.Core.Utilities.CommonUtilities
                 }
 
                 //test if math is required
-                try
+                if (mathChars.Any(f => str.Contains(f)))
                 {
-                    DataTable dt = new DataTable();
-                    var v = dt.Compute(str, "");
-                    return v.ToString();
+                    try
+                    {
+                        DataTable dt = new DataTable();
+                        var v = dt.Compute(str, "");
+                        return v.ToString();
+                    }
+                    catch (Exception)
+                    {
+                        return str;
+                    }
                 }
-                catch (Exception)
-                {
-                    return str;
-                }
+                else
+                    return str;               
             }
         }
 

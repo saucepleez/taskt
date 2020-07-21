@@ -93,6 +93,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap action_bar_debug {
+            get {
+                object obj = ResourceManager.GetObject("action_bar_debug", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap action_bar_import {
             get {
                 object obj = ResourceManager.GetObject("action-bar-import", resourceCulture);
@@ -126,6 +136,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap action_bar_options {
             get {
                 object obj = ResourceManager.GetObject("action_bar_options", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap action_bar_project {
+            get {
+                object obj = ResourceManager.GetObject("action_bar_project", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,6 +243,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_breakpoint {
+            get {
+                object obj = ResourceManager.GetObject("command_breakpoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_camera {
             get {
                 object obj = ResourceManager.GetObject("command_camera", resourceCulture);
@@ -276,6 +306,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_dictionary {
             get {
                 object obj = ResourceManager.GetObject("command_dictionary", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_disabled {
+            get {
+                object obj = ResourceManager.GetObject("command_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -356,6 +396,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_function {
             get {
                 object obj = ResourceManager.GetObject("command_function", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_ignore {
+            get {
+                object obj = ResourceManager.GetObject("command_ignore", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -626,6 +676,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_window_close {
             get {
                 object obj = ResourceManager.GetObject("command_window_close", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap copy {
+            get {
+                object obj = ResourceManager.GetObject("copy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

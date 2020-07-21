@@ -298,7 +298,7 @@
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOpen.Image")));
             this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(4, 709);
+            this.uiBtnOpen.Location = new System.Drawing.Point(4, 868);
             this.uiBtnOpen.Margin = new System.Windows.Forms.Padding(4);
             this.uiBtnOpen.Name = "uiBtnOpen";
             this.uiBtnOpen.Size = new System.Drawing.Size(64, 59);
@@ -412,7 +412,7 @@
             this.uiSettingTabs.Margin = new System.Windows.Forms.Padding(4);
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
-            this.uiSettingTabs.Size = new System.Drawing.Size(843, 611);
+            this.uiSettingTabs.Size = new System.Drawing.Size(843, 770);
             this.uiSettingTabs.TabIndex = 25;
             // 
             // tabAppSettings
@@ -445,7 +445,7 @@
             this.tabAppSettings.Margin = new System.Windows.Forms.Padding(4);
             this.tabAppSettings.Name = "tabAppSettings";
             this.tabAppSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.tabAppSettings.Size = new System.Drawing.Size(835, 570);
+            this.tabAppSettings.Size = new System.Drawing.Size(835, 729);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
@@ -1315,7 +1315,7 @@
             this.tlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
             this.tlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 74F));
-            this.tlpSettings.Size = new System.Drawing.Size(851, 779);
+            this.tlpSettings.Size = new System.Drawing.Size(851, 938);
             this.tlpSettings.TabIndex = 26;
             // 
             // pnlSettings
@@ -1344,7 +1344,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(851, 779);
+            this.ClientSize = new System.Drawing.Size(851, 938);
             this.Controls.Add(this.tlpSettings);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

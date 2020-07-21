@@ -575,52 +575,61 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                         _selectedTabScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
                     break;
                 case 1:
-                    //draw command icon
-                    var img = _uiImages.Images[command.GetType().Name];
-                    if (img != null)
+                    if (command.PauseBeforeExecution)
                     {
-                        e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
+                        var breakPointImg = new Bitmap(Resources.command_breakpoint, new Size(16, 16));
+                        e.Graphics.DrawImage(breakPointImg, modifiedBounds.Left, modifiedBounds.Top + 3);
                     }
+                    else if (command.IsCommented)
+                    {
+                        var commentedImg = new Bitmap(Resources.command_disabled, new Size(16, 16));
+                        e.Graphics.DrawImage(commentedImg, modifiedBounds.Left, modifiedBounds.Top + 3);
+                    }
+                    else
+                    {
+                        //draw command icon
+                        var img = _uiImages.Images[command.GetType().Name];
+                        if (img != null)
+                        {
+                            e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
+                        }
+                    }                   
                     break;
                 case 2:
                     //write command text
                     Brush commandNameBrush, commandBackgroundBrush;
-                    if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1) && !command.PauseBeforeExecution)
+                    if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1) && !command.PauseBeforeExecution && !IsUnhandledException)
                     {
                         //debugging coloring
                         commandNameBrush = Brushes.White;
-                        commandBackgroundBrush = Brushes.OrangeRed;
+                        commandBackgroundBrush = Brushes.LimeGreen;
                         IsScriptPaused = false;
 
-                        TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
-                                                                              .FirstOrDefault();
-
-                        if (debugTab != null && !IsScriptSteppedOver && !IsScriptSteppedInto)
+                        if (!IsScriptSteppedOver && !IsScriptSteppedInto)
                         {
-                            uiPaneTabs.TabPages.Remove(debugTab);
-                            stepIntoToolStripMenuItem.Visible = false;
-                            stepOverToolStripMenuItem.Visible = false;
-                            pauseToolStripMenuItem.Image = Resources.command_pause;
-                            pauseToolStripMenuItem.Tag = "pause";
+                            RemoveDebugTab();
                         }
                     }
-                    else if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1) && command.PauseBeforeExecution)
+                    else if((_debugLine > 0) && (e.ItemIndex == _debugLine - 1) && IsUnhandledException)
+                    {
+                        commandNameBrush = Brushes.Red;
+                        commandBackgroundBrush = Brushes.Black;
+
+                        if (!IsScriptPaused && _isDebugMode)
+                        {
+                            CreateDebugTab();
+                            IsScriptPaused = true;
+                        }
+                        
+                    }
+                    else if ((_debugLine > 0) && (e.ItemIndex == _debugLine - 1) && command.PauseBeforeExecution && !IsUnhandledException)
                     {
                         commandNameBrush = Brushes.White;
-                        commandBackgroundBrush = Brushes.Indigo;
+                        commandBackgroundBrush = Brushes.Red;
 
-                        TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
-                                                                              .FirstOrDefault();
-
-                        if (debugTab == null && !IsScriptPaused)
+                        if (!IsScriptPaused && _isDebugMode)
                         {                           
                             CreateDebugTab();
-                            stepIntoToolStripMenuItem.Visible = true;
-                            stepOverToolStripMenuItem.Visible = true;
-                            pauseToolStripMenuItem.Visible = true;
-                            cancelToolStripMenuItem.Visible = true;
-                            pauseToolStripMenuItem.Image = Resources.command_resume;
-                            pauseToolStripMenuItem.Tag = "resume";
                             IsScriptPaused = true;
                         }
                     }
@@ -645,8 +654,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     else if (command.PauseBeforeExecution)
                     {
                         //pause before execution coloring
-                        commandNameBrush = Brushes.MediumPurple;
-                        commandBackgroundBrush = Brushes.Lavender;
+                        commandNameBrush = Brushes.Red;
+                        commandBackgroundBrush = Brushes.MistyRose;
                     }
                     else if ((command is AddCodeCommentCommand) || (command.IsCommented))
                     {
@@ -715,9 +724,9 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         {
             //warn if nothing was selected
             if (_selectedTabScriptActions.SelectedItems.Count == 0)
-            {
                 Notify("No code was selected!");
-            }
+            else
+                CreateUndoSnapshot();
 
             //get each item and set appropriately
             foreach (ListViewItem item in _selectedTabScriptActions.SelectedItems)
@@ -737,9 +746,9 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         {
             //warn if nothing was selected
             if (_selectedTabScriptActions.SelectedItems.Count == 0)
-            {
                 Notify("No code was selected!");
-            }
+            else
+                CreateUndoSnapshot();
 
             //get each item and set appropriately
             foreach (ListViewItem item in _selectedTabScriptActions.SelectedItems)

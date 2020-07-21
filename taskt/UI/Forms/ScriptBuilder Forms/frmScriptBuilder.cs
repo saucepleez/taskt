@@ -27,7 +27,6 @@ using taskt.Core.IO;
 using taskt.Core.Script;
 using taskt.Core.Server;
 using taskt.Core.Settings;
-using taskt.Properties;
 using taskt.UI.CustomControls;
 using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms.Supplement_Forms;
@@ -97,45 +96,28 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     IsScriptRunning = false;
                     IsScriptSteppedOver = false;
                     IsScriptSteppedInto = false;
-                    stepIntoToolStripMenuItem.Visible = false;
-                    stepOverToolStripMenuItem.Visible = false;
-                    pauseToolStripMenuItem.Visible = false;
-                    cancelToolStripMenuItem.Visible = false;
-
-                    TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
-                                                                              .FirstOrDefault();
-
-                    if (debugTab != null)
-                        uiPaneTabs.TabPages.Remove(debugTab);
+                    RemoveDebugTab();
                 }
 
                 _selectedTabScriptActions.Invalidate();
                 //FormatCommandListView();
 
-                if (stepOverToolStripMenuItem.Visible)
+                if (IsScriptSteppedInto || IsScriptSteppedOver)
                     LoadDebugTab(uiPaneTabs.TabPages["DebugVariables"]);
-                else if (!stepOverToolStripMenuItem.Visible && _newEngine.EngineInstance._isScriptPaused)
-                {
-                    pauseToolStripMenuItem.Image = Resources.command_resume;
-                    pauseToolStripMenuItem.Tag = "resume";
 
-                }
-                else if (!stepOverToolStripMenuItem.Visible && !_newEngine.EngineInstance._isScriptPaused)
-                {
-                    pauseToolStripMenuItem.Image = Resources.command_pause;
-                    pauseToolStripMenuItem.Tag = "pause";
-                }
             }
         }
         private List<string> _notificationList = new List<string>();
         private DateTime _notificationExpires;
         private bool _isDisplaying;
         private string _notificationText;
-        private frmScriptEngine _newEngine;
+        public frmScriptEngine CurrentEngine { get; set; }
         public bool IsScriptRunning { get; set; }
         public bool IsScriptPaused { get; set; }
         public bool IsScriptSteppedOver { get; set; }
         public bool IsScriptSteppedInto { get; set; }
+        public bool IsUnhandledException { get; set; }
+        private bool _isDebugMode;
         #endregion
 
         #region Form Events
@@ -566,8 +548,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             LinkLabel senderLink = (LinkLabel)sender;
             OpenFile(Folders.GetFolder(Folders.FolderType.ScriptsFolder) + senderLink.Text);
         }
-
-        #endregion       
+        #endregion
     }
 }
 

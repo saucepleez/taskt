@@ -498,6 +498,12 @@
     <Compile Include="UI\Forms\Supplement Forms\frmInputBox.Designer.cs">
       <DependentUpon>frmInputBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmError.Designer.cs">
+      <DependentUpon>frmError.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmProjectBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -688,6 +694,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInputBox.resx">
       <DependentUpon>frmInputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmError.resx">
+      <DependentUpon>frmError.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmProjectBuilder.resx">
       <DependentUpon>frmProjectBuilder.cs</DependentUpon>
@@ -894,6 +903,11 @@
     <None Include="Resources\command-folders.png" />
     <None Include="Resources\command-database2.png" />
     <None Include="Resources\command-password.png" />
+    <None Include="Resources\action-bar-project.png" />
+    <None Include="Resources\command-breakpoint.png" />
+    <None Include="Resources\command-disabled.png" />
+    <None Include="Resources\copy.png" />
+    <None Include="Resources\command-ignore.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -901,7 +915,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\taskt-splash.png" />
-    <None Include="Resources\taskt-icon.png" />
     <None Include="Resources\taskt-logo.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

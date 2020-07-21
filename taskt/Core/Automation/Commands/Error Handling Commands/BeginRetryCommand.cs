@@ -83,6 +83,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     try
                     {
+                        cmd.IsExceptionIgnored = true;
                         engine.ExecuteCommand(cmd);
                     }
                     catch (Exception)

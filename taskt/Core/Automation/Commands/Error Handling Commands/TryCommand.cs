@@ -44,6 +44,7 @@ namespace taskt.Core.Automation.Commands
                 try
                 {
                     var cmd = parentCommand.AdditionalScriptCommands[tryIndex];
+                    cmd.IsExceptionIgnored = true;
                     engine.ExecuteCommand(cmd);
                     if(cmd.ScriptCommand is RunTaskCommand && engine.ChildScriptFailed && !engine.ChildScriptErrorCaught)
                         throw new Exception("Child Script Failed");

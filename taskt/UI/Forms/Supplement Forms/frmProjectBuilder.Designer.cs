@@ -45,9 +45,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnOpenProject)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCreateProject)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // lblNewProject
-            //
+            // 
             this.lblNewProject.AutoSize = true;
             this.lblNewProject.BackColor = System.Drawing.Color.Transparent;
             this.lblNewProject.Font = new System.Drawing.Font("Segoe UI Semilight", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -58,9 +58,9 @@
             this.lblNewProject.Size = new System.Drawing.Size(225, 54);
             this.lblNewProject.TabIndex = 14;
             this.lblNewProject.Text = "new project";
-            //
+            // 
             // txtNewProjectName
-            //
+            // 
             this.txtNewProjectName.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNewProjectName.ForeColor = System.Drawing.Color.SteelBlue;
             this.txtNewProjectName.Location = new System.Drawing.Point(17, 90);
@@ -68,9 +68,9 @@
             this.txtNewProjectName.Name = "txtNewProjectName";
             this.txtNewProjectName.Size = new System.Drawing.Size(280, 32);
             this.txtNewProjectName.TabIndex = 16;
-            //
+            // 
             // lblProjectName
-            //
+            // 
             this.lblProjectName.BackColor = System.Drawing.Color.Transparent;
             this.lblProjectName.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProjectName.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -80,9 +80,9 @@
             this.lblProjectName.Size = new System.Drawing.Size(280, 28);
             this.lblProjectName.TabIndex = 17;
             this.lblProjectName.Text = "Project Name";
-            //
+            // 
             // lblOpenProjectDescription
-            //
+            // 
             this.lblOpenProjectDescription.BackColor = System.Drawing.Color.Transparent;
             this.lblOpenProjectDescription.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOpenProjectDescription.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -92,9 +92,9 @@
             this.lblOpenProjectDescription.Size = new System.Drawing.Size(355, 28);
             this.lblOpenProjectDescription.TabIndex = 20;
             this.lblOpenProjectDescription.Text = "Open the Main of an existing Project";
-            //
+            // 
             // txtExistingProjectLocation
-            //
+            // 
             this.txtExistingProjectLocation.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtExistingProjectLocation.ForeColor = System.Drawing.Color.SteelBlue;
             this.txtExistingProjectLocation.Location = new System.Drawing.Point(367, 161);
@@ -102,9 +102,9 @@
             this.txtExistingProjectLocation.Name = "txtExistingProjectLocation";
             this.txtExistingProjectLocation.Size = new System.Drawing.Size(280, 32);
             this.txtExistingProjectLocation.TabIndex = 19;
-            //
+            // 
             // lblOpenProject
-            //
+            // 
             this.lblOpenProject.AutoSize = true;
             this.lblOpenProject.BackColor = System.Drawing.Color.Transparent;
             this.lblOpenProject.Font = new System.Drawing.Font("Segoe UI Semilight", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -115,9 +115,9 @@
             this.lblOpenProject.Size = new System.Drawing.Size(243, 54);
             this.lblOpenProject.TabIndex = 23;
             this.lblOpenProject.Text = "open project";
-            //
+            // 
             // txtNewProjectLocation
-            //
+            // 
             this.txtNewProjectLocation.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNewProjectLocation.ForeColor = System.Drawing.Color.SteelBlue;
             this.txtNewProjectLocation.Location = new System.Drawing.Point(17, 161);
@@ -125,9 +125,9 @@
             this.txtNewProjectLocation.Name = "txtNewProjectLocation";
             this.txtNewProjectLocation.Size = new System.Drawing.Size(280, 32);
             this.txtNewProjectLocation.TabIndex = 24;
-            //
+            // 
             // btnFileManager
-            //
+            // 
             this.btnFileManager.Location = new System.Drawing.Point(654, 161);
             this.btnFileManager.Name = "btnFileManager";
             this.btnFileManager.Size = new System.Drawing.Size(32, 32);
@@ -135,9 +135,9 @@
             this.btnFileManager.Text = "...";
             this.btnFileManager.UseVisualStyleBackColor = true;
             this.btnFileManager.Click += new System.EventHandler(this.btnFileManager_Click);
-            //
+            // 
             // btnFolderManager
-            //
+            // 
             this.btnFolderManager.Location = new System.Drawing.Point(304, 161);
             this.btnFolderManager.Name = "btnFolderManager";
             this.btnFolderManager.Size = new System.Drawing.Size(32, 32);
@@ -145,9 +145,9 @@
             this.btnFolderManager.Text = "...";
             this.btnFolderManager.UseVisualStyleBackColor = true;
             this.btnFolderManager.Click += new System.EventHandler(this.btnFolderManager_Click);
-            //
+            // 
             // lblProjectLocation
-            //
+            // 
             this.lblProjectLocation.BackColor = System.Drawing.Color.Transparent;
             this.lblProjectLocation.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProjectLocation.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -157,9 +157,9 @@
             this.lblProjectLocation.Size = new System.Drawing.Size(280, 28);
             this.lblProjectLocation.TabIndex = 27;
             this.lblProjectLocation.Text = "Project Location";
-            //
+            // 
             // btnOpenProject
-            //
+            // 
             this.btnOpenProject.BackColor = System.Drawing.Color.Transparent;
             this.btnOpenProject.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.btnOpenProject.DisplayText = "Open";
@@ -175,9 +175,9 @@
             this.btnOpenProject.TabStop = false;
             this.btnOpenProject.Text = "Open";
             this.btnOpenProject.Click += new System.EventHandler(this.btnOpenProject_Click);
-            //
+            // 
             // btnCreateProject
-            //
+            // 
             this.btnCreateProject.BackColor = System.Drawing.Color.Transparent;
             this.btnCreateProject.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.btnCreateProject.DisplayText = "Create";
@@ -193,9 +193,9 @@
             this.btnCreateProject.TabStop = false;
             this.btnCreateProject.Text = "Create";
             this.btnCreateProject.Click += new System.EventHandler(this.btnCreateProject_Click);
-            //
+            // 
             // lblError
-            //
+            // 
             this.lblError.BackColor = System.Drawing.Color.Transparent;
             this.lblError.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblError.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -204,9 +204,9 @@
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(688, 28);
             this.lblError.TabIndex = 29;
-            //
+            // 
             // frmProjectBuilder
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -232,6 +232,7 @@
             this.Name = "frmProjectBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Project Manager";
+            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.btnOpenProject)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCreateProject)).EndInit();
             this.ResumeLayout(false);

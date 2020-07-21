@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using taskt.Core.Script;
-using taskt.Properties;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.UI.Forms.ScriptBuilder_Forms
 {
@@ -13,15 +13,20 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
     {
         private void CreateDebugTab()
         {
-            TabPage debugTab = new TabPage();
-            debugTab.Name = "DebugVariables";
-            debugTab.Text = "Variables";
-            uiPaneTabs.TabPages.Add(debugTab);
-            uiPaneTabs.SelectedTab = debugTab;
+            TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
+                                                                              .FirstOrDefault();
+
+            if (debugTab == null)
+            {
+                debugTab = new TabPage();
+                debugTab.Name = "DebugVariables";
+                debugTab.Text = "Variables";
+                uiPaneTabs.TabPages.Add(debugTab);
+                uiPaneTabs.SelectedTab = debugTab;
+            }
             LoadDebugTab(debugTab);
         }
 
-        //TODO: Studio Step Into
         public delegate void LoadDebugTabDelegate(TabPage debugTab);
         private void LoadDebugTab(TabPage debugTab)
         {
@@ -49,7 +54,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     debugTab.Controls.RemoveAt(0);
                 debugTab.Controls.Add(variablesGridViewHelper);
 
-                List<ScriptVariable> engineVariables = _newEngine.EngineInstance.VariableList;
+                List<ScriptVariable> engineVariables = CurrentEngine.EngineInstance.VariableList;
                 foreach (var variable in engineVariables)
                 {
                     DataRow[] foundVariables = variableValues.Select("Name = '" + variable.VariableName + "'");
@@ -59,81 +64,50 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                         switch (variable.VariableValue.GetType().ToString())
                         {
                             case "System.String":
-                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().ToString(),
+                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
                                     variable.VariableValue);
                                 break;
                             case "System.Data.DataTable":
-                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().ToString(), 
+                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName, 
                                     ConvertDataTableToString((DataTable)variable.VariableValue));
                                 break;
+                            case "System.Data.DataRow":
+                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
+                                    ConvertDataRowToString((DataRow)variable.VariableValue));
+                                break;
                             case "System.Collections.Generic.List`1[System.String]":
-                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().ToString(),
+                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
                                     ConvertListToString((List<string>)variable.VariableValue));
                                 break;
                             default:
-                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().ToString(), 
-                                    variable.VariableValue.ToString());
+                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName, 
+                                    "*Type Not Yet Supported*");
                                 break;
                         }                       
                     }
                 }
                 variablesGridViewHelper.DataSource = variableValues;
+                uiPaneTabs.SelectedTab = debugTab;
             }           
         }
 
-        #region Debug Buttons
-        private void stepOverToolStripMenuItem_Click(object sender, EventArgs e)
+        public delegate void RemoveDebugTabDelegate();
+        public void RemoveDebugTab()
         {
-            _newEngine.uiBtnStepOver_Click(sender, e);
-            IsScriptSteppedOver = true;
-        }
-
-        private void stepIntoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _newEngine.uiBtnStepInto_Click(sender, e);
-            IsScriptSteppedInto = true;
-        }
-
-        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _newEngine.uiBtnPause_Click(sender, e);
-            if (pauseToolStripMenuItem.Tag.ToString() == "pause")
+            if (InvokeRequired)
             {
-                pauseToolStripMenuItem.Image = Resources.command_resume;
-                pauseToolStripMenuItem.Tag = "resume";
+                var d = new RemoveDebugTabDelegate(RemoveDebugTab);
+                Invoke(d, new object[] { });
             }
-
-            else if (pauseToolStripMenuItem.Tag.ToString() == "resume")
+            else
             {
-                stepIntoToolStripMenuItem.Visible = false;
-                stepOverToolStripMenuItem.Visible = false;
-                pauseToolStripMenuItem.Visible = true;
-                cancelToolStripMenuItem.Visible = true;
-                pauseToolStripMenuItem.Image = Resources.command_pause;
-                pauseToolStripMenuItem.Tag = "pause";
-
-                //When resuming, close debug tab if it's open
                 TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
                                                                               .FirstOrDefault();
 
                 if (debugTab != null)
                     uiPaneTabs.TabPages.Remove(debugTab);
-
-                IsScriptSteppedOver = false;
-                IsScriptSteppedInto = false;
             }
         }
-
-        private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _newEngine.uiBtnCancel_Click(sender, e);
-
-            stepIntoToolStripMenuItem.Visible = false;
-            stepOverToolStripMenuItem.Visible = false;
-            pauseToolStripMenuItem.Visible = false;
-            cancelToolStripMenuItem.Visible = false;
-        }
-        #endregion
 
         public string ConvertDataTableToString(DataTable dt)
         {
@@ -159,6 +133,17 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
             return stringBuilder.ToString();
         }
+        public string ConvertDataRowToString(DataRow row)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("[");
+
+            for (int i = 0; i < row.ItemArray.Length - 1; i++)
+                stringBuilder.AppendFormat("{0}, ", row.ItemArray[i]);
+
+            stringBuilder.AppendFormat("{0}]", row.ItemArray[row.ItemArray.Length - 1]);
+            return stringBuilder.ToString();
+        }
 
         public string ConvertListToString(List<string> list)
         {
@@ -170,6 +155,24 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
             stringBuilder.AppendFormat("{0}]", list[list.Count - 1]);
             return stringBuilder.ToString();
+        }
+
+
+        public delegate DialogResult LoadErrorFormDelegate(string errorMessage);
+        public DialogResult LoadErrorForm(string errorMessage)
+        {
+            if (InvokeRequired)
+            {
+                var d = new LoadErrorFormDelegate(LoadErrorForm);
+                return (DialogResult)Invoke(d, new object[] { errorMessage });
+            }
+            else
+            {
+                frmError errorForm = new frmError(errorMessage);
+                errorForm.Owner = this;
+                errorForm.ShowDialog();
+                return errorForm.DialogResult;
+            }          
         }
     }
 }

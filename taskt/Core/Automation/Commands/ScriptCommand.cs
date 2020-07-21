@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using taskt.Core.Script;
+using taskt.UI.Forms.ScriptBuilder_Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -43,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         public bool IsSteppedInto { get; set; }
 
         [JsonIgnore]
-        public bool IsSteppedOver { get; set; }
+        public frmScriptBuilder CurrentScriptBuilder { get; set; }
 
         public ScriptCommand()
         {

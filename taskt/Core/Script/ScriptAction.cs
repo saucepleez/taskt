@@ -15,6 +15,7 @@ namespace taskt.Core.Script
         /// </summary>
         public List<ScriptAction> AdditionalScriptCommands { get; set; }
 
+        public bool IsExceptionIgnored { get; set; }
         /// <summary>
         /// adds a command as a nested command to a top-level command
         /// </summary>

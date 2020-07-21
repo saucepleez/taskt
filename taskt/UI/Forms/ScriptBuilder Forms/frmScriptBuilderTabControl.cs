@@ -21,12 +21,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
         }
 
-        private void uiScriptTabControl_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (IsScriptRunning)
-                e.Cancel = true;
-        }
-
         //TODO Finish close button rendering
         private void uiScriptTabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -58,6 +52,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 _lastClickPosition = Cursor.Position;
                 cmsScriptTabActions.Show(Cursor.Position);
             }
+
         //TODO Finish close button click event
         //    else
         //    {
@@ -72,6 +67,12 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         //        if (tabControl.SelectedIndex >= 1 && tabRect.Contains(point))
         //            tabControl.TabPages.Remove(tabControl.TabPages[tabControl.SelectedIndex]);
         //    }
+        }
+
+        private void uiScriptTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (IsScriptRunning)
+                e.Cancel = true;
         }
 
         private void tsmiCloseTab_Click(object sender, EventArgs e)
