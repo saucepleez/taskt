@@ -103,6 +103,26 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap action_bar_element {
+            get {
+                object obj = ResourceManager.GetObject("action_bar_element", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap action_bar_element_recorder {
+            get {
+                object obj = ResourceManager.GetObject("action_bar_element_recorder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap action_bar_import {
             get {
                 object obj = ResourceManager.GetObject("action-bar-import", resourceCulture);
@@ -223,6 +243,56 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap browser_back {
+            get {
+                object obj = ResourceManager.GetObject("browser_back", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap browser_elements {
+            get {
+                object obj = ResourceManager.GetObject("browser_elements", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap browser_forward {
+            get {
+                object obj = ResourceManager.GetObject("browser_forward", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap browser_refresh {
+            get {
+                object obj = ResourceManager.GetObject("browser_refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap browser_save {
+            get {
+                object obj = ResourceManager.GetObject("browser_save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap command_begin_if {
             get {
                 object obj = ResourceManager.GetObject("command_begin_if", resourceCulture);
@@ -316,6 +386,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_disabled {
             get {
                 object obj = ResourceManager.GetObject("command_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap command_element {
+            get {
+                object obj = ResourceManager.GetObject("command_element", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

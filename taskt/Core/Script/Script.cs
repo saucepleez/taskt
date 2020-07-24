@@ -31,6 +31,10 @@ namespace taskt.Core.Script
         /// </summary>
         public List<ScriptVariable> Variables { get; set; }
         /// <summary>
+        /// Contains user-defined elements
+        /// </summary>
+        public List<ScriptElement> Elements { get; set; }
+        /// <summary>
         /// Contains user-selected commands
         /// </summary>
         public List<ScriptAction> Commands;
@@ -58,6 +62,7 @@ namespace taskt.Core.Script
         public static Script SerializeScript(
             ListView.ListViewItemCollection scriptCommands,
             List<ScriptVariable> scriptVariables,
+            List<ScriptElement> scriptElements,
             string scriptFilePath = "",
             string projectName = ""
             )
@@ -70,6 +75,9 @@ namespace taskt.Core.Script
 
             //save variables to file
             script.Variables = scriptVariables;
+
+            //save elements to file
+            script.Elements = scriptElements;
 
             //save listview tags to command list
             int lineNumber = 1;

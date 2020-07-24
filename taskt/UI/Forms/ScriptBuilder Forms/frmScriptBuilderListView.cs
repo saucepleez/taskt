@@ -241,10 +241,16 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
                 //add variables
                 newBuilder._scriptVariables = new List<ScriptVariable>();
+                newBuilder._scriptElements = new List<ScriptElement>();
 
                 foreach (var variable in _scriptVariables)
                 {
                     newBuilder._scriptVariables.Add(variable);
+                }
+
+                foreach (var element in _scriptElements)
+                {
+                    newBuilder._scriptElements.Add(element);
                 }
 
                 //append to new builder
@@ -296,6 +302,9 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 //set variables
                 editCommand.ScriptVariables = _scriptVariables;
 
+                //set elements
+                editCommand.ScriptElements = _scriptElements;
+
                 //show edit command form and save changes on OK result
                 if (editCommand.ShowDialog() == DialogResult.OK)
                 {
@@ -303,6 +312,12 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     selectedCommandItem.Tag = editCommand.SelectedCommand;
                     selectedCommandItem.Text = editCommand.SelectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
                     selectedCommandItem.SubItems.Add(editCommand.SelectedCommand.GetDisplayValue());
+                }
+
+                if (editCommand.SelectedCommand.CommandName == "SeleniumElementActionCommand")
+                {
+                    CreateUndoSnapshot();
+                    _scriptElements = editCommand.ScriptElements;
                 }
             }
         }

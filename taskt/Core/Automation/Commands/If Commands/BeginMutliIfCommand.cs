@@ -34,6 +34,9 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         private List<ScriptVariable> _scriptVariables { get; set; }
 
+        [XmlIgnore]
+        private List<ScriptElement> _scriptElements { get; set; }
+
         public BeginMultiIfCommand()
         {
             CommandName = "BeginMultiIfCommand";
@@ -116,6 +119,7 @@ namespace taskt.Core.Automation.Commands
             
             //get script variables for feeding into if builder form
             _scriptVariables = editor.ScriptVariables;
+            _scriptElements = editor.ScriptElements;
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_IfConditionsTable", this, editor);
@@ -181,6 +185,7 @@ namespace taskt.Core.Automation.Commands
                     editor.OriginalCommand = ifCommand;
                     editor.CreationModeInstance = frmCommandEditor.CreationMode.Edit;
                     editor.ScriptVariables = _scriptVariables;
+                    editor.ScriptElements = _scriptElements;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {

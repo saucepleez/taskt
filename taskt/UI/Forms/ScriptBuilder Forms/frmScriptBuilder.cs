@@ -41,6 +41,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         #region Instance Variables
         private List<ListViewItem> _rowsSelectedForCopy;
         private List<ScriptVariable> _scriptVariables;
+        private List<ScriptElement> _scriptElements;
         private List<AutomationCommand> _automationCommands;
         private bool _editMode;
         private ImageList _uiImages;
@@ -224,6 +225,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             if (!_editMode)
             {
                 _scriptVariables = new List<ScriptVariable>();
+                _scriptElements = new List<ScriptElement>();
             }
             //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
 
@@ -484,6 +486,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             var newCommandForm = new frmCommandEditor(_automationCommands, GetConfiguredCommands());
             newCommandForm.CreationModeInstance = frmCommandEditor.CreationMode.Add;
             newCommandForm.ScriptVariables = _scriptVariables;
+            newCommandForm.ScriptElements = _scriptElements;
             if (specificCommand != "")
                 newCommandForm.DefaultStartupCommand = specificCommand;
 
@@ -491,9 +494,17 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             if (newCommandForm.ShowDialog() == DialogResult.OK)
             {
                 //add to listview
-                AddCommandToListView(newCommandForm.SelectedCommand);
+                CreateUndoSnapshot();
+                AddCommandToListView(newCommandForm.SelectedCommand);              
+            }
+
+            if (newCommandForm.SelectedCommand.CommandName == "SeleniumElementActionCommand")
+            {
+                CreateUndoSnapshot();
+                _scriptElements = newCommandForm.ScriptElements;
             }
         }
+
         private List<ScriptCommand> GetConfiguredCommands()
         {
             List<ScriptCommand> ConfiguredCommands = new List<ScriptCommand>();

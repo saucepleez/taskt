@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public enum UIAdditionalHelperType
         {
             ShowVariableHelper,
+            ShowElementHelper,
             ShowFileSelectionHelper,
             ShowFolderSelectionHelper,
             ShowImageRecogitionHelper,

@@ -369,6 +369,10 @@
     <Compile Include="Core\Automation\Engine\EngineEventArgs\ReportProgressEventArgs.cs" />
     <Compile Include="Core\Automation\Engine\ScriptError.cs" />
     <Compile Include="Core\Automation\Engine\EngineEventArgs\ScriptFinishedEventArgs.cs" />
+    <Compile Include="Core\Script\ScriptElement.cs" />
+    <Compile Include="Core\Script\ScriptElementExtensions.cs" />
+    <Compile Include="Core\Script\ScriptElementType.cs" />
+    <Compile Include="Core\Script\ScriptObject.cs" />
     <Compile Include="Core\Utilities\CommandUtilities\EncryptionServices.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
@@ -474,6 +478,12 @@
     <Compile Include="UI\Forms\frmScreenRecorder.Designer.cs">
       <DependentUpon>frmScreenRecorder.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\frmScriptElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptElements.Designer.cs">
+      <DependentUpon>frmScriptElements.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -491,6 +501,12 @@
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderUIButtons.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAddElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAddElement.Designer.cs">
+      <DependentUpon>frmAddElement.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmInputBox.cs">
       <SubType>Form</SubType>
@@ -588,6 +604,12 @@
     <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmElementSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmElementSelector.Designer.cs">
+      <DependentUpon>frmElementSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -680,8 +702,8 @@
     <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.ru.resx">
-      <DependentUpon>frmScriptBuilder.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\frmScriptElements.resx">
+      <DependentUpon>frmScriptElements.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScreenRecorder.resx">
       <DependentUpon>frmScreenRecorder.cs</DependentUpon>
@@ -691,6 +713,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAddElement.resx">
+      <DependentUpon>frmAddElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInputBox.resx">
       <DependentUpon>frmInputBox.cs</DependentUpon>
@@ -766,6 +791,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
       <DependentUpon>frmUserInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmElementSelector.resx">
+      <DependentUpon>frmElementSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
       <DependentUpon>frmVariableSelector.cs</DependentUpon>
@@ -908,6 +936,14 @@
     <None Include="Resources\command-disabled.png" />
     <None Include="Resources\copy.png" />
     <None Include="Resources\command-ignore.png" />
+    <None Include="Resources\action-bar-element.png" />
+    <None Include="Resources\action-bar-element-recorder.png" />
+    <None Include="Resources\command-element.png" />
+    <None Include="Resources\browser-refresh.png" />
+    <None Include="Resources\browser-back.png" />
+    <None Include="Resources\browser-forward.png" />
+    <None Include="Resources\browser-save.png" />
+    <None Include="Resources\browser-elements.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

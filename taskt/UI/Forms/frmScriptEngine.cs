@@ -41,6 +41,7 @@ namespace taskt.UI.Forms
         private bool _advancedDebug;
         public AutomationEngineInstance EngineInstance { get; set; }
         private List<ScriptVariable> _scriptVariableList;
+        private List<ScriptElement> _scriptElementList;
         private bool _closeWhenDone = false;
         public string Result { get; set; }
         public bool IsNewTaskSteppedInto { get; set; }
@@ -53,7 +54,7 @@ namespace taskt.UI.Forms
 
         //events and methods
         #region Form Events/Methods
-        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<ScriptVariable> variables = null,
+        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<ScriptVariable> variables = null, List<ScriptElement> elements = null,
             bool blnCloseWhenDone = false, bool isDebugMode = false)
         {
             InitializeComponent();
@@ -63,6 +64,11 @@ namespace taskt.UI.Forms
             if (variables != null)
             {
                 _scriptVariableList = variables;
+            }
+
+            if (elements != null)
+            {
+                _scriptElementList = elements;
             }
 
             _closeWhenDone = blnCloseWhenDone;
@@ -192,7 +198,7 @@ namespace taskt.UI.Forms
 
             if (JsonData == null)
             {
-                EngineInstance.ExecuteScriptAsync(this, FilePath, _scriptVariableList);
+                EngineInstance.ExecuteScriptAsync(this, FilePath, _scriptVariableList, _scriptElementList);
             }
             else
             {

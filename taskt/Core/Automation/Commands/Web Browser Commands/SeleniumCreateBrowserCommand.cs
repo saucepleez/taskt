@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
     public class SeleniumCreateBrowserCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Excel Instance Name")]
+        [PropertyDescription("Browser Instance Name")]
         [InputSpecification("Enter a unique name that will represent the application instance.")]
         [SampleUsage("MyExcelInstance")]
         [Remarks("This unique name allows you to refer to the instance by name in future commands, " +

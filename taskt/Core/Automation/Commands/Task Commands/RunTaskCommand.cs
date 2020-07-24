@@ -122,7 +122,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            NewEngine = new frmScriptEngine(childTaskPath, CurrentScriptBuilder, variableList, true, parentEngine.IsDebugMode);
+            NewEngine = new frmScriptEngine(childTaskPath, CurrentScriptBuilder, variableList, null, true, parentEngine.IsDebugMode);
             NewEngine.IsHiddenTaskEngine = true;
 
             if (IsSteppedInto)
@@ -220,7 +220,7 @@ namespace taskt.Core.Automation.Commands
             _passParameters.Font = new Font("Segoe UI Light", 12);
             _passParameters.ForeColor = Color.White;
             _passParameters.DataBindings.Add("Checked", this, "v_AssignVariables", false, DataSourceUpdateMode.OnPropertyChanged);
-            _passParameters.CheckedChanged += (sender, e) => PassParametersCheckbox_CheckedChanged(sender, e, editor.ScriptVariables);
+            _passParameters.CheckedChanged += (sender, e) => PassParametersCheckbox_CheckedChanged(sender, e, editor.ScriptVariables, editor.ScriptElements);
             CommandControls.CreateDefaultToolTipFor("v_AssignVariables", this, _passParameters);
             RenderedControls.Add(_passParameters);
 
@@ -241,10 +241,11 @@ namespace taskt.Core.Automation.Commands
             _passParameters.Checked = false;
         }
 
-        private void PassParametersCheckbox_CheckedChanged(object sender, EventArgs e, List<ScriptVariable> variables)
+        private void PassParametersCheckbox_CheckedChanged(object sender, EventArgs e, List<ScriptVariable> variables, List<ScriptElement> elements)
         {
             AutomationEngineInstance currentScriptEngine = new AutomationEngineInstance();
             currentScriptEngine.VariableList.AddRange(variables);
+            currentScriptEngine.ElementList.AddRange(elements);
             var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);
             var Sender = (CheckBox)sender;
 

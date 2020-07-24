@@ -35,7 +35,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             string title = $"New Tab {(uiScriptTabControl.TabCount + 1)} *";
             TabPage newTabPage = new TabPage(title);
             newTabPage.Name = title;
-            newTabPage.Tag = new List<ScriptVariable>();
+            newTabPage.Tag = new ScriptObject(new List<ScriptVariable>(), new List<ScriptElement>());
             newTabPage.ToolTipText = "";
             uiScriptTabControl.Controls.Add(newTabPage);
             newTabPage.Controls.Add(NewLstScriptActions(title));
@@ -108,13 +108,13 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     string fileName = Path.GetFileNameWithoutExtension(filePath);
                     var foundTab = uiScriptTabControl.TabPages.Cast<TabPage>().Where(t => t.ToolTipText == filePath)
                                                                               .FirstOrDefault();
-
                     if (foundTab == null)
                     {
                         TabPage newtabPage = new TabPage(fileName);
                         newtabPage.Name = fileName;
                         newtabPage.ToolTipText = filePath;
-                        uiScriptTabControl.Controls.Add(newtabPage);
+                        
+                        uiScriptTabControl.TabPages.Add(newtabPage);
                         newtabPage.Controls.Add(NewLstScriptActions(fileName));
                         uiScriptTabControl.SelectedTab = newtabPage;
                     }
@@ -141,6 +141,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     //reinitialize
                     _selectedTabScriptActions.Items.Clear();
                     _scriptVariables = new List<ScriptVariable>();
+                    _scriptElements = new List<ScriptElement>();
 
                     if (deserializedScript.Commands.Count == 0)
                     {
@@ -155,7 +156,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
                     //assign variables
                     _scriptVariables.AddRange(deserializedScript.Variables);
-                    uiScriptTabControl.SelectedTab.Tag = _scriptVariables;
+                    _scriptElements.AddRange(deserializedScript.Elements);
+                    uiScriptTabControl.SelectedTab.Tag = new ScriptObject(_scriptVariables, _scriptElements );
 
                     //update ProjectPath variable
                     var projectPathVariable = _scriptVariables.Where(v => v.VariableName == "ProjectPath").SingleOrDefault();
@@ -345,7 +347,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             //serialize script
             try
             {
-                var exportedScript = Script.SerializeScript(_selectedTabScriptActions.Items, _scriptVariables, ScriptFilePath, _scriptProject.ProjectName);
+                var exportedScript = Script.SerializeScript(_selectedTabScriptActions.Items, _scriptVariables, _scriptElements, ScriptFilePath, _scriptProject.ProjectName);
                 _scriptProject.SaveProject(ScriptFilePath, exportedScript, _mainFileName);
                 uiScriptTabControl.SelectedTab.Text = uiScriptTabControl.SelectedTab.Text.Replace(" *", "");
                 //show success dialog
@@ -370,11 +372,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         }
 
         private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BeginImportProcess();
-        }
-
-        private void btnSequenceImport_Click(object sender, EventArgs e)
         {
             BeginImportProcess();
         }
@@ -429,6 +426,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     }
                 }
 
+                foreach (ScriptElement elem in deserializedScript.Elements)
+                {
+                    if (_scriptElements.Find(alreadyExists => alreadyExists.ElementName == elem.ElementName) == null)
+                    {
+                        _scriptElements.Add(elem);
+                    }
+                }
+
                 //comment
                 _selectedTabScriptActions.Items.Add(CreateScriptCommandListViewItem(new AddCodeCommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
 
@@ -462,23 +467,26 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 uiScriptTabControl.SelectedTab.Controls[0].Show();
         }
 
+        #region Restart And Close Buttons
         private void restartApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Restart();
         }
-
-        private void btnClose_Click(object sender, EventArgs e)
+       
+        private void uiBtnRestart_Click(object sender, EventArgs e)
         {
-            for (int i = 30; i > 0; i--)
-            {
-                tlpControls.RowStyles[4].Height = i;
-            }
+            Application.Restart();
         }
-
         private void closeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+        private void uiBtnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        #endregion
         #endregion
 
         #region Options Tool Strip and Buttons
@@ -642,7 +650,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
             Notify("Running Script..");
 
-            CurrentEngine = new frmScriptEngine(ScriptFilePath, this, null, false, _isDebugMode);
+            CurrentEngine = new frmScriptEngine(ScriptFilePath, this, null, null, false, _isDebugMode);
 
             //executionManager = new ScriptExectionManager();
             //executionManager.CurrentlyExecuting = true;
@@ -665,18 +673,44 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         }
         #endregion
 
-        #region Save And Close Buttons
-        private void uiBtnKeep_Click(object sender, EventArgs e)
+        #region Element Buttons
+        private void elementManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            OpenElementManager();
         }
 
-        private void uiBtnClose_Click(object sender, EventArgs e)
+        private void uiBtnAddElement_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
+            OpenElementManager();
+        }
+
+        private void OpenElementManager()
+        {
+            frmScriptElements scriptElementEditor = new frmScriptElements();
+            scriptElementEditor.ScriptName = uiScriptTabControl.SelectedTab.Name;
+            scriptElementEditor.ScriptElements = _scriptElements;
+
+            if (scriptElementEditor.ShowDialog() == DialogResult.OK)
+            {
+                CreateUndoSnapshot();
+                _scriptElements = scriptElementEditor.ScriptElements;               
+            }
+        }
+
+        private void elementRecorderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmHTMLElementRecorder elementRecorder = new frmHTMLElementRecorder();
+            elementRecorder.ScriptElements = _scriptElements; 
+            elementRecorder.ShowDialog();
+            CreateUndoSnapshot();
+            _scriptElements = elementRecorder.ScriptElements;           
+        }
+
+        private void uiBtnElementRecorder_Click(object sender, EventArgs e)
+        {
+            elementRecorderToolStripMenuItem_Click(sender, e);
         }
         #endregion
-
         #endregion
     }
 }

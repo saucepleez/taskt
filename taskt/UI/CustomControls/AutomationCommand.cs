@@ -122,6 +122,9 @@ namespace taskt.UI.CustomControls
                         case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
                             control.DataSource = editor.ScriptVariables;
                             break;
+                        case PropertyUIHelper.UIAdditionalHelperType.ShowElementHelper:
+                            control.DataSource = editor.ScriptElements;
+                            break;
                         default:
                             break;
                     }

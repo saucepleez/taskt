@@ -24,6 +24,7 @@ namespace taskt.Core.Automation.Engine
     {
         //engine variables
         public List<ScriptVariable> VariableList { get; set; }
+        public List<ScriptElement> ElementList { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
         public ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
@@ -77,6 +78,7 @@ namespace taskt.Core.Automation.Engine
             _serverSettings = settings.ServerSettings;
 
             VariableList = new List<ScriptVariable>();
+            ElementList = new List<ScriptElement>();
             AppInstances = new Dictionary<string, object>();
             ServiceResponses = new List<IRestResponse>();
             DataTables = new List<DataTable>();
@@ -86,7 +88,8 @@ namespace taskt.Core.Automation.Engine
 
         }
 
-        public void ExecuteScriptAsync(frmScriptEngine scriptEngine, string filePath, List<ScriptVariable> variables = null)
+        public void ExecuteScriptAsync(frmScriptEngine scriptEngine, string filePath, List<ScriptVariable> variables = null, 
+                                       List<ScriptElement> elements = null)
         {
             EngineLogger.Information("Client requesting to execute script using frmEngine");
 
@@ -95,6 +98,11 @@ namespace taskt.Core.Automation.Engine
             if (variables != null)
             {
                 VariableList = variables;
+            }
+
+            if (elements != null)
+            {
+                ElementList = elements;
             }
 
             new Thread(() =>
@@ -183,6 +191,26 @@ namespace taskt.Core.Automation.Engine
                 }
 
                 VariableList = automationScript.Variables;
+
+                //track elements
+                ReportProgress("Creating Element List");
+
+                //set elements if they were passed in
+                if (ElementList != null)
+                {
+                    foreach (var elem in ElementList)
+                    {
+                        var elementFound = automationScript.Elements.Where(f => f.ElementName == elem.ElementName).FirstOrDefault();
+
+                        if (elementFound != null)
+                        {
+                            elementFound.ElementType = elem.ElementType;
+                            elementFound.ElementValue = elem.ElementValue;
+                        }
+                    }
+                }
+
+                ElementList = automationScript.Elements;
 
                 ReportProgress("Creating App Instance Tracking List");
                 //create app instances and merge in global instances

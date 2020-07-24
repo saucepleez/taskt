@@ -94,6 +94,8 @@ namespace taskt.UI.Forms
         {
             //create variable editing form
             frmAddVariable addVariableForm = new frmAddVariable();
+            addVariableForm.ScriptVariables = ScriptVariables;
+
             ExpandUserVariableNode();
 
             //validate if user added variable
@@ -145,6 +147,8 @@ namespace taskt.UI.Forms
 
             //create variable editing form
             frmAddVariable addVariableForm = new frmAddVariable(VariableName, VariableValue);
+            addVariableForm.ScriptVariables = ScriptVariables;
+
             ExpandUserVariableNode();
 
             //validate if user added variable

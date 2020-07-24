@@ -55,6 +55,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 string mainScriptName = Path.GetFileNameWithoutExtension(mainScriptPath);
                 UIListView mainScriptActions = NewLstScriptActions(mainScriptName);
                 List<ScriptVariable> mainScriptVariables = new List<ScriptVariable>();
+                List<ScriptElement> mainScriptElements = new List<ScriptElement>();
                 ShowMessageCommand helloWorldCommand = new ShowMessageCommand();
 
                 helloWorldCommand.v_Message = "Hello World";
@@ -66,7 +67,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 try
                 {
                     //Serialize main script
-                    var mainScript = Script.SerializeScript(mainScriptActions.Items, mainScriptVariables, 
+                    var mainScript = Script.SerializeScript(mainScriptActions.Items, mainScriptVariables, mainScriptElements,
                                                             mainScriptPath, projectBuilder.NewProjectName);                  
                     //Create new project
                     Project proj = new Project(projectBuilder.NewProjectName);
@@ -456,13 +457,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 string newFilePath = Path.Combine(selectedNodePath, "New Script.json");
                 UIListView newScriptActions = NewLstScriptActions();
                 List<ScriptVariable> newScripVariables = new List<ScriptVariable>();
+                List<ScriptElement> newScriptElements = new List<ScriptElement>();
                 var helloWorldCommand = new ShowMessageCommand();
                 helloWorldCommand.v_Message = "Hello World";
                 newScriptActions.Items.Insert(0, CreateScriptCommandListViewItem(helloWorldCommand));
 
                 if (!File.Exists(newFilePath))
                 {
-                    Script.SerializeScript(newScriptActions.Items, newScripVariables, newFilePath, _scriptProject.ProjectName);
+                    Script.SerializeScript(newScriptActions.Items, newScripVariables, newScriptElements, newFilePath, _scriptProject.ProjectName);
                     NewNode(tvProject.SelectedNode, newFilePath, "file");
                     OpenFile(newFilePath);
                 }
@@ -477,7 +479,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                         newerFilePath = Path.Combine(newDirectoryPath, $"{newFileNameWithoutExtension} ({count}).json");
                         count += 1;
                     }
-                    Script.SerializeScript(newScriptActions.Items, newScripVariables, newerFilePath, _scriptProject.ProjectName);
+                    Script.SerializeScript(newScriptActions.Items, newScripVariables, newScriptElements, newerFilePath, _scriptProject.ProjectName);
                     NewNode(tvProject.SelectedNode, newerFilePath, "file");
                     OpenFile(newerFilePath);
                 }

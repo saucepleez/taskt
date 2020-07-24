@@ -31,6 +31,8 @@ namespace taskt.UI.Forms
         private List<AutomationCommand> _commandList = new List<AutomationCommand>();
         //list of variables, assigned from frmScriptBuilder
         public List<ScriptVariable> ScriptVariables;
+        //list of elements, assigned from frmScriptBuilder
+        public List<ScriptElement> ScriptElements;
         //reference to currently selected command
         public ScriptCommand SelectedCommand;
         //reference to original command

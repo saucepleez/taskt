@@ -5,11 +5,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using taskt.Core;
-using taskt.Core.Automation.Attributes.ClassAttributes;
+using Group = taskt.Core.Automation.Attributes.ClassAttributes.Group;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
 using taskt.Core.Settings;
 using taskt.Properties;
 using taskt.UI.CustomControls.CustomUIControls;
@@ -231,6 +233,13 @@ namespace taskt.UI.CustomControls
                         helperControl.Click += (sender, e) => ShowVariableSelector(sender, e);
                         break;
 
+                    case PropertyUIHelper.UIAdditionalHelperType.ShowElementHelper:
+                        //show element selector
+                        helperControl.CommandImage = Resources.command_element;
+                        helperControl.CommandDisplay = "Insert Element";
+                        helperControl.Click += (sender, e) => ShowElementSelector(sender, e);
+                        break;
+
                     case PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
                         //show file selector
                         helperControl.CommandImage = Resources.command_files;
@@ -438,6 +447,66 @@ namespace taskt.UI.CustomControls
                 }
 
 
+            }
+        }
+
+        public static void ShowElementSelector(object sender, EventArgs e)
+        {
+            //create element selector form
+            frmElementSelector newElementSelector = new frmElementSelector();
+            
+            //get copy of user element and append system elements, then load to combobox
+            var elementList = CurrentEditor.ScriptElements.Select(f => "(" + f.ElementType.Description() + ") " + f.ElementName).ToList();
+
+            newElementSelector.lstElements.Items.AddRange(elementList.ToArray());
+
+            //if user pressed "OK"
+            if (newElementSelector.ShowDialog() == DialogResult.OK)
+            {
+                //ensure that a element was actually selected
+                if (newElementSelector.lstElements.SelectedItem == null)
+                {
+                    //return out as nothing was selected
+                    MessageBox.Show("There were no elements selected!");
+                    return;
+                }
+
+                //grab the referenced input assigned to the 'insert element' button instance
+                CommandItemControl inputBox = (CommandItemControl)sender;
+                //currently element insertion is only available for simply textboxes
+
+                Regex regex = new Regex(@"\([\w\s]+\)\s");
+                if (inputBox.Tag is TextBox)
+                {
+                    TextBox targetTextbox = (TextBox)inputBox.Tag;
+                    //concat element name with brackets <vElement> as engine searches for the same
+                    targetTextbox.Text = targetTextbox.Text + "<" + regex.Replace(newElementSelector.lstElements.SelectedItem.ToString(), "") + ">";
+                }
+                else if (inputBox.Tag is ComboBox)
+                {
+                    ComboBox targetCombobox = (ComboBox)inputBox.Tag;
+                    //concat element name with brackets <vElement> as engine searches for the same
+                    targetCombobox.Text = targetCombobox.Text + "<" + regex.Replace(newElementSelector.lstElements.SelectedItem.ToString(), "") + ">";
+                }
+                else if (inputBox.Tag is DataGridView)
+                {
+                    DataGridView targetDGV = (DataGridView)inputBox.Tag;
+
+                    if (targetDGV.SelectedCells.Count == 0)
+                    {
+                        MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting" +
+                            " to insert an element!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    {
+                        MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + "<" + newElementSelector.lstElements.SelectedItem.ToString() + ">";
+                }
             }
         }
 
@@ -792,6 +861,24 @@ namespace taskt.UI.CustomControls
                 foreach (var variable in editor.ScriptVariables)
                 {
                     cbo.Items.Add(variable.VariableName);
+                }
+            }
+
+            return cbo;
+        }
+
+        public static ComboBox AddElementNames(this ComboBox cbo, frmCommandEditor editor)
+        {
+            if (cbo == null)
+                return null;
+
+            if (editor != null)
+            {
+                cbo.Items.Clear();
+
+                foreach (var element in editor.ScriptElements)
+                {
+                    cbo.Items.Add(element.ElementName);
                 }
             }
 

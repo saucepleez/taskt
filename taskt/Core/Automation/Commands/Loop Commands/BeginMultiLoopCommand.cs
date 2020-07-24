@@ -35,6 +35,9 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         private List<ScriptVariable> _scriptVariables { get; set; }
 
+        [XmlIgnore]
+        private List<ScriptElement> _scriptElements { get; set; }
+
         public BeginMultiLoopCommand()
         {
             CommandName = "BeginMultiLoopCommand";
@@ -87,6 +90,7 @@ namespace taskt.Core.Automation.Commands
 
             //get script variables for feeding into loop builder form
             _scriptVariables = editor.ScriptVariables;
+            _scriptElements = editor.ScriptElements;
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_LoopConditionsTable", this, editor);
@@ -169,6 +173,7 @@ namespace taskt.Core.Automation.Commands
                     editor.OriginalCommand = loopCommand;
                     editor.CreationModeInstance = frmCommandEditor.CreationMode.Edit;
                     editor.ScriptVariables = _scriptVariables;
+                    editor.ScriptElements = _scriptElements;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {

@@ -35,12 +35,26 @@ namespace taskt.Core.Utilities.CommonUtilities
             var engine = (AutomationEngineInstance)sender;
 
             var variableList = engine.VariableList;
-            var systemVariables = Core.Common.GenerateSystemVariables();
+            var systemVariables = Common.GenerateSystemVariables();
 
-            var searchList = new List<ScriptVariable>();
-            searchList.AddRange(variableList);
-            searchList.AddRange(systemVariables);
+            var variableSearchList = new List<ScriptVariable>();
+            variableSearchList.AddRange(variableList);
+            variableSearchList.AddRange(systemVariables);
 
+            var elementSearchList = engine.ElementList;
+
+            //check if it's an element first
+            if (str.StartsWith("<") && str.EndsWith(">"))
+            {
+                string potentialElement = str.TrimStart('<').TrimEnd('>');
+                var matchingElement = elementSearchList.Where(elem => elem.ElementName == potentialElement).FirstOrDefault();
+                if (matchingElement != null)
+                {
+                    //if element found, store it in str and continue checking for variables
+                    str = matchingElement.ElementValue;
+                }
+            }
+            
             //custom variable markers
             var startVariableMarker = engine.EngineSettings.VariableStartMarker;
             var endVariableMarker = engine.EngineSettings.VariableEndMarker;
@@ -60,7 +74,7 @@ namespace taskt.Core.Utilities.CommonUtilities
 
                     foreach (var potentialSubVariable in potentialSubVariables)
                     {
-                        var matchingVar = (from vars in searchList
+                        var matchingVar = (from vars in variableSearchList
                                            where vars.VariableName == potentialSubVariable
                                            select vars).FirstOrDefault();
 
@@ -90,7 +104,7 @@ namespace taskt.Core.Utilities.CommonUtilities
                         if (jsonPattern.StartsWith("$."))
                         {
                             //find variable
-                            var matchingVar = (from vars in searchList
+                            var matchingVar = (from vars in variableSearchList
                                                where vars.VariableName == variableName
                                                select vars).FirstOrDefault();
                             //if variable is found
@@ -142,7 +156,7 @@ namespace taskt.Core.Utilities.CommonUtilities
                     varcheckname = potentialVariable.Split('.')[0];
                 }
 
-                var varCheck = (from vars in searchList
+                var varCheck = (from vars in variableSearchList
                                 where vars.VariableName == varcheckname
                                 select vars).FirstOrDefault();
 

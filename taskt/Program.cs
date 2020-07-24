@@ -61,7 +61,7 @@ namespace taskt
                     return;
                 }
 
-                Application.Run(new frmScriptEngine(filePath, null, null, true));
+                Application.Run(new frmScriptEngine(filePath, null, null, null, true));
             }
             else
             {

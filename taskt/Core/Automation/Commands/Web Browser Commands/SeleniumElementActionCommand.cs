@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
                      "\n\tLink Text: https://www.mylink.com/"
                     )]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowElementHelper)]
         public string v_SeleniumSearchParameter { get; set; }
 
         [XmlElement]
@@ -526,7 +526,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.Font = new Font("Segoe UI Semilight", 10);
             helperControl.CommandImage = Resources.command_camera;
             helperControl.CommandDisplay = "Element Recorder";
-            helperControl.Click += ShowRecorder;
+            helperControl.Click += new EventHandler((s, e) => ShowRecorder(s, e, editor));
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SeleniumSearchType", this, editor));
@@ -534,7 +534,9 @@ namespace taskt.Core.Automation.Commands
             _searchParameterControls = new List<Control>();
             _searchParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumSearchParameter", this));
             _searchParameterControls.Add(helperControl);
-            _searchParameterControls.Add(CommandControls.CreateDefaultInputFor("v_SeleniumSearchParameter", this));
+            var searchParameterInput = CommandControls.CreateDefaultInputFor("v_SeleniumSearchParameter", this);
+            _searchParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_SeleniumSearchParameter", this, new Control[] { searchParameterInput }, editor));
+            _searchParameterControls.Add(searchParameterInput);
             RenderedControls.AddRange(_searchParameterControls);
 
             _elementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_SeleniumElementAction", this);
@@ -554,7 +556,16 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [{v_SeleniumSearchType} - {v_SeleniumElementAction} - Instance Name '{v_InstanceName}']";
+            if (v_SeleniumSearchParameter.Contains("<") && v_SeleniumSearchParameter.Contains(">"))
+            {
+                var splitSearchType = v_SeleniumSearchType.Split(' ').ToList();
+                splitSearchType.Insert(2, v_SeleniumSearchParameter);
+                string joinedSearchType = string.Join(" ", splitSearchType);
+
+                return base.GetDisplayValue() + $" [{joinedSearchType} - {v_SeleniumElementAction} - Instance Name '{v_InstanceName}']";
+            }               
+            else
+                return base.GetDisplayValue() + $" [{v_SeleniumSearchType} - {v_SeleniumElementAction} - Instance Name '{v_InstanceName}']";
         }
 
         public bool ElementExists(object sender, string searchType, string elementName)
@@ -655,19 +666,22 @@ namespace taskt.Core.Automation.Commands
             return element;
         }
         
-        public void ShowRecorder(object sender, EventArgs e)
+        public void ShowRecorder(object sender, EventArgs e, frmCommandEditor editor)
         {
             //create recorder
             frmHTMLElementRecorder newElementRecorder = new frmHTMLElementRecorder();
+            newElementRecorder.ScriptElements = editor.ScriptElements;
 
             //show form
             newElementRecorder.ShowDialog();
+
+            editor.ScriptElements = newElementRecorder.ScriptElements;
 
             try
             {
                 string seleniumSearchType = Regex.Matches(v_SeleniumSearchType, @"(?<=By )[\w\s]+")[0].ToString();
                 var searchParameter = newElementRecorder.SearchParameters.AsEnumerable().Where(s => s[0].ToString() == seleniumSearchType).SingleOrDefault();
-                _searchParameterControls[2].Text = searchParameter[1].ToString();
+                _searchParameterControls[3].Text = searchParameter[1].ToString();
             }
             catch (Exception)
             {

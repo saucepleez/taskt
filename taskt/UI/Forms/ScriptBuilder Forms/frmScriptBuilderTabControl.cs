@@ -17,7 +17,12 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             {
                 ScriptFilePath = uiScriptTabControl.SelectedTab.ToolTipText.ToString();
                 _selectedTabScriptActions = (UIListView)uiScriptTabControl.SelectedTab.Controls[0];
-                _scriptVariables = (List<ScriptVariable>)uiScriptTabControl.SelectedTab.Tag;
+                ScriptObject scriptObject = (ScriptObject)uiScriptTabControl.SelectedTab.Tag;
+                if (scriptObject != null)
+                {
+                    _scriptVariables = scriptObject.ScriptVariables;
+                    _scriptElements = scriptObject.ScriptElements;
+                }               
             }
         }
 
@@ -134,7 +139,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             {
                 foreach (TabPage tab in uiScriptTabControl.TabPages)
                 {
-                    CheckForUnsavedScript(tab);
+                    result = CheckForUnsavedScript(tab);
                 }
             }
             return result;

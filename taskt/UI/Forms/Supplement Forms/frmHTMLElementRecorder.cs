@@ -3,13 +3,23 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.Core.Automation.User32;
 using HtmlAgilityPack;
+using taskt.Core.Script;
+using System.Collections.Generic;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmHTMLElementRecorder : UIForm
     {
-        public DataTable SearchParameters;
-        public string LastItemClicked;
+        public List<ScriptElement> ScriptElements { get; set; }
+        public DataTable SearchParameters { get; set; }
+        public string LastItemClicked { get; set; }
+        private string _xPath;
+        private string _name;
+        private string _id;
+        private string _tagName;
+        private string _className;
+        private string _linkText;
+        private string _cssSelector;
 
         public frmHTMLElementRecorder()
         {
@@ -67,23 +77,25 @@ namespace taskt.UI.Forms.Supplement_Forms
                 element.Id = savedId;
                 HtmlNode node = doc.GetElementbyId(uniqueId);
 
-                string xpath = node.XPath.Replace("[1]", "");
-                string name = element.GetAttribute("name") == null ? "" : element.GetAttribute("name");
-                string id = element.GetAttribute("id") == null ? "" : element.GetAttribute("id"); ;
-                string className = element.GetAttribute("className") == null ? "" : element.GetAttribute("className");
-                string linkText = element.TagName.ToLower() == "a" ? element.InnerText : "";
+                _xPath = node.XPath.Replace("[1]", "");
+                _name = element.GetAttribute("name") == null ? "" : element.GetAttribute("name");
+                _id = element.GetAttribute("id") == null ? "" : element.GetAttribute("id"); ;
+                _tagName = element.TagName;
+                _className = element.GetAttribute("className") == null ? "" : element.GetAttribute("className");
+                _linkText = element.TagName.ToLower() == "a" ? element.InnerText : "";
+                _cssSelector = ""; //TODO
 
-                LastItemClicked = $"[XPath:{xpath}].[ID:{id}].[Name:{name}].[Tag Name:{element.TagName}].[Class:{className}].[Link Text:{linkText}]";
+                LastItemClicked = $"[XPath:{_xPath}].[ID:{_id}].[Name:{_name}].[Tag Name:{_tagName}].[Class:{_className}].[Link Text:{_linkText}].[CSS Selector:{_cssSelector}]";
                 lblSubHeader.Text = LastItemClicked;
 
                 SearchParameters.Rows.Clear();
-                SearchParameters.Rows.Add("XPath", xpath);
-                SearchParameters.Rows.Add("ID", id);
-                SearchParameters.Rows.Add("Name", name);
-                SearchParameters.Rows.Add("Tag Name", element.TagName);
-                SearchParameters.Rows.Add("Class Name", className);
-                SearchParameters.Rows.Add("CSS Selector", element.Style); //TODO produce the appropriate CSS selector for selenium automation
-                SearchParameters.Rows.Add("Link Text", linkText);
+                SearchParameters.Rows.Add("XPath", _xPath);
+                SearchParameters.Rows.Add("ID", _id);
+                SearchParameters.Rows.Add("Name", _name);
+                SearchParameters.Rows.Add("Tag Name", _tagName);
+                SearchParameters.Rows.Add("Class Name", _className);
+                SearchParameters.Rows.Add("CSS Selector", _cssSelector); //TODO produce the appropriate CSS selector for selenium automation
+                SearchParameters.Rows.Add("Link Text", _linkText);
             }
             catch (Exception)
             {
@@ -126,6 +138,49 @@ namespace taskt.UI.Forms.Supplement_Forms
             wbElementRecorder.GoForward();
         }
 
+        private void pbSave_Click(object sender, EventArgs e)
+        {
+            Dictionary<ScriptElementType, string> elementValueDict = new Dictionary<ScriptElementType, string>()
+            {
+                { ScriptElementType.XPath, _xPath },
+                { ScriptElementType.Name, _name },
+                { ScriptElementType.ID, _id },
+                { ScriptElementType.TagName, _tagName },
+                { ScriptElementType.ClassName, _className },
+                { ScriptElementType.LinkText, _linkText },
+                { ScriptElementType.CSSSelector, _cssSelector }
+            };
+
+            frmAddElement addElementForm = new frmAddElement();
+            addElementForm.ScriptElements = ScriptElements;
+            addElementForm.ElementValueDict = elementValueDict;
+            addElementForm.ShowDialog();
+
+            if (addElementForm.DialogResult == DialogResult.OK)
+            {
+                ScriptElement newElement = new ScriptElement()
+                {
+                    ElementName = addElementForm.txtElementName.Text,
+                    ElementType = (ScriptElementType)Enum.Parse(typeof(ScriptElementType), 
+                                        addElementForm.cbxElementType.SelectedItem.ToString().Replace(" ", "")),
+                    ElementValue = addElementForm.txtDefaultValue.Text
+                };
+                ScriptElements.Add(newElement);
+            }
+        }
+
+        private void pbElements_Click(object sender, EventArgs e)
+        {
+            frmScriptElements scriptElementForm = new frmScriptElements();
+            scriptElementForm.ScriptElements = ScriptElements;
+            scriptElementForm.ShowDialog();
+
+            if (scriptElementForm.DialogResult == DialogResult.OK)
+            {
+                ScriptElements = scriptElementForm.ScriptElements;
+            }
+        }
+
         private void tbURL_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter)
@@ -134,6 +189,6 @@ namespace taskt.UI.Forms.Supplement_Forms
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
-        }
+        }       
     }
 }
