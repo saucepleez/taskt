@@ -217,7 +217,6 @@
     <Compile Include="Core\Automation\Commands\Error Handling Commands\ThrowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error Handling Commands\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelActivateSheetCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel Commands\ExcelAddWorkbookCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelAppendCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelAppendRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelCloseApplicationCommand.cs" />
@@ -228,7 +227,6 @@
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelGetLastRowIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelGetRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelActivateCellCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel Commands\ExcelOpenWorkbookCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelRunMacroCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelSaveWorkbookAsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel Commands\ExcelSaveWorkbookCommand.cs" />
@@ -353,14 +351,12 @@
     <Compile Include="Core\Automation\Commands\Window Commands\ResizeWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window Commands\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window Commands\WaitForWindowToExistCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word Commands\WordAddDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordAppendDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordAppendImageCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordAppendTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordCloseApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordCreateApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordExportToPDFCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word Commands\WordOpenDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordReadDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordReplaceTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word Commands\WordSaveDocumentAsCommand.cs" />

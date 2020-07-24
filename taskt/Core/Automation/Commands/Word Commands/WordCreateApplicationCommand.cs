@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using Application = Microsoft.Office.Interop.Word.Application;
@@ -26,6 +28,24 @@ namespace taskt.Core.Automation.Commands
         [Remarks("This unique name allows you to refer to the instance by name in future commands, " +
                  "ensuring that the commands you specify run against the correct application.")]
         public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("New/Open Document")]
+        [PropertyUISelectionOption("New Document")]
+        [PropertyUISelectionOption("Open Document")]
+        [InputSpecification("Indicate whether to create a new Document or to open an existing Document.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public string v_NewOpenDocument { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Document File Path")]
+        [InputSpecification("Enter or Select the path to the Document file.")]
+        [SampleUsage(@"C:\temp\myfile.docx || {vFilePath} || {ProjectPath}\myfile.docx")]
+        [Remarks("This input should only be used for opening existing Documents.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_FilePath { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Visible")]
@@ -52,6 +72,7 @@ namespace taskt.Core.Automation.Commands
             CommandEnabled = true;
             CustomRendering = true;
             v_InstanceName = "DefaultWord";
+            v_NewOpenDocument = "New Workbook";
             v_Visible = "No";
             v_CloseAllInstances = "Yes";
         }
@@ -59,6 +80,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (AutomationEngineInstance)sender;
+            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
 
             if (v_CloseAllInstances == "Yes")
             {
@@ -77,6 +99,21 @@ namespace taskt.Core.Automation.Commands
                 newWordSession.Visible = false;
 
             engine.AddAppInstance(v_InstanceName, newWordSession);
+
+            if (v_NewOpenDocument == "New Document")
+            {
+                if (!string.IsNullOrEmpty(vFilePath))
+                    throw new InvalidDataException("File path should not be provided for a new Word Document");
+                else
+                    newWordSession.Documents.Add();
+            }
+            else if (v_NewOpenDocument == "Open Document")
+            {
+                if (string.IsNullOrEmpty(vFilePath))
+                    throw new NullReferenceException("File path for Word Document not provided");
+                else
+                    newWordSession.Documents.Open(vFilePath);
+            }
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -84,6 +121,8 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_NewOpenDocument", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Visible", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CloseAllInstances", this, editor));
 
@@ -92,7 +131,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Visible '{v_Visible}' - Close Instances '{v_CloseAllInstances}' - New Instance Name '{v_InstanceName}']";
+            return base.GetDisplayValue() + $" [{v_NewOpenDocument} - Visible '{v_Visible}' - Close Instances '{v_CloseAllInstances}' - New Instance Name '{v_InstanceName}']";
         }
     }
 }

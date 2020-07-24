@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Engine;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using Application = Microsoft.Office.Interop.Excel.Application;
@@ -25,6 +27,24 @@ namespace taskt.Core.Automation.Commands
         [Remarks("This unique name allows you to refer to the instance by name in future commands, " +
                  "ensuring that the commands you specify run against the correct application.")]
         public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("New/Open Workbook")]
+        [PropertyUISelectionOption("New Workbook")]
+        [PropertyUISelectionOption("Open Workbook")]
+        [InputSpecification("Indicate whether to create a new Workbook or to open an existing Workbook.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        public string v_NewOpenWorkbook { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Workbook File Path")]
+        [InputSpecification("Enter or Select the path to the Workbook file.")]
+        [SampleUsage(@"C:\temp\myfile.xlsx || {vFilePath} || {ProjectPath}\myfile.xlsx")]
+        [Remarks("This input should only be used for opening existing Workbooks.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        public string v_FilePath { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Visible")]
@@ -51,6 +71,7 @@ namespace taskt.Core.Automation.Commands
             CommandEnabled = true;
             CustomRendering = true;
             v_InstanceName = "DefaultExcel";
+            v_NewOpenWorkbook = "New Workbook";
             v_Visible = "No";
             v_CloseAllInstances = "Yes";
         }
@@ -58,6 +79,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (AutomationEngineInstance)sender;
+            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
 
             if (v_CloseAllInstances == "Yes")
             {
@@ -75,6 +97,21 @@ namespace taskt.Core.Automation.Commands
                 newExcelSession.Visible = false;
 
             engine.AddAppInstance(v_InstanceName, newExcelSession); 
+
+            if (v_NewOpenWorkbook == "New Workbook")
+            {
+                if (!string.IsNullOrEmpty(vFilePath))
+                    throw new InvalidDataException("File path should not be provided for a new Excel Workbook");
+                else
+                    newExcelSession.Workbooks.Add();
+            }
+            else if (v_NewOpenWorkbook == "Open Workbook")
+            {
+                if (string.IsNullOrEmpty(vFilePath))
+                    throw new NullReferenceException("File path for Excel Workbook not provided");
+                else
+                    newExcelSession.Workbooks.Open(vFilePath);
+            }
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -82,6 +119,8 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_NewOpenWorkbook", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Visible", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CloseAllInstances", this, editor));
 
@@ -90,7 +129,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [Visible '{v_Visible}' - Close Instances '{v_CloseAllInstances}' - New Instance Name '{v_InstanceName}']";
+            return base.GetDisplayValue() + $" [{v_NewOpenWorkbook} - Visible '{v_Visible}' - Close Instances '{v_CloseAllInstances}' - New Instance Name '{v_InstanceName}']";
         }
     }
 }

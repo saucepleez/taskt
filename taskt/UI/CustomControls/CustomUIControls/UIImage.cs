@@ -64,8 +64,6 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("GetClipboardTextCommand", Resources.command_files);
             uiImages.Add("SetClipboardTextCommand", Resources.command_files);
             uiImages.Add("ExcelCreateApplicationCommand", Resources.command_spreadsheet);
-            uiImages.Add("ExcelOpenWorkbookCommand", Resources.command_spreadsheet);
-            uiImages.Add("ExcelAddWorkbookCommand", Resources.command_spreadsheet);
             uiImages.Add("ExcelAppendCellCommand", Resources.command_spreadsheet);
             uiImages.Add("ExcelAppendRowCommand", Resources.command_spreadsheet);
             uiImages.Add("ExcelActivateCellCommand", Resources.command_spreadsheet);
@@ -83,11 +81,9 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("ExcelActivateSheetCommand", Resources.command_spreadsheet);
             uiImages.Add("WordCreateApplicationCommand", Resources.command_files);
             uiImages.Add("WordCloseApplicationCommand", Resources.command_files);
-            uiImages.Add("WordOpenDocumentCommand", Resources.command_files);
             uiImages.Add("WordSaveDocumentCommand", Resources.command_files);
             uiImages.Add("WordSaveDocumentAsCommand", Resources.command_files);
             uiImages.Add("WordExportToPDFCommand", Resources.command_files);
-            uiImages.Add("WordAddDocumentCommand", Resources.command_files);
             uiImages.Add("WordReadDocumentCommand", Resources.command_files);
             uiImages.Add("WordReplaceTextCommand", Resources.command_files);
             uiImages.Add("WordAppendTextCommand", Resources.command_files);
