@@ -187,7 +187,6 @@ namespace taskt.Core.Automation.Commands
 
                     parentEngine.UpdateLineNumber(parentDebugLine + 1);
                     parentEngine.AddStatus("Pausing Before Execution");
-                    parentEngine.CallBackForm.IsScriptSteppedInto = false;
                 }
                 else if (NewEngine.IsNewTaskResumed)
                 {

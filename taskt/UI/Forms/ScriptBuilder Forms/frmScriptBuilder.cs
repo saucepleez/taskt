@@ -104,8 +104,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 //FormatCommandListView();
 
                 if (IsScriptSteppedInto || IsScriptSteppedOver)
-                    LoadDebugTab(uiPaneTabs.TabPages["DebugVariables"]);
-
+                    CreateDebugTab();
             }
         }
         private List<string> _notificationList = new List<string>();
