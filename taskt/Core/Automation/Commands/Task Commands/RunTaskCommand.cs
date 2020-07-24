@@ -199,6 +199,8 @@ namespace taskt.Core.Automation.Commands
                 }
                 else if (NewEngine.IsNewTaskCancelled)
                     parentEngine.uiBtnCancel_Click(null, null);
+                else //Taskt in Run Mode so debug buttons never fired
+                    parentEngine.IsHiddenTaskEngine = false;
             });
         }
 
