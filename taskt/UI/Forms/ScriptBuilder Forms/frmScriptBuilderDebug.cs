@@ -77,10 +77,11 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                                     ConvertDataRowToString((DataRow)variable.VariableValue));
                                 break;
                             case "System.__ComObject":
-                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
+                                variableValues.Rows.Add(variable.VariableName, "Microsoft.Office.Interop.Outlook.MailItem",
                                     ConvertMailItemToString((MailItem)variable.VariableValue));
                                 break;
                             case "System.Collections.Generic.List`1[System.String]":
+                            case "System.Collections.Generic.List`1[Microsoft.Office.Interop.Outlook.MailItem]":
                                 variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
                                     ConvertListToString(variable.VariableValue));
                                 break;
