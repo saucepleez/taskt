@@ -17,23 +17,15 @@ namespace taskt.Core.Automation.Commands
     [Group("Outlook Commands")]
     [Description("This command moves or copies selected emails in Outlook.")]
 
-    public class MoveCopyOutlookEmailsCommand : ScriptCommand
+    public class MoveCopyOutlookEmailCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Source Mail Folder Name")]
-        [InputSpecification("Enter the name of the Outlook mail folder the emails are located in.")]
-        [SampleUsage("Inbox || {vFolderName}")]
+        [PropertyDescription("MailItem")]
+        [InputSpecification("Enter the MailItem to move or copy.")]
+        [SampleUsage("{vMailItem}")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SourceFolder { get; set; }
-
-        [XmlAttribute]
-        [PropertyDescription("Filter")]
-        [InputSpecification("Enter a valid Outlook filter string.")]
-        [SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe' || {vFilter}")]
-        [Remarks("This input is optional.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_Filter { get; set; }
+        public string v_MailItem { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Destination Mail Folder Name")]
@@ -45,8 +37,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyDescription("Mail Operation")]
-        [PropertyUISelectionOption("Move Emails")]
-        [PropertyUISelectionOption("Copy Emails")]
+        [PropertyUISelectionOption("Move MailItem")]
+        [PropertyUISelectionOption("Copy MailItem")]
         [InputSpecification("Specify whether to move or copy the selected emails.")]
         [SampleUsage("")]
         [Remarks("Moving will remove the emails from the original folder while copying will not.")]
@@ -61,21 +53,20 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         public string v_MoveCopyUnreadOnly { get; set; }
 
-        public MoveCopyOutlookEmailsCommand()
+        public MoveCopyOutlookEmailCommand()
         {
-            CommandName = "MoveCopyOutlookEmailsCommand";
-            SelectionName = "Move/Copy Outlook Emails";
+            CommandName = "MoveCopyOutlookEmailCommand";
+            SelectionName = "Move/Copy Outlook Email";
             CommandEnabled = true;
             CustomRendering = true;
-            v_OperationType = "Move Emails";
+            v_OperationType = "Move MailItem";
             v_MoveCopyUnreadOnly = "Yes";
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (AutomationEngineInstance)sender;
-            var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
-            var vFilter = v_Filter.ConvertToUserVariable(sender);
+            MailItem vMailItem = (MailItem)VariableMethods.LookupVariable(engine, v_MailItem).VariableValue;
             var vDestinationFolder = v_DestinationFolder.ConvertToUserVariable(sender);
             
             Application outlookApp = new Application();
@@ -85,51 +76,37 @@ namespace taskt.Core.Automation.Commands
             if (currentUser.Type == "EX")
             {
                 MAPIFolder inboxFolder = test.GetDefaultFolder(OlDefaultFolders.olFolderInbox).Parent;
-                MAPIFolder sourceFolder = inboxFolder.Folders[vSourceFolder];
                 MAPIFolder destinationFolder = inboxFolder.Folders[vDestinationFolder];
-                Items filteredItems = null;
 
-                if (vFilter != "")
-                    filteredItems = sourceFolder.Items.Restrict(vFilter);
-                else
-                    filteredItems = sourceFolder.Items;
-
-                foreach (object _obj in filteredItems)
+                if(v_OperationType == "Move MailItem")
                 {
-                    if (_obj is MailItem)
+                    if (v_MoveCopyUnreadOnly == "Yes")
                     {
-                        MailItem tempMail = (MailItem)_obj;
-                        if(v_OperationType == "Move Emails")
-                        {
-                            if (v_MoveCopyUnreadOnly == "Yes")
-                            {
-                                if (tempMail.UnRead == true)
-                                    tempMail.Move(destinationFolder);
-                            }
-                            else
-                            {
-                                tempMail.Move(destinationFolder);
-                            }
-                        }
-                        else if (v_OperationType == "Copy Emails")
-                        {
-                            MailItem copyMail = null;
-                            if (v_MoveCopyUnreadOnly == "Yes")
-                            {
-                                if (tempMail.UnRead == true)
-                                {
-                                    copyMail = tempMail.Copy();
-                                    copyMail.Move(destinationFolder);
-                                }
-                            }
-                            else
-                            {
-                                copyMail = tempMail.Copy();
-                                copyMail.Move(destinationFolder);
-                            }
-                        }
+                        if (vMailItem.UnRead == true)
+                            vMailItem.Move(destinationFolder);
+                    }
+                    else
+                    {
+                        vMailItem.Move(destinationFolder);
                     }
                 }
+                else if (v_OperationType == "Copy MailItem")
+                {
+                    MailItem copyMail = null;
+                    if (v_MoveCopyUnreadOnly == "Yes")
+                    {
+                        if (vMailItem.UnRead == true)
+                        {
+                            copyMail = vMailItem.Copy();
+                            copyMail.Move(destinationFolder);
+                        }
+                    }
+                    else
+                    {
+                        copyMail = vMailItem.Copy();
+                        copyMail.Move(destinationFolder);
+                    }                       
+                }               
             }
         }
 
@@ -137,8 +114,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolder", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MailItem", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationFolder", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MoveCopyUnreadOnly", this, editor));
@@ -148,7 +124,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [{v_OperationType} to '{v_DestinationFolder}' From '{v_SourceFolder}' - Filter by '{v_Filter}']";
+            return base.GetDisplayValue() + $" [{v_OperationType} '{v_MailItem}' to '{v_DestinationFolder}']";
         }
     }
 }

@@ -288,11 +288,11 @@
     <Compile Include="Core\Automation\Commands\NLG Commands\CreateNLGInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLG Commands\GenerateNLGPhraseCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLG Commands\SetNLGParameterCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Outlook Commands\DeleteOutlookEmailsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Outlook Commands\ForwardOutlookEmailsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Outlook Commands\DeleteOutlookEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Outlook Commands\ForwardOutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook Commands\GetOutlookEmailsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Outlook Commands\MoveCopyOutlookEmailsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Outlook Commands\ReplyToOutlookEmailsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Outlook Commands\MoveCopyOutlookEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Outlook Commands\ReplyToOutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook Commands\SendOutlookEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Regex Commands\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data Commands\MathCalculationCommand.cs" />

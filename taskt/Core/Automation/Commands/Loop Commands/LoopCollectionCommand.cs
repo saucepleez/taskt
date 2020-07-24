@@ -162,7 +162,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return "Loop Collection '" + v_LoopParameter + "'";
+            return $"Loop Collection '{v_LoopParameter}' - Store Collection Item in '{v_OutputUserVariableName}'";
         }
     }
 }

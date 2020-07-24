@@ -118,10 +118,10 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("SendSMTPEmailCommand", Resources.command_smtp);
             uiImages.Add("SendOutlookEmailCommand", Resources.command_smtp);
             uiImages.Add("GetOutlookEmailsCommand", Resources.command_smtp);
-            uiImages.Add("MoveCopyOutlookEmailsCommand", Resources.command_smtp);
-            uiImages.Add("DeleteOutlookEmailsCommand", Resources.command_smtp);
-            uiImages.Add("ForwardOutlookEmailsCommand", Resources.command_smtp);
-            uiImages.Add("ReplyToOutlookEmailsCommand", Resources.command_smtp);
+            uiImages.Add("MoveCopyOutlookEmailCommand", Resources.command_smtp);
+            uiImages.Add("DeleteOutlookEmailCommand", Resources.command_smtp);
+            uiImages.Add("ForwardOutlookEmailCommand", Resources.command_smtp);
+            uiImages.Add("ReplyToOutlookEmailCommand", Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", Resources.command_error);
             uiImages.Add("TryCommand", Resources.command_try);
             uiImages.Add("CatchCommand", Resources.command_try);

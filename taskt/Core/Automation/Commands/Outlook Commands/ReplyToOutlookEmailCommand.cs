@@ -9,7 +9,6 @@ using taskt.Core.Automation.Engine;
 using taskt.Core.Utilities.CommonUtilities;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-using Application = Microsoft.Office.Interop.Outlook.Application;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,23 +16,15 @@ namespace taskt.Core.Automation.Commands
     [Group("Outlook Commands")]
     [Description("This command replies to selected emails in Outlook.")]
 
-    public class ReplyToOutlookEmailsCommand : ScriptCommand
+    public class ReplyToOutlookEmailCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Source Mail Folder Name")]
-        [InputSpecification("Enter the name of the Outlook mail folder the emails are located in.")]
-        [SampleUsage("Inbox || {vFolderName}")]
+        [PropertyDescription("MailItem")]
+        [InputSpecification("Enter the MailItem to reply to.")]
+        [SampleUsage("{vMailItem}")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_SourceFolder { get; set; }
-
-        [XmlAttribute]
-        [PropertyDescription("Filter")]
-        [InputSpecification("Enter a valid Outlook filter string.")]
-        [SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe' || {vFilter}")]
-        [Remarks("This input is optional.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public string v_Filter { get; set; }
+        public string v_MailItem { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Mail Operation")]
@@ -69,10 +60,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         public string v_Attachments { get; set; }
 
-        public ReplyToOutlookEmailsCommand()
+        public ReplyToOutlookEmailCommand()
         {
-            CommandName = "ReplyToOutlookEmailsCommand";
-            SelectionName = "Reply To Outlook Emails";
+            CommandName = "ReplyToOutlookEmailCommand";
+            SelectionName = "Reply To Outlook Email";
             CommandEnabled = true;
             CustomRendering = true;
             v_OperationType = "Reply";
@@ -82,52 +73,27 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (AutomationEngineInstance)sender;
-            var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
-            var vFilter = v_Filter.ConvertToUserVariable(sender);
+            MailItem vMailItem = (MailItem)VariableMethods.LookupVariable(engine, v_MailItem).VariableValue;
             var vBody = v_Body.ConvertToUserVariable(sender);
             var vAttachment = v_Attachments.ConvertToUserVariable(sender);
-
-            Application outlookApp = new Application();
-            AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
-            NameSpace test = outlookApp.GetNamespace("MAPI");
-
-            if (currentUser.Type == "EX")
+           
+            if (v_OperationType == "Reply")
             {
-                MAPIFolder inboxFolder = test.GetDefaultFolder(OlDefaultFolders.olFolderInbox).Parent;
-                MAPIFolder sourceFolder = inboxFolder.Folders[vSourceFolder];
-                Items filteredItems = null;
-
-                if (vFilter != "")
-                    filteredItems = sourceFolder.Items.Restrict(vFilter);
-                else
-                    filteredItems = sourceFolder.Items;
-
-                foreach (object _obj in filteredItems)
-                {
-                    if (_obj is MailItem)
-                    {
-                        MailItem tempMail = (MailItem)_obj;
-                        if (v_OperationType == "Reply")
-                        {
-                            MailItem newMail = tempMail.Reply();
-                            Reply(newMail, vBody, vAttachment);
-                        }
-                        else if(v_OperationType == "Reply All")
-                        {
-                            MailItem newMail = tempMail.ReplyAll();
-                            Reply(newMail, vBody, vAttachment);
-                        }
-                    }
-                }
+                MailItem newMail = vMailItem.Reply();
+                Reply(newMail, vBody, vAttachment);
             }
+            else if(v_OperationType == "Reply All")
+            {
+                MailItem newMail = vMailItem.ReplyAll();
+                Reply(newMail, vBody, vAttachment);
+            }                           
         }
 
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolder", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MailItem", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Body", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_BodyType", this, editor));
@@ -138,7 +104,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From '{v_SourceFolder}' - Filter by '{v_Filter}' - {v_OperationType}]";
+            return base.GetDisplayValue() + $" [MailItem '{v_MailItem}']";
         }
 
         private void Reply(MailItem mail, string body, string attPath)

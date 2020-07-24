@@ -31,8 +31,8 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Filter")]
         [InputSpecification("Enter a valid Outlook filter string.")]
-        [SampleUsage("[Subject] = 'Hello' and [SenderName] = 'Jane Doe' || {vFilter}")]
-        [Remarks("This input is optional.")]
+        [SampleUsage("[Subject] = 'Hello' || [Subject] = 'Hello' and [SenderName] = 'Jane Doe' || {vFilter} || None")]
+        [Remarks("*Warning* Using 'None' as the Filter will return every MailItem in the selected Mail Folder.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Filter { get; set; }
 
@@ -95,6 +95,7 @@ namespace taskt.Core.Automation.Commands
             SelectionName = "Get Outlook Emails";
             CommandEnabled = true;
             CustomRendering = true;
+            v_SourceFolder = "Inbox";
             v_GetUnreadOnly = "No";
             v_MarkAsRead = "Yes";
             v_SaveMessagesAndAttachments = "No";
@@ -121,8 +122,19 @@ namespace taskt.Core.Automation.Commands
                 MAPIFolder userFolder = inboxFolder.Folders[vFolder];
                 Items filteredItems = null;
 
-                if (vFilter != "")
-                    filteredItems = userFolder.Items.Restrict(vFilter);
+                if (string.IsNullOrEmpty(vFilter.Trim()))
+                    throw new NullReferenceException("Outlook Filter not specified");
+                else if (vFilter != "None")
+                {
+                    try
+                    {
+                        filteredItems = userFolder.Items.Restrict(vFilter);
+                    }
+                    catch(System.Exception)
+                    {
+                        throw new InvalidDataException("Outlook Filter is not valid");
+                    }
+                }                   
                 else
                     filteredItems = userFolder.Items;
 

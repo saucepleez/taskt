@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Outlook;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -75,9 +76,13 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                                 variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
                                     ConvertDataRowToString((DataRow)variable.VariableValue));
                                 break;
+                            case "System.__ComObject":
+                                variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
+                                    ConvertMailItemToString((MailItem)variable.VariableValue));
+                                break;
                             case "System.Collections.Generic.List`1[System.String]":
                                 variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
-                                    ConvertListToString((List<string>)variable.VariableValue));
+                                    ConvertListToString(variable.VariableValue));
                                 break;
                             default:
                                 variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName, 
@@ -133,6 +138,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
             return stringBuilder.ToString();
         }
+
         public string ConvertDataRowToString(DataRow row)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -145,18 +151,60 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             return stringBuilder.ToString();
         }
 
-        public string ConvertListToString(List<string> list)
+        public string ConvertListToString(object list)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("[");
+            
+            Type type = list.GetType().GetGenericArguments()[0];
 
-            for (int i = 0; i < list.Count - 1; i++)
-                stringBuilder.AppendFormat("{0}, ", list[i]);
+            if (type == typeof(string))
+            {
+                List<string> stringList = (List<string>)list;
+                stringBuilder.Append($"Count({stringList.Count}) [");
 
-            stringBuilder.AppendFormat("{0}]", list[list.Count - 1]);
+                for (int i = 0; i < stringList.Count - 1; i++)
+                    stringBuilder.AppendFormat("{0}, ", stringList[i]);
+
+                stringBuilder.AppendFormat("{0}]", stringList[stringList.Count - 1]);
+            }
+            else if (type == typeof(MailItem))
+            {
+                List<MailItem> mailItemList = (List<MailItem>)list;
+                stringBuilder.Append($"Count({mailItemList.Count}) [");
+
+                for (int i = 0; i < mailItemList.Count - 1; i++)
+                    stringBuilder.AppendFormat("{0}, \n", ConvertMailItemToString(mailItemList[i]));
+
+                stringBuilder.AppendFormat("{0}]", ConvertMailItemToString(mailItemList[mailItemList.Count - 1]));
+            }
+
             return stringBuilder.ToString();
         }
 
+        public string ConvertMailItemToString(MailItem mail)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append($"[Subject: {mail.Subject}, \n" +
+                                  $"Sender: {mail.SenderName}, \n" +
+                                  $"Sent On: {mail.SentOn}, \n" +
+                                  $"Unread: {mail.UnRead}, \n" +
+                                  $"Attachments({mail.Attachments.Count})");
+            if (mail.Attachments.Count > 0)
+            {
+                stringBuilder.Append(" [");
+                foreach(Attachment attachment in mail.Attachments)
+                {
+                    stringBuilder.Append($"{attachment.FileName}, ");
+                }
+                //trim final comma
+                stringBuilder.Length = stringBuilder.Length - 2;
+                stringBuilder.Append("]");
+            }
+
+            stringBuilder.Append("]");
+
+            return stringBuilder.ToString();
+        }
 
         public delegate DialogResult LoadErrorFormDelegate(string errorMessage);
         public DialogResult LoadErrorForm(string errorMessage)
