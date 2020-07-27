@@ -591,5 +591,27 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
         }
         #endregion
+
+        #region Project Pane Buttons
+        private void uiBtnRefresh_Click(object sender, EventArgs e)
+        {
+            tvProject.Refresh();
+        }
+
+        private void uiBtnExpand_Click(object sender, EventArgs e)
+        {
+            tvProject.ExpandAll();
+        }
+
+        private void uiBtnCollapse_Click(object sender, EventArgs e)
+        {
+            tvProject.CollapseAll();
+        }
+
+        private void uiBtnOpenDirectory_Click(object sender, EventArgs e)
+        {
+            Process.Start(_scriptProjectPath);
+        }
+        #endregion
     }
 }

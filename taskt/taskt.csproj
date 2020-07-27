@@ -444,6 +444,9 @@
     <Compile Include="UI\CustomControls\CustomUIControls\UIPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIIconButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\CustomControls\CustomUIControls\UIPictureButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -943,6 +946,9 @@
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\project-collapse.png" />
+    <None Include="Resources\project-expand.png" />
+    <None Include="Resources\project-open-directory.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

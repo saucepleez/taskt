@@ -926,14 +926,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         #endregion
 
         #region ListView Search
-        private void txtCommandSearch_TextChanged(object sender, EventArgs e)
+        private void txtScriptSearch_TextChanged(object sender, EventArgs e)
         {
             if (_selectedTabScriptActions.Items.Count == 0)
                 return;
 
             _reqdIndex = 0;
 
-            if (txtCommandSearch.Text == "")
+            if (txtScriptSearch.Text == "")
             {
                 //hide info
                 HideSearchInfo();
@@ -964,7 +964,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
         private void pbSearch_Click(object sender, EventArgs e)
         {
-            if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
+            if (txtScriptSearch.Text != "" || tsSearchBox.Text != "")
             {
                 _reqdIndex++;
                 SearchForItemInListView();
@@ -973,7 +973,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
         private void SearchForItemInListView()
         {
-            var searchCriteria = txtCommandSearch.Text;
+            var searchCriteria = txtScriptSearch.Text;
 
             if (searchCriteria == "")
             {

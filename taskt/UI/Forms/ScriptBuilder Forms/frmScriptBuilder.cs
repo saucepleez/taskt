@@ -118,6 +118,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         public bool IsScriptSteppedInto { get; set; }
         public bool IsUnhandledException { get; set; }
         private bool _isDebugMode;
+        private TreeView _tvCommandsCopy;
+        private string _txtCommandWatermark = "Type Here to Search";
         #endregion
 
         #region Form Events
@@ -259,6 +261,10 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
             tvCommands.Sort();
             //tvCommands.ImageList = uiImages;
+
+            _tvCommandsCopy = new TreeView();
+            CopyTreeView(tvCommands, _tvCommandsCopy);
+            txtCommandSearch.Text = _txtCommandWatermark;
 
             //start attended mode if selected
             if (_appSettings.ClientSettings.StartupMode == "Attended Task Mode")
@@ -534,6 +540,89 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 tvCommands_DoubleClick(this, null);
             }
         }
+
+        public void CopyTreeView(TreeView originalTreeView, TreeView copiedTreeView)
+        {
+            TreeNode copiedTreeNode;
+            foreach (TreeNode originalTreeNode in originalTreeView.Nodes)
+            {
+                copiedTreeNode = new TreeNode(originalTreeNode.Text);
+                CopyTreeViewNodes(copiedTreeNode, originalTreeNode);
+                copiedTreeView.Nodes.Add(copiedTreeNode);
+            }
+        }
+
+        public void CopyTreeViewNodes(TreeNode copiedTreeNode, TreeNode originalTreeNode)
+        {
+            TreeNode copiedChildNode;
+            foreach (TreeNode originalChildNode in originalTreeNode.Nodes)
+            {
+                copiedChildNode = new TreeNode(originalChildNode.Text);
+                copiedTreeNode.Nodes.Add(copiedChildNode);
+            }
+        }
+
+        private void txtCommandSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (txtCommandSearch.Text == _txtCommandWatermark)
+                return;
+
+            bool childNodefound = false;
+            //blocks repainting tree until all controls are loaded
+            tvCommands.BeginUpdate();
+            tvCommands.Nodes.Clear();
+            if (txtCommandSearch.Text != string.Empty)
+            {
+                foreach (TreeNode parentNodeCopy in _tvCommandsCopy.Nodes)
+                {
+                    TreeNode searchedParentNode = new TreeNode(parentNodeCopy.Text);
+                    tvCommands.Nodes.Add(searchedParentNode);
+
+                    foreach (TreeNode childNodeCopy in parentNodeCopy.Nodes)
+                    {
+                        if (childNodeCopy.Text.ToLower().Contains(txtCommandSearch.Text.ToLower()))
+                        {
+                            searchedParentNode.Nodes.Add(new TreeNode(childNodeCopy.Text));
+                            childNodefound = true;
+                        }
+                    }
+                    if (!childNodefound)
+                    {
+                        tvCommands.Nodes.Remove(searchedParentNode);
+                    }
+                    childNodefound = false;
+                }
+                tvCommands.ExpandAll();
+            }
+            else
+            {
+                foreach (TreeNode parentNodeCopy in _tvCommandsCopy.Nodes)
+                {
+                    tvCommands.Nodes.Add((TreeNode)parentNodeCopy.Clone());
+                }
+                tvCommands.CollapseAll();
+            }
+            //enables redrawing tree after all controls have been added
+            tvCommands.EndUpdate();           
+        }
+
+        private void txtCommandSearch_Enter(object sender, EventArgs e)
+        {
+            if (txtCommandSearch.Text == _txtCommandWatermark)
+            {
+                txtCommandSearch.Text = "";
+                txtCommandSearch.ForeColor = Color.Black;
+            }           
+        }
+
+        private void txtCommandSearch_Leave(object sender, EventArgs e)
+        {
+            if (txtCommandSearch.Text == "")
+            {
+                txtCommandSearch.Text = _txtCommandWatermark;
+                txtCommandSearch.ForeColor = Color.LightGray;
+            }
+        }
         #endregion
 
         #region Link Labels
@@ -559,6 +648,8 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             OpenFile(Folders.GetFolder(Folders.FolderType.ScriptsFolder) + senderLink.Text);
         }
         #endregion
+
+        
     }
 }
 

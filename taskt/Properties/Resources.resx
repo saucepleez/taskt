@@ -391,4 +391,13 @@
   <data name="browser_elements" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\browser-elements.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="project_collapse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\project-collapse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="project_expand" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\project-expand.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="project_open_directory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\project-open-directory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
