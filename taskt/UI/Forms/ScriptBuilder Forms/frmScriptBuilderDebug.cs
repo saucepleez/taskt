@@ -12,20 +12,29 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 {
     public partial class frmScriptBuilder : Form
     {
+        public delegate void CreateDebugTabDelegate();
         private void CreateDebugTab()
         {
-            TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
+            if (InvokeRequired)
+            {
+                var d = new CreateDebugTabDelegate(CreateDebugTab);
+                Invoke(d, new object[] { });
+            }
+            else
+            {
+                TabPage debugTab = uiPaneTabs.TabPages.Cast<TabPage>().Where(t => t.Name == "DebugVariables")
                                                                               .FirstOrDefault();
 
-            if (debugTab == null)
-            {
-                debugTab = new TabPage();
-                debugTab.Name = "DebugVariables";
-                debugTab.Text = "Variables";
-                uiPaneTabs.TabPages.Add(debugTab);
-                uiPaneTabs.SelectedTab = debugTab;
-            }
-            LoadDebugTab(debugTab);
+                if (debugTab == null)
+                {
+                    debugTab = new TabPage();
+                    debugTab.Name = "DebugVariables";
+                    debugTab.Text = "Variables";
+                    uiPaneTabs.TabPages.Add(debugTab);
+                    uiPaneTabs.SelectedTab = debugTab;
+                }
+                LoadDebugTab(debugTab);
+            }          
         }
 
         public delegate void LoadDebugTabDelegate(TabPage debugTab);
