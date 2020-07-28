@@ -1,0 +1,885 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C1BE3204-94D1-4A9A-AE30-C3E302383182}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>taskt</RootNamespace>
+    <AssemblyName>taskt.Studio</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>taskt_logo_alt.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>F078BC2BE5CD9B63ECEFE9E3C41F1F6BF76F1260</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>JasonBayldonCodeSigning.p12</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.6.10.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.6.10\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ImapX, Version=2.0.0.18, Culture=neutral, PublicKeyToken=5992873d65130d1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImapX.2.0.0.18\lib\net452\ImapX.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=11.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.11.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.14.0.0.1\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskScheduler.2.6.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OneNoteOCRDll, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OneNoteOCR.1.0.0.0\lib\OneNoteOCRDll.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.6.9.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.9\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.7.1\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSimpleNLG, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSimpleNLG.1.2.0\lib\net45\SharpSimpleNLG.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ClientEngine, Version=0.8.0.13, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
+      <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.8.0.13\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationClientsideProviders" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
+    </Reference>
+    <Reference Include="WebSocket4Net, Version=0.15.0.9, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocket4Net.0.15.0\lib\net45\WebSocket4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\Engine Commands\ErrorHandlingCommand.cs" />
+    <Compile Include="Commands\Engine Commands\GetBotStoreDataCommand.cs" />
+    <Compile Include="Commands\Engine Commands\PauseScriptCommand.cs" />
+    <Compile Include="Commands\Engine Commands\SetEngineDelayCommand.cs" />
+    <Compile Include="Commands\Engine Commands\SetEnginePreferenceCommand.cs" />
+    <Compile Include="Commands\Engine Commands\ShowEngineContextCommand.cs" />
+    <Compile Include="Commands\Engine Commands\StopwatchCommand.cs" />
+    <Compile Include="Commands\Engine Commands\UploadBotStoreDataCommand.cs" />
+    <Compile Include="Commands\Input Commands\InputCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\BeginRetryCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\EndRetryCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\RethrowCommand.cs" />
+    <Compile Include="Commands\Misc Commands\ShowMessageCommand.cs" />
+    <Compile Include="Commands\Task Commands\RunTaskCommand.cs" />
+    <Compile Include="Commands\Task Commands\StopCurrentTaskCommand.cs" />
+    <Compile Include="Utilities\GlobalHook.cs" />
+    <Compile Include="Utilities\ManifestUpdate.cs" />
+    <Compile Include="Commands\API Commands\ExecuteRESTAPICommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\QueryHTMLSourceCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\GetHTMLSourceCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\CatchCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\EndTryCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\FinallyCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\GetExceptionMessageCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\ThrowCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\TryCommand.cs" />
+    <Compile Include="Commands\If Commands\BeginIfCommand.cs" />
+    <Compile Include="Commands\If Commands\BeginMutliIfCommand.cs" />
+    <Compile Include="Commands\If Commands\ElseCommand.cs" />
+    <Compile Include="Commands\If Commands\EndIfCommand.cs" />
+    <Compile Include="Commands\Image Commands\ImageRecognitionCommand.cs" />
+    <Compile Include="Commands\Image Commands\PerformOCRCommand.cs" />
+    <Compile Include="Commands\Image Commands\TakeScreenshotCommand.cs" />
+    <Compile Include="Commands\Input Commands\HTMLInputCommand.cs" />
+    <Compile Include="Commands\Input Commands\SendAdvancedKeystrokesCommand.cs" />
+    <Compile Include="Commands\Input Commands\SendKeystrokesCommand.cs" />
+    <Compile Include="Commands\Input Commands\SendMouseClickCommand.cs" />
+    <Compile Include="Commands\Input Commands\SendMouseMoveCommand.cs" />
+    <Compile Include="Commands\Input Commands\UIAutomationCommand.cs" />
+    <Compile Include="Commands\Loop Commands\BeginLoopCommand.cs" />
+    <Compile Include="Commands\Loop Commands\BeginMultiLoopCommand.cs" />
+    <Compile Include="Commands\Loop Commands\EndLoopCommand.cs" />
+    <Compile Include="Commands\Loop Commands\ExitLoopCommand.cs" />
+    <Compile Include="Commands\Loop Commands\LoopContinuouslyCommand.cs" />
+    <Compile Include="Commands\Loop Commands\LoopCollectionCommand.cs" />
+    <Compile Include="Commands\Loop Commands\LoopNumberOfTimesCommand.cs" />
+    <Compile Include="Commands\Loop Commands\NextLoopCommand.cs" />
+    <Compile Include="Commands\Misc Commands\AddCodeCommentCommand.cs" />
+    <Compile Include="Commands\Misc Commands\EncryptionCommand.cs" />
+    <Compile Include="Commands\Misc Commands\GetClipboardTextCommand.cs" />
+    <Compile Include="Commands\Misc Commands\SendSMTPEmailCommand.cs" />
+    <Compile Include="Commands\Misc Commands\SequenceCommand.cs" />
+    <Compile Include="Commands\Misc Commands\SetClipboardTextCommand.cs" />
+    <Compile Include="Commands\API Commands\ExecuteDLLCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumCloseBrowserCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumCreateBrowserCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumElementActionCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumExecuteScriptCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumGetBrowserInfoCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumNavigateBackCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumNavigateForwardCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumNavigateToURLCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumRefreshCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumSwitchBrowserFrameCommand.cs" />
+    <Compile Include="Commands\Web Browser Commands\SeleniumSwitchBrowserWindowCommand.cs" />
+    <Compile Include="Commands\Window Commands\ActivateWindowCommand.cs" />
+    <Compile Include="Commands\Window Commands\CloseWindowCommand.cs" />
+    <Compile Include="Commands\Window Commands\MoveWindowCommand.cs" />
+    <Compile Include="Commands\Window Commands\ResizeWindowCommand.cs" />
+    <Compile Include="Commands\Window Commands\SetWindowStateCommand.cs" />
+    <Compile Include="Commands\Window Commands\WaitForWindowToExistCommand.cs" />
+    <Compile Include="Utilities\Project.cs" />
+    <Compile Include="Utilities\Theme.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControls\AutomationCommand.cs" />
+    <Compile Include="UI\CustomControls\CommandControls.cs" />
+    <Compile Include="UI\CustomControls\CommandGroupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CommandGroupControl.Designer.cs">
+      <DependentUpon>CommandGroupControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControls\CommandItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CommandItemControl.Designer.cs">
+      <DependentUpon>CommandItemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIElement.cs" />
+    <Compile Include="UI\CustomControls\CustomUIControls\UIFlowPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIImage.cs" />
+    <Compile Include="UI\CustomControls\CustomUIControls\UIListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIMenuStripColorTable.cs" />
+    <Compile Include="UI\CustomControls\CustomUIControls\UIPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIIconButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UIPictureButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UISplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UITabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\CustomUIControls\UITreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\DTOs\Class.cs" />
+    <Compile Include="UI\DTOs\Method.cs" />
+    <Compile Include="UI\DTOs\Parameter.cs" />
+    <Compile Include="UI\DTOs\MachineConfiguration.cs" />
+    <Compile Include="UI\DTOs\ScriptActionTag.cs" />
+    <Compile Include="UI\FormEventArgs\LoginResultEventArgs.cs" />
+    <Compile Include="UI\Forms\frmAttendedMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmAttendedMode.Designer.cs">
+      <DependentUpon>frmAttendedMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmScreenRecorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmScreenRecorder.Designer.cs">
+      <DependentUpon>frmScreenRecorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptElements.Designer.cs">
+      <DependentUpon>frmScriptElements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderDebug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderListView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderTabControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderUIButtons.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAddElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAddElement.Designer.cs">
+      <DependentUpon>frmAddElement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInputBox.Designer.cs">
+      <DependentUpon>frmInputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmError.Designer.cs">
+      <DependentUpon>frmError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmProjectBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmProjectBuilder.Designer.cs">
+      <DependentUpon>frmProjectBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAddVariable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAddVariable.Designer.cs">
+      <DependentUpon>frmAddVariable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmCodeBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmCodeBuilder.Designer.cs">
+      <DependentUpon>frmCodeBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmDisplayManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmDisplayManager.Designer.cs">
+      <DependentUpon>frmDisplayManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmDLLExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmDLLExplorer.Designer.cs">
+      <DependentUpon>frmDLLExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmEngineContextViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmEngineContextViewer.Designer.cs">
+      <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.Designer.cs">
+      <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.Designer.cs">
+      <DependentUpon>frmHTMLDisplayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
+      <DependentUpon>frmImageCapture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.Designer.cs">
+      <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSplash.Designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmHTMLElementRecorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmHTMLElementRecorder.Designer.cs">
+      <DependentUpon>frmHTMLElementRecorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.Designer.cs">
+      <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmUserInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
+      <DependentUpon>frmUserInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmElementSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmElementSelector.Designer.cs">
+      <DependentUpon>frmElementSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmVariableSelector.Designer.cs">
+      <DependentUpon>frmVariableSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmUpdate.Designer.cs">
+      <DependentUpon>frmUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\ThemedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ThemedForm.Designer.cs">
+      <DependentUpon>ThemedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmDialog.Designer.cs">
+      <DependentUpon>frmDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmScheduleManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmScheduleManagement.Designer.cs">
+      <DependentUpon>frmScheduleManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmAbout.Designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmBrowserElementBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmBrowserElementBuilder.Designer.cs">
+      <DependentUpon>frmBrowserElementBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptVariables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptVariables.Designer.cs">
+      <DependentUpon>frmScriptVariables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmCommandEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmCommandEditor.Designer.cs">
+      <DependentUpon>frmCommandEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptEngine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptEngine.Designer.cs">
+      <DependentUpon>frmScriptEngine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilderProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.Designer.cs">
+      <DependentUpon>frmScriptBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmShowCursorPosition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmShowCursorPosition.Designer.cs">
+      <DependentUpon>frmShowCursorPosition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="UI\CustomControls\CommandGroupControl.resx">
+      <DependentUpon>CommandGroupControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomControls\CommandItemControl.resx">
+      <DependentUpon>CommandItemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmAttendedMode.resx">
+      <DependentUpon>frmAttendedMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
+      <DependentUpon>frmScheduleManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmScriptElements.resx">
+      <DependentUpon>frmScriptElements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmScreenRecorder.resx">
+      <DependentUpon>frmScreenRecorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAbout.resx">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAddElement.resx">
+      <DependentUpon>frmAddElement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInputBox.resx">
+      <DependentUpon>frmInputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmError.resx">
+      <DependentUpon>frmError.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmProjectBuilder.resx">
+      <DependentUpon>frmProjectBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmAddVariable.resx">
+      <DependentUpon>frmAddVariable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmBrowserElementBuilder.resx">
+      <DependentUpon>frmBrowserElementBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmCommandEditor.resx">
+      <DependentUpon>frmCommandEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmScriptEngine.resx">
+      <DependentUpon>frmScriptEngine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder Forms\frmScriptBuilder.resx">
+      <DependentUpon>frmScriptBuilder.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCodeBuilder.resx">
+      <DependentUpon>frmCodeBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDialog.resx">
+      <DependentUpon>frmDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDisplayManager.resx">
+      <DependentUpon>frmDisplayManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDLLExplorer.resx">
+      <DependentUpon>frmDLLExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmEngineContextViewer.resx">
+      <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLBuilder.resx">
+      <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.resx">
+      <DependentUpon>frmHTMLDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmImageCapture.resx">
+      <DependentUpon>frmImageCapture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmScriptVariables.resx">
+      <DependentUpon>frmScriptVariables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">
+      <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmShowCursorPosition.resx">
+      <DependentUpon>frmShowCursorPosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLElementRecorder.resx">
+      <DependentUpon>frmHTMLElementRecorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.resx">
+      <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
+      <DependentUpon>frmUserInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmElementSelector.resx">
+      <DependentUpon>frmElementSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmVariableSelector.resx">
+      <DependentUpon>frmVariableSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUpdate.resx">
+      <DependentUpon>frmUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\ThemedForm.resx">
+      <DependentUpon>ThemedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIForm.resx">
+      <DependentUpon>UIForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="LICENSE" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{B691E011-1797-432E-907A-4D8C69339129}</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="AxMSTSCLib">
+      <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="MSDASC">
+      <Guid>{2206CEB0-19C1-11D1-89E0-00C04FD7A829}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="MSHTML">
+      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
+      <VersionMajor>4</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="MSTSCLib">
+      <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SHDocVw">
+      <Guid>{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\robot-bouncing.gif" />
+    <None Include="Resources\robot-bouncing-transparent.gif" />
+    <None Include="Resources\robot-error.png" />
+    <None Include="Resources\robot-error1.png" />
+    <None Include="Resources\robot source.png" />
+    <None Include="Resources\command-exitloop.png" />
+    <None Include="Resources\command-run-code.png" />
+    <None Include="Resources\action-bar-saveas.png" />
+    <None Include="Resources\action-bar-clear.png" />
+    <None Include="Resources\action-bar-import.png" />
+    <None Include="Resources\command-parse.png" />
+    <None Include="Resources\command-server.png" />
+    <None Include="Resources\recent-files.png" />
+    <None Include="Resources\executing.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\taskt-command-helper.png" />
+    <None Include="Resources\action_bar_restart.png" />
+    <None Include="Resources\action_bar_close.png" />
+    <None Include="Resources\command-stopwatch.png" />
+    <None Include="Resources\command-system.png" />
+    <None Include="Resources\command-nlg.png" />
+    <None Include="Resources\command-database.png" />
+    <None Include="Resources\command-try.png" />
+    <None Include="Resources\command-remote.png" />
+    <None Include="Resources\command-begin-multi-if.png" />
+    <None Include="Resources\command-nextloop.png" />
+    <Content Include="Resources\7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\7z.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\command-dictionary.png" />
+    <None Include="Resources\command-step-over.png" />
+    <None Include="Resources\command-step-into.png" />
+    <None Include="Resources\command-resume.png" />
+    <None Include="Resources\command-cancel.png" />
+    <None Include="Resources\command-folders.png" />
+    <None Include="Resources\command-database2.png" />
+    <None Include="Resources\command-password.png" />
+    <None Include="Resources\action-bar-project.png" />
+    <None Include="Resources\command-breakpoint.png" />
+    <None Include="Resources\command-disabled.png" />
+    <None Include="Resources\copy.png" />
+    <None Include="Resources\command-ignore.png" />
+    <None Include="Resources\action-bar-element.png" />
+    <None Include="Resources\action-bar-element-recorder.png" />
+    <None Include="Resources\command-element.png" />
+    <None Include="Resources\browser-refresh.png" />
+    <None Include="Resources\browser-back.png" />
+    <None Include="Resources\browser-forward.png" />
+    <None Include="Resources\browser-save.png" />
+    <None Include="Resources\browser-elements.png" />
+    <Content Include="Resources\IEDriverServer.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\project-collapse.png" />
+    <None Include="Resources\project-expand.png" />
+    <None Include="Resources\project-open-directory.png" />
+    <Content Include="Resources\taskt-ExtractPDFText.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\taskt-splash.png" />
+    <None Include="Resources\taskt-logo.png" />
+    <Content Include="Resources\taskt-updater.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\taskt_icon.ico" />
+    <Content Include="taskt_logo_alt.ico" />
+    <None Include="Resources\item-header96.png" />
+    <None Include="Resources\item-header.png" />
+    <None Include="Resources\action-bar-new.png" />
+    <None Include="Resources\action-bar-open.png" />
+    <None Include="Resources\action-bar-save.png" />
+    <None Include="Resources\action-bar-options.png" />
+    <None Include="Resources\action-bar-add-command.png" />
+    <None Include="Resources\action-bar-variable.png" />
+    <None Include="Resources\action-bar-schedule.png" />
+    <None Include="Resources\action-bar-run.png" />
+    <None Include="Resources\command-pause.png" />
+    <None Include="Resources\command-comment.png" />
+    <None Include="Resources\command-startloop.png" />
+    <None Include="Resources\command-endloop.png" />
+    <None Include="Resources\command-begin-if.png" />
+    <None Include="Resources\command-else.png" />
+    <None Include="Resources\command-end-if.png" />
+    <None Include="Resources\command-window.png" />
+    <None Include="Resources\command-window-close.png" />
+    <None Include="Resources\command-stop-process.png" />
+    <None Include="Resources\command-start-process.png" />
+    <None Include="Resources\command-function.png" />
+    <None Include="Resources\command-script.png" />
+    <None Include="Resources\command-search.png" />
+    <None Include="Resources\command-string.png" />
+    <None Include="Resources\command-web.png" />
+    <None Include="Resources\command-camera.png" />
+    <None Include="Resources\command-input.png" />
+    <None Include="Resources\command-spreadsheet.png" />
+    <None Include="Resources\command-error.png" />
+    <None Include="Resources\command-smtp.png" />
+    <None Include="Resources\command-files.png" />
+    <None Include="Resources\links-header.png" />
+    <None Include="Resources\command-sequence.png" />
+    <None Include="Resources\various-record-button.png" />
+    <None Include="Resources\action-bar-record.png" />
+    <None Include="Resources\various-stop-button.png" />
+    <None Include="Resources\header-backing.png" />
+    <None Include="Resources\various-question.png" />
+    <None Include="Resources\header_backing_dark.png" />
+    <Content Include="rpalogo.ico" />
+    <Content Include="Resources\chromedriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\RPALogo.png" />
+    <None Include="Resources\various-chat-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sample Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\taskt.Core\taskt.Core.csproj">
+      <Project>{6956836d-d2b0-4b7a-b06d-fa3a22b4c4ff}</Project>
+      <Name>taskt.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\taskt.Engine\taskt.Engine.csproj">
+      <Project>{ed8f6540-c341-4b5f-8966-26a08e39af87}</Project>
+      <Name>taskt.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\taskt.Server\taskt.Server.csproj">
+      <Project>{d0ff030d-bc12-4e57-a9ad-130feed9be4a}</Project>
+      <Name>taskt.Server</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
