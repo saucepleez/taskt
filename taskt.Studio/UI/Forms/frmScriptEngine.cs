@@ -43,8 +43,7 @@ namespace taskt.UI.Forms
         private bool _advancedDebug;
         public AutomationEngineInstance EngineInstance { get; set; }
         private List<ScriptVariable> _scriptVariableList;
-        private List<ScriptElement> _scriptElementList;
-        private bool _closeWhenDone = false;
+        private List<ScriptElement> _scriptElementList;        
         public string Result { get; set; }
         public bool IsNewTaskSteppedInto { get; set; }
         public bool IsNewTaskResumed { get; set; }
@@ -52,6 +51,9 @@ namespace taskt.UI.Forms
         public bool IsHiddenTaskEngine { get; set; }
         public int DebugLineNumber { get; set; }
         public bool IsDebugMode { get; set; }
+        public bool CloseWhenDone { get; set; }
+        public bool ClosingAllEngines { get; set; }
+        public bool IsChildEngine { get; set; }
         #endregion
 
         //events and methods
@@ -73,7 +75,7 @@ namespace taskt.UI.Forms
                 _scriptElementList = elements;
             }
 
-            _closeWhenDone = blnCloseWhenDone;
+            CloseWhenDone = blnCloseWhenDone;
 
             //set callback form
             CallBackForm = builderForm;
@@ -246,12 +248,13 @@ namespace taskt.UI.Forms
                 case ScriptFinishedResult.Successful:
                     AddStatus("Script Completed Successfully");
                     UpdateUI("debug info (success)");
+                    if (IsChildEngine)
+                        CloseWhenDone = true;
                     break;
                 case ScriptFinishedResult.Error:
                     AddStatus("Error: " + e.Error);
                     AddStatus("Script Completed With Errors!");
                     UpdateUI("debug info (error)");
-                    _closeWhenDone = false;
                     break;
                 case ScriptFinishedResult.Cancelled:
                     AddStatus("Script Cancelled By User");
@@ -273,7 +276,7 @@ namespace taskt.UI.Forms
                  if the engine is improperly closed or interrupted during execution.*/
             }
             
-            if(_closeWhenDone)
+            if(CloseWhenDone)
             {
                 ((frmScriptEngine)EngineInstance.TasktEngineUI).Invoke((Action)delegate () { Close(); });
             }
@@ -573,7 +576,8 @@ namespace taskt.UI.Forms
             {
                 if (uiBtnCancel.DisplayText == "Close")
                 {
-                    UpdateLineNumber(0); 
+                    UpdateLineNumber(0);
+                    ClosingAllEngines = true;
                     Close();                   
                     return;
                 }

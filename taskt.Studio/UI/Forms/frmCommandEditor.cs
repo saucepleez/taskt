@@ -211,7 +211,7 @@ namespace taskt.UI.Forms
         #region Save/Close Buttons
 
         //handles returning DialogResult
-        private void uiBtnAdd_Click(object sender, EventArgs e)
+        public void uiBtnAdd_Click(object sender, EventArgs e)
         {
             //commit any datagridviews
             foreach (Control ctrl in flw_InputVariables.Controls)

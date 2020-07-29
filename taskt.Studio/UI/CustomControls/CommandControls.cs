@@ -153,13 +153,22 @@ namespace taskt.UI.CustomControls
             inputBox.Height = height;
             inputBox.Width = width;
 
-            if (inputBox.Height != 30)
+            if (height > 30)
             {
                 inputBox.Multiline = true;
             }
 
             inputBox.Name = parameterName;
+            inputBox.KeyDown += InputBox_KeyDown;
             return inputBox;
+        }
+
+        private static void InputBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Shift && e.KeyCode == Keys.Enter)
+                return;              
+            else if (e.KeyCode == Keys.Enter)
+                CurrentEditor.uiBtnAdd_Click(null, null);
         }
 
         public static CheckBox CreateCheckBoxFor(string parameterName, ScriptCommand parent)
@@ -176,34 +185,63 @@ namespace taskt.UI.CustomControls
 
         public static Control CreateDropdownFor(string parameterName, ScriptCommand parent)
         {
-            var inputBox = new ComboBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
-            inputBox.Height = 30;
-            inputBox.Width = 300;
-            inputBox.Name = parameterName;
+            var dropdownBox = new ComboBox();
+            dropdownBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            dropdownBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
+            dropdownBox.Height = 30;
+            dropdownBox.Width = 300;
+            dropdownBox.Name = parameterName;       
 
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(PropertyUISelectionOption), true);
 
             foreach (PropertyUISelectionOption option in propertyAttributesAssigned)
             {
-                inputBox.Items.Add(option.UIOption);
+                dropdownBox.Items.Add(option.UIOption);
             }
 
-            return inputBox;
+            dropdownBox.Click += DropdownBox_Click;
+            dropdownBox.KeyDown += DropdownBox_KeyDown;
+            dropdownBox.KeyPress += DropdownBox_KeyPress;
+
+            return dropdownBox;
+        }
+
+        private static void DropdownBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != (char)Keys.Return)
+                 e.Handled = true;
+        }
+
+        private static void DropdownBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Down && e.KeyCode != Keys.Up && e.KeyCode != Keys.Enter)
+                e.Handled = true;
+        }
+
+        private static void DropdownBox_Click(object sender, EventArgs e)
+        {
+            ComboBox clickedDropdownBox = (ComboBox)sender;
+            clickedDropdownBox.DroppedDown = true;
         }
 
         public static ComboBox CreateStandardComboboxFor(string parameterName, ScriptCommand parent)
         {
-            var inputBox = new ComboBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
-            inputBox.Height = 30;
-            inputBox.Width = 300;
-            inputBox.Name = parameterName;
+            var standardComboBox = new ComboBox();
+            standardComboBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            standardComboBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
+            standardComboBox.Height = 30;
+            standardComboBox.Width = 300;
+            standardComboBox.Name = parameterName;
+            standardComboBox.Click += StandardComboBox_Click;
 
-            return inputBox;
+            return standardComboBox;
+        }
+
+        private static void StandardComboBox_Click(object sender, EventArgs e)
+        {
+            ComboBox clickedStandardComboBox = (ComboBox)sender;
+            clickedStandardComboBox.DroppedDown = true;
         }
 
         public static List<Control> CreateUIHelpersFor(string parameterName, ScriptCommand parent, Control[] targetControls,

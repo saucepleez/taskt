@@ -126,7 +126,8 @@ namespace taskt.Commands
                 }
             }
 
-            NewEngine = new frmScriptEngine(childTaskPath, (frmScriptBuilder)CurrentScriptBuilder, variableList, null, true, parentEngine.IsDebugMode);
+            NewEngine = new frmScriptEngine(childTaskPath, (frmScriptBuilder)CurrentScriptBuilder, variableList, null, false, parentEngine.IsDebugMode);
+            NewEngine.IsChildEngine = true;
             NewEngine.IsHiddenTaskEngine = true;
 
             if (IsSteppedInto)
@@ -140,6 +141,12 @@ namespace taskt.Commands
                 ((frmScriptEngine)currentScriptEngine.TasktEngineUI).TopMost = false;
             });
             Application.Run(NewEngine);
+
+            if (NewEngine.ClosingAllEngines)
+            {
+                currentScriptEngine.TasktEngineUI.ClosingAllEngines = true;
+                currentScriptEngine.TasktEngineUI.CloseWhenDone = true;
+            }               
 
             //get new variable list from the new task engine after it finishes running
             var newVariableList = NewEngine.EngineInstance.VariableList;
@@ -173,39 +180,47 @@ namespace taskt.Commands
                 }
             }
 
-            ((frmScriptEngine)currentScriptEngine.TasktEngineUI).Invoke((Action)delegate()
+            if (parentEngine.IsDebugMode)
             {
-                parentEngine.TopMost = true;
-                parentEngine.IsHiddenTaskEngine = true;
-
-                if ((IsSteppedInto || !NewEngine.IsHiddenTaskEngine) && !NewEngine.IsNewTaskResumed && !NewEngine.IsNewTaskCancelled)
+                ((frmScriptEngine)currentScriptEngine.TasktEngineUI).Invoke((Action)delegate()
                 {
-                    parentEngine.CallBackForm.CurrentEngine = parentEngine;
-                    parentEngine.CallBackForm.IsScriptSteppedInto = true;
-                    parentEngine.IsHiddenTaskEngine = false;
-
-                    //toggle running flag to allow for tab selection
-                    parentEngine.CallBackForm.IsScriptRunning = false;
-                    ((frmScriptBuilder)parentEngine.CallBackForm).OpenFile(parentTaskPath);
-                    parentEngine.CallBackForm.IsScriptRunning = true;
-
-                    parentEngine.UpdateLineNumber(parentDebugLine + 1);
-                    parentEngine.AddStatus("Pausing Before Execution");
-                }
-                else if (NewEngine.IsNewTaskResumed)
-                {
-                    parentEngine.CallBackForm.CurrentEngine = parentEngine;
-                    parentEngine.IsNewTaskResumed = true;
+                    parentEngine.TopMost = true;
                     parentEngine.IsHiddenTaskEngine = true;
-                    parentEngine.CallBackForm.IsScriptSteppedInto = false;
-                    parentEngine.CallBackForm.IsScriptPaused = false;
-                    parentEngine.ResumeParentTask();
-                }
-                else if (NewEngine.IsNewTaskCancelled)
-                    parentEngine.uiBtnCancel_Click(null, null);
-                else //Taskt in Run Mode so debug buttons never fired
-                    parentEngine.IsHiddenTaskEngine = false;
-            });
+
+                    if ((IsSteppedInto || !NewEngine.IsHiddenTaskEngine) && !NewEngine.IsNewTaskResumed && !NewEngine.IsNewTaskCancelled)
+                    {
+                        parentEngine.CallBackForm.CurrentEngine = parentEngine;
+                        parentEngine.CallBackForm.IsScriptSteppedInto = true;
+                        parentEngine.IsHiddenTaskEngine = false;
+
+                        //toggle running flag to allow for tab selection
+                        parentEngine.CallBackForm.IsScriptRunning = false;
+                        ((frmScriptBuilder)parentEngine.CallBackForm).OpenFile(parentTaskPath);
+                        parentEngine.CallBackForm.IsScriptRunning = true;
+
+                        parentEngine.UpdateLineNumber(parentDebugLine + 1);
+                        parentEngine.AddStatus("Pausing Before Execution");
+                    }
+                    else if (NewEngine.IsNewTaskResumed)
+                    {
+                        parentEngine.CallBackForm.CurrentEngine = parentEngine;
+                        parentEngine.IsNewTaskResumed = true;
+                        parentEngine.IsHiddenTaskEngine = true;
+                        parentEngine.CallBackForm.IsScriptSteppedInto = false;
+                        parentEngine.CallBackForm.IsScriptPaused = false;
+                        parentEngine.ResumeParentTask();
+                    }
+                    else if (NewEngine.IsNewTaskCancelled)
+                        parentEngine.uiBtnCancel_Click(null, null);
+                });
+            }
+            else
+            {
+                ((frmScriptEngine)currentScriptEngine.TasktEngineUI).Invoke((Action)delegate()
+                {
+                    parentEngine.TopMost = true;
+                });
+            }          
         }
 
         public override List<Control> Render(IfrmCommandEditor editor)

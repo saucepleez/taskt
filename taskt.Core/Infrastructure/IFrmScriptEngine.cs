@@ -14,13 +14,17 @@ namespace taskt.Core.Infrastructure
         bool ServerExecution { get; set; }
         IfrmScriptBuilder CallBackForm { get; set; }
         //AutomationEngineInstance EngineInstance { get; set; }
-        string Result { get; set; }
+        string Result { get; set; }        
         bool IsNewTaskSteppedInto { get; set; }
         bool IsNewTaskResumed { get; set; }
         bool IsNewTaskCancelled { get; set; }
         bool IsHiddenTaskEngine { get; set; }
         int DebugLineNumber { get; set; }
         bool IsDebugMode { get; set; }
+        bool CloseWhenDone { get; set; }
+        bool ClosingAllEngines { get; set; }
+        bool IsChildEngine { get; set; }
+
         void ShowMessage(string message, string title, DialogType dialogType, int closeAfter);
         void ShowEngineContext(string context, int closeAfter);
         void LaunchRDPSession(string machineName, string userName, string password, int width, int height);
