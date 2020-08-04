@@ -313,6 +313,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap command_begin_switch {
+            get {
+                object obj = ResourceManager.GetObject("command_begin_switch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap command_breakpoint {
             get {
                 object obj = ResourceManager.GetObject("command_breakpoint", resourceCulture);
@@ -336,6 +346,16 @@ namespace taskt.Properties {
         public static System.Drawing.Bitmap command_cancel {
             get {
                 object obj = ResourceManager.GetObject("command_cancel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap command_case {
+            get {
+                object obj = ResourceManager.GetObject("command_case", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -416,6 +436,16 @@ namespace taskt.Properties {
         public static System.Drawing.Bitmap command_end_if {
             get {
                 object obj = ResourceManager.GetObject("command_end_if", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap command_end_switch {
+            get {
+                object obj = ResourceManager.GetObject("command_end_switch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

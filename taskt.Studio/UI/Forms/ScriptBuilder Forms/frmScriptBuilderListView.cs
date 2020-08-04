@@ -525,13 +525,19 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 cmd = ((ScriptCommand)(rowItem.Tag));
                 if ((cmd.CommandName == "BeginIfCommand") || (cmd.CommandName == "BeginMultiIfCommand") ||
                     (cmd.CommandName == "LoopCollectionCommand") || (cmd.CommandName == "LoopContinuouslyCommand") ||
-                    (cmd.CommandName == "LoopNumberOfTimesCommand") || (cmd.CommandName == "TryCommand") ||
+                    (cmd.CommandName == "LoopNumberOfTimesCommand") || (cmd.CommandName == "BeginTryCommand") ||
                     (cmd.CommandName == "BeginLoopCommand") || (cmd.CommandName == "BeginMultiLoopCommand") ||
                     (cmd.CommandName == "BeginRetryCommand"))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
                     indent += 2;
+                }
+                else if (cmd.CommandName == "BeginSwitchCommand")
+                {
+                    indent += 2;
+                    rowItem.IndentCount = indent;
+                    indent += 4;
                 }
                 else if ((cmd.CommandName == "EndLoopCommand") || (cmd.CommandName == "EndIfCommand") ||
                     (cmd.CommandName == "EndTryCommand") || (cmd.CommandName == "EndRetryCommand"))
@@ -542,8 +548,16 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     indent -= 2;
                     if (indent < 0) indent = 0;
                 }
+                else if (cmd.CommandName == "EndSwitchCommand")
+                {
+                    indent -= 4;
+                    if (indent < 0) indent = 0;
+                    rowItem.IndentCount = indent;
+                    indent -= 2;
+                    if (indent < 0) indent = 0;
+                }
                 else if ((cmd.CommandName == "ElseCommand") || (cmd.CommandName == "CatchCommand") ||
-                    (cmd.CommandName == "FinallyCommand"))
+                    (cmd.CommandName == "FinallyCommand") || (cmd.CommandName == "CaseCommand"))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -891,16 +905,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 }));
                 _selectedTabScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new EndIfCommand()));
             }
-            else if (selectedCommand.CommandName == "TryCommand")
+            else if (selectedCommand.CommandName == "BeginTryCommand")
             {
                 _selectedTabScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
                 {
                     v_Comment = "Items in this section will be handled if error occurs"
                 }));
-                _selectedTabScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new CatchCommand()
-                {
-                    //v_Comment = "Items in this section will run if error occurs"
-                }));
+                _selectedTabScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new CatchCommand()));
+
                 _selectedTabScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
                 {
                     v_Comment = "This section executes if error occurs above"
@@ -914,6 +926,18 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     v_Comment = "Items in this section will be retried as long as the condition is not met or an error is thrown"
                 }));
                 _selectedTabScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new EndRetryCommand()));
+            }
+            else if (selectedCommand.CommandName == "BeginSwitchCommand")
+            {
+                _selectedTabScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new CaseCommand()
+                { 
+                    v_CaseValue = "Default"
+                }));
+                _selectedTabScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new AddCodeCommentCommand()
+                {
+                    v_Comment = "Items in this section will run if no case statements match"
+                }));
+                _selectedTabScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new EndSwitchCommand()));
             }
 
             CreateUndoSnapshot();

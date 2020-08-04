@@ -118,7 +118,7 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("ForwardOutlookEmailCommand", Resources.command_smtp);
             uiImages.Add("ReplyToOutlookEmailCommand", Resources.command_smtp);
             uiImages.Add("ErrorHandlingCommand", Resources.command_error);
-            uiImages.Add("TryCommand", Resources.command_try);
+            uiImages.Add("BeginTryCommand", Resources.command_try);
             uiImages.Add("CatchCommand", Resources.command_try);
             uiImages.Add("FinallyCommand", Resources.command_try);
             uiImages.Add("EndTryCommand", Resources.command_try);
@@ -127,6 +127,9 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("BeginRetryCommand", Resources.command_try);
             uiImages.Add("EndRetryCommand", Resources.command_try);
             uiImages.Add("GetExceptionMessageCommand", Resources.command_try);
+            uiImages.Add("BeginSwitchCommand", Resources.command_begin_switch);
+            uiImages.Add("CaseCommand", Resources.command_case);
+            uiImages.Add("EndSwitchCommand", Resources.command_end_switch);
             uiImages.Add("SubstringCommand", Resources.command_string);
             uiImages.Add("SplitTextCommand", Resources.command_string);
             uiImages.Add("ReplaceTextCommand", Resources.command_string);

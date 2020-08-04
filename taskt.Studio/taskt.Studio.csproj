@@ -179,6 +179,9 @@
     <Compile Include="Commands\Error Handling Commands\EndRetryCommand.cs" />
     <Compile Include="Commands\Error Handling Commands\RethrowCommand.cs" />
     <Compile Include="Commands\Misc Commands\ShowMessageCommand.cs" />
+    <Compile Include="Commands\Switch Commands\BeginSwitchCommand.cs" />
+    <Compile Include="Commands\Switch Commands\CaseCommand.cs" />
+    <Compile Include="Commands\Switch Commands\EndSwitchCommand.cs" />
     <Compile Include="Commands\Task Commands\RunTaskCommand.cs" />
     <Compile Include="Commands\Task Commands\StopCurrentTaskCommand.cs" />
     <Compile Include="Utilities\GlobalHook.cs" />
@@ -191,7 +194,7 @@
     <Compile Include="Commands\Error Handling Commands\FinallyCommand.cs" />
     <Compile Include="Commands\Error Handling Commands\GetExceptionMessageCommand.cs" />
     <Compile Include="Commands\Error Handling Commands\ThrowCommand.cs" />
-    <Compile Include="Commands\Error Handling Commands\TryCommand.cs" />
+    <Compile Include="Commands\Error Handling Commands\BeginTryCommand.cs" />
     <Compile Include="Commands\If Commands\BeginIfCommand.cs" />
     <Compile Include="Commands\If Commands\BeginMutliIfCommand.cs" />
     <Compile Include="Commands\If Commands\ElseCommand.cs" />
@@ -778,6 +781,9 @@
     <None Include="Resources\browser-forward.png" />
     <None Include="Resources\browser-save.png" />
     <None Include="Resources\browser-elements.png" />
+    <None Include="Resources\command-begin-switch.png" />
+    <None Include="Resources\command-case.png" />
+    <None Include="Resources\command-end-switch.png" />
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

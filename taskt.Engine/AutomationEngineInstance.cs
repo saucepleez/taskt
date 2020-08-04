@@ -340,9 +340,9 @@ namespace taskt.Engine
                 //determine type of command
                 if ((parentCommand.CommandName == "LoopNumberOfTimesCommand") || (parentCommand.CommandName == "LoopContinuouslyCommand") ||
                     (parentCommand.CommandName == "LoopCollectionCommand") || (parentCommand.CommandName == "BeginIfCommand") ||
-                    (parentCommand.CommandName == "BeginMultiIfCommand") || (parentCommand.CommandName == "TryCommand") ||
+                    (parentCommand.CommandName == "BeginMultiIfCommand") || (parentCommand.CommandName == "BeginTryCommand") ||
                     (parentCommand.CommandName == "BeginLoopCommand") || (parentCommand.CommandName == "BeginMultiLoopCommand") ||
-                    (parentCommand.CommandName == "BeginRetryCommand"))
+                    (parentCommand.CommandName == "BeginRetryCommand" || (parentCommand.CommandName == "BeginSwitchCommand")))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     command.IsExceptionIgnored = true;

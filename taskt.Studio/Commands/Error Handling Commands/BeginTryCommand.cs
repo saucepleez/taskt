@@ -15,11 +15,11 @@ namespace taskt.Commands
     [Group("Error Handling Commands")]
     [Description("This command defines a try/catch block which will execute the associated catch block if any " +
                  "exceptions are thrown.")]
-    public class TryCommand : ScriptCommand
+    public class BeginTryCommand : ScriptCommand
     {
-        public TryCommand()
+        public BeginTryCommand()
         {
-            CommandName = "TryCommand";
+            CommandName = "BeginTryCommand";
             SelectionName = "Try";
             CommandEnabled = true;
             CustomRendering = true;

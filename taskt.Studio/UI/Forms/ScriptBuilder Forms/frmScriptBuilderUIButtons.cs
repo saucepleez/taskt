@@ -231,6 +231,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             int beginIfValidationCount = 0;
             int tryCatchValidationCount = 0;
             int retryValidationCount = 0;
+            int beginSwitchValidationCount = 0;
 
             foreach (ListViewItem item in _selectedTabScriptActions.Items)
             {
@@ -252,7 +253,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 {
                     beginIfValidationCount--;
                 }
-                else if (item.Tag is TryCommand)
+                else if (item.Tag is BeginTryCommand)
                 {
                     tryCatchValidationCount++;
                 }
@@ -268,17 +269,13 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 {
                     retryValidationCount--;
                 }
-
-                if (tryCatchValidationCount < 0)
+                else if(item.Tag is BeginSwitchCommand)
                 {
-                    Notify("Please verify the ordering of your try/catch blocks.");
-                    return;
+                    beginSwitchValidationCount++;
                 }
-
-                if (retryValidationCount < 0)
+                else if (item.Tag is EndSwitchCommand)
                 {
-                    Notify("Please verify the ordering of your retry blocks.");
-                    return;
+                    beginSwitchValidationCount--;
                 }
 
                 //end loop was found first
@@ -292,6 +289,24 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 if (beginIfValidationCount < 0)
                 {
                     Notify("Please verify the ordering of your ifs.");
+                    return;
+                }
+
+                if (tryCatchValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your try/catch blocks.");
+                    return;
+                }
+
+                if (retryValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your retry blocks.");
+                    return;
+                }
+
+                if (beginSwitchValidationCount < 0)
+                {
+                    Notify("Please verify the ordering of your switch/case blocks.");
                     return;
                 }
             }
@@ -319,6 +334,12 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             if (retryValidationCount != 0)
             {
                 Notify("Please verify the ordering of your retry blocks.");
+                return;
+            }
+
+            if (beginSwitchValidationCount != 0)
+            {
+                Notify("Please verify the ordering of your switch/case blocks.");
                 return;
             }
 
