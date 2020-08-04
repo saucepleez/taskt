@@ -18,9 +18,9 @@ namespace taskt.Commands
 {
     [Serializable]
     [Group("DataTable Commands")]
-    [Description("This command writes a Value to a DataRow.")]
+    [Description("This command updates a Value in a DataRow at a specified column name/index.")]
 
-    public class WriteDataRowValueCommand : ScriptCommand
+    public class UpdateDataRowValueCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("DataRow")]
@@ -55,10 +55,10 @@ namespace taskt.Commands
         [PropertyUIHelper(UIAdditionalHelperType.ShowVariableHelper)]
         public string v_DataRowValue { get; set; }
 
-        public WriteDataRowValueCommand()
+        public UpdateDataRowValueCommand()
         {
-            CommandName = "WriteDataRowValueCommand";
-            SelectionName = "Write DataRow Value";
+            CommandName = "UpdateDataRowValueCommand";
+            SelectionName = "Update DataRow Value";
             CommandEnabled = true;
             CustomRendering = true;
             v_Option = "Column Index";

@@ -21,23 +21,23 @@ using taskt.UI.CustomControls;
 namespace taskt.Commands
 {
     [Serializable]
-    [Group("Data Commands")]
-    [Description("This command returns an item (having a specific index) from a list.")]
+    [Group("List Commands")]
+    [Description("This command returns an item (having a specific index) from a List.")]
     public class GetListItemCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("List")]
-        [InputSpecification("Provide a list variable.")]
+        [InputSpecification("Provide a List variable.")]
         [SampleUsage("{vList}")]
-        [Remarks("Any type of variable other than list will cause error.")]
+        [Remarks("Any type of variable other than List will cause error.")]
         [PropertyUIHelper(UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Index")]
-        [InputSpecification("Specify a valid list item index.")]
+        [InputSpecification("Specify a valid List item index.")]
         [SampleUsage("0 || {vIndex}")]
-        [Remarks("'0' is the index of the first item in a list. Providing an invalid or out-of-bounds index will result in an error.")]
+        [Remarks("'0' is the index of the first item in a List. Providing an invalid or out-of-bounds index will result in an error.")]
         [PropertyUIHelper(UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ItemIndex { get; set; }
 

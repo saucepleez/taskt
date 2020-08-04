@@ -34,7 +34,7 @@ namespace taskt.Core.Script
         /// retrieve value of the variable
         /// </summary>
         public string GetDisplayValue(string requiredProperty = "")
-        {
+        { 
 
             if (VariableValue is string)
             {
@@ -49,12 +49,13 @@ namespace taskt.Core.Script
                 }
 
             }
-            else if (VariableValue is DataTable)
-            {
-                DataTable dataTable = (DataTable)VariableValue;
-                var dataRow = dataTable.Rows[CurrentPosition];
-                return JsonConvert.SerializeObject(dataRow.ItemArray);
-            }
+            //TODO: Revisit in Variable Cleanup
+            //else if (VariableValue is DataTable)
+            //{
+            //    DataTable dataTable = (DataTable)VariableValue;
+            //    var dataRow = dataTable.Rows[CurrentPosition];
+            //    return JsonConvert.SerializeObject(dataRow.ItemArray);
+            //}
             else if(VariableValue.GetType() != typeof(string))
             {
                 return VariableValue.ToString();

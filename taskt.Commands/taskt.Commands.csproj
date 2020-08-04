@@ -86,11 +86,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data Commands\AddListItemCommand.cs" />
+    <Compile Include="List Commands\AddListItemCommand.cs" />
     <Compile Include="Data Commands\DateCalculationCommand.cs" />
     <Compile Include="Data Commands\FormatDataCommand.cs" />
-    <Compile Include="Data Commands\GetListCountCommand.cs" />
-    <Compile Include="Data Commands\GetListItemCommand.cs" />
+    <Compile Include="List Commands\CreateListCommand.cs" />
+    <Compile Include="List Commands\GetListCountCommand.cs" />
+    <Compile Include="List Commands\GetListItemCommand.cs" />
     <Compile Include="Data Commands\GetPDFTextCommand.cs" />
     <Compile Include="Data Commands\GetTextLengthCommand.cs" />
     <Compile Include="Data Commands\GetWordCountCommand.cs" />
@@ -113,7 +114,7 @@
     <Compile Include="DataTable Commands\GetDataRowValueCommand.cs" />
     <Compile Include="DataTable Commands\MergeDataTableCommand.cs" />
     <Compile Include="DataTable Commands\RemoveDataRowCommand.cs" />
-    <Compile Include="DataTable Commands\WriteDataRowValueCommand.cs" />
+    <Compile Include="DataTable Commands\UpdateDataRowValueCommand.cs" />
     <Compile Include="Dictionary Commands\AddDictionaryItemCommand.cs" />
     <Compile Include="Dictionary Commands\CreateDictionaryCommand.cs" />
     <Compile Include="Dictionary Commands\GetDictionaryValueCommand.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="IE Browser Commands\IEElementActionCommand.cs" />
     <Compile Include="IE Browser Commands\IEFindBrowserCommand.cs" />
     <Compile Include="IE Browser Commands\IENavigateToURLCommand.cs" />
+    <Compile Include="List Commands\UpdateListItemCommand.cs" />
     <Compile Include="NLG Commands\CreateNLGInstanceCommand.cs" />
     <Compile Include="NLG Commands\GenerateNLGPhraseCommand.cs" />
     <Compile Include="NLG Commands\SetNLGParameterCommand.cs" />

@@ -41,6 +41,8 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("GetListCountCommand", Resources.command_function);
             uiImages.Add("GetListItemCommand", Resources.command_function);
             uiImages.Add("AddListItemCommand", Resources.command_function);
+            uiImages.Add("UpdateListItemCommand", Resources.command_function);
+            uiImages.Add("CreateListCommand", Resources.command_function);
             uiImages.Add("RunScriptCommand", Resources.command_script);
             uiImages.Add("RunCustomCodeCommand", Resources.command_script);
             uiImages.Add("RunTaskCommand", Resources.command_start_process);
@@ -91,7 +93,7 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("GetDataRowCommand", Resources.command_spreadsheet);
             uiImages.Add("ExcelGetRangeCommand", Resources.command_spreadsheet);
             uiImages.Add("GetDataRowValueCommand", Resources.command_spreadsheet);
-            uiImages.Add("WriteDataRowValueCommand", Resources.command_spreadsheet);
+            uiImages.Add("UpdateDataRowValueCommand", Resources.command_spreadsheet);
             uiImages.Add("GetDataRowCountCommand", Resources.command_spreadsheet);
             uiImages.Add("CreateDataTableCommand", Resources.command_spreadsheet);
             uiImages.Add("FilterDataTableCommand", Resources.command_spreadsheet);

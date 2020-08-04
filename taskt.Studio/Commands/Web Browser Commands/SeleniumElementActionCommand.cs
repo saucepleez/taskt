@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -97,7 +96,7 @@ namespace taskt.Commands
         [PropertyUISelectionOption("Get Count")]
         [PropertyUISelectionOption("Get Options")]
         [PropertyUISelectionOption("Get Attribute")]
-        [PropertyUISelectionOption("Get Matching Elements")]
+        [PropertyUISelectionOption("Get Matching Element(s)")]
         [PropertyUISelectionOption("Clear Element")]
         [PropertyUISelectionOption("Wait For Element To Exist")]
         [PropertyUISelectionOption("Switch to frame")]
@@ -432,37 +431,23 @@ namespace taskt.Commands
                     elementValue.StoreInUserVariable(engine, VariableName);
                     break;
 
-                case "Get Matching Elements":
+                case "Get Matching Element(s)":
                     var variableName = (from rw in v_WebActionParameterTable.AsEnumerable()
                                         where rw.Field<string>("Parameter Name") == "Variable Name"
                                         select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                    var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
-
-                    if (requiredComplexVariable == null)
+                    if (!(element is IWebElement))
                     {
-                        engine.VariableList.Add(new ScriptVariable() { VariableName = variableName, CurrentPosition = 0 });
-                        requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+                        //create element list
+                        List<IWebElement> elementList = new List<IWebElement>();
+                        foreach (IWebElement item in element)
+                        {
+                            elementList.Add(item);
+                        }
+                        engine.AddVariable(variableName, elementList);
                     }
-
-                    //set json settings
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Error = (serializer, err) => {
-                        err.ErrorContext.Handled = true;
-                    };
-
-                    settings.Formatting = Formatting.Indented;
-
-                    //create json list
-                    List<string> jsonList = new List<string>();
-                    foreach (IWebElement item in element)
-                    {
-                        var json = JsonConvert.SerializeObject(item, settings);
-                        jsonList.Add(json);
-                    }
-
-                    requiredComplexVariable.VariableValue = jsonList;
-                    requiredComplexVariable.CurrentPosition = 0;
+                    else
+                        engine.AddVariable(variableName, element);                    
                     break;
 
                 case "Get Table":
@@ -776,7 +761,7 @@ namespace taskt.Commands
                     break;
 
                 case "Get Text":
-                case "Get Matching Elements":
+                case "Get Matching Element(s)":
                 case "Get Table":
                 case "Get Count":
                     foreach (var ctrl in _elementParameterControls)

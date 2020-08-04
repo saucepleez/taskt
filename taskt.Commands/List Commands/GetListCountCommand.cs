@@ -21,15 +21,15 @@ using taskt.UI.CustomControls;
 namespace taskt.Commands
 {
     [Serializable]
-    [Group("Data Commands")]
-    [Description("This command returns the count of items contained in a list.")]
+    [Group("List Commands")]
+    [Description("This command returns the count of items contained in a List.")]
     public class GetListCountCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("List")]
-        [InputSpecification("Provide a list variable.")]
+        [InputSpecification("Provide a List variable.")]
         [SampleUsage("{vList}")]
-        [Remarks("Providing any type of variable other than a list will result in an error.")]
+        [Remarks("Providing any type of variable other than a List will result in an error.")]
         [PropertyUIHelper(UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ListName { get; set; }
 

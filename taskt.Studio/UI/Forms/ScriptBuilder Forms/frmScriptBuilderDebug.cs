@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Interop.Outlook;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -90,8 +91,14 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                                 variableValues.Rows.Add(variable.VariableName, "Microsoft.Office.Interop.Outlook.MailItem",
                                     ConvertMailItemToString((MailItem)variable.VariableValue));
                                 break;
+                            case "OpenQA.Selenium.Remote.RemoteWebElement":
+                                variableValues.Rows.Add(variable.VariableName, "OpenQA.Selenium.IWebElement",
+                                    ConvertIWebElementToString((IWebElement)variable.VariableValue));
+                                break;
                             case "System.Collections.Generic.List`1[System.String]":
+                            case "System.Collections.Generic.List`1[System.Data.DataTable]":
                             case "System.Collections.Generic.List`1[Microsoft.Office.Interop.Outlook.MailItem]":
+                            case "System.Collections.Generic.List`1[OpenQA.Selenium.IWebElement]":
                                 variableValues.Rows.Add(variable.VariableName, variable.VariableValue.GetType().FullName,
                                     ConvertListToString(variable.VariableValue));
                                 break;
@@ -145,7 +152,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                     stringBuilder.AppendFormat("{0}, ", rows[i]);
 
                 stringBuilder.AppendFormat("{0}]", rows[dt.Columns.Count - 1]);
-                stringBuilder.AppendLine();
             }
             return stringBuilder.ToString();
         }
@@ -159,36 +165,6 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
                 stringBuilder.AppendFormat("{0}, ", row.ItemArray[i]);
 
             stringBuilder.AppendFormat("{0}]", row.ItemArray[row.ItemArray.Length - 1]);
-            return stringBuilder.ToString();
-        }
-
-        public string ConvertListToString(object list)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            
-            Type type = list.GetType().GetGenericArguments()[0];
-
-            if (type == typeof(string))
-            {
-                List<string> stringList = (List<string>)list;
-                stringBuilder.Append($"Count({stringList.Count}) [");
-
-                for (int i = 0; i < stringList.Count - 1; i++)
-                    stringBuilder.AppendFormat("{0}, ", stringList[i]);
-
-                stringBuilder.AppendFormat("{0}]", stringList[stringList.Count - 1]);
-            }
-            else if (type == typeof(MailItem))
-            {
-                List<MailItem> mailItemList = (List<MailItem>)list;
-                stringBuilder.Append($"Count({mailItemList.Count}) [");
-
-                for (int i = 0; i < mailItemList.Count - 1; i++)
-                    stringBuilder.AppendFormat("{0}, \n", ConvertMailItemToString(mailItemList[i]));
-
-                stringBuilder.AppendFormat("{0}]", ConvertMailItemToString(mailItemList[mailItemList.Count - 1]));
-            }
-
             return stringBuilder.ToString();
         }
 
@@ -213,6 +189,69 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             }
 
             stringBuilder.Append("]");
+
+            return stringBuilder.ToString();
+        }
+
+        public string ConvertIWebElementToString(IWebElement element)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append($"[Text: {element.Text}, \n" +
+                                 $"Tag Name: {element.TagName}, \n" +
+                                 $"Location: {element.Location}, \n" +
+                                 $"Size: {element.Size}, \n" +
+                                 $"Displayed: {element.Displayed}, \n" +
+                                 $"Enabled: {element.Enabled}, \n" +
+                                 $"Selected: {element.Selected}]");
+            return stringBuilder.ToString();
+        }
+
+        public string ConvertListToString(object list)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            Type type = list.GetType().GetGenericArguments()[0];
+
+            if (type == typeof(string))
+            {
+                List<string> stringList = (List<string>)list;
+                stringBuilder.Append($"Count({stringList.Count}) [");
+
+                for (int i = 0; i < stringList.Count - 1; i++)
+                    stringBuilder.AppendFormat("{0}, ", stringList[i]);
+
+                stringBuilder.AppendFormat("{0}]", stringList[stringList.Count - 1]);
+            }
+            else if (type == typeof(DataTable))
+            {
+                List<DataTable> dataTableList = (List<DataTable>)list;
+                stringBuilder.Append($"Count({dataTableList.Count}) \n[");
+
+                for (int i = 0; i < dataTableList.Count - 1; i++)
+                    stringBuilder.AppendFormat("{0}, \n", ConvertDataTableToString(dataTableList[i]));
+
+                stringBuilder.AppendFormat("{0}]", ConvertDataTableToString(dataTableList[dataTableList.Count - 1]));
+            }
+            else if (type == typeof(MailItem))
+            {
+                List<MailItem> mailItemList = (List<MailItem>)list;
+                stringBuilder.Append($"Count({mailItemList.Count}) \n[");
+
+                for (int i = 0; i < mailItemList.Count - 1; i++)
+                    stringBuilder.AppendFormat("{0}, \n", ConvertMailItemToString(mailItemList[i]));
+
+                stringBuilder.AppendFormat("{0}]", ConvertMailItemToString(mailItemList[mailItemList.Count - 1]));
+            }
+            else if (type == typeof(IWebElement))
+            {
+                List<IWebElement> elementList = (List<IWebElement>)list;
+                stringBuilder.Append($"Count({elementList.Count}) \n[");
+
+                for (int i = 0; i < elementList.Count - 1; i++)
+                    stringBuilder.AppendFormat("{0}, \n", ConvertIWebElementToString(elementList[i]));
+
+                stringBuilder.AppendFormat("{0}]", ConvertIWebElementToString(elementList[elementList.Count - 1]));
+            }
 
             return stringBuilder.ToString();
         }
