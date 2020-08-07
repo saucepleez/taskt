@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -28,6 +29,7 @@ using taskt.Core.Infrastructure;
 using taskt.Core.IO;
 using taskt.Core.Script;
 using taskt.Core.Settings;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.Engine;
 using taskt.Server;
 using taskt.UI.CustomControls;
@@ -121,9 +123,10 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         public bool IsScriptSteppedOver { get; set; }
         public bool IsScriptSteppedInto { get; set; }
         public bool IsUnhandledException { get; set; }
+        public Logger EngineLogger { get; set; }
         private bool _isDebugMode;
         private TreeView _tvCommandsCopy;
-        private string _txtCommandWatermark = "Type Here to Search";
+        private string _txtCommandWatermark = "Type Here to Search";     
         #endregion
 
         #region Form Events
@@ -180,8 +183,10 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
             HttpServerClient.InitializeScriptEngine(new frmScriptEngine());
             HttpServerClient.AssociatedBuilder = this;
 
-            LocalTCPClient.InitializeAutomationEngine(new AutomationEngineInstance());
-            LocalTCPClient.Initialize(this, new AutomationEngineInstance());
+            string clientLoggerFilePath = Path.Combine(Folders.GetFolder(FolderType.LogFolder), "taskt Automation CLient Logs.txt");
+            Logger automationClientLogger = new Logging().CreateFileLogger(clientLoggerFilePath, Serilog.RollingInterval.Day);
+            LocalTCPClient.InitializeAutomationEngine(new AutomationEngineInstance(automationClientLogger));
+            LocalTCPClient.Initialize(this, new AutomationEngineInstance(automationClientLogger));
             //Core.Sockets.SocketClient.Initialize();
             //Core.Sockets.SocketClient.associatedBuilder = this;
 
@@ -652,7 +657,7 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel senderLink = (LinkLabel)sender;
-            OpenFile(Folders.GetFolder(FolderType.ScriptsFolder) + senderLink.Text);
+            OpenFile(Path.Combine(Folders.GetFolder(FolderType.ScriptsFolder), senderLink.Text));
         }
         #endregion
 

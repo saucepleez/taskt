@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using Serilog.Core;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,6 +16,7 @@ using taskt.Core.Command;
 using taskt.Core.Common;
 using taskt.Core.Enums;
 using taskt.Core.Infrastructure;
+using taskt.Core.IO;
 using taskt.Core.Model.EngineModel;
 using taskt.Core.Model.ServerModel;
 using taskt.Core.Script;
@@ -59,12 +63,12 @@ namespace taskt.Engine
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
         public event EventHandler<LineNumberChangedEventArgs> LineNumberChangedEvent;
-        public Logger EngineLogger;
+        public Logger EngineLogger { get; set; }
 
-        public AutomationEngineInstance()
+        public AutomationEngineInstance(Logger engineLogger)
         {
             //initialize logger
-            EngineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
+            EngineLogger = engineLogger;
             EngineLogger.Information("Engine Class has been initialized");
             _privateCommandLog = "Can't log display value as the command contains sensitive data";
 
@@ -325,14 +329,13 @@ namespace taskt.Engine
             //bypass comments
             if (parentCommand.CommandName == "AddCodeCommentCommand" || parentCommand.IsCommented)
             {
-                ReportProgress("Skipping Line " + parentCommand.LineNumber + ": "
-                    + (parentCommand.v_IsPrivate ? _privateCommandLog : parentCommand.GetDisplayValue().ConvertToUserVariable(this)));
+                ReportProgress($"Skipping Line {parentCommand.LineNumber}: {(parentCommand.v_IsPrivate ? _privateCommandLog : parentCommand.GetDisplayValue().ConvertToUserVariable(this))}", parentCommand.LogLevel);
                 return;
             }
 
             //report intended execution
-            ReportProgress("Running Line " + parentCommand.LineNumber + ": "
-                + (parentCommand.v_IsPrivate ? _privateCommandLog : parentCommand.GetDisplayValue()));
+            if (parentCommand.CommandName != "LogMessageCommand")
+                ReportProgress($"Running Line {parentCommand.LineNumber}: {(parentCommand.v_IsPrivate ? _privateCommandLog : parentCommand.GetDisplayValue())}", parentCommand.LogLevel);
 
             //handle any errors
             try
@@ -382,8 +385,15 @@ namespace taskt.Engine
                     //sleep required time
                     Thread.Sleep(EngineSettings.DelayBetweenCommands);
 
-                        //run the command
-                        parentCommand.RunCommand(this);
+                    //run the command
+                    parentCommand.RunCommand(this);
+
+                    if (parentCommand.CommandName == "LogMessageCommand")
+                    {
+                        string displayValue = parentCommand.GetDisplayValue().Replace("Log Message ['", "").Replace("']", "");
+                        ReportProgress($"Logging Line {parentCommand.LineNumber}: {(parentCommand.v_IsPrivate ? _privateCommandLog : displayValue)}",
+                            parentCommand.LogLevel);
+                    }                       
                 }
             }
             catch (Exception ex)
@@ -416,7 +426,7 @@ namespace taskt.Engine
                     switch (ErrorHandlingAction)
                     {
                         case "Continue Processing":
-                            ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString());
+                            ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString(), LogEventLevel.Error);
                             ReportProgress("Continuing Per Error Handling");
                             break;
 
@@ -434,7 +444,7 @@ namespace taskt.Engine
 
                         DialogResult result = TasktEngineUI.CallBackForm.LoadErrorForm(errorMessage);
                        
-                        ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString());
+                        ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString(), LogEventLevel.Error);
                         TasktEngineUI.CallBackForm.IsUnhandledException = false;
 
                         if (result == DialogResult.OK)
@@ -581,10 +591,41 @@ namespace taskt.Engine
             _isScriptSteppedIntoBeforeException = true;
         }
 
-        public virtual void ReportProgress(string progress)
+        public virtual void ReportProgress(string progress, LogEventLevel eventLevel = LogEventLevel.Information)
         {
-            EngineLogger.Information(progress);
             ReportProgressEventArgs args = new ReportProgressEventArgs();
+
+            switch (eventLevel)
+            {
+                case LogEventLevel.Verbose:
+                    EngineLogger.Verbose(progress);
+                    args.LoggerColor = Color.Purple;
+                    break;
+                case LogEventLevel.Debug:
+                    EngineLogger.Debug(progress);
+                    args.LoggerColor = Color.Green;
+                    break;
+                case LogEventLevel.Information:
+                    EngineLogger.Information(progress);
+                    args.LoggerColor = SystemColors.Highlight;
+                    break;
+                case LogEventLevel.Warning:
+                    EngineLogger.Warning(progress);
+                    args.LoggerColor = Color.Goldenrod;
+                    break;
+                case LogEventLevel.Error:
+                    EngineLogger.Error(progress);
+                    args.LoggerColor = Color.Red;
+                    break;
+                case LogEventLevel.Fatal:
+                    EngineLogger.Fatal(progress);
+                    args.LoggerColor = Color.Black;
+                    break;
+            }
+
+            if (progress.StartsWith("Skipping"))
+                args.LoggerColor = Color.Green;
+             
             args.ProgressUpdate = progress;
 
             //send log to server
@@ -600,8 +641,12 @@ namespace taskt.Engine
             {
                 error = "Terminate with failure";
                 result = ScriptFinishedResult.Error;
+                EngineLogger.Fatal("Result Code: " + result.ToString());
             }
-            EngineLogger.Information("Result Code: " + result.ToString());
+            else
+            {
+                EngineLogger.Information("Result Code: " + result.ToString());
+            }
 
             //add result variable if missing
             var resultVar = VariableList.Where(f => f.VariableName == "taskt.Result").FirstOrDefault();
@@ -637,7 +682,7 @@ namespace taskt.Engine
             else
             {
                 error = ErrorsOccured.OrderByDescending(x => x.LineNumber).FirstOrDefault().StackTrace;
-                EngineLogger.Information("Error: " + error);
+                EngineLogger.Error("Error: " + error);
 
                 if (TaskModel != null)
                 {
@@ -647,7 +692,8 @@ namespace taskt.Engine
                 TasktResult = error;
             }
 
-            EngineLogger.Dispose();
+            if (!TasktEngineUI.IsChildEngine)
+                EngineLogger.Dispose();
 
             _currentStatus = EngineStatus.Finished;
             ScriptFinishedEventArgs args = new ScriptFinishedEventArgs();
@@ -664,11 +710,13 @@ namespace taskt.Engine
             var serializedArguments = JsonConvert.SerializeObject(args);
 
             //write execution metrics
-            if ((EngineSettings.TrackExecutionMetrics) && (FileName != null))
+            if (EngineSettings.TrackExecutionMetrics && (FileName != null))
             {
-                var summaryLogger = new Logging().CreateJsonLogger("Execution Summary", Serilog.RollingInterval.Infinite);
+                string summaryLoggerFilePath = Path.Combine(Folders.GetFolder(FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+                Logger summaryLogger = new Logging().CreateJsonFileLogger(summaryLoggerFilePath, Serilog.RollingInterval.Infinite);
                 summaryLogger.Information(serializedArguments);
-                summaryLogger.Dispose();
+                if (!TasktEngineUI.IsChildEngine)
+                    summaryLogger.Dispose();
             }
 
             Client.EngineBusy = false;

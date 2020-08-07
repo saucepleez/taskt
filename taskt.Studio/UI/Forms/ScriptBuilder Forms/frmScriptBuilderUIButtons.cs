@@ -9,6 +9,7 @@ using taskt.Core.Enums;
 using taskt.Core.IO;
 using taskt.Core.Script;
 using taskt.Core.Settings;
+using taskt.Core.Utilities.CommonUtilities;
 using taskt.Server;
 using taskt.UI.CustomControls.CustomUIControls;
 using taskt.UI.Forms.Supplement_Forms;
@@ -673,7 +674,30 @@ namespace taskt.UI.Forms.ScriptBuilder_Forms
 
             Notify("Running Script..");
 
-            CurrentEngine = new frmScriptEngine(ScriptFilePath, this, null, null, false, _isDebugMode);
+            //initialize Logger
+            switch (_appSettings.EngineSettings.LoggingSinkType)
+            {
+                case SinkType.File:
+                    if (string.IsNullOrEmpty(_appSettings.EngineSettings.LoggingValue1.Trim()))
+                        _appSettings.EngineSettings.LoggingValue1 = Path.Combine(Folders.GetFolder(FolderType.LogFolder), "taskt Engine Logs.txt");
+
+                    EngineLogger = new Logging().CreateFileLogger(_appSettings.EngineSettings.LoggingValue1, Serilog.RollingInterval.Day,
+                        _appSettings.EngineSettings.MinLogLevel);
+                    break;
+                case SinkType.HTTP:
+                    EngineLogger = new Logging().CreateHTTPLogger(_appSettings.EngineSettings.LoggingValue1, _appSettings.EngineSettings.MinLogLevel);
+                    break;
+                case SinkType.SignalR:
+                    string[] groupNames = _appSettings.EngineSettings.LoggingValue3.Split(',').Select(x => x.Trim()).ToArray();
+                    string[] userIDs = _appSettings.EngineSettings.LoggingValue4.Split(',').Select(x => x.Trim()).ToArray();
+
+                    EngineLogger = new Logging().CreateSignalRLogger(_appSettings.EngineSettings.LoggingValue1, _appSettings.EngineSettings.LoggingValue2,
+                        groupNames, userIDs, _appSettings.EngineSettings.MinLogLevel);
+                    break;
+            }
+
+            //initialize Engine
+            CurrentEngine = new frmScriptEngine(ScriptFilePath, this, EngineLogger, null, null, false, _isDebugMode);
 
             //executionManager = new ScriptExectionManager();
             //executionManager.CurrentlyExecuting = true;

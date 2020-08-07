@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Serilog.Core;
+using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using taskt.Core.Enums;
+using taskt.Core.IO;
 using taskt.Core.Settings;
+using taskt.Core.Utilities.CommonUtilities;
 
 namespace taskt.UI.Forms
 {
@@ -62,7 +67,31 @@ namespace taskt.UI.Forms
         {
             //build script path and execute
             var scriptFilePath = Path.Combine(_appSettings.ClientSettings.AttendedTasksFolder, cboSelectedScript.Text);
-            frmScriptEngine newEngine = new frmScriptEngine(scriptFilePath, null);
+
+            //initialize Logger
+            Logger engineLogger = null;
+            switch (_appSettings.EngineSettings.LoggingSinkType)
+            {
+                case SinkType.File:
+                    if (string.IsNullOrEmpty(_appSettings.EngineSettings.LoggingValue1.Trim()))
+                        _appSettings.EngineSettings.LoggingValue1 = Path.Combine(Folders.GetFolder(FolderType.LogFolder), "taskt Engine Logs.txt");
+
+                    engineLogger = new Logging().CreateFileLogger(_appSettings.EngineSettings.LoggingValue1, Serilog.RollingInterval.Day,
+                        _appSettings.EngineSettings.MinLogLevel);
+                    break;
+                case SinkType.HTTP:
+                    engineLogger = new Logging().CreateHTTPLogger(_appSettings.EngineSettings.LoggingValue1, _appSettings.EngineSettings.MinLogLevel);
+                    break;
+                case SinkType.SignalR:
+                    string[] groupNames = _appSettings.EngineSettings.LoggingValue3.Split(',').Select(x => x.Trim()).ToArray();
+                    string[] userIDs = _appSettings.EngineSettings.LoggingValue4.Split(',').Select(x => x.Trim()).ToArray();
+
+                    engineLogger = new Logging().CreateSignalRLogger(_appSettings.EngineSettings.LoggingValue1, _appSettings.EngineSettings.LoggingValue2, 
+                        groupNames, userIDs, _appSettings.EngineSettings.MinLogLevel);
+                    break;
+            }
+            
+            frmScriptEngine newEngine = new frmScriptEngine(scriptFilePath, null, engineLogger);
             newEngine.Show();
         }
 

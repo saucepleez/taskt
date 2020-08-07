@@ -163,7 +163,7 @@ namespace taskt.UI.CustomControls.CustomUIControls
             uiImages.Add("DeleteFolderCommand", Resources.command_files);
             uiImages.Add("MoveCopyFolderCommand", Resources.command_files);
             uiImages.Add("RenameFolderCommand", Resources.command_files);
-            uiImages.Add("LogDataCommand", Resources.command_files);
+            uiImages.Add("LogMessageCommand", Resources.command_files);
             uiImages.Add("ExecuteDLLCommand", Resources.command_run_code);
             uiImages.Add("ExecuteRESTAPICommand", Resources.command_run_code);
             uiImages.Add("ParseJSONModelCommand", Resources.command_parse);

@@ -23,16 +23,16 @@ namespace taskt.Core.IO
                     return attentedTasksFolder;
                 case FolderType.SettingsFolder:
                     //return app data taskt folder
-                    return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\taskt\\";
+                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "taskt");
                 case FolderType.ScriptsFolder:
                     //return scripts folder
-                    return Path.Combine(GetFolder(FolderType.RootFolder), "My Scripts\\");
+                    return Path.Combine(GetFolder(FolderType.RootFolder), "My Scripts");
                 case FolderType.LogFolder:
                     //return logs folder
-                    return Path.Combine(GetFolder(FolderType.RootFolder), "Logs\\");
+                    return Path.Combine(GetFolder(FolderType.RootFolder), "Logs");
                 case FolderType.TempFolder:
                     //return temp folder
-                    return Path.GetTempPath() + "\\taskt\\";
+                    return Path.Combine(Path.GetTempPath(), "taskt");
                 default:
                     //enum is not implemented
                     throw new NotImplementedException("FolderType " + folderType.ToString() + " Not Supported");

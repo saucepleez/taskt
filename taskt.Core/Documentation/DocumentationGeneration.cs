@@ -28,13 +28,25 @@ namespace taskt.Core.Documentation
                 Directory.CreateDirectory(docsFolderName);
             }
 
-            //get all commands
-            var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                      .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+            //get all commands   
+            var studioPath = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*Studio.exe").First();
+            var commandClasses = Assembly.LoadFrom(studioPath).GetTypes()
+                      .Where(t => t.Namespace == "taskt.Commands")
                       .Where(t => t.Name != "ScriptCommand")
                       .Where(t => t.IsAbstract == false)
                       .Where(t => t.BaseType.Name == "ScriptCommand")
                       .ToList();
+
+            var cmdAssemblyPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*Commands.dll");
+            foreach (var path in cmdAssemblyPaths)
+            {
+                commandClasses.AddRange(Assembly.LoadFrom(path).GetTypes()
+                                 .Where(t => t.Namespace == "taskt.Commands")
+                                 .Where(t => t.Name != "ScriptCommand")
+                                 .Where(t => t.IsAbstract == false)
+                                 .Where(t => t.BaseType.Name == "ScriptCommand")
+                                 .ToList());
+            }
 
             var highLevelCommandInfo = new List<CommandMetaData>();
             StringBuilder stringBuilder;
@@ -80,10 +92,10 @@ namespace taskt.Core.Documentation
                 foreach (var prop in commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList())
                 {
                     //pull attributes from property
-                    var commandLabel = GetPropertyValue(prop, typeof(PropertyDescription));
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(InputSpecification));
-                    var sampleUsage = GetPropertyValue(prop, typeof(SampleUsage));
-                    var remarks = GetPropertyValue(prop, typeof(Remarks));
+                    var commandLabel = CleanMarkdownValue(GetPropertyValue(prop, typeof(PropertyDescription)));
+                    var helpfulExplanation = CleanMarkdownValue(GetPropertyValue(prop, typeof(InputSpecification)));
+                    var sampleUsage = CleanMarkdownValue(GetPropertyValue(prop, typeof(SampleUsage)));
+                    var remarks = CleanMarkdownValue(GetPropertyValue(prop, typeof(Remarks)));
 
                     //append to parameter table
                     stringBuilder.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
@@ -188,6 +200,22 @@ namespace taskt.Core.Documentation
                     return "Attribute not supported";
                 }
             }
+        }
+
+        private string CleanMarkdownValue(string value)
+        {
+            Dictionary<string, string> replacementDict = new Dictionary<string, string>
+            {
+                {"|", "\\|"},
+                {"\n\t", "<br>"},
+                {"\r\n", "<br>"}
+            };
+            foreach (var replacementTuple in replacementDict)
+            {
+                value = value.Replace(replacementTuple.Key, replacementTuple.Value);
+            }
+
+            return value;
         }
 
         private string GetClassValue(Type commandClass, Type attributeType)

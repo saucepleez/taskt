@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,6 +36,7 @@ namespace taskt.Core.Infrastructure
         List<IRestResponse> ServiceResponses { get; set; }
         bool AutoCalculateVariables { get; set; }
         string TasktResult { get; set; }
+        Logger EngineLogger { get; set; }
 
         event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;

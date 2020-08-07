@@ -1,18 +1,21 @@
 ﻿using Newtonsoft.Json;
 using Serilog;
 using Serilog.Core;
-using SuperSocket.ClientEngine; // Used for ErrorEventArgs in Connection Error
 using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
 using taskt.Core.Common;
+using taskt.Core.Enums;
 using taskt.Core.Infrastructure;
+using taskt.Core.IO;
 using taskt.Core.Model.ServerModel;
 using taskt.Core.Settings;
 using taskt.Core.Utilities.CommonUtilities;
 using taskt.Server.Exceptions;
 using WebSocket4Net; // Used for WebSocket and MessageReceivedEventArgs
+using ErrorEventArgs = SuperSocket.ClientEngine.ErrorEventArgs;
 
 namespace taskt.Server
 {
@@ -36,7 +39,8 @@ namespace taskt.Server
 
         static SocketClient()
         {
-            SocketLogger = new Logging().CreateLogger("Socket", RollingInterval.Day);
+            string socketLoggerFilePath = Path.Combine(Folders.GetFolder(FolderType.LogFolder), "taskt Socket Logs.txt");
+            SocketLogger = new Logging().CreateFileLogger(socketLoggerFilePath, RollingInterval.Day);
         }
 
         /// <summary>

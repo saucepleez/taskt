@@ -1,8 +1,7 @@
 ﻿using Serilog;
 using Serilog.Core;
+using Serilog.Events;
 using Serilog.Formatting.Compact;
-using taskt.Core.Enums;
-using taskt.Core.IO;
 
 namespace taskt.Core.Utilities.CommonUtilities
 {
@@ -11,24 +10,54 @@ namespace taskt.Core.Utilities.CommonUtilities
     /// </summary>
     public class Logging
     {
-        public Logger CreateLogger(string componentName, RollingInterval logInterval)
+        public Logger CreateFileLogger(string filePath, RollingInterval logInterval,
+            LogEventLevel minLogLevel = LogEventLevel.Verbose)
         {
+            var levelSwitch = new LoggingLevelSwitch();
+            levelSwitch.MinimumLevel = minLogLevel;
+
             return new LoggerConfiguration()
-                .WriteTo.File(
-                Folders.GetFolder(FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt",
-                rollingInterval: logInterval
-                )
-                .CreateLogger();
+                    .MinimumLevel.ControlledBy(levelSwitch)
+                    .WriteTo.File(filePath, rollingInterval: logInterval)
+                    .CreateLogger();
         }
-        public Logger CreateJsonLogger(string componentName, RollingInterval logInterval)
+
+        public Logger CreateHTTPLogger(string uri, LogEventLevel minLogLevel = LogEventLevel.Verbose)
         {
+            var levelSwitch = new LoggingLevelSwitch();
+            levelSwitch.MinimumLevel = minLogLevel;
+
             return new LoggerConfiguration()
-                .WriteTo.File(
-                new CompactJsonFormatter(),
-                Folders.GetFolder(FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt",
-                rollingInterval: logInterval
-                )
-                .CreateLogger();
+                    .MinimumLevel.ControlledBy(levelSwitch)
+                    .WriteTo.Http(uri)
+                    .CreateLogger();
+        }
+
+        public Logger CreateSignalRLogger(string url, string logHub = "LogHub", string[] logGroupNames = null,
+            string[] logUserIds = null, LogEventLevel minLogLevel = LogEventLevel.Verbose)
+        {
+            var levelSwitch = new LoggingLevelSwitch();
+            levelSwitch.MinimumLevel = minLogLevel;
+
+            return new LoggerConfiguration()
+                    .MinimumLevel.ControlledBy(levelSwitch)
+                    .WriteTo.SignalRClient(url,
+                                           hub: logHub, // default is LogHub
+                                           groupNames: logGroupNames, // default is null
+                                           userIds: logUserIds)// default is null
+                    .CreateLogger();
+        }
+
+        public Logger CreateJsonFileLogger(string jsonFilePath, RollingInterval logInterval,
+            LogEventLevel minLogLevel = LogEventLevel.Verbose)
+        {
+            var levelSwitch = new LoggingLevelSwitch();
+            levelSwitch.MinimumLevel = minLogLevel;
+
+            return new LoggerConfiguration()
+                    .MinimumLevel.ControlledBy(levelSwitch)
+                    .WriteTo.File(new CompactJsonFormatter(), jsonFilePath, rollingInterval: logInterval)
+                    .CreateLogger();
         }
     }
 }

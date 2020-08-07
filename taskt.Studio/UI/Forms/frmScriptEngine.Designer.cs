@@ -50,8 +50,9 @@
             // 
             // lstSteppingCommands
             // 
-            this.lstSteppingCommands.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstSteppingCommands.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lstSteppingCommands.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.lstSteppingCommands.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstSteppingCommands.ForeColor = System.Drawing.SystemColors.Highlight;
             this.lstSteppingCommands.FormattingEnabled = true;
             this.lstSteppingCommands.ItemHeight = 21;
             this.lstSteppingCommands.Location = new System.Drawing.Point(9, 69);
@@ -59,6 +60,7 @@
             this.lstSteppingCommands.Name = "lstSteppingCommands";
             this.lstSteppingCommands.Size = new System.Drawing.Size(899, 151);
             this.lstSteppingCommands.TabIndex = 0;
+            this.lstSteppingCommands.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lstSteppingCommands_DrawItem);
             this.lstSteppingCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstSteppingCommands_MouseDoubleClick);
             // 
             // tmrNotify
@@ -96,7 +98,7 @@
             this.lblKillProcNote.BackColor = System.Drawing.Color.Transparent;
             this.lblKillProcNote.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblKillProcNote.ForeColor = System.Drawing.Color.White;
-            this.lblKillProcNote.Location = new System.Drawing.Point(5, 241);
+            this.lblKillProcNote.Location = new System.Drawing.Point(5, 227);
             this.lblKillProcNote.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblKillProcNote.Name = "lblKillProcNote";
             this.lblKillProcNote.Size = new System.Drawing.Size(419, 25);
@@ -109,7 +111,7 @@
             this.lblAction.BackColor = System.Drawing.Color.Transparent;
             this.lblAction.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAction.ForeColor = System.Drawing.Color.White;
-            this.lblAction.Location = new System.Drawing.Point(7, 270);
+            this.lblAction.Location = new System.Drawing.Point(7, 257);
             this.lblAction.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAction.Name = "lblAction";
             this.lblAction.Size = new System.Drawing.Size(83, 25);

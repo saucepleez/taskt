@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -48,6 +49,9 @@ namespace taskt.Core.Command
 
         [JsonIgnore]
         public IfrmScriptBuilder CurrentScriptBuilder { get; set; }
+
+        [JsonIgnore]
+        public LogEventLevel LogLevel { get; set; } = LogEventLevel.Information;
 
         public ScriptCommand()
         {

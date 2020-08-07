@@ -41,12 +41,13 @@ namespace taskt.Server
 
         static LocalTCPClient()
         {
-            _automationLogger = new Logging().CreateLogger("Automation Client", Serilog.RollingInterval.Day);
+
         }
 
         public static void Initialize(IfrmScriptBuilder builder, IEngine automationEngine)
         {
             _associatedBuilder = builder;
+            _automationLogger = automationEngine.EngineLogger;
             _automationLogger.Information("Automation Listener Initializing");
 
             if (AutomationInstance == null)

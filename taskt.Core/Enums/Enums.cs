@@ -107,4 +107,11 @@ namespace taskt.Core.Enums
         OkCancel,
         OkOnly
     }
+
+    public enum SinkType
+    {
+        File,
+        HTTP,
+        SignalR
+    }
 }

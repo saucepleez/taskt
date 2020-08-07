@@ -77,7 +77,7 @@ namespace taskt.UI.Forms
                 return;
             }
 
-            var selectedFile = _rpaScriptsFolder + cboSelectedScript.Text;
+            var selectedFile = Path.Combine(_rpaScriptsFolder, cboSelectedScript.Text);
 
             using (TaskService ts = new TaskService())
             {

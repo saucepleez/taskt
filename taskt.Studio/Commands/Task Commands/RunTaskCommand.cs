@@ -126,7 +126,8 @@ namespace taskt.Commands
                 }
             }
 
-            NewEngine = new frmScriptEngine(childTaskPath, (frmScriptBuilder)CurrentScriptBuilder, variableList, null, false, parentEngine.IsDebugMode);
+            NewEngine = new frmScriptEngine(childTaskPath, (frmScriptBuilder)CurrentScriptBuilder, ((frmScriptBuilder)CurrentScriptBuilder).EngineLogger,
+                variableList, null, false, parentEngine.IsDebugMode);
             NewEngine.IsChildEngine = true;
             NewEngine.IsHiddenTaskEngine = true;
 
@@ -136,12 +137,13 @@ namespace taskt.Commands
                 NewEngine.IsHiddenTaskEngine = false;
             }
 
+            ((frmScriptBuilder)CurrentScriptBuilder).EngineLogger.Information("Executing Child Task: " + Path.GetFileName(childTaskPath));
             ((frmScriptEngine)currentScriptEngine.TasktEngineUI).Invoke((Action)delegate()
             {
                 ((frmScriptEngine)currentScriptEngine.TasktEngineUI).TopMost = false;
             });
             Application.Run(NewEngine);
-
+            
             if (NewEngine.ClosingAllEngines)
             {
                 currentScriptEngine.TasktEngineUI.ClosingAllEngines = true;
@@ -180,6 +182,7 @@ namespace taskt.Commands
                 }
             }
 
+            ((frmScriptBuilder)CurrentScriptBuilder).EngineLogger.Information("Resuming Parent Task: " + Path.GetFileName(parentTaskPath));
             if (parentEngine.IsDebugMode)
             {
                 ((frmScriptEngine)currentScriptEngine.TasktEngineUI).Invoke((Action)delegate()
@@ -263,7 +266,7 @@ namespace taskt.Commands
 
         private void PassParametersCheckbox_CheckedChanged(object sender, EventArgs e, List<ScriptVariable> variables, List<ScriptElement> elements)
         {
-            AutomationEngineInstance currentScriptEngine = new AutomationEngineInstance();
+            AutomationEngineInstance currentScriptEngine = new AutomationEngineInstance(((frmScriptBuilder)CurrentScriptBuilder).EngineLogger);
             currentScriptEngine.VariableList.AddRange(variables);
             currentScriptEngine.ElementList.AddRange(elements);
             var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);

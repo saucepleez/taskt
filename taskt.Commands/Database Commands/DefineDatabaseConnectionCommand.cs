@@ -200,7 +200,7 @@ namespace taskt.Commands
         {
             try
             {
-                var engine = new Engine.AutomationEngineInstance();
+                var engine = (AutomationEngineInstance)sender;
                 var oleDBConnection = CreateConnection(engine);
                 oleDBConnection.Open();
                 oleDBConnection.Close();
@@ -208,7 +208,7 @@ namespace taskt.Commands
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Connection Failed: {ex.ToString()}", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Connection Failed: {ex}", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
           
 

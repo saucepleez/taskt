@@ -2,12 +2,14 @@
 using Serilog;
 using Serilog.Core;
 using System;
+using System.IO;
 using System.Net;
 using System.Timers;
 using System.Windows.Forms;
 using taskt.Core.Common;
 using taskt.Core.Enums;
 using taskt.Core.Infrastructure;
+using taskt.Core.IO;
 using taskt.Core.Model.ServerModel;
 using taskt.Core.Settings;
 using taskt.Core.Utilities.CommonUtilities;
@@ -27,7 +29,8 @@ namespace taskt.Server
 
         static HttpServerClient()
         {
-            _httpLogger = new Logging().CreateLogger("HTTP", RollingInterval.Day);
+            string httpLoggerFilePath = Path.Combine(Folders.GetFolder(FolderType.LogFolder), "taskt HTTP Logs.txt");
+            _httpLogger = new Logging().CreateFileLogger(httpLoggerFilePath, RollingInterval.Day);
             Initialize();
         }
 
