@@ -391,6 +391,8 @@ namespace taskt.Engine
                     if (parentCommand.CommandName == "LogMessageCommand")
                     {
                         string displayValue = parentCommand.GetDisplayValue().Replace("Log Message ['", "").Replace("']", "");
+                        string logMessage = displayValue.Split('-').Last().ConvertToUserVariable(this);
+                        displayValue = displayValue.Replace(displayValue.Split('-').Last(), logMessage);
                         ReportProgress($"Logging Line {parentCommand.LineNumber}: {(parentCommand.v_IsPrivate ? _privateCommandLog : displayValue)}",
                             parentCommand.LogLevel);
                     }                       
