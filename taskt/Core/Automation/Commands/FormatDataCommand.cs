@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class FormatDataCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. [DateTime.Now]")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. {DateTime.Now}, 2500")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains a date or number requiring formatting")]
         [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now], 1/1/2000, 2500")]
@@ -108,7 +108,10 @@ namespace taskt.Core.Automation.Commands
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FormatType", this, editor));
+
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_FormatType", this));
+            RenderedControls.Add(CommandControls.CreateDropdownFor("v_FormatType", this));
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
