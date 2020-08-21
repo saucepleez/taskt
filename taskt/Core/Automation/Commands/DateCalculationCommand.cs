@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
     public class DateCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. [DateTime.Now]")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. {DateTime.Now}")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains the start date.")]
         [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now] or 1/1/2000")]
