@@ -100,6 +100,7 @@ namespace taskt.UI.CustomControls
             if (inputBox.Height != 30)
             {
                 inputBox.Multiline = true;
+                inputBox.ScrollBars = ScrollBars.Vertical;
             }
 
             inputBox.Name = parameterName;
