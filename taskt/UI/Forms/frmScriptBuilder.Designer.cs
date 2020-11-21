@@ -1146,7 +1146,7 @@
             // 
             this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
             this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Actions(s)";
+            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Action(s)";
             this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
             // 
             // copySelectedToolStripMenuItem
