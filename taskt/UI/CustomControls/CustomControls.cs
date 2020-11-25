@@ -464,6 +464,7 @@ namespace taskt.UI
             uiImages.Add("IEBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
             uiImages.Add("IEBrowserElementCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SendKeysCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("SendHotkeyCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendAdvancedKeyStrokesCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("EncryptionCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("SendMouseMoveCommand", taskt.Properties.Resources.command_input);
@@ -473,6 +474,7 @@ namespace taskt.UI
             uiImages.Add("EndLoopCommand", taskt.Properties.Resources.command_endloop);
             uiImages.Add("ClipboardGetTextCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("ExtractFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExcelCreateApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelOpenWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
@@ -519,6 +521,7 @@ namespace taskt.UI
             uiImages.Add("SeleniumBrowserSwitchWindowCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("SeleniumBrowserSwitchFrameCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserTakeScreenshotCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("OutlookEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("OutlookGetEmailsCommand", taskt.Properties.Resources.command_smtp);
@@ -589,7 +592,7 @@ namespace taskt.UI
             uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_dictionary);
-
+            uiImages.Add("PingCommand", taskt.Properties.Resources.command_web);
             return uiImages;
         }
         public static ImageList UIImageList()

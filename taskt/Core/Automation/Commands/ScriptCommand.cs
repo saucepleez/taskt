@@ -7,6 +7,7 @@ using System.Windows.Forms;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
+    [XmlInclude(typeof(PingCommand))]
     [XmlInclude(typeof(SendKeysCommand))]
     [XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]
     [XmlInclude(typeof(CreateDictionaryCommand))]
@@ -95,6 +96,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SeleniumBrowserExecuteScriptCommand))]
     [XmlInclude(typeof(SeleniumBrowserSwitchWindowCommand))]
     [XmlInclude(typeof(SeleniumBrowserInfoCommand))]
+    [XmlInclude(typeof(SeleniumBrowserTakeScreenshotCommand))]
     [XmlInclude(typeof(SMTPSendEmailCommand))]
     [XmlInclude(typeof(ErrorHandlingCommand))]
     [XmlInclude(typeof(StringSubstringCommand))]
@@ -185,6 +187,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(MathCalculationCommand))]
     [XmlInclude(typeof(SetEnginePreferenceCommand))]
     [XmlInclude(typeof(ExtractFileCommand))]
+    [XmlInclude(typeof(SendHotkeyCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

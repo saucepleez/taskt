@@ -432,6 +432,28 @@ namespace taskt.Core.Automation.Engine
             }
 
         }
+
+        public void StoreComplexObjectInVariable(string variableName, object value)
+        {
+
+
+            Script.ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+
+            if (storeVariable == null)
+            {
+                //create and set variable
+                VariableList.Add(new Script.ScriptVariable
+                {
+                    VariableName = variableName,
+                    VariableValue = value
+               });            
+            }
+            else
+            {
+                //set variable
+                storeVariable.VariableValue = value;
+            }
+        }
         public void CancelScript()
         {
             IsCancellationPending = true;

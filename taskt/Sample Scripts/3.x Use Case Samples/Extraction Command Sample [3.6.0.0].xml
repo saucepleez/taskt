@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e7e8c735-fb1a-4ef3-9117-b852981fc279" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Identify a source file for extraction" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExtractFileCommand" CommandID="3220f15d-beff-48db-84a1-ffc3dec12ed8" CommandName="ExtractFileCommand" IsCommented="false" SelectionName="File Extraction" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="" CommandEnabled="true" v_FilePathOrigin="https://file-examples.com/wp-content/uploads/2017/02/zip_5MB.zip" v_PathDestination="D:\Dropbox\Environment Folders\Desktop\onlinezip\" v_Password="" v_applyToVariableName="vFiles" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="eccc6920-a536-41a6-968e-f8a57475edec" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Loop the variable which will contain all extracted file names" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="9ebe8d4b-68b6-4565-9c89-f9758822271c" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="{vFiles}" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="964efcc5-c61e-4cb1-b4a2-16f442a0268e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Show File Name" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4cdc83f4-c056-40cc-bc66-91b9791f7ee3" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vFiles}" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="9e0aba9a-e891-46fd-8708-0165d426d5ee" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Variables />
+</Script>

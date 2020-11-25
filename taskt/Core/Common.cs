@@ -557,6 +557,22 @@ namespace taskt.Core
             return keyDescriptionList;
         }
 
+        public static string ConvertObjectToJson(object obj)
+        {
+           
+                //set json settings
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.Error = (serializer, err) =>
+                {
+                    err.ErrorContext.Handled = true;
+                };
+
+                settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+
+                return JsonConvert.SerializeObject(obj, settings);
+         
+        }
+
     }
 }
 

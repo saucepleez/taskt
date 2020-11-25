@@ -300,6 +300,20 @@ namespace taskt.Core.Automation.User32
             MOUSEEVENTF_MIDDLEUP = 0x40
         }
 
+        public static void KeyDownKeyUp(Keys[] keys)
+        {
+            foreach (var key in keys)
+            {
+                KeyDown(key);
+            }
+
+            foreach (var key in keys)
+            {
+                KeyUp(key);
+            }
+        }
+
+
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
         private const int KEYEVENTF_EXTENDEDKEY = 1;
@@ -577,8 +591,23 @@ namespace taskt.Core.Automation.User32
             }
 
             //build keyboard command
+
             private static void BuildKeyboardCommand(Keys key)
             {
+
+                var diff = DateTime.Now - keyTime;
+                keyTime = DateTime.Now;
+
+
+                if (diff.Milliseconds < 50 && LastKey != null && LastKey == key)
+                {
+                    return;
+                }
+                else
+                {
+                    LastKey = key;
+                }
+
                 bool toUpperCase = false;
 
                 //determine if casing is needed
@@ -631,6 +660,7 @@ namespace taskt.Core.Automation.User32
                 else if (selectedKey == "Return")
                 {
                     selectedKey = "ENTER";
+
                 }
                 else if (selectedKey == "Space")
                 {
@@ -716,6 +746,10 @@ namespace taskt.Core.Automation.User32
 
 
             }
+
+            public static DateTime keyTime { get; set; }
+            public static Keys? LastKey { get; set; }
+
             //build mouse command
             private static void BuildMouseCommand(IntPtr lParam, MouseMessages mouseMessage)
             {
