@@ -84,6 +84,15 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPAttachment { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate if SSL should be used")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("Select from one of the options")]
+        [Attributes.PropertyAttributes.SampleUsage("**Yes** or **No**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_EnableSSL { get; set; }
+
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("SSL Validation")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Validate SSL")]
@@ -100,6 +109,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
             this.v_SSLValidation = "Validate SSL";
+            this.v_EnableSSL = "Yes";
         }
 
         public override void RunCommand(object sender)
@@ -124,10 +134,18 @@ namespace taskt.Core.Automation.Commands
                 string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
                 string varSMTPFilePath = v_SMTPAttachment.ConvertToUserVariable(sender);
 
+                string varEnableSSL = v_EnableSSL.ConvertToUserVariable(sender).ToUpperInvariant();
+
+                bool sslPreference = true;
+                if (varEnableSSL == "NO")
+                {
+                    sslPreference = false;
+                }
+
                 var client = new SmtpClient(varSMTPHost, int.Parse(varSMTPPort))
                 {
                     Credentials = new System.Net.NetworkCredential(varSMTPUserName, varSMTPPassword),
-                    EnableSsl = true
+                    EnableSsl = sslPreference
                 };
 
 
@@ -170,6 +188,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPSubject", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPBody", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SMTPAttachment", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EnableSSL", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SSLValidation", this, editor));
             return RenderedControls;
 
