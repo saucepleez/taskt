@@ -476,6 +476,7 @@ namespace taskt.UI
             uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExtractFileCommand", taskt.Properties.Resources.command_files);
             uiImages.Add("ExcelCreateApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelAddWorksheetCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelOpenWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("ExcelGoToCellCommand", taskt.Properties.Resources.command_spreadsheet);
