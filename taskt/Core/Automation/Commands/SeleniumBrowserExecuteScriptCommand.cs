@@ -21,6 +21,11 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the script code")]
         public string v_ScriptCode { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the timeout in seconds")]
+        public string v_TimeOut { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Supply Arguments")]
         public string v_Args { get; set; }
@@ -51,19 +56,31 @@ namespace taskt.Core.Automation.Commands
 
             var script = v_ScriptCode.ConvertToUserVariable(sender);
             var args = v_Args.ConvertToUserVariable(sender);
+            var timeout = v_TimeOut.ConvertToUserVariable(sender);
+
             var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
+            //configure timeout
+            int timeOut;
+            if (!int.TryParse(timeout, out timeOut))
+            {
+                timeOut = 60;
+            }
 
+            //set driver timeout
+            seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0,0, timeOut);
+               
+            //run script
             OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
 
             object result;
             if (String.IsNullOrEmpty(args))
             {
-                result = js.ExecuteScript(script);
+                result = js.ExecuteAsyncScript(script);
             }
             else
             {
-                result = js.ExecuteScript(script, args);
+                result = js.ExecuteAsyncScript(script, args);
             }
 
             //apply result to variable
@@ -81,6 +98,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptCode", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Args", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TimeOut", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
