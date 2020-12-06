@@ -189,6 +189,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExtractFileCommand))]
     [XmlInclude(typeof(SendHotkeyCommand))]
     [XmlInclude(typeof(ExcelAddWorksheetCommand))]
+    [XmlInclude(typeof(LoadTaskCommand))]
+    [XmlInclude(typeof(UnloadTaskCommand))]
     public abstract class ScriptCommand
     {
         [XmlAttribute]

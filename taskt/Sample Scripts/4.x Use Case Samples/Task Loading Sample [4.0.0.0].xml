@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f77b06e5-2411-4ee4-9443-8de070a09e67" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="This example demonstrates loading task feature." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8a804ed8-b8e5-4397-b05a-a657b2c8eddc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment=" This enables a large task file to be loaded one time and called multiple times without having to reload." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ffe658a7-9257-47c0-a128-c96993fa2aa0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Define Task file for testing" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="e0673a3f-208e-4b9d-87eb-a93409c5bd06" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vFilePath" v_Input="D:\path\to\My Scripts\hello world.xml" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0f667226-f8a1-4993-a422-57388a659824" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="1) Define task path to be loaded" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="LoadTaskCommand" CommandID="296894c1-544a-435b-a124-4e385d07fd0a" CommandName="LoadTaskCommand" IsCommented="false" SelectionName="Load Task" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_taskPath="{vFilePath}" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="532991fe-162c-470a-b3b7-1260319a1666" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="2) Call Run Task with same path (Variables Supported)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RunTaskCommand" CommandID="26c95ef1-f139-4a8d-a6bb-7727684e74d3" CommandName="RunTaskCommand" IsCommented="false" SelectionName="Run Task" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_taskPath="{vFilePath}" v_AssignVariables="false">
+        <v_VariableAssignments>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="RunTaskCommandInputParameters120520072404">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="VariableName" type="xs:string" minOccurs="0" />
+                  <xs:element name="VariableValue" type="xs:string" minOccurs="0" />
+                  <xs:element name="VariableReturn" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="RunTaskCommandInputParameters120520072404" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="RunTaskCommandInputParameters120520072404" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_VariableAssignments>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2e84ab9b-61e7-4a43-8025-9af4b2a9dc9c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="3) Optionally Unload Task. Taskt will pull from the file again." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UnloadTaskCommand" CommandID="a2ab5027-21e8-4534-9ea8-40e2b7ea58b2" CommandName="UnloadTaskCommand" IsCommented="false" SelectionName="Unload Task" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_taskPath="{vFilePath}">
+        <v_ErrorPreference>Continue if not found</v_ErrorPreference>
+      </ScriptCommand>
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vFilePath</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

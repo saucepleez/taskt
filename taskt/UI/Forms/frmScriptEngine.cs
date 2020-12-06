@@ -41,18 +41,24 @@ namespace taskt.UI.Forms
         private bool advancedDebug { get; set; }
         public AutomationEngineInstance engineInstance { get; set; }
         private List<Core.Script.ScriptVariable> Variables { get; set; }
+        private Dictionary<string, Core.Script.Script> PreloadedTasks { get; set; }
         public bool CloseWhenDone = false;
         #endregion
         public string Result { get; set; }
         //events and methods
         #region Form Events/Methods
-        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false)
+        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false, Dictionary<string, Core.Script.Script> preloadedTasks = null)
         {
             InitializeComponent();
 
             if (variables != null)
             {
                 Variables = variables;
+            }
+
+            if (preloadedTasks != null)
+            {
+                PreloadedTasks = preloadedTasks;
             }
 
             CloseWhenDone = blnCloseWhenDone;
@@ -166,7 +172,7 @@ namespace taskt.UI.Forms
 
             if (xmlData == null)
             {
-                engineInstance.ExecuteScriptAsync(this, filePath, Variables);
+                engineInstance.ExecuteScriptAsync(this, filePath, Variables, PreloadedTasks);
             }
             else
             {

@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Engine
         //engine variables
         public List<Core.Script.ScriptVariable> VariableList { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
+        public Dictionary<string, Core.Script.Script> PreloadedTasks { get; set; }
         public Core.Automation.Commands.ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
@@ -42,6 +43,7 @@ namespace taskt.Core.Automation.Engine
         public string TasktResult { get; set; } = "";
 
         public Serilog.Core.Logger engineLogger;
+
         public AutomationEngineInstance()
         {
             //initialize logger
@@ -61,6 +63,11 @@ namespace taskt.Core.Automation.Engine
 
             VariableList = new List<Script.ScriptVariable>();
 
+            if (PreloadedTasks is null)
+            {
+                PreloadedTasks = new Dictionary<string, Script.Script>();
+            }
+      
             AppInstances = new Dictionary<string, object>();
             ServiceResponses = new List<IRestResponse>();
             DataTables = new List<DataTable>();
@@ -70,7 +77,7 @@ namespace taskt.Core.Automation.Engine
 
         }
 
-        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null)
+        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null, Dictionary<string, Core.Script.Script> preloadedTasks = null)
         {
             engineLogger.Information("Client requesting to execute script using frmEngine");
 
@@ -79,6 +86,11 @@ namespace taskt.Core.Automation.Engine
             if (variables != null)
             {
                 VariableList = variables;
+            }
+
+            if (preloadedTasks != null)
+            {
+                PreloadedTasks = preloadedTasks;
             }
 
             new Thread(() =>
@@ -125,14 +137,30 @@ namespace taskt.Core.Automation.Engine
                 //log starting
                 ReportProgress("Bot Engine Started: " + DateTime.Now.ToString());
 
+                //determine if preloaded script exists
+                bool preLoadedTask = false;
+                if (PreloadedTasks != null)
+                {
+                    preLoadedTask = PreloadedTasks.Any(f => f.Key == data);
+                }
+      
+
+              
                 //get automation script
                 Core.Script.Script automationScript;
-                if (dataIsFile)
+                if (dataIsFile && (!preLoadedTask))
                 {
                     ReportProgress("Deserializing File");
                     engineLogger.Information("Script Path: " + data);
                     FileName = data;              
                     automationScript = Core.Script.Script.DeserializeFile(data);
+                }
+                else if (dataIsFile && preLoadedTask)
+                {
+                    ReportProgress("Using Preloaded Task");
+                    engineLogger.Information("Preloaded Script Path: " + data);
+                    FileName = data;
+                    automationScript = PreloadedTasks[data];
                 }
                 else
                 {
