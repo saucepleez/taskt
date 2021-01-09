@@ -15,10 +15,12 @@ namespace taskt.Core.Automation.Commands
     public class StringSubstringCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text to modify")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("")]
+
         public string v_userVariableName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Start from Position")]
@@ -68,10 +70,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var userVariableName = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { userVariableName }, editor));
-            RenderedControls.Add(userVariableName);
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_startIndex", this, editor));
@@ -88,7 +87,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply Substring to '" + v_userVariableName + "']";
+            return base.GetDisplayValue() + " [Apply Substring to '" + v_userVariableName + "', Start " + v_startIndex + ", Length " + v_stringLength + " ]";
         }
     }
 }
