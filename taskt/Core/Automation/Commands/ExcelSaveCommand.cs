@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']"; ;
+            return base.GetDisplayValue();
         }
     }
 }
