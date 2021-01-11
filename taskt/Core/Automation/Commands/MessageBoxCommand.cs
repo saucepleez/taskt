@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the message to be displayed.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify any text that should be displayed on screen.  You may also include variables for display purposes.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello World** or **[vMyText]**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello World** or **{vMyText}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Message { get; set; }
 

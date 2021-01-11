@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Amount of time to pause for (in milliseconds).")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
-        [Attributes.PropertyAttributes.SampleUsage("**8000** or **[vVariableWaitTime]**")]
+        [Attributes.PropertyAttributes.SampleUsage("**8000** or **{vVariableWaitTime}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_PauseLength { get; set; }
 

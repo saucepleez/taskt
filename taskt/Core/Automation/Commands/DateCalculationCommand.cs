@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. {DateTime.Now}")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains the start date.")]
-        [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now] or 1/1/2000")]
+        [Attributes.PropertyAttributes.SampleUsage("{DateTime.Now} or 1/1/2000")]
         [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
         public string v_InputValue { get; set; }
 
@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value")]
         [Attributes.PropertyAttributes.InputSpecification("Enter how many units to increment by")]
-        [Attributes.PropertyAttributes.SampleUsage("15, [vIncrement]")]
+        [Attributes.PropertyAttributes.SampleUsage("15, {vIncrement}")]
         [Attributes.PropertyAttributes.Remarks("You can use negative numbers which will do the opposite, ex. Subtract Days and an increment of -5 will Add Days.")]
         public string v_Increment { get; set; }
 

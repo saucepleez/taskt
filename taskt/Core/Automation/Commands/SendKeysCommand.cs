@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text that should be sent to the specified window.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **[vEntryText]**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **{vEntryText}**")]
         [Attributes.PropertyAttributes.Remarks("This command supports sending variables within brackets [vVariable]")]
         public string v_TextToSend { get; set; }
 

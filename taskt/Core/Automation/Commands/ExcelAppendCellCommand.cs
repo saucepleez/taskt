@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello World or [vText]")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello World or {vText}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_TextToSet { get; set; }
 

@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class RegExExtractorCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. {vSomeVariable})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
         [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]

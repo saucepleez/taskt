@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. {DateTime.Now}, 2500")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains a date or number requiring formatting")]
-        [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now], 1/1/2000, 2500")]
+        [Attributes.PropertyAttributes.SampleUsage("{DateTime.Now}, 1/1/2000, 2500")]
         [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
         public string v_InputValue { get; set; }
 

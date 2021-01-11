@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the List item")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid List index value")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or [vIndex]")]
+        [Attributes.PropertyAttributes.SampleUsage("0 or {vIndex}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ItemIndex { get; set; }
 

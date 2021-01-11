@@ -25,8 +25,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be added to the variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello or {vNum}+1")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {vName}.  You can also perform basic math operations.")]
         public string v_Input { get; set; }
         public AddToVariableCommand()
         {

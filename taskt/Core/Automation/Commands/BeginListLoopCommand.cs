@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please input the list variable to be looped")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a variable which contains a list of items")]
-        [Attributes.PropertyAttributes.SampleUsage("[vMyList]")]
+        [Attributes.PropertyAttributes.SampleUsage("{vMyList}")]
         [Attributes.PropertyAttributes.Remarks("Use this command to iterate over the results of the Split command.")]
         public string v_LoopParameter { get; set; }
 

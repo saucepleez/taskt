@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the row number to delete")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the number of the row that should be deleted.")]
-        [Attributes.PropertyAttributes.SampleUsage("1, 5, [vNumber]")]
+        [Attributes.PropertyAttributes.SampleUsage("1, 5, {vNumber}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_RowNumber { get; set; }
         [XmlAttribute]

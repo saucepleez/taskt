@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the sheet name")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the specific sheet that should be retrieved.")]
-        [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheet, [vSheet]")]
+        [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheet, {vSheet}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SheetName { get; set; }
 

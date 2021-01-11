@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or {vTextFilePath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
 
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the text should be written to files.")]
-        [Attributes.PropertyAttributes.SampleUsage("**[vText]** or **Hello World!**")]
+        [Attributes.PropertyAttributes.SampleUsage("**{vText}** or **Hello World!**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_TextToWrite { get; set; }
 

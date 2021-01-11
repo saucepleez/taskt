@@ -259,6 +259,12 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
+        {
+            RenderedControls = new List<Control>();
+            return RenderedControls;
+        }
+
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor)
         {
             RenderedControls = new List<Control>();

@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or [vIndex]")]
+        [Attributes.PropertyAttributes.SampleUsage("0 or {vIndex}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DataRowIndex { get; set; }
 

@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or {vTextFilePath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFilePath { get; set; }
 
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to copy to")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the new path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\new path\\ or [vTextFolderPath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\new path\\ or {vTextFolderPath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DestinationDirectory { get; set; }
 

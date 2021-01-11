@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.xlsx or [vExcelFilePath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.xlsx or {vExcelFilePath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FileName { get; set; }
 
