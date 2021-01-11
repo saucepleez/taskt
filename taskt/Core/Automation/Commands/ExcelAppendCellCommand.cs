@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Append last cell to: " + v_TextToSet +"]";
+            return base.GetDisplayValue() + " [Append last cell to: " + v_TextToSet + ", Instance Name: '" + v_InstanceName + "']";
         }
     }
 }
