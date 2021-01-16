@@ -149,7 +149,6 @@ namespace taskt.UI.Forms
 
             //gracefully handle post initialization setups (drop downs, etc)
             AfterFormInitialization();
-
         }
         private void CopyPropertiesTo(object fromObject, object toObject)
         {
@@ -179,6 +178,13 @@ namespace taskt.UI.Forms
         private void frmCommandEditor_Shown(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.Sizable;
+
+            //focus first TextBox
+            var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
+            var firstTextBox = (TextBox)(userSelectedCommand.UIControls.First(elem => (elem is TextBox)));
+            firstTextBox.Focus();
+            firstTextBox.SelectionStart = firstTextBox.Text.Length;
+            firstTextBox.SelectionLength = 0;
         }
 
         #endregion Form Events
@@ -219,7 +225,15 @@ namespace taskt.UI.Forms
             {
                 flw_InputVariables.Controls.Add(ctrl);
             }
-        
+
+            //focus first TextBox
+            var firstTextBox = (TextBox)(userSelectedCommand.UIControls.First(elem => (elem is TextBox)));
+            firstTextBox.Focus();
+            firstTextBox.SelectionStart = firstTextBox.Text.Length;
+            firstTextBox.SelectionLength = 0;
+
+            // resize
+            frmCommandEditor_Resize(null, null);
         }
 
 
@@ -265,7 +279,6 @@ namespace taskt.UI.Forms
             {
                 item.Width = this.Width - 70;
             }
-
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
