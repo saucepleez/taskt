@@ -53,6 +53,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Write Range";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
             this.v_AddHeaders = "Yes";
         }
         public override void RunCommand(object sender)

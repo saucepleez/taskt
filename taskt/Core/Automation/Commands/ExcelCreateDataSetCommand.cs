@@ -53,6 +53,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
             v_ContainsHeaderRow = "Yes";
+
         }
 
         public override void RunCommand(object sender)

@@ -82,6 +82,8 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
             v_FileType = "xlsx";
+
+            this.v_InstanceName = "RPAExcel";
         }
 
         public override void RunCommand(object sender)

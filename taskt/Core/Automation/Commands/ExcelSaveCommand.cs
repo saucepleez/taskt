@@ -28,6 +28,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Save Workbook";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {

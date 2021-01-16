@@ -39,6 +39,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Last Row Index";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {
