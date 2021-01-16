@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please select the type of data")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Date")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Number")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Path")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the source type")]
         [Attributes.PropertyAttributes.SampleUsage("Choose **Date** or **Number**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -86,6 +87,44 @@ namespace taskt.Core.Automation.Commands
                         formattedString = parsedDecimal.ToString(formatting);
                     }
                     break;
+                case "Path":
+                    switch(formatting.ToLower())
+                    {
+                        case "file":
+                        case "filename":
+                        case "fn":
+                            formattedString = Path.GetFileName(variableString);
+                            break;
+
+                        case "folder":
+                        case "directory":
+                        case "dir":
+                            formattedString = Path.GetDirectoryName(variableString);
+                            break;
+
+                        case "filewithoutextension":
+                        case "filenamewithoutextension":
+                        case "fnwoext":
+                            formattedString = Path.GetFileNameWithoutExtension(variableString);
+                            break;
+
+                        case "extension":
+                        case "ext":
+                            formattedString = Path.GetExtension(variableString);
+                            break;
+
+                        case "drive":
+                        case "drivename":
+                        case "root":
+                            formattedString = Path.GetPathRoot(variableString);
+                            break;
+
+                        default:
+                            formattedString = "";
+                            break;
+                    }
+                    break;
+                    
                 default:
                     throw new Exception("Formatter Type Not Supported: " + v_FormatType);
             }
