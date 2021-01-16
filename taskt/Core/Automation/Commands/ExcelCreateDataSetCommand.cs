@@ -17,6 +17,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please create a DataSet name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
         [Attributes.PropertyAttributes.SampleUsage("vMyDataset")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -24,6 +25,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the workbook file")]
         [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx")]
@@ -32,6 +34,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the sheet name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the specific sheet that should be retrieved.")]
         [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheet, {vSheet}")]
         [Attributes.PropertyAttributes.Remarks("")]
