@@ -423,181 +423,245 @@ namespace taskt.UI
         public static Dictionary<string, Image> UIImageDictionary()
         {
             var uiImages = new Dictionary<string, Image>();
-            uiImages.Add("PauseCommand", taskt.Properties.Resources.command_pause);
-            uiImages.Add("SetEngineDelayCommand", taskt.Properties.Resources.command_pause);
-            uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
-            uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SetWindowStateCommand", taskt.Properties.Resources.command_window);            
-            uiImages.Add("HTMLInputCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("UIAutomationCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
-            uiImages.Add("ResizeWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("MessageBoxCommand", taskt.Properties.Resources.command_comment);
-            uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process); 
-            uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
-            uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("AddToVariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("ParseDatasetRowCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("MathCalculationCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("TextExtractorCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("PDFTextExtractionCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetListCountCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetListItemCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
-            uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
-            uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);
-            uiImages.Add("StopTaskCommand", taskt.Properties.Resources.command_stop_process);
-            uiImages.Add("UserInputCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("CloseWindowCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("IEBrowserCreateCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("IEBrowserNavigateCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("IEBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("IEBrowserElementCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SendKeysCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendHotkeyCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendAdvancedKeyStrokesCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("EncryptionCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendMouseMoveCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendMouseClickCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("WebBrowserFindBrowserCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("EndLoopCommand", taskt.Properties.Resources.command_endloop);
-            uiImages.Add("ClipboardGetTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("ExtractFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("ExcelCreateApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelOpenWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGoToCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelCloseApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSetCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelRunMacroCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSaveAsCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelDeleteRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelDeleteCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSplitRangeByColumnCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelAppendCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelCreateDatasetCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetRangeCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelWriteRangeCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelWriteRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("WordCreateApplicationCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordCloseApplicationCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordOpenDocumentCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordSaveCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordSaveAsCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordExportToPDFCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordAddDocumentCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordReadDocumentCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordReplaceTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordAppendTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordAppendImageCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordAppendDataTableCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("GetDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("GetDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("WriteDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("GetDataRowCountCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("RemoveDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("SeleniumBrowserCreateCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserNavigateURLCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserNavigateForwardCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserNavigateBackCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserRefreshCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("SeleniumBrowserElementActionCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserExecuteScriptCommand", taskt.Properties.Resources.command_script);
-            uiImages.Add("SeleniumBrowserSwitchWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SeleniumBrowserSwitchFrameCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserTakeScreenshotCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookEmailCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookGetEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookMoveEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookDeleteEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookForwardEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookReplyToEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
-            uiImages.Add("TryCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("CatchExceptionCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("FinallyCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("EndTryCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("ThrowExceptionCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
-            uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
-            uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
-            uiImages.Add("BeginIfCommand", taskt.Properties.Resources.command_begin_if);
-            uiImages.Add("NextLoopCommand", taskt.Properties.Resources.command_nextloop);
-            uiImages.Add("BeginMultiIfCommand", taskt.Properties.Resources.command_begin_multi_if);
-            uiImages.Add("EndIfCommand", taskt.Properties.Resources.command_end_if);
-            uiImages.Add("ElseCommand", taskt.Properties.Resources.command_else);
-            uiImages.Add("ScreenshotCommand", taskt.Properties.Resources.command_camera);
-            uiImages.Add("OCRCommand", taskt.Properties.Resources.command_camera);
-            uiImages.Add("ImageRecognitionCommand", taskt.Properties.Resources.command_camera);
-            uiImages.Add("HTTPRequestCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("HTTPQueryResultCommand", taskt.Properties.Resources.command_search);
-            uiImages.Add("BeginListLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginContinousLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginMultiLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("ExitLoopCommand", taskt.Properties.Resources.command_exitloop);
-            uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
-            uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WriteTextFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("MoveFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("DeleteFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("RenameFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("GetFilesCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("GetFoldersCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("CreateFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("DeleteFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("MoveFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("RenameFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
+            // API
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
             uiImages.Add("RESTCommand", taskt.Properties.Resources.command_run_code);
+            uiImages.Add("HTTPRequestCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("HTTPQueryResultCommand", taskt.Properties.Resources.command_search);
+
+            // Data
+            uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetListCountCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetListItemCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("MathCalculationCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("ParseDatasetRowCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("ParseJsonArrayCommand", taskt.Properties.Resources.command_parse);
             uiImages.Add("ParseJsonCommand", taskt.Properties.Resources.command_parse);
             uiImages.Add("ParseJsonModelCommand", taskt.Properties.Resources.command_parse);
-            uiImages.Add("ParseJsonArrayCommand", taskt.Properties.Resources.command_parse);
-            uiImages.Add("UploadDataCommand", taskt.Properties.Resources.command_server);
-            uiImages.Add("GetDataCommand", taskt.Properties.Resources.command_server);
-            uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
-            uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
-            uiImages.Add("RemoteDesktopCommand", taskt.Properties.Resources.command_system);
-            uiImages.Add("NLGGeneratePhraseCommand", taskt.Properties.Resources.command_nlg);
-            uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
-            uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
-            uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SetEnginePreferenceCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("PDFTextExtractionCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
+            uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
+            uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
+            uiImages.Add("TextExtractorCommand", taskt.Properties.Resources.command_function);
+
+            // Database
             uiImages.Add("DatabaseDefineConnectionCommand", taskt.Properties.Resources.command_database);
             uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
-            uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
-            uiImages.Add("RemoteAPICommand", taskt.Properties.Resources.command_remote);
+
+            // DataTable
+            uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowCountCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("RemoveDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("WriteDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
+
+            // Dictionary
             uiImages.Add("AddDictionaryCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_dictionary);
+
+            // Engine
+            uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
+            uiImages.Add("GetDataCommand", taskt.Properties.Resources.command_server);  // get bot data
+            uiImages.Add("PauseCommand", taskt.Properties.Resources.command_pause);
+            uiImages.Add("SetEngineDelayCommand", taskt.Properties.Resources.command_pause);
+            uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SetEnginePreferenceCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
+            uiImages.Add("UploadDataCommand", taskt.Properties.Resources.command_server);   // upload bot store
+
+            // Error
+            uiImages.Add("CatchExceptionCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("EndTryCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("FinallyCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("ThrowExceptionCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("TryCommand", taskt.Properties.Resources.command_try);
+
+            // Excel
+            uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelAppendCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelAppendRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelCloseApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelCreateDatasetCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelCreateApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelDeleteCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelDeleteRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetRangeCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetRangeCommandAsDT", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGoToCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelOpenWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelRunMacroCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSaveAsCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSetCellCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSplitRangeByColumnCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelWriteRangeCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelWriteRowCommand", taskt.Properties.Resources.command_spreadsheet);
+
+            // File
+            uiImages.Add("DeleteFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("ExtractFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("GetFilesCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("MoveFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("RenameFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
+
+            // Folder
+            uiImages.Add("CreateFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("DeleteFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("GetFoldersCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("MoveFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("RenameFolderCommand", taskt.Properties.Resources.command_files);
+
+            // IE
+            uiImages.Add("IEBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
+            uiImages.Add("IEBrowserCreateCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserElementCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("WebBrowserFindBrowserCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserNavigateCommand", taskt.Properties.Resources.command_web);
+
+            // If
+            uiImages.Add("BeginIfCommand", taskt.Properties.Resources.command_begin_if);
+            uiImages.Add("BeginMultiIfCommand", taskt.Properties.Resources.command_begin_multi_if);
+            uiImages.Add("ElseCommand", taskt.Properties.Resources.command_else);
+            uiImages.Add("EndIfCommand", taskt.Properties.Resources.command_end_if);
+
+            // Image
+            uiImages.Add("ImageRecognitionCommand", taskt.Properties.Resources.command_camera);
+            uiImages.Add("OCRCommand", taskt.Properties.Resources.command_camera);
+            uiImages.Add("ScreenshotCommand", taskt.Properties.Resources.command_camera);
+
+            // Input
+            uiImages.Add("HTMLInputCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("UserInputCommand", taskt.Properties.Resources.command_input); // prompt
+            uiImages.Add("SendAdvancedKeyStrokesCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("SendHotkeyCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("SendKeysCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("SendMouseMoveCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("SendMouseClickCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("UIAutomationCommand", taskt.Properties.Resources.command_input);
+
+            // Loop
+            uiImages.Add("BeginLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginMultiLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("EndLoopCommand", taskt.Properties.Resources.command_endloop);
+            uiImages.Add("ExitLoopCommand", taskt.Properties.Resources.command_exitloop);
+            uiImages.Add("BeginContinousLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginListLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("NextLoopCommand", taskt.Properties.Resources.command_nextloop);
+
+            // Misc
+            uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
+            uiImages.Add("EncryptionCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("ClipboardGetTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
+            uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("MessageBoxCommand", taskt.Properties.Resources.command_comment);
+
+            // NLG
+            uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
+            uiImages.Add("NLGGeneratePhraseCommand", taskt.Properties.Resources.command_nlg);
+            uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
+
+            // Outlook
+            uiImages.Add("OutlookDeleteEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookForwardEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookGetEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookMoveEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookReplyToEmailsCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookEmailCommand", taskt.Properties.Resources.command_smtp);
+
+            // Program
+            uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
+            uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process);
+
+            // Regex
+            uiImages.Add("GetRegexMatchesCommand", taskt.Properties.Resources.command_function);
+
+            // Remote
+            uiImages.Add("RemoteAPICommand", taskt.Properties.Resources.command_remote);
+            uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
+
+            // System
+            uiImages.Add("EnvironmentVariableCommand", taskt.Properties.Resources.command_system);
+            uiImages.Add("RemoteDesktopCommand", taskt.Properties.Resources.command_system);
+            uiImages.Add("OSVariableCommand", taskt.Properties.Resources.command_system);
+            uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
+
+            // Task
+            uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);
+            uiImages.Add("StopTaskCommand", taskt.Properties.Resources.command_stop_process);
+
+            // Text
+            uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WriteTextFileCommand", taskt.Properties.Resources.command_files);
+
+            // Variable
+            uiImages.Add("AddToVariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
+
+            // Web
+            uiImages.Add("SeleniumBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
+            uiImages.Add("SeleniumBrowserCreateCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserElementActionCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserExecuteScriptCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserNavigateBackCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserNavigateForwardCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserNavigateURLCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserRefreshCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserSwitchFrameCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SeleniumBrowserSwitchWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SeleniumBrowserTakeScreenshotCommand", taskt.Properties.Resources.command_web);
+
+            // Window
+            uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("CloseWindowCommand", taskt.Properties.Resources.command_window_close);
+            uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("ResizeWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("SetWindowStateCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("WaitForWindowCommand", taskt.Properties.Resources.command_window);
+
+            // Word
+            uiImages.Add("WordAddDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendDataTableCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendImageCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAppendTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordCloseApplicationCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordCreateApplicationCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordExportToPDFCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordOpenDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordReadDocumentCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordReplaceTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordSaveCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordSaveAsCommand", taskt.Properties.Resources.command_files);
+
+            //// NOTHING ///
+            uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
+            uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
+            uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);
             uiImages.Add("PingCommand", taskt.Properties.Resources.command_web);
+
             return uiImages;
         }
         public static ImageList UIImageList()
