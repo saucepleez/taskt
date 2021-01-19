@@ -29,11 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme5 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
             this.fileActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,13 +113,6 @@
             this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restartApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -212,6 +212,77 @@
             this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(96, 26);
             this.fileActionsToolStripMenuItem.Text = "&File Actions";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.newToolStripMenuItem.Text = "New File";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.openToolStripMenuItem.Text = "Open File";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // importFileToolStripMenuItem
+            // 
+            this.importFileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.importFileToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
+            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
+            this.importFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.importFileToolStripMenuItem.Text = "Import File";
+            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.saveToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_save;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.saveAsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_saveas;
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // restartApplicationToolStripMenuItem
+            // 
+            this.restartApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.restartApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_restart;
+            this.restartApplicationToolStripMenuItem.Name = "restartApplicationToolStripMenuItem";
+            this.restartApplicationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.restartApplicationToolStripMenuItem.Text = "&Restart Application";
+            this.restartApplicationToolStripMenuItem.Click += new System.EventHandler(this.restartApplicationToolStripMenuItem_Click);
+            // 
+            // closeApplicationToolStripMenuItem
+            // 
+            this.closeApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.closeApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_close;
+            this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
+            this.closeApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.closeApplicationToolStripMenuItem.Text = "Close Application";
+            this.closeApplicationToolStripMenuItem.Click += new System.EventHandler(this.closeApplicationToolStripMenuItem_Click);
+            // 
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -268,7 +339,7 @@
             this.recordToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.recordToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
             this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
-            this.recordToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.recordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recordToolStripMenuItem.Text = "R&ecord";
             this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
             // 
@@ -277,7 +348,7 @@
             this.scheduleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.scheduleToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_schedule;
             this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
-            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.scheduleToolStripMenuItem.Text = "&Schedule";
             this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
             // 
@@ -286,7 +357,7 @@
             this.runToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.runToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.runToolStripMenuItem.Text = "&Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
@@ -604,9 +675,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme5.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme5.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme5;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1058,63 +1129,63 @@
             this.moveToParentToolStripMenuItem,
             this.viewCodeToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(254, 196);
+            this.lstContextStrip.Size = new System.Drawing.Size(279, 218);
             // 
             // enableSelectedCodeToolStripMenuItem
             // 
             this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
-            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.enableSelectedCodeToolStripMenuItem.Text = "Enable Selected Code";
+            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.enableSelectedCodeToolStripMenuItem.Text = "&Enable Selected Code";
             this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
             // 
             // disableSelectedCodeToolStripMenuItem
             // 
             this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
-            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.disableSelectedCodeToolStripMenuItem.Text = "Disable Selected Code";
+            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.disableSelectedCodeToolStripMenuItem.Text = "&Disable Selected Code";
             this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
             // 
             // pauseBeforeExecutionToolStripMenuItem
             // 
             this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
-            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.pauseBeforeExecutionToolStripMenuItem.Text = "Pause Before Execution";
+            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.pauseBeforeExecutionToolStripMenuItem.Text = "&Pause Before Execution";
             this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
             // 
             // cutSelectedActionssToolStripMenuItem
             // 
             this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
-            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Action(s)";
+            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Action(s) (&X)";
             this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
             // 
             // copySelectedToolStripMenuItem
             // 
             this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
-            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.copySelectedToolStripMenuItem.Text = "Copy Selected Action(s)";
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.copySelectedToolStripMenuItem.Text = "&Copy Selected Action(s)";
             this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
             // 
             // pasteSelectedToolStripMenuItem
             // 
             this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
-            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s)";
+            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s) (&V)";
             this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
             // 
             // moveToParentToolStripMenuItem
             // 
             this.moveToParentToolStripMenuItem.Name = "moveToParentToolStripMenuItem";
-            this.moveToParentToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.moveToParentToolStripMenuItem.Text = "Move Out To Parent";
+            this.moveToParentToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.moveToParentToolStripMenuItem.Text = "&Move Out To Parent";
             this.moveToParentToolStripMenuItem.Visible = false;
             this.moveToParentToolStripMenuItem.Click += new System.EventHandler(this.moveToParentToolStripMenuItem_Click);
             // 
             // viewCodeToolStripMenuItem
             // 
             this.viewCodeToolStripMenuItem.Name = "viewCodeToolStripMenuItem";
-            this.viewCodeToolStripMenuItem.Size = new System.Drawing.Size(253, 24);
-            this.viewCodeToolStripMenuItem.Text = "View Code";
+            this.viewCodeToolStripMenuItem.Size = new System.Drawing.Size(278, 24);
+            this.viewCodeToolStripMenuItem.Text = "View Code (&I)";
             this.viewCodeToolStripMenuItem.Click += new System.EventHandler(this.viewCodeToolStripMenuItem_Click);
             // 
             // notifyTray
@@ -1126,77 +1197,6 @@
             this.notifyTray.Text = "taskt, free and open-source process automation";
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.newToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.newToolStripMenuItem.Text = "New File";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.openToolStripMenuItem.Text = "Open File";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // importFileToolStripMenuItem
-            // 
-            this.importFileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.importFileToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
-            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
-            this.importFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.importFileToolStripMenuItem.Text = "Import File";
-            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.saveToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_save;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.saveAsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_saveas;
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
-            // 
-            // restartApplicationToolStripMenuItem
-            // 
-            this.restartApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.restartApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_restart;
-            this.restartApplicationToolStripMenuItem.Name = "restartApplicationToolStripMenuItem";
-            this.restartApplicationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.restartApplicationToolStripMenuItem.Text = "&Restart Application";
-            this.restartApplicationToolStripMenuItem.Click += new System.EventHandler(this.restartApplicationToolStripMenuItem_Click);
-            // 
-            // closeApplicationToolStripMenuItem
-            // 
-            this.closeApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.closeApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_close;
-            this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
-            this.closeApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.closeApplicationToolStripMenuItem.Text = "Close Application";
-            this.closeApplicationToolStripMenuItem.Click += new System.EventHandler(this.closeApplicationToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 

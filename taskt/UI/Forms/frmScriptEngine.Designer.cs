@@ -50,10 +50,10 @@
             this.lstSteppingCommands.ForeColor = System.Drawing.Color.SteelBlue;
             this.lstSteppingCommands.FormattingEnabled = true;
             this.lstSteppingCommands.ItemHeight = 17;
-            this.lstSteppingCommands.Location = new System.Drawing.Point(7, 56);
+            this.lstSteppingCommands.Location = new System.Drawing.Point(7, 52);
             this.lstSteppingCommands.Name = "lstSteppingCommands";
-            this.lstSteppingCommands.Size = new System.Drawing.Size(675, 140);
-            this.lstSteppingCommands.TabIndex = 0;
+            this.lstSteppingCommands.Size = new System.Drawing.Size(675, 123);
+            this.lstSteppingCommands.TabIndex = 1;
             this.lstSteppingCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstSteppingCommands_MouseDoubleClick);
             // 
             // tmrNotify
@@ -66,10 +66,10 @@
             this.lblCloseTimer.AutoSize = true;
             this.lblCloseTimer.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCloseTimer.ForeColor = System.Drawing.Color.White;
-            this.lblCloseTimer.Location = new System.Drawing.Point(12, 176);
+            this.lblCloseTimer.Location = new System.Drawing.Point(12, 162);
             this.lblCloseTimer.Name = "lblCloseTimer";
             this.lblCloseTimer.Size = new System.Drawing.Size(0, 17);
-            this.lblCloseTimer.TabIndex = 3;
+            this.lblCloseTimer.TabIndex = 2;
             // 
             // lblMainLogo
             // 
@@ -80,7 +80,7 @@
             this.lblMainLogo.Location = new System.Drawing.Point(1, 5);
             this.lblMainLogo.Name = "lblMainLogo";
             this.lblMainLogo.Size = new System.Drawing.Size(253, 45);
-            this.lblMainLogo.TabIndex = 4;
+            this.lblMainLogo.TabIndex = 0;
             this.lblMainLogo.Text = "taskt is executing";
             // 
             // lblKillProcNote
@@ -89,10 +89,10 @@
             this.lblKillProcNote.BackColor = System.Drawing.Color.Transparent;
             this.lblKillProcNote.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblKillProcNote.ForeColor = System.Drawing.Color.White;
-            this.lblKillProcNote.Location = new System.Drawing.Point(4, 196);
+            this.lblKillProcNote.Location = new System.Drawing.Point(4, 181);
             this.lblKillProcNote.Name = "lblKillProcNote";
             this.lblKillProcNote.Size = new System.Drawing.Size(333, 20);
-            this.lblKillProcNote.TabIndex = 17;
+            this.lblKillProcNote.TabIndex = 3;
             this.lblKillProcNote.Text = "Press the \'Pause/Break\' key to stop automation.";
             // 
             // lblAction
@@ -101,10 +101,10 @@
             this.lblAction.BackColor = System.Drawing.Color.Transparent;
             this.lblAction.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAction.ForeColor = System.Drawing.Color.White;
-            this.lblAction.Location = new System.Drawing.Point(5, 219);
+            this.lblAction.Location = new System.Drawing.Point(5, 202);
             this.lblAction.Name = "lblAction";
             this.lblAction.Size = new System.Drawing.Size(65, 20);
-            this.lblAction.TabIndex = 19;
+            this.lblAction.TabIndex = 4;
             this.lblAction.Text = "Action...";
             this.lblAction.Visible = false;
             // 
@@ -119,9 +119,10 @@
             this.uiBtnCancel.IsMouseOver = false;
             this.uiBtnCancel.Location = new System.Drawing.Point(633, 2);
             this.uiBtnCancel.Name = "uiBtnCancel";
-            this.uiBtnCancel.Size = new System.Drawing.Size(48, 48);
+            this.uiBtnCancel.Size = new System.Drawing.Size(48, 44);
             this.uiBtnCancel.TabIndex = 14;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // uiBtnPause
@@ -135,16 +136,17 @@
             this.uiBtnPause.IsMouseOver = false;
             this.uiBtnPause.Location = new System.Drawing.Point(579, 2);
             this.uiBtnPause.Name = "uiBtnPause";
-            this.uiBtnPause.Size = new System.Drawing.Size(48, 48);
+            this.uiBtnPause.Size = new System.Drawing.Size(48, 44);
             this.uiBtnPause.TabIndex = 15;
             this.uiBtnPause.TabStop = false;
+            this.uiBtnPause.Text = "Pause";
             this.uiBtnPause.Click += new System.EventHandler(this.uiBtnPause_Click);
             // 
             // pbBotIcon
             // 
             this.pbBotIcon.BackColor = System.Drawing.Color.Transparent;
             this.pbBotIcon.Image = global::taskt.Properties.Resources.executing;
-            this.pbBotIcon.Location = new System.Drawing.Point(7, 56);
+            this.pbBotIcon.Location = new System.Drawing.Point(7, 52);
             this.pbBotIcon.Name = "pbBotIcon";
             this.pbBotIcon.Size = new System.Drawing.Size(675, 135);
             this.pbBotIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -154,10 +156,10 @@
             // 
             // frmScriptEngine
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(694, 247);
+            this.ClientSize = new System.Drawing.Size(694, 228);
             this.Controls.Add(this.lblAction);
             this.Controls.Add(this.lblKillProcNote);
             this.Controls.Add(this.uiBtnCancel);

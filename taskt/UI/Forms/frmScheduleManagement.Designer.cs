@@ -69,20 +69,20 @@
             // txtAppPath
             // 
             this.txtAppPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAppPath.Location = new System.Drawing.Point(9, 240);
+            this.txtAppPath.Location = new System.Drawing.Point(9, 222);
             this.txtAppPath.Name = "txtAppPath";
             this.txtAppPath.Size = new System.Drawing.Size(513, 24);
-            this.txtAppPath.TabIndex = 0;
+            this.txtAppPath.TabIndex = 5;
             // 
             // cboSelectedScript
             // 
             this.cboSelectedScript.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSelectedScript.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboSelectedScript.FormattingEnabled = true;
-            this.cboSelectedScript.Location = new System.Drawing.Point(10, 286);
+            this.cboSelectedScript.Location = new System.Drawing.Point(10, 264);
             this.cboSelectedScript.Name = "cboSelectedScript";
             this.cboSelectedScript.Size = new System.Drawing.Size(334, 26);
-            this.cboSelectedScript.TabIndex = 2;
+            this.cboSelectedScript.TabIndex = 7;
             // 
             // lblMainLogo
             // 
@@ -93,7 +93,7 @@
             this.lblMainLogo.Location = new System.Drawing.Point(1, 4);
             this.lblMainLogo.Name = "lblMainLogo";
             this.lblMainLogo.Size = new System.Drawing.Size(152, 37);
-            this.lblMainLogo.TabIndex = 4;
+            this.lblMainLogo.TabIndex = 0;
             this.lblMainLogo.Text = "schedule";
             // 
             // lblScheduledScripts
@@ -102,10 +102,10 @@
             this.lblScheduledScripts.BackColor = System.Drawing.Color.Transparent;
             this.lblScheduledScripts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScheduledScripts.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblScheduledScripts.Location = new System.Drawing.Point(6, 36);
+            this.lblScheduledScripts.Location = new System.Drawing.Point(6, 33);
             this.lblScheduledScripts.Name = "lblScheduledScripts";
             this.lblScheduledScripts.Size = new System.Drawing.Size(202, 21);
-            this.lblScheduledScripts.TabIndex = 6;
+            this.lblScheduledScripts.TabIndex = 1;
             this.lblScheduledScripts.Text = "Currently Scheduled Scripts";
             // 
             // label3
@@ -114,10 +114,10 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.AliceBlue;
-            this.label3.Location = new System.Drawing.Point(7, 221);
+            this.label3.Location = new System.Drawing.Point(7, 204);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(233, 17);
-            this.label3.TabIndex = 8;
+            this.label3.TabIndex = 4;
             this.label3.Text = "taskt.exe location (executing assembly)";
             // 
             // lblScriptName
@@ -126,10 +126,10 @@
             this.lblScriptName.BackColor = System.Drawing.Color.Transparent;
             this.lblScriptName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScriptName.ForeColor = System.Drawing.Color.White;
-            this.lblScriptName.Location = new System.Drawing.Point(6, 267);
+            this.lblScriptName.Location = new System.Drawing.Point(6, 246);
             this.lblScriptName.Name = "lblScriptName";
             this.lblScriptName.Size = new System.Drawing.Size(80, 17);
-            this.lblScriptName.TabIndex = 9;
+            this.lblScriptName.TabIndex = 6;
             this.lblScriptName.Text = "Script Name";
             // 
             // dgvScheduledTasks
@@ -161,7 +161,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvScheduledTasks.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvScheduledTasks.Location = new System.Drawing.Point(9, 59);
+            this.dgvScheduledTasks.Location = new System.Drawing.Point(9, 54);
             this.dgvScheduledTasks.Name = "dgvScheduledTasks";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -172,8 +172,8 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvScheduledTasks.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvScheduledTasks.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvScheduledTasks.Size = new System.Drawing.Size(612, 124);
-            this.dgvScheduledTasks.TabIndex = 11;
+            this.dgvScheduledTasks.Size = new System.Drawing.Size(612, 114);
+            this.dgvScheduledTasks.TabIndex = 2;
             this.dgvScheduledTasks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvScheduledTasks_CellContentClick);
             // 
             // colTaskName
@@ -240,9 +240,10 @@
             this.uiBtnShowScheduleManager.IsMouseOver = false;
             this.uiBtnShowScheduleManager.Location = new System.Drawing.Point(469, 4);
             this.uiBtnShowScheduleManager.Name = "uiBtnShowScheduleManager";
-            this.uiBtnShowScheduleManager.Size = new System.Drawing.Size(152, 52);
+            this.uiBtnShowScheduleManager.Size = new System.Drawing.Size(152, 48);
             this.uiBtnShowScheduleManager.TabIndex = 14;
             this.uiBtnShowScheduleManager.TabStop = false;
+            this.uiBtnShowScheduleManager.Text = "Launch Task Scheduler";
             this.uiBtnShowScheduleManager.Click += new System.EventHandler(this.uiBtnShowScheduleManager_Click);
             // 
             // uiBtnOk
@@ -254,11 +255,12 @@
             this.uiBtnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.uiBtnOk.Image = global::taskt.Properties.Resources.logo;
             this.uiBtnOk.IsMouseOver = false;
-            this.uiBtnOk.Location = new System.Drawing.Point(7, 423);
+            this.uiBtnOk.Location = new System.Drawing.Point(7, 390);
             this.uiBtnOk.Name = "uiBtnOk";
-            this.uiBtnOk.Size = new System.Drawing.Size(55, 48);
+            this.uiBtnOk.Size = new System.Drawing.Size(55, 44);
             this.uiBtnOk.TabIndex = 1;
             this.uiBtnOk.TabStop = false;
+            this.uiBtnOk.Text = "Add";
             this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // panel1
@@ -272,9 +274,9 @@
             this.panel1.Controls.Add(this.rdoEndByDate);
             this.panel1.Controls.Add(this.dtEndTime);
             this.panel1.Controls.Add(this.dtStartTime);
-            this.panel1.Location = new System.Drawing.Point(8, 318);
+            this.panel1.Location = new System.Drawing.Point(8, 294);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(513, 106);
+            this.panel1.Size = new System.Drawing.Size(513, 98);
             this.panel1.TabIndex = 15;
             // 
             // cboRecurType
@@ -285,10 +287,10 @@
             "Minutes",
             "Hours",
             "Days"});
-            this.cboRecurType.Location = new System.Drawing.Point(215, 19);
+            this.cboRecurType.Location = new System.Drawing.Point(215, 18);
             this.cboRecurType.Name = "cboRecurType";
             this.cboRecurType.Size = new System.Drawing.Size(158, 23);
-            this.cboRecurType.TabIndex = 7;
+            this.cboRecurType.TabIndex = 4;
             // 
             // lblRecurrence
             // 
@@ -298,16 +300,16 @@
             this.lblRecurrence.Location = new System.Drawing.Point(176, 0);
             this.lblRecurrence.Name = "lblRecurrence";
             this.lblRecurrence.Size = new System.Drawing.Size(73, 17);
-            this.lblRecurrence.TabIndex = 6;
+            this.lblRecurrence.TabIndex = 2;
             this.lblRecurrence.Text = "Recurrence";
             // 
             // txtRecurCount
             // 
             this.txtRecurCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRecurCount.Location = new System.Drawing.Point(179, 19);
+            this.txtRecurCount.Location = new System.Drawing.Point(179, 18);
             this.txtRecurCount.Name = "txtRecurCount";
             this.txtRecurCount.Size = new System.Drawing.Size(32, 21);
-            this.txtRecurCount.TabIndex = 5;
+            this.txtRecurCount.TabIndex = 3;
             // 
             // lblStartDate
             // 
@@ -317,7 +319,7 @@
             this.lblStartDate.Location = new System.Drawing.Point(2, 0);
             this.lblStartDate.Name = "lblStartDate";
             this.lblStartDate.Size = new System.Drawing.Size(66, 17);
-            this.lblStartDate.TabIndex = 4;
+            this.lblStartDate.TabIndex = 0;
             this.lblStartDate.Text = "Start Date";
             // 
             // rdoDoNotEnd
@@ -325,10 +327,10 @@
             this.rdoDoNotEnd.AutoSize = true;
             this.rdoDoNotEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdoDoNotEnd.ForeColor = System.Drawing.Color.White;
-            this.rdoDoNotEnd.Location = new System.Drawing.Point(5, 85);
+            this.rdoDoNotEnd.Location = new System.Drawing.Point(5, 78);
             this.rdoDoNotEnd.Name = "rdoDoNotEnd";
             this.rdoDoNotEnd.Size = new System.Drawing.Size(95, 20);
-            this.rdoDoNotEnd.TabIndex = 3;
+            this.rdoDoNotEnd.TabIndex = 7;
             this.rdoDoNotEnd.TabStop = true;
             this.rdoDoNotEnd.Text = "Do Not End";
             this.rdoDoNotEnd.UseVisualStyleBackColor = true;
@@ -338,10 +340,10 @@
             this.rdoEndByDate.AutoSize = true;
             this.rdoEndByDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdoEndByDate.ForeColor = System.Drawing.Color.White;
-            this.rdoEndByDate.Location = new System.Drawing.Point(5, 42);
+            this.rdoEndByDate.Location = new System.Drawing.Point(5, 39);
             this.rdoEndByDate.Name = "rdoEndByDate";
             this.rdoEndByDate.Size = new System.Drawing.Size(101, 20);
-            this.rdoEndByDate.TabIndex = 2;
+            this.rdoEndByDate.TabIndex = 5;
             this.rdoEndByDate.TabStop = true;
             this.rdoEndByDate.Text = "End By Date";
             this.rdoEndByDate.UseVisualStyleBackColor = true;
@@ -352,10 +354,10 @@
             this.dtEndTime.CustomFormat = "MM/dd/yyyy hh:mm:ss";
             this.dtEndTime.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtEndTime.Location = new System.Drawing.Point(5, 62);
+            this.dtEndTime.Location = new System.Drawing.Point(5, 57);
             this.dtEndTime.Name = "dtEndTime";
             this.dtEndTime.Size = new System.Drawing.Size(155, 23);
-            this.dtEndTime.TabIndex = 1;
+            this.dtEndTime.TabIndex = 6;
             // 
             // dtStartTime
             // 
@@ -363,10 +365,10 @@
             this.dtStartTime.CustomFormat = "MM/dd/yyyy hh:mm:ss";
             this.dtStartTime.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtStartTime.Location = new System.Drawing.Point(5, 19);
+            this.dtStartTime.Location = new System.Drawing.Point(5, 18);
             this.dtStartTime.Name = "dtStartTime";
             this.dtStartTime.Size = new System.Drawing.Size(155, 23);
-            this.dtStartTime.TabIndex = 0;
+            this.dtStartTime.TabIndex = 1;
             // 
             // label2
             // 
@@ -374,18 +376,18 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.AliceBlue;
-            this.label2.Location = new System.Drawing.Point(6, 200);
+            this.label2.Location = new System.Drawing.Point(6, 185);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 21);
-            this.label2.TabIndex = 16;
+            this.label2.TabIndex = 3;
             this.label2.Text = "Add New Schedule";
             // 
             // frmScheduleManagement
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 268;
-            this.ClientSize = new System.Drawing.Size(628, 474);
+            this.ClientSize = new System.Drawing.Size(628, 438);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.uiBtnShowScheduleManager);

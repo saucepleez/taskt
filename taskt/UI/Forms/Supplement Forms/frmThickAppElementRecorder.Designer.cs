@@ -53,9 +53,9 @@
             this.tlpControls.Location = new System.Drawing.Point(0, 0);
             this.tlpControls.Name = "tlpControls";
             this.tlpControls.RowCount = 1;
-            this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 190F));
-            this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpControls.Size = new System.Drawing.Size(735, 186);
+            this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+            this.tlpControls.Size = new System.Drawing.Size(735, 172);
             this.tlpControls.TabIndex = 1;
             // 
             // pnlHeader
@@ -72,15 +72,15 @@
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(735, 190);
-            this.pnlHeader.TabIndex = 1;
+            this.pnlHeader.Size = new System.Drawing.Size(735, 175);
+            this.pnlHeader.TabIndex = 0;
             // 
             // pbRefresh
             // 
             this.pbRefresh.Image = global::taskt.Properties.Resources.command_startloop;
-            this.pbRefresh.Location = new System.Drawing.Point(14, 123);
+            this.pbRefresh.Location = new System.Drawing.Point(14, 114);
             this.pbRefresh.Name = "pbRefresh";
-            this.pbRefresh.Size = new System.Drawing.Size(32, 32);
+            this.pbRefresh.Size = new System.Drawing.Size(32, 30);
             this.pbRefresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbRefresh.TabIndex = 19;
             this.pbRefresh.TabStop = false;
@@ -93,7 +93,7 @@
             this.cboWindowTitle.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cboWindowTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboWindowTitle.FormattingEnabled = true;
-            this.cboWindowTitle.Location = new System.Drawing.Point(52, 127);
+            this.cboWindowTitle.Location = new System.Drawing.Point(52, 117);
             this.cboWindowTitle.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cboWindowTitle.Name = "cboWindowTitle";
             this.cboWindowTitle.Size = new System.Drawing.Size(348, 28);
@@ -102,9 +102,9 @@
             // pbRecord
             // 
             this.pbRecord.Image = global::taskt.Properties.Resources.various_record_button;
-            this.pbRecord.Location = new System.Drawing.Point(409, 123);
+            this.pbRecord.Location = new System.Drawing.Point(409, 114);
             this.pbRecord.Name = "pbRecord";
-            this.pbRecord.Size = new System.Drawing.Size(32, 32);
+            this.pbRecord.Size = new System.Drawing.Size(32, 30);
             this.pbRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbRecord.TabIndex = 4;
             this.pbRecord.TabStop = false;
@@ -114,10 +114,10 @@
             // 
             this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescription.ForeColor = System.Drawing.Color.White;
-            this.lblDescription.Location = new System.Drawing.Point(10, 69);
+            this.lblDescription.Location = new System.Drawing.Point(10, 64);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(778, 53);
-            this.lblDescription.TabIndex = 16;
+            this.lblDescription.Size = new System.Drawing.Size(778, 49);
+            this.lblDescription.TabIndex = 2;
             this.lblDescription.Text = "Instructions: Select the target window name from the drop-down list and click the" +
     " record button.  Once recording has started, click the element in the target app" +
     "lication that you want to capture.\r\n ";
@@ -127,10 +127,10 @@
             this.chkStopOnClick.AutoSize = true;
             this.chkStopOnClick.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkStopOnClick.ForeColor = System.Drawing.Color.White;
-            this.chkStopOnClick.Location = new System.Drawing.Point(18, 161);
+            this.chkStopOnClick.Location = new System.Drawing.Point(18, 149);
             this.chkStopOnClick.Name = "chkStopOnClick";
             this.chkStopOnClick.Size = new System.Drawing.Size(195, 21);
-            this.chkStopOnClick.TabIndex = 20;
+            this.chkStopOnClick.TabIndex = 4;
             this.chkStopOnClick.Text = "Stop Recording on First Click";
             this.chkStopOnClick.UseVisualStyleBackColor = true;
             // 
@@ -139,10 +139,10 @@
             this.lblSubHeader.AutoSize = true;
             this.lblSubHeader.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubHeader.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.lblSubHeader.Location = new System.Drawing.Point(9, 43);
+            this.lblSubHeader.Location = new System.Drawing.Point(9, 40);
             this.lblSubHeader.Name = "lblSubHeader";
             this.lblSubHeader.Size = new System.Drawing.Size(299, 21);
-            this.lblSubHeader.TabIndex = 15;
+            this.lblSubHeader.TabIndex = 1;
             this.lblSubHeader.Text = "Capture Elements from Thick Applications";
             // 
             // lblHeader
@@ -151,19 +151,19 @@
             this.lblHeader.BackColor = System.Drawing.Color.Transparent;
             this.lblHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeader.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblHeader.Location = new System.Drawing.Point(7, 9);
+            this.lblHeader.Location = new System.Drawing.Point(7, 8);
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(273, 37);
-            this.lblHeader.TabIndex = 14;
+            this.lblHeader.TabIndex = 0;
             this.lblHeader.Text = "element recorder";
             // 
             // frmThickAppElementRecorder
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.BackgroundChangeIndex = 265;
-            this.ClientSize = new System.Drawing.Size(735, 186);
+            this.ClientSize = new System.Drawing.Size(735, 172);
             this.Controls.Add(this.tlpControls);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

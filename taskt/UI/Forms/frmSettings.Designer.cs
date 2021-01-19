@@ -392,7 +392,7 @@
             this.uiSettingTabs.Name = "uiSettingTabs";
             this.uiSettingTabs.SelectedIndex = 0;
             this.uiSettingTabs.Size = new System.Drawing.Size(632, 458);
-            this.uiSettingTabs.TabIndex = 0;
+            this.uiSettingTabs.TabIndex = 1;
             // 
             // tabAppSettings
             // 
@@ -1241,7 +1241,7 @@
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(638, 65);
-            this.panel1.TabIndex = 26;
+            this.panel1.TabIndex = 0;
             // 
             // tmrGetSocketStatus
             // 
