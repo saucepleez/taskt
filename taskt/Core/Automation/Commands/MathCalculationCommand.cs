@@ -71,7 +71,15 @@ namespace taskt.Core.Automation.Commands
                 var thousandSeperator = v_ThousandSeperator.ConvertToUserVariable(sender);
 
                 //remove thousandths markers
-                variableMath = variableMath.Replace(thousandSeperator, "");
+                if (thousandSeperator != "")
+                {
+                    variableMath = variableMath.Replace(thousandSeperator, "");
+                }
+
+                if (decimalSeperator == "")
+                {
+                    decimalSeperator = ".";
+                }
 
                 //check decimal seperator
                 if (decimalSeperator != ".")
