@@ -527,6 +527,11 @@ namespace taskt.Core.Automation.Commands
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
 
+                if (windowName == "Current Window")
+                {
+                    windowName = User32Functions.GetActiveWindowTitle();
+                }
+
                 UIAutomationCommand newUIACommand = new UIAutomationCommand();
                 newUIACommand.v_WindowName = windowName;
                 newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
