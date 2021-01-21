@@ -514,7 +514,18 @@ namespace taskt.UI.Forms
                 RedoChange();
 
             }
-
+            else if ((e.Control) && (e.Shift) && (e.KeyCode == Keys.E))
+            {
+                lstScriptActions_DoubleClick(null, null);
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.E))
+            {
+                SetSelectedCodeToCommented(false);
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.D))
+            {
+                SetSelectedCodeToCommented(true);
+            }
             else if ((e.Control) && (e.KeyCode == Keys.A))
             {
 
@@ -833,7 +844,7 @@ namespace taskt.UI.Forms
             grpSearch.Left = grpSaveClose.Right + 20;
 
             moveToParentToolStripMenuItem.Visible = true;
-
+            lstContextStripSep2.Visible = true;
 
         }
 
@@ -1033,8 +1044,22 @@ namespace taskt.UI.Forms
                     else if ((e.Item.Focused) || (e.Item.Selected))
                     {
                         //selected item coloring
-                        commandNameBrush = Brushes.White;
+                        if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+                        {
+                            // disable command
+                            commandNameBrush = Brushes.LightGreen;
+                        }
+                        else if (command.PauseBeforeExeucution)
+                        {
+                            // pause
+                            commandNameBrush = Brushes.Plum;
+                        }
+                        else
+                        {
+                            commandNameBrush = Brushes.White;
+                        }
                         commandBackgroundBrush = Brushes.DodgerBlue;
+
                     }
                     else if (command.PauseBeforeExeucution)
                     {
@@ -1193,6 +1218,11 @@ namespace taskt.UI.Forms
         private void pasteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PasteRows();
+        }
+
+        private void editThisCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lstScriptActions_DoubleClick(null, null);
         }
         #endregion
 
@@ -2204,6 +2234,7 @@ namespace taskt.UI.Forms
 
 
         }
+
     }
 
 }
