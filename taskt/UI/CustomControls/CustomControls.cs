@@ -568,6 +568,7 @@ namespace taskt.UI
             uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
             uiImages.Add("EncryptionCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ClipboardGetTextCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("PingCommand", taskt.Properties.Resources.command_web);
             uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
             uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
             uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
@@ -660,7 +661,7 @@ namespace taskt.UI
             uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
             uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("PingCommand", taskt.Properties.Resources.command_web);
+            
 
             return uiImages;
         }
