@@ -179,12 +179,17 @@ namespace taskt.UI.Forms
         {
             this.FormBorderStyle = FormBorderStyle.Sizable;
 
-            //focus first TextBox
+            //focus first TextBox, ComboBox, DataGridView
             var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
-            var firstTextBox = (TextBox)(userSelectedCommand.UIControls.First(elem => (elem is TextBox)));
-            firstTextBox.Focus();
-            firstTextBox.SelectionStart = firstTextBox.Text.Length;
-            firstTextBox.SelectionLength = 0;
+            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
+
+            firstFocus.Focus();
+            if (firstFocus is TextBox)
+            {
+                var trg = (TextBox)firstFocus;
+                trg.SelectionStart = trg.Text.Length;
+                trg.SelectionLength = 0;
+            }
         }
 
         #endregion Form Events
@@ -227,10 +232,14 @@ namespace taskt.UI.Forms
             }
 
             //focus first TextBox
-            var firstTextBox = (TextBox)(userSelectedCommand.UIControls.First(elem => (elem is TextBox)));
-            firstTextBox.Focus();
-            firstTextBox.SelectionStart = firstTextBox.Text.Length;
-            firstTextBox.SelectionLength = 0;
+            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
+            firstFocus.Focus();
+            if (firstFocus is TextBox)
+            {
+                var trg = (TextBox)firstFocus;
+                trg.SelectionStart = trg.Text.Length;
+                trg.SelectionLength = 0;
+            }
 
             // resize
             frmCommandEditor_Resize(null, null);
