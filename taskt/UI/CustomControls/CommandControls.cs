@@ -68,13 +68,13 @@ namespace taskt.UI.CustomControls
 
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription), true);
 
-
+            var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
 
             Label inputLabel = new Label();
             if (propertyAttributesAssigned.Length > 0)
             {
                 var attribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
-                inputLabel.Text = attribute.propertyDescription;
+                inputLabel.Text = attribute.propertyDescription.Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker);
             }
             else
             {
@@ -773,7 +773,6 @@ public class AutomationCommand
                 throw new InvalidOperationException("Command cannot be null!");
             }
 
-
             UIControls = new List<Control>();
             if (Command.CustomRendering)
             {
@@ -819,16 +818,13 @@ public class AutomationCommand
                 label.Text = "Command not enabled for custom rendering!";
                 UIControls.Add(label);
             }
-          
-
         }  
         public void Bind(UI.Forms.frmCommandEditor editor)
         {
-
             //preference to preload is false
             //if (UIControls is null)
             //{
-                this.RenderUIComponents(editor);
+            this.RenderUIComponents(editor);
             //}
 
             foreach (var ctrl in UIControls)
@@ -880,9 +876,6 @@ public class AutomationCommand
                         variableCbo.Items.Add(var.VariableName);
                     }
                 }
-
-
-
               
             }
         }

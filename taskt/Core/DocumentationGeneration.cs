@@ -39,6 +39,10 @@ namespace taskt.Core
             StringBuilder sb;
             string fullFileName;
 
+            var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
+            var vs = settings.VariableStartMarker;
+            var ve = settings.VariableEndMarker;
+
             //loop each command
             foreach (var commandClass in commandClasses)
             {
@@ -81,10 +85,10 @@ namespace taskt.Core
                 {
 
                     //pull attributes from property
-                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification));
-                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage));
-                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks));
+                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)).Replace("{{{", vs).Replace("}}}", ve);
+                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification)).Replace("{{{", vs).Replace("}}}", ve);
+                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage)).Replace("{{{", vs).Replace("}}}", ve);
+                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks)).Replace("{{{", vs).Replace("}}}", ve);
 
                     //append to parameter table
                     sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
