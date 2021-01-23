@@ -926,7 +926,18 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndTryCommand()));
             }
 
-           
+            // focus insert command
+            if (lstScriptActions.SelectedItems.Count > 0)
+            {
+                lstScriptActions.MultiSelect = false;
+                for (var i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
+                {
+                    var idx = lstScriptActions.SelectedItems[i].Index;
+                    lstScriptActions.Items[idx].Focused = false;
+                }
+            }
+            lstScriptActions.Items[insertionIndex].Selected = true;
+            lstScriptActions.MultiSelect = true;
 
             CreateUndoSnapshot();
 
