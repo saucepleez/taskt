@@ -476,14 +476,7 @@ namespace taskt.UI.Forms
             //delete from listview if required
             if (e.KeyCode == Keys.Delete)
             {
-                foreach (ListViewItem itm in lstScriptActions.SelectedItems)
-                {
-                    lstScriptActions.Items.Remove(itm);
-                }
-
-                CreateUndoSnapshot();
-                lstScriptActions.Invalidate();
-                //FormatCommandListView();
+                DeleteRows();
             }
             else if(e.KeyCode == Keys.Enter)
             {
@@ -537,6 +530,18 @@ namespace taskt.UI.Forms
             }
 
 
+        }
+
+        private void DeleteRows()
+        {
+            foreach (ListViewItem itm in lstScriptActions.SelectedItems)
+            {
+                lstScriptActions.Items.Remove(itm);
+            }
+
+            CreateUndoSnapshot();
+            lstScriptActions.Invalidate();
+            //FormatCommandListView();
         }
 
         private void CutRows()
@@ -1219,7 +1224,10 @@ namespace taskt.UI.Forms
         {
             PasteRows();
         }
-
+        private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteRows();
+        }
         private void editThisCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lstScriptActions_DoubleClick(null, null);
