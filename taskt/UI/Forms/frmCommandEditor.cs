@@ -49,6 +49,8 @@ namespace taskt.UI.Forms
         public Core.Automation.Commands.ScriptCommand editingCommand;
         //track existing commands for visibility
         public List<Core.Automation.Commands.ScriptCommand> configuredCommands;
+        // taskt setting
+        public Core.ApplicationSettings appSettings;
         public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
         {
             InitializeComponent();
@@ -143,7 +145,7 @@ namespace taskt.UI.Forms
 
 
                 //handle selection change events
-
+                
 
             }
 

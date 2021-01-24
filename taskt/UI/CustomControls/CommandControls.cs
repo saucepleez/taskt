@@ -30,7 +30,7 @@ namespace taskt.UI.CustomControls
             controlList.Add(input);
 
             return controlList;
-
+            
         }
 
         public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
@@ -46,7 +46,7 @@ namespace taskt.UI.CustomControls
             controlList.Add(input);
 
             return controlList;
-
+            
         }
 
         public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
@@ -68,7 +68,8 @@ namespace taskt.UI.CustomControls
 
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription), true);
 
-            var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
+            // var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
+            var settings = CurrentEditor.appSettings.EngineSettings;
 
             Label inputLabel = new Label();
             if (propertyAttributesAssigned.Length > 0)
@@ -345,19 +346,20 @@ namespace taskt.UI.CustomControls
                 //currently variable insertion is only available for simply textboxes
 
                 //load settings
-                var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                //var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                var settings = CurrentEditor.appSettings.EngineSettings;
 
                 if (inputBox.Tag is TextBox)
                 {
                     TextBox targetTextbox = (TextBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = targetTextbox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is ComboBox)
                 {
                     ComboBox targetCombobox = (ComboBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetCombobox.Text = targetCombobox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is DataGridView)
                 {
@@ -375,7 +377,7 @@ namespace taskt.UI.CustomControls
                         return;
                     }
 
-                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
 
 

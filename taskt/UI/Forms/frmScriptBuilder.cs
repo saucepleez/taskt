@@ -807,6 +807,9 @@ namespace taskt.UI.Forms
                 //set variables
                 editCommand.scriptVariables = this.scriptVariables;
 
+                // set taskt settings
+                editCommand.appSettings = this.appSettings;
+
                 //show edit command form and save changes on OK result
                 if (editCommand.ShowDialog() == DialogResult.OK)
                 {
@@ -1798,6 +1801,8 @@ namespace taskt.UI.Forms
             var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands());
             newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
             newCommandForm.scriptVariables = this.scriptVariables;
+            // set taskt settings
+            newCommandForm.appSettings = this.appSettings;
             if (specificCommand != "")
                 newCommandForm.defaultStartupCommand = specificCommand;
 
