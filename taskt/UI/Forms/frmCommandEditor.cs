@@ -296,5 +296,11 @@ namespace taskt.UI.Forms
         {
 
         }
+
+        public string ReplaceVariableMaker(string v)
+        {
+            var s = appSettings.EngineSettings;
+            return v.Replace("{{{", s.VariableStartMarker).Replace("}}}", s.VariableEndMarker);
+        }
     }
 }

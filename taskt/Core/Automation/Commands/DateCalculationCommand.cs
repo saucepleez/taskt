@@ -149,6 +149,12 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            // dynamic replace variabl marker
+            if (this.v_InputValue == "{{{DateTime.Now}}}")
+            {
+                this.v_InputValue = editor.ReplaceVariableMaker(this.v_InputValue);
+            }
+
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
