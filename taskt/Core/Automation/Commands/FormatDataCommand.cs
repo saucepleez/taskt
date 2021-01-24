@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InputValue = PutVariableMarker("DateTime.Now");
+            this.v_InputValue = "{{{DateTime.Now}}}";
             this.v_FormatType = "Date";
             this.v_ToStringFormat = "MM/dd/yyyy";
             

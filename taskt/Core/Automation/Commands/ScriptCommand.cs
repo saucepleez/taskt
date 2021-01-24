@@ -281,11 +281,5 @@ namespace taskt.Core.Automation.Commands
         {
 
         }
-
-        protected string PutVariableMarker(string varName)
-        {
-            var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
-            return (settings.VariableStartMarker + varName + settings.VariableEndMarker);
-        }
     }
 }
