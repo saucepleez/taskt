@@ -82,18 +82,25 @@ namespace taskt.UI.CustomControls
                 inputLabel.Text = parameterName;
             }
 
-
-
+            var theme = CurrentEditor.Theme.Label;
             inputLabel.AutoSize = true;
-            inputLabel.Font = new Font("Segoe UI Light", 12);
-            inputLabel.ForeColor = Color.White;
+            //inputLabel.Font = new Font("Segoe UI Light", 12);
+            //inputLabel.ForeColor = Color.White;
+            inputLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputLabel.ForeColor = theme.FontColor;
+            inputLabel.BackColor = theme.BackColor;
+
             inputLabel.Name = "lbl_" + parameterName;
             return inputLabel;
         }
         public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300)
         {
             var inputBox = new TextBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            var theme = CurrentEditor.Theme.Input;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
             inputBox.Height = height;
             inputBox.Width = width;
@@ -109,10 +116,12 @@ namespace taskt.UI.CustomControls
         }
         public static Control CreateDropdownFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
-
-
             var inputBox = new ComboBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            var theme = CurrentEditor.Theme.Dropdown;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
             inputBox.Height = 30;
             inputBox.Width = 300;
@@ -131,10 +140,12 @@ namespace taskt.UI.CustomControls
         }
         public static ComboBox CreateStandardComboboxFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
-
-
             var inputBox = new ComboBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            var theme = CurrentEditor.Theme.Combobox;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
             inputBox.Height = 30;
             inputBox.Width = 300;
@@ -160,8 +171,12 @@ namespace taskt.UI.CustomControls
             {
                 taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
                 helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-                helperControl.ForeColor = Color.AliceBlue;
-                helperControl.Font = new Font("Segoe UI Semilight", 10);
+                //helperControl.ForeColor = Color.AliceBlue;
+                //helperControl.Font = new Font("Segoe UI Semilight", 10);
+                var theme = CurrentEditor.Theme.UIHelper;
+                helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+                helperControl.ForeColor = theme.FontColor;
+                helperControl.BackColor = theme.BackColor;
                 helperControl.Name = parameterName + "_helper";
                 helperControl.Tag = targetControls.FirstOrDefault();
                 helperControl.HelperType = attrib.additionalHelper;
@@ -784,9 +799,14 @@ public class AutomationCommand
                 if (renderedControls.Count == 0)
                 {
                     var label = new Label();
-                    label.ForeColor = Color.Red;
+                    var theme = editorForm.Theme.ErrorLabel;
+                    //label.ForeColor = Color.Red;
+                    //label.AutoSize = true;
+                    //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                    label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
                     label.AutoSize = true;
-                    label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                    label.ForeColor = theme.FontColor;
+                    label.BackColor = theme.BackColor;
                     label.Text = "No Controls are defined for rendering!  If you intend to override with custom controls, you must handle the Render() method of this command!  If you do not wish to override with your own custom controls then set 'CustomRendering' to False.";
                     UIControls.Add(label);
                 }
@@ -814,9 +834,14 @@ public class AutomationCommand
             {
 
                 var label = new Label();
-                label.ForeColor = Color.Red;
+                var theme = editorForm.Theme.ErrorLabel;
+                //label.ForeColor = Color.Red;
+                //label.AutoSize = true;
+                //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
                 label.AutoSize = true;
-                label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                label.ForeColor = theme.FontColor;
+                label.BackColor = theme.BackColor;
                 label.Text = "Command not enabled for custom rendering!";
                 UIControls.Add(label);
             }
