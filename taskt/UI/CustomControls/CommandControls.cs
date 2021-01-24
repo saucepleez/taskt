@@ -734,6 +734,8 @@ namespace taskt.UI.CustomControls
             if (cbo == null)
                 return null;
 
+            cbo.BeginUpdate();
+
             cbo.Items.Clear();
             cbo.Items.Add("Current Window");
 
@@ -748,7 +750,7 @@ namespace taskt.UI.CustomControls
                 }
             }
 
-
+            cbo.EndUpdate();
 
             return cbo;
         }
@@ -759,12 +761,16 @@ namespace taskt.UI.CustomControls
 
             if (editor != null)
             {
+                cbo.BeginUpdate();
+
                 cbo.Items.Clear();
 
                 foreach (var variable in editor.scriptVariables)
                 {
                     cbo.Items.Add(variable.VariableName);
                 }
+
+                cbo.EndUpdate();
 
             }
 
