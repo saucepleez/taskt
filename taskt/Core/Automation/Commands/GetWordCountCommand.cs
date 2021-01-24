@@ -9,22 +9,22 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
+    [Attributes.ClassAttributes.Description("This command allows you to you to retrieve the word count of a string or variable.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find word count of a string or variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class GetWordCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. Hello world, {{{vSomeVariable}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputValue { get; set; }
 
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted json")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive word count")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
