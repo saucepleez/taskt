@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     public class GetWordCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. Hello world, {{{vSomeVariable}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring the word count (ex. Hello world, {{{vText}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
         [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]

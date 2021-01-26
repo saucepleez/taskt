@@ -15,26 +15,26 @@ namespace taskt.Core.Automation.Commands
     public class StringReplaceCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify (ex. Hello, {{{vText}}}")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify (ex. Hello, {{{vText}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the text to be replaced")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the text to be replaced (ex. H, {{{vTextA}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the old value of the text that will be replaced")]
-        [Attributes.PropertyAttributes.SampleUsage("H")]
+        [Attributes.PropertyAttributes.SampleUsage("H, {{{vTextA}}}")]
         [Attributes.PropertyAttributes.Remarks("H in Hello would be targeted for replacement")]
         public string v_replacementText { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the replacement value")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the replacement value (ex. J, {{{vTextB}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the new value after replacement")]
-        [Attributes.PropertyAttributes.SampleUsage("J")]
+        [Attributes.PropertyAttributes.SampleUsage("J, {{{vTextB}}}")]
         [Attributes.PropertyAttributes.Remarks("H would be replaced with J to create 'Jello'")]
         public string v_replacementValue { get; set; }
 

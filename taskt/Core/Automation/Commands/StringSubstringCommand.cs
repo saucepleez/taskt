@@ -15,22 +15,22 @@ namespace taskt.Core.Automation.Commands
     public class StringSubstringCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text (ex. Hello, {{{vText}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
 
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Start from Position")]
+        [Attributes.PropertyAttributes.PropertyDescription("Start from Position (ex, 1, {{{vPosition}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the starting position within the string")]
         [Attributes.PropertyAttributes.SampleUsage("0 for beginning, 1 for first character, etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_startIndex { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Length (-1 to keep remainder)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Length (-1 to keep remainder) (ex. 1, -1, {{{vLength}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
         [Attributes.PropertyAttributes.SampleUsage("-1 to keep remainder, 1 for 1 position after start index, etc.")]

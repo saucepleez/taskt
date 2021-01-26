@@ -16,15 +16,15 @@ namespace taskt.Core.Automation.Commands
     public class RegExExtractorCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. {vSomeVariable})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. hallo hello, {{{vText}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Input the RegEx Extractor Pattern")]
+        [Attributes.PropertyAttributes.PropertyDescription("Input the RegEx Extractor Pattern (ex. \\w+)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the RegEx extractor pattern that should be used to extract the text")]
         [Attributes.PropertyAttributes.SampleUsage(@"^([\w\-]+)")]
         [Attributes.PropertyAttributes.Remarks("If an extractor splits each word in a sentence, for example, you will need to specify the associated index of the word that is required.")]
