@@ -18,7 +18,8 @@ namespace taskt.Core.Automation.Commands
     public class SendAdvancedKeyStrokesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Notepad, {{{vWindowName}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -64,7 +65,7 @@ namespace taskt.Core.Automation.Commands
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName
+                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
                 };
                 activateWindow.RunCommand(sender);
             }
