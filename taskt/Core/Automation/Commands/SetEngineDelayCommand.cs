@@ -15,9 +15,9 @@ namespace taskt.Core.Automation.Commands
     public class SetEngineDelayCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Set Delay between commands (in milliseconds).")]
+        [Attributes.PropertyAttributes.PropertyDescription("Set Delay between commands (in milliseconds). (ex. 2500, {{{vWait}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
-        [Attributes.PropertyAttributes.SampleUsage("**250** or **{vVariableSpeed}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**250** or **{{{vVariableSpeed}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_EngineSpeed { get; set; }

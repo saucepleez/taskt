@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Enter the instance name of the Stopwatch")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Provide a unique instance or way to refer to the stopwatch")]
-        [Attributes.PropertyAttributes.SampleUsage("**myStopwatch**, **{vStopWatch}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myStopwatch**, **{{{vStopWatch}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_StopwatchName { get; set; }
 
@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Enter the Stopwatch Action")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Provide a unique instance or way to refer to the stopwatch")]
-        [Attributes.PropertyAttributes.SampleUsage("**myStopwatch**, **{vStopWatch}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myStopwatch**, **{{{vStopWatch}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_StopwatchAction { get; set; }
 
@@ -39,7 +39,8 @@ namespace taskt.Core.Automation.Commands
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify String Format")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify String Format (ex. hh:mm)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
         [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -59,7 +60,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Stopwatch";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_StopwatchName = "default";
+            this.v_StopwatchName = "RPAStopwatch";
             this.v_StopwatchAction = "Start Stopwatch";
         }
 
