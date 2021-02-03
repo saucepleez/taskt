@@ -289,15 +289,31 @@ namespace taskt.UI.CustomControls
         }
 
       
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName)
+        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = -1, int height = -1)
         {
+            if (width < 1)
+            {
+                width = 400;
+            }
+            if (height < 1)
+            {
+                height = 250;
+            }
+
             var gridView = new DataGridView();
-            gridView.AllowUserToAddRows = true;
-            gridView.AllowUserToDeleteRows = true;
-            gridView.Size = new Size(400, 250);
+            gridView.AllowUserToAddRows = AllowAddRows;
+            gridView.AllowUserToDeleteRows = AllowDeleteRows;
+            gridView.Size = new Size(width, height);
             gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridView.DataBindings.Add("DataSource", sourceCommand, dataSourceName, false, DataSourceUpdateMode.OnPropertyChanged);
-            gridView.AllowUserToResizeRows = false;
+            gridView.AllowUserToResizeRows = AllowResizeRows;
+
+            var theme = CurrentEditor.Theme.Datagridview;
+            gridView.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            gridView.ForeColor = theme.FontColor;
+            gridView.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
+            gridView.RowTemplate.Height = Convert.ToInt32(theme.FontSize) + 20;
+
             return gridView;
         }
         private static void ShowCodeBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)

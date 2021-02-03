@@ -70,6 +70,16 @@ namespace taskt.Core
             }
         }
 
+        // datagridview
+        private UIFont _datagridview = new UIFont();
+        public UIFont Datagridview
+        {
+            get
+            {
+                return _datagridview;
+            }
+        }
+
         // uiHelper
         private UIFont _uihelper = new UIFont("Segoe UI Semilight", 10, FontStyle.Regular, Color.AliceBlue, Color.Transparent);
         public UIFont UIHelper
