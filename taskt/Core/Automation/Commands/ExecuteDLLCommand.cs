@@ -73,13 +73,12 @@ namespace taskt.Core.Automation.Commands
             this.v_MethodParameters.Columns.Add("Parameter Value");
             this.v_MethodParameters.TableName = DateTime.Now.ToString("MethodParameterTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
-            ParametersGridViewHelper = new DataGridView();
-            ParametersGridViewHelper.AllowUserToAddRows = true;
-            ParametersGridViewHelper.AllowUserToDeleteRows = true;
-            ParametersGridViewHelper.Size = new Size(350, 125);
-            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_MethodParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            //ParametersGridViewHelper = new DataGridView();
+            //ParametersGridViewHelper.AllowUserToAddRows = true;
+            //ParametersGridViewHelper.AllowUserToDeleteRows = true;
+            //ParametersGridViewHelper.Size = new Size(350, 125);
+            //ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_MethodParameters", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         public override void RunCommand(object sender)
@@ -234,6 +233,9 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_MethodParameters", true, true, true, -1, 135);
+            ParametersGridViewHelper.CellClick += ParametersGridViewHelper_CellClick;
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ClassName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MethodName", this, editor));
@@ -247,16 +249,20 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_MethodParameters", this, new Control[] { ParametersGridViewHelper }, editor));
             RenderedControls.Add(ParametersGridViewHelper);
-    
-
 
             return RenderedControls;
         }
 
 
+        public void ParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ParametersGridViewHelper.BeginEdit(true);
+        }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Call Method '" + v_MethodName + "' in '" + v_ClassName + "']";
         }
+
     }
 }
