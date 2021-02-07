@@ -910,16 +910,20 @@ namespace taskt.UI.Forms
             //insert command
             lstScriptActions.Items.Insert(insertionIndex, command);
 
+            var focusIndex = insertionIndex;
+
             //special types also get a following command and comment
             if ((selectedCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginListLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiLoopCommand))
             {
                 lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndLoopCommand()));
+                focusIndex++;
             }
             else if ((selectedCommand is Core.Automation.Commands.BeginIfCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiIfCommand))
             {
                 lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndIfCommand()));
+                focusIndex++;
             }
             else if (selectedCommand is Core.Automation.Commands.TryCommand)
             {
@@ -927,6 +931,7 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.CatchExceptionCommand() { v_Comment = "Items in this section will run if error occurs" }));
                 lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "This section executes if error occurs above" }));
                 lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndTryCommand()));
+                focusIndex++;
             }
 
             // focus insert command
@@ -939,7 +944,7 @@ namespace taskt.UI.Forms
                     lstScriptActions.Items[idx].Focused = false;
                 }
             }
-            lstScriptActions.Items[insertionIndex].Selected = true;
+            lstScriptActions.Items[focusIndex].Selected = true;
             lstScriptActions.MultiSelect = true;
 
             CreateUndoSnapshot();
