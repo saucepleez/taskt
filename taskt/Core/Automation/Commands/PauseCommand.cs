@@ -49,5 +49,18 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Wait for " + v_PauseLength + "ms]";
         }
+
+        public override bool IsValidate()
+        {
+            if (String.IsNullOrEmpty(v_PauseLength))
+            {
+                MessageBox.Show("Time of pause is empty.", SelectionName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
