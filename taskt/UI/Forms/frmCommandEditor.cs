@@ -254,6 +254,8 @@ namespace taskt.UI.Forms
 
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
+            selectedCommand.BeforeValidate();
+
             //commit any datagridviews
             foreach (Control ctrl in flw_InputVariables.Controls)
             {
@@ -269,11 +271,16 @@ namespace taskt.UI.Forms
                     var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
                     cmd.v_ImageCapture = typedControl.EncodedImage;
                 }
-
-
             }
 
-            this.DialogResult = DialogResult.OK;
+            if (selectedCommand.IsValidate())
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                // nothing
+            }
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)

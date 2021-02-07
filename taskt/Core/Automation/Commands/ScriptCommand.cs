@@ -281,5 +281,15 @@ namespace taskt.Core.Automation.Commands
         {
 
         }
+
+        public virtual void BeforeValidate()
+        {
+        }
+
+        public virtual bool IsValidate()
+        {
+            return true;
+        }
+
     }
 }
