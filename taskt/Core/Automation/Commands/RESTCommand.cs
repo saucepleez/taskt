@@ -367,27 +367,41 @@ namespace taskt.Core.Automation.Commands
 
         public void RESTParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex != 0)
+            if (e.ColumnIndex >= 0)
             {
-                RESTParametersGridViewHelper.BeginEdit(true);
+                if (e.ColumnIndex != 0)
+                {
+                    RESTParametersGridViewHelper.BeginEdit(false);
+                }
+                else if (RESTParametersGridViewHelper.Rows[e.RowIndex].Cells[0].Value.ToString() == "")
+                {
+                    // Parameter type is empty
+                    SendKeys.Send("{F4}");  // show combobox list
+                }
             }
-            else if (RESTParametersGridViewHelper.Rows[e.RowIndex].Cells[0].Value.ToString() == "")
+            else
             {
-                // Parameter type is empty
-                SendKeys.Send("{F4}");  // show combobox list
+                RESTParametersGridViewHelper.EndEdit();
             }
         }
 
         public void AdvancedRESTParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex != 3)
+            if (e.ColumnIndex >= 0)
             {
-                AdvancedRESTParametersGridViewHelper.BeginEdit(true);
+                if (e.ColumnIndex != 3)
+                {
+                    AdvancedRESTParametersGridViewHelper.BeginEdit(false);
+                }
+                else if (AdvancedRESTParametersGridViewHelper.Rows[e.RowIndex].Cells[3].Value.ToString() == "")
+                {
+                    // parameter type is empty
+                    SendKeys.Send("{F4}");  // show combobx list
+                }
             }
-            else if (AdvancedRESTParametersGridViewHelper.Rows[e.RowIndex].Cells[3].Value.ToString() == "")
+            else
             {
-                // parameter type is empty
-                SendKeys.Send("{F4}");  // show combobx list
+                AdvancedRESTParametersGridViewHelper.EndEdit();
             }
         }
 
