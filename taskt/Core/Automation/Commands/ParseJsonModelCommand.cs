@@ -49,12 +49,12 @@ namespace taskt.Core.Automation.Commands
             v_ParseObjects.Columns.Add("Output Variable");
             v_ParseObjects.TableName = $"ParseJsonObjectsTable{DateTime.Now.ToString("MMddyyhhmmss")}";
 
-            ParseObjectsGridViewHelper = new DataGridView();
-            ParseObjectsGridViewHelper.AllowUserToAddRows = true;
-            ParseObjectsGridViewHelper.AllowUserToDeleteRows = true;
-            ParseObjectsGridViewHelper.Size = new Size(400, 250);
-            ParseObjectsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ParseObjectsGridViewHelper.DataBindings.Add("DataSource", this, "v_ParseObjects", false, DataSourceUpdateMode.OnPropertyChanged);
+            //ParseObjectsGridViewHelper = new DataGridView();
+            //ParseObjectsGridViewHelper.AllowUserToAddRows = true;
+            //ParseObjectsGridViewHelper.AllowUserToDeleteRows = true;
+            //ParseObjectsGridViewHelper.Size = new Size(400, 250);
+            //ParseObjectsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //ParseObjectsGridViewHelper.DataBindings.Add("DataSource", this, "v_ParseObjects", false, DataSourceUpdateMode.OnPropertyChanged);
 
         }
 
@@ -126,6 +126,9 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            ParseObjectsGridViewHelper = CommandControls.CreateDataGridView(this, "v_ParseObjects");
+            ParseObjectsGridViewHelper.CellClick += ParseObjectsGridViewHelper_CellClick;
+
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
@@ -134,17 +137,39 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(ParseObjectsGridViewHelper);
 
-           
-
             return RenderedControls;
 
         }
 
-
-
         public override string GetDisplayValue()
         {
             return $"{base.GetDisplayValue()} [Select {v_ParseObjects.Rows.Count} item(s) from JSON]";
+        }
+
+        public void ParseObjectsGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                ParseObjectsGridViewHelper.BeginEdit(true);
+            }
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (ParseObjectsGridViewHelper.IsCurrentCellDirty || ParseObjectsGridViewHelper.IsCurrentRowDirty)
+            {
+                ParseObjectsGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_ParseObjects.NewRow();
+                v_ParseObjects.Rows.Add(newRow);
+                for (var i = v_ParseObjects.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_ParseObjects.Rows[i][0].ToString() == "" && v_ParseObjects.Rows[i][1].ToString() == "")
+                    {
+                        v_ParseObjects.Rows[i].Delete();
+                    }
+                }
+            }
         }
     }
 }
