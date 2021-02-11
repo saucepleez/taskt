@@ -289,7 +289,7 @@ namespace taskt.UI.CustomControls
         }
 
       
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = -1, int height = -1)
+        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = -1, int height = -1, bool AutoGenerateColumns = true )
         {
             if (width < 1)
             {
@@ -303,6 +303,7 @@ namespace taskt.UI.CustomControls
             var gridView = new DataGridView();
             gridView.AllowUserToAddRows = AllowAddRows;
             gridView.AllowUserToDeleteRows = AllowDeleteRows;
+            gridView.AutoGenerateColumns = AutoGenerateColumns;
             gridView.Size = new Size(width, height);
             gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridView.DataBindings.Add("DataSource", sourceCommand, dataSourceName, false, DataSourceUpdateMode.OnPropertyChanged);

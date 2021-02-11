@@ -261,7 +261,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-           var baseURLControlSet = CommandControls.CreateDefaultInputGroupFor("v_BaseURL", this, editor);
+            var baseURLControlSet = CommandControls.CreateDefaultInputGroupFor("v_BaseURL", this, editor);
             RenderedControls.AddRange(baseURLControlSet);
 
             var apiEndPointControlSet = CommandControls.CreateDefaultInputGroupFor("v_APIEndPoint", this, editor);
@@ -284,12 +284,15 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_RESTParameters", this));
 
-            RESTParametersGridViewHelper = new DataGridView();
-            RESTParametersGridViewHelper.Width = 500;
-            RESTParametersGridViewHelper.Height = 140;
+            //RESTParametersGridViewHelper = new DataGridView();
+            //RESTParametersGridViewHelper.Width = 500;
+            //RESTParametersGridViewHelper.Height = 140;
 
-            RESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            RESTParametersGridViewHelper.AutoGenerateColumns = false;
+            //RESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            //RESTParametersGridViewHelper.AutoGenerateColumns = false;
+
+            RESTParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_RESTParameters", true, true, false, -1, 140, false );
+            RESTParametersGridViewHelper.CellClick += RESTParametersGridViewHelper_CellClick;
 
             var selectColumn = new DataGridViewComboBoxColumn();
             selectColumn.HeaderText = "Type";
@@ -307,18 +310,20 @@ namespace taskt.Core.Automation.Commands
             paramValueColumn.DataPropertyName = "Parameter Value";
             RESTParametersGridViewHelper.Columns.Add(paramValueColumn);
        
-            RESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_RESTParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            //RESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_RESTParameters", false, DataSourceUpdateMode.OnPropertyChanged);
             RenderedControls.Add(RESTParametersGridViewHelper);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_AdvancedParameters", this));
 
             //advanced parameters
-            AdvancedRESTParametersGridViewHelper = new DataGridView();
-            AdvancedRESTParametersGridViewHelper.Width = 500;
-            AdvancedRESTParametersGridViewHelper.Height = 140;
+            //AdvancedRESTParametersGridViewHelper = new DataGridView();
+            //AdvancedRESTParametersGridViewHelper.Width = 500;
+            //AdvancedRESTParametersGridViewHelper.Height = 140;
 
-            AdvancedRESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            AdvancedRESTParametersGridViewHelper.AutoGenerateColumns = false;
+            //AdvancedRESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            //AdvancedRESTParametersGridViewHelper.AutoGenerateColumns = false;
+            AdvancedRESTParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_AdvancedParameters", true, true, false, -1, 140, false);
+            AdvancedRESTParametersGridViewHelper.CellClick += AdvancedRESTParametersGridViewHelper_CellClick;
 
             var advParamNameColumn = new DataGridViewTextBoxColumn();
             advParamNameColumn.HeaderText = "Name";
@@ -342,7 +347,7 @@ namespace taskt.Core.Automation.Commands
             advParamType.DataSource = new string[] { "Cookie", "GetOrPost", "HttpHeader", "QueryString", "RequestBody", "URLSegment", "QueryStringWithoutEncode"};
             AdvancedRESTParametersGridViewHelper.Columns.Add(advParamType);
 
-            AdvancedRESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_AdvancedParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            //AdvancedRESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_AdvancedParameters", false, DataSourceUpdateMode.OnPropertyChanged);
             RenderedControls.Add(AdvancedRESTParametersGridViewHelper);
 
 
@@ -358,6 +363,65 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [URL: " + v_BaseURL +  v_APIEndPoint + "]";
+        }
+
+        public void RESTParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != 0)
+            {
+                RESTParametersGridViewHelper.BeginEdit(true);
+            }
+            else if (RESTParametersGridViewHelper.Rows[e.RowIndex].Cells[0].Value.ToString() == "")
+            {
+                // Parameter type is empty
+                SendKeys.Send("{F4}");  // show combobox list
+            }
+        }
+
+        public void AdvancedRESTParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != 3)
+            {
+                AdvancedRESTParametersGridViewHelper.BeginEdit(true);
+            }
+            else if (AdvancedRESTParametersGridViewHelper.Rows[e.RowIndex].Cells[3].Value.ToString() == "")
+            {
+                // parameter type is empty
+                SendKeys.Send("{F4}");  // show combobx list
+            }
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (RESTParametersGridViewHelper.IsCurrentCellDirty || RESTParametersGridViewHelper.IsCurrentRowDirty)
+            {
+                RESTParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_RESTParameters.NewRow();
+                v_RESTParameters.Rows.Add(newRow);
+
+                for (var i = v_RESTParameters.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_RESTParameters.Rows[i][0].ToString() == "" && v_RESTParameters.Rows[i][1].ToString() == "" && v_RESTParameters.Rows[i][2].ToString() == "")
+                    {
+                        v_RESTParameters.Rows[i].Delete();
+                    }
+                }
+            }
+            if (AdvancedRESTParametersGridViewHelper.IsCurrentCellDirty || AdvancedRESTParametersGridViewHelper.IsCurrentRowDirty)
+            {
+                AdvancedRESTParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_AdvancedParameters.NewRow();
+                v_AdvancedParameters.Rows.Add(newRow);
+
+                for (var i = v_AdvancedParameters.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_AdvancedParameters.Rows[i][0].ToString() == "" && v_AdvancedParameters.Rows[i][1].ToString() == "" && v_AdvancedParameters.Rows[i][2].ToString() == "" && v_AdvancedParameters.Rows[i][3].ToString() == "")
+                    {
+                        v_AdvancedParameters.Rows[i].Delete();
+                    }
+                }
+            }
         }
 
     }
