@@ -94,20 +94,6 @@ namespace taskt.Core.Automation.Commands
             this.v_WebActionParameterTable.TableName = DateTime.Now.ToString("WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
             this.v_WebActionParameterTable.Columns.Add("Parameter Name");
             this.v_WebActionParameterTable.Columns.Add("Parameter Value");
-
-            SearchGridViewHelper = new DataGridView();
-            SearchGridViewHelper.AllowUserToAddRows = true;
-            SearchGridViewHelper.AllowUserToDeleteRows = true;
-            SearchGridViewHelper.Size = new Size(400, 250);
-            SearchGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            SearchGridViewHelper.DataBindings.Add("DataSource", this, "v_WebSearchParameter", false, DataSourceUpdateMode.OnPropertyChanged);
-
-            ElementsGridViewHelper = new DataGridView();
-            ElementsGridViewHelper.AllowUserToAddRows = true;
-            ElementsGridViewHelper.AllowUserToDeleteRows = true;
-            ElementsGridViewHelper.Size = new Size(400, 250);
-            ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private Boolean InspectFrame(IHTMLElementCollection elementCollection, EnumerableRowCollection<DataRow> elementSearchProperties, object sender, SHDocVw.InternetExplorer browserInstance)
@@ -401,6 +387,25 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            //SearchGridViewHelper = new DataGridView();
+            //SearchGridViewHelper.AllowUserToAddRows = true;
+            //SearchGridViewHelper.AllowUserToDeleteRows = true;
+            //SearchGridViewHelper.Size = new Size(400, 250);
+            //SearchGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //SearchGridViewHelper.DataBindings.Add("DataSource", this, "v_WebSearchParameter", false, DataSourceUpdateMode.OnPropertyChanged);
+            SearchGridViewHelper = CommandControls.CreateDataGridView(this, "v_WebSearchParameter", true, true, false, 400, 250);
+            SearchGridViewHelper.CellClick += SearchGridViewHelper_CellClick;
+
+            //ElementsGridViewHelper = new DataGridView();
+            //ElementsGridViewHelper.AllowUserToAddRows = true;
+            //ElementsGridViewHelper.AllowUserToDeleteRows = true;
+            //ElementsGridViewHelper.Size = new Size(400, 250);
+            //ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            ElementsGridViewHelper = CommandControls.CreateDataGridView(this, "v_WebActionParameterTable", false , false, false, 400, 150);
+            ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
+            ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
             SearchParameterControls = new List<Control>();
@@ -531,6 +536,57 @@ namespace taskt.Core.Automation.Commands
             }
             if (parameters.Length > 0) parameters = parameters.Substring(1);
             return base.GetDisplayValue() + " [ Action: '" + v_WebAction + " " + parameters + "', Instance Name: '" + v_InstanceName + "']";
+        }
+
+
+        private void SearchGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex != 0)
+                {
+                    SearchGridViewHelper.BeginEdit(false);
+                }
+            }
+            else
+            {
+                SearchGridViewHelper.EndEdit();
+            }
+        }
+
+
+        private void ElementsGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void ElementsGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                ElementsGridViewHelper.BeginEdit(false);
+            }
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (SearchGridViewHelper.IsCurrentCellDirty || SearchGridViewHelper.IsCurrentRowDirty)
+            {
+                SearchGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_WebSearchParameter.NewRow();
+                v_WebSearchParameter.Rows.Add(newRow);
+                for (var i = v_WebSearchParameter.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_WebSearchParameter.Rows[i][1].ToString() == "" && v_WebSearchParameter.Rows[i][2].ToString() == "")
+                    {
+                        v_WebSearchParameter.Rows[i].Delete();
+                    }
+                }
+            }
         }
 
     }
