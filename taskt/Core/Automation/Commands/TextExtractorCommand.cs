@@ -209,7 +209,7 @@ namespace taskt.Core.Automation.Commands
             // click colmum b, change edit mode
             if (e.ColumnIndex == 1)
             {
-                ParametersGridViewHelper.BeginEdit(true);
+                ParametersGridViewHelper.BeginEdit(false);
             }
         }
         private string GetParameterValue(string parameterName)

@@ -256,7 +256,14 @@ namespace taskt.Core.Automation.Commands
 
         public void ParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            ParametersGridViewHelper.BeginEdit(true);
+            if (e.ColumnIndex >= 0)
+            {
+                ParametersGridViewHelper.BeginEdit(false);
+            }
+            else
+            {
+                ParametersGridViewHelper.EndEdit();
+            }
         }
 
         public override string GetDisplayValue()

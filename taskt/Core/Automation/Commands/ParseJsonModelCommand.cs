@@ -150,7 +150,11 @@ namespace taskt.Core.Automation.Commands
         {
             if (e.ColumnIndex >= 0)
             {
-                ParseObjectsGridViewHelper.BeginEdit(true);
+                ParseObjectsGridViewHelper.BeginEdit(false);
+            }
+            else
+            {
+                ParseObjectsGridViewHelper.EndEdit();
             }
         }
 
