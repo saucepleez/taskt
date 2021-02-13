@@ -289,13 +289,13 @@ namespace taskt.UI.CustomControls
         }
 
       
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = -1, int height = -1, bool AutoGenerateColumns = true )
+        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
         {
-            if (width < 1)
+            if (width < 100)
             {
                 width = 400;
             }
-            if (height < 1)
+            if (height < 100)
             {
                 height = 250;
             }
@@ -314,6 +314,11 @@ namespace taskt.UI.CustomControls
             gridView.ForeColor = theme.FontColor;
             gridView.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
             gridView.RowTemplate.Height = Convert.ToInt32(theme.FontSize) + 20;
+
+            if (headerRowHeight > 1)
+            {
+                gridView.ColumnHeadersHeight = ((Convert.ToInt32(theme.FontSize) + 15) * headerRowHeight);
+            }
 
             return gridView;
         }
