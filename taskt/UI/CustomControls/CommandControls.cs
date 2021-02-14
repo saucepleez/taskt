@@ -408,13 +408,35 @@ namespace taskt.UI.CustomControls
                         return;
                     }
 
-                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
                     {
                         MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    {
+                        if (targetDGV.Tag == null)
+                        {
+                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        else if (targetDGV.Tag.ToString() != "column-a-editable")
+                        {
+                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+
+                    var source = (DataTable)targetDGV.DataSource;
+                    var rowIndex = targetDGV.SelectedCells[0].RowIndex;
+                    var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
+                    if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
+                    {
+                        source.Rows.Add(source.NewRow());
+                    }
+                    var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
+                    targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
 
 
