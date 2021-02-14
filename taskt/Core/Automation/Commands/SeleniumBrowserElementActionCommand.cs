@@ -111,18 +111,6 @@ namespace taskt.Core.Automation.Commands
             };
             this.v_WebActionParameterTable.Columns.Add("Parameter Name");
             this.v_WebActionParameterTable.Columns.Add("Parameter Value");
-
-            ElementsGridViewHelper = new DataGridView();
-            ElementsGridViewHelper.AllowUserToAddRows = true;
-            ElementsGridViewHelper.AllowUserToDeleteRows = true;
-            ElementsGridViewHelper.Size = new Size(400, 250);
-            ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            ElementsGridViewHelper.AllowUserToAddRows = false;
-            ElementsGridViewHelper.AllowUserToDeleteRows = false;
-            ElementsGridViewHelper.AllowUserToResizeRows = false;
-            //ElementsGridViewHelper.MouseEnter += ElementsGridViewHelper_MouseEnter;
-
         }
 
         //private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
@@ -555,6 +543,19 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            //ElementsGridViewHelper = new DataGridView();
+            //ElementsGridViewHelper.AllowUserToAddRows = true;
+            //ElementsGridViewHelper.AllowUserToDeleteRows = true;
+            //ElementsGridViewHelper.Size = new Size(400, 250);
+            //ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            //ElementsGridViewHelper.AllowUserToAddRows = false;
+            //ElementsGridViewHelper.AllowUserToDeleteRows = false;
+            //ElementsGridViewHelper.AllowUserToResizeRows = false;
+            ElementsGridViewHelper = CommandControls.CreateDataGridView(this, "v_WebActionParameterTable", false, false);
+            ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
+            ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SeleniumSearchType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumSearchParameter", this, editor));
@@ -576,6 +577,8 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
+
+
 
         //public override void Refresh(UI.Forms.frmCommandEditor editor)
         //{
@@ -757,8 +760,37 @@ namespace taskt.Core.Automation.Commands
                 }
                
             }
+        }
 
-         
+        private void ElementsGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void ElementsGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex == 1)
+                {
+                    var targetCell = ElementsGridViewHelper.Rows[e.RowIndex].Cells[1];
+                    if (targetCell is DataGridViewTextBoxCell)
+                    {
+                        ElementsGridViewHelper.BeginEdit(false);
+                    }
+                    else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
+                    {
+                        SendKeys.Send("%{DOWN}");
+                    }
+                }
+            }
+            else
+            {
+                ElementsGridViewHelper.EndEdit();
+            }
         }
 
         public override string GetDisplayValue()
