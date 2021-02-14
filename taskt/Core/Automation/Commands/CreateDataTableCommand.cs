@@ -98,6 +98,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
 
             ColumnNamesGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            ColumnNamesGridViewHelper.Tag = "column-a-editable";
             ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
 
             return RenderedControls;

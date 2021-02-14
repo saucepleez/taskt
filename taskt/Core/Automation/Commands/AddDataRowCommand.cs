@@ -100,6 +100,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_AddDataDataTable", this, editor));
             AddDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            AddDataGridViewHelper.Tag = "column-a-editable";
             AddDataGridViewHelper.CellClick += AddDataGridViewHelper_CellClick;
 
             taskt.UI.CustomControls.CommandItemControl loadSchemaControl = new taskt.UI.CustomControls.CommandItemControl();
