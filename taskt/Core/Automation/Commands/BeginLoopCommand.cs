@@ -77,25 +77,6 @@ namespace taskt.Core.Automation.Commands
             };
             this.v_LoopActionParameterTable.Columns.Add("Parameter Name");
             this.v_LoopActionParameterTable.Columns.Add("Parameter Value");
-
-            LoopGridViewHelper = new DataGridView();
-            LoopGridViewHelper.AllowUserToAddRows = true;
-            LoopGridViewHelper.AllowUserToDeleteRows = true;
-            LoopGridViewHelper.Size = new Size(400, 250);
-            LoopGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            LoopGridViewHelper.DataBindings.Add("DataSource", this, "v_LoopActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            LoopGridViewHelper.AllowUserToAddRows = false;
-            LoopGridViewHelper.AllowUserToDeleteRows = false;
-            LoopGridViewHelper.MouseEnter += LoopGridViewHelper_MouseEnter;
-
-            RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
-            RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            RecorderControl.ForeColor = Color.AliceBlue;
-            RecorderControl.Name = "guirecorder_helper";
-            RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-            RecorderControl.CommandDisplay = "Element Recorder";
-            RecorderControl.Click += ShowLoopElementRecorder;
-            RecorderControl.Hide();
         }
         private void LoopGridViewHelper_MouseEnter(object sender, EventArgs e)
         {
@@ -538,6 +519,32 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            //LoopGridViewHelper = new DataGridView();
+            //LoopGridViewHelper.AllowUserToAddRows = true;
+            //LoopGridViewHelper.AllowUserToDeleteRows = true;
+            //LoopGridViewHelper.Size = new Size(400, 250);
+            //LoopGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //LoopGridViewHelper.DataBindings.Add("DataSource", this, "v_LoopActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            //LoopGridViewHelper.AllowUserToAddRows = false;
+            //LoopGridViewHelper.AllowUserToDeleteRows = false;
+            LoopGridViewHelper = CommandControls.CreateDataGridView(this, "v_LoopActionParameterTable", false, false);
+            LoopGridViewHelper.MouseEnter += LoopGridViewHelper_MouseEnter;
+            LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
+            LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;
+
+            var helperTheme = editor.Theme.UIHelper;
+            RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
+            RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            //RecorderControl.ForeColor = Color.AliceBlue;
+            RecorderControl.Font = new Font(helperTheme.Font, helperTheme.FontSize, helperTheme.Style);
+            RecorderControl.ForeColor = helperTheme.FontColor;
+            RecorderControl.BackColor = helperTheme.BackColor;
+            RecorderControl.Name = "guirecorder_helper";
+            RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            RecorderControl.CommandDisplay = "Element Recorder";
+            RecorderControl.Click += ShowLoopElementRecorder;
+            RecorderControl.Hide();
+
             ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_LoopActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionType", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_LoopActionType", this, new Control[] { ActionDropdown }, editor));
@@ -952,6 +959,35 @@ namespace taskt.Core.Automation.Commands
                     return "Loop While .... ";
             }
 
+        }
+        private void LoopGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+        private void LoopGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex == 1)
+                {
+                    var targetCell = LoopGridViewHelper.Rows[e.RowIndex].Cells[0];
+                    if (targetCell is DataGridViewTextBoxCell)
+                    {
+                        LoopGridViewHelper.BeginEdit(false);
+                    }
+                    else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
+                    {
+                        SendKeys.Send("%{DOWN}");
+                    }
+                }
+            }
+            else
+            {
+                LoopGridViewHelper.EndEdit();
+            }
         }
     }
 }
