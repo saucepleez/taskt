@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
 
             this.v_UseHttps = bool.Parse(caseType.ToLower());
 
-            if (!this.v_URL.StartsWith("http://") && !this.v_URL.StartsWith("https://"))
+            if (!this.v_URL.StartsWith("http"))
             {
                 this.v_URL = this.v_HttpsChoice[v_UseHttps] + this.v_URL;
             }
@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            if (!this.v_URL.StartsWith("http://") && !this.v_URL.StartsWith("https://"))
+            if (!this.v_URL.StartsWith("http"))
             {
                 return base.GetDisplayValue() + " [URL: '" + v_HttpsChoice[v_UseHttps] + v_URL + "', Instance Name: '" + v_InstanceName + "']";
             }
