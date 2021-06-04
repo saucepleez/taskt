@@ -109,7 +109,8 @@ namespace taskt.Core.Automation.Commands
 
             }
 
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true);
+
+            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(startFile, null, variableList, true, currentScriptEngine.PreloadedTasks);
             
             //Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance) sender;
             currentScriptEngine.tasktEngineUI.Invoke((Action)delegate () { currentScriptEngine.tasktEngineUI.TopMost = false; });

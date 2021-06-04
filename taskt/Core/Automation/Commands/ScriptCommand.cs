@@ -246,7 +246,9 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ThickAppGetTextCommand))]
     [XmlInclude(typeof(DatabaseRunQueryCommand))]
     [XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
-    
+    [XmlInclude(typeof(ExcelAddWorksheetCommand))]
+    [XmlInclude(typeof(LoadTaskCommand))]
+    [XmlInclude(typeof(UnloadTaskCommand))]
 
     public abstract class ScriptCommand
     {
