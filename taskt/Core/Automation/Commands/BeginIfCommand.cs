@@ -62,6 +62,7 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         CommandItemControl RecorderControl;
+
         public BeginIfCommand()
         {
             this.CommandName = "BeginIfCommand";
@@ -540,7 +541,7 @@ namespace taskt.Core.Automation.Commands
             //IfGridViewHelper.DataBindings.Add("DataSource", this, "v_IfActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             //IfGridViewHelper.AllowUserToAddRows = false;
             //IfGridViewHelper.AllowUserToDeleteRows = false;
-            IfGridViewHelper = CommandControls.CreateDataGridView(this, "v_IfActionParameterTable", false, false, false, 400, 250);
+            IfGridViewHelper = CommandControls.CreateDataGridView(this, "v_IfActionParameterTable", false, false, false, 400, 150);
             IfGridViewHelper.MouseEnter += IfGridViewHelper_MouseEnter;
             IfGridViewHelper.CellClick += IfGridViewHelper_CellClick;
             IfGridViewHelper.CellBeginEdit += IfGridViewHelper_CellBeginEdit;

@@ -143,12 +143,22 @@ namespace taskt.Core
             sb.AppendLine("<!--TITLE: Automation Commands -->");
             sb.AppendLine("<!-- SUBTITLE: an overview of available commands in taskt. -->");
             sb.AppendLine("## Automation Commands");
-            sb.AppendLine("| Command Group   	| Command Name 	|  Command Description	|");
-            sb.AppendLine("| ---                | ---           | ---                   |");
 
+            var sortHighLevelCommandInfo = highLevelCommandInfo
+                                            .OrderBy(t => t.Group)
+                                            .ThenBy(t => t.Name);
 
-            foreach (var cmd in highLevelCommandInfo)
+            string oldGroup = "";
+
+            foreach (var cmd in sortHighLevelCommandInfo)
             {
+                if (oldGroup != cmd.Group)
+                {
+                    sb.AppendLine("### " + cmd.Group);
+                    sb.AppendLine("| Command Group   	| Command Name 	|  Command Description	|");
+                    sb.AppendLine("| ---                | ---           | ---                   |");
+                    oldGroup = cmd.Group;
+                }
                 sb.AppendLine("|" + cmd.Group + "|[" + cmd.Name + "](" + cmd.Location + ")|" + cmd.Description + "|");
             }
 
