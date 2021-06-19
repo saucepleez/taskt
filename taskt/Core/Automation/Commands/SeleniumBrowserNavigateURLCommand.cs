@@ -8,7 +8,7 @@ using taskt.UI.Forms;
 namespace taskt.Core.Automation.Commands
 {
 
-  
+
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
@@ -31,6 +31,17 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_URL { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional: Specify HTTPS usage")]
+        [Attributes.PropertyAttributes.InputSpecification("Choose if you want to use HTTP or HTTPS for navigation. If no protocol is specified in the URL above, taskt will resort to this choice.")]
+        [Attributes.PropertyAttributes.SampleUsage("\"True\" to use HTTPS, \"False\" if you want to try HTTP instead")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("True")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("False")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public bool v_UseHttps { get; set; }
+        private Dictionary<bool, string> v_HttpsChoice = new Dictionary<bool, string>();
+
 
         public SeleniumBrowserNavigateURLCommand()
         {
@@ -39,18 +50,32 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "default";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_UseHttps = true;
+            this.v_HttpsChoice.Add(true, "https://");
+            this.v_HttpsChoice.Add(false, "http://");
+
         }
 
         public override void RunCommand(object sender)
         {
+
+            var caseType = v_UseHttps.ToString().ConvertToUserVariable(sender);
+
+            this.v_UseHttps = bool.Parse(caseType.ToLower());
+
+            if (!this.v_URL.StartsWith("http"))
+            {
+                this.v_URL = this.v_HttpsChoice[v_UseHttps] + this.v_URL;
+            }
+
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
             var browserObject = engine.GetAppInstance(vInstance);
 
-
             var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+
             seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
 
         }
@@ -62,12 +87,22 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
 
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_UseHttps", this, editor));
+
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [URL: '" + v_URL + "', Instance Name: '" + v_InstanceName + "']";
+            if (!this.v_URL.StartsWith("http"))
+            {
+                return base.GetDisplayValue() + " [URL: '" + v_HttpsChoice[v_UseHttps] + v_URL + "', Instance Name: '" + v_InstanceName + "']";
+            }
+            else
+            {
+                return base.GetDisplayValue() + " [URL: '" + v_URL + "', Instance Name: '" + v_InstanceName + "']";
+            }
+            
         }
         private void WaitForReadyState(SHDocVw.InternetExplorer ieInstance)
         {

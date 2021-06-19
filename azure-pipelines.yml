@@ -28,19 +28,6 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-
-- task: DownloadSecureFile@1
-  inputs:
-    secureFile: 'app_cert'
-
-- task: codesigning@2
-  inputs:
-    secureFileId: 'app_cert'
-    signCertPassword: '$(certPass)'
-    files: '**/taskt.exe'
-    timeServer: 'http://timestamp.digicert.com'
-    hashingAlgorithm: 'SHA256'
-
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'

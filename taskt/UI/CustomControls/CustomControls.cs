@@ -455,6 +455,9 @@ namespace taskt.UI
             uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
 
             // DataTable
+            uiImages.Add("LoadTaskCommand", taskt.Properties.Resources.command_start_process);
+            uiImages.Add("UnloadTaskCommand", taskt.Properties.Resources.command_stop_process);
+            uiImages.Add("ExcelAddWorksheetCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
             uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);

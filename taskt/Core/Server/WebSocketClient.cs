@@ -231,6 +231,10 @@ namespace taskt.Core.Server
 
             try
             {
+                if (SocketClient.webSocket is null)
+                    return;
+
+
                 if (SocketClient.webSocket.State == WebSocket4Net.WebSocketState.Open)
                 {
                     using (WebClient client = new WebClient())
