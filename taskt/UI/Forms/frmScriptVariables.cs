@@ -29,6 +29,7 @@ namespace taskt.UI.Forms
         TreeNode userVariableParentNode;
         public string leadingValue = "Default Value: ";
         public string emptyValue = "(no default value)";
+        public Core.ApplicationSettings appSettings;
         #region Initialization and Form Load
 
         public frmScriptVariables()
@@ -42,6 +43,7 @@ namespace taskt.UI.Forms
             InitializeNodes("Default Task Variables", Core.Common.GenerateSystemVariables());
         }
 
+        // create variables TreeNode
         private TreeNode InitializeNodes(string parentName, List<Core.Script.ScriptVariable> variables)
         {
 
@@ -63,6 +65,7 @@ namespace taskt.UI.Forms
 
         #endregion
 
+
         #region Add/Cancel Buttons
         private void uiBtnOK_Click(object sender, EventArgs e)
         {
@@ -79,8 +82,6 @@ namespace taskt.UI.Forms
 
                 //add to list
                 scriptVariables.Add(new Core.Script.ScriptVariable() { VariableName = VariableName, VariableValue = VariableValue });
-        
-
             }
 
             //return success result
@@ -100,20 +101,34 @@ namespace taskt.UI.Forms
         private void uiBtnNew_Click(object sender, EventArgs e)
         {
             //create variable editing form
-            Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable();
-            ExpandUserVariableNode();
-
-            //validate if user added variable
-            if (addVariableForm.ShowDialog() == DialogResult.OK)
+            using (Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable())
             {
-                //add newly edited node
-                AddUserVariableNode(userVariableParentNode, addVariableForm.txtVariableName.Text, addVariableForm.txtDefaultValue.Text);
+                addVariableForm.appSettings = this.appSettings;
+                ExpandUserVariableNode();
+
+                //validate if user added variable
+                if (addVariableForm.ShowDialog() == DialogResult.OK)
+                {
+                    string newVaiable = addVariableForm.txtVariableName.Text.Trim();
+                    if (checkVariableName(newVaiable))
+                    {
+                        if (!isVariableExists(newVaiable))
+                        {
+                            //add newly edited node
+                            AddUserVariableNode(userVariableParentNode, newVaiable, addVariableForm.txtDefaultValue.Text);
+                        }
+                        else
+                        {
+                            MessageBox.Show("'" + newVaiable + "' is already exists.", "Variable Error");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("'" + newVaiable + "' contains bad character(ex. { } [ ] + - * /).", "Variable Error");
+                    }
+                }
             }
-
-
         }
-
-        
 
         private void tvScriptVariables_DoubleClick(object sender, EventArgs e)
         {
@@ -155,20 +170,52 @@ namespace taskt.UI.Forms
             }
 
             //create variable editing form
-            Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable(VariableName, VariableValue);
-            ExpandUserVariableNode();
-
-            //validate if user added variable
-            if (addVariableForm.ShowDialog() == DialogResult.OK)
+            using (Supplement_Forms.frmAddVariable addVariableForm = new Supplement_Forms.frmAddVariable(VariableName, VariableValue))
             {
-                //remove parent
-                parentNode.Remove();
+                addVariableForm.appSettings = this.appSettings;
+                ExpandUserVariableNode();
 
-                //add newly edited node
-                AddUserVariableNode(userVariableParentNode, addVariableForm.txtVariableName.Text, addVariableForm.txtDefaultValue.Text);
+                //validate if user added variable
+                if (addVariableForm.ShowDialog() == DialogResult.OK)
+                {
+                    string newVariable = addVariableForm.txtVariableName.Text;
+                    if (VariableName == newVariable)
+                    {
+                        // variable name don't change
+
+                        //remove parent
+                        parentNode.Remove();
+
+                        //add newly edited node
+                        AddUserVariableNode(userVariableParentNode, newVariable, addVariableForm.txtDefaultValue.Text);
+                    }
+                    else
+                    {
+                        // variable name changed
+                        if (checkVariableName(newVariable))
+                        {
+                            if (!isVariableExists(newVariable))
+                            {
+                                //remove parent
+                                parentNode.Remove();
+
+                                //add newly edited node
+                                AddUserVariableNode(userVariableParentNode, newVariable, addVariableForm.txtDefaultValue.Text);
+                            }
+                            else
+                            {
+                                MessageBox.Show("'" + newVariable + "' is already exists.", "Variable Error");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("'" + newVariable + "' contains bad character(ex. { } [ ] + - * /).", "Variable Error");
+                        }
+                    }
+                }
             }
-
         }
+
         private void AddUserVariableNode(TreeNode parentNode, string VariableName, string variableText)
         {
             //add new node and sort
@@ -248,6 +295,38 @@ namespace taskt.UI.Forms
             return node;
         }
         #endregion
+
+        private bool isVariableExists(string variableName)
+        {
+            foreach(TreeNode parentNode in tvScriptVariables.Nodes)
+            {
+                foreach(TreeNode child in parentNode.Nodes)
+                {
+                    if (variableName == child.Text)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool checkVariableName(string variableName)
+        {
+            if (variableName.Contains('{') || variableName.Contains('}') ||
+                variableName.Contains('[') || variableName.Contains(']') ||
+                variableName.Contains('+') || variableName.Contains('-') ||
+                variableName.Contains('*') || variableName.Contains('*') ||
+                variableName.Contains('%') ||
+                variableName.Contains(' '))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
