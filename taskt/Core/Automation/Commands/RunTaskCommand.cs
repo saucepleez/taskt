@@ -94,9 +94,9 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 var variableReturn = "No";
-                if (rw.ItemArray[2].GetType().ToString() != "System.DBNull")
+                if (rw.ItemArray[2].GetType().ToString() == "System.String")
                 {
-                     variableReturn = (string)rw.ItemArray[2];
+                    variableReturn = (string)rw.ItemArray[2];
                 }
                 variableList.Add(new Script.ScriptVariable
                 {
