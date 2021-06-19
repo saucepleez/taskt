@@ -12,6 +12,8 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmAddVariable : ThemedForm
     {
+        public Core.ApplicationSettings appSettings;
+
         public frmAddVariable()
         {
             InitializeComponent();
@@ -28,7 +30,8 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void frmAddVariable_Load(object sender, EventArgs e)
         {
-
+            lblDefineNameDescription.Text = lblDefineNameDescription.Tag.ToString().Replace("{{{", appSettings.EngineSettings.VariableStartMarker)
+                    .Replace("}}}", appSettings.EngineSettings.VariableEndMarker);
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
