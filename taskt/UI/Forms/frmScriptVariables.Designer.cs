@@ -147,10 +147,10 @@
             this.lblDefineName.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.lblDefineName.Location = new System.Drawing.Point(55, 45);
             this.lblDefineName.Name = "lblDefineName";
-            this.lblDefineName.Size = new System.Drawing.Size(270, 40);
+            this.lblDefineName.Size = new System.Drawing.Size(294, 40);
             this.lblDefineName.TabIndex = 1;
-            this.lblDefineName.Text = "Double-Click to edit existing variables\r\nPress \'DEL\' key to delete existing varia" +
-    "bles";
+            this.lblDefineName.Text = "Enter or Double-Click to edit existing variables\r\nPress \'DEL\' key to delete exist" +
+    "ing variables";
             // 
             // uiBtnNew
             // 
@@ -192,6 +192,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmScriptVariables";
             this.Text = "Variables";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmScriptVariables_FormClosed);
             this.Load += new System.EventHandler(this.frmScriptVariables_Load);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).EndInit();

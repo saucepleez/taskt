@@ -283,6 +283,10 @@ namespace taskt.UI.Forms
                 //remove parent node
                 parentNode.Remove();
             }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                tvScriptVariables_DoubleClick(null, null);
+            }
         }
 
         private TreeNode GetSelectedTopNode()
@@ -331,6 +335,13 @@ namespace taskt.UI.Forms
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.FillRectangle(this.Theme.CreateGradient(panel2.ClientRectangle), panel2.ClientRectangle);
+        }
+
+        private void frmScriptVariables_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // release
+            userVariableParentNode.Remove();
+            userVariableParentNode = null;
         }
     }
 }
