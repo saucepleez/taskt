@@ -1342,14 +1342,17 @@ namespace taskt.UI.Forms
         private void btnManageVariables_Click(object sender, EventArgs e)
         {
 
-            UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            scriptVariableEditor.scriptVariables = this.scriptVariables;
+            //using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
+            //{
+            //    scriptVariableEditor.appSettings = this.appSettings;
+            //    scriptVariableEditor.scriptVariables = this.scriptVariables;
 
-            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            {
-                this.scriptVariables = scriptVariableEditor.scriptVariables;
-            }
-
+            //    if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            //    {
+            //        this.scriptVariables = scriptVariableEditor.scriptVariables;
+            //    }
+            //}
+            showVariableManager();
         }
 
         private void frmScriptBuilder_SizeChanged(object sender, EventArgs e)
@@ -1679,13 +1682,14 @@ namespace taskt.UI.Forms
 
         private void uiBtnAddVariable_Click(object sender, EventArgs e)
         {
-            UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            scriptVariableEditor.scriptVariables = this.scriptVariables;
+            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
+            //scriptVariableEditor.scriptVariables = this.scriptVariables;
 
-            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            {
-                this.scriptVariables = scriptVariableEditor.scriptVariables;
-            }
+            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            //{
+            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
+            //}
+            showVariableManager();
         }
 
         private void uiBtnRunScript_Click(object sender, EventArgs e)
@@ -2012,6 +2016,22 @@ namespace taskt.UI.Forms
 
         #endregion
 
+        #region Variable Edit
+        private void showVariableManager()
+        {
+            using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
+            {
+                scriptVariableEditor.appSettings = this.appSettings;
+                scriptVariableEditor.scriptVariables = this.scriptVariables;
+
+                if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+                {
+                    this.scriptVariables = scriptVariableEditor.scriptVariables;
+                }
+            }
+        }
+        #endregion
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -2126,13 +2146,14 @@ namespace taskt.UI.Forms
 
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            scriptVariableEditor.scriptVariables = this.scriptVariables;
+            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
+            //scriptVariableEditor.scriptVariables = this.scriptVariables;
 
-            if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            {
-                this.scriptVariables = scriptVariableEditor.scriptVariables;
-            }
+            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            //{
+            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
+            //}
+            showVariableManager();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
