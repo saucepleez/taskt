@@ -92,7 +92,12 @@ namespace taskt.Core.Automation.Commands
                 {
                     variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender);
                 }
-                var variableReturn = (string)rw.ItemArray[2];
+
+                var variableReturn = "No";
+                if (rw.ItemArray[2].GetType().ToString() != "System.DBNull")
+                {
+                     variableReturn = (string)rw.ItemArray[2];
+                }
                 variableList.Add(new Script.ScriptVariable
                 {
                     VariableName = variableName,
