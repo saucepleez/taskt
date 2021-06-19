@@ -146,7 +146,8 @@ namespace taskt.Core
 
             var sortHighLevelCommandInfo = highLevelCommandInfo
                                             .OrderBy(t => t.Group)
-                                            .ThenBy(t => t.Name);
+                                            .ThenBy(t => t.Name)
+                                            .ToList();
 
             string oldGroup = "";
 
@@ -175,6 +176,13 @@ namespace taskt.Core
             fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
+            // release
+            commandClasses.Clear();
+            commandClasses = null;
+            highLevelCommandInfo.Clear();
+            highLevelCommandInfo = null;
+            sortHighLevelCommandInfo.Clear();
+            sortHighLevelCommandInfo = null;
 
             return docsFolderName;
 
