@@ -420,9 +420,13 @@ namespace taskt.UI
 {
     public static class Images
     {
+        private static Dictionary<string, Image> imageList = new Dictionary<string, Image>();
+
         public static Dictionary<string, Image> UIImageDictionary()
         {
-            var uiImages = new Dictionary<string, Image>();
+            //var uiImages = new Dictionary<string, Image>();
+            Dictionary<string, Image> uiImages = imageList;
+
             // API
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
             uiImages.Add("RESTCommand", taskt.Properties.Resources.command_run_code);
@@ -664,16 +668,24 @@ namespace taskt.UI
             uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
             uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);
-            
+
+            // release
+            GC.Collect();
 
             return uiImages;
         }
         public static ImageList UIImageList()
         {
-            Dictionary<string, Image> imageIcons = UIImageDictionary();
+            //Dictionary<string, Image> imageIcons = UIImageDictionary();
+            if (imageList.Count == 0)
+            {
+                UIImageDictionary();
+            }
+
             ImageList uiImages = new ImageList();
             uiImages.ImageSize = new Size(16, 16);
-            foreach (var icon in imageIcons)
+            //foreach (var icon in imageIcons)
+            foreach (var icon in imageList)
             {
 
                 //var someImage = icon.Value;
@@ -689,8 +701,6 @@ namespace taskt.UI
                 //}
 
                 uiImages.Images.Add(icon.Key, icon.Value);
-
-
             }
 
 
@@ -701,7 +711,6 @@ namespace taskt.UI
         {
             using (System.Drawing.Image oldImage = image)
             {
-      
                 using (Bitmap newImage = new Bitmap(16, 16, System.Drawing.Imaging.PixelFormat.Format32bppRgb))
                 {
                     using (Graphics canvas = Graphics.FromImage(newImage))
@@ -717,11 +726,17 @@ namespace taskt.UI
         }
         public static Image GetUIImage(string commandName)
         {
-            var uiImageDictionary = UIImageDictionary();
+            //var uiImageDictionary = UIImageDictionary();
+            if (imageList.Count == 0)
+            {
+                UIImageDictionary();
+            }
+
             Image uiImage;
             try
             {
-                uiImage = uiImageDictionary[commandName];
+                //uiImage = uiImageDictionary[commandName];
+                uiImage = imageList[commandName];
             }
             catch (Exception)
             {
