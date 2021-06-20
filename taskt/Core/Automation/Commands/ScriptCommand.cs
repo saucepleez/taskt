@@ -278,6 +278,9 @@ namespace taskt.Core.Automation.Commands
         public bool CommandEnabled { get; set; }
 
         [XmlIgnore]
+        public bool IsValid { get; protected set; }
+
+        [XmlIgnore]
         public bool CustomRendering { get; set; }
 
         [XmlIgnore]
@@ -292,6 +295,7 @@ namespace taskt.Core.Automation.Commands
             this.IsCommented = false;
             this.CustomRendering = false;
             this.GenerateID();
+            this.IsValid = true;
         }
 
         public void GenerateID()
@@ -350,6 +354,7 @@ namespace taskt.Core.Automation.Commands
 
         public virtual bool IsValidate()
         {
+            this.IsValid = true;
             return true;
         }
 

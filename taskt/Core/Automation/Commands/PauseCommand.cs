@@ -55,10 +55,12 @@ namespace taskt.Core.Automation.Commands
             if (String.IsNullOrEmpty(v_PauseLength))
             {
                 MessageBox.Show("Time of pause is empty.", SelectionName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.IsValid = false;
                 return false;
             }
             else
             {
+                this.IsValid = true;
                 return true;
             }
         }
