@@ -56,19 +56,22 @@ namespace taskt.Core.Automation.Commands
 
             var script = v_ScriptCode.ConvertToUserVariable(sender);
             var args = v_Args.ConvertToUserVariable(sender);
-            var timeout = v_TimeOut.ConvertToUserVariable(sender);
+            var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);
 
             var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
             //configure timeout
             int timeOut;
-            if (!int.TryParse(timeout, out timeOut))
+            if (!int.TryParse(inputTimeout, out timeOut))
             {
-                timeOut = 60;
+                timeOut = -1;
             }
 
             //set driver timeout
-            seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0,0, timeOut);
+            if (timeOut > 0)
+            {
+                seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0, 0, timeOut);
+            }
                
             //run script
             OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
@@ -76,11 +79,25 @@ namespace taskt.Core.Automation.Commands
             object result;
             if (String.IsNullOrEmpty(args))
             {
-                result = js.ExecuteAsyncScript(script);
+                if (timeOut > 1)
+                {
+                    result = js.ExecuteAsyncScript(script);
+                }
+                else
+                {
+                    result = js.ExecuteScript(script);
+                }
             }
             else
             {
-                result = js.ExecuteAsyncScript(script, args);
+                if (timeOut > 1)
+                {
+                    result = js.ExecuteAsyncScript(script, args);
+                }
+                else
+                {
+                    result = js.ExecuteScript(script, args);
+                }
             }
 
             //apply result to variable
