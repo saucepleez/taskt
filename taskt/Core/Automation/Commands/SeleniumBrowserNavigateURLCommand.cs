@@ -63,9 +63,10 @@ namespace taskt.Core.Automation.Commands
 
             this.v_UseHttps = bool.Parse(caseType.ToLower());
 
-            if (!this.v_URL.StartsWith("http"))
+            var parsedURL = v_URL.ConvertToUserVariable(sender);
+            if (!parsedURL.StartsWith("http"))
             {
-                this.v_URL = this.v_HttpsChoice[v_UseHttps] + this.v_URL;
+                parsedURL = this.v_HttpsChoice[v_UseHttps] + parsedURL;
             }
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
@@ -76,7 +77,7 @@ namespace taskt.Core.Automation.Commands
 
             var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
-            seleniumInstance.Navigate().GoToUrl(v_URL.ConvertToUserVariable(sender));
+            seleniumInstance.Navigate().GoToUrl(parsedURL);
 
         }
         public override List<Control> Render(frmCommandEditor editor)
