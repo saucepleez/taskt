@@ -279,7 +279,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                // nothing
+                this.DialogResult = DialogResult.OK;
             }
         }
 
