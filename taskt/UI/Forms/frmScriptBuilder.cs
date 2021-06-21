@@ -1078,12 +1078,16 @@ namespace taskt.UI.Forms
                             // pause
                             commandNameBrush = Brushes.Plum;
                         }
+                        else if (!command.IsValid)
+                        {
+                            // invalid
+                            commandNameBrush = Brushes.Crimson;
+                        }
                         else
                         {
                             commandNameBrush = Brushes.White;
                         }
                         commandBackgroundBrush = Brushes.DodgerBlue;
-
                     }
                     else if (command.PauseBeforeExeucution)
                     {
@@ -1100,7 +1104,15 @@ namespace taskt.UI.Forms
                     else
                     {
                         //standard coloring
-                        commandNameBrush = Brushes.SteelBlue;
+                        if (command.IsValid)
+                        {
+                            commandNameBrush = Brushes.SteelBlue;
+                            
+                        }
+                        else
+                        {
+                            commandNameBrush = Brushes.Crimson;
+                        }
                         commandBackgroundBrush = Brushes.WhiteSmoke;
                     }
 
