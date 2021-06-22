@@ -135,6 +135,9 @@ namespace taskt.UI.CustomControls
                 inputBox.Items.Add(option.uiOption);
             }
 
+            inputBox.KeyUp += (sender, e) => ComboBoxKeyUp(sender, e);
+            inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
+
             return inputBox;
 
         }
@@ -151,6 +154,8 @@ namespace taskt.UI.CustomControls
             inputBox.Width = 300;
             inputBox.Name = parameterName;
 
+            inputBox.KeyUp += (sender, e) => ComboBoxKeyUp(sender, e);
+            inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
 
             return inputBox;
 
@@ -390,13 +395,31 @@ namespace taskt.UI.CustomControls
                 {
                     TextBox targetTextbox = (TextBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    string str = targetTextbox.Text;
+                    int cursorPos = targetTextbox.SelectionStart;
+                    string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                    targetTextbox.Focus();
+                    targetTextbox.SelectionStart = cursorPos + ins.Length;
+                    targetTextbox.SelectionLength = 0;
+                    //targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is ComboBox)
                 {
                     ComboBox targetCombobox = (ComboBox)inputBox.Tag;
+                    string str = targetCombobox.Text;
+                    int cursorPos;
+                    if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
+                    {
+                        cursorPos = str.Length;
+                    }
+                    string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                    targetCombobox.Focus();
+                    targetCombobox.SelectionStart = cursorPos + ins.Length;
+                    targetCombobox.SelectionLength = 0;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    //targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is DataGridView)
                 {
@@ -681,6 +704,20 @@ namespace taskt.UI.CustomControls
             }
 
         }
+
+        private static void ComboBoxKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            ComboBox trg = (ComboBox)sender;
+            trg.Tag = trg.SelectionStart;
+            Console.WriteLine(trg.Tag);
+        }
+        private static void ComboBoxClick(object sender, System.EventArgs e)
+        {
+            ComboBox trg = (ComboBox)sender;
+            trg.Tag = trg.SelectionStart;
+            Console.WriteLine(trg.Tag);
+        }
+
         private static void AddInputParameter(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
 
