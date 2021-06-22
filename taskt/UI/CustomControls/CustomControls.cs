@@ -420,12 +420,14 @@ namespace taskt.UI
 {
     public static class Images
     {
-        private static Dictionary<string, Image> imageList = new Dictionary<string, Image>();
+        //private static Dictionary<string, Image> imageList = new Dictionary<string, Image>();
+        private static ImageList uiImages = new ImageList();
 
         public static Dictionary<string, Image> UIImageDictionary()
         {
             //var uiImages = new Dictionary<string, Image>();
-            Dictionary<string, Image> uiImages = imageList;
+            //Dictionary<string, Image> uiImages = imageList;
+            Dictionary<string, Image> uiImages = new Dictionary<string, Image>();
 
             // API
             uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
@@ -668,24 +670,31 @@ namespace taskt.UI
             uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
             uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
             uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("_NotFoundCommand", taskt.Properties.Resources.command_files);
 
             // release
-            GC.Collect();
+            //GC.Collect();
 
             return uiImages;
         }
         public static ImageList UIImageList()
         {
-            //Dictionary<string, Image> imageIcons = UIImageDictionary();
-            if (imageList.Count == 0)
-            {
-                UIImageDictionary();
-            }
+            Dictionary<string, Image> imageIcons = UIImageDictionary();
+            //if (imageList.Count == 0)
+            //{
+            //    UIImageDictionary();
+            //}
 
-            ImageList uiImages = new ImageList();
+            //ImageList uiImages = new ImageList();
+
+            if (uiImages.Images.Count > 0)
+            {
+                return uiImages;
+            }
+            
             uiImages.ImageSize = new Size(16, 16);
             //foreach (var icon in imageIcons)
-            foreach (var icon in imageList)
+            foreach (var icon in imageIcons)
             {
 
                 //var someImage = icon.Value;
@@ -703,7 +712,8 @@ namespace taskt.UI
                 uiImages.Images.Add(icon.Key, icon.Value);
             }
 
-
+            // release
+            imageIcons.Clear();
 
             return uiImages;
         }
@@ -726,23 +736,39 @@ namespace taskt.UI
         }
         public static Image GetUIImage(string commandName)
         {
-            //var uiImageDictionary = UIImageDictionary();
-            if (imageList.Count == 0)
+            ////var uiImageDictionary = UIImageDictionary();
+            //if (imageList.Count == 0)
+            //{
+            //    UIImageDictionary();
+            //}
+
+            //Image uiImage;
+            //try
+            //{
+            //    //uiImage = uiImageDictionary[commandName];
+            //    uiImage = imageList[commandName];
+            //}
+            //catch (Exception)
+            //{
+            //    uiImage = Properties.Resources.command_files;
+            //}
+
+            if (uiImages.Images.Count == 0)
             {
-                UIImageDictionary();
+                UIImageList();
             }
 
-            Image uiImage;
+            Image retImage;
             try
             {
-                //uiImage = uiImageDictionary[commandName];
-                uiImage = imageList[commandName];
+                retImage = uiImages.Images[uiImages.Images.IndexOfKey(commandName)];
             }
             catch (Exception)
             {
-                uiImage = Properties.Resources.command_files;
+                retImage = uiImages.Images[uiImages.Images.IndexOfKey("_NotFoundCommand")];
             }
-            return uiImage;
+
+            return retImage;
         }
     }
 }

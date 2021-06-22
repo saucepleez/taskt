@@ -233,6 +233,9 @@ namespace taskt.UI.Forms
 
             }
 
+            // release
+            GC.Collect();
+
         }
         private void GenerateRecentFiles()
         {
