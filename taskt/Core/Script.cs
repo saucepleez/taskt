@@ -128,8 +128,7 @@ namespace taskt.Core.Script
             if (scriptFilePath != "")
             {
                 //write to file
-                System.IO.FileStream fs;
-                using (fs = System.IO.File.Create(scriptFilePath))
+                using (System.IO.FileStream fs = System.IO.File.Create(scriptFilePath))
                 {
                     using (XmlWriter writer = XmlWriter.Create(fs, settings))
                     {
@@ -138,6 +137,9 @@ namespace taskt.Core.Script
                 }  
             }
 
+            // release
+            settings = null;
+            serializer = null;
 
             return script;
         }
@@ -158,9 +160,6 @@ namespace taskt.Core.Script
                 Script deserializedData = (Script)serializer.Deserialize(reader);
                 return deserializedData;
             }
-
-          
-            
         }
         /// <summary>
         /// Deserializes an XML string into user-defined commands (server sends a string to the client)
