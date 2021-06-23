@@ -137,10 +137,6 @@ namespace taskt.Core.Script
                 }  
             }
 
-            // release
-            settings = null;
-            serializer = null;
-
             return script;
         }
         /// <summary>
