@@ -1612,9 +1612,6 @@ namespace taskt.UI.Forms
                     Notify("Please verify the ordering of your ifs.");
                     return;
                 }
-
-
-
             }
 
             //extras were found
@@ -1639,43 +1636,19 @@ namespace taskt.UI.Forms
             //define default output path
             if ((this.ScriptFilePath == null) || (saveAs))
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-                saveFileDialog.RestoreDirectory = true;
-                saveFileDialog.Filter = "Xml (*.xml)|*.xml";
-
-                if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    return;
+                    saveFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+                    saveFileDialog.RestoreDirectory = true;
+                    saveFileDialog.Filter = "Xml (*.xml)|*.xml";
+
+                    if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                    {
+                        return;
+                    }
+
+                    this.ScriptFilePath = saveFileDialog.FileName;
                 }
-
-                this.ScriptFilePath = saveFileDialog.FileName;
-
-
-                // var fileName = Microsoft.VisualBasic.Interaction.InputBox("Please enter a file name (without extension)", "Enter File Name", "Default", -1, -1);
-
-
-
-                //var rpaScriptsFolder = Core.Common.GetScriptFolderPath();
-
-                //if (!System.IO.Directory.Exists(rpaScriptsFolder))
-                //{
-                //    UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0);
-
-                //    if (userDialog.ShowDialog() == DialogResult.OK)
-                //    {
-                //        System.IO.Directory.CreateDirectory(rpaScriptsFolder);
-                //    }
-                //    else
-                //    {
-                //        return;
-                //    }
-
-
-                //}
-
-
-                //this.ScriptFilePath = rpaScriptsFolder + fileName + ".xml";
             }
 
             //serialize script
@@ -1687,7 +1660,7 @@ namespace taskt.UI.Forms
             }
             catch (Exception ex)
             {
-                Notify("Er ror: " + ex.ToString());
+                Notify("Save Error: " + ex.ToString());
             }
 
 
