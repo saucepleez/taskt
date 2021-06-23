@@ -150,14 +150,16 @@ namespace taskt.Core.Script
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
 
-            System.IO.FileStream fs;
-
             //open file stream from file
-            using (fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
+            using (System.IO.FileStream fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
             {
                 //read and return data
                 XmlReader reader = XmlReader.Create(fs);
                 Script deserializedData = (Script)serializer.Deserialize(reader);
+
+                // release
+                serializer = null;
+
                 return deserializedData;
             }
         }
@@ -166,10 +168,12 @@ namespace taskt.Core.Script
         /// </summary>
         public static Script DeserializeXML(string scriptXML)
         {
-            System.IO.StringReader reader = new System.IO.StringReader(scriptXML);
-            XmlSerializer serializer = new XmlSerializer(typeof(Script));
-            Script deserializedData = (Script)serializer.Deserialize(reader);
-            return deserializedData;
+            using (System.IO.StringReader reader = new System.IO.StringReader(scriptXML))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                Script deserializedData = (Script)serializer.Deserialize(reader);
+                return deserializedData;
+            }
         }
     }
 
