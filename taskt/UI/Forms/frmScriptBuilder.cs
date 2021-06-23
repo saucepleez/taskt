@@ -50,6 +50,8 @@ namespace taskt.UI.Forms
         private int reqdIndex;
         private int selectedIndex = -1;
 
+        private bool dontSaveFlag = false;
+
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndex = -1;
         private frmScriptBuilder parentBuilder { get; set; }
@@ -2117,6 +2119,12 @@ namespace taskt.UI.Forms
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.ScriptFilePath = null;
+
+            if (dontSaveFlag)
+            {
+
+            }
+
             lstScriptActions.Items.Clear();
             HideSearchInfo();
             scriptVariables = new List<Core.Script.ScriptVariable>();
@@ -2127,16 +2135,18 @@ namespace taskt.UI.Forms
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //show ofd
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
-
-            //if user selected file
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                //open file
-                OpenFile(openFileDialog.FileName);
+                openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Filter = "Xml (*.xml)|*.xml";
+
+                //if user selected file
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //open file
+                    OpenFile(openFileDialog.FileName);
+                }
             }
         }
 
