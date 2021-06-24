@@ -38,7 +38,7 @@ namespace taskt.UI.Forms
     //Features ability to add, drag/drop reorder commands
     {
         #region Instance and Form Events
-        private List<ListViewItem> rowsSelectedForCopy { get; set; }
+        //private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
         private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
         bool editMode { get; set; }
@@ -307,7 +307,7 @@ namespace taskt.UI.Forms
             if (editMode)
                 return;
 
-            Notify("Welcome! Press 'Add Command' to get started!");
+            Notify("Welcome! Press 'Start Edit Script' to get started!");
         }
         private void pnlControlContainer_Paint(object sender, PaintEventArgs e)
         {
@@ -553,25 +553,35 @@ namespace taskt.UI.Forms
         {
 
             //initialize list of items to copy   
-            if (rowsSelectedForCopy == null)
-            {
-                rowsSelectedForCopy = new List<ListViewItem>();
-            }
-            else
-            {
-                rowsSelectedForCopy.Clear();
-            }
+            //if (rowsSelectedForCopy == null)
+            //{
+            //    rowsSelectedForCopy = new List<ListViewItem>();
+            //}
+            //else
+            //{
+            //    rowsSelectedForCopy.Clear();
+            //}
 
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
+                var commands = new List<Core.Automation.Commands.ScriptCommand>();
+
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
                 {
-                    rowsSelectedForCopy.Add(item);
+                    commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
+                    //rowsSelectedForCopy.Add(item);
                     lstScriptActions.Items.Remove(item);
                 }
+                // set clipborad xml string
+                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands));
 
-                Notify(rowsSelectedForCopy.Count + " item(s) cut to clipboard!");
+                //Notify(rowsSelectedForCopy.Count + " item(s) cut to clipboard!");
+                Notify(commands.Count + " item(s) cut to clipboard!");
+
+                // release
+                commands.Clear();
+                commands = null;
             }
         }
 
@@ -579,57 +589,82 @@ namespace taskt.UI.Forms
         {
 
             //initialize list of items to copy   
-            if (rowsSelectedForCopy == null)
-            {
-                rowsSelectedForCopy = new List<ListViewItem>();
-            }
-            else
-            {
-                rowsSelectedForCopy.Clear();
-            }
+            //if (rowsSelectedForCopy == null)
+            //{
+            //    rowsSelectedForCopy = new List<ListViewItem>();
+            //}
+            //else
+            //{
+            //    rowsSelectedForCopy.Clear();
+            //}
 
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
+                var commands = new List<Core.Automation.Commands.ScriptCommand>();
+
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
                 {
-                    rowsSelectedForCopy.Add(item);
+                    commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
+                    //rowsSelectedForCopy.Add(item);
                 }
 
-                Notify(rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
+                // set clipborad xml string
+                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands));
 
+                //Notify(rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
+                Notify(commands.Count + " item(s) copied to clipboard!");
+
+                // release
+                commands.Clear();
+                commands = null;
             }
         }
 
         private void PasteRows()
         {
 
-            if (rowsSelectedForCopy != null)
+            //if (rowsSelectedForCopy != null)
+            //{
+
+            //    if (lstScriptActions.SelectedItems.Count == 0)
+            //    {
+            //        MessageBox.Show("In order to paste, you must first select a command to paste under.", "Select Command To Paste Under");
+            //        return;
+            //    }
+
+            //    //int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
+
+            //    //foreach (ListViewItem item in rowsSelectedForCopy)
+            //    //{
+            //    //    Core.Automation.Commands.ScriptCommand duplicatedCommand = (Core.Automation.Commands.ScriptCommand)Core.Common.Clone(item.Tag);
+            //    //    duplicatedCommand.GenerateID();
+            //    //    lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
+            //    //    destinationIndex += 1;                  
+            //    //}
+
+            //    //lstScriptActions.Invalidate();
+
+            //    //Notify(rowsSelectedForCopy.Count + " item(s) pasted!");
+
+            //    var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText());
+            //    //PopulateExecutionCommands(sc.Commands);
+            //    InsertExecutionCommands(sc.Commands);
+            //}
+
+            var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText());
+            if (sc != null)
             {
+                InsertExecutionCommands(sc.Commands);
 
-                if (lstScriptActions.SelectedItems.Count == 0)
-                {
-                    MessageBox.Show("In order to paste, you must first select a command to paste under.", "Select Command To Paste Under");
-                    return;
-                }
-
-                int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
-                
-                foreach (ListViewItem item in rowsSelectedForCopy)
-                {
-                    Core.Automation.Commands.ScriptCommand duplicatedCommand = (Core.Automation.Commands.ScriptCommand)Core.Common.Clone(item.Tag);
-                    duplicatedCommand.GenerateID();
-                    lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
-                    destinationIndex += 1;                  
-                }
-
-                lstScriptActions.Invalidate();
-
-                Notify(rowsSelectedForCopy.Count + " item(s) pasted!");
+                Notify(sc.Commands.Count + " item(s) pasted!");
+                // release
+                sc = null;
             }
-
-         
-
+            else
+            {
+                Notify("Error! can not paste item(s).");
+            }
         }
 
         private void UndoChange()
@@ -1425,6 +1460,9 @@ namespace taskt.UI.Forms
 
                 //notify
                 Notify("Script Loaded Successfully!");
+
+                // release
+                deserializedScript = null;
             }
             catch (Exception ex)
             {
@@ -1489,10 +1527,10 @@ namespace taskt.UI.Forms
 
 
                 //format listview
-     
 
                 //notify
                 Notify("Script Imported Successfully!");
+
             }
             catch (Exception ex)
             {
@@ -1510,8 +1548,6 @@ namespace taskt.UI.Forms
 
         public void PopulateExecutionCommands(List<Core.Script.ScriptAction> commandDetails)
         {
-            
-
             foreach (Core.Script.ScriptAction item in commandDetails)
             {
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand));
@@ -1522,8 +1558,32 @@ namespace taskt.UI.Forms
             {
                 pnlCommandHelper.Hide();
             }
-
         }
+        public int InsertExecutionCommands(List<Core.Script.ScriptAction> commandDetails, int position = -1)
+        {
+            if (position < 0)
+            {
+                if (lstScriptActions.SelectedIndices.Count == 0)
+                {
+                    position = lstScriptActions.Items.Count - 1;
+                }
+                else
+                {
+                    position = lstScriptActions.SelectedIndices[0];
+                }
+            }
+            foreach (Core.Script.ScriptAction item in commandDetails)
+            {
+                lstScriptActions.Items.Insert(position + 1, CreateScriptCommandListViewItem(item.ScriptCommand));
+                position++;
+                if (item.AdditionalScriptCommands.Count > 0)
+                {
+                    position = InsertExecutionCommands(item.AdditionalScriptCommands, position);
+                }
+            }
+            return position;
+        }
+
         private void ClearSelectedListViewItems()
         {
             lstScriptActions.SelectedItems.Clear();
@@ -1839,6 +1899,10 @@ namespace taskt.UI.Forms
         #endregion
 
         #region Link Labels
+        private void lnkStartEdit_Click(object sender, EventArgs e)
+        {
+            pnlCommandHelper.Visible = false;
+        }
         private void lnkGitProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
@@ -2283,6 +2347,7 @@ namespace taskt.UI.Forms
             }
         }
 
+       
     }
 
 }

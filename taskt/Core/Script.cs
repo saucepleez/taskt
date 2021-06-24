@@ -164,11 +164,45 @@ namespace taskt.Core.Script
         /// </summary>
         public static Script DeserializeXML(string scriptXML)
         {
-            using (System.IO.StringReader reader = new System.IO.StringReader(scriptXML))
+            try
+            {
+                using (System.IO.StringReader reader = new System.IO.StringReader(scriptXML))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                    Script deserializedData = (Script)serializer.Deserialize(reader);
+                    return deserializedData;
+                }
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static string SerializeScript(List<Core.Automation.Commands.ScriptCommand> commands)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Script));
+
+            var actions = new Script();
+            foreach(taskt.Core.Automation.Commands.ScriptCommand cmd in commands)
+            {
+                actions.AddNewParentCommand(cmd);
+            }
+            using (var writer = new System.IO.StringWriter())
+            {
+                serializer.Serialize(writer, actions);
+                actions = null;
+                return writer.ToString();
+            }
+        }
+
+        public static Script DeserializeScript(string scriptXML)
+        {
+            using (var reader = new System.IO.StringReader(scriptXML))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(Script));
-                Script deserializedData = (Script)serializer.Deserialize(reader);
-                return deserializedData;
+                var ret = (Script)serializer.Deserialize(reader);
+                return ret;
             }
         }
     }
