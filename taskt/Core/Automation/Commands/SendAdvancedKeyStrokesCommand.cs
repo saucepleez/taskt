@@ -18,7 +18,8 @@ namespace taskt.Core.Automation.Commands
     public class SendAdvancedKeyStrokesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, Current Window, {{{vWindowName}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -64,7 +65,7 @@ namespace taskt.Core.Automation.Commands
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName
+                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
                 };
                 activateWindow.RunCommand(sender);
             }
@@ -149,12 +150,14 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
-            KeystrokeGridHelper = new DataGridView();
-            KeystrokeGridHelper.DataBindings.Add("DataSource", this, "v_KeyActions", false, DataSourceUpdateMode.OnPropertyChanged);
-            KeystrokeGridHelper.AllowUserToDeleteRows = true;
-            KeystrokeGridHelper.AutoGenerateColumns = false;
-            KeystrokeGridHelper.Width = 500;
-            KeystrokeGridHelper.Height = 140;
+            //KeystrokeGridHelper = new DataGridView();
+            //KeystrokeGridHelper.DataBindings.Add("DataSource", this, "v_KeyActions", false, DataSourceUpdateMode.OnPropertyChanged);
+            //KeystrokeGridHelper.AllowUserToDeleteRows = true;
+            //KeystrokeGridHelper.AutoGenerateColumns = false;
+            //KeystrokeGridHelper.Width = 500;
+            //KeystrokeGridHelper.Height = 140;
+            KeystrokeGridHelper = CommandControls.CreateDataGridView(this, "v_KeyActions", true, true, false, 500, 140, false);
+            KeystrokeGridHelper.CellClick += KeystrokeGridHelper_CellClick;
 
             DataGridViewComboBoxColumn propertyName = new DataGridViewComboBoxColumn();
             propertyName.DataSource = Core.Common.GetAvailableKeys();
@@ -168,10 +171,9 @@ namespace taskt.Core.Automation.Commands
             propertyValue.DataPropertyName = "Action";
             KeystrokeGridHelper.Columns.Add(propertyValue);
 
-            KeystrokeGridHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            KeystrokeGridHelper.AllowUserToAddRows = true;
-            KeystrokeGridHelper.AllowUserToDeleteRows = true;
-
+            //KeystrokeGridHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            //KeystrokeGridHelper.AllowUserToAddRows = true;
+            //KeystrokeGridHelper.AllowUserToDeleteRows = true;
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_KeyActions", this));
             RenderedControls.Add(KeystrokeGridHelper);
@@ -180,10 +182,38 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
-     
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Send To Window '" + v_WindowName + "']";
+        }
+        private void KeystrokeGridHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (KeystrokeGridHelper.CurrentCell.Value.ToString() == "")
+                {
+                    SendKeys.Send("%{DOWN}");
+                }
+            }
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (KeystrokeGridHelper.IsCurrentCellDirty || KeystrokeGridHelper.IsCurrentRowDirty)
+            {
+                KeystrokeGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_KeyActions.NewRow();
+                v_KeyActions.Rows.Add(newRow);
+                for (var i = v_KeyActions.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_KeyActions.Rows[i][0].ToString() == "" && v_KeyActions.Rows[i][1].ToString() == "")
+                    {
+                        v_KeyActions.Rows[i].Delete();
+                    }
+                }
+            }
         }
     }
 }

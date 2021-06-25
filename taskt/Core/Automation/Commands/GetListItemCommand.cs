@@ -18,18 +18,18 @@ namespace taskt.Core.Automation.Commands
     public class GetListItemCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name (ex. {{{vList}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a existing List.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
+        [Attributes.PropertyAttributes.SampleUsage("**{{{myData}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the List item")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the List item (ex. 0, {{{vIndex}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid List index value")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or [vIndex]")]
+        [Attributes.PropertyAttributes.SampleUsage("0 or {{{vIndex}}}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ItemIndex { get; set; }
 

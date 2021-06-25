@@ -17,10 +17,10 @@ namespace taskt.Core.Automation.Commands
     public class MathCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the input to be computed (ex. (2 + 1)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the input to be computed (ex. (2 + 1), {{{vNum}}}+1)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains valid math.")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.SampleUsage("2+1, {{{vNum}}}+1")]
         [Attributes.PropertyAttributes.Remarks("You can use known numbers or variables.")]
         public string v_InputValue { get; set; }
 
@@ -71,7 +71,15 @@ namespace taskt.Core.Automation.Commands
                 var thousandSeperator = v_ThousandSeperator.ConvertToUserVariable(sender);
 
                 //remove thousandths markers
-                variableMath = variableMath.Replace(thousandSeperator, "");
+                if (thousandSeperator != "")
+                {
+                    variableMath = variableMath.Replace(thousandSeperator, "");
+                }
+
+                if (decimalSeperator == "")
+                {
+                    decimalSeperator = ".";
+                }
 
                 //check decimal seperator
                 if (decimalSeperator != ".")

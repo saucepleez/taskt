@@ -16,10 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class FormatDataCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. {DateTime.Now}, 2500")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. {{{DateTime.Now}}}, 2500, {{{vNum}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains a date or number requiring formatting")]
-        [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now], 1/1/2000, 2500")]
+        [Attributes.PropertyAttributes.SampleUsage("{{{DateTime.Now}}}, 1/1/2000, 2500")]
         [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
         public string v_InputValue { get; set; }
 
@@ -27,13 +27,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please select the type of data")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Date")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Number")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Path")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the source type")]
-        [Attributes.PropertyAttributes.SampleUsage("Choose **Date** or **Number**")]
+        [Attributes.PropertyAttributes.SampleUsage("Choose **Date** or **Number** or **Path**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FormatType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify required output format")]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify required output format (ex. yy/MM/dd, hh:mm, #.0)")]
         [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
         [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, C2, D2, etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -54,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InputValue = "{DateTime.Now}";
+            this.v_InputValue = "{{{DateTime.Now}}}";
             this.v_FormatType = "Date";
             this.v_ToStringFormat = "MM/dd/yyyy";
             
@@ -86,6 +87,44 @@ namespace taskt.Core.Automation.Commands
                         formattedString = parsedDecimal.ToString(formatting);
                     }
                     break;
+                case "Path":
+                    switch(formatting.ToLower())
+                    {
+                        case "file":
+                        case "filename":
+                        case "fn":
+                            formattedString = Path.GetFileName(variableString);
+                            break;
+
+                        case "folder":
+                        case "directory":
+                        case "dir":
+                            formattedString = Path.GetDirectoryName(variableString);
+                            break;
+
+                        case "filewithoutextension":
+                        case "filenamewithoutextension":
+                        case "fnwoext":
+                            formattedString = Path.GetFileNameWithoutExtension(variableString);
+                            break;
+
+                        case "extension":
+                        case "ext":
+                            formattedString = Path.GetExtension(variableString);
+                            break;
+
+                        case "drive":
+                        case "drivename":
+                        case "root":
+                            formattedString = Path.GetPathRoot(variableString);
+                            break;
+
+                        default:
+                            formattedString = "";
+                            break;
+                    }
+                    break;
+                    
                 default:
                     throw new Exception("Formatter Type Not Supported: " + v_FormatType);
             }
@@ -105,6 +144,12 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
+
+            // dynamic replace variable marker
+            if (this.v_InputValue == "{{{DateTime.Now}}}")
+            {
+                this.v_InputValue = editor.ReplaceVariableMaker(this.v_InputValue);
+            }
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));

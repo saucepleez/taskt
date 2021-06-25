@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or [vTextFolderPath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or {vTextFolderPath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_MessageDirectory { get; set; }
 
@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or [vTextFolderPath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or {vTextFolderPath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_AttachmentDirectory { get; set; }
 

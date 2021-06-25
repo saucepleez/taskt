@@ -23,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter Letter of the Column to check (ex. A, B, C)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid column letter")]
         [Attributes.PropertyAttributes.SampleUsage("A, B, AA, etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -39,17 +40,20 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Last Row Index";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var columnLetter = v_ColumnLetter.ConvertToUserVariable(engine);
 
             var excelObject = engine.GetAppInstance(vInstance);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
                 var excelSheet = excelInstance.ActiveSheet;
-                var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, "A").End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
+                var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, columnLetter).End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
 
                 lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);

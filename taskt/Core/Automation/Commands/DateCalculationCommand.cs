@@ -20,10 +20,10 @@ namespace taskt.Core.Automation.Commands
     public class DateCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. {DateTime.Now}")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. {{{DateTime.Now}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains the start date.")]
-        [Attributes.PropertyAttributes.SampleUsage("[DateTime.Now] or 1/1/2000")]
+        [Attributes.PropertyAttributes.SampleUsage("{{{DateTime.Now}}}} or 1/1/2000")]
         [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
         public string v_InputValue { get; set; }
 
@@ -44,9 +44,10 @@ namespace taskt.Core.Automation.Commands
         public string v_CalculationMethod { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value (ex. 15, {{{vIncrement}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter how many units to increment by")]
-        [Attributes.PropertyAttributes.SampleUsage("15, [vIncrement]")]
+        [Attributes.PropertyAttributes.SampleUsage("15, {{{vIncrement}}}")]
         [Attributes.PropertyAttributes.Remarks("You can use negative numbers which will do the opposite, ex. Subtract Days and an increment of -5 will Add Days.")]
         public string v_Increment { get; set; }
 
@@ -72,9 +73,8 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InputValue = "{DateTime.Now}";
+            this.v_InputValue = "{{{DateTime.Now}}}";
             this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
-
         }
 
         public override void RunCommand(object sender)
@@ -148,6 +148,12 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
+
+            // dynamic replace variabl marker
+            if (this.v_InputValue == "{{{DateTime.Now}}}")
+            {
+                this.v_InputValue = editor.ReplaceVariableMaker(this.v_InputValue);
+            }
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));

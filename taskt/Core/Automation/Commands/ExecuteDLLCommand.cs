@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the DLL file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the DLL File")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.dll or [vDLLFilePath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.dll or {vDLLFilePath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer)]
         public string v_FilePath { get; set; }
@@ -73,13 +73,12 @@ namespace taskt.Core.Automation.Commands
             this.v_MethodParameters.Columns.Add("Parameter Value");
             this.v_MethodParameters.TableName = DateTime.Now.ToString("MethodParameterTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
-            ParametersGridViewHelper = new DataGridView();
-            ParametersGridViewHelper.AllowUserToAddRows = true;
-            ParametersGridViewHelper.AllowUserToDeleteRows = true;
-            ParametersGridViewHelper.Size = new Size(350, 125);
-            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_MethodParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            //ParametersGridViewHelper = new DataGridView();
+            //ParametersGridViewHelper.AllowUserToAddRows = true;
+            //ParametersGridViewHelper.AllowUserToDeleteRows = true;
+            //ParametersGridViewHelper.Size = new Size(350, 125);
+            //ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_MethodParameters", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         public override void RunCommand(object sender)
@@ -234,6 +233,9 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_MethodParameters", true, true, true, -1, 135);
+            ParametersGridViewHelper.CellClick += ParametersGridViewHelper_CellClick;
+
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ClassName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MethodName", this, editor));
@@ -247,16 +249,45 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_MethodParameters", this, new Control[] { ParametersGridViewHelper }, editor));
             RenderedControls.Add(ParametersGridViewHelper);
-    
-
 
             return RenderedControls;
         }
 
 
+        public void ParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                ParametersGridViewHelper.BeginEdit(false);
+            }
+            else
+            {
+                ParametersGridViewHelper.EndEdit();
+            }
+        }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Call Method '" + v_MethodName + "' in '" + v_ClassName + "']";
         }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (ParametersGridViewHelper.IsCurrentCellDirty || ParametersGridViewHelper.IsCurrentRowDirty)
+            {
+                ParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_MethodParameters.NewRow();
+                v_MethodParameters.Rows.Add(newRow);
+                for (var i = v_MethodParameters.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_MethodParameters.Rows[i][0].ToString() == "" && v_MethodParameters.Rows[i][1].ToString() == "")
+                    {
+                        v_MethodParameters.Rows[i].Delete();
+                    }
+                }
+            }
+        }
+
     }
 }

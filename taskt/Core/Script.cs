@@ -128,8 +128,7 @@ namespace taskt.Core.Script
             if (scriptFilePath != "")
             {
                 //write to file
-                System.IO.FileStream fs;
-                using (fs = System.IO.File.Create(scriptFilePath))
+                using (System.IO.FileStream fs = System.IO.File.Create(scriptFilePath))
                 {
                     using (XmlWriter writer = XmlWriter.Create(fs, settings))
                     {
@@ -137,7 +136,6 @@ namespace taskt.Core.Script
                     }
                 }  
             }
-
 
             return script;
         }
@@ -148,29 +146,64 @@ namespace taskt.Core.Script
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
 
-            System.IO.FileStream fs;
-
             //open file stream from file
-            using (fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
+            using (System.IO.FileStream fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
             {
                 //read and return data
                 XmlReader reader = XmlReader.Create(fs);
                 Script deserializedData = (Script)serializer.Deserialize(reader);
+
+                // release
+                serializer = null;
+
                 return deserializedData;
             }
-
-          
-            
         }
         /// <summary>
         /// Deserializes an XML string into user-defined commands (server sends a string to the client)
         /// </summary>
         public static Script DeserializeXML(string scriptXML)
         {
-            System.IO.StringReader reader = new System.IO.StringReader(scriptXML);
+            try
+            {
+                using (System.IO.StringReader reader = new System.IO.StringReader(scriptXML))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                    Script deserializedData = (Script)serializer.Deserialize(reader);
+                    return deserializedData;
+                }
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static string SerializeScript(List<Core.Automation.Commands.ScriptCommand> commands)
+        {
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
-            Script deserializedData = (Script)serializer.Deserialize(reader);
-            return deserializedData;
+
+            var actions = new Script();
+            foreach(taskt.Core.Automation.Commands.ScriptCommand cmd in commands)
+            {
+                actions.AddNewParentCommand(cmd);
+            }
+            using (var writer = new System.IO.StringWriter())
+            {
+                serializer.Serialize(writer, actions);
+                actions = null;
+                return writer.ToString();
+            }
+        }
+
+        public static Script DeserializeScript(string scriptXML)
+        {
+            using (var reader = new System.IO.StringReader(scriptXML))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                var ret = (Script)serializer.Deserialize(reader);
+                return ret;
+            }
         }
     }
 

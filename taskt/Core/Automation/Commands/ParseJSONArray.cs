@@ -17,10 +17,10 @@ namespace taskt.Core.Automation.Commands
     public class ParseJSONArrayCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the JSON Array or Variable (ex. {someVariable})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the JSON Array or Variable (ex. [1,2,3], {{{vJsonArray}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or json array value")]
-        [Attributes.PropertyAttributes.SampleUsage("**[{obj1},{obj2}]** or **{vArrayVariable}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**[1,2,3]** or **[{obj1},{obj2}]** or **{{{vArrayVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputValue { get; set; }
 

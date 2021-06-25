@@ -267,6 +267,9 @@ namespace taskt.Core
                 mathChars.Add('-');
                 mathChars.Add('=');
                 mathChars.Add('/');
+                mathChars.Add('\r');
+                mathChars.Add('\n');
+                mathChars.Add('\t');
 
                 //if the string matches the char then return
                 //as the user does not want to do math

@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
         [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
-        [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheetName, [vSheet]")]
+        [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheetName, {vSheet}")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SheetName { get; set; }
@@ -34,6 +34,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Activate Sheet";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {

@@ -16,10 +16,11 @@ namespace taskt.Core.Automation.Commands
     public class PDFTextExtractionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path or PDF file URL")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path or PDF file URL (ex. c:\\temp\\myfile.pdf, {{{vPDFPath}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.pdf , [vFilePath] or https://temp.com/myfile.pdf")]
+        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.pdf , {{{vFilePath}}} or https://temp.com/myfile.pdf")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
 

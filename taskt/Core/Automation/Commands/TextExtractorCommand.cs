@@ -19,10 +19,10 @@ namespace taskt.Core.Automation.Commands
     public class TextExtractorCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. Hello, {{{vText}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputValue { get; set; }
 
@@ -126,13 +126,15 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            ParametersGridViewHelper = new DataGridView();
-            ParametersGridViewHelper.AllowUserToAddRows = true;
-            ParametersGridViewHelper.AllowUserToDeleteRows = true;
-            ParametersGridViewHelper.Size = new Size(350, 125);
-            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            //ParametersGridViewHelper = new DataGridView();
+            //ParametersGridViewHelper.AllowUserToAddRows = true;
+            //ParametersGridViewHelper.AllowUserToDeleteRows = true;
+            //ParametersGridViewHelper.Size = new Size(350, 125);
+            //ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_TextExtractionTable", false, false);
+            ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
+            ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
 
@@ -175,21 +177,41 @@ namespace taskt.Core.Automation.Commands
                 case "Extract All After Text":
                     textParameters.Rows.Add("Leading Text", "");
                     textParameters.Rows.Add("Skip Past Occurences", "0");
+                    textParameters.Columns[0].ReadOnly = true;
                     break;
                 case "Extract All Before Text":
                     textParameters.Rows.Add("Trailing Text", "");
                     textParameters.Rows.Add("Skip Past Occurences", "0");
+                    textParameters.Columns[0].ReadOnly = true;
                     break;
                 case "Extract All Between Text":
                     textParameters.Rows.Add("Leading Text", "");
                     textParameters.Rows.Add("Trailing Text", "");
                     textParameters.Rows.Add("Skip Past Occurences", "0");
+                    textParameters.Columns[0].ReadOnly = true;
                     break;
                 default:
                     break;
             }
         }
 
+        private void ParameterGridViewHelper_OnCellBeginEdit(object sender, System.Windows.Forms.DataGridViewCellCancelEventArgs e)
+        {
+            // column A readonly
+            if (e.ColumnIndex == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void ParameterGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // click colmum b, change edit mode
+            if (e.ColumnIndex == 1)
+            {
+                ParametersGridViewHelper.BeginEdit(false);
+            }
+        }
         private string GetParameterValue(string parameterName)
         {
             return ((from rw in v_TextExtractionTable.AsEnumerable()

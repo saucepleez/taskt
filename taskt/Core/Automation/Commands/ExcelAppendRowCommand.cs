@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Row to set")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set (This could be a DataRow).")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello,world or [vText]")]
+        [Attributes.PropertyAttributes.SampleUsage("Hello,world or {vText}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_TextToSet { get; set; }
 
@@ -36,6 +36,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Append Row";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {

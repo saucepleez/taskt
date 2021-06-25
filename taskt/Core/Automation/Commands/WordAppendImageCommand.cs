@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the image.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myimage.png or [vTextFilePath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myimage.png or {vTextFilePath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ImagePath { get; set; }
 

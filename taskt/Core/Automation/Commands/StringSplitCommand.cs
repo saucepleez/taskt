@@ -17,13 +17,15 @@ namespace taskt.Core.Automation.Commands
     public class StringSplitCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select variable or text to split")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select variable or text to split (ex. Hello, {{{vText}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Input Delimiter (ex. [crLF] for new line, [chars] for each char, ',')")]
+        [Attributes.PropertyAttributes.PropertyDescription("Input Delimiter (ex. [crLF] for new line, [chars] for each char, ',' , {{{vChar}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Declare the character that will be used to seperate. [crLF] can be used for line breaks and [chars] can be used to split each digit/letter")]
         [Attributes.PropertyAttributes.SampleUsage("[crLF], [chars], ',' (comma - with no single quote wrapper)")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -63,7 +65,8 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                splitString = stringVariable.Split(new string[] { v_splitCharacter }, StringSplitOptions.None).ToList();
+                var splitCharacter = v_splitCharacter.ConvertToUserVariable(sender);
+                splitString = stringVariable.Split(new string[] { splitCharacter }, StringSplitOptions.None).ToList();
             }
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
@@ -84,11 +87,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var userVariableName = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { userVariableName }, editor));
-            RenderedControls.Add(userVariableName);
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_splitCharacter", this, editor));
 

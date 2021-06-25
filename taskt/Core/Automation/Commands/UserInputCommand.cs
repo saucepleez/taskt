@@ -167,9 +167,10 @@ namespace taskt.Core.Automation.Commands
 
             base.Render(editor);
 
-            UserInputGridViewHelper = new DataGridView();
-            UserInputGridViewHelper.KeyDown += UserInputDataGridView_KeyDown;
-            UserInputGridViewHelper.DataBindings.Add("DataSource", this, "v_UserInputConfig", false, DataSourceUpdateMode.OnPropertyChanged);
+            //UserInputGridViewHelper = new DataGridView();
+            //UserInputGridViewHelper.DataBindings.Add("DataSource", this, "v_UserInputConfig", false, DataSourceUpdateMode.OnPropertyChanged);
+            UserInputGridViewHelper = CommandControls.CreateDataGridView(this, "v_UserInputConfig", true, true, false, 400, 250, true, 2);
+            UserInputGridViewHelper.CellClick += UserInputGridViewHelper_CellClick;
 
             var typefield = new DataGridViewComboBoxColumn();
             typefield.Items.Add("TextBox");
@@ -235,20 +236,34 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        private void UserInputDataGridView_KeyDown(object sender, KeyEventArgs e)
-        {
-
-
-            if (UserInputGridViewHelper.SelectedRows.Count > 0)
-            {
-                UserInputGridViewHelper.Rows.RemoveAt(UserInputGridViewHelper.SelectedCells[0].RowIndex);
-            }
-
-        }
 
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [" + v_InputHeader + "]";
         }
+
+
+        private void UserInputGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex == 0)
+                {
+                    if (UserInputGridViewHelper.Rows[e.RowIndex].Cells[0].Value.ToString() == "")
+                    {
+                        SendKeys.Send("{F4}");
+                    }
+                }
+                else
+                {
+                    UserInputGridViewHelper.BeginEdit(false);
+                }
+            }
+            else
+            {
+                UserInputGridViewHelper.EndEdit();
+            }
+        }
+
     }
 }

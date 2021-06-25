@@ -39,6 +39,10 @@ namespace taskt.Core
             StringBuilder sb;
             string fullFileName;
 
+            var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
+            var vs = settings.VariableStartMarker;
+            var ve = settings.VariableEndMarker;
+
             //loop each command
             foreach (var commandClass in commandClasses)
             {
@@ -81,10 +85,10 @@ namespace taskt.Core
                 {
 
                     //pull attributes from property
-                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification));
-                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage));
-                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks));
+                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)).Replace("{{{", vs).Replace("}}}", ve);
+                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification)).Replace("{{{", vs).Replace("}}}", ve);
+                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage)).Replace("{{{", vs).Replace("}}}", ve);
+                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks)).Replace("{{{", vs).Replace("}}}", ve);
 
                     //append to parameter table
                     sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
@@ -139,12 +143,23 @@ namespace taskt.Core
             sb.AppendLine("<!--TITLE: Automation Commands -->");
             sb.AppendLine("<!-- SUBTITLE: an overview of available commands in taskt. -->");
             sb.AppendLine("## Automation Commands");
-            sb.AppendLine("| Command Group   	| Command Name 	|  Command Description	|");
-            sb.AppendLine("| ---                | ---           | ---                   |");
 
+            var sortHighLevelCommandInfo = highLevelCommandInfo
+                                            .OrderBy(t => t.Group)
+                                            .ThenBy(t => t.Name)
+                                            .ToList();
 
-            foreach (var cmd in highLevelCommandInfo)
+            string oldGroup = "";
+
+            foreach (var cmd in sortHighLevelCommandInfo)
             {
+                if (oldGroup != cmd.Group)
+                {
+                    sb.AppendLine("### " + cmd.Group);
+                    sb.AppendLine("| Command Group   	| Command Name 	|  Command Description	|");
+                    sb.AppendLine("| ---                | ---           | ---                   |");
+                    oldGroup = cmd.Group;
+                }
                 sb.AppendLine("|" + cmd.Group + "|[" + cmd.Name + "](" + cmd.Location + ")|" + cmd.Description + "|");
             }
 
@@ -161,6 +176,13 @@ namespace taskt.Core
             fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
+            // release
+            commandClasses.Clear();
+            commandClasses = null;
+            highLevelCommandInfo.Clear();
+            highLevelCommandInfo = null;
+            sortHighLevelCommandInfo.Clear();
+            sortHighLevelCommandInfo = null;
 
             return docsFolderName;
 

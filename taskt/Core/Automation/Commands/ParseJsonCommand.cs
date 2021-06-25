@@ -17,17 +17,17 @@ namespace taskt.Core.Automation.Commands
     public class ParseJsonCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. [vSomeVariable])")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. {\"id\":2} {{{vJSONVariable}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **vSomeVariable**")]
+        [Attributes.PropertyAttributes.SampleUsage("**{\"id\":2}** or **{{{vSomeVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify a JSON extractor")]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify a JSON extractor (ex. $.id)")]
         [Attributes.PropertyAttributes.InputSpecification("Input a JSON token extractor")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from Before Text, After Text, Between Text")]
+        [Attributes.PropertyAttributes.SampleUsage("$.id")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_JsonExtractor { get; set; }
 

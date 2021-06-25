@@ -12,10 +12,6 @@ using System.Text;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("If Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true.")]
@@ -66,6 +62,7 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         CommandItemControl RecorderControl;
+
         public BeginIfCommand()
         {
             this.CommandName = "BeginIfCommand";
@@ -80,29 +77,6 @@ namespace taskt.Core.Automation.Commands
             };
             this.v_IfActionParameterTable.Columns.Add("Parameter Name");
             this.v_IfActionParameterTable.Columns.Add("Parameter Value");
-
-            IfGridViewHelper = new DataGridView();
-            IfGridViewHelper.AllowUserToAddRows = true;
-            IfGridViewHelper.AllowUserToDeleteRows = true;
-            IfGridViewHelper.Size = new Size(400, 250);
-            IfGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            IfGridViewHelper.DataBindings.Add("DataSource", this, "v_IfActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            IfGridViewHelper.AllowUserToAddRows = false;
-            IfGridViewHelper.AllowUserToDeleteRows = false;
-            IfGridViewHelper.MouseEnter += IfGridViewHelper_MouseEnter;
-
-            RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
-            RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            RecorderControl.ForeColor = Color.AliceBlue;
-            RecorderControl.Name = "guirecorder_helper";
-            RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-            RecorderControl.CommandDisplay = "Element Recorder";
-            RecorderControl.Click += ShowIfElementRecorder;
-            RecorderControl.Hide();
-           
-
-
-
         }
 
         private void IfGridViewHelper_MouseEnter(object sender, EventArgs e)
@@ -527,6 +501,11 @@ namespace taskt.Core.Automation.Commands
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
 
+                if (windowName == "Current Window")
+                {
+                    windowName = User32Functions.GetActiveWindowTitle();
+                }
+
                 UIAutomationCommand newUIACommand = new UIAutomationCommand();
                 newUIACommand.v_WindowName = windowName;
                 newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
@@ -554,6 +533,31 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            //IfGridViewHelper = new DataGridView();
+            //IfGridViewHelper.AllowUserToAddRows = true;
+            //IfGridViewHelper.AllowUserToDeleteRows = true;
+            //IfGridViewHelper.Size = new Size(400, 250);
+            //IfGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //IfGridViewHelper.DataBindings.Add("DataSource", this, "v_IfActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            //IfGridViewHelper.AllowUserToAddRows = false;
+            //IfGridViewHelper.AllowUserToDeleteRows = false;
+            IfGridViewHelper = CommandControls.CreateDataGridView(this, "v_IfActionParameterTable", false, false, false, 400, 150);
+            IfGridViewHelper.MouseEnter += IfGridViewHelper_MouseEnter;
+            IfGridViewHelper.CellClick += IfGridViewHelper_CellClick;
+            IfGridViewHelper.CellBeginEdit += IfGridViewHelper_CellBeginEdit;
+
+            var helperTheme = editor.Theme.UIHelper;
+            RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
+            RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            //RecorderControl.ForeColor = Color.AliceBlue;
+            RecorderControl.Font = new Font(helperTheme.Font, helperTheme.FontSize, helperTheme.Style);
+            RecorderControl.ForeColor = helperTheme.FontColor;
+            RecorderControl.BackColor = helperTheme.BackColor;
+            RecorderControl.Name = "guirecorder_helper";
+            RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            RecorderControl.CommandDisplay = "Element Recorder";
+            RecorderControl.Click += ShowIfElementRecorder;
+            RecorderControl.Hide();
 
             ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_IfActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionType", this));
@@ -574,11 +578,10 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(ParameterControls);
 
 
-
-
-
             return RenderedControls;
         }
+
+
         private void ifAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
 
@@ -985,6 +988,37 @@ namespace taskt.Core.Automation.Commands
                     return "If .... ";
             }
 
+        }
+
+
+        private void IfGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 0) 
+            {
+                e.Cancel = true;
+            }
+        }
+        private void IfGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex == 1)
+                {
+                    var targetCell = IfGridViewHelper.Rows[e.RowIndex].Cells[1];
+                    if (targetCell is DataGridViewTextBoxCell)
+                    {
+                        IfGridViewHelper.BeginEdit(false);
+                    }
+                    else if (targetCell is DataGridViewComboBoxCell && targetCell.Value.ToString() == "")
+                    {
+                        SendKeys.Send("{F4}");
+                    }
+                }
+            }
+            else
+            {
+                IfGridViewHelper.EndEdit();
+            }
         }
     }
 }

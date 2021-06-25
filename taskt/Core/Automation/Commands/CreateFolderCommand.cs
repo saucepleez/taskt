@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the name of the new folder")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the name of the new folder.")]
-        [Attributes.PropertyAttributes.SampleUsage("myFolderName or [vFolderName]")]
+        [Attributes.PropertyAttributes.SampleUsage("myFolderName or {vFolderName}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_NewFolderName { get; set; }
 
@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or [vTextFolderPath]")]
+        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or {TextFolderPath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DestinationDirectory { get; set; }
 

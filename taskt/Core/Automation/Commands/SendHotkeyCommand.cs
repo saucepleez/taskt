@@ -17,18 +17,19 @@ namespace taskt.Core.Automation.Commands
     public class SendHotkeyCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, Current Window, {{{vWindowName}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Hotkey to Send")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select Hotkey to Send.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text that should be sent to the specified window.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **[vEntryText]**")]
-        [Attributes.PropertyAttributes.Remarks("This command supports sending variables within brackets [vVariable]")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
         public string v_Hotkey { get; set; }
 
         public SendHotkeyCommand()
@@ -46,7 +47,7 @@ namespace taskt.Core.Automation.Commands
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName
+                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
                 };
                 activateWindow.RunCommand(sender);
             }

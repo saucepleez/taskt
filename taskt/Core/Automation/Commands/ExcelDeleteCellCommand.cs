@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the range to delete ex. A1 or A1:C1")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, {vAddress}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Range { get; set; }
         [XmlAttribute]
@@ -42,6 +42,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Delete Cell";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {

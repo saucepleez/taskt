@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, {vAddress}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress1 { get; set; }
         [XmlAttribute]
@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2, Leave Blank for All)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, {vAddress}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress2 { get; set; }
 
@@ -70,6 +70,8 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
             this.v_AddHeaders = "Yes";
+
+            this.v_InstanceName = "RPAExcel";
         }
 
         public override void RunCommand(object sender)

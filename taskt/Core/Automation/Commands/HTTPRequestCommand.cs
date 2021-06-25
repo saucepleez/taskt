@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid URL that you want to collect data from.")]
-        [Attributes.PropertyAttributes.SampleUsage("http://mycompany.com/news or [vCompany]")]
+        [Attributes.PropertyAttributes.SampleUsage("http://mycompany.com/news or {vURL}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WebRequestURL { get; set; }
 

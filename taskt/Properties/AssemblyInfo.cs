@@ -22,8 +22,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Build and Execute Automation Scripts")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("taskt")]
-[assembly: AssemblyCopyright("Copyright ©2019")]
+[assembly: AssemblyProduct("taskt unofficial")]
+[assembly: AssemblyCopyright("Copyright ©2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -45,6 +45,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("0.0.*")]
-[assembly: AssemblyFileVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("3.5.0.4")]
 //[assembly: AssemblyVersion("0.0.0.2")]
 //[assembly: AssemblyFileVersion("0.0.0.2")]

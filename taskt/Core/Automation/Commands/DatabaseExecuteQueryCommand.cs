@@ -210,14 +210,15 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(queryControls);
 
             //set up query parameter controls
-            QueryParametersGridView = new DataGridView();
-            QueryParametersGridView.AllowUserToAddRows = true;
-            QueryParametersGridView.AllowUserToDeleteRows = true;
-            QueryParametersGridView.Size = new Size(400, 250);
-            QueryParametersGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            QueryParametersGridView.AutoGenerateColumns = false;
+            //QueryParametersGridView = new DataGridView();
+            //QueryParametersGridView.AllowUserToAddRows = true;
+            //QueryParametersGridView.AllowUserToDeleteRows = true;
+            //QueryParametersGridView.Size = new Size(400, 250);
+            //QueryParametersGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //QueryParametersGridView.AutoGenerateColumns = false;
+            QueryParametersGridView = CommandControls.CreateDataGridView(this, "v_QueryParameters", true, true , true, 400, 250, false);
+            QueryParametersGridView.CellClick += QueryParametersGridView_CellClick;
         
-
             var selectColumn = new DataGridViewComboBoxColumn();
             selectColumn.HeaderText = "Type";
             selectColumn.DataPropertyName = "Parameter Type";
@@ -234,7 +235,7 @@ namespace taskt.Core.Automation.Commands
             paramValueColumn.DataPropertyName = "Parameter Value";
             QueryParametersGridView.Columns.Add(paramValueColumn);
 
-            QueryParametersGridView.DataBindings.Add("DataSource", this, "v_QueryParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            //QueryParametersGridView.DataBindings.Add("DataSource", this, "v_QueryParameters", false, DataSourceUpdateMode.OnPropertyChanged);
          
             QueryParametersControls = new List<Control>();
 
@@ -242,9 +243,13 @@ namespace taskt.Core.Automation.Commands
             QueryParametersControls.AddRange(CommandControls.CreateUIHelpersFor("v_QueryParameters", this, new Control[] { QueryParametersGridView }, editor));
 
             CommandItemControl helperControl = new CommandItemControl();
+            var helperTheme = editor.Theme.UIHelper;
             helperControl.Padding = new Padding(10, 0, 0, 0);
-            helperControl.ForeColor = Color.AliceBlue;
-            helperControl.Font = new Font("Segoe UI Semilight", 10);
+            //helperControl.ForeColor = Color.AliceBlue;
+            //helperControl.Font = new Font("Segoe UI Semilight", 10);
+            helperControl.ForeColor = helperTheme.FontColor;
+            helperControl.BackColor = helperTheme.BackColor;
+            helperControl.Font = new Font(helperTheme.Font, helperTheme.FontSize, helperTheme.Style);
             helperControl.Name = "add_param_helper";
             helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
             helperControl.CommandDisplay = "Add Parameter";
@@ -252,7 +257,6 @@ namespace taskt.Core.Automation.Commands
             QueryParametersControls.Add(helperControl);
             QueryParametersControls.Add(QueryParametersGridView);
             RenderedControls.AddRange(QueryParametersControls);
-
 
 
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_QueryType", this, editor));
@@ -269,6 +273,26 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return $"{base.GetDisplayValue()} - [{v_QueryType}, Apply Result to Variable '{v_DatasetName}', Instance Name: '{v_InstanceName}']";
+        }
+
+        public void QueryParametersGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex != 0)
+                {
+                    QueryParametersGridView.BeginEdit(false);
+                }
+                else if (QueryParametersGridView.Rows[e.RowIndex].Cells[0].Value.ToString() == "")
+                {
+                    // type is empty
+                    SendKeys.Send("{F4}");
+                }
+            }
+            else
+            {
+                QueryParametersGridView.EndEdit();
+            }
         }
     }
 }

@@ -33,6 +33,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Close Excel Application";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {

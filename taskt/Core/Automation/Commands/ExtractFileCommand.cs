@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the extraction folder (ex. C:\\temp\\myzip\\")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\ or [vFilePath]")]
+        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\ or {vFilePath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_PathDestination { get; set; }
 

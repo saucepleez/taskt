@@ -30,7 +30,7 @@ namespace taskt.UI.CustomControls
             controlList.Add(input);
 
             return controlList;
-
+            
         }
 
         public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
@@ -46,7 +46,7 @@ namespace taskt.UI.CustomControls
             controlList.Add(input);
 
             return controlList;
-
+            
         }
 
         public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
@@ -68,31 +68,39 @@ namespace taskt.UI.CustomControls
 
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription), true);
 
-
+            // var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
+            var settings = CurrentEditor.appSettings.EngineSettings;
 
             Label inputLabel = new Label();
             if (propertyAttributesAssigned.Length > 0)
             {
                 var attribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
-                inputLabel.Text = attribute.propertyDescription;
+                inputLabel.Text = attribute.propertyDescription.Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker);
             }
             else
             {
                 inputLabel.Text = parameterName;
             }
 
-
-
+            var theme = CurrentEditor.Theme.Label;
             inputLabel.AutoSize = true;
-            inputLabel.Font = new Font("Segoe UI Light", 12);
-            inputLabel.ForeColor = Color.White;
+            //inputLabel.Font = new Font("Segoe UI Light", 12);
+            //inputLabel.ForeColor = Color.White;
+            inputLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputLabel.ForeColor = theme.FontColor;
+            inputLabel.BackColor = theme.BackColor;
+
             inputLabel.Name = "lbl_" + parameterName;
             return inputLabel;
         }
         public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300)
         {
             var inputBox = new TextBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            var theme = CurrentEditor.Theme.Input;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
             inputBox.Height = height;
             inputBox.Width = width;
@@ -108,10 +116,12 @@ namespace taskt.UI.CustomControls
         }
         public static Control CreateDropdownFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
-
-
             var inputBox = new ComboBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            var theme = CurrentEditor.Theme.Dropdown;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
             inputBox.Height = 30;
             inputBox.Width = 300;
@@ -125,20 +135,27 @@ namespace taskt.UI.CustomControls
                 inputBox.Items.Add(option.uiOption);
             }
 
+            inputBox.KeyUp += (sender, e) => ComboBoxKeyUp(sender, e);
+            inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
+
             return inputBox;
 
         }
         public static ComboBox CreateStandardComboboxFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
-
-
             var inputBox = new ComboBox();
-            inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            var theme = CurrentEditor.Theme.Combobox;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
             inputBox.Height = 30;
             inputBox.Width = 300;
             inputBox.Name = parameterName;
 
+            inputBox.KeyUp += (sender, e) => ComboBoxKeyUp(sender, e);
+            inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
 
             return inputBox;
 
@@ -159,8 +176,12 @@ namespace taskt.UI.CustomControls
             {
                 taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
                 helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-                helperControl.ForeColor = Color.AliceBlue;
-                helperControl.Font = new Font("Segoe UI Semilight", 10);
+                //helperControl.ForeColor = Color.AliceBlue;
+                //helperControl.Font = new Font("Segoe UI Semilight", 10);
+                var theme = CurrentEditor.Theme.UIHelper;
+                helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+                helperControl.ForeColor = theme.FontColor;
+                helperControl.BackColor = theme.BackColor;
                 helperControl.Name = parameterName + "_helper";
                 helperControl.Tag = targetControls.FirstOrDefault();
                 helperControl.HelperType = attrib.additionalHelper;
@@ -273,15 +294,37 @@ namespace taskt.UI.CustomControls
         }
 
       
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName)
+        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
         {
+            if (width < 100)
+            {
+                width = 400;
+            }
+            if (height < 100)
+            {
+                height = 250;
+            }
+
             var gridView = new DataGridView();
-            gridView.AllowUserToAddRows = true;
-            gridView.AllowUserToDeleteRows = true;
-            gridView.Size = new Size(400, 250);
+            gridView.AllowUserToAddRows = AllowAddRows;
+            gridView.AllowUserToDeleteRows = AllowDeleteRows;
+            gridView.AutoGenerateColumns = AutoGenerateColumns;
+            gridView.Size = new Size(width, height);
             gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridView.DataBindings.Add("DataSource", sourceCommand, dataSourceName, false, DataSourceUpdateMode.OnPropertyChanged);
-            gridView.AllowUserToResizeRows = false;
+            gridView.AllowUserToResizeRows = AllowResizeRows;
+
+            var theme = CurrentEditor.Theme.Datagridview;
+            gridView.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            gridView.ForeColor = theme.FontColor;
+            gridView.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
+            gridView.RowTemplate.Height = Convert.ToInt32(theme.FontSize) + 20;
+
+            if (headerRowHeight > 1)
+            {
+                gridView.ColumnHeadersHeight = ((Convert.ToInt32(theme.FontSize) + 15) * headerRowHeight);
+            }
+
             return gridView;
         }
         private static void ShowCodeBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
@@ -345,19 +388,38 @@ namespace taskt.UI.CustomControls
                 //currently variable insertion is only available for simply textboxes
 
                 //load settings
-                var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                //var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                var settings = CurrentEditor.appSettings.EngineSettings;
 
                 if (inputBox.Tag is TextBox)
                 {
                     TextBox targetTextbox = (TextBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = targetTextbox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    string str = targetTextbox.Text;
+                    int cursorPos = targetTextbox.SelectionStart;
+                    string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                    targetTextbox.Focus();
+                    targetTextbox.SelectionStart = cursorPos + ins.Length;
+                    targetTextbox.SelectionLength = 0;
+                    //targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is ComboBox)
                 {
                     ComboBox targetCombobox = (ComboBox)inputBox.Tag;
+                    string str = targetCombobox.Text;
+                    int cursorPos;
+                    if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
+                    {
+                        cursorPos = str.Length;
+                    }
+                    string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                    targetCombobox.Focus();
+                    targetCombobox.SelectionStart = cursorPos + ins.Length;
+                    targetCombobox.SelectionLength = 0;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetCombobox.Text = targetCombobox.Text + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    //targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
                 else if (inputBox.Tag is DataGridView)
                 {
@@ -369,13 +431,35 @@ namespace taskt.UI.CustomControls
                         return;
                     }
 
-                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
                     {
                         MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    targetDGV.SelectedCells[0].Value = targetDGV.SelectedCells[0].Value + string.Concat(settings.EngineSettings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.EngineSettings.VariableEndMarker);
+                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    {
+                        if (targetDGV.Tag == null)
+                        {
+                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        else if (targetDGV.Tag.ToString() != "column-a-editable")
+                        {
+                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+
+                    var source = (DataTable)targetDGV.DataSource;
+                    var rowIndex = targetDGV.SelectedCells[0].RowIndex;
+                    var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
+                    if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
+                    {
+                        source.Rows.Add(source.NewRow());
+                    }
+                    var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
+                    targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
                 }
 
 
@@ -620,6 +704,20 @@ namespace taskt.UI.CustomControls
             }
 
         }
+
+        private static void ComboBoxKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            ComboBox trg = (ComboBox)sender;
+            trg.Tag = trg.SelectionStart;
+            Console.WriteLine(trg.Tag);
+        }
+        private static void ComboBoxClick(object sender, System.EventArgs e)
+        {
+            ComboBox trg = (ComboBox)sender;
+            trg.Tag = trg.SelectionStart;
+            Console.WriteLine(trg.Tag);
+        }
+
         private static void AddInputParameter(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
 
@@ -717,6 +815,8 @@ namespace taskt.UI.CustomControls
             if (cbo == null)
                 return null;
 
+            cbo.BeginUpdate();
+
             cbo.Items.Clear();
             cbo.Items.Add("Current Window");
 
@@ -731,7 +831,7 @@ namespace taskt.UI.CustomControls
                 }
             }
 
-
+            cbo.EndUpdate();
 
             return cbo;
         }
@@ -742,12 +842,16 @@ namespace taskt.UI.CustomControls
 
             if (editor != null)
             {
+                cbo.BeginUpdate();
+
                 cbo.Items.Clear();
 
                 foreach (var variable in editor.scriptVariables)
                 {
                     cbo.Items.Add(variable.VariableName);
                 }
+
+                cbo.EndUpdate();
 
             }
 
@@ -773,7 +877,6 @@ public class AutomationCommand
                 throw new InvalidOperationException("Command cannot be null!");
             }
 
-
             UIControls = new List<Control>();
             if (Command.CustomRendering)
             {
@@ -783,9 +886,14 @@ public class AutomationCommand
                 if (renderedControls.Count == 0)
                 {
                     var label = new Label();
-                    label.ForeColor = Color.Red;
+                    var theme = editorForm.Theme.ErrorLabel;
+                    //label.ForeColor = Color.Red;
+                    //label.AutoSize = true;
+                    //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                    label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
                     label.AutoSize = true;
-                    label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                    label.ForeColor = theme.FontColor;
+                    label.BackColor = theme.BackColor;
                     label.Text = "No Controls are defined for rendering!  If you intend to override with custom controls, you must handle the Render() method of this command!  If you do not wish to override with your own custom controls then set 'CustomRendering' to False.";
                     UIControls.Add(label);
                 }
@@ -813,22 +921,24 @@ public class AutomationCommand
             {
 
                 var label = new Label();
-                label.ForeColor = Color.Red;
+                var theme = editorForm.Theme.ErrorLabel;
+                //label.ForeColor = Color.Red;
+                //label.AutoSize = true;
+                //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
                 label.AutoSize = true;
-                label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
+                label.ForeColor = theme.FontColor;
+                label.BackColor = theme.BackColor;
                 label.Text = "Command not enabled for custom rendering!";
                 UIControls.Add(label);
             }
-          
-
         }  
         public void Bind(UI.Forms.frmCommandEditor editor)
         {
-
             //preference to preload is false
             //if (UIControls is null)
             //{
-                this.RenderUIComponents(editor);
+            this.RenderUIComponents(editor);
             //}
 
             foreach (var ctrl in UIControls)
@@ -880,9 +990,6 @@ public class AutomationCommand
                         variableCbo.Items.Add(var.VariableName);
                     }
                 }
-
-
-
               
             }
         }

@@ -49,6 +49,8 @@ namespace taskt.UI.Forms
         public Core.Automation.Commands.ScriptCommand editingCommand;
         //track existing commands for visibility
         public List<Core.Automation.Commands.ScriptCommand> configuredCommands;
+        // taskt setting
+        public Core.ApplicationSettings appSettings;
         public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
         {
             InitializeComponent();
@@ -143,13 +145,12 @@ namespace taskt.UI.Forms
 
 
                 //handle selection change events
-
+                
 
             }
 
             //gracefully handle post initialization setups (drop downs, etc)
             AfterFormInitialization();
-
         }
         private void CopyPropertiesTo(object fromObject, object toObject)
         {
@@ -179,6 +180,18 @@ namespace taskt.UI.Forms
         private void frmCommandEditor_Shown(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.Sizable;
+
+            //focus first TextBox, ComboBox, DataGridView
+            var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
+            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
+
+            firstFocus.Focus();
+            if (firstFocus is TextBox)
+            {
+                var trg = (TextBox)firstFocus;
+                trg.SelectionStart = trg.Text.Length;
+                trg.SelectionLength = 0;
+            }
         }
 
         #endregion Form Events
@@ -219,7 +232,19 @@ namespace taskt.UI.Forms
             {
                 flw_InputVariables.Controls.Add(ctrl);
             }
-        
+
+            //focus first TextBox
+            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
+            firstFocus.Focus();
+            if (firstFocus is TextBox)
+            {
+                var trg = (TextBox)firstFocus;
+                trg.SelectionStart = trg.Text.Length;
+                trg.SelectionLength = 0;
+            }
+
+            // resize
+            frmCommandEditor_Resize(null, null);
         }
 
 
@@ -229,6 +254,8 @@ namespace taskt.UI.Forms
 
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
+            selectedCommand.BeforeValidate();
+
             //commit any datagridviews
             foreach (Control ctrl in flw_InputVariables.Controls)
             {
@@ -244,11 +271,16 @@ namespace taskt.UI.Forms
                     var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
                     cmd.v_ImageCapture = typedControl.EncodedImage;
                 }
-
-
             }
 
-            this.DialogResult = DialogResult.OK;
+            if (selectedCommand.IsValidate())
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                this.DialogResult = DialogResult.OK;
+            }
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
@@ -265,12 +297,17 @@ namespace taskt.UI.Forms
             {
                 item.Width = this.Width - 70;
             }
-
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        public string ReplaceVariableMaker(string v)
+        {
+            var s = appSettings.EngineSettings;
+            return v.Replace("{{{", s.VariableStartMarker).Replace("}}}", s.VariableEndMarker);
         }
     }
 }

@@ -18,21 +18,21 @@ namespace taskt.Core.Automation.Commands
     public class SendMouseMoveCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the X position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the X position to move the mouse to (ex. 0, 250, {{{vXPos}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the mouse, 0 starts at the left and goes to the right")]
         [Attributes.PropertyAttributes.SampleUsage("0")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
         public string v_XMousePosition { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to (ex. 0, 250, {{{vYPos}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes down")]
         [Attributes.PropertyAttributes.SampleUsage("0")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         public string v_YMousePosition { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please indicate mouse click type if required")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("None")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
@@ -73,8 +73,11 @@ namespace taskt.Core.Automation.Commands
                 var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
 
                 User32Functions.SetCursorPosition(xLocation, yLocation);
-                User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
-
+                
+                if (v_MouseClick != "") 
+                {
+                    User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
+                }
 
             }
             catch (Exception ex)

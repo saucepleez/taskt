@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("A1, B10, [vAddress]")]
+        [Attributes.PropertyAttributes.SampleUsage("A1, B10, {vAddress}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress1 { get; set; }
         [XmlAttribute]
@@ -48,6 +48,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Range";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
 
         public override void RunCommand(object sender)

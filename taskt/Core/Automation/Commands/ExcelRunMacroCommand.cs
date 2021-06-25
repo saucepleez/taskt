@@ -23,26 +23,30 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the macro name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the name of the macro as it exists in the spreadsheet")]
         [Attributes.PropertyAttributes.SampleUsage("Macro1")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_MacroName { get; set; }
         public ExcelRunMacroCommand()
         {
-            this.CommandName = "ExcelAddWorkbookCommand";
+            this.CommandName = "ExcelRunMacroCommand";
             this.SelectionName = "Run Macro";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_InstanceName = "RPAExcel";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vMacroName = v_MacroName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
 
            
                 Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                excelInstance.Run(v_MacroName);
+                excelInstance.Run(vMacroName);
             
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -58,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [ Macro: '" + v_MacroName + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

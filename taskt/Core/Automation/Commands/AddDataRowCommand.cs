@@ -36,6 +36,10 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private List<CreateDataTableCommand> DataTableCreationCommands;
 
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView AddDataGridViewHelper;
+
         public AddDataRowCommand()
         {
             this.CommandName = "AddDataRowCommand";
@@ -94,8 +98,10 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
 
-
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_AddDataDataTable", this, editor));
+            AddDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            AddDataGridViewHelper.Tag = "column-a-editable";
+            AddDataGridViewHelper.CellClick += AddDataGridViewHelper_CellClick;
 
             taskt.UI.CustomControls.CommandItemControl loadSchemaControl = new taskt.UI.CustomControls.CommandItemControl();
             loadSchemaControl.ForeColor = System.Drawing.Color.White;
@@ -104,9 +110,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(loadSchemaControl);
 
             DataTableCreationCommands = editor.configuredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
-
-
-
 
             return RenderedControls;
         }
@@ -141,6 +144,36 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + $" [{v_AddDataDataTable.Rows.Count} Fields, apply to '{v_DataTableName}']";
+        }
+
+        private void AddDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                AddDataGridViewHelper.BeginEdit(false);
+            }
+            else
+            {
+                AddDataGridViewHelper.EndEdit();
+            }
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (AddDataGridViewHelper.IsCurrentCellDirty || AddDataGridViewHelper.IsCurrentRowDirty)
+            {
+                AddDataGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_AddDataDataTable.NewRow();
+                v_AddDataDataTable.Rows.Add(newRow);
+                for (var i = v_AddDataDataTable.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_AddDataDataTable.Rows[i][0].ToString() == "" && v_AddDataDataTable.Rows[i][1].ToString() == "")
+                    {
+                        v_AddDataDataTable.Rows[i].Delete();
+                    }
+                }
+            }
         }
     }
 }

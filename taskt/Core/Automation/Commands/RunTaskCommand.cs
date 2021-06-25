@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the valid path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("c:\\temp\\mytask.xml or [vScriptPath]")]
+        [Attributes.PropertyAttributes.SampleUsage("c:\\temp\\mytask.xml or {vScriptPath}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_taskPath { get; set; }
 
@@ -92,7 +92,12 @@ namespace taskt.Core.Automation.Commands
                 {
                     variableValue = ((string)rw.ItemArray[1]).ConvertToUserVariable(sender);
                 }
-                var variableReturn = (string)rw.ItemArray[2];
+
+                var variableReturn = "No";
+                if (rw.ItemArray[2].GetType().ToString() == "System.String")
+                {
+                    variableReturn = (string)rw.ItemArray[2];
+                }
                 variableList.Add(new Script.ScriptVariable
                 {
                     VariableName = variableName,

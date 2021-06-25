@@ -17,17 +17,18 @@ namespace taskt.Core.Automation.Commands
     public class SendKeysCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, Current Window, {{{vWindowName}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send. (ex. Hello, ^s, {{{vText}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text that should be sent to the specified window.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **[vEntryText]**")]
-        [Attributes.PropertyAttributes.Remarks("This command supports sending variables within brackets [vVariable]")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **{{{vEntryText}}}**")]
+        [Attributes.PropertyAttributes.Remarks("This command supports sending variables within brackets {{{vVariable}}}")]
         public string v_TextToSend { get; set; }
 
         [XmlAttribute]
@@ -58,7 +59,7 @@ namespace taskt.Core.Automation.Commands
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName
+                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
                 };
                 activateWindow.RunCommand(sender);
             }

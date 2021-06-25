@@ -55,7 +55,7 @@
             this.lblMainLogo.Location = new System.Drawing.Point(-2, -2);
             this.lblMainLogo.Name = "lblMainLogo";
             this.lblMainLogo.Size = new System.Drawing.Size(138, 45);
-            this.lblMainLogo.TabIndex = 7;
+            this.lblMainLogo.TabIndex = 0;
             this.lblMainLogo.Text = "variables";
             // 
             // uiBtnCancel
@@ -69,9 +69,10 @@
             this.uiBtnCancel.IsMouseOver = false;
             this.uiBtnCancel.Location = new System.Drawing.Point(55, 1);
             this.uiBtnCancel.Name = "uiBtnCancel";
-            this.uiBtnCancel.Size = new System.Drawing.Size(48, 48);
+            this.uiBtnCancel.Size = new System.Drawing.Size(48, 44);
             this.uiBtnCancel.TabIndex = 15;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // uiBtnOK
@@ -85,9 +86,10 @@
             this.uiBtnOK.IsMouseOver = false;
             this.uiBtnOK.Location = new System.Drawing.Point(3, 1);
             this.uiBtnOK.Name = "uiBtnOK";
-            this.uiBtnOK.Size = new System.Drawing.Size(48, 48);
+            this.uiBtnOK.Size = new System.Drawing.Size(48, 44);
             this.uiBtnOK.TabIndex = 14;
             this.uiBtnOK.TabStop = false;
+            this.uiBtnOK.Text = "Ok";
             this.uiBtnOK.Click += new System.EventHandler(this.uiBtnOK_Click);
             // 
             // tableLayoutPanel1
@@ -102,11 +104,11 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 97F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(607, 417);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(607, 385);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // tvScriptVariables
@@ -116,11 +118,11 @@
             this.tvScriptVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvScriptVariables.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tvScriptVariables.ForeColor = System.Drawing.Color.White;
-            this.tvScriptVariables.Location = new System.Drawing.Point(3, 100);
+            this.tvScriptVariables.Location = new System.Drawing.Point(3, 93);
             this.tvScriptVariables.Name = "tvScriptVariables";
             this.tvScriptVariables.ShowLines = false;
-            this.tvScriptVariables.Size = new System.Drawing.Size(601, 263);
-            this.tvScriptVariables.TabIndex = 18;
+            this.tvScriptVariables.Size = new System.Drawing.Size(601, 242);
+            this.tvScriptVariables.TabIndex = 1;
             this.tvScriptVariables.DoubleClick += new System.EventHandler(this.tvScriptVariables_DoubleClick);
             this.tvScriptVariables.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvScriptVariables_KeyDown);
             // 
@@ -134,8 +136,8 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(607, 97);
-            this.panel1.TabIndex = 18;
+            this.panel1.Size = new System.Drawing.Size(607, 90);
+            this.panel1.TabIndex = 0;
             // 
             // lblDefineName
             // 
@@ -143,12 +145,12 @@
             this.lblDefineName.BackColor = System.Drawing.Color.Transparent;
             this.lblDefineName.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDefineName.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.lblDefineName.Location = new System.Drawing.Point(55, 49);
+            this.lblDefineName.Location = new System.Drawing.Point(55, 45);
             this.lblDefineName.Name = "lblDefineName";
-            this.lblDefineName.Size = new System.Drawing.Size(270, 40);
-            this.lblDefineName.TabIndex = 16;
-            this.lblDefineName.Text = "Double-Click to edit existing variables\r\nPress \'DEL\' key to delete existing varia" +
-    "bles";
+            this.lblDefineName.Size = new System.Drawing.Size(294, 40);
+            this.lblDefineName.TabIndex = 1;
+            this.lblDefineName.Text = "Enter or Double-Click to edit existing variables\r\nPress \'DEL\' key to delete exist" +
+    "ing variables";
             // 
             // uiBtnNew
             // 
@@ -159,11 +161,12 @@
             this.uiBtnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.uiBtnNew.Image = global::taskt.Properties.Resources.action_bar_new;
             this.uiBtnNew.IsMouseOver = false;
-            this.uiBtnNew.Location = new System.Drawing.Point(5, 45);
+            this.uiBtnNew.Location = new System.Drawing.Point(5, 42);
             this.uiBtnNew.Name = "uiBtnNew";
-            this.uiBtnNew.Size = new System.Drawing.Size(48, 49);
+            this.uiBtnNew.Size = new System.Drawing.Size(48, 45);
             this.uiBtnNew.TabIndex = 13;
             this.uiBtnNew.TabStop = false;
+            this.uiBtnNew.Text = "Add";
             this.uiBtnNew.Click += new System.EventHandler(this.uiBtnNew_Click);
             // 
             // panel2
@@ -172,23 +175,24 @@
             this.panel2.Controls.Add(this.uiBtnOK);
             this.panel2.Controls.Add(this.uiBtnCancel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 366);
+            this.panel2.Location = new System.Drawing.Point(0, 338);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(607, 51);
-            this.panel2.TabIndex = 19;
+            this.panel2.Size = new System.Drawing.Size(607, 47);
+            this.panel2.TabIndex = 2;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // frmScriptVariables
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(607, 417);
+            this.ClientSize = new System.Drawing.Size(607, 385);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmScriptVariables";
             this.Text = "Variables";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmScriptVariables_FormClosed);
             this.Load += new System.EventHandler(this.frmScriptVariables_Load);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).EndInit();

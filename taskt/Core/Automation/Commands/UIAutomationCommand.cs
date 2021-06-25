@@ -333,10 +333,13 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create search param grid
-            SearchParametersGridViewHelper = new DataGridView();
-            SearchParametersGridViewHelper.Width = 500;
-            SearchParametersGridViewHelper.Height = 140;
-            SearchParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIASearchParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            //SearchParametersGridViewHelper = new DataGridView();
+            //SearchParametersGridViewHelper.Width = 500;
+            //SearchParametersGridViewHelper.Height = 140;
+            //SearchParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIASearchParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            SearchParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIASearchParameters", false, false, false, 500, 140);
+            SearchParametersGridViewHelper.CellBeginEdit += SearchParametersGridViewHelper_CellBeginEdit;
+            SearchParametersGridViewHelper.CellClick += SearchParametersGridViewHelper_CellClick;
 
             DataGridViewCheckBoxColumn enabled = new DataGridViewCheckBoxColumn();
             enabled.HeaderText = "Enabled";
@@ -353,16 +356,19 @@ namespace taskt.Core.Automation.Commands
             propertyValue.DataPropertyName = "Parameter Value";
             SearchParametersGridViewHelper.Columns.Add(propertyValue);
 
-            SearchParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            SearchParametersGridViewHelper.AllowUserToAddRows = false;
-            SearchParametersGridViewHelper.AllowUserToDeleteRows = false;
+            //SearchParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            //SearchParametersGridViewHelper.AllowUserToAddRows = false;
+            //SearchParametersGridViewHelper.AllowUserToDeleteRows = false;
 
             //create actions
-            ActionParametersGridViewHelper = new DataGridView();
-            ActionParametersGridViewHelper.Width = 500;
-            ActionParametersGridViewHelper.Height = 140;
-            ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            //ActionParametersGridViewHelper = new DataGridView();
+            //ActionParametersGridViewHelper.Width = 500;
+            //ActionParametersGridViewHelper.Height = 140;
+            //ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
+            ActionParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIAActionParameters", false, false, false, 500, 140);
             ActionParametersGridViewHelper.MouseEnter += ActionParametersGridViewHelper_MouseEnter;
+            ActionParametersGridViewHelper.CellBeginEdit += ActionParametersGridViewHelper_CellBeginEdit;
+            ActionParametersGridViewHelper.CellClick += ActionParametersGridViewHelper_CellClick;
 
             propertyName = new DataGridViewTextBoxColumn();
             propertyName.HeaderText = "Parameter Name";
@@ -374,9 +380,9 @@ namespace taskt.Core.Automation.Commands
             propertyValue.DataPropertyName = "Parameter Value";
             ActionParametersGridViewHelper.Columns.Add(propertyValue);
 
-            ActionParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            ActionParametersGridViewHelper.AllowUserToAddRows = false;
-            ActionParametersGridViewHelper.AllowUserToDeleteRows = false;
+            //ActionParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            //ActionParametersGridViewHelper.AllowUserToAddRows = false;
+            //ActionParametersGridViewHelper.AllowUserToDeleteRows = false;
 
 
 
@@ -418,6 +424,60 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
 
         }
+
+        private void SearchParametersGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                e.Cancel = true;
+            }
+        }
+        private void SearchParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex == 2)
+                {
+                    SearchParametersGridViewHelper.BeginEdit(false);
+                }
+            }
+            else
+            {
+                SearchParametersGridViewHelper.EndEdit();
+            }
+        }
+       
+        private void ActionParametersGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+        private void ActionParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex == 1)
+                {
+                    var targetCell = ActionParametersGridViewHelper.Rows[e.RowIndex].Cells[1];
+                    if (targetCell is DataGridViewTextBoxCell)
+                    {
+                        ActionParametersGridViewHelper.BeginEdit(false);
+                    }
+                    else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
+                    {
+                        SendKeys.Send("%{DOWN}");
+                    }
+                }
+            }
+            else
+            {
+                ActionParametersGridViewHelper.EndEdit();
+            }
+        }
+
+
         public void ShowRecorder(object sender, EventArgs e)
         {
             //get command reference

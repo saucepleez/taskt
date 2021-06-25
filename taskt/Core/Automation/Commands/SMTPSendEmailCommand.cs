@@ -65,14 +65,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Subject")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the text subject (or variable) that the email should have.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Alert!** or **[vStatus]**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Alert!** or **{vStatus}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPSubject { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Body")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify the message that should be sent.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Everything ran ok at [DateTime.Now]**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Everything ran ok at {DateTime.Now}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPBody { get; set; }
 

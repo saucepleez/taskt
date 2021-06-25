@@ -32,6 +32,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public DataTable v_ColumnNameDataTable { get; set; }
 
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView ColumnNamesGridViewHelper;
 
         public CreateDataTableCommand()
         {
@@ -93,6 +96,11 @@ namespace taskt.Core.Automation.Commands
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
+
+            ColumnNamesGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            ColumnNamesGridViewHelper.Tag = "column-a-editable";
+            ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
+
             return RenderedControls;
 
         }
@@ -100,6 +108,36 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + $" [Name: '{v_DataTableName}' with {v_ColumnNameDataTable.Rows.Count} Columns]";
+        }
+
+        private void ColumnNamesGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                ColumnNamesGridViewHelper.BeginEdit(false);
+            }
+            else
+            {
+                ColumnNamesGridViewHelper.EndEdit();
+            }
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (ColumnNamesGridViewHelper.IsCurrentCellDirty || ColumnNamesGridViewHelper.IsCurrentRowDirty)
+            {
+                ColumnNamesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_ColumnNameDataTable.NewRow();
+                v_ColumnNameDataTable.Rows.Add(newRow);
+                for (var i = v_ColumnNameDataTable.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_ColumnNameDataTable.Rows[i][0].ToString() == "")
+                    {
+                        v_ColumnNameDataTable.Rows[i].Delete();
+                    }
+                }
+            }
         }
     }
 }

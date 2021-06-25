@@ -47,10 +47,10 @@
             this.lstClasses.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstClasses.FormattingEnabled = true;
             this.lstClasses.ItemHeight = 21;
-            this.lstClasses.Location = new System.Drawing.Point(12, 116);
+            this.lstClasses.Location = new System.Drawing.Point(12, 107);
             this.lstClasses.Name = "lstClasses";
-            this.lstClasses.Size = new System.Drawing.Size(517, 88);
-            this.lstClasses.TabIndex = 0;
+            this.lstClasses.Size = new System.Drawing.Size(517, 67);
+            this.lstClasses.TabIndex = 2;
             this.lstClasses.SelectedIndexChanged += new System.EventHandler(this.lstClasses_SelectedIndexChanged);
             // 
             // lstMethods
@@ -58,10 +58,10 @@
             this.lstMethods.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstMethods.FormattingEnabled = true;
             this.lstMethods.ItemHeight = 21;
-            this.lstMethods.Location = new System.Drawing.Point(12, 242);
+            this.lstMethods.Location = new System.Drawing.Point(12, 223);
             this.lstMethods.Name = "lstMethods";
-            this.lstMethods.Size = new System.Drawing.Size(517, 88);
-            this.lstMethods.TabIndex = 1;
+            this.lstMethods.Size = new System.Drawing.Size(517, 67);
+            this.lstMethods.TabIndex = 4;
             this.lstMethods.SelectedIndexChanged += new System.EventHandler(this.lstMethods_SelectedIndexChanged);
             // 
             // lstParameters
@@ -69,10 +69,10 @@
             this.lstParameters.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstParameters.FormattingEnabled = true;
             this.lstParameters.ItemHeight = 21;
-            this.lstParameters.Location = new System.Drawing.Point(12, 368);
+            this.lstParameters.Location = new System.Drawing.Point(12, 340);
             this.lstParameters.Name = "lstParameters";
-            this.lstParameters.Size = new System.Drawing.Size(517, 88);
-            this.lstParameters.TabIndex = 2;
+            this.lstParameters.Size = new System.Drawing.Size(517, 67);
+            this.lstParameters.TabIndex = 6;
             // 
             // label1
             // 
@@ -80,10 +80,10 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(7, 9);
+            this.label1.Location = new System.Drawing.Point(7, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(424, 25);
-            this.label1.TabIndex = 3;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Load a DLL and explore methods and parameters";
             // 
             // label2
@@ -92,10 +92,10 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(7, 88);
+            this.label2.Location = new System.Drawing.Point(7, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 25);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 1;
             this.label2.Text = "Classes";
             // 
             // label3
@@ -104,10 +104,10 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(7, 214);
+            this.label3.Location = new System.Drawing.Point(7, 198);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 25);
-            this.label3.TabIndex = 5;
+            this.label3.TabIndex = 3;
             this.label3.Text = "Methods:";
             // 
             // label4
@@ -116,10 +116,10 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(12, 340);
+            this.label4.Location = new System.Drawing.Point(12, 314);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(110, 25);
-            this.label4.TabIndex = 6;
+            this.label4.TabIndex = 5;
             this.label4.Text = "Parameters:";
             // 
             // uiPictureButton1
@@ -131,11 +131,12 @@
             this.uiPictureButton1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.uiPictureButton1.Image = global::taskt.Properties.Resources.command_run_code;
             this.uiPictureButton1.IsMouseOver = false;
-            this.uiPictureButton1.Location = new System.Drawing.Point(12, 37);
+            this.uiPictureButton1.Location = new System.Drawing.Point(12, 34);
             this.uiPictureButton1.Name = "uiPictureButton1";
-            this.uiPictureButton1.Size = new System.Drawing.Size(55, 48);
+            this.uiPictureButton1.Size = new System.Drawing.Size(55, 44);
             this.uiPictureButton1.TabIndex = 8;
             this.uiPictureButton1.TabStop = false;
+            this.uiPictureButton1.Text = "Load DLL";
             this.uiPictureButton1.Click += new System.EventHandler(this.uiPictureButton1_Click);
             // 
             // uiBtnOk
@@ -147,20 +148,21 @@
             this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOk.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOk.Image")));
             this.uiBtnOk.IsMouseOver = false;
-            this.uiBtnOk.Location = new System.Drawing.Point(11, 464);
+            this.uiBtnOk.Location = new System.Drawing.Point(11, 428);
             this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.uiBtnOk.Name = "uiBtnOk";
-            this.uiBtnOk.Size = new System.Drawing.Size(48, 49);
+            this.uiBtnOk.Size = new System.Drawing.Size(48, 45);
             this.uiBtnOk.TabIndex = 17;
             this.uiBtnOk.TabStop = false;
+            this.uiBtnOk.Text = "Ok";
             this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // frmDLLExplorer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 247;
-            this.ClientSize = new System.Drawing.Size(543, 519);
+            this.ClientSize = new System.Drawing.Size(543, 479);
             this.Controls.Add(this.uiBtnOk);
             this.Controls.Add(this.uiPictureButton1);
             this.Controls.Add(this.label4);
