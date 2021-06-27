@@ -1094,24 +1094,29 @@ namespace taskt.UI.Forms
 
                 case 2:
                     //write command text
-                    Brush commandNameBrush, commandBackgroundBrush;
+                    //Brush commandNameBrush, commandBackgroundBrush;
+                    taskt.Core.Theme.UIFont trg;
+
                     if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
                     {
                         //debugging coloring
-                        commandNameBrush = Brushes.White;
-                        commandBackgroundBrush = Brushes.OrangeRed;
+                        //commandNameBrush = Brushes.White;
+                        //commandBackgroundBrush = Brushes.OrangeRed;
+                        trg = taskt.Core.Theme.scriptTexts["debug"];
                     }
                     else if ((currentIndex >= 0) && (e.ItemIndex == currentIndex))
                     {
                         //search primary item coloring
-                        commandNameBrush = Brushes.Black;
-                        commandBackgroundBrush = Brushes.Goldenrod;
+                        //commandNameBrush = Brushes.Black;
+                        //commandBackgroundBrush = Brushes.Goldenrod;
+                        trg = taskt.Core.Theme.scriptTexts["current"];
                     }
                     else if (matchingSearchIndex.Contains(e.ItemIndex))
                     {
                         //search match item coloring
-                        commandNameBrush = Brushes.Black;
-                        commandBackgroundBrush = Brushes.LightYellow;
+                        //commandNameBrush = Brushes.Black;
+                        //commandBackgroundBrush = Brushes.LightYellow;
+                        trg = taskt.Core.Theme.scriptTexts["match"];
                     }
                     else if ((e.Item.Focused) || (e.Item.Selected))
                     {
@@ -1119,54 +1124,67 @@ namespace taskt.UI.Forms
                         if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
                         {
                             // disable command
-                            commandNameBrush = Brushes.LightGreen;
+                            //commandNameBrush = Brushes.LightGreen;
+                            trg = taskt.Core.Theme.scriptTexts["selected-comment"];
                         }
                         else if (command.PauseBeforeExeucution)
                         {
                             // pause
-                            commandNameBrush = Brushes.Plum;
+                            //commandNameBrush = Brushes.Plum;
+                            trg = taskt.Core.Theme.scriptTexts["selected-pause"];
                         }
                         else if (!command.IsValid)
                         {
                             // invalid
-                            commandNameBrush = Brushes.Crimson;
+                            //commandNameBrush = Brushes.Crimson;
+                            trg = taskt.Core.Theme.scriptTexts["selected-invalid"];
                         }
                         else
                         {
-                            commandNameBrush = Brushes.White;
+                            //commandNameBrush = Brushes.White;
+                            trg = taskt.Core.Theme.scriptTexts["selected-normal"];
                         }
-                        commandBackgroundBrush = Brushes.DodgerBlue;
+                        //commandBackgroundBrush = Brushes.DodgerBlue;
                     }
                     else if (command.PauseBeforeExeucution)
                     {
                         //pause before execution coloring
-                        commandNameBrush = Brushes.MediumPurple;
-                        commandBackgroundBrush = Brushes.Lavender;
+                        //commandNameBrush = Brushes.MediumPurple;
+                        //commandBackgroundBrush = Brushes.Lavender;
+                        trg = taskt.Core.Theme.scriptTexts["pause"];
                     }
                     else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
                     {
                         //comments and commented command coloring
-                        commandNameBrush = Brushes.ForestGreen;
-                        commandBackgroundBrush = Brushes.WhiteSmoke;
+                        //commandNameBrush = Brushes.ForestGreen;
+                        //commandBackgroundBrush = Brushes.WhiteSmoke;
+                        trg = taskt.Core.Theme.scriptTexts["comment"];
+                    }
+                    else if (!command.IsValid)
+                    {
+                        //standard coloring
+                        //if (command.IsValid)
+                        //{
+                        //    //commandNameBrush = Brushes.SteelBlue;
+                        //    trg = taskt.Core.Theme.scriptTexts["normal"];
+
+                        //}
+                        //else
+                        //{
+                        //    //commandNameBrush = Brushes.Crimson;
+                        //    trg = taskt.Core.Theme.scriptTexts["invalid"];
+                        //}
+                        //commandBackgroundBrush = Brushes.WhiteSmoke;
+                        trg = taskt.Core.Theme.scriptTexts["invalid"];
                     }
                     else
                     {
-                        //standard coloring
-                        if (command.IsValid)
-                        {
-                            commandNameBrush = Brushes.SteelBlue;
-                            
-                        }
-                        else
-                        {
-                            commandNameBrush = Brushes.Crimson;
-                        }
-                        commandBackgroundBrush = Brushes.WhiteSmoke;
+                        trg = taskt.Core.Theme.scriptTexts["normal"];
                     }
 
                     //fille with background color
-                    e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
-
+                    //e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
+                    e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
 
 
                     //get indent count
@@ -1176,8 +1194,10 @@ namespace taskt.UI.Forms
                     modifiedBounds.X += indentPixels;
 
                     //draw string
+                    //e.Graphics.DrawString(command.GetDisplayValue(),
+                    //               lstScriptActions.Font, commandNameBrush, modifiedBounds);
                     e.Graphics.DrawString(command.GetDisplayValue(),
-                                   lstScriptActions.Font, commandNameBrush, modifiedBounds);
+                                   new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
 
                     break;
             }
