@@ -99,8 +99,6 @@ namespace taskt.UI.Forms
                 {
                     cboSelectedCommand.SelectedIndex = cboSelectedCommand.FindStringExact(requiredCommand.FullName);
                 }
-
-               
             }
             else
             {
@@ -135,18 +133,11 @@ namespace taskt.UI.Forms
                         {
                             typedControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
                         }
-
-
-
                     }
-
-
                 }
 
 
                 //handle selection change events
-                
-
             }
 
             //gracefully handle post initialization setups (drop downs, etc)
@@ -198,9 +189,6 @@ namespace taskt.UI.Forms
 
         private void cboSelectedCommand_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            //clear controls
-            flw_InputVariables.Controls.Clear();
-
             //find underlying command item
             var selectedCommandItem = cboSelectedCommand.Text;
 
@@ -227,11 +215,18 @@ namespace taskt.UI.Forms
             //bind controls to new data source
             userSelectedCommand.Bind(this);
 
+            flw_InputVariables.SuspendLayout();
+
+            //clear controls
+            flw_InputVariables.Controls.Clear();
+
             //add each control
             foreach (var ctrl in userSelectedCommand.UIControls)
             {
                 flw_InputVariables.Controls.Add(ctrl);
             }
+
+            flw_InputVariables.ResumeLayout();
 
             //focus first TextBox
             var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
@@ -293,10 +288,12 @@ namespace taskt.UI.Forms
 
         private void frmCommandEditor_Resize(object sender, EventArgs e)
         {
+            flw_InputVariables.SuspendLayout();
             foreach (Control item in flw_InputVariables.Controls)
             {
                 item.Width = this.Width - 70;
             }
+            flw_InputVariables.ResumeLayout();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
