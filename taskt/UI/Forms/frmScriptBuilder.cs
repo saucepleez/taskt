@@ -89,7 +89,16 @@ namespace taskt.UI.Forms
                 this.Text = "taskt";
             }
 
+            if (this.dontSaveFlag)
+            {
+                this.Text += " *";
+            }
+        }
 
+        private void ChangeSaveState(bool s)
+        {
+            this.dontSaveFlag = s;
+            UpdateWindowTitle();
         }
 
         private void frmScriptBuilder_Load(object sender, EventArgs e)
@@ -220,7 +229,6 @@ namespace taskt.UI.Forms
                 tvCommands.Nodes.Add(newGroup);
 
             }
-
             tvCommands.Sort();
 
             //tvCommands.ImageList = uiImages;
@@ -234,6 +242,8 @@ namespace taskt.UI.Forms
                 frmAttended.Show();
 
             }
+
+            this.dontSaveFlag = false;
 
             // release
             GC.Collect();
@@ -327,8 +337,10 @@ namespace taskt.UI.Forms
         }
         private void lblMainLogo_Click(object sender, EventArgs e)
         {
-            Supplemental.frmAbout aboutForm = new Supplemental.frmAbout();
-            aboutForm.Show();
+            using (Supplemental.frmAbout aboutForm = new Supplemental.frmAbout())
+            {
+                aboutForm.Show();
+            }
         }
         private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -502,15 +514,11 @@ namespace taskt.UI.Forms
             }
             else if ((e.Control) && (e.KeyCode == Keys.Z))
             {
-
                 UndoChange();
-
             }
             else if ((e.Control) && (e.KeyCode == Keys.R))
             {
-
                 RedoChange();
-
             }
             else if ((e.Control) && (e.Shift) && (e.KeyCode == Keys.E))
             {
@@ -526,12 +534,10 @@ namespace taskt.UI.Forms
             }
             else if ((e.Control) && (e.KeyCode == Keys.A))
             {
-
                 foreach (ListViewItem item in lstScriptActions.Items)
                 {
                     item.Selected = true;
                 }
-
             }
 
 
@@ -542,6 +548,8 @@ namespace taskt.UI.Forms
             foreach (ListViewItem itm in lstScriptActions.SelectedItems)
             {
                 lstScriptActions.Items.Remove(itm);
+
+                ChangeSaveState(true);
             }
 
             CreateUndoSnapshot();
@@ -565,6 +573,8 @@ namespace taskt.UI.Forms
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
+                ChangeSaveState(true);
+
                 var commands = new List<Core.Automation.Commands.ScriptCommand>();
 
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
@@ -601,6 +611,8 @@ namespace taskt.UI.Forms
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
+                ChangeSaveState(true);
+
                 var commands = new List<Core.Automation.Commands.ScriptCommand>();
 
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
@@ -655,6 +667,8 @@ namespace taskt.UI.Forms
             var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText());
             if (sc != null)
             {
+                ChangeSaveState(true);
+
                 InsertExecutionCommands(sc.Commands);
 
                 Notify(sc.Commands.Count + " item(s) pasted!");
@@ -725,12 +739,6 @@ namespace taskt.UI.Forms
 
         private void CreateUndoSnapshot()
         {
-
-
-
-
-
-
             List<ListViewItem> itemList = new List<ListViewItem>();
             foreach (ListViewItem rowItem in lstScriptActions.Items)
             {
@@ -807,6 +815,7 @@ namespace taskt.UI.Forms
                 //if data has been changed
                 if (newBuilder.ShowDialog() == DialogResult.OK)
                 {
+                    ChangeSaveState(true);
 
                     //create updated list
                     List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
@@ -823,46 +832,40 @@ namespace taskt.UI.Forms
 
                     //update label
                     selectedCommandItem.Text = sequence.GetDisplayValue();
-
                 }
-
-             
-
             }
             else
             {
 
                 //create new command editor form
-                UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands());
-
-                //creation mode edit locks form to current command
-                editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
-
-                //editCommand.defaultStartupCommand = currentCommand.SelectionName;
-                editCommand.editingCommand = currentCommand;
-
-                //create clone of current command so databinding does not affect if changes are not saved
-                editCommand.originalCommand = Core.Common.Clone(currentCommand);
-
-                //set variables
-                editCommand.scriptVariables = this.scriptVariables;
-
-                // set taskt settings
-                editCommand.appSettings = this.appSettings;
-
-                //show edit command form and save changes on OK result
-                if (editCommand.ShowDialog() == DialogResult.OK)
+                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
                 {
-                    selectedCommandItem.Tag = editCommand.selectedCommand;
-                    selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
-                    selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
+                    //creation mode edit locks form to current command
+                    editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
+
+                    //editCommand.defaultStartupCommand = currentCommand.SelectionName;
+                    editCommand.editingCommand = currentCommand;
+
+                    //create clone of current command so databinding does not affect if changes are not saved
+                    editCommand.originalCommand = Core.Common.Clone(currentCommand);
+
+                    //set variables
+                    editCommand.scriptVariables = this.scriptVariables;
+
+                    // set taskt settings
+                    editCommand.appSettings = this.appSettings;
+
+                    //show edit command form and save changes on OK result
+                    if (editCommand.ShowDialog() == DialogResult.OK)
+                    {
+                        ChangeSaveState(true);
+
+                        selectedCommandItem.Tag = editCommand.selectedCommand;
+                        selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
+                        selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
+                    }
                 }
             }
-
-
-
-
-
         }
 
 
@@ -1239,6 +1242,8 @@ namespace taskt.UI.Forms
                 selectedCommand.IsCommented = setCommented;
             }
 
+            ChangeSaveState(true);
+
             //recolor
             lstScriptActions.Invalidate();
 
@@ -1264,6 +1269,8 @@ namespace taskt.UI.Forms
 
             //recolor
             //FormatCommandListView();
+
+            ChangeSaveState(true);
 
             lstScriptActions.Invalidate();
 
@@ -1416,19 +1423,41 @@ namespace taskt.UI.Forms
         #region Open, Save, Parse File
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
-            //show ofd
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
+            BeginOpenScriptProcess();
+        }
 
-            //if user selected file
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+        private void BeginOpenScriptProcess()
+        {
+            CheckAndSaveScriptIfForget();
+
+            //show ofd
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                //open file
-                OpenFile(openFileDialog.FileName);
+                openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Filter = "Xml (*.xml)|*.xml";
+
+                //if user selected file
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //open file
+                    OpenFile(openFileDialog.FileName);
+                }
             }
         }
+
+        private void CheckAndSaveScriptIfForget()
+        {
+            if (this.dontSaveFlag)
+            {
+                if (MessageBox.Show("This script has not been saved yet.\nDo you save it?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+
+                    BeginSaveScriptProcess((ScriptFilePath == ""));
+                }
+            }
+        }
+
         private void OpenFile(string filePath)
         {
 
@@ -1456,7 +1485,7 @@ namespace taskt.UI.Forms
                 PopulateExecutionCommands(deserializedScript.Commands);
 
                 //format listview
-               
+                ChangeSaveState(false);
 
                 //notify
                 Notify("Script Loaded Successfully!");
@@ -1477,20 +1506,21 @@ namespace taskt.UI.Forms
         private void BeginImportProcess()
         {
             //show ofd
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.Filter = "Xml (*.xml)|*.xml";
-
-            //if user selected file
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                //import
-                Cursor.Current = Cursors.WaitCursor;
-                Import(openFileDialog.FileName);
-                Cursor.Current = Cursors.Default;
-            }
+                openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Filter = "Xml (*.xml)|*.xml";
 
+                //if user selected file
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //import
+                    Cursor.Current = Cursors.WaitCursor;
+                    Import(openFileDialog.FileName);
+                    Cursor.Current = Cursors.Default;
+                }
+            }
         }
         private void Import(string filePath)
         {
@@ -1525,6 +1555,8 @@ namespace taskt.UI.Forms
                 //comment
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
 
+
+                ChangeSaveState(true);
 
                 //format listview
 
@@ -1593,15 +1625,18 @@ namespace taskt.UI.Forms
 
         private void uiBtnSave_Click(object sender, EventArgs e)
         {
-            //clear selected items
-            ClearSelectedListViewItems();
-            SaveToFile(false);
+            BeginSaveScriptProcess(false);
         }
         private void uiBtnSaveAs_Click(object sender, EventArgs e)
         {
+            BeginSaveScriptProcess(true);
+        }
+
+        private void BeginSaveScriptProcess(bool SaveAs)
+        {
             //clear selected items
             ClearSelectedListViewItems();
-            SaveToFile(true);
+            SaveToFile(SaveAs);
         }
 
         private List<Core.Automation.Commands.ScriptCommand> GetConfiguredCommands()
@@ -1717,6 +1752,7 @@ namespace taskt.UI.Forms
                 var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, this.ScriptFilePath);
                 //show success dialog
                 Notify("File has been saved successfully!");
+                ChangeSaveState(false);
             }
             catch (Exception ex)
             {
@@ -1781,42 +1817,59 @@ namespace taskt.UI.Forms
 
         private void uiBtnNew_Click(object sender, EventArgs e)
         {
-            this.ScriptFilePath = null;
-            lstScriptActions.Items.Clear();
+            BeginNewScriptProcess();
+        }
+
+        private void BeginNewScriptProcess()
+        {
+            CheckAndSaveScriptIfForget();
+
+            NewScript();
+
             HideSearchInfo();
-            scriptVariables = new List<Core.Script.ScriptVariable>();
             GenerateRecentFiles();
             pnlCommandHelper.Show();
         }
 
+        private void NewScript()
+        {
+            this.ScriptFilePath = null;
+            lstScriptActions.Items.Clear();
+            scriptVariables = new List<Core.Script.ScriptVariable>();
+
+            ChangeSaveState(false);
+        }
+
         private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
         {
-            UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement();
-            scheduleManager.Show();
+            using (UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement())
+            {
+                scheduleManager.Show();
+            }
         }
 
         private void uiBtnAbout_Click(object sender, EventArgs e)
         {
-            UI.Forms.Supplemental.frmAbout frmAboutForm = new UI.Forms.Supplemental.frmAbout();
-            frmAboutForm.Show();
+            using (UI.Forms.Supplemental.frmAbout frmAboutForm = new UI.Forms.Supplemental.frmAbout())
+            {
+                frmAboutForm.Show();
+            }
         }
 
         private void uiBtnSettings_Click(object sender, EventArgs e)
         {
             //show settings dialog
-            frmSettings newSettings = new frmSettings(this);
-            newSettings.ShowDialog();
+            using (frmSettings newSettings = new frmSettings(this))
+            {
+                newSettings.ShowDialog();
 
-            //reload app settings
-            appSettings = new Core.ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
+                //reload app settings
+                appSettings = new Core.ApplicationSettings();
+                appSettings = appSettings.GetOrCreateApplicationSettings();
 
-            //reinit
-             Core.Server.HttpServerClient.Initialize();
-
-
-
-
+                //reinit
+                Core.Server.HttpServerClient.Initialize();
+            }
         }
 
         private void PerformAntiIdle()
@@ -1831,7 +1884,6 @@ namespace taskt.UI.Forms
 
         private void uiBtnRecordSequence_Click(object sender, EventArgs e)
         {
-
             this.Hide();
             frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
             sequenceRecorder.callBackForm = this;
@@ -1841,8 +1893,6 @@ namespace taskt.UI.Forms
 
             this.Show();
             this.BringToFront();
-
-
         }
 
         private void uiBtnClearAll_Click(object sender, EventArgs e)
@@ -1857,21 +1907,24 @@ namespace taskt.UI.Forms
         private void AddNewCommand(string specificCommand = "")
         {
             //bring up new command configuration form
-            var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands());
-            newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
-            newCommandForm.scriptVariables = this.scriptVariables;
-            // set taskt settings
-            newCommandForm.appSettings = this.appSettings;
-            if (specificCommand != "")
-                newCommandForm.defaultStartupCommand = specificCommand;
-
-            //if a command was selected
-            if (newCommandForm.ShowDialog() == DialogResult.OK)
+            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
             {
-                //add to listview
-                AddCommandToListView(newCommandForm.selectedCommand);
-            }
+                newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
+                newCommandForm.scriptVariables = this.scriptVariables;
+                // set taskt settings
+                newCommandForm.appSettings = this.appSettings;
+                if (specificCommand != "")
+                    newCommandForm.defaultStartupCommand = specificCommand;
 
+                //if a command was selected
+                if (newCommandForm.ShowDialog() == DialogResult.OK)
+                {
+                    ChangeSaveState(true);
+
+                    //add to listview
+                    AddCommandToListView(newCommandForm.selectedCommand);
+                }
+            }
         }
         #endregion
 
@@ -1931,9 +1984,6 @@ namespace taskt.UI.Forms
 
         private void txtCommandSearch_TextChanged(object sender, EventArgs e)
         {
-
-   
-
             if (lstScriptActions.Items.Count == 0)
                 return;
 
@@ -1960,7 +2010,6 @@ namespace taskt.UI.Forms
                 //repaint
                 lstScriptActions.Invalidate();
             }
-
         }
 
         private void HideSearchInfo()
@@ -1976,13 +2025,10 @@ namespace taskt.UI.Forms
                 reqdIndex++;
                 SearchForItemInListView();
             }
-
         }
 
         private void SearchForItemInListView()
         {
-
-
             var searchCriteria = txtCommandSearch.Text;
 
             if (searchCriteria == "")
@@ -2046,11 +2092,6 @@ namespace taskt.UI.Forms
 
 
             lstScriptActions.EnsureVisible(currentIndex);
-
-
-
-
-
         }
 
         private void pbSearch_MouseEnter(object sender, EventArgs e)
@@ -2089,8 +2130,10 @@ namespace taskt.UI.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder();
-            recorder.ShowDialog();
+            using (UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder())
+            {
+                recorder.ShowDialog();
+            }
         }
 
         private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2155,36 +2198,12 @@ namespace taskt.UI.Forms
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.ScriptFilePath = null;
-
-            if (dontSaveFlag)
-            {
-
-            }
-
-            lstScriptActions.Items.Clear();
-            HideSearchInfo();
-            scriptVariables = new List<Core.Script.ScriptVariable>();
-            GenerateRecentFiles();
-            pnlCommandHelper.Show();
+            BeginNewScriptProcess();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //show ofd
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-                openFileDialog.RestoreDirectory = true;
-                openFileDialog.Filter = "Xml (*.xml)|*.xml";
-
-                //if user selected file
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    //open file
-                    OpenFile(openFileDialog.FileName);
-                }
-            }
+            BeginOpenScriptProcess();
         }
 
         private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2194,16 +2213,12 @@ namespace taskt.UI.Forms
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //clear selected items
-            ClearSelectedListViewItems();
-            SaveToFile(false);
+            BeginSaveScriptProcess(false);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //clear selected items
-            ClearSelectedListViewItems();
-            SaveToFile(true);
+            BeginSaveScriptProcess(true);
         }
 
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2293,11 +2308,14 @@ namespace taskt.UI.Forms
 
         private void restartApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CheckAndSaveScriptIfForget();
+
             Application.Restart();
         }
 
         private void closeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            BeginFormCloseProcess();
             Application.Exit();
         }
 
@@ -2326,12 +2344,25 @@ namespace taskt.UI.Forms
 
         private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = !BeginFormCloseProcess();
+        }
+
+        private bool BeginFormCloseProcess()
+        {
             if (notifyTray != null)
             {
                 notifyTray.Visible = false;
                 notifyTray.Dispose();
             }
-                              
+
+            if (this.parentBuilder != null)
+            {
+                //TODO: i want to do better.
+                return true;
+            }
+
+            CheckAndSaveScriptIfForget();
+            return true;
         }
 
         private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2347,7 +2378,6 @@ namespace taskt.UI.Forms
             }
         }
 
-       
     }
 
 }
