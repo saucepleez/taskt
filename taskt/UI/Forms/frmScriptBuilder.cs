@@ -931,7 +931,8 @@ namespace taskt.UI.Forms
             newCommand.Tag = cmdDetails;
             newCommand.ForeColor = cmdDetails.DisplayForeColor;
             newCommand.BackColor = Color.DimGray;
-            newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
+            //newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
+            newCommand.ImageIndex = taskt.UI.Images.GetUIImageList(cmdDetails.GetType().Name);
             return newCommand;
         }
 
@@ -1084,7 +1085,8 @@ namespace taskt.UI.Forms
                     break;
                 case 1:
                     //draw command icon
-                    var img = uiImages.Images[command.GetType().Name];
+                    //var img = uiImages.Images[command.GetType().Name];
+                    var img = taskt.UI.Images.GetUIImage(command.GetType().Name);
                     if (img != null)
                     {
                         e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
