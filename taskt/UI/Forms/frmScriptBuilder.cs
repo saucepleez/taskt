@@ -343,7 +343,7 @@ namespace taskt.UI.Forms
         {
             using (Supplemental.frmAbout aboutForm = new Supplemental.frmAbout())
             {
-                aboutForm.Show();
+                aboutForm.ShowDialog();
             }
         }
         private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
@@ -1847,7 +1847,7 @@ namespace taskt.UI.Forms
         {
             using (UI.Forms.Supplemental.frmAbout frmAboutForm = new UI.Forms.Supplemental.frmAbout())
             {
-                frmAboutForm.Show();
+                frmAboutForm.ShowDialog();
             }
         }
 
