@@ -133,7 +133,7 @@ namespace taskt.UI.Forms
                  Core.Server.HttpServerClient.CheckIn();
             }
 
-             Core.Server.HttpServerClient.associatedBuilder = this;
+            Core.Server.HttpServerClient.associatedBuilder = this;
 
             Core.Server.LocalTCPListener.Initialize(this);
             //Core.Sockets.SocketClient.Initialize();
@@ -173,11 +173,12 @@ namespace taskt.UI.Forms
 
             if (!System.IO.Directory.Exists(rpaScriptsFolder))
             {
-                UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0);
-
-                if (userDialog.ShowDialog() == DialogResult.OK)
+                using (UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
                 {
-                    System.IO.Directory.CreateDirectory(rpaScriptsFolder);
+                    if (userDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        System.IO.Directory.CreateDirectory(rpaScriptsFolder);
+                    }
                 }
             }
 
@@ -206,6 +207,7 @@ namespace taskt.UI.Forms
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
 
+            tvCommands.SuspendLayout();
             var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
 
             foreach (var cmd in groupedCommands)
@@ -230,6 +232,7 @@ namespace taskt.UI.Forms
 
             }
             tvCommands.Sort();
+            tvCommands.ResumeLayout();
 
             //tvCommands.ImageList = uiImages;
 
@@ -292,10 +295,11 @@ namespace taskt.UI.Forms
             }
             else
             {
+                flwRecentFiles.SuspendLayout();
                 foreach (var fil in recentFiles)
                 {
                     if (flwRecentFiles.Controls.Count == 7)
-                        return;
+                        break;
 
                     LinkLabel newFileLink = new LinkLabel();
                     newFileLink.Text = fil;
@@ -305,8 +309,8 @@ namespace taskt.UI.Forms
                     newFileLink.Margin = new Padding(0, 0, 0, 0);
                     newFileLink.LinkClicked += NewFileLink_LinkClicked;
                     flwRecentFiles.Controls.Add(newFileLink);
-
                 }
+                flwRecentFiles.ResumeLayout();
             }
         }
         private void frmScriptBuilder_Shown(object sender, EventArgs e)
@@ -789,49 +793,50 @@ namespace taskt.UI.Forms
 
                 //get sequence events
                 Core.Automation.Commands.SequenceCommand sequence = (Core.Automation.Commands.SequenceCommand)currentCommand;
-                frmScriptBuilder newBuilder = new frmScriptBuilder();
 
-                //add variables
-
-                newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
-
-                foreach (var variable in this.scriptVariables)
+                using (frmScriptBuilder newBuilder = new frmScriptBuilder())
                 {
-                    newBuilder.scriptVariables.Add(variable);
-                }
+                    //add variables
 
-                //append to new builder
-                foreach (var cmd in sequence.v_scriptActions)
-                {
-                    newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
-                }
+                    newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
 
-
-                //apply editor style format
-                newBuilder.ApplyEditorFormat();
-
-                newBuilder.parentBuilder = this;
-
-                //if data has been changed
-                if (newBuilder.ShowDialog() == DialogResult.OK)
-                {
-                    ChangeSaveState(true);
-
-                    //create updated list
-                    List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
-
-                    //update to list
-                    for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
+                    foreach (var variable in this.scriptVariables)
                     {
-                        var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
-                        updatedList.Add(command);
+                        newBuilder.scriptVariables.Add(variable);
                     }
 
-                    //apply new list to existing sequence
-                    sequence.v_scriptActions = updatedList;
+                    //append to new builder
+                    foreach (var cmd in sequence.v_scriptActions)
+                    {
+                        newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
+                    }
 
-                    //update label
-                    selectedCommandItem.Text = sequence.GetDisplayValue();
+                    //apply editor style format
+                    newBuilder.ApplyEditorFormat();
+
+                    newBuilder.parentBuilder = this;
+
+                    //if data has been changed
+                    if (newBuilder.ShowDialog() == DialogResult.OK)
+                    {
+                        ChangeSaveState(true);
+
+                        //create updated list
+                        List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
+
+                        //update to list
+                        for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
+                        {
+                            var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
+                            updatedList.Add(command);
+                        }
+
+                        //apply new list to existing sequence
+                        sequence.v_scriptActions = updatedList;
+
+                        //update label
+                        selectedCommandItem.Text = sequence.GetDisplayValue();
+                    }
                 }
             }
             else
@@ -1780,39 +1785,7 @@ namespace taskt.UI.Forms
 
         private void uiBtnRunScript_Click(object sender, EventArgs e)
         {
-
-            if (lstScriptActions.Items.Count == 0)
-            {
-                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
-                Notify("You must first build the script by adding commands!");
-                return;
-            }
-
-
-            if (ScriptFilePath == null)
-            {
-                //MessageBox.Show("You must first save your script before you can run it!", "Please Save Script");
-                Notify("You must first save your script before you can run it!");
-                return;
-            }
-
-            //clear selected items
-            ClearSelectedListViewItems();
-
-            SaveToFile(false); // Save & Run!
-
-            Notify("Running Script..");
-
-
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
-
-            //this.executionManager = new ScriptExectionManager();
-            //executionManager.CurrentlyExecuting = true;
-            //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
-
-            newEngine.callBackForm = this;
-            newEngine.Show();
-           
+            BeginRunScriptProcess();
         }
 
         private void uiBtnNew_Click(object sender, EventArgs e)
@@ -1885,9 +1858,11 @@ namespace taskt.UI.Forms
         private void uiBtnRecordSequence_Click(object sender, EventArgs e)
         {
             this.Hide();
-            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
-            sequenceRecorder.callBackForm = this;
-            sequenceRecorder.ShowDialog();
+            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
+            {
+                sequenceRecorder.callBackForm = this;
+                sequenceRecorder.ShowDialog();
+            }
 
             pnlCommandHelper.Hide();
 
@@ -2236,9 +2211,11 @@ namespace taskt.UI.Forms
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //show settings dialog
-            frmSettings newSettings = new frmSettings(this);
-            newSettings.ShowDialog();
-
+            using (frmSettings newSettings = new frmSettings(this))
+            {
+                newSettings.ShowDialog();
+            }
+                
             //reload app settings
             appSettings = new Core.ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
@@ -2250,9 +2227,12 @@ namespace taskt.UI.Forms
         private void recordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
-            frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder();
-            sequenceRecorder.callBackForm = this;
-            sequenceRecorder.ShowDialog();
+
+            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
+            {
+                sequenceRecorder.callBackForm = this;
+                sequenceRecorder.ShowDialog();
+            }
 
             pnlCommandHelper.Hide();
 
@@ -2268,7 +2248,11 @@ namespace taskt.UI.Forms
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            BeginRunScriptProcess();
+        }
 
+        private void BeginRunScriptProcess()
+        {
             if (lstScriptActions.Items.Count == 0)
             {
                 // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
@@ -2289,21 +2273,17 @@ namespace taskt.UI.Forms
 
             Notify("Running Script..");
 
-
             UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
-
-            //this.executionManager = new ScriptExectionManager();
-            //executionManager.CurrentlyExecuting = true;
-            //executionManager.ScriptName = new System.IO.FileInfo(ScriptFilePath).Name;
-
             newEngine.callBackForm = this;
             newEngine.Show();
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void saveAndRunToolStripMenuItem_Clicked(object sender, EventArgs e)
         {
-            saveToolStripMenuItem_Click(null, null);
-            runToolStripMenuItem_Click(null, null);
+            //saveToolStripMenuItem_Click(null, null);
+            //runToolStripMenuItem_Click(null, null);
+            BeginSaveScriptProcess((this.ScriptFilePath == ""));
+            BeginRunScriptProcess();
         }
 
         private void restartApplicationToolStripMenuItem_Click(object sender, EventArgs e)
