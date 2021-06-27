@@ -1294,6 +1294,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmScriptBuilder";
             this.Text = "taskt";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmScriptBuilder_FormClosing);
             this.Load += new System.EventHandler(this.frmScriptBuilder_Load);
             this.Shown += new System.EventHandler(this.frmScriptBuilder_Shown);
             this.SizeChanged += new System.EventHandler(this.frmScriptBuilder_SizeChanged);
