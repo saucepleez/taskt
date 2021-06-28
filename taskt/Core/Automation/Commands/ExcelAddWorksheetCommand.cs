@@ -47,8 +47,12 @@ namespace taskt.Core.Automation.Commands
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
-            return RenderedControls;
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+            }
 
+            return RenderedControls;
         }
         public override string GetDisplayValue()
         {

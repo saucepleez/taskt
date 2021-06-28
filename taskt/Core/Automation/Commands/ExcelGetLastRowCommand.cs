@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InstanceName = "RPAExcel";
+            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
@@ -75,9 +75,12 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
 
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+            }
 
             return RenderedControls;
-
         }
         public override string GetDisplayValue()
         {
