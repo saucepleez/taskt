@@ -85,13 +85,18 @@ namespace taskt.UI.Forms
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAppFolderPath.DataBindings.Add("Text", clientSettings, "RootFolder", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAttendedTaskFolder.DataBindings.Add("Text", clientSettings, "AttendedTasksFolder", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
             chkMinimizeToTray.DataBindings.Add("Checked", clientSettings, "MinimizeToTray", false, DataSourceUpdateMode.OnPropertyChanged);
             cboStartUpMode.DataBindings.Add("Text", clientSettings, "StartupMode", false, DataSourceUpdateMode.OnPropertyChanged);
             chkPreloadCommands.DataBindings.Add("Checked", clientSettings, "PreloadBuilderCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkSlimActionBar.DataBindings.Add("Checked", clientSettings, "UseSlimActionBar", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            // Editor Tab
+            chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultWordInstanceName.DataBindings.Add("Text", clientSettings, "DefaultWordInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics
             bgwMetrics.RunWorkerAsync();
