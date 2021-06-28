@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Stopwatch";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_StopwatchName = "RPAStopwatch";
+            this.v_StopwatchName = "";
             this.v_StopwatchAction = "Start Stopwatch";
         }
 
@@ -123,7 +123,8 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_StopwatchName", this, editor));
+            var ctlStopwatchName = CommandControls.CreateDefaultInputGroupFor("v_StopwatchName", this, editor);
+            RenderedControls.AddRange(ctlStopwatchName);
 
             var StopWatchComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_StopwatchAction", this);
             StopWatchComboBox = (ComboBox)CommandControls.CreateDropdownFor("v_StopwatchAction", this);
@@ -140,6 +141,11 @@ namespace taskt.Core.Automation.Commands
             comboBox.AddVariableNames(editor);
 
             MeasureControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_StopwatchName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
+            }
 
             foreach (var ctrl in MeasureControls)
             {
