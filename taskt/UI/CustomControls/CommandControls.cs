@@ -213,7 +213,7 @@ namespace taskt.UI.CustomControls
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
                         helperControl.CommandDisplay = "Capture Reference Image";
-                        helperControl.Click += (sender, e) => ShowImageCapture(sender, e);
+                        helperControl.Click += (sender, e) => ShowImageCapture(sender, e, editor);
 
                         taskt.UI.CustomControls.CommandItemControl testRun = new taskt.UI.CustomControls.CommandItemControl();
                         testRun.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
@@ -510,11 +510,10 @@ namespace taskt.UI.CustomControls
                 }
             }
         }
-        private static void ShowImageCapture(object sender, EventArgs e)
+        private static void ShowImageCapture(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
-
-
-            ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            //ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            var settings = editor.appSettings;
             var minimizePreference = settings.ClientSettings.MinimizeToTray;
 
             if (minimizePreference)
@@ -540,7 +539,7 @@ namespace taskt.UI.CustomControls
                         var convertedImage = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
                         var convertedLength = convertedImage.Length;
                         targetPictureBox.EncodedImage = convertedImage;
-                        imageCaptureForm.Show();
+                        //imageCaptureForm.Show();
                     }
                 }
             }
