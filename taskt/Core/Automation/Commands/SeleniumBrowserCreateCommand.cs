@@ -49,7 +49,9 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Select a Browser Engine Type")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Edge")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Chrome")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Firefox")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("IE")]
         [Attributes.PropertyAttributes.InputSpecification("Select the window state that the browser should start up with.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Normal** to start the browser in normal mode or **Maximize** to start the browser in maximized mode.")]
@@ -88,6 +90,21 @@ namespace taskt.Core.Automation.Commands
 
                 driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
                 webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, options);
+            }
+            else if (seleniumEngine == "Edge")
+            {
+                OpenQA.Selenium.Edge.EdgeOptions options = new OpenQA.Selenium.Edge.EdgeOptions();
+
+                driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(driverPath, "msedgedriver.exe");
+                webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, options);
+            }
+            else if (seleniumEngine == "Firefox")
+            {
+                OpenQA.Selenium.Firefox.FirefoxOptions options = new OpenQA.Selenium.Firefox.FirefoxOptions();
+                options.BrowserExecutableLocation = @"c:\Program Files\Mozilla Firefox\firefox.exe";
+
+                driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(driverPath);
+                webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, options);
             }
             else
             {
