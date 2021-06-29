@@ -157,6 +157,7 @@ namespace taskt.Core
         public bool InsertCommandsInline { get; set; }
         public bool EnableSequenceDragDrop { get; set; }
         public bool InsertVariableAtCursor { get; set; }
+        public bool InsertElseAutomatically { get; set; }
         public string DefaultBrowserInstanceName { get; set; }
         public string DefaultStopWatchInstanceName { get; set; }
         public string DefaultExcelInstanceName { get; set; }
@@ -173,6 +174,7 @@ namespace taskt.Core
             InsertCommandsInline = true;
             EnableSequenceDragDrop = true;
             InsertVariableAtCursor = true;
+            InsertElseAutomatically = false;
             DefaultBrowserInstanceName = "RPABrowser";
             DefaultStopWatchInstanceName = "RPAStopwatch";
             DefaultExcelInstanceName = "RPAExcel";
