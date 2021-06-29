@@ -333,33 +333,34 @@ namespace taskt.UI.CustomControls
             CustomControls.CommandItemControl commandItem = (CustomControls.CommandItemControl)sender;
             TextBox targetTextbox = (TextBox)commandItem.Tag;
 
-
-            UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new Forms.Supplemental.frmCodeBuilder(targetTextbox.Text);
-
-            if (codeBuilder.ShowDialog() == DialogResult.OK)
+            using (UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
             {
+                if (codeBuilder.ShowDialog() == DialogResult.OK)
+                {
 
-                targetTextbox.Text = codeBuilder.rtbCode.Text;
+                    targetTextbox.Text = codeBuilder.rtbCode.Text;
+                }
             }
         }
         private static void ShowMouseCaptureForm(object sender, EventArgs e)
         {
-            taskt.UI.Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new taskt.UI.Forms.Supplemental.frmShowCursorPosition();
-
-            //if user made a successful selection
-            if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
+            using (taskt.UI.Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new taskt.UI.Forms.Supplemental.frmShowCursorPosition())
             {
-                //Todo - ideally one function to add to textbox which adds to class
+                //if user made a successful selection
+                if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
+                {
+                    //Todo - ideally one function to add to textbox which adds to class
 
-                //add selected variables to associated control text
-                CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
-                CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
+                    //add selected variables to associated control text
+                    CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
+                    CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
 
-                //find current command and add to underlying class
-                Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
-                cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
-                cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
-            }
+                    //find current command and add to underlying class
+                    Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
+                    cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
+                    cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
+                }
+            }  
         }
         public static void ShowVariableSelector(object sender, EventArgs e, taskt.UI.Forms.frmCommandEditor editor)
         {
@@ -485,26 +486,28 @@ namespace taskt.UI.CustomControls
         }
         private static void ShowFileSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-
-            if (ofd.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                //currently variable insertion is only available for simply textboxes
-                TextBox targetTextbox = (TextBox)inputBox.Tag;
-                //concat variable name with brackets [vVariable] as engine searches for the same
-                targetTextbox.Text = ofd.FileName;
-            }
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
+                    //currently variable insertion is only available for simply textboxes
+                    TextBox targetTextbox = (TextBox)inputBox.Tag;
+                    //concat variable name with brackets [vVariable] as engine searches for the same
+                    targetTextbox.Text = ofd.FileName;
+                }
+            }     
         }
         private static void ShowFolderSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-
-            if(fbd.ShowDialog() == DialogResult.OK)
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
             {
-                CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                TextBox targetTextBox = (TextBox)inputBox.Tag;
-                targetTextBox.Text = fbd.SelectedPath;
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
+                    TextBox targetTextBox = (TextBox)inputBox.Tag;
+                    targetTextBox.Text = fbd.SelectedPath;
+                }
             }
         }
         private static void ShowImageCapture(object sender, EventArgs e)
@@ -527,19 +530,19 @@ namespace taskt.UI.CustomControls
             if (userAcceptance == DialogResult.Yes)
             {
 
-                Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture();
-
-                if (imageCaptureForm.ShowDialog() == DialogResult.OK)
+                using (Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture())
                 {
-                    CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                    UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-                    targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                    var convertedImage = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
-                    var convertedLength = convertedImage.Length;
-                    targetPictureBox.EncodedImage = convertedImage;
-                    imageCaptureForm.Show();
+                    if (imageCaptureForm.ShowDialog() == DialogResult.OK)
+                    {
+                        CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
+                        UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
+                        targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
+                        var convertedImage = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                        var convertedLength = convertedImage.Length;
+                        targetPictureBox.EncodedImage = convertedImage;
+                        imageCaptureForm.Show();
+                    }
                 }
-
             }
 
             ShowAllForms();
@@ -549,9 +552,6 @@ namespace taskt.UI.CustomControls
                 settings.ClientSettings.MinimizeToTray = true;
                 settings.Save(settings);
             }
-
-
-
         }
         private static void RunImageCapture(object sender, EventArgs e)
         {
@@ -591,7 +591,6 @@ namespace taskt.UI.CustomControls
         }
         private static void ShowElementRecorder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
-
             //get command reference
             Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)editor.selectedCommand;
 
@@ -607,9 +606,6 @@ namespace taskt.UI.CustomControls
 
             editor.WindowState = FormWindowState.Normal;
             editor.BringToFront();
-
-
-
         }
         private static void GenerateDLLParameters(object sender, EventArgs e)
         {
@@ -679,48 +675,45 @@ namespace taskt.UI.CustomControls
         private static void ShowDLLExplorer(object sender, EventArgs e)
         {
             //create form
-            UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer();
-
-            //show dialog
-            if (dllExplorer.ShowDialog() == DialogResult.OK)
+            using (UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer())
             {
-                //user accepted the selections
-                //declare command
-                Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
-
-                //add file name
-                if (!string.IsNullOrEmpty(dllExplorer.FileName))
+                //show dialog
+                if (dllExplorer.ShowDialog() == DialogResult.OK)
                 {
-                    CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
-                }
+                    //user accepted the selections
+                    //declare command
+                    Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
 
-                //add class name
-                if (dllExplorer.lstClasses.SelectedItem != null)
-                {
-                    CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
-                }
-
-                //add method name
-                if (dllExplorer.lstMethods.SelectedItem != null)
-                {
-                    CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
-                }
-
-                cmd.v_MethodParameters.Rows.Clear();
-
-                //add parameters
-                if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
-                {
-                    foreach (var param in dllExplorer.SelectedParameters)
+                    //add file name
+                    if (!string.IsNullOrEmpty(dllExplorer.FileName))
                     {
-                        cmd.v_MethodParameters.Rows.Add(param, "");
+                        CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
+                    }
+
+                    //add class name
+                    if (dllExplorer.lstClasses.SelectedItem != null)
+                    {
+                        CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
+                    }
+
+                    //add method name
+                    if (dllExplorer.lstMethods.SelectedItem != null)
+                    {
+                        CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
+                    }
+
+                    cmd.v_MethodParameters.Rows.Clear();
+
+                    //add parameters
+                    if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
+                    {
+                        foreach (var param in dllExplorer.SelectedParameters)
+                        {
+                            cmd.v_MethodParameters.Rows.Add(param, "");
+                        }
                     }
                 }
-
-
-
             }
-
         }
 
         private static void ComboBoxKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -748,16 +741,16 @@ namespace taskt.UI.CustomControls
         }
         private static void ShowHTMLBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
-            var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder();
-
-            RichTextBox inputControl = (RichTextBox)editor.flw_InputVariables.Controls["v_InputHTML"];
-            htmlForm.rtbHTML.Text = inputControl.Text;
-
-            if (htmlForm.ShowDialog() == DialogResult.OK)
+            using (var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder())
             {
-                inputControl.Text = htmlForm.rtbHTML.Text;
-            }
+                RichTextBox inputControl = (RichTextBox)editor.flw_InputVariables.Controls["v_InputHTML"];
+                htmlForm.rtbHTML.Text = inputControl.Text;
 
+                if (htmlForm.ShowDialog() == DialogResult.OK)
+                {
+                    inputControl.Text = htmlForm.rtbHTML.Text;
+                }
+            }
         }
 
         public static void ShowAllForms()
