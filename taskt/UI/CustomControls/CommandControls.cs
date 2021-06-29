@@ -192,7 +192,7 @@ namespace taskt.UI.CustomControls
                         //show variable selector
                         helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
                         helperControl.CommandDisplay = "Insert Variable";
-                        helperControl.Click += (sender, e) => ShowVariableSelector(sender, e);
+                        helperControl.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
                         break;
 
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
@@ -361,7 +361,7 @@ namespace taskt.UI.CustomControls
                 cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
             }
         }
-        public static void ShowVariableSelector(object sender, EventArgs e)
+        public static void ShowVariableSelector(object sender, EventArgs e, taskt.UI.Forms.frmCommandEditor editor)
         {
             //create variable selector form
             UI.Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector();
@@ -395,31 +395,49 @@ namespace taskt.UI.CustomControls
                 {
                     TextBox targetTextbox = (TextBox)inputBox.Tag;
                     //concat variable name with brackets [vVariable] as engine searches for the same
-                    string str = targetTextbox.Text;
-                    int cursorPos = targetTextbox.SelectionStart;
-                    string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                    targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                    targetTextbox.Focus();
-                    targetTextbox.SelectionStart = cursorPos + ins.Length;
-                    targetTextbox.SelectionLength = 0;
-                    //targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                    {
+                        string str = targetTextbox.Text;
+                        int cursorPos = targetTextbox.SelectionStart;
+                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                        targetTextbox.Focus();
+                        targetTextbox.SelectionStart = cursorPos + ins.Length;
+                        targetTextbox.SelectionLength = 0;
+                    }
+                    else
+                    {
+                        targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        targetTextbox.Focus();
+                        targetTextbox.SelectionStart = targetTextbox.Text.Length;
+                        targetTextbox.SelectionLength = 0;
+                    }
                 }
                 else if (inputBox.Tag is ComboBox)
                 {
                     ComboBox targetCombobox = (ComboBox)inputBox.Tag;
-                    string str = targetCombobox.Text;
-                    int cursorPos;
-                    if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
+                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
                     {
-                        cursorPos = str.Length;
+                        string str = targetCombobox.Text;
+                        int cursorPos;
+                        if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
+                        {
+                            cursorPos = str.Length;
+                        }
+                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                        targetCombobox.Focus();
+                        targetCombobox.SelectionStart = cursorPos + ins.Length;
+                        targetCombobox.SelectionLength = 0;
                     }
-                    string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                    targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                    targetCombobox.Focus();
-                    targetCombobox.SelectionStart = cursorPos + ins.Length;
-                    targetCombobox.SelectionLength = 0;
-                    //concat variable name with brackets [vVariable] as engine searches for the same
-                    //targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    else
+                    {
+                        //concat variable name with brackets [vVariable] as engine searches for the same
+                        targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        targetCombobox.Focus();
+                        targetCombobox.SelectionStart = targetCombobox.Text.Length;
+                        targetCombobox.SelectionLength = 0;
+                    }
                 }
                 else if (inputBox.Tag is DataGridView)
                 {

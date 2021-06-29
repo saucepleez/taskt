@@ -93,6 +93,7 @@ namespace taskt.UI.Forms
             // Editor Tab
             chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
             chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkInsertVariablePosition.DataBindings.Add("Checked", clientSettings, "InsertVariableAtCursor", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);

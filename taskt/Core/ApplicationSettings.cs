@@ -149,13 +149,14 @@ namespace taskt.Core
     {
         public bool AntiIdleWhileOpen { get; set; }
         public string RootFolder { get; set; }
-        public bool EnableSequenceDragDrop { get; set; }
         public bool MinimizeToTray { get; set; }
         public string AttendedTasksFolder { get; set; }
         public string StartupMode { get; set; }
         public bool PreloadBuilderCommands { get; set; }
         public bool UseSlimActionBar { get; set; }
         public bool InsertCommandsInline { get; set; }
+        public bool EnableSequenceDragDrop { get; set; }
+        public bool InsertVariableAtCursor { get; set; }
         public string DefaultBrowserInstanceName { get; set; }
         public string DefaultStopWatchInstanceName { get; set; }
         public string DefaultExcelInstanceName { get; set; }
@@ -167,10 +168,11 @@ namespace taskt.Core
             RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
             StartupMode = "Builder Mode";
             AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
-            EnableSequenceDragDrop = true;
             PreloadBuilderCommands = false;
             UseSlimActionBar = true;
             InsertCommandsInline = true;
+            EnableSequenceDragDrop = true;
+            InsertVariableAtCursor = true;
             DefaultBrowserInstanceName = "RPABrowser";
             DefaultStopWatchInstanceName = "RPAStopwatch";
             DefaultExcelInstanceName = "RPAExcel";

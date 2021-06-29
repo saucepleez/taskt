@@ -1247,7 +1247,6 @@
             this.chkInsertVariablePosition.TabIndex = 16;
             this.chkInsertVariablePosition.Text = "Insert variable at cursor position (Textbox/Combobox)";
             this.chkInsertVariablePosition.UseVisualStyleBackColor = false;
-            this.chkInsertVariablePosition.Visible = false;
             // 
             // txtDefaultWordInstanceName
             // 
