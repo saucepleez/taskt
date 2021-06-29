@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserExecuteScriptCommand";
             this.SelectionName = "Execute Script";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -121,6 +121,11 @@ namespace taskt.Core.Automation.Commands
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

@@ -116,6 +116,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabEditorSettings = new System.Windows.Forms.TabPage();
+            this.lblInsertElse = new System.Windows.Forms.CheckBox();
             this.chkInsertVariablePosition = new System.Windows.Forms.CheckBox();
             this.txtDefaultWordInstanceName = new System.Windows.Forms.TextBox();
             this.lblWordInstance = new System.Windows.Forms.Label();
@@ -131,7 +132,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.lblInsertElse = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -409,6 +409,7 @@
             // 
             // tabAppSettings
             // 
+            this.tabAppSettings.AutoScroll = true;
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabAppSettings.Controls.Add(this.chkSlimActionBar);
             this.tabAppSettings.Controls.Add(this.chkPreloadCommands);
@@ -1220,6 +1221,20 @@
             this.tabEditorSettings.Text = "Editor";
             this.tabEditorSettings.UseVisualStyleBackColor = true;
             // 
+            // lblInsertElse
+            // 
+            this.lblInsertElse.AutoSize = true;
+            this.lblInsertElse.BackColor = System.Drawing.Color.Transparent;
+            this.lblInsertElse.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInsertElse.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblInsertElse.Location = new System.Drawing.Point(10, 101);
+            this.lblInsertElse.Name = "lblInsertElse";
+            this.lblInsertElse.Size = new System.Drawing.Size(250, 24);
+            this.lblInsertElse.TabIndex = 17;
+            this.lblInsertElse.Text = "Insert Else when BeginIf command";
+            this.lblInsertElse.UseVisualStyleBackColor = false;
+            this.lblInsertElse.Visible = false;
+            // 
             // chkInsertVariablePosition
             // 
             this.chkInsertVariablePosition.AutoSize = true;
@@ -1375,20 +1390,6 @@
             // 
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
-            // 
-            // lblInsertElse
-            // 
-            this.lblInsertElse.AutoSize = true;
-            this.lblInsertElse.BackColor = System.Drawing.Color.Transparent;
-            this.lblInsertElse.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInsertElse.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblInsertElse.Location = new System.Drawing.Point(10, 101);
-            this.lblInsertElse.Name = "lblInsertElse";
-            this.lblInsertElse.Size = new System.Drawing.Size(250, 24);
-            this.lblInsertElse.TabIndex = 17;
-            this.lblInsertElse.Text = "Insert Else when BeginIf command";
-            this.lblInsertElse.UseVisualStyleBackColor = false;
-            this.lblInsertElse.Visible = false;
             // 
             // frmSettings
             // 

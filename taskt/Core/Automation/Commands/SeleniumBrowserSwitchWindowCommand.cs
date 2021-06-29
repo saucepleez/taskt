@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserSwitchWindowCommand";
             this.SelectionName = "Switch Browser Window";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
@@ -150,6 +150,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MatchSpecification", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CaseSensitiveMatch", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MatchParameter", this, editor));
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserCreateCommand";
             this.SelectionName = "Create Browser";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
             this.v_EngineType = "Chrome";
@@ -133,6 +133,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_InstanceTracking", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_BrowserWindowOption", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumOptions", this, editor));
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

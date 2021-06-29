@@ -79,9 +79,9 @@ namespace taskt.Core.Automation.Commands
             this.v_IfActionParameterTable.Columns.Add("Parameter Value");
         }
 
-        private void IfGridViewHelper_MouseEnter(object sender, EventArgs e)
+        private void IfGridViewHelper_MouseEnter(object sender, EventArgs e, frmCommandEditor editor)
         {
-            ifAction_SelectionChangeCommitted(null, null);
+            ifAction_SelectionChangeCommitted(null, null, editor);
         }
 
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
@@ -542,7 +542,7 @@ namespace taskt.Core.Automation.Commands
             //IfGridViewHelper.AllowUserToAddRows = false;
             //IfGridViewHelper.AllowUserToDeleteRows = false;
             IfGridViewHelper = CommandControls.CreateDataGridView(this, "v_IfActionParameterTable", false, false, false, 400, 150);
-            IfGridViewHelper.MouseEnter += IfGridViewHelper_MouseEnter;
+            IfGridViewHelper.MouseEnter += (sender, e) => IfGridViewHelper_MouseEnter(sender,e, editor);
             IfGridViewHelper.CellClick += IfGridViewHelper_CellClick;
             IfGridViewHelper.CellBeginEdit += IfGridViewHelper_CellBeginEdit;
 
@@ -562,7 +562,7 @@ namespace taskt.Core.Automation.Commands
             ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_IfActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionType", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfActionType", this, new Control[] { ActionDropdown }, editor));
-            ActionDropdown.SelectionChangeCommitted += ifAction_SelectionChangeCommitted;
+            ActionDropdown.SelectionChangeCommitted += (sender, e) => ifAction_SelectionChangeCommitted(sender, e, editor);
 
             RenderedControls.Add(ActionDropdown);
 
@@ -582,7 +582,7 @@ namespace taskt.Core.Automation.Commands
         }
 
 
-        private void ifAction_SelectionChangeCommitted(object sender, EventArgs e)
+        private void ifAction_SelectionChangeCommitted(object sender, EventArgs e, frmCommandEditor editor)
         {
 
 
@@ -769,7 +769,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (sender != null)
                     {
-                        actionParameters.Rows.Add("Selenium Instance Name", "default");
+                        actionParameters.Rows.Add("Selenium Instance Name", editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
                         actionParameters.Rows.Add("Element Search Method", "");
                         actionParameters.Rows.Add("Element Search Parameter", "");
                         ifActionParameterBox.DataSource = actionParameters;

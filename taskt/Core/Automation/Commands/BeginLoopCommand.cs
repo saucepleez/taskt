@@ -78,9 +78,9 @@ namespace taskt.Core.Automation.Commands
             this.v_LoopActionParameterTable.Columns.Add("Parameter Name");
             this.v_LoopActionParameterTable.Columns.Add("Parameter Value");
         }
-        private void LoopGridViewHelper_MouseEnter(object sender, EventArgs e)
+        private void LoopGridViewHelper_MouseEnter(object sender, EventArgs e, frmCommandEditor editor)
         {
-            loopAction_SelectionChangeCommitted(null, null);
+            loopAction_SelectionChangeCommitted(null, null, editor);
         }
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
@@ -528,7 +528,7 @@ namespace taskt.Core.Automation.Commands
             //LoopGridViewHelper.AllowUserToAddRows = false;
             //LoopGridViewHelper.AllowUserToDeleteRows = false;
             LoopGridViewHelper = CommandControls.CreateDataGridView(this, "v_LoopActionParameterTable", false, false);
-            LoopGridViewHelper.MouseEnter += LoopGridViewHelper_MouseEnter;
+            LoopGridViewHelper.MouseEnter += (sender, e) => LoopGridViewHelper_MouseEnter(sender, e, editor);
             LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
             LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;
 
@@ -548,7 +548,7 @@ namespace taskt.Core.Automation.Commands
             ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_LoopActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionType", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_LoopActionType", this, new Control[] { ActionDropdown }, editor));
-            ActionDropdown.SelectionChangeCommitted += loopAction_SelectionChangeCommitted;
+            ActionDropdown.SelectionChangeCommitted += (sender, e) => loopAction_SelectionChangeCommitted(sender, e, editor);
 
             RenderedControls.Add(ActionDropdown);
 
@@ -563,7 +563,7 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
-        private void loopAction_SelectionChangeCommitted(object sender, EventArgs e)
+        private void loopAction_SelectionChangeCommitted(object sender, EventArgs e, frmCommandEditor editor)
         {
             ComboBox loopAction = (ComboBox)ActionDropdown;
             DataGridView loopActionParameterBox = (DataGridView)LoopGridViewHelper;
@@ -745,7 +745,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (sender != null)
                     {
-                        actionParameters.Rows.Add("Selenium Instance Name", "default");
+                        actionParameters.Rows.Add("Selenium Instance Name", editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
                         actionParameters.Rows.Add("Element Search Method", "");
                         actionParameters.Rows.Add("Element Search Parameter", "");
                         loopActionParameterBox.DataSource = actionParameters;

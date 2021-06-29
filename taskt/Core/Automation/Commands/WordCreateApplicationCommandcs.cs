@@ -52,8 +52,12 @@ namespace taskt.Core.Automation.Commands
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
-            return RenderedControls;
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
+            }
 
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

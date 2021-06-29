@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserSwitchFrameCommand";
             this.SelectionName = "Switch Browser Frame";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
             this.v_SelectionType = "Index";
@@ -98,6 +98,10 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SelectionType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FrameParameter", this, editor));
 
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

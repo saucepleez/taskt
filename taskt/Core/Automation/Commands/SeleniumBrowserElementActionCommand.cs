@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserElementActionCommand";
             this.SelectionName = "Element Action";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
@@ -574,6 +574,11 @@ namespace taskt.Core.Automation.Commands
             ElementParameterControls.Add(ElementsGridViewHelper);
 
             RenderedControls.AddRange(ElementParameterControls);
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

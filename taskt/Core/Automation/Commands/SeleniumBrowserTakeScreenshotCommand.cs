@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserTakeScreenshotCommand";
             this.SelectionName = "Take Screenshot";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.v_SeleniumScreenshotPathParameter = "";
             this.v_SeleniumScreenshotFileNameParameter = "screenshot_001";
             this.CommandEnabled = true;
@@ -75,6 +75,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumScreenshotPathParameter", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumScreenshotFileNameParameter", this, editor));
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

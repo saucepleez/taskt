@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserNavigateURLCommand";
             this.SelectionName = "Navigate to URL";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
             this.v_UseHttps = true;
@@ -89,6 +89,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
 
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_UseHttps", this, editor));
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }
