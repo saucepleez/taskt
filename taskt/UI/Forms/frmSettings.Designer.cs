@@ -1262,9 +1262,9 @@
             this.lblWordInstance.ForeColor = System.Drawing.Color.SlateGray;
             this.lblWordInstance.Location = new System.Drawing.Point(7, 288);
             this.lblWordInstance.Name = "lblWordInstance";
-            this.lblWordInstance.Size = new System.Drawing.Size(168, 17);
+            this.lblWordInstance.Size = new System.Drawing.Size(169, 17);
             this.lblWordInstance.TabIndex = 14;
-            this.lblWordInstance.Text = "Default Excel instance name";
+            this.lblWordInstance.Text = "Default Word instance name";
             // 
             // txtDefaultExcelInstanceName
             // 
