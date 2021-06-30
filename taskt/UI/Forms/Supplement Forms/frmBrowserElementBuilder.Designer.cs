@@ -49,7 +49,7 @@
             this.cboIEWindow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboIEWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboIEWindow.FormattingEnabled = true;
-            this.cboIEWindow.Location = new System.Drawing.Point(12, 69);
+            this.cboIEWindow.Location = new System.Drawing.Point(12, 64);
             this.cboIEWindow.Name = "cboIEWindow";
             this.cboIEWindow.Size = new System.Drawing.Size(398, 28);
             this.cboIEWindow.TabIndex = 0;
@@ -68,9 +68,9 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvSearchParameters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvSearchParameters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSearchParameters.Location = new System.Drawing.Point(12, 132);
+            this.dgvSearchParameters.Location = new System.Drawing.Point(12, 122);
             this.dgvSearchParameters.Name = "dgvSearchParameters";
-            this.dgvSearchParameters.Size = new System.Drawing.Size(516, 180);
+            this.dgvSearchParameters.Size = new System.Drawing.Size(516, 166);
             this.dgvSearchParameters.TabIndex = 2;
             // 
             // lblMainLogo
@@ -79,7 +79,7 @@
             this.lblMainLogo.BackColor = System.Drawing.Color.Transparent;
             this.lblMainLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMainLogo.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMainLogo.Location = new System.Drawing.Point(12, 19);
+            this.lblMainLogo.Location = new System.Drawing.Point(12, 18);
             this.lblMainLogo.Name = "lblMainLogo";
             this.lblMainLogo.Size = new System.Drawing.Size(337, 29);
             this.lblMainLogo.TabIndex = 5;
@@ -91,7 +91,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label1.Location = new System.Drawing.Point(12, 102);
+            this.label1.Location = new System.Drawing.Point(12, 94);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(339, 29);
             this.label1.TabIndex = 6;
@@ -106,11 +106,12 @@
             this.uiBtnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.uiBtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnRefresh.Image")));
             this.uiBtnRefresh.IsMouseOver = false;
-            this.uiBtnRefresh.Location = new System.Drawing.Point(416, 58);
+            this.uiBtnRefresh.Location = new System.Drawing.Point(416, 54);
             this.uiBtnRefresh.Name = "uiBtnRefresh";
-            this.uiBtnRefresh.Size = new System.Drawing.Size(48, 48);
+            this.uiBtnRefresh.Size = new System.Drawing.Size(48, 44);
             this.uiBtnRefresh.TabIndex = 9;
             this.uiBtnRefresh.TabStop = false;
+            this.uiBtnRefresh.Text = "Refresh";
             this.uiBtnRefresh.Click += new System.EventHandler(this.uiBtnRefresh_Click);
             // 
             // uiBtnCancel
@@ -120,13 +121,14 @@
             this.uiBtnCancel.DisplayText = "Cancel";
             this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
+            this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
-            this.uiBtnCancel.Location = new System.Drawing.Point(63, 318);
+            this.uiBtnCancel.Location = new System.Drawing.Point(63, 294);
             this.uiBtnCancel.Name = "uiBtnCancel";
-            this.uiBtnCancel.Size = new System.Drawing.Size(48, 48);
+            this.uiBtnCancel.Size = new System.Drawing.Size(48, 44);
             this.uiBtnCancel.TabIndex = 17;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // uiBtnOK
@@ -136,13 +138,14 @@
             this.uiBtnOK.DisplayText = "Ok";
             this.uiBtnOK.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOK.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOK.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOK.Image")));
+            this.uiBtnOK.Image = global::taskt.Properties.Resources.various_ok_button;
             this.uiBtnOK.IsMouseOver = false;
-            this.uiBtnOK.Location = new System.Drawing.Point(12, 318);
+            this.uiBtnOK.Location = new System.Drawing.Point(12, 294);
             this.uiBtnOK.Name = "uiBtnOK";
-            this.uiBtnOK.Size = new System.Drawing.Size(48, 48);
+            this.uiBtnOK.Size = new System.Drawing.Size(48, 44);
             this.uiBtnOK.TabIndex = 16;
             this.uiBtnOK.TabStop = false;
+            this.uiBtnOK.Text = "Ok";
             this.uiBtnOK.Click += new System.EventHandler(this.uiBtnOK_Click);
             // 
             // label3
@@ -151,7 +154,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label3.Location = new System.Drawing.Point(14, 47);
+            this.label3.Location = new System.Drawing.Point(14, 43);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(296, 18);
             this.label3.TabIndex = 19;
@@ -159,10 +162,10 @@
             // 
             // frmBrowserElementBuilder
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 205;
-            this.ClientSize = new System.Drawing.Size(615, 372);
+            this.ClientSize = new System.Drawing.Size(615, 343);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.uiBtnCancel);
             this.Controls.Add(this.uiBtnOK);

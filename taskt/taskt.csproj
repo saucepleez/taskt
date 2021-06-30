@@ -822,6 +822,8 @@
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\various-cancel.png" />
+    <Content Include="Resources\various-ok.png" />
     <Content Include="taskt_logo_alt.ico" />
     <None Include="Resources\item-header96.png" />
     <None Include="Resources\item-header.png" />

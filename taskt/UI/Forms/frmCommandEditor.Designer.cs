@@ -108,7 +108,7 @@
             this.uiBtnAdd.DisplayText = "Ok";
             this.uiBtnAdd.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnAdd.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnAdd.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnAdd.Image")));
+            this.uiBtnAdd.Image = global::taskt.Properties.Resources.various_ok_button;
             this.uiBtnAdd.IsMouseOver = false;
             this.uiBtnAdd.Location = new System.Drawing.Point(6, 5);
             this.uiBtnAdd.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
@@ -126,7 +126,7 @@
             this.uiBtnCancel.DisplayText = "Cancel";
             this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
+            this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
             this.uiBtnCancel.Location = new System.Drawing.Point(106, 5);
             this.uiBtnCancel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);

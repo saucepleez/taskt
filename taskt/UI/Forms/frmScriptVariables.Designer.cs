@@ -65,7 +65,7 @@
             this.uiBtnCancel.DisplayText = "Cancel";
             this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
+            this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
             this.uiBtnCancel.Location = new System.Drawing.Point(55, 1);
             this.uiBtnCancel.Name = "uiBtnCancel";
@@ -82,7 +82,7 @@
             this.uiBtnOK.DisplayText = "Ok";
             this.uiBtnOK.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOK.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOK.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOK.Image")));
+            this.uiBtnOK.Image = global::taskt.Properties.Resources.various_ok_button;
             this.uiBtnOK.IsMouseOver = false;
             this.uiBtnOK.Location = new System.Drawing.Point(3, 1);
             this.uiBtnOK.Name = "uiBtnOK";
