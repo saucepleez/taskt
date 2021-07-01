@@ -34,14 +34,14 @@
             this.dgvSearchParameters = new System.Windows.Forms.DataGridView();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.uiBtnRefresh = new taskt.UI.CustomControls.UIPictureButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnOK = new taskt.UI.CustomControls.UIPictureButton();
-            this.label3 = new System.Windows.Forms.Label();
+            this.uiBtnRefresh = new taskt.UI.CustomControls.UIPictureButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearchParameters)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnRefresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnRefresh)).BeginInit();
             this.SuspendLayout();
             // 
             // cboIEWindow
@@ -97,22 +97,17 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Element Search Parameters";
             // 
-            // uiBtnRefresh
+            // label3
             // 
-            this.uiBtnRefresh.BackColor = System.Drawing.Color.Transparent;
-            this.uiBtnRefresh.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiBtnRefresh.DisplayText = "Refresh";
-            this.uiBtnRefresh.DisplayTextBrush = System.Drawing.Color.Black;
-            this.uiBtnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uiBtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnRefresh.Image")));
-            this.uiBtnRefresh.IsMouseOver = false;
-            this.uiBtnRefresh.Location = new System.Drawing.Point(416, 54);
-            this.uiBtnRefresh.Name = "uiBtnRefresh";
-            this.uiBtnRefresh.Size = new System.Drawing.Size(48, 44);
-            this.uiBtnRefresh.TabIndex = 9;
-            this.uiBtnRefresh.TabStop = false;
-            this.uiBtnRefresh.Text = "Refresh";
-            this.uiBtnRefresh.Click += new System.EventHandler(this.uiBtnRefresh_Click);
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label3.Location = new System.Drawing.Point(14, 43);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(296, 18);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Select a window name, then click to capture";
             // 
             // uiBtnCancel
             // 
@@ -148,17 +143,22 @@
             this.uiBtnOK.Text = "Ok";
             this.uiBtnOK.Click += new System.EventHandler(this.uiBtnOK_Click);
             // 
-            // label3
+            // uiBtnRefresh
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label3.Location = new System.Drawing.Point(14, 43);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(296, 18);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Select a window name, then click to capture";
+            this.uiBtnRefresh.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnRefresh.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnRefresh.DisplayText = "Refresh";
+            this.uiBtnRefresh.DisplayTextBrush = System.Drawing.Color.Black;
+            this.uiBtnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.uiBtnRefresh.Image = global::taskt.Properties.Resources.refresh;
+            this.uiBtnRefresh.IsMouseOver = false;
+            this.uiBtnRefresh.Location = new System.Drawing.Point(416, 54);
+            this.uiBtnRefresh.Name = "uiBtnRefresh";
+            this.uiBtnRefresh.Size = new System.Drawing.Size(48, 44);
+            this.uiBtnRefresh.TabIndex = 9;
+            this.uiBtnRefresh.TabStop = false;
+            this.uiBtnRefresh.Text = "Refresh";
+            this.uiBtnRefresh.Click += new System.EventHandler(this.uiBtnRefresh_Click);
             // 
             // frmBrowserElementBuilder
             // 
@@ -179,9 +179,9 @@
             this.Text = "Web Element Builder";
             this.Load += new System.EventHandler(this.frmBrowserElementBuilder_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearchParameters)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnRefresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnRefresh)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
