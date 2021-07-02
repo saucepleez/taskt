@@ -338,9 +338,9 @@ namespace taskt.Core.Automation.Engine
                     //sleep required time
                     System.Threading.Thread.Sleep(engineSettings.DelayBetweenCommands);
                  
-                        //run the command
-                        parentCommand.RunCommand(this);
-                    }
+                    //run the command
+                    parentCommand.RunCommand(this);
+                }
             }
             catch (Exception ex)
             {
