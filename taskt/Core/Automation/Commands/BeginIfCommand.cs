@@ -393,8 +393,6 @@ namespace taskt.Core.Automation.Commands
                     ifResult = true;
                 }
 
-
-
             }
             else if (v_IfActionType == "Active Window Name Is")
             {
@@ -501,7 +499,7 @@ namespace taskt.Core.Automation.Commands
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
 
-                if (windowName == "Current Window")
+                if (windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
                 {
                     windowName = User32Functions.GetActiveWindowTitle();
                 }
@@ -795,7 +793,7 @@ namespace taskt.Core.Automation.Commands
                     ifActionParameterBox.Visible = true;
                     if (sender != null)
                     {
-                        actionParameters.Rows.Add("Window Name", "Current Window");
+                        actionParameters.Rows.Add("Window Name", editor.appSettings.EngineSettings.CurrentWindowKeyword);
                         actionParameters.Rows.Add("Element Search Method", "");
                         actionParameters.Rows.Add("Element Search Parameter", "");
                         ifActionParameterBox.DataSource = actionParameters;

@@ -491,6 +491,11 @@ namespace taskt.Core.Automation.Commands
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
 
+                if (windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+                {
+                    windowName = User32Functions.GetActiveWindowTitle();
+                }
+
                 UIAutomationCommand newUIACommand = new UIAutomationCommand();
                 newUIACommand.v_WindowName = windowName;
                 newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
@@ -771,7 +776,7 @@ namespace taskt.Core.Automation.Commands
                     loopActionParameterBox.Visible = true;
                     if (sender != null)
                     {
-                        actionParameters.Rows.Add("Window Name", "Current Window");
+                        actionParameters.Rows.Add("Window Name", editor.appSettings.EngineSettings.CurrentWindowKeyword);
                         actionParameters.Rows.Add("Element Search Method", "");
                         actionParameters.Rows.Add("Element Search Parameter", "");
                         loopActionParameterBox.DataSource = actionParameters;
