@@ -55,11 +55,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            if (v_WindowName != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+            string targetWindowName = v_WindowName.ConvertToUserVariable(sender);
+            if (targetWindowName != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
+                    v_WindowName = targetWindowName
                 };
                 activateWindow.RunCommand(sender);
             }
