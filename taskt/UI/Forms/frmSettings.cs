@@ -64,6 +64,7 @@ namespace taskt.UI.Forms
             txtCommandDelay.DataBindings.Add("Text", engineSettings, "DelayBetweenCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkOverrideInstances.DataBindings.Add("Checked", engineSettings, "OverrideExistingAppInstances", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutoCalcVariables.DataBindings.Add("Checked", engineSettings, "AutoCalcVariables", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtCurrentWindow.DataBindings.Add("Text", engineSettings, "CurrentWindowKeyword", false, DataSourceUpdateMode.OnPropertyChanged);
 
 
             cboCancellationKey.DataSource = Enum.GetValues(typeof(Keys));

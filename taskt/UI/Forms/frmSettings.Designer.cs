@@ -132,6 +132,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.lblCurrentWindow = new System.Windows.Forms.Label();
+            this.txtCurrentWindow = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -641,6 +643,8 @@
             // 
             this.tabDebugSettings.AutoScroll = true;
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.txtCurrentWindow);
+            this.tabDebugSettings.Controls.Add(this.lblCurrentWindow);
             this.tabDebugSettings.Controls.Add(this.chkAutoCalcVariables);
             this.tabDebugSettings.Controls.Add(this.label16);
             this.tabDebugSettings.Controls.Add(this.cboCancellationKey);
@@ -1390,6 +1394,25 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // lblCurrentWindow
+            // 
+            this.lblCurrentWindow.AutoSize = true;
+            this.lblCurrentWindow.BackColor = System.Drawing.Color.Transparent;
+            this.lblCurrentWindow.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentWindow.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblCurrentWindow.Location = new System.Drawing.Point(6, 448);
+            this.lblCurrentWindow.Name = "lblCurrentWindow";
+            this.lblCurrentWindow.Size = new System.Drawing.Size(183, 21);
+            this.lblCurrentWindow.TabIndex = 20;
+            this.lblCurrentWindow.Text = "Current window keyword:";
+            // 
+            // txtCurrentWindow
+            // 
+            this.txtCurrentWindow.Location = new System.Drawing.Point(185, 445);
+            this.txtCurrentWindow.Name = "txtCurrentWindow";
+            this.txtCurrentWindow.Size = new System.Drawing.Size(204, 29);
+            this.txtCurrentWindow.TabIndex = 21;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1523,5 +1546,7 @@
         private System.Windows.Forms.Label lblStopwatchInstance;
         private System.Windows.Forms.CheckBox chkInsertVariablePosition;
         private System.Windows.Forms.CheckBox chkInsertElse;
+        private System.Windows.Forms.TextBox txtCurrentWindow;
+        private System.Windows.Forms.Label lblCurrentWindow;
     }
 }
