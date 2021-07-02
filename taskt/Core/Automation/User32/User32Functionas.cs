@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.User32
          
         }
 
-        public static List<IntPtr> FindTargetWindows(string windowName)
+        public static List<IntPtr> FindTargetWindows(string windowName, bool findCurrentWindow = true)
         {
             //create list of hwnds to target
             List<IntPtr> targetWindows = new List<IntPtr>();
@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.User32
             {
                 //target current or specific window
                 IntPtr hwnd;
-                if (windowName == "Current Window")
+                if (findCurrentWindow)
                 {
                     //get active window
                     hwnd = User32Functions.GetActiveWindow();
