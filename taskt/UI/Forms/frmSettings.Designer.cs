@@ -372,7 +372,7 @@
             this.chkAdvancedDebug.BackColor = System.Drawing.Color.Transparent;
             this.chkAdvancedDebug.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAdvancedDebug.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkAdvancedDebug.Location = new System.Drawing.Point(10, 94);
+            this.chkAdvancedDebug.Location = new System.Drawing.Point(10, 97);
             this.chkAdvancedDebug.Name = "chkAdvancedDebug";
             this.chkAdvancedDebug.Size = new System.Drawing.Size(344, 25);
             this.chkAdvancedDebug.TabIndex = 4;
@@ -385,7 +385,7 @@
             this.chkCreateMissingVariables.BackColor = System.Drawing.Color.Transparent;
             this.chkCreateMissingVariables.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkCreateMissingVariables.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkCreateMissingVariables.Location = new System.Drawing.Point(10, 114);
+            this.chkCreateMissingVariables.Location = new System.Drawing.Point(10, 119);
             this.chkCreateMissingVariables.Name = "chkCreateMissingVariables";
             this.chkCreateMissingVariables.Size = new System.Drawing.Size(318, 25);
             this.chkCreateMissingVariables.TabIndex = 5;
@@ -639,6 +639,7 @@
             // 
             // tabDebugSettings
             // 
+            this.tabDebugSettings.AutoScroll = true;
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabDebugSettings.Controls.Add(this.chkAutoCalcVariables);
             this.tabDebugSettings.Controls.Add(this.label16);
@@ -673,7 +674,7 @@
             this.chkAutoCalcVariables.BackColor = System.Drawing.Color.Transparent;
             this.chkAutoCalcVariables.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAutoCalcVariables.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkAutoCalcVariables.Location = new System.Drawing.Point(10, 174);
+            this.chkAutoCalcVariables.Location = new System.Drawing.Point(10, 183);
             this.chkAutoCalcVariables.Name = "chkAutoCalcVariables";
             this.chkAutoCalcVariables.Size = new System.Drawing.Size(255, 25);
             this.chkAutoCalcVariables.TabIndex = 10;
@@ -686,7 +687,7 @@
             this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label16.Location = new System.Drawing.Point(6, 391);
+            this.label16.Location = new System.Drawing.Point(6, 406);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(134, 21);
             this.label16.TabIndex = 0;
@@ -696,7 +697,7 @@
             // 
             this.cboCancellationKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCancellationKey.FormattingEnabled = true;
-            this.cboCancellationKey.Location = new System.Drawing.Point(142, 390);
+            this.cboCancellationKey.Location = new System.Drawing.Point(142, 405);
             this.cboCancellationKey.Name = "cboCancellationKey";
             this.cboCancellationKey.Size = new System.Drawing.Size(154, 29);
             this.cboCancellationKey.TabIndex = 1;
@@ -707,7 +708,7 @@
             this.chkOverrideInstances.BackColor = System.Drawing.Color.Transparent;
             this.chkOverrideInstances.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkOverrideInstances.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkOverrideInstances.Location = new System.Drawing.Point(10, 154);
+            this.chkOverrideInstances.Location = new System.Drawing.Point(10, 161);
             this.chkOverrideInstances.Name = "chkOverrideInstances";
             this.chkOverrideInstances.Size = new System.Drawing.Size(187, 25);
             this.chkOverrideInstances.TabIndex = 9;
@@ -721,7 +722,7 @@
             this.lblDelay.BackColor = System.Drawing.Color.Transparent;
             this.lblDelay.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDelay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblDelay.Location = new System.Drawing.Point(4, 202);
+            this.lblDelay.Location = new System.Drawing.Point(7, 218);
             this.lblDelay.Name = "lblDelay";
             this.lblDelay.Size = new System.Drawing.Size(349, 21);
             this.lblDelay.TabIndex = 11;
@@ -729,7 +730,7 @@
             // 
             // txtCommandDelay
             // 
-            this.txtCommandDelay.Location = new System.Drawing.Point(357, 200);
+            this.txtCommandDelay.Location = new System.Drawing.Point(357, 215);
             this.txtCommandDelay.Name = "txtCommandDelay";
             this.txtCommandDelay.Size = new System.Drawing.Size(77, 29);
             this.txtCommandDelay.TabIndex = 12;
@@ -740,7 +741,7 @@
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label10.Location = new System.Drawing.Point(15, 352);
+            this.label10.Location = new System.Drawing.Point(20, 367);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 21);
             this.label10.TabIndex = 17;
@@ -752,7 +753,7 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label9.Location = new System.Drawing.Point(12, 321);
+            this.label9.Location = new System.Drawing.Point(12, 336);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(106, 21);
             this.label9.TabIndex = 15;
@@ -763,7 +764,7 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label8.Location = new System.Drawing.Point(10, 250);
+            this.label8.Location = new System.Drawing.Point(10, 265);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(410, 66);
             this.label8.TabIndex = 14;
@@ -776,7 +777,7 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Segoe UI Light", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label7.Location = new System.Drawing.Point(6, 225);
+            this.label7.Location = new System.Drawing.Point(6, 240);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(149, 30);
             this.label7.TabIndex = 13;
@@ -788,7 +789,7 @@
             this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 335);
+            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 350);
             this.lblVariableDisplay.Name = "lblVariableDisplay";
             this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
             this.lblVariableDisplay.TabIndex = 19;
@@ -796,7 +797,7 @@
             // 
             // txtVariableEndMarker
             // 
-            this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 349);
+            this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 364);
             this.txtVariableEndMarker.Name = "txtVariableEndMarker";
             this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableEndMarker.TabIndex = 18;
@@ -804,7 +805,7 @@
             // 
             // txtVariableStartMarker
             // 
-            this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 318);
+            this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 333);
             this.txtVariableStartMarker.Name = "txtVariableStartMarker";
             this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
             this.txtVariableStartMarker.TabIndex = 16;
@@ -816,7 +817,7 @@
             this.chkTrackMetrics.BackColor = System.Drawing.Color.Transparent;
             this.chkTrackMetrics.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkTrackMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkTrackMetrics.Location = new System.Drawing.Point(10, 134);
+            this.chkTrackMetrics.Location = new System.Drawing.Point(10, 141);
             this.chkTrackMetrics.Name = "chkTrackMetrics";
             this.chkTrackMetrics.Size = new System.Drawing.Size(188, 25);
             this.chkTrackMetrics.TabIndex = 6;
