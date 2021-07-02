@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class SendKeysCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, Current Window, {{{vWindowName}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            if (v_WindowName != "Current Window")
+            if (v_WindowName != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
@@ -101,9 +101,6 @@ namespace taskt.Core.Automation.Commands
                 System.Windows.Forms.SendKeys.SendWait(textToSend);
             }
 
-
-          
-
             System.Threading.Thread.Sleep(500);
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -112,7 +109,7 @@ namespace taskt.Core.Automation.Commands
 
 
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
