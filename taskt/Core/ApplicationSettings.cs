@@ -123,6 +123,8 @@ namespace taskt.Core
         public bool AutoCloseMessagesOnServerExecution { get; set; }
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
         public bool AutoCalcVariables { get; set; }
+
+        public string CurrentWindowKeyword { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -139,7 +141,8 @@ namespace taskt.Core
             AutoCloseMessagesOnServerExecution = true;
             AutoCloseDebugWindowOnServerExecution = true;
             AutoCalcVariables = true;
-    }
+            CurrentWindowKeyword = "Current Window";
+        }
     }
     /// <summary>
     /// Defines application/client-level settings which can be managed by the user

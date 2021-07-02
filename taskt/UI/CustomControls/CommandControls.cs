@@ -75,7 +75,9 @@ namespace taskt.UI.CustomControls
             if (propertyAttributesAssigned.Length > 0)
             {
                 var attribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
-                inputLabel.Text = attribute.propertyDescription.Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker);
+                inputLabel.Text = attribute.propertyDescription.
+                    Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker)
+                    .Replace("%kwd_current_window%", settings.CurrentWindowKeyword);
             }
             else
             {
@@ -820,7 +822,7 @@ namespace taskt.UI.CustomControls
             return commandList;
 
         }
-        public static ComboBox AddWindowNames(this ComboBox cbo)
+        public static ComboBox AddWindowNames(this ComboBox cbo, UI.Forms.frmCommandEditor editor = null)
         {
             if (cbo == null)
                 return null;
@@ -828,7 +830,15 @@ namespace taskt.UI.CustomControls
             cbo.BeginUpdate();
 
             cbo.Items.Clear();
-            cbo.Items.Add("Current Window");
+
+            if (editor != null)
+            {
+                cbo.Items.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+            }
+            else
+            {
+                cbo.Items.Add("Current Window");
+            }
 
             Process[] processlist = Process.GetProcesses();
             //pull the main window title for each
