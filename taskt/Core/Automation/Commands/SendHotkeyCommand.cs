@@ -43,11 +43,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            if (v_WindowName != "Current Window")
+            var targetWindow = v_WindowName.ConvertToUserVariable(sender);
+            if (targetWindow != ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
+                    v_WindowName = targetWindow
                 };
                 activateWindow.RunCommand(sender);
             }
@@ -123,7 +124,7 @@ namespace taskt.Core.Automation.Commands
 
 
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 

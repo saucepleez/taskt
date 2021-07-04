@@ -212,7 +212,7 @@ namespace taskt.Core.Automation.Commands
             //create variable window name
             var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
 
-            if (variableWindowName == "Current Window")
+            if (variableWindowName == engine.engineSettings.CurrentWindowKeyword)
             {
                 variableWindowName = User32Functions.GetActiveWindowTitle();
             }
@@ -408,7 +408,7 @@ namespace taskt.Core.Automation.Commands
 
             //window name
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
