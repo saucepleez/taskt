@@ -268,7 +268,7 @@ namespace taskt.UI.Forms
                 }
             }
 
-            if (selectedCommand.IsValidate())
+            if (selectedCommand.IsValidate(this))
             {
                 this.DialogResult = DialogResult.OK;
             }

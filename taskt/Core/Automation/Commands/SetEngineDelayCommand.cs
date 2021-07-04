@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Set Engine Delay";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_EngineSpeed = "250";
+            this.v_EngineSpeed = "";
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -36,11 +36,41 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_EngineSpeed", this, editor));
 
+            this.v_EngineSpeed = editor.appSettings.EngineSettings.DelayBetweenCommands.ToString();
+            
             return RenderedControls;
         }
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            this.IsValid = true;
+
+            int speedValue;
+
+            string message = "";
+            if (String.IsNullOrEmpty(v_EngineSpeed))
+            {
+                message += "Delay is empty.";
+                this.IsValid = false;
+            }
+            else
+            {
+                if (int.TryParse(v_EngineSpeed, out speedValue))
+                {
+                    if (speedValue < 0)
+                    {
+                        message += "Specify a value of 0 or more for Delay.";
+                    }
+                }
+            }
+
+            showValidationResult(message, editor);
+
+            return this.IsValid;
         }
     }
 }

@@ -352,10 +352,21 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public virtual bool IsValidate()
+        public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
             this.IsValid = true;
             return true;
+        }
+
+        protected void showValidationResult(string message, UI.Forms.frmCommandEditor editor)
+        {
+            if ((!this.IsValid) && (!editor.appSettings.ClientSettings.DontShowValidationMessage))
+            {
+                using (var fm = new UI.Forms.Supplemental.frmDialog(message, this.SelectionName, UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                {
+                    fm.ShowDialog();
+                }
+            }
         }
 
     }
