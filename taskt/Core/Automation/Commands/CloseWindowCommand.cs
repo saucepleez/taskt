@@ -40,17 +40,13 @@ namespace taskt.Core.Automation.Commands
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
 
-
-            var targetWindows = User32Functions.FindTargetWindows(windowName);
+            var targetWindows = User32Functions.FindTargetWindows(windowName, (((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName));
 
             //loop each window
             foreach (var targetedWindow in targetWindows)
             {
                 User32Functions.CloseWindow(targetedWindow);
             }
-            
-
-           
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -58,7 +54,7 @@ namespace taskt.Core.Automation.Commands
 
             //create window name helper control
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 

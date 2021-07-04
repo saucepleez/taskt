@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
 
             //create window name helper control
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
