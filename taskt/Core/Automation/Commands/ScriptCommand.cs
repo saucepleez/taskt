@@ -281,6 +281,9 @@ namespace taskt.Core.Automation.Commands
         public bool IsValid { get; protected set; }
 
         [XmlIgnore]
+        public string validationResult { get; protected set; }
+
+        [XmlIgnore]
         public bool CustomRendering { get; set; }
 
         [XmlIgnore]
@@ -296,6 +299,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = false;
             this.GenerateID();
             this.IsValid = true;
+            this.validationResult = "";
         }
 
         public void GenerateID()
@@ -356,17 +360,6 @@ namespace taskt.Core.Automation.Commands
         {
             this.IsValid = true;
             return true;
-        }
-
-        protected void showValidationResult(string message, UI.Forms.frmCommandEditor editor)
-        {
-            if ((!this.IsValid) && (!editor.appSettings.ClientSettings.DontShowValidationMessage))
-            {
-                using (var fm = new UI.Forms.Supplemental.frmDialog(message, this.SelectionName, UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
-                {
-                    fm.ShowDialog();
-                }
-            }
         }
 
     }

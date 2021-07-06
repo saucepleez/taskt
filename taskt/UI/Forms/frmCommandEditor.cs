@@ -274,6 +274,13 @@ namespace taskt.UI.Forms
             }
             else
             {
+                if (!appSettings.ClientSettings.DontShowValidationMessage)
+                {
+                    using(UI.Forms.Supplemental.frmDialog fm = new UI.Forms.Supplemental.frmDialog(selectedCommand.validationResult, selectedCommand.SelectionName, Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
+                }
                 this.DialogResult = DialogResult.OK;
             }
         }
