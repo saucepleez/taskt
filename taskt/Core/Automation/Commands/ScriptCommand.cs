@@ -359,6 +359,7 @@ namespace taskt.Core.Automation.Commands
         public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
             this.IsValid = true;
+            this.validationResult = "";
             return true;
         }
 
