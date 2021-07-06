@@ -53,13 +53,13 @@ namespace taskt.Core.Automation.Commands
         public override bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
             this.IsValid = true;
+            this.validationResult = "";
 
             int pauseValue;
 
-            string message = "";
             if (String.IsNullOrEmpty(v_PauseLength))
             {
-                message += "Time of pause is empty.";
+                this.validationResult += "Time of pause is empty.\n";
                 this.IsValid = false;
             }
             else
@@ -68,12 +68,11 @@ namespace taskt.Core.Automation.Commands
                 {
                     if (pauseValue < 0)
                     {
-                        message += "Specify a value of 0 or more for Time of pause.";
+                        this.validationResult += "Specify a value of 0 or more for Time of pause.\n";
+                        this.IsValid = false;
                     }
                 }
             }
-
-            showValidationResult(message, editor);
 
             return this.IsValid;
         }

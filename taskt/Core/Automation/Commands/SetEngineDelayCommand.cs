@@ -48,13 +48,13 @@ namespace taskt.Core.Automation.Commands
         public override bool IsValidate(frmCommandEditor editor)
         {
             this.IsValid = true;
+            this.validationResult = "";
 
             int speedValue;
 
-            string message = "";
             if (String.IsNullOrEmpty(v_EngineSpeed))
             {
-                message += "Delay is empty.";
+                this.validationResult += "Delay is empty.\n";
                 this.IsValid = false;
             }
             else
@@ -63,12 +63,11 @@ namespace taskt.Core.Automation.Commands
                 {
                     if (speedValue < 0)
                     {
-                        message += "Specify a value of 0 or more for Delay.";
+                        this.validationResult += "Specify a value of 0 or more for Delay.\n";
+                        this.IsValid = false;
                     }
                 }
             }
-
-            showValidationResult(message, editor);
 
             return this.IsValid;
         }

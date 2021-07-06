@@ -189,25 +189,23 @@ namespace taskt.Core.Automation.Commands
         public override bool IsValidate(frmCommandEditor editor)
         {
             this.IsValid = true;
-            string message = "";
+            this.validationResult = "";
 
             if (String.IsNullOrEmpty(v_StopwatchName))
             {
-                message += "Instance name is empty.";
+                this.validationResult += "Instance name is empty.\n";
                 this.IsValid = false;
             }
             if (String.IsNullOrEmpty(v_StopwatchAction))
             {
-                message += "Stopwach Action is empty.";
+                this.validationResult += "Stopwach Action is empty.\n";
                 this.IsValid = false;
             }
             if ((v_StopwatchAction == "Measure Stopwatch") && String.IsNullOrEmpty(v_userVariableName))
             {
-                message += "Variable is empty.";
+                this.validationResult += "Variable is empty.";
                 this.IsValid = false;
             }
-
-            showValidationResult(message, editor);
 
             return this.IsValid;
         }

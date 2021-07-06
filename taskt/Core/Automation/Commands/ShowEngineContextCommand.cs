@@ -86,11 +86,11 @@ namespace taskt.Core.Automation.Commands
         public override bool IsValidate(frmCommandEditor editor)
         {
             this.IsValid = true;
-            string message = "";
+            this.validationResult = "";
 
             if (String.IsNullOrEmpty(v_AutoCloseAfter))
             {
-                message += "Close time is empty.";
+                this.validationResult += "Close time is empty.\n";
                 this.IsValid = true;
             }
             else
@@ -100,12 +100,11 @@ namespace taskt.Core.Automation.Commands
                 {
                     if (v < 0)
                     {
-                        message += "Close time less than zero.";
+                        this.validationResult += "Close time less than zero.\n";
+                        this.IsValid = true;
                     }
                 }
             }
-
-            showValidationResult(message, editor);
 
             return this.IsValid;
         }

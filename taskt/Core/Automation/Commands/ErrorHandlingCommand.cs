@@ -56,15 +56,13 @@ namespace taskt.Core.Automation.Commands
         public override bool IsValidate(frmCommandEditor editor)
         {
             this.IsValid = true;
+            this.validationResult = "";
 
-            string message = "";
             if (String.IsNullOrEmpty(v_ErrorHandlingAction))
             {
-                message += "Error handling action is empty.";
+                this.validationResult += "Error handling action is empty.\n";
                 this.IsValid = false;
             }
-
-            showValidationResult(message, editor);
 
             return this.IsValid;
         }
