@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select source type of PDF file")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please select source type of PDF file (default is File Path)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Path")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File URL")]
         [Attributes.PropertyAttributes.InputSpecification("Select source type of PDF file")]
@@ -55,6 +55,10 @@ namespace taskt.Core.Automation.Commands
             var vSourceFilePath = v_FilePath.ConvertToUserVariable(sender);
             // get source type of file either from a physical file or from a URL
             var vSourceFileType = v_FileSourceType.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(vSourceFileType))
+            {
+                vSourceFileType = "FilePath";
+            }
 
             if (vSourceFileType == "File URL")
             {
@@ -131,11 +135,6 @@ namespace taskt.Core.Automation.Commands
         {
             base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_FileSourceType))
-            {
-                this.validationResult += "Source type is empty.\n";
-                this.IsValid = false;
-            }
             if (String.IsNullOrEmpty(this.v_FilePath))
             {
                 this.validationResult += "File path, url is empty.\n";
