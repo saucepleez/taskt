@@ -441,7 +441,7 @@ namespace taskt.UI
             {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},
             {"ModifyVariableCommand", "taskt.Properties.Resources.command_function"},
             {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
-            {"ParseJsonArrayCommand", "taskt.Properties.Resources.command_parse"},
+            {"ParseJSONArrayCommand", "taskt.Properties.Resources.command_parse"},
             {"ParseJsonCommand", "taskt.Properties.Resources.command_parse"},
             {"ParseJsonModelCommand", "taskt.Properties.Resources.command_parse"},
             {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},

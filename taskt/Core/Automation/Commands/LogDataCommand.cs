@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
 
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select existing log file or enter a custom name.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select existing log file or enter a custom name.(ex. MyLog, Engine Log)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Logs")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the file name where logs should be appended to")]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the text to log.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the value of the text to be saved.")]
-        [Attributes.PropertyAttributes.SampleUsage("Third Step Complete, {vVariable}, etc.")]
+        [Attributes.PropertyAttributes.SampleUsage("Third Step Complete, {{{vVariable}}}, etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_LogText { get; set; }
 
@@ -92,6 +92,19 @@ namespace taskt.Core.Automation.Commands
 
 
             return base.GetDisplayValue() + " [Write Log to 'taskt\\Logs\\" + logFileName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_LogFile))
+            {
+                this.validationResult += "Log file is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

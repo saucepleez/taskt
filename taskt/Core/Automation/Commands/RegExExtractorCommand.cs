@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Input the RegEx Extractor Pattern (ex. \\w+)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the RegEx extractor pattern that should be used to extract the text")]
         [Attributes.PropertyAttributes.SampleUsage(@"^([\w\-]+)")]
         [Attributes.PropertyAttributes.Remarks("If an extractor splits each word in a sentence, for example, you will need to specify the associated index of the word that is required.")]
@@ -32,6 +33,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Select Matching Group Index")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the index of the result")]
         [Attributes.PropertyAttributes.SampleUsage("1")]
         [Attributes.PropertyAttributes.Remarks("The extractor will split multiple patterns found into multiple indexes.  Test which index is required to retrieve the value or create a better/more define extractor.")]
@@ -39,7 +41,6 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the RegEx result")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
@@ -84,9 +85,6 @@ namespace taskt.Core.Automation.Commands
                 string matchedValue = match.Groups[matchGroup].Value;
                 matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
             }
-
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -112,6 +110,34 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InputValue))
+            {
+                this.validationResult += "Value is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_RegExExtractor))
+            {
+                this.validationResult += "RegEx Extractor pattern is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_MatchGroupIndex))
+            {
+                this.validationResult += "Group index is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }
