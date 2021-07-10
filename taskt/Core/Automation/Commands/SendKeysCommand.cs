@@ -20,19 +20,19 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send. (ex. Hello, ^s, {{{vText}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send. (ex. Hello, ^s, {{{vText}}}, {WIN_KEY}, {WIN_KEY+R})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text that should be sent to the specified window.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **{{{vEntryText}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **{{{vEntryText}}}** or **{WIN_KEY}** or **{WIN_KEY+R}**")]
         [Attributes.PropertyAttributes.Remarks("This command supports sending variables within brackets {{{vVariable}}}")]
         public string v_TextToSend { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate if Text is Encrypted")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please Indicate if Text is Encrypted (default is Not Encrypted)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Not Encrypted")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Encrypted")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate if the text in 'TextToSend' is Encrypted.")]
@@ -66,8 +66,13 @@ namespace taskt.Core.Automation.Commands
             }
 
             string textToSend = v_TextToSend.ConvertToUserVariable(sender);
+            string EncryptionOption = v_EncryptionOption.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(EncryptionOption))
+            {
+                EncryptionOption = "Not Encrypted";
+            }
 
-            if (v_EncryptionOption == "Encrypted")
+            if (EncryptionOption == "Encrypted")
             {
                 textToSend = Core.EncryptionServices.DecryptString(textToSend, "TASKT");
             }
@@ -136,7 +141,10 @@ namespace taskt.Core.Automation.Commands
         {
 
             if (string.IsNullOrEmpty(InputText.Text))
+            {
+                MessageBox.Show("Text to send is empty.", "Notice");
                 return;
+            }
 
             var encrypted = EncryptionServices.EncryptString(InputText.Text, "TASKT");
             this.v_EncryptionOption = "Encrypted";
@@ -148,6 +156,19 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Send '" + v_TextToSend + "' to '" + v_WindowName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_WindowName))
+            {
+                this.validationResult += "Window name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

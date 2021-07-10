@@ -18,6 +18,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please specify the HTML to be used")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the HTML to be displayed")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -25,9 +26,9 @@ namespace taskt.Core.Automation.Commands
 
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify if an error should occur on any result other than 'OK'")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify if an error should occur on any result other than 'OK' (default is Error On Close)")]
         [Attributes.PropertyAttributes.InputSpecification("Select if this should throw an exception.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.SampleUsage("**Error On Close** or **Do Not Error On Close**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error On Close")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Do Not Error On Close")]
@@ -63,31 +64,36 @@ namespace taskt.Core.Automation.Commands
 
             //invoke ui for data collection
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
-            {
-
-                //sample for temp testing
-                var htmlInput = v_InputHTML.ConvertToUserVariable(sender);
-
-                var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
-
-                //if user selected Ok then process variables
-                //null result means user cancelled/closed
-                if (variables != null)
                 {
-                    //store each one into context
-                    foreach (var variable in variables)
+
+                    //sample for temp testing
+                    var htmlInput = v_InputHTML.ConvertToUserVariable(sender);
+                    var ErrorOnClose = v_ErrorOnClose.ConvertToUserVariable(sender);
+
+                    if (String.IsNullOrEmpty(ErrorOnClose))
                     {
-                        variable.VariableValue.ToString().StoreInUserVariable(sender, variable.VariableName);
+                        ErrorOnClose = "Error On Close";
                     }
+
+                    var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
+
+                    //if user selected Ok then process variables
+                    //null result means user cancelled/closed
+                    if (variables != null)
+                    {
+                        //store each one into context
+                        foreach (var variable in variables)
+                        {
+                            variable.VariableValue.ToString().StoreInUserVariable(sender, variable.VariableName);
+                        }
+                    }
+                    else if (ErrorOnClose == "Error On Close")
+                    {
+                        throw new Exception("Input Form was closed by the user");
+                    }
+
+
                 }
-                else if (v_ErrorOnClose == "Error On Close")
-                {
-                    throw new Exception("Input Form was closed by the user");
-                }
-
-
-            }
-
             ));
 
 
@@ -108,9 +114,9 @@ namespace taskt.Core.Automation.Commands
             HtmlInput = (TextBox)CommandControls.CreateDefaultInputFor("v_InputHTML", this);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_InputHTML", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_InputHTML", this, new Control[] { HtmlInput }, editor));
             RenderedControls.Add(helperControl);
             RenderedControls.Add(HtmlInput);
-
 
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_ErrorOnClose", this, editor));
 
@@ -119,20 +125,33 @@ namespace taskt.Core.Automation.Commands
         }
         private void ShowHTMLBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
-            var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder();
-
-            htmlForm.rtbHTML.Text = HtmlInput.Text;
-
-            if (htmlForm.ShowDialog() == DialogResult.OK)
+            using (var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder())
             {
-                HtmlInput.Text = htmlForm.rtbHTML.Text;
-            }
+                htmlForm.rtbHTML.Text = HtmlInput.Text;
 
+                if (htmlForm.ShowDialog() == DialogResult.OK)
+                {
+                    HtmlInput.Text = htmlForm.rtbHTML.Text;
+                }
+            }
         }
 
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Show Form To User]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InputHTML))
+            {
+                this.validationResult += "HTML is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

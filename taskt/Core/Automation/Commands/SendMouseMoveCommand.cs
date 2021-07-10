@@ -19,20 +19,22 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the X position to move the mouse to (ex. 0, 250, {{{vXPos}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the mouse, 0 starts at the left and goes to the right")]
-        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.SampleUsage("**250** or **{{{vXPos}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
         public string v_XMousePosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the Y position to move the mouse to (ex. 0, 250, {{{vYPos}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes down")]
-        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.SampleUsage("**250** or **{{{vYPos}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         public string v_YMousePosition { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please indicate mouse click type if required")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please indicate mouse click type if required (defualt is None)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("None")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
@@ -65,15 +67,19 @@ namespace taskt.Core.Automation.Commands
             var mouseX = v_XMousePosition.ConvertToUserVariable(sender);
             var mouseY = v_YMousePosition.ConvertToUserVariable(sender);
 
-
-
             try
             {
                 var xLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseX)));
                 var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
 
                 User32Functions.SetCursorPosition(xLocation, yLocation);
-                
+
+                var click = v_MouseClick.ConvertToUserVariable(sender);
+                if (String.IsNullOrEmpty(click))
+                {
+                    click = "None";
+                }
+
                 if (v_MouseClick != "") 
                 {
                     User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
@@ -84,11 +90,6 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("Error parsing input to int type (X: " + v_XMousePosition + ", Y:" + v_YMousePosition + ") " + ex.ToString());
             }
-
-          
-
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -110,6 +111,21 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Target Coordinates (" + v_XMousePosition + "," + v_YMousePosition + ") Click: " + v_MouseClick + "]";
         }
 
-     
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_XMousePosition))
+            {
+                this.validationResult += "X position is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_YMousePosition))
+            {
+                this.validationResult += "Y position is empty.\n";
+                this.IsValid = false;
+            }
+            return this.IsValid;
+        }
     }
 }

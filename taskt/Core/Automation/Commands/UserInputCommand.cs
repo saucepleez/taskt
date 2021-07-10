@@ -18,15 +18,17 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please specify a heading name")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the header to be displayed on the input form.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.SampleUsage("**Please Provide Input**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputHeader { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please specify input directions")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the directions you want to give the user.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
+        [Attributes.PropertyAttributes.SampleUsage("**Please fill in the following fields**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputDirections { get; set; }
 
@@ -64,16 +66,12 @@ namespace taskt.Core.Automation.Commands
 
             v_InputHeader = "Please Provide Input";
             v_InputDirections = "Directions: Please fill in the following fields";
-
         }
 
         public override void RunCommand(object sender)
         {
-
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-                        
+               
             if (engine.tasktEngineUI == null)
             {
                 engine.ReportProgress("UserInput Supported With UI Only");
@@ -108,54 +106,48 @@ namespace taskt.Core.Automation.Commands
 
             //invoke ui for data collection
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
-            {
-
-                //get input from user
-              var userInputs =  engine.tasktEngineUI.ShowInput(clonedCommand);
-
-                //check if user provided input
-                if (userInputs != null)
                 {
 
-                    //loop through each input and assign
-                    for (int i = 0; i < userInputs.Count; i++)
+                    //get input from user
+                    var userInputs =  engine.tasktEngineUI.ShowInput(clonedCommand);
+
+                    //check if user provided input
+                    if (userInputs != null)
                     {
-                        //get target variable
-                        var targetVariable = v_UserInputConfig.Rows[i]["ApplyToVariable"] as string;
 
-
-                        //if engine is expected to create variables, the user will not expect them to contain start/end markers
-                        //ex. {vAge} should not be created, vAge should be created and then called by doing {vAge}
-                        if ((!string.IsNullOrEmpty(targetVariable)) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+                        //loop through each input and assign
+                        for (int i = 0; i < userInputs.Count; i++)
                         {
-                            //remove start markers
-                            if (targetVariable.StartsWith(engine.engineSettings.VariableStartMarker))
-                            {
-                                targetVariable = targetVariable.TrimStart(engine.engineSettings.VariableStartMarker.ToCharArray());
-                            }
+                            //get target variable
+                            var targetVariable = v_UserInputConfig.Rows[i]["ApplyToVariable"] as string;
 
-                            //remove end markers
-                            if (targetVariable.EndsWith(engine.engineSettings.VariableEndMarker))
+
+                            //if engine is expected to create variables, the user will not expect them to contain start/end markers
+                            //ex. {vAge} should not be created, vAge should be created and then called by doing {vAge}
+                            if ((!string.IsNullOrEmpty(targetVariable)) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
                             {
-                                targetVariable = targetVariable.TrimEnd(engine.engineSettings.VariableEndMarker.ToCharArray());
+                                //remove start markers
+                                if (targetVariable.StartsWith(engine.engineSettings.VariableStartMarker))
+                                {
+                                    targetVariable = targetVariable.TrimStart(engine.engineSettings.VariableStartMarker.ToCharArray());
+                                }
+
+                                //remove end markers
+                                if (targetVariable.EndsWith(engine.engineSettings.VariableEndMarker))
+                                {
+                                    targetVariable = targetVariable.TrimEnd(engine.engineSettings.VariableEndMarker.ToCharArray());
+                                }
                             }
-                        }
 
                        
-                        //store user data in variable
-                        if (!string.IsNullOrEmpty(targetVariable))
-                        {
-                            userInputs[i].StoreInUserVariable(sender, targetVariable);
+                            //store user data in variable
+                            if (!string.IsNullOrEmpty(targetVariable))
+                            {
+                                userInputs[i].StoreInUserVariable(sender, targetVariable);
+                            }
                         }
-
-                                  
                     }
-
-
                 }
-
-            }
-
             ));
 
 
@@ -163,8 +155,6 @@ namespace taskt.Core.Automation.Commands
 
         public override List<Control> Render(frmCommandEditor editor)
         {
-
-
             base.Render(editor);
 
             //UserInputGridViewHelper = new DataGridView();
@@ -222,8 +212,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserInputConfig", this, new Control[] { UserInputGridViewHelper }, editor));
             RenderedControls.Add(UserInputGridViewHelper);
 
-
-
             return RenderedControls;
 
         }
@@ -233,7 +221,6 @@ namespace taskt.Core.Automation.Commands
             var newRow = v_UserInputConfig.NewRow();
             newRow["Size"] = "500,100";
             v_UserInputConfig.Rows.Add(newRow);
-
         }
 
 
@@ -263,6 +250,28 @@ namespace taskt.Core.Automation.Commands
             {
                 UserInputGridViewHelper.EndEdit();
             }
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            for (int i = 0; i < v_UserInputConfig.Rows.Count; i++)
+            {
+                var row = v_UserInputConfig.Rows[i];
+                if (String.IsNullOrEmpty(row["Type"].ToString()))
+                {
+                    this.validationResult += "Input Type #" + (i + 1) + " is empty.\n";
+                    this.IsValid = false;
+                }
+                if (String.IsNullOrEmpty(row["Size"].ToString()))
+                {
+                    this.validationResult += "Input Size #" + (i + 1) + " is empty.\n";
+                    this.IsValid = false;
+                }
+            }
+
+            return this.IsValid;
         }
 
     }
