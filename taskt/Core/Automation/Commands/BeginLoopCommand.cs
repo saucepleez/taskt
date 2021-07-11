@@ -994,5 +994,225 @@ namespace taskt.Core.Automation.Commands
                 LoopGridViewHelper.EndEdit();
             }
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_LoopActionType))
+            {
+                this.validationResult += "Type is empty.";
+                this.IsValid = false;
+            }
+            else
+            {
+                switch (this.v_LoopActionType)
+                {
+                    case "Value":
+                        ValueValidate();
+                        break;
+
+                    case "Date Compare":
+                        ValueValidate();
+                        break;
+
+                    case "Variable Compare":
+                        ValueValidate();
+                        break;
+
+                    case "Variable Has Value":
+                        VariableValidate();
+                        break;
+
+                    case "Variable Is Numeric":
+                        VariableValidate();
+                        break;
+
+                    case "Window Name Exists":
+                        WindowValidate();
+                        break;
+
+                    case "Active Window Name Is":
+                        WindowValidate();
+                        break;
+
+                    case "File Exists":
+                        FileValidate();
+                        break;
+
+                    case "Folder Exists":
+                        FoloderValidate();
+                        break;
+
+                    case "Web Element Exists":
+                        WebValidate();
+                        break;
+
+                    case "GUI Element Exists":
+                        GUIValidate();
+                        break;
+
+                    case "Error Occured":
+                        ErrorValidate();
+                        break;
+
+                    case "Error Did Not Occur":
+                        ErrorValidate();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            return this.IsValid;
+        }
+
+        private void ValueValidate()
+        {
+            string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                               where rw.Field<string>("Parameter Name") == "Operand"
+                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(operand))
+            {
+                this.validationResult += "Operand is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void VariableValidate()
+        {
+            string v = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                         where rw.Field<string>("Parameter Name") == "Variable Name"
+                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(v))
+            {
+                this.validationResult += "Variable Name is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void WindowValidate()
+        {
+            string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Window Name"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(windowName))
+            {
+                this.validationResult += "Window Name is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void FileValidate()
+        {
+            string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                          where rw.Field<string>("Parameter Name") == "File Path"
+                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(fp))
+            {
+                this.validationResult += "File Path is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void FoloderValidate()
+        {
+            string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                          where rw.Field<string>("Parameter Name") == "Folder Path"
+                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(fp))
+            {
+                this.validationResult += "Folder Path is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void WebValidate()
+        {
+            string instance = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                              where rw.Field<string>("Parameter Name") == "Element Search Method"
+                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(instance))
+            {
+                this.validationResult += "Browser Instance Name (Selenium Insntance) is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(method))
+            {
+                this.validationResult += "Search Method is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param))
+            {
+                this.validationResult += "Search Parameter is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void GUIValidate()
+        {
+            string window = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                              where rw.Field<string>("Parameter Name") == "Window Name"
+                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                              where rw.Field<string>("Parameter Name") == "Element Search Method"
+                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(window))
+            {
+                this.validationResult += "Window Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(method))
+            {
+                this.validationResult += "Search Method is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param))
+            {
+                this.validationResult += "Search Parameter is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void ErrorValidate()
+        {
+            string line = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Line Number"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(line))
+            {
+                this.validationResult += "Line Number is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int vLine;
+                if (int.TryParse(line, out vLine))
+                {
+                    if (vLine < 1)
+                    {
+                        this.validationResult += "Specify 1 or more to Line Number.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+        }
     }
 }
