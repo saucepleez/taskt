@@ -18,11 +18,11 @@ namespace taskt.Core.Automation.Commands
     public class RunTaskCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select a Task to run")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select a Task to run (ex. c:\\temp\\mytask.xml, {{{vPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the valid path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("c:\\temp\\mytask.xml or {vScriptPath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**c:\\temp\\mytask.xml** or **{{{vScriptPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_taskPath { get; set; }
 
@@ -238,6 +238,19 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [" + v_taskPath + "]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_taskPath))
+            {
+                this.validationResult += "Task is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }
