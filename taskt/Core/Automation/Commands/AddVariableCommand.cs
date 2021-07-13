@@ -24,18 +24,18 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If the variable exists, the value of the old variable will be replaced with the new one")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable (ex. Hello, {{{vNum}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello or [vNum]+1")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vNum}}}**")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
         public string v_Input { get; set; }
-        [Attributes.PropertyAttributes.PropertyDescription("Define the action to take if the variable already exists")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Define the action to take if the variable already exists (Default is Replace If Variable Exists)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Do Nothing If Variable Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error If Variable Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Replace If Variable Exists")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate handler from the list")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Do Nothing If Variable Exists** or **Error If Variable Exists** or **Replace If Variable Exists**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_IfExists { get; set; }
         public AddVariableCommand()
@@ -74,7 +74,13 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 //variable exists so decide what to do
-                switch (v_IfExists)
+                var ifExists = v_IfExists.ConvertToUserVariable(sender);
+                if (String.IsNullOrEmpty(ifExists))
+                {
+                    ifExists = "Replace If Variable Exists";
+                }
+
+                switch (ifExists)
                 {
                     case "Replace If Variable Exists":
                         v_Input.ConvertToUserVariable(sender).StoreInUserVariable(engine, v_userVariableName);
@@ -83,13 +89,8 @@ namespace taskt.Core.Automation.Commands
                         throw new Exception("Attempted to create a variable that already exists! Use 'Set Variable' instead or change the Exception Setting in the 'Add Variable' Command.");
                     default:
                         break;
-                }
-               
+                }  
             }
-
-         
-         
-
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -113,6 +114,19 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Assign '" + v_Input + "' to New Variable '" + v_userVariableName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "New variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

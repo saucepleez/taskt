@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using taskt.UI.CustomControls;
+using taskt.UI.Forms;
+
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
@@ -16,17 +18,17 @@ namespace taskt.Core.Automation.Commands
     public class AddToVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a list variable to modify")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be added to the variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be added to the variable (ex. Hello, {{{vNum}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello or {vNum}+1")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {vName}.  You can also perform basic math operations.")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vNum}}}**")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
         public string v_Input { get; set; }
         public AddToVariableCommand()
         {
@@ -108,7 +110,6 @@ namespace taskt.Core.Automation.Commands
             //custom rendering
             base.Render(editor);
 
-
             //create control for variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
@@ -117,11 +118,20 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
 
-        
-
             return RenderedControls;
+        }
 
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
 
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "List variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }
