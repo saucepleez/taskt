@@ -16,17 +16,17 @@ namespace taskt.Core.Automation.Commands
     public class WaitForWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window name that you are waiting for to exist.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window name that you are waiting for to exist. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to wait to exist.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait before an error should be raised.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait before an error should be raised. (ex. 5, {{{vWaitTime}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to wait before an error should be invoked")]
-        [Attributes.PropertyAttributes.SampleUsage("**5**")]
+        [Attributes.PropertyAttributes.SampleUsage("**5** or **{{{vWaitTime}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_LengthToWait { get; set; }
 
@@ -95,5 +95,35 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Target Window: '" + v_WindowName + "', Wait Up To " + v_LengthToWait + " seconds]";
         }
 
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_WindowName))
+            {
+                this.validationResult += "Window is empty.\n";
+                this.IsValid = false;
+            }
+
+            if (String.IsNullOrEmpty(this.v_LengthToWait))
+            {
+                this.validationResult += "Wait time is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int wait;
+                if (int.TryParse(this.v_LengthToWait, out wait))
+                {
+                    if (wait <= 0)
+                    {
+                        this.validationResult += "Specify a value of 1 or more for wait time.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+
+            return this.IsValid;
+        }
     }
 }

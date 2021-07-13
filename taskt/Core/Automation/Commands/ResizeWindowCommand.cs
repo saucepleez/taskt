@@ -17,23 +17,23 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to resize.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to resize. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to resize.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window. (ex. 640, {{{vWidth}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new width size of the window")]
-        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.SampleUsage("**640** or **{{{vWidth}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid width range could be 0-1920")]
         public string v_XWindowSize { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required height (pixel) of the window.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required height (pixel) of the window. (ex. 480, {{{vHeight}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new height size of the window")]
-        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.SampleUsage("**480** or **{{{vHeight}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid height range could be 0-1080")]
         public string v_YWindowSize { get; set; }
 
@@ -101,6 +101,29 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Size (" + v_XWindowSize + "," + v_YWindowSize + ")]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_WindowName))
+            {
+                this.validationResult += "Windows is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_XWindowSize))
+            {
+                this.validationResult += "Width is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_YWindowSize))
+            {
+                this.validationResult += "Height is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }
