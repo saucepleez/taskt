@@ -15,10 +15,10 @@ namespace taskt.Core.Automation.Commands
     public class SeleniumBrowserSwitchFrameCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance , {{{vInstance}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
-        [Attributes.PropertyAttributes.Remarks("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
@@ -36,9 +36,9 @@ namespace taskt.Core.Automation.Commands
         public string v_SelectionType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Frame Search Parameter")]
-        [Attributes.PropertyAttributes.SampleUsage("Enter in a frame index or name")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Frame Search Parameter (If Selection Type is 'Index' or 'Name of ID', please enter)")]
+        [Attributes.PropertyAttributes.SampleUsage("Index: **0** or **{{{vIndex}}}**, Name/ID: **top** or **{{{vName}}}**")]
+        [Attributes.PropertyAttributes.Remarks("If selection type is 'Index', default index is 0.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_FrameParameter { get; set; }
 
@@ -67,7 +67,11 @@ namespace taskt.Core.Automation.Commands
             switch (selectionType)
             {
                 case "Index":
-                    var intFrameIndex = int.Parse(frameIndex);
+                    int intFrameIndex;
+                    if (!int.TryParse(frameIndex, out intFrameIndex))
+                    {
+                        intFrameIndex = 0;
+                    }
                     seleniumInstance.SwitchTo().Frame(intFrameIndex);
                     break;
                 case "Name or ID":
@@ -85,9 +89,6 @@ namespace taskt.Core.Automation.Commands
                 default:
                     throw new NotImplementedException($"Logic to Select Frame '{selectionType}' Not Implemented");
             }
-
-       
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -109,6 +110,48 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return $"{base.GetDisplayValue()} - [Find {v_SelectionType}, Instance Name: '{v_InstanceName}']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InstanceName))
+            {
+                this.validationResult += "Instance name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SelectionType))
+            {
+                this.validationResult += "Selection Type is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                switch (this.v_SelectionType)
+                {
+                    case "Index":
+                        break;
+
+                    case "Name or ID":
+                        NameOrIDValidate();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            return this.IsValid;
+        }
+
+        private void NameOrIDValidate()
+        {
+            if (!String.IsNullOrEmpty(this.v_FrameParameter))
+            {
+                this.validationResult += "Frame Search Parameter is empty.\n";
+                this.IsValid = false;
+            }
         }
     }
 }
