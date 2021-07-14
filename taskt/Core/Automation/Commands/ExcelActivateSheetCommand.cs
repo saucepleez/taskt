@@ -15,16 +15,16 @@ namespace taskt.Core.Automation.Commands
     public class ExcelActivateSheetCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate (ex. Sheet1, {{{vSheet}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
-        [Attributes.PropertyAttributes.SampleUsage("Sheet1, mySheetName, {vSheet}")]
+        [Attributes.PropertyAttributes.SampleUsage("**Sheet1**, **mySheetName**, **{{{vSheet}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SheetName { get; set; }
@@ -45,13 +45,9 @@ namespace taskt.Core.Automation.Commands
             var excelObject = engine.GetAppInstance(vInstance);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                string sheetToDelete = v_SheetName.ConvertToUserVariable(sender);
-                var workSheet = excelInstance.Sheets[sheetToDelete] as Microsoft.Office.Interop.Excel.Worksheet;
-                workSheet.Select();
-
-
-
-            
+            string sheetToActive = v_SheetName.ConvertToUserVariable(sender);
+            var workSheet = excelInstance.Sheets[sheetToActive] as Microsoft.Office.Interop.Excel.Worksheet;
+            workSheet.Select();
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -73,6 +69,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Sheet Name: " + v_SheetName + ", Instance Name: '" + v_InstanceName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InstanceName))
+            {
+                this.validationResult += "Instance is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SheetName))
+            {
+                this.validationResult += "Sheet is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

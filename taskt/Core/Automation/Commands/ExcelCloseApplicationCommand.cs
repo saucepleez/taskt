@@ -15,18 +15,20 @@ namespace taskt.Core.Automation.Commands
     public class ExcelCloseApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate if the Workbook should be saved")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a TRUE or FALSE value")]
-        [Attributes.PropertyAttributes.SampleUsage("'TRUE' or 'FALSE'")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate if the Workbook should be saved (Defaut is False)")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("True")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("False")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a True or False value")]
+        [Attributes.PropertyAttributes.SampleUsage("**True** or **False**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public bool v_ExcelSaveOnExit { get; set; }
+        public string v_ExcelSaveOnExit { get; set; }
         public ExcelCloseApplicationCommand()
         {
             this.CommandName = "ExcelCloseApplicationCommand";
@@ -50,7 +52,12 @@ namespace taskt.Core.Automation.Commands
             //check if workbook exists and save
             if (excelInstance.ActiveWorkbook != null)
             {
-                excelInstance.ActiveWorkbook.Close(v_ExcelSaveOnExit);
+                string vSaved = v_ExcelSaveOnExit.ConvertToUserVariable(sender);
+                if (String.IsNullOrEmpty(vSaved))
+                {
+                    vSaved = "False";
+                }
+                excelInstance.ActiveWorkbook.Close((vSaved.ToLower() == "true"));
             }
 
             //close excel
@@ -66,7 +73,8 @@ namespace taskt.Core.Automation.Commands
 
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelSaveOnExit", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelSaveOnExit", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ExcelSaveOnExit", this, editor));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
@@ -78,6 +86,19 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Save On Close: " + v_ExcelSaveOnExit + ", Instance Name: '" + v_InstanceName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InstanceName))
+            {
+                this.validationResult += "Instance is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

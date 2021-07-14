@@ -15,17 +15,17 @@ namespace taskt.Core.Automation.Commands
     public class ExcelGetLastRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter Letter of the Column to check (ex. A, B, C)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please Enter Letter of the Column to check (Default is A) (ex. A, B, {{{vColumn}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid column letter")]
-        [Attributes.PropertyAttributes.SampleUsage("A, B, AA, etc.")]
+        [Attributes.PropertyAttributes.SampleUsage("**A** or **B** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ColumnLetter { get; set; }
         [XmlAttribute]
@@ -48,18 +48,19 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var columnLetter = v_ColumnLetter.ConvertToUserVariable(engine);
+            if (String.IsNullOrEmpty(columnLetter))
+            {
+                columnLetter = "A";
+            }
 
             var excelObject = engine.GetAppInstance(vInstance);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                var excelSheet = excelInstance.ActiveSheet;
-                var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, columnLetter).End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
+            var excelSheet = excelInstance.ActiveSheet;
+            var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, columnLetter).End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
 
-                lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
-
-
-            
+            lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -85,6 +86,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Column '" + v_ColumnLetter + "', Apply to '" + v_applyToVariableName + "', Instance Name: '" + v_InstanceName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InstanceName))
+            {
+                this.validationResult += "Instance is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

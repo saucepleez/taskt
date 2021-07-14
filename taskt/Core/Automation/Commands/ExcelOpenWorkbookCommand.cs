@@ -15,19 +15,19 @@ namespace taskt.Core.Automation.Commands
     public class ExcelOpenWorkbookCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path (ex. C:\\temp\\myfile.xlsx, {{{vFilePath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or {vFilePath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vFilePath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
         public ExcelOpenWorkbookCommand()
@@ -45,11 +45,9 @@ namespace taskt.Core.Automation.Commands
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
 
-           var excelObject = engine.GetAppInstance(vInstance);
+            var excelObject = engine.GetAppInstance(vInstance);
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             excelInstance.Workbooks.Open(vFilePath);
-
-           
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -69,6 +67,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Open from '" + v_FilePath + "', Instance Name: '" + v_InstanceName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InstanceName))
+            {
+                this.validationResult += "Instance is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_FilePath))
+            {
+                this.validationResult += "File is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }
