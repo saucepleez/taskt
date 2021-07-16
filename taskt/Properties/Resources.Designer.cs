@@ -73,6 +73,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap action_bar_add_variable {
+            get {
+                object obj = ResourceManager.GetObject("action_bar_add_variable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap action_bar_clear {
             get {
                 object obj = ResourceManager.GetObject("action_bar_clear", resourceCulture);
@@ -713,9 +723,39 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap taskt_file_helper {
+            get {
+                object obj = ResourceManager.GetObject("taskt_file_helper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap taskt_folder_helper {
+            get {
+                object obj = ResourceManager.GetObject("taskt_folder_helper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap taskt_splash {
             get {
                 object obj = ResourceManager.GetObject("taskt-splash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap taskt_variable_helper {
+            get {
+                object obj = ResourceManager.GetObject("taskt_variable_helper", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

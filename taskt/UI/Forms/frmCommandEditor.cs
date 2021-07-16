@@ -313,5 +313,19 @@ namespace taskt.UI.Forms
             var s = appSettings.EngineSettings;
             return v.Replace("{{{", s.VariableStartMarker).Replace("}}}", s.VariableEndMarker);
         }
+
+        private void uiButtonVariable_Click(object sender, EventArgs e)
+        {
+            using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
+            {
+                scriptVariableEditor.appSettings = this.appSettings;
+                scriptVariableEditor.scriptVariables = this.scriptVariables;
+
+                if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+                {
+                    this.scriptVariables = scriptVariableEditor.scriptVariables;
+                }
+            }
+        }
     }
 }

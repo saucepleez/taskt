@@ -159,7 +159,7 @@
             this.uiBtnNew.DisplayText = "Add";
             this.uiBtnNew.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uiBtnNew.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.uiBtnNew.Image = global::taskt.Properties.Resources.action_bar_add_variable;
             this.uiBtnNew.IsMouseOver = false;
             this.uiBtnNew.Location = new System.Drawing.Point(5, 42);
             this.uiBtnNew.Name = "uiBtnNew";
