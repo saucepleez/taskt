@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "IEBrowserElementActionCommand";
             this.SelectionName = "Element Action";
             this.CommandEnabled = true;
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CustomRendering = true;
 
             this.v_WebSearchParameter = new System.Data.DataTable();
@@ -426,6 +426,11 @@ namespace taskt.Core.Automation.Commands
             ElementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { ElementsGridViewHelper }, editor));
             ElementParameterControls.Add(ElementsGridViewHelper);
             RenderedControls.AddRange(ElementParameterControls);
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

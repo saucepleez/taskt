@@ -56,7 +56,6 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
             v_ContainsHeaderRow = "Yes";
-
         }
 
         public override void RunCommand(object sender)
@@ -85,8 +84,8 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ContainsHeaderRow", this, editor));
-            return RenderedControls;
 
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

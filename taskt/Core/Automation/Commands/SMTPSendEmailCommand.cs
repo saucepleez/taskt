@@ -20,67 +20,67 @@ namespace taskt.Core.Automation.Commands
     public class SMTPSendEmailCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Host Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Host Name (ex. mail.example.com, {{{vHost}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the host/service name that the script should use")]
-        [Attributes.PropertyAttributes.SampleUsage("**smtp.gmail.com**")]
+        [Attributes.PropertyAttributes.SampleUsage("**smtp.gmail.com** or **{{{vHost}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPHost { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Port")]
+        [Attributes.PropertyAttributes.PropertyDescription("Port (ex. 25, 587, {{{vPort}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the port number that should be used when contacting the SMTP service")]
-        [Attributes.PropertyAttributes.SampleUsage("**587**")]
+        [Attributes.PropertyAttributes.SampleUsage("**25** or **587** or **{{{vPort}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public int v_SMTPPort { get; set; }
+        public string v_SMTPPort { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Username")]
+        [Attributes.PropertyAttributes.PropertyDescription("Username (ex. myUserName, {{{vUserName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the username to use when contacting the SMTP service")]
-        [Attributes.PropertyAttributes.SampleUsage("**username**")]
+        [Attributes.PropertyAttributes.SampleUsage("**username** or **{{{vUserName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPUserName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Password")]
+        [Attributes.PropertyAttributes.PropertyDescription("Password (ex. myPassword, {{{vPassword}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the password to use when contacting the SMTP service")]
-        [Attributes.PropertyAttributes.SampleUsage("**password**")]
+        [Attributes.PropertyAttributes.SampleUsage("**password** or **{{{vPassword}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPPassword { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("From Email")]
+        [Attributes.PropertyAttributes.PropertyDescription("From Email (ex. myaccount@example.com, {{{vMail}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how the 'From' field should appear.")]
-        [Attributes.PropertyAttributes.SampleUsage("myRobot@company.com")]
+        [Attributes.PropertyAttributes.SampleUsage("**myRobot@company.com** or **{{{vMail}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPFromEmail { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("To Email")]
+        [Attributes.PropertyAttributes.PropertyDescription("To Email (ex. toaccount@exmaple.com, {{{vMail}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify the destination email that should be addressed.")]
-        [Attributes.PropertyAttributes.SampleUsage("jason@company.com")]
+        [Attributes.PropertyAttributes.SampleUsage("**jason@company.com** or **{{{vMail}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPToEmail { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Subject")]
+        [Attributes.PropertyAttributes.PropertyDescription("Subject (ex. Alert Mail, {{{vTitle}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the text subject (or variable) that the email should have.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Alert!** or **{vStatus}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Alert!** or **{{{vStatus}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPSubject { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Body")]
+        [Attributes.PropertyAttributes.PropertyDescription("Body (ex. Everything ok, {{{vMailMessage}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify the message that should be sent.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Everything ran ok at {DateTime.Now}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Everything ran ok at {{{DateTime.Now}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPBody { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Attachment Path (Optional)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Attachment Path (ex. C:\\temp\\file.txt, {{{vPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicates the file path to attachment.")]
-        [Attributes.PropertyAttributes.SampleUsage("**c:\\temp\\file.txt**")]
+        [Attributes.PropertyAttributes.SampleUsage("**c:\\temp\\file.txt** or **{{{vPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SMTPAttachment { get; set; }
 
@@ -124,7 +124,7 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 string varSMTPHost = v_SMTPHost.ConvertToUserVariable(sender);
-                string varSMTPPort = v_SMTPPort.ToString().ConvertToUserVariable(sender);
+                string varSMTPPort = v_SMTPPort.ConvertToUserVariable(sender);
                 string varSMTPUserName = v_SMTPUserName.ConvertToUserVariable(sender);
                 string varSMTPPassword = v_SMTPPassword.ConvertToUserVariable(sender);
 
@@ -197,6 +197,56 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [To Address: '" + v_SMTPToEmail + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_SMTPHost))
+            {
+                this.validationResult += "Host is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SMTPPort))
+            {
+                this.validationResult += "Port is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int port;
+                if (int.TryParse(this.v_SMTPPort, out port))
+                {
+                    if (port < 0 || port > 65535)
+                    {
+                        this.validationResult += "Specify a value between 0 and 65535 for the Port.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+            if (String.IsNullOrEmpty(this.v_SMTPUserName))
+            {
+                this.validationResult += "Username is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SMTPPassword))
+            {
+                this.validationResult += "Password is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SMTPFromEmail))
+            {
+                this.validationResult += "From Email is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SMTPToEmail))
+            {
+                this.validationResult += "To Email is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

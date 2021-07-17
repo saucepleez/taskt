@@ -17,10 +17,10 @@ namespace taskt.Core.Automation.Commands
     public class SendHotkeyCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, Current Window, {{{vWindowName}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
 
@@ -43,11 +43,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            if (v_WindowName != "Current Window")
+            var targetWindow = v_WindowName.ConvertToUserVariable(sender);
+            if (targetWindow != ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
+                    v_WindowName = targetWindow
                 };
                 activateWindow.RunCommand(sender);
             }
@@ -123,7 +124,7 @@ namespace taskt.Core.Automation.Commands
 
 
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
@@ -161,6 +162,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Send '" + v_Hotkey + "' to '" + v_WindowName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_WindowName))
+            {
+                this.validationResult += "Window name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_Hotkey))
+            {
+                this.validationResult += "Hotkey is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

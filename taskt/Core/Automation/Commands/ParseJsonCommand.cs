@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class ParseJsonCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction (ex. {\"id\":2} {{{vJSONVariable}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the JSON text or variable requiring extraction (ex. {\"id\":2} {{{vJSONVariable}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
         [Attributes.PropertyAttributes.SampleUsage("**{\"id\":2}** or **{{{vSomeVariable}}}**")]
@@ -26,14 +26,14 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Specify a JSON extractor (ex. $.id)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input a JSON token extractor")]
         [Attributes.PropertyAttributes.SampleUsage("$.id")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted json")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted JSON")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
@@ -131,11 +131,32 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-
-
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Selector: " + v_JsonExtractor + ", Apply Result(s) To Variable: " + v_applyToVariableName + "]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InputValue))
+            {
+                this.validationResult += "JSON text is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_JsonExtractor))
+            {
+                this.validationResult += "JSON extractor is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

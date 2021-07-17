@@ -18,22 +18,21 @@ namespace taskt.Core.Automation.Commands
     {
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file (ex. C:\\temp\\myfile.txt, {{{vFilePath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or {vTextFilePath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new file name (with extension)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new file name (with extension) (ex. newfilename.txt, {{{vFileName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify the new file name including the extension.")]
-        [Attributes.PropertyAttributes.SampleUsage("newfile.txt or newfile.png")]
+        [Attributes.PropertyAttributes.SampleUsage("**newfile.txt** or **{{{vNewFileName}}}**")]
         [Attributes.PropertyAttributes.Remarks("Changing the file extension will not automatically convert files.")]
         public string v_NewName { get; set; }
-
 
         public RenameFileCommand()
         {
@@ -72,6 +71,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [rename " + v_SourceFilePath + " to '" + v_NewName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_SourceFilePath))
+            {
+                this.validationResult += "Source file is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_NewName))
+            {
+                this.validationResult += "New file name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

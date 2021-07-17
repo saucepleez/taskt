@@ -15,20 +15,20 @@ namespace taskt.Core.Automation.Commands
     public class ReadTextFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file (ex. C:\\temp\\myfile.txt, {{{vTextFilePath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or {vTextFilePath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the read type")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please select the read type (Default is Content)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Content")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Line Count")]
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate window state required")]
-        [Attributes.PropertyAttributes.SampleUsage("Choose from **Minimize**, **Maximize** and **Restore**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Content** or **Line Count**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ReadOption { get; set; }
 
@@ -55,6 +55,10 @@ namespace taskt.Core.Automation.Commands
             var filePath = v_FilePath.ConvertToUserVariable(sender);
 
             var readPreference = v_ReadOption.ConvertToUserVariable(sender).ToUpperInvariant();
+            if (String.IsNullOrEmpty(readPreference))
+            {
+                readPreference = "CONTENT";
+            }
 
             string result;
             if (readPreference == "LINE COUNT")
@@ -67,7 +71,6 @@ namespace taskt.Core.Automation.Commands
                 //read text from file
                 result = System.IO.File.ReadAllText(filePath);
             }
-
 
             //assign text to user variable
             result.StoreInUserVariable(sender, v_userVariableName);
@@ -91,6 +94,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Read " + v_ReadOption + " from '" + v_FilePath + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_FilePath))
+            {
+                this.validationResult += "File is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

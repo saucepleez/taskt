@@ -48,7 +48,7 @@ namespace taskt.UI.Forms.Supplemental
                 this.WindowState = FormWindowState.Minimized;
             }
          
-            this.Size = new Size(540, 156);
+            this.Size = new Size(540, 140);
 
 
             this.searchParameters = new DataTable();

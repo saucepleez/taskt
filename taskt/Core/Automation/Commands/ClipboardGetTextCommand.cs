@@ -60,5 +60,18 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Get Text From Clipboard and Apply to Variable: " + v_userVariableName + "]";
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
+        }
     }
 }

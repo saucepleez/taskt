@@ -19,9 +19,9 @@ namespace taskt.Core.Automation.Commands
     public class ExcelCreateApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InstanceName = "RPAExcel";
+            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
@@ -46,9 +46,6 @@ namespace taskt.Core.Automation.Commands
             };
 
             engine.AddAppInstance(vInstance, newExcelSession);
-
-
-           
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -57,13 +54,30 @@ namespace taskt.Core.Automation.Commands
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
-            return RenderedControls;
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+            }
 
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InstanceName))
+            {
+                this.validationResult += "Instance is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

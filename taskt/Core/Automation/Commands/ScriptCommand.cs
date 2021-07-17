@@ -281,6 +281,9 @@ namespace taskt.Core.Automation.Commands
         public bool IsValid { get; protected set; }
 
         [XmlIgnore]
+        public string validationResult { get; protected set; }
+
+        [XmlIgnore]
         public bool CustomRendering { get; set; }
 
         [XmlIgnore]
@@ -296,6 +299,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = false;
             this.GenerateID();
             this.IsValid = true;
+            this.validationResult = "";
         }
 
         public void GenerateID()
@@ -352,9 +356,10 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public virtual bool IsValidate()
+        public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
             this.IsValid = true;
+            this.validationResult = "";
             return true;
         }
 

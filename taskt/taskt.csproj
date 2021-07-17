@@ -806,16 +806,29 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\command-dictionary.png" />
+    <None Include="Resources\action-bar-add-variable.png" />
+    <Content Include="Resources\geckodriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\msedgedriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\refresh.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\taskt-splash.png" />
+    <Content Include="Resources\taskt-file-helper.png" />
+    <Content Include="Resources\taskt-folder-helper.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\taskt-variable-helper.png" />
+    <Content Include="Resources\various-cancel.png" />
+    <Content Include="Resources\various-ok.png" />
     <Content Include="taskt_logo_alt.ico" />
     <None Include="Resources\item-header96.png" />
     <None Include="Resources\item-header.png" />

@@ -57,7 +57,7 @@
             this.lblLocal.BackColor = System.Drawing.Color.Transparent;
             this.lblLocal.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLocal.ForeColor = System.Drawing.Color.White;
-            this.lblLocal.Location = new System.Drawing.Point(12, 110);
+            this.lblLocal.Location = new System.Drawing.Point(12, 102);
             this.lblLocal.Name = "lblLocal";
             this.lblLocal.Size = new System.Drawing.Size(115, 25);
             this.lblLocal.TabIndex = 3;
@@ -69,7 +69,7 @@
             this.lblRemote.BackColor = System.Drawing.Color.Transparent;
             this.lblRemote.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRemote.ForeColor = System.Drawing.Color.White;
-            this.lblRemote.Location = new System.Drawing.Point(12, 140);
+            this.lblRemote.Location = new System.Drawing.Point(12, 129);
             this.lblRemote.Name = "lblRemote";
             this.lblRemote.Size = new System.Drawing.Size(135, 25);
             this.lblRemote.TabIndex = 4;
@@ -82,14 +82,15 @@
             this.uiBtnOk.DisplayText = "Update";
             this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOk.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOk.Image")));
+            this.uiBtnOk.Image = global::taskt.Properties.Resources.various_ok_button;
             this.uiBtnOk.IsMouseOver = false;
-            this.uiBtnOk.Location = new System.Drawing.Point(5, 180);
+            this.uiBtnOk.Location = new System.Drawing.Point(5, 166);
             this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.uiBtnOk.Name = "uiBtnOk";
-            this.uiBtnOk.Size = new System.Drawing.Size(88, 49);
+            this.uiBtnOk.Size = new System.Drawing.Size(88, 45);
             this.uiBtnOk.TabIndex = 18;
             this.uiBtnOk.TabStop = false;
+            this.uiBtnOk.Text = "Update";
             this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // uiBtnCancel
@@ -99,14 +100,15 @@
             this.uiBtnCancel.DisplayText = "Cancel";
             this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
+            this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
-            this.uiBtnCancel.Location = new System.Drawing.Point(99, 180);
+            this.uiBtnCancel.Location = new System.Drawing.Point(99, 166);
             this.uiBtnCancel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.uiBtnCancel.Name = "uiBtnCancel";
-            this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
+            this.uiBtnCancel.Size = new System.Drawing.Size(88, 45);
             this.uiBtnCancel.TabIndex = 19;
             this.uiBtnCancel.TabStop = false;
+            this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // lblText
@@ -114,20 +116,20 @@
             this.lblText.BackColor = System.Drawing.Color.Transparent;
             this.lblText.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblText.ForeColor = System.Drawing.Color.White;
-            this.lblText.Location = new System.Drawing.Point(12, 44);
+            this.lblText.Location = new System.Drawing.Point(12, 41);
             this.lblText.Name = "lblText";
-            this.lblText.Size = new System.Drawing.Size(371, 65);
+            this.lblText.Size = new System.Drawing.Size(371, 60);
             this.lblText.TabIndex = 20;
             this.lblText.Text = "We found a signed version that is newer than the one you are running.  Select \'Up" +
     "date\' to get the latest version of taskt.";
             // 
             // frmUpdate
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.BackgroundChangeIndex = 175;
-            this.ClientSize = new System.Drawing.Size(395, 234);
+            this.ClientSize = new System.Drawing.Size(395, 216);
             this.Controls.Add(this.lblText);
             this.Controls.Add(this.uiBtnOk);
             this.Controls.Add(this.uiBtnCancel);

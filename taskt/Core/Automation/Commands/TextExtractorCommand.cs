@@ -46,7 +46,6 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted text")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
@@ -72,9 +71,6 @@ namespace taskt.Core.Automation.Commands
 
             this.v_TextExtractionTable.Columns.Add("Parameter Name");
             this.v_TextExtractionTable.Columns.Add("Parameter Value");
-
-        
-
         }
 
         public override void RunCommand(object sender)

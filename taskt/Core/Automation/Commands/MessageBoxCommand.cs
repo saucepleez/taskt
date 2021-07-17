@@ -27,17 +27,18 @@ namespace taskt.Core.Automation.Commands
         public string v_Message { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Close After X (Seconds) - 0 to bypass")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Close After X (Seconds) - 0 to bypass (Default is 0) (ex. 0, {{{vTime}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to display on screen. After the amount of seconds passes, the message box will be automatically closed and script will resume execution.")]
         [Attributes.PropertyAttributes.SampleUsage("**0** to remain open indefinitely or **5** to stay open for 5 seconds.")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public int v_AutoCloseAfter { get; set; }
+        public string v_AutoCloseAfter { get; set; }
         public MessageBoxCommand()
         {
             this.CommandName = "MessageBoxCommand";
             this.SelectionName = "Show Message";
             this.CommandEnabled = true;
-            this.v_AutoCloseAfter = 0;
+            this.v_AutoCloseAfter = "0";
             this.CustomRendering = true;
         }
 
@@ -55,17 +56,22 @@ namespace taskt.Core.Automation.Commands
                 return;
             }
 
-            //automatically close messageboxes for server requests
-            if (engine.serverExecution && v_AutoCloseAfter <= 0)
+            if (String.IsNullOrEmpty(v_AutoCloseAfter))
             {
-                v_AutoCloseAfter = 10;
+                v_AutoCloseAfter = "0";
+            }
+            int closeAfter = int.Parse(v_AutoCloseAfter);
+
+            //automatically close messageboxes for server requests
+            if (engine.serverExecution && closeAfter <= 0)
+            {
+                closeAfter = 10;
             }
 
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, v_AutoCloseAfter);
+                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, closeAfter);
             }
-
             ));
 
         }

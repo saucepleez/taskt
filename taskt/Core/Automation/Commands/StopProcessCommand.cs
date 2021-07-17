@@ -15,10 +15,10 @@ namespace taskt.Core.Automation.Commands
     public class StopProcessCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter the process name to be stopped (calc, notepad)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Enter the process name to be stopped (ex. calc, notepad, {{{vPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Provide the program process name as it appears as a process in Windows Task Manager")]
-        [Attributes.PropertyAttributes.SampleUsage("**notepad**, **calc**")]
+        [Attributes.PropertyAttributes.SampleUsage("**notepad** or **calc** or **{{{vPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("The program name may vary from the actual process name.  You can use Thick App commands instead to close an application window.")]
         public string v_ProgramShortName { get; set; }
 
@@ -51,6 +51,19 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Process: " + v_ProgramShortName + "]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_ProgramShortName))
+            {
+                this.validationResult += "Process name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

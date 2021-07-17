@@ -15,10 +15,11 @@ namespace taskt.Core.Automation.Commands
     public class RunScriptCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter the path to the script")]
+        [Attributes.PropertyAttributes.PropertyDescription("Enter the path to the script (ex. C:\\temp\\myscript.vbs, {{{vScriptPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a fully qualified path to the script, including the script extension.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myscript.vbs**")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myscript.vbs** or **{{{vScriptPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("This command differs from **Start Process** because this command blocks execution until the script has completed.  If you do not want to stop while the script executes, consider using **Start Process** instead.")]
         public string v_ScriptPath { get; set; }
 
@@ -51,14 +52,25 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptPath", this, editor));
 
-        
-
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Script Path: " + v_ScriptPath + "]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_ScriptPath))
+            {
+                this.validationResult += "Script is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

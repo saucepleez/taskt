@@ -69,8 +69,12 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
 
-            return RenderedControls;
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
+            }
 
+            return RenderedControls;
         }
         public override string GetDisplayValue()
         {

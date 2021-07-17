@@ -36,7 +36,13 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var image = User32Functions.CaptureWindow(v_ScreenshotWindowName);
+            var targetWindowName = v_ScreenshotWindowName.ConvertToUserVariable(sender);
+            if (targetWindowName == ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+            {
+                targetWindowName = User32Functions.GetActiveWindowTitle();
+            }
+
+            var image = User32Functions.CaptureWindow(targetWindowName);
             string ConvertToUserVariabledString = v_FilePath.ConvertToUserVariable(sender);
             image.Save(ConvertToUserVariabledString);
         }
@@ -46,7 +52,7 @@ namespace taskt.Core.Automation.Commands
 
             //create window name helper control
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_ScreenshotWindowName", this));
-            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_ScreenshotWindowName", this).AddWindowNames();
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_ScreenshotWindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_ScreenshotWindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 

@@ -16,24 +16,24 @@ namespace taskt.Core.Automation.Commands
     public class CreateFolderCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the name of the new folder")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the name of the new folder (ex. myFolder, {{{vFolderName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the name of the new folder.")]
-        [Attributes.PropertyAttributes.SampleUsage("myFolderName or {vFolderName}")]
+        [Attributes.PropertyAttributes.SampleUsage("**myFolderName** or **{{{vFolderName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_NewFolderName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory for the new folder")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory for the new folder (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or {TextFolderPath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfolder** or **{{{TextFolderPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Delete folder if it already exists")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Delete folder if it already exists (default is No)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.InputSpecification("Specify whether the folder should be deleted first if it is already found to exist.")]
@@ -58,10 +58,17 @@ namespace taskt.Core.Automation.Commands
 
 
             var finalPath = System.IO.Path.Combine(destinationDirectory, newFolder);
-            //delete folder if it exists AND the delete option is selected 
-            if (v_DeleteExisting == "Yes" && System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
+            if (System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
             {
-                System.IO.Directory.Delete(finalPath, true);
+                var deleteFolder = v_DeleteExisting.ConvertToUserVariable(sender);
+                if (String.IsNullOrEmpty(deleteFolder))
+                {
+                    deleteFolder = "No";
+                }
+                if (deleteFolder.ToLower() == "yes")
+                {
+                    System.IO.Directory.Delete(finalPath, true);
+                }
             }
 
             //create folder if it doesn't exist
@@ -85,6 +92,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + "[create " + v_DestinationDirectory + "\\" + v_NewFolderName +"']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DestinationDirectory))
+            {
+                this.validationResult += "Directory of new folder is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_NewFolderName))
+            {
+                this.validationResult += "Name of new folder is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

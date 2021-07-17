@@ -50,19 +50,31 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Wait for " + v_PauseLength + "ms]";
         }
 
-        public override bool IsValidate()
+        public override bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
+            this.IsValid = true;
+            this.validationResult = "";
+
+            int pauseValue;
+
             if (String.IsNullOrEmpty(v_PauseLength))
             {
-                MessageBox.Show("Time of pause is empty.", SelectionName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.validationResult += "Time of pause is empty.\n";
                 this.IsValid = false;
-                return false;
             }
             else
             {
-                this.IsValid = true;
-                return true;
+                if (int.TryParse(v_PauseLength, out pauseValue))
+                {
+                    if (pauseValue < 0)
+                    {
+                        this.validationResult += "Specify a value of 0 or more for Time of pause.\n";
+                        this.IsValid = false;
+                    }
+                }
             }
+
+            return this.IsValid;
         }
     }
 }

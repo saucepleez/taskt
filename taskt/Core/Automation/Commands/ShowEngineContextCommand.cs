@@ -24,13 +24,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to display on screen. After the amount of seconds passes, the message box will be automatically closed and script will resume execution.")]
         [Attributes.PropertyAttributes.SampleUsage("**0** to remain open indefinitely or **5** to stay open for 5 seconds.")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public int v_AutoCloseAfter { get; set; }
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_AutoCloseAfter { get; set; }
         public ShowEngineContextCommand()
         {
             this.CommandName = "ShowEngineContextCommand";
             this.SelectionName = "Show Engine Context";
             this.CommandEnabled = true;
-            this.v_AutoCloseAfter = 0;
+            this.v_AutoCloseAfter = "0";
             this.CustomRendering = true;
         }
 
@@ -44,17 +45,23 @@ namespace taskt.Core.Automation.Commands
                 return;
             }
 
-            //automatically close messageboxes for server requests
-            if (engine.serverExecution && v_AutoCloseAfter <= 0)
+            v_AutoCloseAfter = v_AutoCloseAfter.ConvertToUserVariable(sender);
+            int closeValue;
+            if (!int.TryParse(v_AutoCloseAfter, out closeValue))
             {
-                v_AutoCloseAfter = 10;
+                closeValue = 10;
+            }
+
+            //automatically close messageboxes for server requests
+            if (engine.serverExecution && closeValue <= 0)
+            {
+                closeValue = 10;
             }
 
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
-            {
-                engine.tasktEngineUI.ShowEngineContext(engine.GetEngineContext(), v_AutoCloseAfter);
-            }
-
+                {
+                    engine.tasktEngineUI.ShowEngineContext(engine.GetEngineContext(), closeValue);
+                }
             ));
 
         }
@@ -69,12 +76,37 @@ namespace taskt.Core.Automation.Commands
 
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue();
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            this.IsValid = true;
+            this.validationResult = "";
+
+            if (String.IsNullOrEmpty(v_AutoCloseAfter))
+            {
+                this.validationResult += "Close time is empty.\n";
+                this.IsValid = true;
+            }
+            else
+            {
+                int v;
+                if (!int.TryParse(v_AutoCloseAfter, out v))
+                {
+                    if (v < 0)
+                    {
+                        this.validationResult += "Close time less than zero.\n";
+                        this.IsValid = true;
+                    }
+                }
+            }
+
+            return this.IsValid;
         }
 
     }

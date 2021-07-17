@@ -18,19 +18,19 @@ namespace taskt.Core.Automation.Commands
     {
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source folder")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source folder (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the folder.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myFolder or {vTextFolderPath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myFolder** or **{{{vTextFolderPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new folder name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new folder name (ex. newFolderName, {{{vFolderName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify the new folder name.")]
-        [Attributes.PropertyAttributes.SampleUsage("newFolderName")]
+        [Attributes.PropertyAttributes.SampleUsage("**newFolderName** or **{{{vNewFolderName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_NewName { get; set; }
 
@@ -72,6 +72,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [rename " + v_SourceFolderPath + " to '" + v_NewName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_SourceFolderPath))
+            {
+                this.validationResult += "Soruce folder is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_NewName))
+            {
+                this.validationResult += "Folder Name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
             v_FileType = "xlsx";
 
-            this.v_InstanceName = "RPAExcel";
+            this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
@@ -237,9 +237,12 @@ namespace taskt.Core.Automation.Commands
 
             //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Output", this, editor));
 
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+            }
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()

@@ -139,6 +139,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FontItalic", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FontUnderline", this, editor));
 
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
+            }
+
             return RenderedControls;
         }
         public override string GetDisplayValue()

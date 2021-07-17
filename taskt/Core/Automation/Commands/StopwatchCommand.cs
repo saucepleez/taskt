@@ -25,8 +25,13 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Enter the Stopwatch Action")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start Stopwatch")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Stopwatch")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Restart Stopwatch")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Reset Stopwatch")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Measure Stopwatch")]
         [Attributes.PropertyAttributes.InputSpecification("Provide a unique instance or way to refer to the stopwatch")]
-        [Attributes.PropertyAttributes.SampleUsage("**myStopwatch**, **{{{vStopWatch}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_StopwatchAction { get; set; }
 
@@ -60,7 +65,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Stopwatch";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_StopwatchName = "RPAStopwatch";
+            this.v_StopwatchName = "";
             this.v_StopwatchAction = "Start Stopwatch";
         }
 
@@ -115,22 +120,25 @@ namespace taskt.Core.Automation.Commands
                 default:
                     throw new NotImplementedException("Stopwatch Action '" + action + "' not implemented");
             }
-
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_StopwatchName", this, editor));
+            var ctlStopwatchName = CommandControls.CreateDefaultInputGroupFor("v_StopwatchName", this, editor);
+            RenderedControls.AddRange(ctlStopwatchName);
 
-            var StopWatchComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_StopwatchAction", this);
-            StopWatchComboBox = (ComboBox)CommandControls.CreateDropdownFor("v_StopwatchAction", this);
-            StopWatchComboBox.DataSource = new List<string> { "Start Stopwatch", "Stop Stopwatch", "Restart Stopwatch", "Reset Stopwatch", "Measure Stopwatch" };
-            StopWatchComboBox.SelectedIndexChanged += StopWatchComboBox_SelectedValueChanged;
-            RenderedControls.Add(StopWatchComboBoxLabel);
-            RenderedControls.Add(StopWatchComboBox);
+            //var StopWatchComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_StopwatchAction", this);
+            //StopWatchComboBox = (ComboBox)CommandControls.CreateDropdownFor("v_StopwatchAction", this);
+            //StopWatchComboBox.DataSource = new List<string> { "Start Stopwatch", "Stop Stopwatch", "Restart Stopwatch", "Reset Stopwatch", "Measure Stopwatch" };
+            //StopWatchComboBox.SelectedIndexChanged += StopWatchComboBox_SelectedValueChanged;
+            //RenderedControls.Add(StopWatchComboBoxLabel);
+            //RenderedControls.Add(StopWatchComboBox);
+            var stopwatchActionCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_StopwatchAction", this, editor);
+            RenderedControls.AddRange(stopwatchActionCtrls);
+            StopWatchComboBox = (ComboBox)stopwatchActionCtrls.Find(t => t is ComboBox);
+            StopWatchComboBox.SelectedIndex = 0;
+            StopWatchComboBox.SelectedIndexChanged += (sender, e) => StopWatchComboBox_SelectedValueChanged(sender, e);
 
             //create controls for user variable
             MeasureControls = CommandControls.CreateDefaultDropdownGroupFor("v_userVariableName", this, editor);
@@ -140,6 +148,11 @@ namespace taskt.Core.Automation.Commands
             comboBox.AddVariableNames(editor);
 
             MeasureControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_StopwatchName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
+            }
 
             foreach (var ctrl in MeasureControls)
             {
@@ -152,16 +165,18 @@ namespace taskt.Core.Automation.Commands
 
         private void StopWatchComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-           
-            if (StopWatchComboBox.SelectedValue.ToString() == "Measure Stopwatch")
+            if (StopWatchComboBox.Text == "Measure Stopwatch")
             {
                 foreach (var ctrl in MeasureControls)
-                                 ctrl.Visible = true;
-               
+                {
+                    ctrl.Visible = true;
+                }               
             }
             else {
                 foreach (var ctrl in MeasureControls)
+                {
                     ctrl.Visible = false;
+                }
             }
             
         }
@@ -169,6 +184,30 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Action: " + v_StopwatchAction + ", Name: " + v_StopwatchName + "]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            this.IsValid = true;
+            this.validationResult = "";
+
+            if (String.IsNullOrEmpty(v_StopwatchName))
+            {
+                this.validationResult += "Instance name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(v_StopwatchAction))
+            {
+                this.validationResult += "Stopwach Action is empty.\n";
+                this.IsValid = false;
+            }
+            if ((v_StopwatchAction == "Measure Stopwatch") && String.IsNullOrEmpty(v_userVariableName))
+            {
+                this.validationResult += "Variable is empty.";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

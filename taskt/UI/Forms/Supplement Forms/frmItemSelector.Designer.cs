@@ -42,9 +42,9 @@
             this.lstVariables.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstVariables.FormattingEnabled = true;
             this.lstVariables.ItemHeight = 21;
-            this.lstVariables.Location = new System.Drawing.Point(12, 41);
+            this.lstVariables.Location = new System.Drawing.Point(12, 38);
             this.lstVariables.Name = "lstVariables";
-            this.lstVariables.Size = new System.Drawing.Size(328, 151);
+            this.lstVariables.Size = new System.Drawing.Size(328, 130);
             this.lstVariables.TabIndex = 0;
             this.lstVariables.DoubleClick += new System.EventHandler(this.lstVariables_DoubleClick);
             // 
@@ -67,12 +67,12 @@
             this.uiBtnOk.DisplayText = "Ok";
             this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOk.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnOk.Image")));
+            this.uiBtnOk.Image = global::taskt.Properties.Resources.various_ok_button;
             this.uiBtnOk.IsMouseOver = false;
-            this.uiBtnOk.Location = new System.Drawing.Point(12, 205);
+            this.uiBtnOk.Location = new System.Drawing.Point(12, 189);
             this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.uiBtnOk.Name = "uiBtnOk";
-            this.uiBtnOk.Size = new System.Drawing.Size(88, 49);
+            this.uiBtnOk.Size = new System.Drawing.Size(88, 45);
             this.uiBtnOk.TabIndex = 18;
             this.uiBtnOk.TabStop = false;
             this.uiBtnOk.Text = "Ok";
@@ -85,28 +85,28 @@
             this.uiBtnCancel.DisplayText = "Cancel";
             this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("uiBtnCancel.Image")));
+            this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
-            this.uiBtnCancel.Location = new System.Drawing.Point(106, 205);
+            this.uiBtnCancel.Location = new System.Drawing.Point(106, 189);
             this.uiBtnCancel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.uiBtnCancel.Name = "uiBtnCancel";
-            this.uiBtnCancel.Size = new System.Drawing.Size(88, 49);
+            this.uiBtnCancel.Size = new System.Drawing.Size(88, 45);
             this.uiBtnCancel.TabIndex = 19;
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
-            // frmVariableSelector
+            // frmItemSelector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 262);
+            this.ClientSize = new System.Drawing.Size(353, 242);
             this.Controls.Add(this.uiBtnOk);
             this.Controls.Add(this.uiBtnCancel);
             this.Controls.Add(this.lblHeader);
             this.Controls.Add(this.lstVariables);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmVariableSelector";
+            this.Name = "frmItemSelector";
             this.Text = "Insert a Variable";
             this.Load += new System.EventHandler(this.frmVariableSelector_Load);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();

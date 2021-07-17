@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using taskt.UI.CustomControls;
+using taskt.UI.Forms;
+
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
@@ -22,11 +24,11 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable (ex. Hello, 1, {{{vNum}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello or {vNum}+1")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets [vName].  You can also perform basic math operations.")]
+        [Attributes.PropertyAttributes.SampleUsage("**1** or **Hello** or {{{vNum}}}")]
+        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
         public string v_Input { get; set; }
         public VariableCommand()
         {
@@ -110,11 +112,20 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
 
-        
-
             return RenderedControls;
+        }
 
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
 
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class MoveFolderCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate whether to move or copy the folder")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate whether to move or copy the folder (default is Move Folder)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Move Folder")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Copy Folder")]
         [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to move the folder or copy the folder. Moving will remove the folder from the original path while Copying will not.")]
@@ -25,25 +25,25 @@ namespace taskt.Core.Automation.Commands
         public string v_OperationType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source folder")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source folder (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the folder.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfolder or {vTextFolderPath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to move/copy to")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to move/copy to (ex. C:\\temp\\newfolder, {{{vFolderPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the new path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\new path or {vTextFolderPath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\newPath** or **{{{vTextFolderPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Create folder if destination does not exist")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Create folder if destination does not exist (default is No)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.InputSpecification("Specify whether the directory should be created if it does not already exist.")]
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Delete folder if it already exists")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Delete folder if it already exists (defualt is No)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.InputSpecification("Specify whether the folder should be deleted first if it is already found to exist.")]
@@ -74,9 +74,17 @@ namespace taskt.Core.Automation.Commands
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
             var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(sender);
 
-            if ((v_CreateDirectory == "Yes") && (!System.IO.Directory.Exists(destinationFolder)))
+            if (!System.IO.Directory.Exists(destinationFolder))
             {
-                Directory.CreateDirectory(destinationFolder);
+                var vCreateDirectory = v_CreateDirectory.ConvertToUserVariable(sender);
+                if (String.IsNullOrEmpty(vCreateDirectory))
+                {
+                    vCreateDirectory = "No";
+                }
+                if (vCreateDirectory.ToLower() == "yes")
+                {
+                    Directory.CreateDirectory(destinationFolder);
+                }
             }
 
             //get source folder name and info
@@ -86,17 +94,30 @@ namespace taskt.Core.Automation.Commands
             var finalPath = System.IO.Path.Combine(destinationFolder, sourceFolderInfo.Name);
 
             //delete if it already exists per user
-            if (v_DeleteExisting == "Yes" && System.IO.Directory.Exists(finalPath))
+            if (System.IO.Directory.Exists(finalPath))
             {
-                Directory.Delete(finalPath, true);
+                var vDeleteExisting = v_DeleteExisting.ConvertToUserVariable(sender);
+                if (String.IsNullOrEmpty(vDeleteExisting))
+                {
+                    vDeleteExisting = "No";
+                }
+                if (vDeleteExisting.ToLower() == "yes")
+                {
+                    Directory.Delete(finalPath, true);
+                }
             }
 
-            if (v_OperationType == "Move Folder")
+            var vOperationType = v_OperationType.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(vOperationType))
+            {
+                vOperationType = "Move Folder";
+            }
+            if (vOperationType == "Move Folder")
             {
                 //move folder
                 Directory.Move(sourceFolder, finalPath);
             }
-            else if (v_OperationType == "Copy Folder")
+            else if (vOperationType == "Copy Folder")
             {
                 //copy folder
                 DirectoryCopy(sourceFolder, finalPath, true);   
@@ -163,6 +184,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [" + v_OperationType + " from '" + v_SourceFolderPath + "' to '" + v_DestinationDirectory + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_SourceFolderPath))
+            {
+                this.validationResult += "Source folder is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_DestinationDirectory))
+            {
+                this.validationResult += "Move/copy folder is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

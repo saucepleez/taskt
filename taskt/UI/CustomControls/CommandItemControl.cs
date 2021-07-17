@@ -29,11 +29,13 @@ namespace taskt.UI.CustomControls
         {
             InitializeComponent();
             this.CommandImage = Properties.Resources.command_comment;
+            this.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
         }
         public Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType HelperType { get; set; }
         public object DataSource { get; set; }
         public string FunctionalDescription { get; set; }
         public string ImplementationDescription { get; set; }
+        public Image DrawIcon { get; set; }
         private string commandDisplay;
         public string CommandDisplay
         {
@@ -72,7 +74,7 @@ namespace taskt.UI.CustomControls
 
         private void CommandItemControl_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(taskt.Properties.Resources.taskt_command_helper, 0, 0, 16, 16);
+            e.Graphics.DrawImage(this.DrawIcon, 0, 0, 16, 16);
             e.Graphics.DrawString(this.CommandDisplay, this.Font, new SolidBrush(this.ForeColor), 18, 0);
         }
 

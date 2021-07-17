@@ -63,5 +63,19 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + $" [{v_PreferenceType}]";
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            this.IsValid = true;
+            this.validationResult = "";
+
+            if (String.IsNullOrEmpty(v_PreferenceType))
+            {
+                this.validationResult += "Parameter Type is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
+        }
     }
 }
