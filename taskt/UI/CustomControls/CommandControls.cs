@@ -17,7 +17,7 @@ namespace taskt.UI.CustomControls
     {
         public static UI.Forms.frmCommandEditor CurrentEditor { get; set; }
 
-        public static List<Control> CreateDefaultInputGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        public static List<Control> CreateDefaultInputGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
             //Todo: Test
             var controlList = new List<Control>();
@@ -27,13 +27,17 @@ namespace taskt.UI.CustomControls
 
             controlList.Add(label);
             controlList.AddRange(helpers);
+            if (additionalLinks != null)
+            {
+                controlList.AddRange(additionalLinks);
+            }
             controlList.Add(input);
 
             return controlList;
             
         }
 
-        public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
             //Todo: Test
             var controlList = new List<Control>();
@@ -43,13 +47,17 @@ namespace taskt.UI.CustomControls
 
             controlList.Add(label);
             controlList.AddRange(helpers);
+            if (additionalLinks != null)
+            {
+                controlList.AddRange(additionalLinks);
+            }
             controlList.Add(input);
 
             return controlList;
             
         }
 
-        public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
             var controlList = new List<Control>();
             var label = CreateDefaultLabelFor(parameterName, parent);
@@ -58,6 +66,10 @@ namespace taskt.UI.CustomControls
 
             controlList.Add(label);
             controlList.AddRange(helpers);
+            if (additionalLinks != null)
+            {
+                controlList.AddRange(additionalLinks);
+            }
             controlList.Add(gridview);
 
             return controlList;
@@ -161,6 +173,18 @@ namespace taskt.UI.CustomControls
 
             return inputBox;
 
+        }
+
+        public static CommandItemControl CreateUIHelper()
+        {
+            taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
+            helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            var theme = CurrentEditor.Theme.UIHelper;
+            helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            helperControl.ForeColor = theme.FontColor;
+            helperControl.BackColor = theme.BackColor;
+
+            return helperControl;
         }
 
         public static List<Control> CreateUIHelpersFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, UI.Forms.frmCommandEditor editor)
