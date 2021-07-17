@@ -954,6 +954,25 @@ namespace taskt.UI.Forms
                 insertionIndex = lstScriptActions.SelectedItems[0].Index + 1;            
             }
 
+            // insert comment above if, loop, try
+            if (appSettings.ClientSettings.InsertCommentIfLoopAbove)
+            {
+                if ((selectedCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginListLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+                {
+                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Please enter a description of the loop here" }));
+                    insertionIndex++;
+                }
+                else if((selectedCommand is Core.Automation.Commands.BeginIfCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiIfCommand))
+                {
+                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Please enter a description of the if here" }));
+                    insertionIndex++;
+                }
+                else if(selectedCommand is Core.Automation.Commands.TryCommand)
+                {
+                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Please enter a description of the error handling here" }));
+                    insertionIndex++;
+                }
+            }
 
             //insert command
             lstScriptActions.Items.Insert(insertionIndex, command);

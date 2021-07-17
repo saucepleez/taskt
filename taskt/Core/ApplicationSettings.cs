@@ -161,11 +161,13 @@ namespace taskt.Core
         public bool EnableSequenceDragDrop { get; set; }
         public bool InsertVariableAtCursor { get; set; }
         public bool InsertElseAutomatically { get; set; }
+        public bool InsertCommentIfLoopAbove { get; set; }
         public bool DontShowValidationMessage { get; set; }
         public string DefaultBrowserInstanceName { get; set; }
         public string DefaultStopWatchInstanceName { get; set; }
         public string DefaultExcelInstanceName { get; set; }
         public string DefaultWordInstanceName { get; set; }
+        public string DefaultDBInstanceName { get; set; }
         public ClientSettings()
         {
             MinimizeToTray = false;
@@ -179,11 +181,13 @@ namespace taskt.Core
             EnableSequenceDragDrop = true;
             InsertVariableAtCursor = true;
             InsertElseAutomatically = false;
+            InsertCommentIfLoopAbove = false;
             DontShowValidationMessage = false;
             DefaultBrowserInstanceName = "RPABrowser";
             DefaultStopWatchInstanceName = "RPAStopwatch";
             DefaultExcelInstanceName = "RPAExcel";
             DefaultWordInstanceName = "RPAWord";
+            DefaultDBInstanceName = "RPADB";
         }
     }
     /// <summary>

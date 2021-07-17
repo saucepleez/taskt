@@ -96,10 +96,12 @@ namespace taskt.UI.Forms
             chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
             chkInsertVariablePosition.DataBindings.Add("Checked", clientSettings, "InsertVariableAtCursor", false, DataSourceUpdateMode.OnPropertyChanged);
             chkInsertElse.DataBindings.Add("checked", clientSettings, "InsertElseAutomatically", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkInsertCommentIfLoop.DataBindings.Add("checked", clientSettings, "InsertCommentIfLoopAbove", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultWordInstanceName.DataBindings.Add("Text", clientSettings, "DefaultWordInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultDBInstanceName.DataBindings.Add("Text", clientSettings, "DefaultDBInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics
             bgwMetrics.RunWorkerAsync();
