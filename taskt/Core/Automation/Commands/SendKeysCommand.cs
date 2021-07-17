@@ -119,17 +119,21 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
-            taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
+            //taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
+            taskt.UI.CustomControls.CommandItemControl encryptLink = CommandControls.CreateUIHelper();
+            encryptLink.CommandDisplay = "Encrypt Text";
+            encryptLink.Click += (sender, e) => HelperControl_Click(sender, e);
 
-            var textInputGroup = CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor);
+            var textInputGroup = CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor, new List<Control>() { encryptLink } );
             RenderedControls.AddRange(textInputGroup);
 
-            InputText = (TextBox)textInputGroup[2];
+            //InputText = (TextBox)textInputGroup[2];
+            InputText = (TextBox)textInputGroup.Find(t => t is TextBox);
 
-            helperControl.ForeColor = Color.White;
-            helperControl.CommandDisplay = "Encrypt Text";
-            helperControl.Click += HelperControl_Click;
-            RenderedControls.Add(helperControl);
+            //helperControl.ForeColor = Color.White;
+            //helperControl.CommandDisplay = "Encrypt Text";
+            //helperControl.Click += HelperControl_Click;
+            //RenderedControls.Add(helperControl);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EncryptionOption", this, editor));
 
