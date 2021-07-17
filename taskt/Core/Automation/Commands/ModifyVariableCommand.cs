@@ -26,12 +26,15 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Select the case type")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
-        [Attributes.PropertyAttributes.SampleUsage("-1 to keep remainder, 1 for 1 position after start index, etc.")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("To Upper Case")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("To Lower Case")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("To Base64 String")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("From Base64 String")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim Start")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim End")]
         public string v_ConvertType { get; set; }
 
         [XmlAttribute]
@@ -70,6 +73,16 @@ namespace taskt.Core.Automation.Commands
                     byte[] encodedDataAsBytes = System.Convert.FromBase64String(stringValue);
                     stringValue = System.Text.ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
                     break;
+                case "Trim":
+                    stringValue = stringValue.Trim();
+                    break;
+                case "Trim Start":
+                    stringValue = stringValue.TrimStart();
+                    break;
+                case "Trim End":
+                    stringValue = stringValue.TrimEnd();
+                    break;
+
                 default:
                     throw new NotImplementedException("Conversion Type '" + caseType + "' not implemented!");
             }
