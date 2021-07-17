@@ -18,10 +18,10 @@ namespace taskt.Core.Automation.Commands
     public class GetListCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name (ex. {{{vList}}}, [ 1, 2, 3 ])")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name (ex. {{{vList}}}, [1,2,3])")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a existing List.")]
-        [Attributes.PropertyAttributes.SampleUsage("**{{{myData}}}** or **[ 1, 2, 3 ]**")]
+        [Attributes.PropertyAttributes.SampleUsage("**{{{myData}}}** or **[1,2,3]**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ListName { get; set; }
 
