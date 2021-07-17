@@ -516,6 +516,7 @@ namespace taskt.UI
             {"ExcelWriteRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
 
             // File
+            {"CheckFileExistsCommand", "taskt.Properties.Resources.command_files"},
             {"DeleteFileCommand", "taskt.Properties.Resources.command_files"},
             {"ExtractFileCommand", "taskt.Properties.Resources.command_files"},
             {"GetFilesCommand", "taskt.Properties.Resources.command_files"},
@@ -524,6 +525,7 @@ namespace taskt.UI
             {"WaitForFileToExistCommand", "taskt.Properties.Resources.command_files"},
 
             // Folder
+            {"CheckFolderExistsCommand", "taskt.Properties.Resources.command_files"},
             {"CreateFolderCommand", "taskt.Properties.Resources.command_files"},
             {"DeleteFolderCommand", "taskt.Properties.Resources.command_files"},
             {"GetFoldersCommand", "taskt.Properties.Resources.command_files"},
@@ -1018,7 +1020,15 @@ namespace taskt.UI
 
         public static int GetUIImageList(string commandName)
         {
-            return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
+            //return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
+            try
+            {
+                return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
+            }
+            catch (Exception)
+            {
+                return uiImages.Images.IndexOfKey("taskt.Properties.Resources.command_files");
+            }
         }
 
         public static Image GetUIImage(string commandName)

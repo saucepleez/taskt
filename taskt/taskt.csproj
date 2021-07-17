@@ -187,7 +187,9 @@
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginMultiLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CheckFolderExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelAddWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CheckFileExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\UnloadTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\PingCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />

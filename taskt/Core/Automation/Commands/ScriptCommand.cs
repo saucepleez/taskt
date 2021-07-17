@@ -96,6 +96,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelWriteRowCommand))]
 
     // File
+    [XmlInclude(typeof(CheckFileExistsCommand))]
     [XmlInclude(typeof(DeleteFileCommand))]
     [XmlInclude(typeof(ExtractFileCommand))]
     [XmlInclude(typeof(GetFilesCommand))]
@@ -104,6 +105,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WaitForFileToExistCommand))]
 
     // Folder
+    [XmlInclude(typeof(CheckFolderExistsCommand))]
     [XmlInclude(typeof(CreateFolderCommand))]
     [XmlInclude(typeof(DeleteFolderCommand))]
     [XmlInclude(typeof(GetFoldersCommand))]
