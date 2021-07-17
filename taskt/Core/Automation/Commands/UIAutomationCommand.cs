@@ -397,6 +397,7 @@ namespace taskt.Core.Automation.Commands
             //helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
             CommandItemControl helperControl = CommandControls.CreateUIHelper();
             helperControl.CommandDisplay = "Element Recorder";
+            helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
             helperControl.Click += ShowRecorder;
 
             //automation type

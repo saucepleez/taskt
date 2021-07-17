@@ -242,6 +242,7 @@ namespace taskt.UI.CustomControls
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
                         helperControl.CommandDisplay = "Capture Reference Image";
+                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
                         helperControl.Click += (sender, e) => ShowImageCapture(sender, e, editor);
 
                         taskt.UI.CustomControls.CommandItemControl testRun = new taskt.UI.CustomControls.CommandItemControl();
@@ -266,7 +267,8 @@ namespace taskt.UI.CustomControls
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
                         helperControl.CommandImage = UI.Images.GetUIImage("SendMouseMoveCommand");
                         helperControl.CommandDisplay = "Capture Mouse Position";
-                        helperControl.ForeColor = Color.AliceBlue;
+                        //helperControl.ForeColor = Color.AliceBlue;
+                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
                         helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
