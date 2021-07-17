@@ -341,7 +341,7 @@ namespace taskt.Core.Automation.Commands
             //SearchParametersGridViewHelper.Width = 500;
             //SearchParametersGridViewHelper.Height = 140;
             //SearchParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIASearchParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-            SearchParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIASearchParameters", false, false, false, 500, 140);
+            SearchParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIASearchParameters", false, false, false, 500, 240);
             SearchParametersGridViewHelper.CellBeginEdit += SearchParametersGridViewHelper_CellBeginEdit;
             SearchParametersGridViewHelper.CellClick += SearchParametersGridViewHelper_CellClick;
 
@@ -390,11 +390,12 @@ namespace taskt.Core.Automation.Commands
 
 
             //create helper control
-            CommandItemControl helperControl = new CommandItemControl();
-            helperControl.Padding = new Padding(10, 0, 0, 0);
-            helperControl.ForeColor = Color.AliceBlue;
-            helperControl.Font = new Font("Segoe UI Semilight", 10);         
-            helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            //CommandItemControl helperControl = new CommandItemControl();
+            //helperControl.Padding = new Padding(10, 0, 0, 0);
+            //helperControl.ForeColor = Color.AliceBlue;
+            //helperControl.Font = new Font("Segoe UI Semilight", 10);         
+            //helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            CommandItemControl helperControl = CommandControls.CreateUIHelper();
             helperControl.CommandDisplay = "Element Recorder";
             helperControl.Click += ShowRecorder;
 
@@ -412,10 +413,19 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
+            var emptyParameterLink = CommandControls.CreateUIHelper();
+            emptyParameterLink.CommandDisplay = "Add empty parameters";
+            emptyParameterLink.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
+            emptyParameterLink.Click += (sender, e) => EmptySearchParameterClicked(sender, e);
+
             //create search parameters   
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIASearchParameters", this));
             RenderedControls.Add(helperControl);
+            RenderedControls.Add(emptyParameterLink);
             RenderedControls.Add(SearchParametersGridViewHelper);
+
+            
+            //RenderedControls.Add(emptyParameterLink);
 
             //create action parameters
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
@@ -599,6 +609,35 @@ namespace taskt.Core.Automation.Commands
 
             actionParameterView.Refresh();
 
+        }
+
+        private void EmptySearchParameterClicked(object sender, EventArgs e)
+        {
+            SearchParametersGridViewHelper.SuspendLayout();
+
+            v_UIASearchParameters.Rows.Clear();
+            v_UIASearchParameters.Rows.Add(false, "AcceleratorKey", "");
+            v_UIASearchParameters.Rows.Add(false, "AccessKey", "");
+            v_UIASearchParameters.Rows.Add(false, "AutomationId", "");
+            v_UIASearchParameters.Rows.Add(false, "ClassName", "");
+            v_UIASearchParameters.Rows.Add(false, "FrameworkId", "");
+            v_UIASearchParameters.Rows.Add(false, "HasKeyboardFocus", "");
+            v_UIASearchParameters.Rows.Add(false, "HelpText", "");
+            v_UIASearchParameters.Rows.Add(false, "IsContentElement", "");
+            v_UIASearchParameters.Rows.Add(false, "IsControlElement", "");
+            v_UIASearchParameters.Rows.Add(false, "IsEnabled", "");
+            v_UIASearchParameters.Rows.Add(false, "IsKeyboardFocusable", "");
+            v_UIASearchParameters.Rows.Add(false, "IsOffscreen", "");
+            v_UIASearchParameters.Rows.Add(false, "IsPassword", "");
+            v_UIASearchParameters.Rows.Add(false, "IsRequiredForForm", "");
+            v_UIASearchParameters.Rows.Add(false, "ItemStatus", "");
+            v_UIASearchParameters.Rows.Add(false, "ItemType", "");
+            v_UIASearchParameters.Rows.Add(false, "LocalizedControlType", "");
+            v_UIASearchParameters.Rows.Add(false, "Name", "");
+            v_UIASearchParameters.Rows.Add(false, "NativeWindowHandle", "");
+            v_UIASearchParameters.Rows.Add(false, "ProcessID", "");
+
+            SearchParametersGridViewHelper.ResumeLayout();
         }
 
         public override string GetDisplayValue()
