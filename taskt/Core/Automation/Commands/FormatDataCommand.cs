@@ -37,8 +37,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Specify required output format (ex. yy/MM/dd, hh:mm, #.0, file)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, C2, D2, file, folder, extension etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.SampleUsage("**MM/dd/yy**, **hh:mm**, **C2**, **D2**, **file** etc.")]
+        [Attributes.PropertyAttributes.Remarks("Path supports **file**, **folder**, **filewithoutextension**, **extension**, **drive**")]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
