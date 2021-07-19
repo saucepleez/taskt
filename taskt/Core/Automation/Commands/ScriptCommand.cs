@@ -131,6 +131,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ScreenshotCommand))]
 
     // Input
+    [XmlInclude(typeof(FileDialogCommand))]
+    [XmlInclude(typeof(FolderDialogCommand))]
     [XmlInclude(typeof(HTMLInputCommand))]
     [XmlInclude(typeof(UserInputCommand))]
     [XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]

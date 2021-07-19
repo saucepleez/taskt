@@ -551,6 +551,8 @@ namespace taskt.UI
             {"ScreenshotCommand", "taskt.Properties.Resources.command_camera"},
 
             // Input
+            {"FileDialogCommand", "taskt.Properties.Resources.command_input"},
+            {"FolderDialogCommand", "taskt.Properties.Resources.command_input"},
             {"HTMLInputCommand", "taskt.Properties.Resources.command_input"},
             {"UserInputCommand", "taskt.Properties.Resources.command_input"}, // prompt
             {"SendAdvancedKeyStrokesCommand", "taskt.Properties.Resources.command_input"},
