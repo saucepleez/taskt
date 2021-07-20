@@ -60,7 +60,7 @@ namespace taskt.Core
                 sb.AppendLine("<!--TITLE: " + commandName + " Command -->");
                 sb.AppendLine("<!-- SUBTITLE: a command in the " + groupName + " group. -->");
 
-                sb.AppendLine("[Go To Automation Commands Overview](/automation-commands)");
+                sb.AppendLine("[Go To Automation Commands Overview](/automation-commands.md)");
 
                 sb.AppendLine(Environment.NewLine);
                 sb.AppendLine("# " + commandName + " Command");
@@ -139,7 +139,8 @@ namespace taskt.Core
                 System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
                 //add to high level
-                var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName.Replace(".md", "");
+                //var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName.Replace(".md", "");
+                var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName;
                 highLevelCommandInfo.Add(new CommandMetaData() { Group = groupName, Description = classDescription, Name = commandName, Location = serverPath });
 
             }
