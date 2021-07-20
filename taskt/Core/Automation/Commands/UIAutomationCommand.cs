@@ -423,6 +423,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIASearchParameters", this));
             RenderedControls.Add(helperControl);
             RenderedControls.Add(emptyParameterLink);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIASearchParameters", this, new Control[] { SearchParametersGridViewHelper }, editor));
             RenderedControls.Add(SearchParametersGridViewHelper);
 
             
@@ -430,6 +431,7 @@ namespace taskt.Core.Automation.Commands
 
             //create action parameters
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIAActionParameters", this, new Control[] { ActionParametersGridViewHelper }, editor));
             RenderedControls.Add(ActionParametersGridViewHelper);
 
             return RenderedControls;
