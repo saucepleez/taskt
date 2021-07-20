@@ -26,6 +26,14 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please indicate the extension (Default is empty and searched all files) (ex. txt, {{{vExtension}}})")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the extension.")]
+        [Attributes.PropertyAttributes.SampleUsage("**txt** or **{{{vExtension}}}**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchExtension { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
@@ -46,9 +54,19 @@ namespace taskt.Core.Automation.Commands
             //apply variable logic
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
 
+            var ext = "." + v_SearchExtension.ConvertToUserVariable(sender).ToLower();
+
             //delete folder
             //System.IO.Directory.Delete(sourceFolder, true);
-            var filesList = System.IO.Directory.GetFiles(sourceFolder).ToList();
+            List<string> filesList;
+            if (String.IsNullOrEmpty(ext))
+            {
+                filesList = System.IO.Directory.GetFiles(sourceFolder).ToList();
+            }
+            else
+            {
+                filesList = System.IO.Directory.GetFiles(sourceFolder, "*.*").Where(t => System.IO.Path.GetExtension(t).ToLower() == ext).ToList();
+            }
 
             Script.ScriptVariable newFilesList = new Script.ScriptVariable
             {
@@ -69,6 +87,8 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SearchExtension", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
