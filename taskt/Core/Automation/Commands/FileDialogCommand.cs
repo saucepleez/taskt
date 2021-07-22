@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Specify the value of the Filter property (ex. Text file|*.txt|All files|*.*, {{{vFilter}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("*.txt|Text file|*.*|All Files or {{{vFilter}}}")]
+        [Attributes.PropertyAttributes.SampleUsage("**\\*.txt\\|Text file\\|\\*.\\*\\|All Files** or **{{{vFilter}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Filter { get; set; }
 
