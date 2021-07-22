@@ -522,7 +522,8 @@ namespace taskt.Core.Automation.Commands
             var browserObject = engine.GetAppInstance(vInstance);
 
             //get selenium instance driver
-            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            //var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
             try
             {
