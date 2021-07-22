@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
             //ParametersGridViewHelper.Size = new Size(350, 125);
             //ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_TextExtractionTable", false, false);
+            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_TextExtractionTable", false, false, false, 400, 160);
             ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
             ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
