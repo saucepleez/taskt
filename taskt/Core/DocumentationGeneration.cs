@@ -95,6 +95,8 @@ namespace taskt.Core
                     var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks))
                             .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
 
+                    commandLabel = commandLabel.Replace("*", "\\*").Replace("|", "\\|");
+
                     //append to parameter table
                     sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
 
@@ -117,12 +119,6 @@ namespace taskt.Core
                 sb.AppendLine("[Open/Report an issue on GitHub](https://github.com/saucepleez/taskt/issues/new)");
                 sb.AppendLine("[Ask a question on Gitter](https://gitter.im/taskt-rpa/Lobby)");
 
-
-
-
-
-              
-
                 //create kebob destination and command file nmae
                 var kebobDestination = groupName.Replace(" ", "-").Replace("/", "-").ToLower();
                 var kebobFileName = commandName.Replace(" ", "-").Replace("/", "-").ToLower() + "-command.md";
@@ -140,7 +136,7 @@ namespace taskt.Core
 
                 //add to high level
                 //var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName.Replace(".md", "");
-                var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName;
+                var serverPath = "/" + kebobDestination + "/" + kebobFileName;
                 highLevelCommandInfo.Add(new CommandMetaData() { Group = groupName, Description = classDescription, Name = commandName, Location = serverPath });
 
             }
@@ -263,10 +259,6 @@ namespace taskt.Core
                     var processedAttribute = (Core.Automation.Attributes.ClassAttributes.UsesDescription)attributeFound;
                     return processedAttribute.usesDescription;
                 }
-    
-
-            
-
             }
 
             //string groupAttribute = "";
