@@ -25,6 +25,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Click Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Check If Element Exists")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text Value From Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Check State From Element")]
         [Attributes.PropertyAttributes.SampleUsage("**Click Element** or **Get Value From Element** or **Check If Element Exists**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_AutomationType { get; set; }
@@ -250,13 +252,13 @@ namespace taskt.Core.Automation.Commands
                     searchResult = "TRUE";
                 }
 
-              //store data
+                //store data
                 searchResult.StoreInUserVariable(sender, applyToVariable);
 
             }
 
             //determine element click type
-           else if (v_AutomationType == "Click Element")
+            else if (v_AutomationType == "Click Element")
             {
 
                 //if handle was not found
@@ -325,6 +327,10 @@ namespace taskt.Core.Automation.Commands
                 //store into variable
                 requiredValue.StoreInUserVariable(sender, applyToVariable);
 
+            }
+            else if (v_AutomationType == "Get Text Value From Element")
+            {
+                MessageBox.Show(((ValuePattern)requiredHandle.GetCurrentPattern(ValuePattern.Pattern)).Current.Value);
             }
             else
             {

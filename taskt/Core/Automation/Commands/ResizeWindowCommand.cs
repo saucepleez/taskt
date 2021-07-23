@@ -23,6 +23,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window title search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window. (ex. 640, {{{vWidth}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new width size of the window")]
@@ -52,24 +62,70 @@ namespace taskt.Core.Automation.Commands
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
 
-            var targetWindows = User32Functions.FindTargetWindows(windowName, (((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName));
-
-            //loop each window and set the window state
-            foreach (var targetedWindow in targetWindows)
+            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
             {
-                var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
-                var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
+                searchMethod = "Contains";
+            }
 
-                if (!int.TryParse(variableXSize, out int xPos))
+            bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow);
+            var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
+            var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
+
+            if (!int.TryParse(variableXSize, out int xPos))
+            {
+                throw new Exception("X Position Invalid - " + v_XWindowSize);
+            }
+            if (!int.TryParse(variableYSize, out int yPos))
+            {
+                throw new Exception("X Position Invalid - " + v_YWindowSize);
+            }
+
+            if (searchMethod == "Contains" || targetIsCurrentWindow)
+            {
+                //loop each window and set the window state
+                foreach (var targetedWindow in targetWindows)
                 {
-                    throw new Exception("X Position Invalid - " + v_XWindowSize);
+                    User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
                 }
-                if (!int.TryParse(variableYSize, out int yPos))
+            }
+            else
+            {
+                Func<string, bool> searchFunc;
+                switch (searchMethod)
                 {
-                    throw new Exception("X Position Invalid - " + v_YWindowSize);
+                    case "Start with":
+                        searchFunc = (s) => s.StartsWith(windowName);
+                        break;
+
+                    case "End with":
+                        searchFunc = (s) => s.EndsWith(windowName);
+                        break;
+
+                    case "Exact match":
+                        searchFunc = (s) => (s == windowName);
+                        break;
+
+                    default:
+                        throw new Exception("Search method " + searchMethod + " is not support.");
+                        break;
                 }
 
-                User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
+                bool isResize = false;
+                foreach (var targetedWindow in targetWindows)
+                {
+                    if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
+                    {
+                        User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
+                        isResize = true;
+                    }
+                }
+                if (!isResize)
+                {
+                    throw new Exception("Window name '" + windowName + "' is not found.Search method " + searchMethod + ".");
+                }
             }
 
         }
@@ -82,6 +138,8 @@ namespace taskt.Core.Automation.Commands
             WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             //create standard group controls
             var xGroup = CommandControls.CreateDefaultInputGroupFor("v_XWindowSize", this, editor);

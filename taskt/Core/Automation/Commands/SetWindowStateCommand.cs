@@ -23,6 +23,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window title search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please choose the new required state of the window.")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Maximize")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Minimize")]
@@ -49,32 +59,79 @@ namespace taskt.Core.Automation.Commands
             //convert window name
             string windowName = v_WindowName.ConvertToUserVariable(sender);
 
-            var targetWindows = User32Functions.FindTargetWindows(windowName, (((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName));
-
-            //loop each window and set the window state
-            foreach (var targetedWindow in targetWindows)
+            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
             {
-                User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SW_SHOWNORMAL;
-                switch (v_WindowState)
+                searchMethod = "Contains";
+            }
+
+            bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow);
+
+            User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SW_SHOWNORMAL;
+            switch (v_WindowState)
+            {
+                case "Maximize":
+                    WINDOW_STATE = User32Functions.WindowState.SW_MAXIMIZE;
+                    break;
+
+                case "Minimize":
+                    WINDOW_STATE = User32Functions.WindowState.SW_MINIMIZE;
+                    break;
+
+                case "Restore":
+                    WINDOW_STATE = User32Functions.WindowState.SW_RESTORE;
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (searchMethod == "Contains" || targetIsCurrentWindow)
+            {
+                //loop each window and set the window state
+                foreach (var targetedWindow in targetWindows)
                 {
-                    case "Maximize":
-                        WINDOW_STATE = User32Functions.WindowState.SW_MAXIMIZE;
+                    User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
+                }
+            }
+            else
+            {
+                Func<string, bool> searchFunc;
+                switch (searchMethod)
+                {
+                    case "Start with":
+                        searchFunc = (s) => s.StartsWith(windowName);
                         break;
 
-                    case "Minimize":
-                        WINDOW_STATE = User32Functions.WindowState.SW_MINIMIZE;
+                    case "End with":
+                        searchFunc = (s) => s.EndsWith(windowName);
                         break;
 
-                    case "Restore":
-                        WINDOW_STATE = User32Functions.WindowState.SW_RESTORE;
+                    case "Exact match":
+                        searchFunc = (s) => (s == windowName);
                         break;
 
                     default:
+                        throw new Exception("Search method " + searchMethod + " is not support.");
                         break;
                 }
 
-                User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
-            }     
+                bool isChanged = false;
+                foreach (var targetedWindow in targetWindows)
+                {
+                    if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
+                    {
+                        User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
+                        isChanged = true;
+                    }
+                }
+                if (!isChanged)
+                {
+                    throw new Exception("Window name '" + windowName + "' is not found.Search method " + searchMethod + ".");
+                }
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -85,6 +142,8 @@ namespace taskt.Core.Automation.Commands
             WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             var windowStateLabel = CommandControls.CreateDefaultLabelFor("v_WindowState", this);
             RenderedControls.Add(windowStateLabel);

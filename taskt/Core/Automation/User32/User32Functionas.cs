@@ -233,6 +233,19 @@ namespace taskt.Core.Automation.User32
             return "";
         }
 
+        public static string GetWindowTitle(IntPtr hWnd)
+        {
+            const int nChars = 256;
+            StringBuilder Buff = new StringBuilder(nChars);
+            IntPtr handle = GetForegroundWindow();
+
+            if (GetWindowText(hWnd, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return "";
+        }
+
         [DllImport("user32.dll")]
         private static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
         public static void SendMouseClick(string clickType, int xMousePosition, int yMousePosition)

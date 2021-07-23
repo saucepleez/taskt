@@ -23,6 +23,17 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window title search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
+
         [XmlIgnore]
         [NonSerialized]
         public ComboBox WindowNameControl;
@@ -39,13 +50,62 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-
-            var targetWindows = User32Functions.FindTargetWindows(windowName, (((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName));
-
-            //loop each window
-            foreach (var targetedWindow in targetWindows)
+            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
             {
-                User32Functions.CloseWindow(targetedWindow);
+                searchMethod = "Contains";
+            }
+
+            bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow);
+
+            if (searchMethod == "Contains" || targetIsCurrentWindow)
+            {
+                //loop each window
+                foreach (var targetedWindow in targetWindows)
+                {
+                    User32Functions.CloseWindow(targetedWindow);
+                }
+            }
+            else
+            {
+                Func<string, bool> searchFunc;
+                switch (searchMethod)
+                {
+                    case "Start with":
+                        searchFunc = (s) => s.StartsWith(windowName);
+                        break;
+
+                    case "End with":
+                        searchFunc = (s) => s.EndsWith(windowName);
+                        break;
+
+                    case "Exact match":
+                        searchFunc = (s) => (s == windowName);
+                        break;
+
+                    default:
+                        throw new Exception("Search method " + searchMethod + " is not support.");
+                        break;
+                }
+
+                bool isCloseWindow = false;
+
+                //loop each window
+                foreach (var targetedWindow in targetWindows)
+                {
+                    if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
+                    {
+                        User32Functions.CloseWindow(targetedWindow);
+                        isCloseWindow = true;
+                    }
+                }
+
+                if (!isCloseWindow)
+                {
+                    throw new Exception("Window name " + windowName + " is not found. Search method is " + searchMethod + ".");
+                }
             }
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -57,6 +117,8 @@ namespace taskt.Core.Automation.Commands
             WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             return RenderedControls;
 

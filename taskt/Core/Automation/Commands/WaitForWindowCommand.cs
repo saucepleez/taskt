@@ -23,6 +23,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window title search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait before an error should be raised. (ex. 5, {{{vWaitTime}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to wait before an error should be invoked")]
@@ -44,22 +54,68 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
+
+            if (targetIsCurrentWindow)
+            {
+                return; // always exists
+            }
+
+            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
+            {
+                searchMethod = "Contains";
+            }
+
             var lengthToWait = v_LengthToWait.ConvertToUserVariable(sender);
             var waitUntil = int.Parse(lengthToWait);
             var endDateTime = DateTime.Now.AddSeconds(waitUntil);
-
             IntPtr hWnd = IntPtr.Zero;
 
-            while (DateTime.Now < endDateTime)
+            if (searchMethod == "Contains")
             {
-                string windowName = v_WindowName.ConvertToUserVariable(sender);
-                hWnd = User32Functions.FindWindow(windowName);
+                while (DateTime.Now < endDateTime)
+                {
+                    hWnd = User32Functions.FindWindow(windowName);
 
-                if (hWnd != IntPtr.Zero) //If found
-                    break;
+                    if (hWnd != IntPtr.Zero) //If found
+                        break;
 
-                System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            else
+            {
+                Func<string, bool> searchFunc;
+                switch (searchMethod)
+                {
+                    case "Start with":
+                        searchFunc = (s) => s.StartsWith(windowName);
+                        break;
 
+                    case "End with":
+                        searchFunc = (s) => s.EndsWith(windowName);
+                        break;
+
+                    case "Exact match":
+                        searchFunc = (s) => (s == windowName);
+                        break;
+
+                    default:
+                        throw new Exception("Search method " + searchMethod + " is not support.");
+                        break;
+                }
+                while (DateTime.Now < endDateTime)
+                {
+                    hWnd = User32Functions.FindWindow(windowName);
+                    if (searchFunc(User32Functions.GetWindowTitle(hWnd)))
+                    {
+                        break;
+                    }
+
+                    System.Threading.Thread.Sleep(1000);
+                }
             }
 
             if (hWnd == IntPtr.Zero)
@@ -76,6 +132,8 @@ namespace taskt.Core.Automation.Commands
             WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             //create standard group controls
             var lengthToWaitControlSet = CommandControls.CreateDefaultInputGroupFor("v_LengthToWait", this, editor);
