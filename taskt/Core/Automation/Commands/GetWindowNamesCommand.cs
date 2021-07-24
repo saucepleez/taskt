@@ -150,7 +150,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + "]";
+            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + "', Result In: '" + v_UserVariableName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
