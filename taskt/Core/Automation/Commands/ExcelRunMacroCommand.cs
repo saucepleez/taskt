@@ -28,6 +28,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**Macro1** or **Module1.Macro1** or **{{{vMacro}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_MacroName { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please Enter the macro argument1")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the value of the macro argument")]
+        [Attributes.PropertyAttributes.SampleUsage("**1** or **Hello** or **{{{vArgument}}}**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_Argument1 { get; set; }
+
         public ExcelRunMacroCommand()
         {
             this.CommandName = "ExcelRunMacroCommand";
@@ -42,12 +50,21 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var vMacroName = v_MacroName.ConvertToUserVariable(engine);
+
+            var vArg1 = v_Argument1.ConvertToUserVariable(engine);
+
             var excelObject = engine.GetAppInstance(vInstance);
 
-           
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            excelInstance.Run(vMacroName);
-            
+
+            if (String.IsNullOrEmpty(vArg1))
+            {
+                excelInstance.Run(vMacroName);
+            }
+            else
+            {
+                excelInstance.Run(vMacroName, vArg1);
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -56,6 +73,7 @@ namespace taskt.Core.Automation.Commands
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MacroName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Argument1", this, editor));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
