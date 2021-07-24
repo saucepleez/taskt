@@ -184,6 +184,8 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\GetWindowNamesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CheckWindowNameExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginMultiLoopCommand.cs" />

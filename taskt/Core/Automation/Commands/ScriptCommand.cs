@@ -224,7 +224,9 @@ namespace taskt.Core.Automation.Commands
 
     // Window
     [XmlInclude(typeof(ActivateWindowCommand))]
+    [XmlInclude(typeof(CheckWindowNameExistsCommand))]
     [XmlInclude(typeof(CloseWindowCommand))]
+    [XmlInclude(typeof(GetWindowNamesCommand))]
     [XmlInclude(typeof(MoveWindowCommand))]
     [XmlInclude(typeof(ResizeWindowCommand))]
     [XmlInclude(typeof(SetWindowStateCommand))]
