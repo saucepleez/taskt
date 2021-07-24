@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
 
             bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
 
-            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow);
+            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
 
             User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SW_SHOWNORMAL;
             switch (v_WindowState)

@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
 
             bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
 
-            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow);
+            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
             var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
             var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
 

@@ -71,10 +71,10 @@ namespace taskt.Core.Automation.Commands
             var lengthToWait = v_LengthToWait.ConvertToUserVariable(sender);
             var waitUntil = int.Parse(lengthToWait);
             var endDateTime = DateTime.Now.AddSeconds(waitUntil);
-            IntPtr hWnd = IntPtr.Zero;
 
             if (searchMethod == "Contains")
             {
+                IntPtr hWnd = IntPtr.Zero;
                 while (DateTime.Now < endDateTime)
                 {
                     hWnd = User32Functions.FindWindow(windowName);
@@ -83,6 +83,10 @@ namespace taskt.Core.Automation.Commands
                         break;
 
                     System.Threading.Thread.Sleep(1000);
+                }
+                if (hWnd == IntPtr.Zero)
+                {
+                    throw new Exception("Window was not found in the allowed time!");
                 }
             }
             else
@@ -106,21 +110,27 @@ namespace taskt.Core.Automation.Commands
                         throw new Exception("Search method " + searchMethod + " is not support.");
                         break;
                 }
+
+                bool isFind = false;
                 while (DateTime.Now < endDateTime)
                 {
-                    hWnd = User32Functions.FindWindow(windowName);
-                    if (searchFunc(User32Functions.GetWindowTitle(hWnd)))
+                    List<IntPtr> hWnds = User32Functions.FindWindowsGreedy(windowName);
+                    foreach(var hWnd in hWnds)
                     {
-                        break;
+                        if (searchFunc(User32Functions.GetWindowTitle(hWnd)))
+                        {
+                            isFind = true;
+                            break;
+                        }
                     }
 
                     System.Threading.Thread.Sleep(1000);
                 }
-            }
 
-            if (hWnd == IntPtr.Zero)
-            {
-                throw new Exception("Window was not found in the allowed time!");
+                if (!isFind)
+                {
+                    throw new Exception("Window was not found in the allowed time!");
+                }
             }
         }
         public override List<Control> Render(frmCommandEditor editor)
