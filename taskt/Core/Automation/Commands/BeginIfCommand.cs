@@ -34,8 +34,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("GUI Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
+        [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**, **Boolean**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_IfActionType { get; set; }
 
@@ -146,18 +147,32 @@ namespace taskt.Core.Automation.Commands
                 value1 = value1.ConvertToUserVariable(sender);
                 value2 = value2.ConvertToUserVariable(sender);
 
-
-
+                bool tempBool;
+                bool isBoolCompare = (bool.TryParse(value1, out tempBool) && bool.TryParse(value2, out tempBool));
                 decimal cdecValue1, cdecValue2;
 
                 switch (operand)
                 {
                     case "is equal to":
-                        ifResult = (value1 == value2);
+                        if (isBoolCompare)
+                        {
+                            ifResult = (bool.Parse(value1) == bool.Parse(value2));
+                        }
+                        else
+                        {
+                            ifResult = (value1 == value2);
+                        }
                         break;
 
                     case "is not equal to":
-                        ifResult = (value1 != value2);
+                        if (isBoolCompare)
+                        {
+                            ifResult = (bool.Parse(value1) != bool.Parse(value2));
+                        }
+                        else
+                        {
+                            ifResult = (value1 != value2);
+                        }
                         break;
 
                     case "is greater than":
@@ -199,8 +214,6 @@ namespace taskt.Core.Automation.Commands
 
                 value1 = value1.ConvertToUserVariable(sender);
                 value2 = value2.ConvertToUserVariable(sender);
-
-
 
                 DateTime dt1, dt2;
                 dt1 = DateTime.Parse(value1);
@@ -256,8 +269,6 @@ namespace taskt.Core.Automation.Commands
                     value1 = value1.ToUpper();
                     value2 = value2.ToUpper();
                 }
-
-
 
                 switch (operand)
                 {
@@ -519,6 +530,30 @@ namespace taskt.Core.Automation.Commands
                 }
 
 
+            }
+            else if (v_IfActionType == "Boolean")
+            {
+                string value = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                      where rw.Field<string>("Parameter Name") == "Variable Name"
+                                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                string compare = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Value Is"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                bool vValue = bool.Parse(value);
+                switch (compare.ToLower())
+                {
+                    case "true":
+                        ifResult = vValue;
+                        break;
+                    case "false":
+                        ifResult = !vValue;
+                        break;
+                    default:
+                        throw new Exception("Value Is " + compare + " is not support.");
+                        break;
+                }
             }
             else
             {
@@ -830,6 +865,23 @@ namespace taskt.Core.Automation.Commands
 
                     break;
 
+                case "Boolean":
+                    ifActionParameterBox.Visible = true;
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Variable Name", "");
+                        actionParameters.Rows.Add("Value Is", "True");
+                        ifActionParameterBox.DataSource = actionParameters;
+                    }
+                    //assign cell as a combobox
+                    var booleanParam = new DataGridViewComboBoxCell();
+                    booleanParam.Items.Add("True");
+                    booleanParam.Items.Add("False");
+                    ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
+
+                    RecorderControl.Show();
+                    break;
+
                 default:
                     break;
             }
@@ -887,7 +939,7 @@ namespace taskt.Core.Automation.Commands
                                       where rw.Field<string>("Parameter Name") == "Value2"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If (" + value1 + " " + operand + " " + value2 + ")";
+                    return "If ([" + v_IfActionType + "] " + value1 + " " + operand + " " + value2 + ")";
 
                 case "Variable Has Value":
                     string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
@@ -980,7 +1032,16 @@ namespace taskt.Core.Automation.Commands
 
                     return "If GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
 
+                case "Boolean":
+                    string booleanVariable = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                             where rw.Field<string>("Parameter Name") == "Variable Name"
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
+                    string compareTo = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                                         where rw.Field<string>("Parameter Name") == "Value Is"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    return "If [Boolean] " + booleanVariable + " is " + compareTo;
+                    
                 default:
 
                     return "If .... ";
@@ -1082,6 +1143,10 @@ namespace taskt.Core.Automation.Commands
 
                     case "Error Did Not Occur":
                         ErrorValidate();
+                        break;
+
+                    case "Boolean":
+                        BooleanValidate();
                         break;
 
                     default:
@@ -1236,6 +1301,19 @@ namespace taskt.Core.Automation.Commands
                         this.IsValid = false;
                     }
                 }
+            }
+        }
+
+        private void BooleanValidate()
+        {
+            string variable = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Variable Name"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(variable))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
             }
         }
     }
