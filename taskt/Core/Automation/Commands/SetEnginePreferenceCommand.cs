@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using System.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -19,9 +20,28 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Enable Automatic Calculations")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Disable Automatic Calculations")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start Variable Marker")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End Variable Marker")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Delay")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Current Window Keyword")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_PreferenceType { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify Parameter Value")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_ParameterValue { get; set; }
+
+        [XmlIgnore]
+        [NonSerialized]
+        private ComboBox PreferenceTypeCombobox;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<Control> ElementParameterControls;
 
         public SetEnginePreferenceCommand()
         {
@@ -37,6 +57,8 @@ namespace taskt.Core.Automation.Commands
 
             var preference = v_PreferenceType.ConvertToUserVariable(sender);
 
+            var parameterValue = v_ParameterValue.ConvertToUserVariable(sender);
+
             switch (preference)
             {
                 case "Enable Automatic Calculations":
@@ -45,6 +67,20 @@ namespace taskt.Core.Automation.Commands
                 case "Disable Automatic Calculations":
                     engine.AutoCalculateVariables = false;
                     break;
+
+                case "Start Variable Marker":
+                    engine.engineSettings.VariableStartMarker = parameterValue;
+                    break;
+                case "End Variable Marker":
+                    engine.engineSettings.VariableEndMarker = parameterValue;
+                    break;
+                case "Engine Delay":
+                    engine.engineSettings.DelayBetweenCommands = int.Parse(parameterValue);
+                    break;
+                case "Current Window Keyword":
+                    engine.engineSettings.CurrentWindowKeyword = parameterValue;
+                    break;
+
                 default:
                     throw new NotImplementedException($"The preference '{preference}' is not implemented.");
             }
@@ -55,13 +91,59 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_PreferenceType", this, editor));
+            var preference = CommandControls.CreateDefaultDropdownGroupFor("v_PreferenceType", this, editor);
+            RenderedControls.AddRange(preference);
+
+            PreferenceTypeCombobox = (ComboBox)preference.Where(t => t is ComboBox).FirstOrDefault();
+            PreferenceTypeCombobox.SelectedValueChanged += (sender, e) => PreferenceCombobox_SelectedChanged(sender, e);
+
+            ElementParameterControls = CommandControls.CreateDefaultInputGroupFor("v_ParameterValue", this, editor);
+            RenderedControls.AddRange(this.ElementParameterControls);
 
             return RenderedControls;
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [{v_PreferenceType}]";
+            switch (this.v_PreferenceType)
+            {
+                case "Enable Automatic Calculations":
+                case "Disable Automatic Calculations":
+                    return base.GetDisplayValue() + $" [{v_PreferenceType}]";
+                    break;
+
+                case "Start Variable Marker":
+                case "End Variable Marker":
+                case "Engine Delay":
+                case "Current Window Keyword":
+                    return base.GetDisplayValue() + " [" + v_PreferenceType +" set '" + (String.IsNullOrEmpty(v_ParameterValue) ? "" : v_ParameterValue) + "']";
+                    break;
+
+                default:
+                    return base.GetDisplayValue() + $" [{v_PreferenceType}]";
+                    break;
+            }
+            
+        }
+
+        private void PreferenceCombobox_SelectedChanged(object sender, System.EventArgs e)
+        {
+            switch (PreferenceTypeCombobox.Text)
+            {
+                case "Enable Automatic Calculations":
+                case "Disable Automatic Calculations":
+                    foreach(var ctl in ElementParameterControls)
+                    {
+                        ctl.Visible = false;
+                    }
+                    break;
+
+                default:
+                    foreach (var ctl in ElementParameterControls)
+                    {
+                        ctl.Visible = true;
+                    }
+                    break;
+            }
         }
 
         public override bool IsValidate(frmCommandEditor editor)
