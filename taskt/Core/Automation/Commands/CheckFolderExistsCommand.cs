@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Folder Operation Commands")]
-    [Attributes.ClassAttributes.Description("This command returns existance of folder paths from a specified location")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to return a existance of file paths from a specific location.")]
+    [Attributes.ClassAttributes.Description("This command returns existence of folder paths from a specified location")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to return a existence of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class CheckFolderExistsCommand : ScriptCommand
     {
