@@ -431,6 +431,7 @@ namespace taskt.UI
             {"HTTPQueryResultCommand", "taskt.Properties.Resources.command_search"},
 
             // Data
+            {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
             {"DateCalculationCommand", "taskt.Properties.Resources.command_function"},
             {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
             {"GetListCountCommand", "taskt.Properties.Resources.command_function"},

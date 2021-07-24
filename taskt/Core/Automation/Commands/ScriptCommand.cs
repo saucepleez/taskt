@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(HTTPQueryResultCommand))]
 
     // Data
+    [XmlInclude(typeof(ConvertListToJSONCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
     [XmlInclude(typeof(GetListCountCommand))]
