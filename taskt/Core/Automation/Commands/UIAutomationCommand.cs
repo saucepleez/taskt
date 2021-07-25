@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Check If Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text Value From Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Check State From Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Table Element")]
         [Attributes.PropertyAttributes.SampleUsage("**Click Element** or **Get Value From Element** or **Check If Element Exists** or **Get Text Value From Element** or **Get Check State From Element**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_AutomationType { get; set; }
@@ -378,6 +379,39 @@ namespace taskt.Core.Automation.Commands
                 }
                 (checkState ? "TRUE" : "FALSE").StoreInUserVariable(sender, applyToVariable);
             }
+            else if (v_AutomationType == "Get Value From Table Element")
+            {
+                // row, column
+                var vTarget = (from rw in v_UIAActionParameters.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Target"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                var vRow = (from rw in v_UIAActionParameters.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Row"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                var vColumn = (from rw in v_UIAActionParameters.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Column"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                int row, col;
+                
+
+                object dgvPattern;
+                if (requiredHandle.TryGetCurrentPattern(TablePattern.Pattern, out dgvPattern))
+                {
+                    row = int.Parse(vRow);
+                    col = int.Parse(vColumn);
+                    var cell = ((TablePattern)dgvPattern).GetItem(row, col);
+                    cell.Current.Name.StoreInUserVariable(sender, applyToVariable);
+                }
+                else
+                {
+                    throw new Exception("This table is not supported.");
+                }
+                
+            }
             else
             {
                 throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
@@ -634,6 +668,15 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
 
+                case "Get Value From Table Element":
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Row", "");
+                        actionParameters.Rows.Add("Column", "");
+                        actionParameters.Rows.Add("Apply To Variable", "");
+                    }
+                    break;
+
                 default:
                     var parameterName = new DataGridViewComboBoxCell();
                     parameterName.Items.Add("AcceleratorKey");
@@ -796,6 +839,10 @@ namespace taskt.Core.Automation.Commands
                         CheckIfElementExistsValidate();
                         break;
 
+                    case "Get Value From Table Element":
+                        GetValueFromTableElement();
+                        break;
+
                     default:
                         break;
                 }
@@ -861,6 +908,35 @@ namespace taskt.Core.Automation.Commands
             var variable = (from rw in v_UIAActionParameters.AsEnumerable()
                             where rw.Field<string>("Parameter Name") == "Apply To Variable"
                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            if (String.IsNullOrEmpty(variable))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void GetValueFromTableElement()
+        {
+            var row = (from rw in v_UIAActionParameters.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Row"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            var column = (from rw in v_UIAActionParameters.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Column"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            var variable = (from rw in v_UIAActionParameters.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+            if (String.IsNullOrEmpty(row))
+            {
+                this.validationResult += "Row is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(column))
+            {
+                this.validationResult += "Column is empty.\n";
+                this.IsValid = false;
+            }
             if (String.IsNullOrEmpty(variable))
             {
                 this.validationResult += "Variable is empty.\n";
