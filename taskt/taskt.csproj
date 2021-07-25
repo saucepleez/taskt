@@ -184,6 +184,9 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\WordCheckWordInstanceExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelCheckExcelInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\GetWindowNamesCommand.cs" />
     <Compile Include="Core\Automation\Commands\CheckWindowNameExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />

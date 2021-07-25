@@ -77,6 +77,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelAddWorkbookCommand))]
     [XmlInclude(typeof(ExcelAppendCellCommand))]
     [XmlInclude(typeof(ExcelAppendRowCommand))]
+    [XmlInclude(typeof(ExcelCheckExcelInstanceExistsCommand))]
     [XmlInclude(typeof(ExcelCloseApplicationCommand))]
     [XmlInclude(typeof(ExcelCreateDataSetCommand))]
     [XmlInclude(typeof(ExcelCreateApplicationCommand))]
@@ -210,6 +211,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SetVariableIndexCommand))]
 
     // Web
+    [XmlInclude(typeof(SeleniumBrowserCheckBrowserInstanceExistsCommand))]
     [XmlInclude(typeof(SeleniumBrowserCloseCommand))]
     [XmlInclude(typeof(SeleniumBrowserCreateCommand))]
     [XmlInclude(typeof(SeleniumBrowserElementActionCommand))]
@@ -238,6 +240,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WordAppendDataTableCommand))]
     [XmlInclude(typeof(WordAppendImageCommand))]
     [XmlInclude(typeof(WordAppendTextCommand))]
+    [XmlInclude(typeof(WordCheckWordInstanceExistsCommand))]
     [XmlInclude(typeof(WordCloseApplicationCommand))]
     [XmlInclude(typeof(WordCreateApplicationCommand))]
     [XmlInclude(typeof(WordExportToPDFCommand))]

@@ -497,6 +497,7 @@ namespace taskt.UI
             {"ExcelAddWorkbookCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelAppendCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelAppendRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelCheckExcelInstanceExistsCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCloseApplicationCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCreateDatasetCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCreateApplicationCommand", "taskt.Properties.Resources.command_spreadsheet"},
@@ -630,6 +631,7 @@ namespace taskt.UI
             {"SetVariableIndexCommand", "taskt.Properties.Resources.command_function"},
 
             // Web
+            {"SeleniumBrowserCheckBrowserInstanceExistsCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserCloseCommand", "taskt.Properties.Resources.command_window_close"},
             {"SeleniumBrowserCreateCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserElementActionCommand", "taskt.Properties.Resources.command_web"},
@@ -658,6 +660,7 @@ namespace taskt.UI
             {"WordAppendDataTableCommand", "taskt.Properties.Resources.command_files"},
             {"WordAppendImageCommand", "taskt.Properties.Resources.command_files"},
             {"WordAppendTextCommand", "taskt.Properties.Resources.command_files"},
+            {"WordCheckWordInstanceExistsCommand", "taskt.Properties.Resources.command_files"},
             {"WordCloseApplicationCommand", "taskt.Properties.Resources.command_files"},
             {"WordCreateApplicationCommand", "taskt.Properties.Resources.command_files"},
             {"WordExportToPDFCommand", "taskt.Properties.Resources.command_files"},
