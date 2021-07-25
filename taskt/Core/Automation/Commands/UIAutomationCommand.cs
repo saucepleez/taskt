@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Check If Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text Value From Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Check State From Element")]
-        [Attributes.PropertyAttributes.SampleUsage("**Click Element** or **Get Value From Element** or **Check If Element Exists**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Click Element** or **Get Value From Element** or **Check If Element Exists** or **Get Text Value From Element** or **Get Check State From Element**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_AutomationType { get; set; }
 
@@ -330,7 +330,53 @@ namespace taskt.Core.Automation.Commands
             }
             else if (v_AutomationType == "Get Text Value From Element")
             {
-                MessageBox.Show(((ValuePattern)requiredHandle.GetCurrentPattern(ValuePattern.Pattern)).Current.Value);
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                object patternObj;
+                if (requiredHandle.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
+                {
+                    // TextBox
+                    ((ValuePattern)patternObj).Current.Value.StoreInUserVariable(sender, applyToVariable);
+                }
+                else if (requiredHandle.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
+                {
+                    // TextBox Multilune
+                    TextPattern tPtn = (TextPattern)patternObj;
+                    tPtn.DocumentRange.GetText(-1).StoreInUserVariable(sender, applyToVariable);
+                }
+                else if (requiredHandle.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
+                {
+                    ((SelectionPattern)patternObj).Current.GetSelection()[0].GetCurrentPropertyValue(AutomationElement.NameProperty).ToString().StoreInUserVariable(sender, applyToVariable);
+                }
+                else
+                {
+                    requiredHandle.Current.Name.StoreInUserVariable(sender, applyToVariable);
+                }
+            }
+            else if (v_AutomationType == "Get Check State From Element")
+            {
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                object patternObj;
+                bool checkState;
+                if (requiredHandle.TryGetCurrentPattern(TogglePattern.Pattern, out patternObj))
+                {
+                    checkState = (((TogglePattern)patternObj).Current.ToggleState == ToggleState.On);
+                }
+                else if (requiredHandle.TryGetCurrentPattern(SelectionItemPattern.Pattern, out patternObj))
+                {
+                    checkState = ((SelectionItemPattern)patternObj).Current.IsSelected;
+                }
+                else
+                {
+                    throw new Exception("Thie element is not CheckBox or RadioButton.");
+                }
+                (checkState ? "TRUE" : "FALSE").StoreInUserVariable(sender, applyToVariable);
             }
             else
             {
@@ -573,6 +619,21 @@ namespace taskt.Core.Automation.Commands
                         actionParameters.Rows.Add("Apply To Variable", "");
                     }
                     break;
+
+                case "Get Text Value From Element":
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Apply To Variable", "");
+                    }
+                    break;
+
+                case "Get Check State From Element":
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Apply To Variable", "");
+                    }
+                    break;
+
                 default:
                     var parameterName = new DataGridViewComboBoxCell();
                     parameterName.Items.Add("AcceleratorKey");
@@ -671,6 +732,24 @@ namespace taskt.Core.Automation.Commands
 
                 return base.GetDisplayValue() + " [Check for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
             }
+            else if (v_AutomationType == "Get Text Value From Element")
+            {
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                return base.GetDisplayValue() + " [Text Value for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+            }
+            else if (v_AutomationType == "Get Check State From Element")
+            {
+                //apply to variable
+                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
+                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                return base.GetDisplayValue() + " [Check State for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+            }
             else
             {
                 //get value from property
@@ -712,6 +791,8 @@ namespace taskt.Core.Automation.Commands
                         GetValueFromElementValidate();
                         break;
                     case "Check If Element Exists":
+                    case "Get Text Value From Element":
+                    case "Get Check State From Element":
                         CheckIfElementExistsValidate();
                         break;
 
