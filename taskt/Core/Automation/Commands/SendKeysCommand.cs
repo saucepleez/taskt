@@ -23,6 +23,18 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window name search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send. (ex. Hello, ^s, {{{vText}}}, {WIN_KEY}, {WIN_KEY+R})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -56,11 +68,17 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             string targetWindowName = v_WindowName.ConvertToUserVariable(sender);
+            var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
+            {
+                searchMethod = "Contains";
+            }
             if (targetWindowName != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = targetWindowName
+                    v_WindowName = targetWindowName,
+                    v_SearchMethod = searchMethod
                 };
                 activateWindow.RunCommand(sender);
             }
@@ -118,6 +136,8 @@ namespace taskt.Core.Automation.Commands
             var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             //taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
             taskt.UI.CustomControls.CommandItemControl encryptLink = CommandControls.CreateUIHelper();

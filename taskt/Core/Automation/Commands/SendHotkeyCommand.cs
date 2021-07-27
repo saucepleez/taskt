@@ -25,6 +25,17 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window name search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select Hotkey to Send.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text that should be sent to the specified window.")]
@@ -44,11 +55,17 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var targetWindow = v_WindowName.ConvertToUserVariable(sender);
+            var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
+            {
+                searchMethod = "Contains";
+            }
             if (targetWindow != ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = targetWindow
+                    v_WindowName = targetWindow,
+                    v_SearchMethod = searchMethod
                 };
                 activateWindow.RunCommand(sender);
             }
@@ -127,6 +144,8 @@ namespace taskt.Core.Automation.Commands
             var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             var controls = CommandControls.CreateDefaultDropdownGroupFor("v_Hotkey", this, editor);
             var hotkey = controls[2] as ComboBox;

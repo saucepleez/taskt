@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Check If Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text Value From Element")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Check State From Element")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Selected State From Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Table Element")]
         [Attributes.PropertyAttributes.SampleUsage("**Click Element** or **Get Value From Element** or **Check If Element Exists** or **Get Text Value From Element** or **Get Check State From Element**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -38,6 +38,17 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window name search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
 
         [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -223,6 +234,23 @@ namespace taskt.Core.Automation.Commands
             {
                 variableWindowName = User32Functions.GetActiveWindowTitle();
             }
+            else
+            {
+                // search and activate window
+                var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+                if (String.IsNullOrEmpty(searchMethod))
+                {
+                    searchMethod = "Contains";
+                }
+                ActivateWindowCommand activateWindow = new ActivateWindowCommand
+                {
+                    v_WindowName = variableWindowName,
+                    v_SearchMethod = searchMethod
+                };
+                activateWindow.RunCommand(sender);
+                System.Threading.Thread.Sleep(500); // wait a bit
+                variableWindowName = User32Functions.GetActiveWindowTitle();
+            }
 
             var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
 
@@ -357,7 +385,7 @@ namespace taskt.Core.Automation.Commands
                     requiredHandle.Current.Name.StoreInUserVariable(sender, applyToVariable);
                 }
             }
-            else if (v_AutomationType == "Get Check State From Element")
+            else if (v_AutomationType == "Get Selected State From Element")
             {
                 //apply to variable
                 var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
@@ -499,6 +527,8 @@ namespace taskt.Core.Automation.Commands
             WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             var emptyParameterLink = CommandControls.CreateUIHelper();
             emptyParameterLink.CommandDisplay = "Add empty parameters";
@@ -661,7 +691,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
 
-                case "Get Check State From Element":
+                case "Get Selected State From Element":
                     if (sender != null)
                     {
                         actionParameters.Rows.Add("Apply To Variable", "");
@@ -784,14 +814,14 @@ namespace taskt.Core.Automation.Commands
 
                 return base.GetDisplayValue() + " [Text Value for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
             }
-            else if (v_AutomationType == "Get Check State From Element")
+            else if (v_AutomationType == "Get Selected State From Element")
             {
                 //apply to variable
                 var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
                                        where rw.Field<string>("Parameter Name") == "Apply To Variable"
                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                return base.GetDisplayValue() + " [Check State for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+                return base.GetDisplayValue() + " [Selected State for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
             }
             else
             {
@@ -835,7 +865,7 @@ namespace taskt.Core.Automation.Commands
                         break;
                     case "Check If Element Exists":
                     case "Get Text Value From Element":
-                    case "Get Check State From Element":
+                    case "Get Selected State From Element":
                         CheckIfElementExistsValidate();
                         break;
 
