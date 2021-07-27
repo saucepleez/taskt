@@ -184,6 +184,10 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelDeleteWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelRenameWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelSetCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\WordCheckWordInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelCheckExcelInstanceExistsCommand.cs" />
