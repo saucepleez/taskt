@@ -17,6 +17,65 @@ namespace taskt.UI.CustomControls
     {
         public static UI.Forms.frmCommandEditor CurrentEditor { get; set; }
 
+        public static List<Control> CreateDefaultInferenceControlGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        {
+            var controlList = new List<Control>();
+
+            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
+
+            Control input;
+            
+            var rct = (Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl));
+            if (rct != null)
+            {
+                switch (rct.recommendedControl)
+                {
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
+                        input = CreateDefaultInputFor(parameterName, parent);
+                        break;
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
+                        input = CreateDropdownFor(parameterName, parent, variableProperties);
+                        var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
+                        if ((varList != null) && varList.isVariablesList)
+                        {
+                            ((ComboBox)input).AddVariableNames(editor);
+                        }
+                        else
+                        {
+                            var winList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList));
+                            if ((winList != null) && (winList.isWindowNamesList))
+                            {
+                                ((ComboBox)input).AddWindowNames(editor);
+                            }
+                        }
+                        break;
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
+                        input = CreateDropdownFor(parameterName, parent);
+                        break;
+                    default:
+                        input = CreateDefaultInputFor(parameterName, parent);
+                        break;
+                }
+            }
+            else
+            {
+                input = CreateDefaultInputFor(parameterName, parent);
+            }
+
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
+
+            controlList.Add(label);
+            controlList.AddRange(helpers);
+            if (additionalLinks != null)
+            {
+                controlList.AddRange(additionalLinks);
+            }
+            controlList.Add(input);
+
+            return controlList;
+        }
+
         public static List<Control> CreateDefaultInputGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
             //Todo: Test
@@ -74,9 +133,17 @@ namespace taskt.UI.CustomControls
 
             return controlList;
         }
-        public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
+        public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
         {
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            PropertyInfo variableProperties;
+            if (pInfo == null)
+            {
+                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            }
+            else
+            {
+                variableProperties = pInfo;
+            }
 
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription), true);
 
@@ -128,7 +195,7 @@ namespace taskt.UI.CustomControls
             return inputBox;
 
         }
-        public static Control CreateDropdownFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
+        public static Control CreateDropdownFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
         {
             var inputBox = new ComboBox();
             //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
@@ -141,7 +208,16 @@ namespace taskt.UI.CustomControls
             inputBox.Width = 300;
             inputBox.Name = parameterName;
 
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            PropertyInfo variableProperties;
+            if (pInfo == null)
+            {
+                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            }
+            else
+            {
+                variableProperties = pInfo;
+            }
+
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption), true);
 
             foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption option in propertyAttributesAssigned)
@@ -187,9 +263,18 @@ namespace taskt.UI.CustomControls
             return helperControl;
         }
 
-        public static List<Control> CreateUIHelpersFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, UI.Forms.frmCommandEditor editor)
+        public static List<Control> CreateUIHelpersFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, UI.Forms.frmCommandEditor editor, PropertyInfo pInfo = null)
         {
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            PropertyInfo variableProperties;
+            if (pInfo == null)
+            {
+                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            }
+            else
+            {
+                variableProperties = pInfo;
+            }
+            
             var propertyUIHelpers = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper), true);
             var controlList = new List<Control>();
 

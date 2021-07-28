@@ -55,6 +55,15 @@ namespace taskt.Core.Automation.Attributes.ClassAttributes
             this.usesDescription = desc;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class SubGruop : System.Attribute
+    {
+        public string subGruopName = "";
+        public SubGruop(string group)
+        {
+            this.subGruopName = group;
+        }
+    }
 }
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
@@ -136,6 +145,53 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public PropertySelectionChangeEvent(string description)
         {
             this.uiOption = description;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyIsOptional : System.Attribute
+    {
+        public bool isOptional = false;
+        public PropertyIsOptional(bool opt)
+        {
+            this.isOptional = opt;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyIsWindowNamesList : System.Attribute
+    {
+        public bool isWindowNamesList = false;
+        public PropertyIsWindowNamesList(bool opt)
+        {
+            this.isWindowNamesList = opt;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyIsVariablesList : System.Attribute
+    {
+        public bool isVariablesList = false;
+        public PropertyIsVariablesList(bool opt)
+        {
+            this.isVariablesList = opt;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyRecommendedUIControl : System.Attribute
+    {
+        public RecommendeUIControlType recommendedControl = RecommendeUIControlType.TextBox;
+        public PropertyRecommendedUIControl(RecommendeUIControlType ctl)
+        {
+            this.recommendedControl = ctl;
+        }
+        public enum RecommendeUIControlType
+        {
+            TextBox,
+            ComboBox,
+            DataGridView,
+            MultiLineTextBox,
+            CheckBox,
+            RadioButton,
+            TextLink,
+            Label
         }
     }
 }
