@@ -160,9 +160,30 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyIsWindowNamesList : System.Attribute
     {
         public bool isWindowNamesList = false;
-        public PropertyIsWindowNamesList(bool opt)
+        public bool allowCurrentWindow = true;
+        public bool allowAllWindows = false;
+        public bool allowDesktop = false;
+        public PropertyIsWindowNamesList(bool isWindowNameList)
         {
-            this.isWindowNamesList = opt;
+            this.isWindowNamesList = isWindowNameList;
+        }
+        public PropertyIsWindowNamesList(bool isWindowNameList, bool allowCurrent)
+        {
+            this.isWindowNamesList = isWindowNameList;
+            this.allowCurrentWindow = allowCurrent;
+        }
+        public PropertyIsWindowNamesList(bool isWindowNameList, bool allowCurrent, bool allowAll)
+        {
+            this.isWindowNamesList = isWindowNameList;
+            this.allowCurrentWindow = allowCurrent;
+            this.allowAllWindows = allowAll;
+        }
+        public PropertyIsWindowNamesList(bool isWindowNameList, bool allowCurrent, bool allowAll, bool allowDesktop)
+        {
+            this.isWindowNamesList = isWindowNameList;
+            this.allowCurrentWindow = allowCurrent;
+            this.allowAllWindows = allowAll;
+            this.allowDesktop = allowDesktop;
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]
@@ -192,6 +213,15 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             RadioButton,
             TextLink,
             Label
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyShowSampleUsageInDescription : System.Attribute
+    {
+        public bool showSampleUsage = false;
+        public PropertyShowSampleUsageInDescription(bool opt)
+        {
+            this.showSampleUsage = opt;
         }
     }
 }
