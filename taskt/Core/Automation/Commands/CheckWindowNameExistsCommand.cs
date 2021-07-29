@@ -15,13 +15,14 @@ namespace taskt.Core.Automation.Commands
     public class CheckWindowNameExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to check existence. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to check existence.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to check existence.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
@@ -129,8 +130,14 @@ namespace taskt.Core.Automation.Commands
             //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
             //RenderedControls.Add(VariableNameControl);
 
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultInferenceControlGroupFor("v_WindowName", this, editor));
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultInferenceControlGroupFor("v_UserVariableName", this, editor));
+            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateInferenceDefaultControlGroupFor("v_WindowName", this, editor));
+            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateInferenceDefaultControlGroupFor("v_UserVariableName", this, editor));
+
+            RenderedControls.AddRange(
+                UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(
+                        new List<string>() { "v_WindowName", "v_UserVariableName" }, this, editor
+                )
+            );
 
             return RenderedControls;
 
