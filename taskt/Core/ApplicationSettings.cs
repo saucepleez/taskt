@@ -163,6 +163,7 @@ namespace taskt.Core
         public bool InsertElseAutomatically { get; set; }
         public bool InsertCommentIfLoopAbove { get; set; }
         public bool DontShowValidationMessage { get; set; }
+        public bool ShowSampleUsageInDescription { get; set; }
         public string DefaultBrowserInstanceName { get; set; }
         public string DefaultStopWatchInstanceName { get; set; }
         public string DefaultExcelInstanceName { get; set; }
@@ -183,6 +184,7 @@ namespace taskt.Core
             InsertElseAutomatically = false;
             InsertCommentIfLoopAbove = false;
             DontShowValidationMessage = false;
+            ShowSampleUsageInDescription = true;
             DefaultBrowserInstanceName = "RPABrowser";
             DefaultStopWatchInstanceName = "RPAStopwatch";
             DefaultExcelInstanceName = "RPAExcel";
