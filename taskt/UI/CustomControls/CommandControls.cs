@@ -17,7 +17,19 @@ namespace taskt.UI.CustomControls
     {
         public static UI.Forms.frmCommandEditor CurrentEditor { get; set; }
 
-        public static List<Control> CreateDefaultInferenceControlGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(List<string> parameterNames, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        {
+            var controlList = new List<Control>();
+
+            foreach(var parameterName in parameterNames)
+            {
+                controlList.AddRange(CreateInferenceDefaultControlGroupFor(parameterName, parent, editor));
+            }
+
+            return controlList;
+        }
+
+        public static List<Control> CreateInferenceDefaultControlGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
             var controlList = new List<Control>();
 
@@ -153,10 +165,33 @@ namespace taskt.UI.CustomControls
             Label inputLabel = new Label();
             if (propertyAttributesAssigned.Length > 0)
             {
-                var attribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
-                inputLabel.Text = attribute.propertyDescription.
-                    Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker)
-                    .Replace("%kwd_current_window%", settings.CurrentWindowKeyword);
+                var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
+                var labelText = desc.propertyDescription.replaceEngineKeyword();
+
+                if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+                {
+                    var showSample = (Core.Automation.Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription));
+                    if (showSample != null && showSample.showSampleUsage)
+                    {
+                        if (!labelText.Contains("(ex."))
+                        {
+                            var sampleAttr = (Core.Automation.Attributes.PropertyAttributes.SampleUsage)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage));
+                            var sampleText = (sampleAttr == null) ? "" : sampleAttr.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
+                            labelText += " (ex. " + sampleText + ")";
+                        }
+                    }
+                }
+
+                var attrIsOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
+                if (attrIsOpt != null && attrIsOpt.isOptional)
+                {
+                    if (!labelText.Contains("Optional"))
+                    {
+                        labelText = "Optional - " + labelText;
+                    }
+                }
+
+                inputLabel.Text = labelText;
             }
             else
             {
@@ -990,6 +1025,48 @@ namespace taskt.UI.CustomControls
             }
 
             return cbo;
+        }
+
+        private static string replaceEngineKeyword(this string targetString)
+        {
+            var settings = CurrentEditor.appSettings.EngineSettings;
+            return targetString.Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker)
+                    .Replace("%kwd_current_window%", settings.CurrentWindowKeyword);
+        }
+
+        private static string getTextMDFormat(this string targetString)
+        {
+            int idxAster, idxTable;
+            string ret = "";
+            while(targetString.Length > 0)
+            {
+                idxAster = targetString.IndexOf("\\*");
+                idxTable = targetString.IndexOf("\\|");
+                if (idxAster >= 0 || idxTable >= 0)
+                {
+                    if (idxAster < idxTable)
+                    {
+                        ret += targetString.Substring(0, idxAster).removeMDFormat() + "*";
+                        targetString = targetString.Substring(idxAster + 1);
+                    }
+                    else
+                    {
+                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "*";
+                        targetString = targetString.Substring(idxTable + 1);
+                    }
+                }
+                else
+                {
+                    ret += targetString.removeMDFormat();
+                    targetString = "";
+                }
+            }
+            return ret;
+        }
+
+        private static string removeMDFormat(this string targetString)
+        {
+            return targetString.Replace("*", "").Replace("**", "").Replace("|", "");
         }
 
     }
