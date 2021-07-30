@@ -943,7 +943,9 @@ namespace taskt.UI.CustomControls
                     var attributeFound = (Core.Automation.Attributes.ClassAttributes.Group)groupingAttribute[0];
                     groupAttribute = attributeFound.groupName;
                 }
-
+                var subGroupAttr = (Core.Automation.Attributes.ClassAttributes.SubGruop)commandClass.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.SubGruop));
+                string subGroupName = (subGroupAttr != null) ? subGroupAttr.subGruopName : "";
+                    
                 //Instantiate Class
                 Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
 
@@ -954,6 +956,7 @@ namespace taskt.UI.CustomControls
                     newAutomationCommand.CommandClass = commandClass;
                     newAutomationCommand.Command = newCommand;
                     newAutomationCommand.DisplayGroup = groupAttribute;
+                    newAutomationCommand.DisplaySubGroup = subGroupName;
                     newAutomationCommand.FullName = string.Join(" - ", groupAttribute, newCommand.SelectionName);
                     newAutomationCommand.ShortName = newCommand.SelectionName;
 
@@ -1079,6 +1082,7 @@ public class AutomationCommand
         public string FullName { get; set; }
         public string ShortName { get; set; }
         public string DisplayGroup { get; set; }
+        public string DisplaySubGroup { get; set; }
         public Core.Automation.Commands.ScriptCommand Command { get; set; }
         public List<Control> UIControls { get; set; }
         public void RenderUIComponents(taskt.UI.Forms.frmCommandEditor editorForm)
