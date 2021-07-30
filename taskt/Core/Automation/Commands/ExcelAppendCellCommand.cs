@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.SubGruop("Cell")]
     [Attributes.ClassAttributes.Description("Append input to last row of sheet into the first cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.SubGruop("File/Book")]
     [Attributes.ClassAttributes.Description("This command allows you to save an Excel workbook.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a workbook to a file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]

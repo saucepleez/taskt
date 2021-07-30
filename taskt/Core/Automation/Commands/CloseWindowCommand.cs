@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
+    [Attributes.ClassAttributes.SubGruop("Window Action")]
     [Attributes.ClassAttributes.Description("This command closes an open window.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an existing window by name.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SendMessage' from user32.dll to achieve automation.")]

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.SubGruop("Instance")]
     [Attributes.ClassAttributes.Description("This command returns existance of Excel instance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check Excel instance.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
