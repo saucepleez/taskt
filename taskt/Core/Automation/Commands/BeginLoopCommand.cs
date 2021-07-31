@@ -34,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("GUI Element Exists")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -78,9 +79,9 @@ namespace taskt.Core.Automation.Commands
             this.v_LoopActionParameterTable.Columns.Add("Parameter Name");
             this.v_LoopActionParameterTable.Columns.Add("Parameter Value");
         }
-        private void LoopGridViewHelper_MouseEnter(object sender, EventArgs e)
+        private void LoopGridViewHelper_MouseEnter(object sender, EventArgs e, frmCommandEditor editor)
         {
-            loopAction_SelectionChangeCommitted(null, null);
+            loopAction_SelectionChangeCommitted(null, null, editor);
         }
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
@@ -135,19 +136,33 @@ namespace taskt.Core.Automation.Commands
 
                 value1 = value1.ConvertToUserVariable(sender);
                 value2 = value2.ConvertToUserVariable(sender);
-
-
+                bool tempBool;
+                bool isBoolCompare = (bool.TryParse(value1, out tempBool) && bool.TryParse(value2, out tempBool));
 
                 decimal cdecValue1, cdecValue2;
 
                 switch (operand)
                 {
                     case "is equal to":
-                        loopResult = (value1 == value2);
+                        if (isBoolCompare)
+                        {
+                            loopResult = (bool.Parse(value1) == bool.Parse(value2));
+                        }
+                        else
+                        {
+                            loopResult = (value1 == value2);
+                        }
                         break;
 
                     case "is not equal to":
-                        loopResult = (value1 != value2);
+                        if (isBoolCompare)
+                        {
+                            loopResult = (bool.Parse(value1) != bool.Parse(value2));
+                        }
+                        else
+                        {
+                            loopResult = (value1 != value2);
+                        }
                         break;
 
                     case "is greater than":
@@ -491,6 +506,11 @@ namespace taskt.Core.Automation.Commands
                                                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
 
+                if (windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+                {
+                    windowName = User32Functions.GetActiveWindowTitle();
+                }
+
                 UIAutomationCommand newUIACommand = new UIAutomationCommand();
                 newUIACommand.v_WindowName = windowName;
                 newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
@@ -506,6 +526,30 @@ namespace taskt.Core.Automation.Commands
                 }
 
 
+            }
+            else if (v_LoopActionType == "Boolean")
+            {
+                string value = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                 where rw.Field<string>("Parameter Name") == "Variable Name"
+                                 select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                string compare = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                   where rw.Field<string>("Parameter Name") == "Value Is"
+                                   select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+                bool vValue = bool.Parse(value);
+                switch (compare.ToLower())
+                {
+                    case "true":
+                        loopResult = vValue;
+                        break;
+                    case "false":
+                        loopResult = !vValue;
+                        break;
+                    default:
+                        throw new Exception("Value Is " + compare + " is not support.");
+                        break;
+                }
             }
             else
             {
@@ -528,7 +572,7 @@ namespace taskt.Core.Automation.Commands
             //LoopGridViewHelper.AllowUserToAddRows = false;
             //LoopGridViewHelper.AllowUserToDeleteRows = false;
             LoopGridViewHelper = CommandControls.CreateDataGridView(this, "v_LoopActionParameterTable", false, false);
-            LoopGridViewHelper.MouseEnter += LoopGridViewHelper_MouseEnter;
+            LoopGridViewHelper.MouseEnter += (sender, e) => LoopGridViewHelper_MouseEnter(sender, e, editor);
             LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
             LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;
 
@@ -548,7 +592,7 @@ namespace taskt.Core.Automation.Commands
             ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_LoopActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionType", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_LoopActionType", this, new Control[] { ActionDropdown }, editor));
-            ActionDropdown.SelectionChangeCommitted += loopAction_SelectionChangeCommitted;
+            ActionDropdown.SelectionChangeCommitted += (sender, e) => loopAction_SelectionChangeCommitted(sender, e, editor);
 
             RenderedControls.Add(ActionDropdown);
 
@@ -563,7 +607,7 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
-        private void loopAction_SelectionChangeCommitted(object sender, EventArgs e)
+        private void loopAction_SelectionChangeCommitted(object sender, EventArgs e, frmCommandEditor editor)
         {
             ComboBox loopAction = (ComboBox)ActionDropdown;
             DataGridView loopActionParameterBox = (DataGridView)LoopGridViewHelper;
@@ -745,7 +789,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (sender != null)
                     {
-                        actionParameters.Rows.Add("Selenium Instance Name", "default");
+                        actionParameters.Rows.Add("Selenium Instance Name", editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
                         actionParameters.Rows.Add("Element Search Method", "");
                         actionParameters.Rows.Add("Element Search Parameter", "");
                         loopActionParameterBox.DataSource = actionParameters;
@@ -771,7 +815,7 @@ namespace taskt.Core.Automation.Commands
                     loopActionParameterBox.Visible = true;
                     if (sender != null)
                     {
-                        actionParameters.Rows.Add("Window Name", "Current Window");
+                        actionParameters.Rows.Add("Window Name", editor.appSettings.EngineSettings.CurrentWindowKeyword);
                         actionParameters.Rows.Add("Element Search Method", "");
                         actionParameters.Rows.Add("Element Search Parameter", "");
                         loopActionParameterBox.DataSource = actionParameters;
@@ -806,6 +850,23 @@ namespace taskt.Core.Automation.Commands
 
                     RecorderControl.Show();
 
+                    break;
+
+                case "Boolean":
+                    loopActionParameterBox.Visible = true;
+                    if (sender != null)
+                    {
+                        actionParameters.Rows.Add("Variable Name", "");
+                        actionParameters.Rows.Add("Value Is", "True");
+                        loopActionParameterBox.DataSource = actionParameters;
+                    }
+                    //assign cell as a combobox
+                    var booleanParam = new DataGridViewComboBoxCell();
+                    booleanParam.Items.Add("True");
+                    booleanParam.Items.Add("False");
+                    loopActionParameterBox.Rows[1].Cells[1] = booleanParam;
+
+                    RecorderControl.Show();
                     break;
 
                 default:
@@ -953,6 +1014,15 @@ namespace taskt.Core.Automation.Commands
 
                     return "Loop While GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
 
+                case "Boolean":
+                    string booleanVariable = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                               where rw.Field<string>("Parameter Name") == "Variable Name"
+                                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+                    string compareTo = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                         where rw.Field<string>("Parameter Name") == "Value Is"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    return "If [Boolean] " + booleanVariable + " is " + compareTo;
 
                 default:
 
@@ -987,6 +1057,243 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 LoopGridViewHelper.EndEdit();
+            }
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_LoopActionType))
+            {
+                this.validationResult += "Type is empty.";
+                this.IsValid = false;
+            }
+            else
+            {
+                switch (this.v_LoopActionType)
+                {
+                    case "Value":
+                        ValueValidate();
+                        break;
+
+                    case "Date Compare":
+                        ValueValidate();
+                        break;
+
+                    case "Variable Compare":
+                        ValueValidate();
+                        break;
+
+                    case "Variable Has Value":
+                        VariableValidate();
+                        break;
+
+                    case "Variable Is Numeric":
+                        VariableValidate();
+                        break;
+
+                    case "Window Name Exists":
+                        WindowValidate();
+                        break;
+
+                    case "Active Window Name Is":
+                        WindowValidate();
+                        break;
+
+                    case "File Exists":
+                        FileValidate();
+                        break;
+
+                    case "Folder Exists":
+                        FoloderValidate();
+                        break;
+
+                    case "Web Element Exists":
+                        WebValidate();
+                        break;
+
+                    case "GUI Element Exists":
+                        GUIValidate();
+                        break;
+
+                    case "Error Occured":
+                        ErrorValidate();
+                        break;
+
+                    case "Error Did Not Occur":
+                        ErrorValidate();
+                        break;
+
+                    case "Boolean":
+                        BooleanValidate();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            return this.IsValid;
+        }
+
+        private void ValueValidate()
+        {
+            string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                               where rw.Field<string>("Parameter Name") == "Operand"
+                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(operand))
+            {
+                this.validationResult += "Operand is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void VariableValidate()
+        {
+            string v = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                         where rw.Field<string>("Parameter Name") == "Variable Name"
+                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(v))
+            {
+                this.validationResult += "Variable Name is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void WindowValidate()
+        {
+            string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                  where rw.Field<string>("Parameter Name") == "Window Name"
+                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(windowName))
+            {
+                this.validationResult += "Window Name is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void FileValidate()
+        {
+            string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                          where rw.Field<string>("Parameter Name") == "File Path"
+                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(fp))
+            {
+                this.validationResult += "File Path is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void FoloderValidate()
+        {
+            string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                          where rw.Field<string>("Parameter Name") == "Folder Path"
+                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            if (String.IsNullOrEmpty(fp))
+            {
+                this.validationResult += "Folder Path is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void WebValidate()
+        {
+            string instance = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                              where rw.Field<string>("Parameter Name") == "Element Search Method"
+                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(instance))
+            {
+                this.validationResult += "Browser Instance Name (Selenium Insntance) is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(method))
+            {
+                this.validationResult += "Search Method is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param))
+            {
+                this.validationResult += "Search Parameter is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void GUIValidate()
+        {
+            string window = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                              where rw.Field<string>("Parameter Name") == "Window Name"
+                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                              where rw.Field<string>("Parameter Name") == "Element Search Method"
+                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(window))
+            {
+                this.validationResult += "Window Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(method))
+            {
+                this.validationResult += "Search Method is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param))
+            {
+                this.validationResult += "Search Parameter is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void ErrorValidate()
+        {
+            string line = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                            where rw.Field<string>("Parameter Name") == "Line Number"
+                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(line))
+            {
+                this.validationResult += "Line Number is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int vLine;
+                if (int.TryParse(line, out vLine))
+                {
+                    if (vLine < 1)
+                    {
+                        this.validationResult += "Specify 1 or more to Line Number.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+        }
+
+        private void BooleanValidate()
+        {
+            string variable = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+                                where rw.Field<string>("Parameter Name") == "Variable Name"
+                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            if (String.IsNullOrEmpty(variable))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
             }
         }
     }

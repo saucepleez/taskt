@@ -42,6 +42,7 @@ namespace taskt.Core
             var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
             var vs = settings.VariableStartMarker;
             var ve = settings.VariableEndMarker;
+            var cw = settings.CurrentWindowKeyword;
 
             //loop each command
             foreach (var commandClass in commandClasses)
@@ -59,7 +60,7 @@ namespace taskt.Core
                 sb.AppendLine("<!--TITLE: " + commandName + " Command -->");
                 sb.AppendLine("<!-- SUBTITLE: a command in the " + groupName + " group. -->");
 
-                sb.AppendLine("[Go To Automation Commands Overview](/automation-commands)");
+                sb.AppendLine("[Go To Automation Commands Overview](/automation-commands.md)");
 
                 sb.AppendLine(Environment.NewLine);
                 sb.AppendLine("# " + commandName + " Command");
@@ -85,10 +86,16 @@ namespace taskt.Core
                 {
 
                     //pull attributes from property
-                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)).Replace("{{{", vs).Replace("}}}", ve);
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification)).Replace("{{{", vs).Replace("}}}", ve);
-                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage)).Replace("{{{", vs).Replace("}}}", ve);
-                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks)).Replace("{{{", vs).Replace("}}}", ve);
+                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription))
+                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
+                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification))
+                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw); 
+                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage))
+                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
+                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks))
+                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
+
+                    commandLabel = commandLabel.Replace("*", "\\*").Replace("|", "\\|");
 
                     //append to parameter table
                     sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
@@ -112,12 +119,6 @@ namespace taskt.Core
                 sb.AppendLine("[Open/Report an issue on GitHub](https://github.com/saucepleez/taskt/issues/new)");
                 sb.AppendLine("[Ask a question on Gitter](https://gitter.im/taskt-rpa/Lobby)");
 
-
-
-
-
-              
-
                 //create kebob destination and command file nmae
                 var kebobDestination = groupName.Replace(" ", "-").Replace("/", "-").ToLower();
                 var kebobFileName = commandName.Replace(" ", "-").Replace("/", "-").ToLower() + "-command.md";
@@ -134,7 +135,8 @@ namespace taskt.Core
                 System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
                 //add to high level
-                var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName.Replace(".md", "");
+                //var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName.Replace(".md", "");
+                var serverPath = "/" + kebobDestination + "/" + kebobFileName;
                 highLevelCommandInfo.Add(new CommandMetaData() { Group = groupName, Description = classDescription, Name = commandName, Location = serverPath });
 
             }
@@ -257,10 +259,6 @@ namespace taskt.Core
                     var processedAttribute = (Core.Automation.Attributes.ClassAttributes.UsesDescription)attributeFound;
                     return processedAttribute.usesDescription;
                 }
-    
-
-            
-
             }
 
             //string groupAttribute = "";

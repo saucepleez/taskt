@@ -40,7 +40,6 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ErrorHandlingAction", this));
             var dropdown = CommandControls.CreateDropdownFor("v_ErrorHandlingAction", this);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_ErrorHandlingAction", this, new Control[] { dropdown }, editor));
@@ -49,10 +48,23 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
-
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            this.IsValid = true;
+            this.validationResult = "";
+
+            if (String.IsNullOrEmpty(v_ErrorHandlingAction))
+            {
+                this.validationResult += "Error handling action is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

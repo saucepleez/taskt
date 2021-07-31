@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Text")]
     [Attributes.ClassAttributes.Description("This command allows you to retrieve the length of a string or variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find the length of a string or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,7 +26,6 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the length")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
@@ -69,12 +69,29 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(VariableNameControl);
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Apply Result to: '" + v_applyToVariableName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InputValue))
+            {
+                this.validationResult += "Value is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

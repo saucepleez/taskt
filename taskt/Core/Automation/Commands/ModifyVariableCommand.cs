@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Text")]
     [Attributes.ClassAttributes.Description("This command allows you to trim a string")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
@@ -24,13 +25,17 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Select the case type")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
-        [Attributes.PropertyAttributes.SampleUsage("-1 to keep remainder, 1 for 1 position after start index, etc.")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("To Upper Case")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("To Lower Case")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("To Base64 String")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("From Base64 String")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim Start")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim End")]
         public string v_ConvertType { get; set; }
 
         [XmlAttribute]
@@ -49,8 +54,6 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender)
         {
-
-
             var stringValue = v_userVariableName.ConvertToUserVariable(sender);
 
             var caseType = v_ConvertType.ConvertToUserVariable(sender);
@@ -71,6 +74,16 @@ namespace taskt.Core.Automation.Commands
                     byte[] encodedDataAsBytes = System.Convert.FromBase64String(stringValue);
                     stringValue = System.Text.ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
                     break;
+                case "Trim":
+                    stringValue = stringValue.Trim();
+                    break;
+                case "Trim Start":
+                    stringValue = stringValue.TrimStart();
+                    break;
+                case "Trim End":
+                    stringValue = stringValue.TrimEnd();
+                    break;
+
                 default:
                     throw new NotImplementedException("Conversion Type '" + caseType + "' not implemented!");
             }
@@ -98,6 +111,29 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Convert '" + v_userVariableName + "' " + v_ConvertType + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "Text to modify is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_ConvertType))
+            {
+                this.validationResult += "Case type is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

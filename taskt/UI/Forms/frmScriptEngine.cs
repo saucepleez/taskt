@@ -483,6 +483,87 @@ namespace taskt.UI.Forms
 
         }
 
+        public delegate string ShowOpenFileDialogDelegate(string filter, int index, string directory);
+        public string ShowOpenFileDialog(string filter, int index, string directory)
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowOpenFileDialogDelegate(ShowOpenFileDialog);
+                Invoke(d, new object[] { filter, index, directory });
+                return null;
+            }
+            else
+            {
+                using (var dialog = new OpenFileDialog())
+                {
+                    dialog.Filter = filter;
+                    dialog.FilterIndex = index;
+                    dialog.InitialDirectory = directory;
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        return dialog.FileName;
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+            }
+        }
+
+        public delegate string ShowSaveFileDialogDelegate(string filter, int index, string directory);
+        public string ShowSaveFileDialog(string filter, int index, string directory)
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowSaveFileDialogDelegate(ShowSaveFileDialog);
+                Invoke(d, new object[] { filter, index, directory });
+                return null;
+            }
+            else
+            {
+                using (var dialog = new SaveFileDialog())
+                {
+                    dialog.Filter = filter;
+                    dialog.FilterIndex = index;
+                    dialog.InitialDirectory = directory;
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        return dialog.FileName;
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+            }
+        }
+
+        public delegate string ShowFolderDialogDelegate();
+        public string ShowFolderDialog()
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowFolderDialogDelegate(ShowFolderDialog);
+                Invoke(d, new object[] {  });
+                return null;
+            }
+            else
+            {
+                using (var dialog = new FolderBrowserDialog())
+                {
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        return dialog.SelectedPath;
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+            }
+        }
+
         public delegate void SetLineNumber(int lineNumber);
         public void UpdateLineNumber(int lineNumber)
         {

@@ -18,12 +18,23 @@ namespace taskt.Core.Automation.Commands
     public class SendAdvancedKeyStrokesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, Current Window, {{{vWindowName}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window name search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
 
         [Attributes.PropertyAttributes.PropertyDescription("Set Keys and Parameters")]
         [Attributes.PropertyAttributes.InputSpecification("Define the parameters for the actions.")]
@@ -31,12 +42,12 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("Select Valid Options from the dropdowns")]
         public DataTable v_KeyActions { get; set; }
 
-        [XmlElement]   
+        [XmlElement]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Return all keys to 'UP' position after execution (Default is No)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Return all keys to 'UP' position after execution")]
         [Attributes.PropertyAttributes.InputSpecification("Select either 'Yes' or 'No' as to a preference")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Yes** or **No**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_KeyUpDefault { get; set; }
 
@@ -59,17 +70,23 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var targetWindow = v_WindowName.ConvertToUserVariable(sender);
+            var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
+            {
+                searchMethod = "Contains";
+            }
 
             //activate anything except current window
-            if (v_WindowName != "Current Window")
+            if (targetWindow != ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
-                    v_WindowName = v_WindowName.ConvertToUserVariable(sender)
+                    v_WindowName = targetWindow,
+                    v_SearchMethod = searchMethod
                 };
                 activateWindow.RunCommand(sender);
             }
-
 
             //track all keys down
             var keysDown = new List<System.Windows.Forms.Keys>();
@@ -146,9 +163,11 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             //KeystrokeGridHelper = new DataGridView();
             //KeystrokeGridHelper.DataBindings.Add("DataSource", this, "v_KeyActions", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -214,6 +233,33 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
             }
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_WindowName))
+            {
+                this.validationResult += "Windows name is empty.\n";
+                this.IsValid = false;
+            }
+            for (int i = 0; i < v_KeyActions.Rows.Count; i++)
+            {
+                var row = v_KeyActions.Rows[i];
+                if (String.IsNullOrEmpty(row["Key"].ToString()))
+                {
+                    this.validationResult += "Selected Key #" + (i + 1) + " is empty.\n";
+                    this.IsValid = false;
+                }
+                else if (String.IsNullOrEmpty(row["Action"].ToString()))
+                {
+                    this.validationResult += "Selected Action #" + (i + 1) + " is empty.\n";
+                    this.IsValid = false;
+                }
+            }
+
+            return this.IsValid;
         }
     }
 }

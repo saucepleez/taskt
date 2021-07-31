@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.SubGruop("Range")]
     [Attributes.ClassAttributes.Description("This command writes a datatable to an excel sheet starting from the given cell address.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -54,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InstanceName = "RPAExcel";
+            this.v_InstanceName = "";
             this.v_AddHeaders = "Yes";
         }
         public override void RunCommand(object sender)
@@ -151,8 +152,12 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AddHeaders", this, editor));
 
-            return RenderedControls;
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+            }
 
+            return RenderedControls;
         }
         public override string GetDisplayValue()
         {

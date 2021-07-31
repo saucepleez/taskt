@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(HTTPQueryResultCommand))]
 
     // Data
+    [XmlInclude(typeof(ConvertListToJSONCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
     [XmlInclude(typeof(GetListCountCommand))]
@@ -76,26 +77,32 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelAddWorkbookCommand))]
     [XmlInclude(typeof(ExcelAppendCellCommand))]
     [XmlInclude(typeof(ExcelAppendRowCommand))]
+    [XmlInclude(typeof(ExcelCheckExcelInstanceExistsCommand))]
     [XmlInclude(typeof(ExcelCloseApplicationCommand))]
     [XmlInclude(typeof(ExcelCreateDataSetCommand))]
     [XmlInclude(typeof(ExcelCreateApplicationCommand))]
     [XmlInclude(typeof(ExcelDeleteCellCommand))]
     [XmlInclude(typeof(ExcelDeleteRowCommand))]
+    [XmlInclude(typeof(ExcelDeleteWorksheetCommand))]
     [XmlInclude(typeof(ExcelGetCellCommand))]
+    [XmlInclude(typeof(ExcelGetCellRCCommand))]
     [XmlInclude(typeof(ExcelGetLastRowCommand))]
     [XmlInclude(typeof(ExcelGetRangeCommand))]
     [XmlInclude(typeof(ExcelGetRangeCommandAsDT))]
     [XmlInclude(typeof(ExcelGoToCellCommand))]
     [XmlInclude(typeof(ExcelOpenWorkbookCommand))]
+    [XmlInclude(typeof(ExcelRenameWorksheetCommand))]
     [XmlInclude(typeof(ExcelRunMacroCommand))]
     [XmlInclude(typeof(ExcelSaveCommand))]
     [XmlInclude(typeof(ExcelSaveAsCommand))]
     [XmlInclude(typeof(ExcelSetCellCommand))]
+    [XmlInclude(typeof(ExcelSetCellRCCommand))]
     [XmlInclude(typeof(ExcelSplitRangeByColumnCommand))]
     [XmlInclude(typeof(ExcelWriteRangeCommand))]
     [XmlInclude(typeof(ExcelWriteRowCommand))]
 
     // File
+    [XmlInclude(typeof(CheckFileExistsCommand))]
     [XmlInclude(typeof(DeleteFileCommand))]
     [XmlInclude(typeof(ExtractFileCommand))]
     [XmlInclude(typeof(GetFilesCommand))]
@@ -104,6 +111,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WaitForFileToExistCommand))]
 
     // Folder
+    [XmlInclude(typeof(CheckFolderExistsCommand))]
     [XmlInclude(typeof(CreateFolderCommand))]
     [XmlInclude(typeof(DeleteFolderCommand))]
     [XmlInclude(typeof(GetFoldersCommand))]
@@ -129,6 +137,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ScreenshotCommand))]
 
     // Input
+    [XmlInclude(typeof(FileDialogCommand))]
+    [XmlInclude(typeof(FolderDialogCommand))]
     [XmlInclude(typeof(HTMLInputCommand))]
     [XmlInclude(typeof(UserInputCommand))]
     [XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]
@@ -205,6 +215,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SetVariableIndexCommand))]
 
     // Web
+    [XmlInclude(typeof(SeleniumBrowserCheckBrowserInstanceExistsCommand))]
     [XmlInclude(typeof(SeleniumBrowserCloseCommand))]
     [XmlInclude(typeof(SeleniumBrowserCreateCommand))]
     [XmlInclude(typeof(SeleniumBrowserElementActionCommand))]
@@ -220,7 +231,9 @@ namespace taskt.Core.Automation.Commands
 
     // Window
     [XmlInclude(typeof(ActivateWindowCommand))]
+    [XmlInclude(typeof(CheckWindowNameExistsCommand))]
     [XmlInclude(typeof(CloseWindowCommand))]
+    [XmlInclude(typeof(GetWindowNamesCommand))]
     [XmlInclude(typeof(MoveWindowCommand))]
     [XmlInclude(typeof(ResizeWindowCommand))]
     [XmlInclude(typeof(SetWindowStateCommand))]
@@ -231,6 +244,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WordAppendDataTableCommand))]
     [XmlInclude(typeof(WordAppendImageCommand))]
     [XmlInclude(typeof(WordAppendTextCommand))]
+    [XmlInclude(typeof(WordCheckWordInstanceExistsCommand))]
     [XmlInclude(typeof(WordCloseApplicationCommand))]
     [XmlInclude(typeof(WordCreateApplicationCommand))]
     [XmlInclude(typeof(WordExportToPDFCommand))]
@@ -281,6 +295,9 @@ namespace taskt.Core.Automation.Commands
         public bool IsValid { get; protected set; }
 
         [XmlIgnore]
+        public string validationResult { get; protected set; }
+
+        [XmlIgnore]
         public bool CustomRendering { get; set; }
 
         [XmlIgnore]
@@ -296,6 +313,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = false;
             this.GenerateID();
             this.IsValid = true;
+            this.validationResult = "";
         }
 
         public void GenerateID()
@@ -352,9 +370,10 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public virtual bool IsValidate()
+        public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
             this.IsValid = true;
+            this.validationResult = "";
             return true;
         }
 

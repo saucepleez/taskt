@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandName = "IEBrowserCloseCommand";
             this.SelectionName = "Close Browser";
             this.CommandEnabled = true;
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CustomRendering = true;
         }
 
@@ -46,6 +46,11 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
 
             return RenderedControls;
         }

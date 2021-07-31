@@ -82,16 +82,60 @@ namespace taskt.Core.Automation.User32
                     if (potentialWindow != null)
                         hWnd = potentialWindow.MainWindowHandle;
                 }
-
-
                 //return hwnd
                 return hWnd;
             }
-
-         
         }
 
-        public static List<IntPtr> FindTargetWindows(string windowName)
+        public static List<IntPtr> FindWindowsGreedy(string windowName)
+        {
+            List<IntPtr> ret = new List<IntPtr>();
+            if (windowName.Contains("Windows Explorer -"))
+            {
+                var windowLocationName = windowName.Split('-')[1].Trim();
+
+                SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+                foreach (SHDocVw.InternetExplorer window in shellWindows)
+                {
+                    if (window.LocationName.Contains(windowLocationName))
+                    {
+                        ret.Add((IntPtr)window.HWND);
+                    }
+                }
+                return ret;
+            }
+            else
+            {
+                //try to find exact window name
+                IntPtr hWnd = FindWindowNative(null, windowName);
+
+                if (hWnd == IntPtr.Zero)
+                {
+                    //potentially wait for some additional initialization
+                    System.Threading.Thread.Sleep(1000);
+                    hWnd = FindWindowNative(null, windowName);
+                    if (hWnd != IntPtr.Zero)
+                    {
+                        ret.Add(hWnd);
+                    }
+                }
+                else
+                {
+                    ret.Add(hWnd);
+                }
+                //if exact window was not found, try partial match
+                var potentialWindows = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).ToList();
+                foreach (var potentialWindow in potentialWindows)
+                {
+                    ret.Add(potentialWindow.MainWindowHandle);
+                }
+                //return hwnd
+                return ret;
+            }
+        }
+
+        public static List<IntPtr> FindTargetWindows(string windowName, bool findCurrentWindow = false, bool greedy = false)
         {
             //create list of hwnds to target
             List<IntPtr> targetWindows = new List<IntPtr>();
@@ -103,11 +147,11 @@ namespace taskt.Core.Automation.User32
                     targetWindows.Add(prc.MainWindowHandle);
                 }
             }
-            else
+            else if (!greedy)
             {
                 //target current or specific window
                 IntPtr hwnd;
-                if (windowName == "Current Window")
+                if (findCurrentWindow)
                 {
                     //get active window
                     hwnd = User32Functions.GetActiveWindow();
@@ -129,11 +173,40 @@ namespace taskt.Core.Automation.User32
                     //add to list
                     targetWindows.Add(hwnd);
                 }
-
+            }
+            else
+            {
+                //target current or specific window                
+                if (findCurrentWindow)
+                {
+                    //get active window
+                    IntPtr hwnd;
+                    hwnd = User32Functions.GetActiveWindow();
+                    if (hwnd == IntPtr.Zero)
+                    {
+                        throw new Exception("Window not found");
+                    }
+                    else
+                    {
+                        targetWindows.Add(hwnd);
+                    }
+                }
+                else
+                {
+                    //find window by name
+                    var hWnds = User32Functions.FindWindowsGreedy(windowName);
+                    if (hWnds.Count == 0)
+                    {
+                        throw new Exception("Window not found");
+                    }
+                    else
+                    {
+                        targetWindows.AddRange(hWnds);
+                    }
+                }
             }
 
             return targetWindows;
-
         }
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
@@ -227,6 +300,19 @@ namespace taskt.Core.Automation.User32
             IntPtr handle = GetForegroundWindow();
 
             if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return "";
+        }
+
+        public static string GetWindowTitle(IntPtr hWnd)
+        {
+            const int nChars = 256;
+            StringBuilder Buff = new StringBuilder(nChars);
+            IntPtr handle = GetForegroundWindow();
+
+            if (GetWindowText(hWnd, Buff, nChars) > 0)
             {
                 return Buff.ToString();
             }

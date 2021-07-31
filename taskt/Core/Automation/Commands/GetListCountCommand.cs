@@ -12,16 +12,17 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("List")]
     [Attributes.ClassAttributes.Description("This command allows you to get the item count of a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the item count of a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class GetListCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name (ex. {{{vList}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name (ex. {{{vList}}}, [1,2,3])")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a existing List.")]
-        [Attributes.PropertyAttributes.SampleUsage("**{{{myData}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**{{{myData}}}** or **[1,2,3]**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ListName { get; set; }
 
@@ -38,7 +39,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get List Count";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
         }
 
         public override void RunCommand(object sender)
@@ -114,11 +114,27 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
-
-
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + $" [From '{v_ListName}', Store In: '{v_UserVariableName}']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_ListName))
+            {
+                this.validationResult += "List Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_UserVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

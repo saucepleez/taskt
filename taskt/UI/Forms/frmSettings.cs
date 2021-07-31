@@ -64,6 +64,7 @@ namespace taskt.UI.Forms
             txtCommandDelay.DataBindings.Add("Text", engineSettings, "DelayBetweenCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkOverrideInstances.DataBindings.Add("Checked", engineSettings, "OverrideExistingAppInstances", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutoCalcVariables.DataBindings.Add("Checked", engineSettings, "AutoCalcVariables", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtCurrentWindow.DataBindings.Add("Text", engineSettings, "CurrentWindowKeyword", false, DataSourceUpdateMode.OnPropertyChanged);
 
 
             cboCancellationKey.DataSource = Enum.GetValues(typeof(Keys));
@@ -85,13 +86,23 @@ namespace taskt.UI.Forms
             chkAntiIdle.DataBindings.Add("Checked", clientSettings, "AntiIdleWhileOpen", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAppFolderPath.DataBindings.Add("Text", clientSettings, "RootFolder", false, DataSourceUpdateMode.OnPropertyChanged);
             txtAttendedTaskFolder.DataBindings.Add("Text", clientSettings, "AttendedTasksFolder", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
             chkMinimizeToTray.DataBindings.Add("Checked", clientSettings, "MinimizeToTray", false, DataSourceUpdateMode.OnPropertyChanged);
             cboStartUpMode.DataBindings.Add("Text", clientSettings, "StartupMode", false, DataSourceUpdateMode.OnPropertyChanged);
             chkPreloadCommands.DataBindings.Add("Checked", clientSettings, "PreloadBuilderCommands", false, DataSourceUpdateMode.OnPropertyChanged);
             chkSlimActionBar.DataBindings.Add("Checked", clientSettings, "UseSlimActionBar", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            // Editor Tab
+            chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkInsertVariablePosition.DataBindings.Add("Checked", clientSettings, "InsertVariableAtCursor", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkInsertElse.DataBindings.Add("Checked", clientSettings, "InsertElseAutomatically", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkInsertCommentIfLoop.DataBindings.Add("Checked", clientSettings, "InsertCommentIfLoopAbove", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkGruopingBySubgruop.DataBindings.Add("Checked", clientSettings, "GroupingBySubgroup", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultWordInstanceName.DataBindings.Add("Text", clientSettings, "DefaultWordInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultDBInstanceName.DataBindings.Add("Text", clientSettings, "DefaultDBInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics
             bgwMetrics.RunWorkerAsync();

@@ -17,20 +17,20 @@ namespace taskt.Core.Automation.Commands
     {
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file (ex. C:\\temp\\myfile.txt, {{{vFilePath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.txt or {vTextFilePath}")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_FileName { get; set; }
 
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait for the file to exist")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait for the file to exist (ex. 10, {{{vWaitTime}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how long to wait before an error will occur because the file is not found.")]
-        [Attributes.PropertyAttributes.SampleUsage("**10** or **20**")]
+        [Attributes.PropertyAttributes.SampleUsage("**10** or **20** or **{{{vWaitTime}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WaitTime { get; set; }
 
@@ -93,6 +93,36 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [file: " + v_FileName + ", wait " + v_WaitTime + "s]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_FileName))
+            {
+                this.validationResult += "File is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_WaitTime))
+            {
+                this.validationResult += "Wait time is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int v;
+                if (int.TryParse(this.v_WaitTime, out v))
+                {
+                    if (v < 0)
+                    {
+                        this.validationResult += "Specify a value of 0 or more for wait time.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+
+            return this.IsValid;
         }
     }
 }

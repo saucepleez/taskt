@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a date calculation.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
@@ -53,6 +54,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify String Format")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
         [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -73,7 +75,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InputValue = "{{{DateTime.Now}}}";
+            this.v_InputValue = "";
             this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
         }
 
@@ -149,12 +151,6 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            // dynamic replace variabl marker
-            if (this.v_InputValue == "{{{DateTime.Now}}}")
-            {
-                this.v_InputValue = editor.ReplaceVariableMaker(this.v_InputValue);
-            }
-
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
@@ -169,6 +165,10 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
 
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InputValue = editor.ReplaceVariableMaker("{{{DateTime.Now}}}");
+            }
 
             return RenderedControls;
 
@@ -202,6 +202,35 @@ namespace taskt.Core.Automation.Commands
                 return base.GetDisplayValue();
             }
 
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            this.IsValid = true;
+            this.validationResult = "";
+
+            if (String.IsNullOrEmpty(this.v_InputValue))
+            {
+                this.validationResult += "Date value is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_CalculationMethod))
+            {
+                this.validationResult += "Calculation Method is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_Increment))
+            {
+                this.validationResult += "Increment value is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

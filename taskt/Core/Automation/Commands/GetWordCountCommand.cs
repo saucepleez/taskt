@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Text")]
     [Attributes.ClassAttributes.Description("This command allows you to you to retrieve the word count of a string or variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find word count of a string or variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -71,11 +72,27 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-
-
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Apply Result to: '" + v_applyToVariableName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InputValue))
+            {
+                this.validationResult += "Value is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

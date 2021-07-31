@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Text")]
     [Attributes.ClassAttributes.Description("This command allows you to trim a string")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
@@ -56,7 +57,13 @@ namespace taskt.Core.Automation.Commands
 
             int startIndex, stringLength;
             int.TryParse(v_startIndex.ConvertToUserVariable(sender), out startIndex);
-            int.TryParse(v_stringLength.ConvertToUserVariable(sender), out stringLength);
+
+            v_stringLength = v_stringLength.ConvertToUserVariable(sender);
+            if (v_stringLength == "")
+            {
+                v_stringLength = "-1";
+            }
+            int.TryParse(v_stringLength, out stringLength);
 
             //apply substring
             if (stringLength >= 0)
@@ -92,6 +99,29 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Apply Substring to '" + v_userVariableName + "', Start " + v_startIndex + ", Length " + v_stringLength + " ]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "Text is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_startIndex))
+            {
+                this.validationResult += "Start is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

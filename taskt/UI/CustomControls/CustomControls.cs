@@ -422,6 +422,265 @@ namespace taskt.UI
     {
         //private static Dictionary<string, Image> imageList = new Dictionary<string, Image>();
         private static ImageList uiImages = new ImageList();
+        private static Dictionary<string, string> imageCommandTable = new Dictionary<string, string>()
+        {
+            // API
+            {"ExecuteDLLCommand", "taskt.Properties.Resources.command_run_code"},
+            {"RESTCommand", "taskt.Properties.Resources.command_run_code"},
+            {"HTTPRequestCommand", "taskt.Properties.Resources.command_web"},
+            {"HTTPQueryResultCommand", "taskt.Properties.Resources.command_search"},
+
+            // Data
+            {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
+            {"DateCalculationCommand", "taskt.Properties.Resources.command_function"},
+            {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
+            {"GetListCountCommand", "taskt.Properties.Resources.command_function"},
+            {"GetListItemCommand", "taskt.Properties.Resources.command_function"},
+            {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
+            {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
+            {"LogDataCommand", "taskt.Properties.Resources.command_files"},
+            {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},
+            {"ModifyVariableCommand", "taskt.Properties.Resources.command_function"},
+            {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
+            {"ParseJSONArrayCommand", "taskt.Properties.Resources.command_parse"},
+            {"ParseJsonCommand", "taskt.Properties.Resources.command_parse"},
+            {"ParseJsonModelCommand", "taskt.Properties.Resources.command_parse"},
+            {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
+            {"RegExExtractorCommand", "taskt.Properties.Resources.command_function"},
+            {"StringReplaceCommand", "taskt.Properties.Resources.command_string"},
+            {"StringSplitCommand", "taskt.Properties.Resources.command_string"},
+            {"StringSubstringCommand", "taskt.Properties.Resources.command_string"},
+            {"TextExtractorCommand", "taskt.Properties.Resources.command_function"},
+
+            // Database
+            {"DatabaseDefineConnectionCommand", "taskt.Properties.Resources.command_database"},
+            {"DatabaseExecuteQueryCommand", "taskt.Properties.Resources.command_database"},
+
+            // DataTable
+            {"LoadTaskCommand", "taskt.Properties.Resources.command_start_process"},
+            {"UnloadTaskCommand", "taskt.Properties.Resources.command_stop_process"},
+            {"ExcelAddWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"AddDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"CreateDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"FilterDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"GetDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"GetDataRowCountCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"GetDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"RemoveDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"WriteDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
+
+            // Dictionary
+            {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"CreateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"GetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"LoadDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+
+            // Engine
+            {"ErrorHandlingCommand", "taskt.Properties.Resources.command_error"},
+            {"GetDataCommand", "taskt.Properties.Resources.command_server"},  // get bot data
+            {"PauseCommand", "taskt.Properties.Resources.command_pause"},
+            {"SetEngineDelayCommand", "taskt.Properties.Resources.command_pause"},
+            {"ShowEngineContextCommand", "taskt.Properties.Resources.command_window"},
+            {"SetEnginePreferenceCommand", "taskt.Properties.Resources.command_window"},
+            {"StopwatchCommand", "taskt.Properties.Resources.command_stopwatch"},
+            {"UploadDataCommand", "taskt.Properties.Resources.command_server"},   // upload bot store
+
+            // Error
+            {"CatchExceptionCommand", "taskt.Properties.Resources.command_try"},
+            {"EndTryCommand", "taskt.Properties.Resources.command_try"},
+            {"FinallyCommand", "taskt.Properties.Resources.command_try"},
+            {"ThrowExceptionCommand", "taskt.Properties.Resources.command_try"},
+            {"TryCommand", "taskt.Properties.Resources.command_try"},
+
+            // Excel
+            {"ExcelActivateSheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelAddWorkbookCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelAppendCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelAppendRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelCheckExcelInstanceExistsCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelCloseApplicationCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelCreateDatasetCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelCreateApplicationCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelDeleteCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelDeleteRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelDeleteWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGetCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGetCellRCCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGetLastRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGetRangeCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGetRangeCommandAsDT", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGoToCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelOpenWorkbookCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelRenameWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelRunMacroCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelSaveCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelSaveAsCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelSetCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelSetCellRCCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelSplitRangeByColumnCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelWriteRangeCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelWriteRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+
+            // File
+            {"CheckFileExistsCommand", "taskt.Properties.Resources.command_files"},
+            {"DeleteFileCommand", "taskt.Properties.Resources.command_files"},
+            {"ExtractFileCommand", "taskt.Properties.Resources.command_files"},
+            {"GetFilesCommand", "taskt.Properties.Resources.command_files"},
+            {"MoveFileCommand", "taskt.Properties.Resources.command_files"},
+            {"RenameFileCommand", "taskt.Properties.Resources.command_files"},
+            {"WaitForFileToExistCommand", "taskt.Properties.Resources.command_files"},
+
+            // Folder
+            {"CheckFolderExistsCommand", "taskt.Properties.Resources.command_files"},
+            {"CreateFolderCommand", "taskt.Properties.Resources.command_files"},
+            {"DeleteFolderCommand", "taskt.Properties.Resources.command_files"},
+            {"GetFoldersCommand", "taskt.Properties.Resources.command_files"},
+            {"MoveFolderCommand", "taskt.Properties.Resources.command_files"},
+            {"RenameFolderCommand", "taskt.Properties.Resources.command_files"},
+
+            // IE
+            {"IEBrowserCloseCommand", "taskt.Properties.Resources.command_window_close"},
+            {"IEBrowserCreateCommand", "taskt.Properties.Resources.command_web"},
+            {"IEBrowserElementCommand", "taskt.Properties.Resources.command_web"},
+            {"WebBrowserFindBrowserCommand", "taskt.Properties.Resources.command_web"},
+            {"IEBrowserNavigateCommand", "taskt.Properties.Resources.command_web"},
+
+            // If
+            {"BeginIfCommand", "taskt.Properties.Resources.command_begin_if"},
+            {"BeginMultiIfCommand", "taskt.Properties.Resources.command_begin_multi_if"},
+            {"ElseCommand", "taskt.Properties.Resources.command_else"},
+            {"EndIfCommand", "taskt.Properties.Resources.command_end_if"},
+
+            // Image
+            {"ImageRecognitionCommand", "taskt.Properties.Resources.command_camera"},
+            {"OCRCommand", "taskt.Properties.Resources.command_camera"},
+            {"ScreenshotCommand", "taskt.Properties.Resources.command_camera"},
+
+            // Input
+            {"FileDialogCommand", "taskt.Properties.Resources.command_input"},
+            {"FolderDialogCommand", "taskt.Properties.Resources.command_input"},
+            {"HTMLInputCommand", "taskt.Properties.Resources.command_input"},
+            {"UserInputCommand", "taskt.Properties.Resources.command_input"}, // prompt
+            {"SendAdvancedKeyStrokesCommand", "taskt.Properties.Resources.command_input"},
+            {"SendHotkeyCommand", "taskt.Properties.Resources.command_input"},
+            {"SendKeysCommand", "taskt.Properties.Resources.command_input"},
+            {"SendMouseMoveCommand", "taskt.Properties.Resources.command_input"},
+            {"SendMouseClickCommand", "taskt.Properties.Resources.command_input"},
+            {"UIAutomationCommand", "taskt.Properties.Resources.command_input"},
+
+            // Loop
+            {"BeginLoopCommand", "taskt.Properties.Resources.command_startloop"},
+            {"BeginMultiLoopCommand", "taskt.Properties.Resources.command_startloop"},
+            {"EndLoopCommand", "taskt.Properties.Resources.command_endloop"},
+            {"ExitLoopCommand", "taskt.Properties.Resources.command_exitloop"},
+            {"BeginContinousLoopCommand", "taskt.Properties.Resources.command_startloop"},
+            {"BeginListLoopCommand", "taskt.Properties.Resources.command_startloop"},
+            {"BeginNumberOfTimesLoopCommand", "taskt.Properties.Resources.command_startloop"},
+            {"NextLoopCommand", "taskt.Properties.Resources.command_nextloop"},
+
+            // Misc
+            {"CommentCommand", "taskt.Properties.Resources.command_comment"},
+            {"EncryptionCommand", "taskt.Properties.Resources.command_input"},
+            {"ClipboardGetTextCommand", "taskt.Properties.Resources.command_files"},
+            {"PingCommand", "taskt.Properties.Resources.command_web"},
+            {"SMTPSendEmailCommand", "taskt.Properties.Resources.command_smtp"},
+            {"SequenceCommand", "taskt.Properties.Resources.command_sequence"},
+            {"ClipboardSetTextCommand", "taskt.Properties.Resources.command_files"},
+            {"MessageBoxCommand", "taskt.Properties.Resources.command_comment"},
+
+            // NLG
+            {"NLGCreateInstanceCommand", "taskt.Properties.Resources.command_nlg"},
+            {"NLGGeneratePhraseCommand", "taskt.Properties.Resources.command_nlg"},
+            {"NLGSetParameterCommand", "taskt.Properties.Resources.command_nlg"},
+
+            // Outlook
+            {"OutlookDeleteEmailsCommand", "taskt.Properties.Resources.command_smtp"},
+            {"OutlookForwardEmailsCommand", "taskt.Properties.Resources.command_smtp"},
+            {"OutlookGetEmailsCommand", "taskt.Properties.Resources.command_smtp"},
+            {"OutlookMoveEmailsCommand", "taskt.Properties.Resources.command_smtp"},
+            {"OutlookReplyToEmailsCommand", "taskt.Properties.Resources.command_smtp"},
+            {"OutlookEmailCommand", "taskt.Properties.Resources.command_smtp"},
+
+            // Program
+            {"RunCustomCodeCommand", "taskt.Properties.Resources.command_script"},
+            {"RunScriptCommand", "taskt.Properties.Resources.command_script"},
+            {"StartProcessCommand", "taskt.Properties.Resources.command_start_process"},
+            {"StopProcessCommand", "taskt.Properties.Resources.command_stop_process"},
+
+            // Regex
+            {"GetRegexMatchesCommand", "taskt.Properties.Resources.command_function"},
+
+            // Remote
+            {"RemoteAPICommand", "taskt.Properties.Resources.command_remote"},
+            {"RemoteTaskCommand", "taskt.Properties.Resources.command_remote"},
+
+            // System
+            {"EnvironmentVariableCommand", "taskt.Properties.Resources.command_system"},
+            {"RemoteDesktopCommand", "taskt.Properties.Resources.command_system"},
+            {"OSVariableCommand", "taskt.Properties.Resources.command_system"},
+            {"SystemActionCommand", "taskt.Properties.Resources.command_script"},
+
+            // Task
+            {"RunTaskCommand", "taskt.Properties.Resources.command_start_process"},
+            {"StopTaskCommand", "taskt.Properties.Resources.command_stop_process"},
+
+            // Text
+            {"ReadTextFileCommand", "taskt.Properties.Resources.command_files"},
+            {"WriteTextFileCommand", "taskt.Properties.Resources.command_files"},
+
+            // Variable
+            {"AddToVariableCommand", "taskt.Properties.Resources.command_function"},
+            {"AddVariableCommand", "taskt.Properties.Resources.command_function"},
+            {"VariableCommand", "taskt.Properties.Resources.command_function"},
+            {"SetVariableIndexCommand", "taskt.Properties.Resources.command_function"},
+
+            // Web
+            {"SeleniumBrowserCheckBrowserInstanceExistsCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserCloseCommand", "taskt.Properties.Resources.command_window_close"},
+            {"SeleniumBrowserCreateCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserElementActionCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserExecuteScriptCommand", "taskt.Properties.Resources.command_script"},
+            {"SeleniumBrowserInfoCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserNavigateBackCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserNavigateForwardCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserNavigateURLCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserRefreshCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserSwitchFrameCommand", "taskt.Properties.Resources.command_window"},
+            {"SeleniumBrowserSwitchWindowCommand", "taskt.Properties.Resources.command_window"},
+            {"SeleniumBrowserTakeScreenshotCommand", "taskt.Properties.Resources.command_web"},
+
+            // Window
+            {"ActivateWindowCommand", "taskt.Properties.Resources.command_window"},
+            {"CheckWindowNameExistsCommand", "taskt.Properties.Resources.command_window"},
+            {"CloseWindowCommand", "taskt.Properties.Resources.command_window_close"},
+            {"GetWindowNamesCommand", "taskt.Properties.Resources.command_window"},
+            {"MoveWindowCommand", "taskt.Properties.Resources.command_window"},
+            {"ResizeWindowCommand", "taskt.Properties.Resources.command_window"},
+            {"SetWindowStateCommand", "taskt.Properties.Resources.command_window"},
+            {"WaitForWindowCommand", "taskt.Properties.Resources.command_window"},
+
+            // Word
+            {"WordAddDocumentCommand", "taskt.Properties.Resources.command_files"},
+            {"WordAppendDataTableCommand", "taskt.Properties.Resources.command_files"},
+            {"WordAppendImageCommand", "taskt.Properties.Resources.command_files"},
+            {"WordAppendTextCommand", "taskt.Properties.Resources.command_files"},
+            {"WordCheckWordInstanceExistsCommand", "taskt.Properties.Resources.command_files"},
+            {"WordCloseApplicationCommand", "taskt.Properties.Resources.command_files"},
+            {"WordCreateApplicationCommand", "taskt.Properties.Resources.command_files"},
+            {"WordExportToPDFCommand", "taskt.Properties.Resources.command_files"},
+            {"WordOpenDocumentCommand", "taskt.Properties.Resources.command_files"},
+            {"WordReadDocumentCommand", "taskt.Properties.Resources.command_files"},
+            {"WordReplaceTextCommand", "taskt.Properties.Resources.command_files"},
+            {"WordSaveCommand", "taskt.Properties.Resources.command_files"},
+            {"WordSaveAsCommand", "taskt.Properties.Resources.command_files"},
+
+            //// NOTHING ///
+            {"BeginExcelDatasetLoopCommand", "taskt.Properties.Resources.command_startloop"},
+            {"ThickAppClickItemCommand", "taskt.Properties.Resources.command_input"},
+            {"ThickAppGetTextCommand", "taskt.Properties.Resources.command_search"},
+            {"Setcommand_windowtateCommand", "taskt.Properties.Resources.command_window"},
+            {"_NotFoundCommand", "taskt.Properties.Resources.command_files"},
+        };
 
         public static Dictionary<string, Image> UIImageDictionary()
         {
@@ -679,7 +938,7 @@ namespace taskt.UI
         }
         public static ImageList UIImageList()
         {
-            Dictionary<string, Image> imageIcons = UIImageDictionary();
+            //Dictionary<string, Image> imageIcons = UIImageDictionary();
             //if (imageList.Count == 0)
             //{
             //    UIImageDictionary();
@@ -691,29 +950,65 @@ namespace taskt.UI
             {
                 return uiImages;
             }
-            
+
             uiImages.ImageSize = new Size(16, 16);
             //foreach (var icon in imageIcons)
-            foreach (var icon in imageIcons)
-            {
+            //foreach (var icon in imageIcons)
+            //{
 
-                //var someImage = icon.Value;
+            //    //var someImage = icon.Value;
 
-                //using (Image src = icon.Value)
-                //using (Bitmap dst = new Bitmap(16, 16))
-                //using (Graphics g = Graphics.FromImage(dst))
-                //{
-                //    g.SmoothingMode = SmoothingMode.AntiAlias;
-                //    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                //    g.DrawImage(src, 0, 0, dst.Width, dst.Height);
-                //    uiImages.Images.Add(icon.Key, dst);
-                //}
+            //    //using (Image src = icon.Value)
+            //    //using (Bitmap dst = new Bitmap(16, 16))
+            //    //using (Graphics g = Graphics.FromImage(dst))
+            //    //{
+            //    //    g.SmoothingMode = SmoothingMode.AntiAlias;
+            //    //    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            //    //    g.DrawImage(src, 0, 0, dst.Width, dst.Height);
+            //    //    uiImages.Images.Add(icon.Key, dst);
+            //    //}
 
-                uiImages.Images.Add(icon.Key, icon.Value);
-            }
+            //    uiImages.Images.Add(icon.Key, icon.Value);
+            //}
+            uiImages.Images.Add("taskt.Properties.Resources.command_begin_if", taskt.Properties.Resources.command_begin_if);
+            uiImages.Images.Add("taskt.Properties.Resources.command_begin_multi_if", taskt.Properties.Resources.command_begin_multi_if);
+            uiImages.Images.Add("taskt.Properties.Resources.command_camera", taskt.Properties.Resources.command_camera);
+            uiImages.Images.Add("taskt.Properties.Resources.command_comment", taskt.Properties.Resources.command_comment);
+            uiImages.Images.Add("taskt.Properties.Resources.command_database", taskt.Properties.Resources.command_database);
+            uiImages.Images.Add("taskt.Properties.Resources.command_dictionary", taskt.Properties.Resources.command_dictionary);
+            uiImages.Images.Add("taskt.Properties.Resources.command_else", taskt.Properties.Resources.command_else);
+            uiImages.Images.Add("taskt.Properties.Resources.command_endloop", taskt.Properties.Resources.command_endloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_end_if", taskt.Properties.Resources.command_end_if);
+            uiImages.Images.Add("taskt.Properties.Resources.command_error", taskt.Properties.Resources.command_error);
+            uiImages.Images.Add("taskt.Properties.Resources.command_exitloop", taskt.Properties.Resources.command_exitloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_files", taskt.Properties.Resources.command_files);
+            uiImages.Images.Add("taskt.Properties.Resources.command_function", taskt.Properties.Resources.command_function);
+            uiImages.Images.Add("taskt.Properties.Resources.command_input", taskt.Properties.Resources.command_input);
+            uiImages.Images.Add("taskt.Properties.Resources.command_nextloop", taskt.Properties.Resources.command_nextloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_nlg", taskt.Properties.Resources.command_nlg);
+            uiImages.Images.Add("taskt.Properties.Resources.command_parse", taskt.Properties.Resources.command_parse);
+            uiImages.Images.Add("taskt.Properties.Resources.command_pause", taskt.Properties.Resources.command_pause);
+            uiImages.Images.Add("taskt.Properties.Resources.command_remote", taskt.Properties.Resources.command_remote);
+            uiImages.Images.Add("taskt.Properties.Resources.command_run_code", taskt.Properties.Resources.command_run_code);
+            uiImages.Images.Add("taskt.Properties.Resources.command_script", taskt.Properties.Resources.command_script);
+            uiImages.Images.Add("taskt.Properties.Resources.command_search", taskt.Properties.Resources.command_search);
+            uiImages.Images.Add("taskt.Properties.Resources.command_sequence", taskt.Properties.Resources.command_sequence);
+            uiImages.Images.Add("taskt.Properties.Resources.command_server", taskt.Properties.Resources.command_server);
+            uiImages.Images.Add("taskt.Properties.Resources.command_smtp", taskt.Properties.Resources.command_smtp);
+            uiImages.Images.Add("taskt.Properties.Resources.command_spreadsheet", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Images.Add("taskt.Properties.Resources.command_startloop", taskt.Properties.Resources.command_startloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_start_process", taskt.Properties.Resources.command_start_process);
+            uiImages.Images.Add("taskt.Properties.Resources.command_stopwatch", taskt.Properties.Resources.command_stopwatch);
+            uiImages.Images.Add("taskt.Properties.Resources.command_stop_process", taskt.Properties.Resources.command_stop_process);
+            uiImages.Images.Add("taskt.Properties.Resources.command_string", taskt.Properties.Resources.command_string);
+            uiImages.Images.Add("taskt.Properties.Resources.command_system", taskt.Properties.Resources.command_system);
+            uiImages.Images.Add("taskt.Properties.Resources.command_try", taskt.Properties.Resources.command_try);
+            uiImages.Images.Add("taskt.Properties.Resources.command_web", taskt.Properties.Resources.command_web);
+            uiImages.Images.Add("taskt.Properties.Resources.command_window", taskt.Properties.Resources.command_window);
+            uiImages.Images.Add("taskt.Properties.Resources.command_window_close", taskt.Properties.Resources.command_window_close);
 
             // release
-            imageIcons.Clear();
+            //imageIcons.Clear();
 
             return uiImages;
         }
@@ -734,6 +1029,20 @@ namespace taskt.UI
                 }
             }
         }
+
+        public static int GetUIImageList(string commandName)
+        {
+            //return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
+            try
+            {
+                return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
+            }
+            catch (Exception)
+            {
+                return uiImages.Images.IndexOfKey("taskt.Properties.Resources.command_files");
+            }
+        }
+
         public static Image GetUIImage(string commandName)
         {
             ////var uiImageDictionary = UIImageDictionary();
@@ -761,11 +1070,11 @@ namespace taskt.UI
             Image retImage;
             try
             {
-                retImage = uiImages.Images[uiImages.Images.IndexOfKey(commandName)];
+                retImage = uiImages.Images[uiImages.Images.IndexOfKey(imageCommandTable[commandName])];
             }
             catch (Exception)
             {
-                retImage = uiImages.Images[uiImages.Images.IndexOfKey("_NotFoundCommand")];
+                retImage = uiImages.Images[uiImages.Images.IndexOfKey("taskt.Properties.Resources.command_files")];
             }
 
             return retImage;

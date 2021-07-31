@@ -322,4 +322,28 @@
   <data name="command_dictionary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\command-dictionary.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="various_cancel_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\various-cancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="various_ok_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\various-ok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="taskt_file_helper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\taskt-file-helper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="taskt_folder_helper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\taskt-folder-helper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="taskt_variable_helper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\taskt-variable-helper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="action_bar_add_variable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\action-bar-add-variable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="taskt_element_helper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\taskt-element-helper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

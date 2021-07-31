@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
+    [Attributes.ClassAttributes.SubGruop("Window Action")]
     [Attributes.ClassAttributes.Description("This command resizes a window to a specified size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reize a window by name to a specific size on screen.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetWindowPos' from user32.dll to achieve automation.")]
@@ -17,23 +18,33 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to resize.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to resize. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to resize.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_WindowName { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window title search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
+        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_SearchMethod { get; set; }
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window. (ex. 640, {{{vWidth}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new width size of the window")]
-        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.SampleUsage("**640** or **{{{vWidth}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid width range could be 0-1920")]
         public string v_XWindowSize { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required height (pixel) of the window.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required height (pixel) of the window. (ex. 480, {{{vHeight}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new height size of the window")]
-        [Attributes.PropertyAttributes.SampleUsage("0")]
+        [Attributes.PropertyAttributes.SampleUsage("**480** or **{{{vHeight}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid height range could be 0-1080")]
         public string v_YWindowSize { get; set; }
 
@@ -52,24 +63,70 @@ namespace taskt.Core.Automation.Commands
         {
             string windowName = v_WindowName.ConvertToUserVariable(sender);
 
-            var targetWindows = User32Functions.FindTargetWindows(windowName);
-
-            //loop each window and set the window state
-            foreach (var targetedWindow in targetWindows)
+            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(searchMethod))
             {
-                var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
-                var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
+                searchMethod = "Contains";
+            }
 
-                if (!int.TryParse(variableXSize, out int xPos))
+            bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
+
+            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
+            var variableXSize = v_XWindowSize.ConvertToUserVariable(sender);
+            var variableYSize = v_YWindowSize.ConvertToUserVariable(sender);
+
+            if (!int.TryParse(variableXSize, out int xPos))
+            {
+                throw new Exception("X Position Invalid - " + v_XWindowSize);
+            }
+            if (!int.TryParse(variableYSize, out int yPos))
+            {
+                throw new Exception("X Position Invalid - " + v_YWindowSize);
+            }
+
+            if (searchMethod == "Contains" || targetIsCurrentWindow)
+            {
+                //loop each window and set the window state
+                foreach (var targetedWindow in targetWindows)
                 {
-                    throw new Exception("X Position Invalid - " + v_XWindowSize);
+                    User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
                 }
-                if (!int.TryParse(variableYSize, out int yPos))
+            }
+            else
+            {
+                Func<string, bool> searchFunc;
+                switch (searchMethod)
                 {
-                    throw new Exception("X Position Invalid - " + v_YWindowSize);
+                    case "Start with":
+                        searchFunc = (s) => s.StartsWith(windowName);
+                        break;
+
+                    case "End with":
+                        searchFunc = (s) => s.EndsWith(windowName);
+                        break;
+
+                    case "Exact match":
+                        searchFunc = (s) => (s == windowName);
+                        break;
+
+                    default:
+                        throw new Exception("Search method " + searchMethod + " is not support.");
+                        break;
                 }
 
-                User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
+                bool isResize = false;
+                foreach (var targetedWindow in targetWindows)
+                {
+                    if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
+                    {
+                        User32Functions.SetWindowSize(targetedWindow, xPos, yPos);
+                        isResize = true;
+                    }
+                }
+                if (!isResize)
+                {
+                    throw new Exception("Window name '" + windowName + "' is not found.Search method " + searchMethod + ".");
+                }
             }
 
         }
@@ -79,9 +136,11 @@ namespace taskt.Core.Automation.Commands
 
             //create window name helper control
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames();
+            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             //create standard group controls
             var xGroup = CommandControls.CreateDefaultInputGroupFor("v_XWindowSize", this, editor);
@@ -101,6 +160,29 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Size (" + v_XWindowSize + "," + v_YWindowSize + ")]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_WindowName))
+            {
+                this.validationResult += "Windows is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_XWindowSize))
+            {
+                this.validationResult += "Width is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_YWindowSize))
+            {
+                this.validationResult += "Height is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

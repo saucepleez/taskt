@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
+    [Attributes.ClassAttributes.SubGruop("DataSet")]
     [Attributes.ClassAttributes.Description("This command gets a range of cells and applies them against a dataset")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to quickly iterate over Excel as a dataset.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'OLEDB' to achieve automation.")]
@@ -56,7 +57,6 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
             v_ContainsHeaderRow = "Yes";
-
         }
 
         public override void RunCommand(object sender)
@@ -85,8 +85,8 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ContainsHeaderRow", this, editor));
-            return RenderedControls;
 
+            return RenderedControls;
         }
 
         public override string GetDisplayValue()

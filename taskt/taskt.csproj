@@ -184,10 +184,24 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelDeleteWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelRenameWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelSetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordCheckWordInstanceExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelCheckExcelInstanceExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GetWindowNamesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CheckWindowNameExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\AddDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginMultiLoopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CheckFolderExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelAddWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\CheckFileExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FolderDialogCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FileDialogCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ConvertListToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\UnloadTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\PingCommand.cs" />
     <Compile Include="Core\Automation\Commands\CreateDictionaryCommand.cs" />
@@ -806,16 +820,30 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\command-dictionary.png" />
+    <None Include="Resources\action-bar-add-variable.png" />
+    <Content Include="Resources\geckodriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\msedgedriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\refresh.png" />
+    <None Include="Resources\taskt-element-helper.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\taskt-splash.png" />
+    <Content Include="Resources\taskt-file-helper.png" />
+    <Content Include="Resources\taskt-folder-helper.png" />
     <Content Include="Resources\taskt-updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\taskt-variable-helper.png" />
+    <Content Include="Resources\various-cancel.png" />
+    <Content Include="Resources\various-ok.png" />
     <Content Include="taskt_logo_alt.ico" />
     <None Include="Resources\item-header96.png" />
     <None Include="Resources\item-header.png" />

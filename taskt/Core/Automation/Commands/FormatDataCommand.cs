@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command allows you to apply formatting to a string")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to apply specific formatting to text or a variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
@@ -34,10 +35,11 @@ namespace taskt.Core.Automation.Commands
         public string v_FormatType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify required output format (ex. yy/MM/dd, hh:mm, #.0)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify required output format (ex. yy/MM/dd, hh:mm, #.0, file)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, C2, D2, etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.SampleUsage("**MM/dd/yy**, **hh:mm**, **C2**, **D2**, **file** etc.")]
+        [Attributes.PropertyAttributes.Remarks("Path supports **file**, **folder**, **filewithoutextension**, **extension**, **drive**")]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
@@ -48,6 +50,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
+
         public FormatDataCommand()
         {
             this.CommandName = "FormatDataCommand";
@@ -55,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InputValue = "{{{DateTime.Now}}}";
+            this.v_InputValue = "";
             this.v_FormatType = "Date";
             this.v_ToStringFormat = "MM/dd/yyyy";
             
@@ -69,7 +72,7 @@ namespace taskt.Core.Automation.Commands
             //get formatting
             var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
 
-            var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
+            //var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
 
 
             string formattedString = "";
@@ -145,24 +148,26 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            // dynamic replace variable marker
-            if (this.v_InputValue == "{{{DateTime.Now}}}")
-            {
-                this.v_InputValue = editor.ReplaceVariableMaker(this.v_InputValue);
-            }
-
             //create standard group controls
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_FormatType", this));
-            RenderedControls.Add(CommandControls.CreateDropdownFor("v_FormatType", this));
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_FormatType", this));
+            //RenderedControls.Add(CommandControls.CreateDropdownFor("v_FormatType", this));
+            var typeCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_FormatType", this, editor);
+            RenderedControls.AddRange(typeCtrls);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
+            var formatCtls = CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor);
+            RenderedControls.AddRange(formatCtls);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InputValue = editor.ReplaceVariableMaker("{{{DateTime.Now}}}");
+            }
 
             return RenderedControls;
 
@@ -170,6 +175,35 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Format '" + v_InputValue + "' and Apply Result to Variable '" + v_applyToVariableName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            this.IsValid = true;
+            this.validationResult = "";
+
+            if (String.IsNullOrEmpty(this.v_InputValue))
+            {
+                this.validationResult += "Value is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_FormatType))
+            {
+                this.validationResult += "Type of data is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_FormatType))
+            {
+                this.validationResult += "Output format is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

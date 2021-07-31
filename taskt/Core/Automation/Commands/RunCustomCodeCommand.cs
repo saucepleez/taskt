@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Paste the C# code to execute")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the code to be executed or use the builder to create your custom C# code.  The builder contains a Hello World template that you can use to build from.")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
@@ -23,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Code { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply Arguments (optional)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Supply Arguments")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter arguments that the custom code will receive during execution")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
@@ -71,7 +72,7 @@ namespace taskt.Core.Automation.Commands
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
                 scriptProc.StartInfo.Arguments = arguments;
 
-                if (v_applyToVariableName != "")
+                if (String.IsNullOrEmpty(v_applyToVariableName))
                 {
                     //redirect output
                     scriptProc.StartInfo.RedirectStandardOutput = true;
@@ -83,16 +84,13 @@ namespace taskt.Core.Automation.Commands
 
                 scriptProc.WaitForExit();
 
-                if (v_applyToVariableName != "")
+                if (String.IsNullOrEmpty(v_applyToVariableName))
                 {
                     var output = scriptProc.StandardOutput.ReadToEnd();
                     output.StoreInUserVariable(sender, v_applyToVariableName);
                 }
-    
 
                 scriptProc.Close();
-
-
             }
 
 
@@ -115,6 +113,19 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue();
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_Code))
+            {
+                this.validationResult += "C# code is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select source type of PDF file")]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please select source type of PDF file (default is File Path)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Path")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File URL")]
         [Attributes.PropertyAttributes.InputSpecification("Select source type of PDF file")]
@@ -35,7 +36,6 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the PDF text")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
@@ -56,6 +56,10 @@ namespace taskt.Core.Automation.Commands
             var vSourceFilePath = v_FilePath.ConvertToUserVariable(sender);
             // get source type of file either from a physical file or from a URL
             var vSourceFileType = v_FileSourceType.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(vSourceFileType))
+            {
+                vSourceFileType = "FilePath";
+            }
 
             if (vSourceFileType == "File URL")
             {
@@ -103,9 +107,6 @@ namespace taskt.Core.Automation.Commands
 
             //apply to variable
             result.StoreInUserVariable(sender, v_applyToVariableName);
-
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -129,6 +130,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Extract From '" + v_FilePath + "' and apply result to '" + v_applyToVariableName + "'" ;
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_FilePath))
+            {
+                this.validationResult += "File path, url is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            {
+                this.validationResult += "Varialbe is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

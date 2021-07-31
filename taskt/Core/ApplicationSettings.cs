@@ -123,6 +123,8 @@ namespace taskt.Core
         public bool AutoCloseMessagesOnServerExecution { get; set; }
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
         public bool AutoCalcVariables { get; set; }
+
+        public string CurrentWindowKeyword { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -139,7 +141,8 @@ namespace taskt.Core
             AutoCloseMessagesOnServerExecution = true;
             AutoCloseDebugWindowOnServerExecution = true;
             AutoCalcVariables = true;
-    }
+            CurrentWindowKeyword = "Current Window";
+        }
     }
     /// <summary>
     /// Defines application/client-level settings which can be managed by the user
@@ -149,24 +152,46 @@ namespace taskt.Core
     {
         public bool AntiIdleWhileOpen { get; set; }
         public string RootFolder { get; set; }
-        public bool InsertCommandsInline { get; set; }
-        public bool EnableSequenceDragDrop { get; set; }
         public bool MinimizeToTray { get; set; }
         public string AttendedTasksFolder { get; set; }
         public string StartupMode { get; set; }
         public bool PreloadBuilderCommands { get; set; }
         public bool UseSlimActionBar { get; set; }
+        public bool InsertCommandsInline { get; set; }
+        public bool EnableSequenceDragDrop { get; set; }
+        public bool InsertVariableAtCursor { get; set; }
+        public bool InsertElseAutomatically { get; set; }
+        public bool InsertCommentIfLoopAbove { get; set; }
+        public bool GroupingBySubgroup { get; set; }
+        public bool DontShowValidationMessage { get; set; }
+        public bool ShowSampleUsageInDescription { get; set; }
+        public string DefaultBrowserInstanceName { get; set; }
+        public string DefaultStopWatchInstanceName { get; set; }
+        public string DefaultExcelInstanceName { get; set; }
+        public string DefaultWordInstanceName { get; set; }
+        public string DefaultDBInstanceName { get; set; }
         public ClientSettings()
         {
             MinimizeToTray = false;
             AntiIdleWhileOpen = false;
-            InsertCommandsInline = false;
             RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
             StartupMode = "Builder Mode";
             AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
-            EnableSequenceDragDrop = true;
             PreloadBuilderCommands = false;
             UseSlimActionBar = true;
+            InsertCommandsInline = true;
+            EnableSequenceDragDrop = true;
+            InsertVariableAtCursor = true;
+            InsertElseAutomatically = false;
+            InsertCommentIfLoopAbove = false;
+            GroupingBySubgroup = true;
+            DontShowValidationMessage = false;
+            ShowSampleUsageInDescription = true;
+            DefaultBrowserInstanceName = "RPABrowser";
+            DefaultStopWatchInstanceName = "RPAStopwatch";
+            DefaultExcelInstanceName = "RPAExcel";
+            DefaultWordInstanceName = "RPAWord";
+            DefaultDBInstanceName = "RPADB";
         }
     }
     /// <summary>

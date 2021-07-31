@@ -19,9 +19,9 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input the list variable to be looped")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please input the list variable to be looped (ex. {{{vList}}}, [1,2,3])")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a variable which contains a list of items")]
-        [Attributes.PropertyAttributes.SampleUsage("{vMyList}")]
+        [Attributes.PropertyAttributes.SampleUsage("**{{{vMyList}}}** or **[1,2,3]**")]
         [Attributes.PropertyAttributes.Remarks("Use this command to iterate over the results of the Split command.")]
         public string v_LoopParameter { get; set; }
 
@@ -153,6 +153,19 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return "Loop List Variable '" + v_LoopParameter + "'";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_LoopParameter))
+            {
+                this.validationResult += "List variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

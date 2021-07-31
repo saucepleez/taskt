@@ -19,9 +19,9 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter how many times to perform the loop")]
+        [Attributes.PropertyAttributes.PropertyDescription("Enter how many times to perform the loop (ex. 5, {{{vNum}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the amount of times you would like to perform the encased commands.")]
-        [Attributes.PropertyAttributes.SampleUsage("**5** or **10**")]
+        [Attributes.PropertyAttributes.SampleUsage("**5** or **10** or **{{{vNum}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_LoopParameter { get; set; }
 
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Define Start Index (Default: 0)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the starting index of the loop.")]
-        [Attributes.PropertyAttributes.SampleUsage("**5** or **10**")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **1** or **{{{vStartValue}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_LoopStart { get; set; }
 
@@ -104,8 +104,6 @@ namespace taskt.Core.Automation.Commands
           
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
 
-       
-
             }
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -130,6 +128,30 @@ namespace taskt.Core.Automation.Commands
                 return "Loop " +  v_LoopParameter + " Times";
             }
          
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_LoopParameter))
+            {
+                this.validationResult += "Times is empty.\n";
+            }
+            else
+            {
+                int v;
+                if (int.TryParse(this.v_LoopParameter, out v))
+                {
+                    if (v < 0)
+                    {
+                        this.validationResult += "Specify a value of 0 or more for Times.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+
+            return this.IsValid;
         }
     }
 }

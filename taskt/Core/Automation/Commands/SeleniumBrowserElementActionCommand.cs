@@ -16,15 +16,16 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
+    [Attributes.ClassAttributes.SubGruop("Actions")]
     [Attributes.ClassAttributes.Description("This command allows you to close a Selenium web browser session.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate, set, or get data on a webpage within the web browser.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     public class SeleniumBrowserElementActionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_InstanceName { get; set; }
@@ -101,7 +102,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserElementActionCommand";
             this.SelectionName = "Element Action";
-            this.v_InstanceName = "default";
+            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
@@ -522,7 +523,8 @@ namespace taskt.Core.Automation.Commands
             var browserObject = engine.GetAppInstance(vInstance);
 
             //get selenium instance driver
-            var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            //var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
+            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
             try
             {
@@ -574,6 +576,13 @@ namespace taskt.Core.Automation.Commands
             ElementParameterControls.Add(ElementsGridViewHelper);
 
             RenderedControls.AddRange(ElementParameterControls);
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            }
+
+            seleniumAction_SelectionChangeCommitted(null, null);
 
             return RenderedControls;
         }
@@ -796,6 +805,35 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [" + v_SeleniumSearchType + " and " + v_SeleniumElementAction + ", Instance Name: '" + v_InstanceName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_InstanceName))
+            {
+                this.validationResult += "Instance name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SeleniumSearchType))
+            {
+                this.validationResult += "Search Method is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SeleniumSearchParameter))
+            {
+                this.validationResult += "Search Parameter is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SeleniumElementAction))
+            {
+                this.validationResult += "Element Action is empty.\n";
+                this.IsValid = false;
+            }
+            // TODO: DGV validate
+
+            return this.IsValid;
         }
     }
 }

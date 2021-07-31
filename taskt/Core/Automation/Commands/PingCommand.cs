@@ -17,10 +17,10 @@ namespace taskt.Core.Automation.Commands
     {
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter ip address or host name that you want to ping")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter ip address or host name that you want to ping (ex. 192.168.0.1, {{{vHost}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Ip address or hostname you want to ping")]
-        [Attributes.PropertyAttributes.SampleUsage("** 192.168.0.1 or www.google.com**")]
+        [Attributes.PropertyAttributes.SampleUsage("**192.168.0.1** or **www.google.com**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_HostName { get; set; }
 
@@ -54,7 +54,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
             Ping ping = new Ping();
             string hstname = v_HostName.ConvertToUserVariable(sender);
 
@@ -62,12 +61,30 @@ namespace taskt.Core.Automation.Commands
             var pingReply = Common.ConvertObjectToJson(pingresult);
 
             pingReply.StoreInUserVariable(sender, v_userVariableName);
-
         }
 
         public override string GetDisplayValue()
         {
             return $"Ping Host '{this.v_HostName}'";
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_HostName))
+            {
+                this.validationResult += "IP address or Host is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_userVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
+        }
+
     }
 }

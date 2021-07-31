@@ -54,7 +54,7 @@
             this.tlpControls.Name = "tlpControls";
             this.tlpControls.RowCount = 1;
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+            this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 175F));
             this.tlpControls.Size = new System.Drawing.Size(735, 172);
             this.tlpControls.TabIndex = 1;
             // 
@@ -116,7 +116,7 @@
             this.lblDescription.ForeColor = System.Drawing.Color.White;
             this.lblDescription.Location = new System.Drawing.Point(10, 64);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(778, 49);
+            this.lblDescription.Size = new System.Drawing.Size(722, 49);
             this.lblDescription.TabIndex = 2;
             this.lblDescription.Text = "Instructions: Select the target window name from the drop-down list and click the" +
     " record button.  Once recording has started, click the element in the target app" +
