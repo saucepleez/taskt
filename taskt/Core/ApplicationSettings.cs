@@ -162,6 +162,7 @@ namespace taskt.Core
         public bool InsertVariableAtCursor { get; set; }
         public bool InsertElseAutomatically { get; set; }
         public bool InsertCommentIfLoopAbove { get; set; }
+        public bool GroupingBySubgroup { get; set; }
         public bool DontShowValidationMessage { get; set; }
         public bool ShowSampleUsageInDescription { get; set; }
         public string DefaultBrowserInstanceName { get; set; }
@@ -183,6 +184,7 @@ namespace taskt.Core
             InsertVariableAtCursor = true;
             InsertElseAutomatically = false;
             InsertCommentIfLoopAbove = false;
+            GroupingBySubgroup = true;
             DontShowValidationMessage = false;
             ShowSampleUsageInDescription = true;
             DefaultBrowserInstanceName = "RPABrowser";

@@ -137,6 +137,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.chkGruopingBySubgruop = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -1228,6 +1229,7 @@
             // 
             // tabEditorSettings
             // 
+            this.tabEditorSettings.Controls.Add(this.chkGruopingBySubgruop);
             this.tabEditorSettings.Controls.Add(this.chkInsertCommentIfLoop);
             this.tabEditorSettings.Controls.Add(this.txtDefaultDBInstanceName);
             this.tabEditorSettings.Controls.Add(this.lblDBInstance);
@@ -1266,7 +1268,7 @@
             // 
             // txtDefaultDBInstanceName
             // 
-            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 389);
+            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 438);
             this.txtDefaultDBInstanceName.Name = "txtDefaultDBInstanceName";
             this.txtDefaultDBInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultDBInstanceName.TabIndex = 19;
@@ -1277,7 +1279,7 @@
             this.lblDBInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblDBInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDBInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblDBInstance.Location = new System.Drawing.Point(7, 369);
+            this.lblDBInstance.Location = new System.Drawing.Point(7, 418);
             this.lblDBInstance.Name = "lblDBInstance";
             this.lblDBInstance.Size = new System.Drawing.Size(192, 17);
             this.lblDBInstance.TabIndex = 18;
@@ -1311,7 +1313,7 @@
             // 
             // txtDefaultWordInstanceName
             // 
-            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 338);
+            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 387);
             this.txtDefaultWordInstanceName.Name = "txtDefaultWordInstanceName";
             this.txtDefaultWordInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultWordInstanceName.TabIndex = 15;
@@ -1322,7 +1324,7 @@
             this.lblWordInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblWordInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWordInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblWordInstance.Location = new System.Drawing.Point(7, 318);
+            this.lblWordInstance.Location = new System.Drawing.Point(7, 367);
             this.lblWordInstance.Name = "lblWordInstance";
             this.lblWordInstance.Size = new System.Drawing.Size(169, 17);
             this.lblWordInstance.TabIndex = 14;
@@ -1330,7 +1332,7 @@
             // 
             // txtDefaultExcelInstanceName
             // 
-            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 288);
+            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 337);
             this.txtDefaultExcelInstanceName.Name = "txtDefaultExcelInstanceName";
             this.txtDefaultExcelInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultExcelInstanceName.TabIndex = 13;
@@ -1341,7 +1343,7 @@
             this.lblExcelInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblExcelInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExcelInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblExcelInstance.Location = new System.Drawing.Point(7, 268);
+            this.lblExcelInstance.Location = new System.Drawing.Point(7, 317);
             this.lblExcelInstance.Name = "lblExcelInstance";
             this.lblExcelInstance.Size = new System.Drawing.Size(168, 17);
             this.lblExcelInstance.TabIndex = 12;
@@ -1349,7 +1351,7 @@
             // 
             // txtDefaultStopwatchInstanceName
             // 
-            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 235);
+            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 284);
             this.txtDefaultStopwatchInstanceName.Name = "txtDefaultStopwatchInstanceName";
             this.txtDefaultStopwatchInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultStopwatchInstanceName.TabIndex = 11;
@@ -1360,7 +1362,7 @@
             this.lblStopwatchInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblStopwatchInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStopwatchInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 215);
+            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 264);
             this.lblStopwatchInstance.Name = "lblStopwatchInstance";
             this.lblStopwatchInstance.Size = new System.Drawing.Size(193, 17);
             this.lblStopwatchInstance.TabIndex = 10;
@@ -1368,7 +1370,7 @@
             // 
             // txtDefaultBrowserInstanceName
             // 
-            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 183);
+            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 232);
             this.txtDefaultBrowserInstanceName.Name = "txtDefaultBrowserInstanceName";
             this.txtDefaultBrowserInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultBrowserInstanceName.TabIndex = 9;
@@ -1379,7 +1381,7 @@
             this.lblBrowserInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblBrowserInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBrowserInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 163);
+            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 212);
             this.lblBrowserInstance.Name = "lblBrowserInstance";
             this.lblBrowserInstance.Size = new System.Drawing.Size(182, 17);
             this.lblBrowserInstance.TabIndex = 8;
@@ -1450,6 +1452,19 @@
             // 
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
+            // 
+            // chkGruopingBySubgruop
+            // 
+            this.chkGruopingBySubgruop.AutoSize = true;
+            this.chkGruopingBySubgruop.BackColor = System.Drawing.Color.Transparent;
+            this.chkGruopingBySubgruop.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGruopingBySubgruop.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGruopingBySubgruop.Location = new System.Drawing.Point(10, 161);
+            this.chkGruopingBySubgruop.Name = "chkGruopingBySubgruop";
+            this.chkGruopingBySubgruop.Size = new System.Drawing.Size(176, 24);
+            this.chkGruopingBySubgruop.TabIndex = 21;
+            this.chkGruopingBySubgruop.Text = "Gruoping by subgroup";
+            this.chkGruopingBySubgruop.UseVisualStyleBackColor = false;
             // 
             // frmSettings
             // 
@@ -1589,5 +1604,6 @@
         private System.Windows.Forms.TextBox txtDefaultDBInstanceName;
         private System.Windows.Forms.Label lblDBInstance;
         private System.Windows.Forms.CheckBox chkInsertCommentIfLoop;
+        private System.Windows.Forms.CheckBox chkGruopingBySubgruop;
     }
 }

@@ -95,8 +95,9 @@ namespace taskt.UI.Forms
             chkInsertCommandsInline.DataBindings.Add("Checked", clientSettings, "InsertCommandsInline", false, DataSourceUpdateMode.OnPropertyChanged);
             chkSequenceDragDrop.DataBindings.Add("Checked", clientSettings, "EnableSequenceDragDrop", false, DataSourceUpdateMode.OnPropertyChanged);
             chkInsertVariablePosition.DataBindings.Add("Checked", clientSettings, "InsertVariableAtCursor", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkInsertElse.DataBindings.Add("checked", clientSettings, "InsertElseAutomatically", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkInsertCommentIfLoop.DataBindings.Add("checked", clientSettings, "InsertCommentIfLoopAbove", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkInsertElse.DataBindings.Add("Checked", clientSettings, "InsertElseAutomatically", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkInsertCommentIfLoop.DataBindings.Add("Checked", clientSettings, "InsertCommentIfLoopAbove", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkGruopingBySubgruop.DataBindings.Add("Checked", clientSettings, "GroupingBySubgroup", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
