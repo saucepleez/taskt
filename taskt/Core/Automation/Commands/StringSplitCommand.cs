@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("Text")]
     [Attributes.ClassAttributes.Description("This command allows you to split a string")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to split a single text or variable into multiple items")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Split method to achieve automation.")]

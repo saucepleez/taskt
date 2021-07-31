@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.SubGruop("List")]
     [Attributes.ClassAttributes.Description("This command allows you to get the item count of a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the item count of a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
