@@ -9,18 +9,21 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
-    [Attributes.ClassAttributes.SubGruop("Window Action")]
-    [Attributes.ClassAttributes.Description("This command activates a window and brings it to the front.")]
+    [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.Description("This command returns a existence of window name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to active a window by name or bring it to attention.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetForegroundWindow', 'ShowWindow' from user32.dll to achieve automation.")]
-    public class ActivateWindowCommand : ScriptCommand
+    public class CheckWindowNameExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to activate. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to check existence.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to check existence.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
@@ -34,14 +37,23 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_SearchMethod { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify the variable to assign the result")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("Result is **TRUE** or **FALSE**")]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_UserVariableName { get; set; }
+
         [XmlIgnore]
         [NonSerialized]
         public ComboBox WindowNameControl;
 
-        public ActivateWindowCommand()
+        public CheckWindowNameExistsCommand()
         {
-            this.CommandName = "ActivateWindowCommand";
-            this.SelectionName = "Activate Window";
+            this.CommandName = "CheckWindowNameExistsCommand";
+            this.SelectionName = "Check Window Name Exists";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -57,13 +69,14 @@ namespace taskt.Core.Automation.Commands
             bool targetIsCurrentWindow = windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword;
             var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
 
+            bool existResult = false;
+
             //loop each window
             if (searchMethod == "Contains" || targetIsCurrentWindow)
             {
-                foreach (var targetedWindow in targetWindows)
+                if (targetWindows.Count > 0)
                 {
-                    User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
-                    User32Functions.SetForegroundWindow(targetedWindow);
+                    existResult = true;
                 }
             }
             else
@@ -88,35 +101,40 @@ namespace taskt.Core.Automation.Commands
                         break;
                 }
 
-                bool isActivated = false;
                 foreach (var targetedWindow in targetWindows)
                 {
                     if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
                     {
-                        User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
-                        User32Functions.SetForegroundWindow(targetedWindow);
-                        isActivated = true;
+                        existResult = true;
+                        break;
                     }
                 }
-
-                if (!isActivated)
-                {
-                    throw new Exception("Window '" + windowName + "' is not found. Search method is " + searchMethod + ".");
-                }
             }
+
+            (existResult ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_UserVariableName);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create window name helper control
-            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
-            RenderedControls.Add(WindowNameControl);
+            ////create window name helper control
+            //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            //WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
+            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            //RenderedControls.Add(WindowNameControl);
 
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
+            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
+
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateInferenceDefaultControlGroupFor("v_WindowName", this, editor));
+            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateInferenceDefaultControlGroupFor("v_UserVariableName", this, editor));
+
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 
@@ -129,7 +147,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + "]";
+            return base.GetDisplayValue() + " [Check: " + v_WindowName + "', Result In: '" + v_UserVariableName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -139,6 +157,11 @@ namespace taskt.Core.Automation.Commands
             if (String.IsNullOrEmpty(this.v_WindowName))
             {
                 this.validationResult += "Window is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_UserVariableName))
+            {
+                this.validationResult += "Variable is empty.\n";
                 this.IsValid = false;
             }
 

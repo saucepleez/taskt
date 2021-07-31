@@ -17,6 +17,21 @@ namespace taskt.UI.CustomControls
     {
         public static UI.Forms.frmCommandEditor CurrentEditor { get; set; }
 
+        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        {
+            var controlList = new List<string>();
+            var parentProps = parent.GetType().GetProperties();
+            foreach(var prop in parentProps)
+            {
+                if (prop.Name.StartsWith("v_") && prop.Name != "v_Comment")
+                {
+                    controlList.Add(prop.Name);
+                }
+            }
+
+            return MultiCreateInferenceDefaultControlGroupFor(controlList, parent, editor);
+        }
+
         public static List<Control> MultiCreateInferenceDefaultControlGroupFor(List<string> parameterNames, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
         {
             var controlList = new List<Control>();
@@ -72,7 +87,29 @@ namespace taskt.UI.CustomControls
             }
             else
             {
-                input = CreateDefaultInputFor(parameterName, parent);
+                // check combobox
+                var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
+                var winList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList));
+                var uiList = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption), true);
+
+                if (uiList.Length > 0)
+                {
+                    input = CreateDropdownFor(parameterName, parent, variableProperties);
+                }
+                else if (varList != null && varList.isVariablesList)
+                {
+                    input = CreateDropdownFor(parameterName, parent, variableProperties);
+                    ((ComboBox)input).AddVariableNames(editor);
+                }
+                else if (winList != null && winList.isWindowNamesList)
+                {
+                    input = CreateDropdownFor(parameterName, parent, variableProperties);
+                    ((ComboBox)input).AddVariableNames(editor);
+                }
+                else
+                {
+                    input = CreateDefaultInputFor(parameterName, parent);
+                }
             }
 
             var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);

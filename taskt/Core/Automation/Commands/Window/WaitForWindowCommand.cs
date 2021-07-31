@@ -10,21 +10,24 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
-    [Attributes.ClassAttributes.SubGruop("Window Action")]
+    [Attributes.ClassAttributes.SubGruop("Window Actions")]
     [Attributes.ClassAttributes.Description("This command waits for a window to exist.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to explicitly wait for a window to exist before continuing script execution.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'ShowWindow' from user32.dll to achieve automation.")]
     public class WaitForWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window name that you are waiting for to exist. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window name that you are waiting for to exist.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to wait to exist.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_WindowName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window title search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Window title search method (Default is Contains)")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
@@ -32,13 +35,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
         [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_SearchMethod { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait before an error should be raised. (ex. 5, {{{vWaitTime}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait before an error should be raised.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to wait before an error should be invoked")]
         [Attributes.PropertyAttributes.SampleUsage("**5** or **{{{vWaitTime}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_LengthToWait { get; set; }
 
         [XmlIgnore]
@@ -139,17 +145,18 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create window name helper control
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
-            RenderedControls.Add(WindowNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            //WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            //RenderedControls.Add(WindowNameControl);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
-            //create standard group controls
-            var lengthToWaitControlSet = CommandControls.CreateDefaultInputGroupFor("v_LengthToWait", this, editor);
-            RenderedControls.AddRange(lengthToWaitControlSet);
+            ////create standard group controls
+            //var lengthToWaitControlSet = CommandControls.CreateDefaultInputGroupFor("v_LengthToWait", this, editor);
+            //RenderedControls.AddRange(lengthToWaitControlSet);
 
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 

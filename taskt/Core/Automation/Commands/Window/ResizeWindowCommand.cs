@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
-    [Attributes.ClassAttributes.SubGruop("Window Action")]
+    [Attributes.ClassAttributes.SubGruop("Window Actions")]
     [Attributes.ClassAttributes.Description("This command resizes a window to a specified size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reize a window by name to a specific size on screen.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetWindowPos' from user32.dll to achieve automation.")]
@@ -18,13 +18,16 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to resize. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to resize.")]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to resize.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_WindowName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window title search method (Default is Contains)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Window title search method (Default is Contains)")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
@@ -32,20 +35,24 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
         [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_SearchMethod { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window. (ex. 640, {{{vWidth}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required width (pixel) of the window.")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new width size of the window")]
         [Attributes.PropertyAttributes.SampleUsage("**640** or **{{{vWidth}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid width range could be 0-1920")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_XWindowSize { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required height (pixel) of the window. (ex. 480, {{{vHeight}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new required height (pixel) of the window.")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new height size of the window")]
         [Attributes.PropertyAttributes.SampleUsage("**480** or **{{{vHeight}}}**")]
         [Attributes.PropertyAttributes.Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid height range could be 0-1080")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_YWindowSize { get; set; }
 
         [XmlIgnore]
@@ -135,18 +142,20 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create window name helper control
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
-            RenderedControls.Add(WindowNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            //WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            //RenderedControls.Add(WindowNameControl);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
-            //create standard group controls
-            var xGroup = CommandControls.CreateDefaultInputGroupFor("v_XWindowSize", this, editor);
-            var yGroup = CommandControls.CreateDefaultInputGroupFor("v_YWindowSize", this, editor);
-            RenderedControls.AddRange(xGroup);
-            RenderedControls.AddRange(yGroup);
+            ////create standard group controls
+            //var xGroup = CommandControls.CreateDefaultInputGroupFor("v_XWindowSize", this, editor);
+            //var yGroup = CommandControls.CreateDefaultInputGroupFor("v_YWindowSize", this, editor);
+            //RenderedControls.AddRange(xGroup);
+            //RenderedControls.AddRange(yGroup);
+
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
       
             return RenderedControls;
 

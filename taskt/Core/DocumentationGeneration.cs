@@ -97,6 +97,15 @@ namespace taskt.Core
 
                     commandLabel = commandLabel.Replace("*", "\\*").Replace("|", "\\|");
 
+                    var isOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
+                    if (isOpt != null && isOpt.isOptional)
+                    {
+                        if (!commandLabel.Contains("Optional"))
+                        {
+                            commandLabel = "Optional - " + commandLabel;
+                        }
+                    }
+
                     //append to parameter table
                     sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
 
