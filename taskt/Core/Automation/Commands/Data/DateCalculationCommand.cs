@@ -21,11 +21,12 @@ namespace taskt.Core.Automation.Commands
     public class DateCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable (ex. {{{DateTime.Now}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the date value or variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains the start date.")]
-        [Attributes.PropertyAttributes.SampleUsage("{{{DateTime.Now}}}} or 1/1/2000")]
+        [Attributes.PropertyAttributes.SampleUsage("**{{{DateTime.Now}}}** or **1/1/2000**")]
         [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
@@ -42,22 +43,26 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Subtract Years")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary operation")]
         [Attributes.PropertyAttributes.SampleUsage("Select From Add Seconds, Add Minutes, Add Hours, Add Days, Add Years, Subtract Seconds, Subtract Minutes, Subtract Hours, Subtract Days, Subtract Years ")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_CalculationMethod { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value (ex. 15, {{{vIncrement}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the increment value")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter how many units to increment by")]
         [Attributes.PropertyAttributes.SampleUsage("15, {{{vIncrement}}}")]
         [Attributes.PropertyAttributes.Remarks("You can use negative numbers which will do the opposite, ex. Subtract Days and an increment of -5 will Add Days.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_Increment { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify String Format")]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify String Format")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("MM/dd/yy, hh:mm, etc.")]
+        [Attributes.PropertyAttributes.SampleUsage("**MM/dd/yy** or **hh:mm** or etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
@@ -66,6 +71,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
 
         public DateCalculationCommand()
@@ -152,18 +159,20 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_CalculationMethod", this));
-            RenderedControls.Add(CommandControls.CreateDropdownFor("v_CalculationMethod", this));
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_CalculationMethod", this));
+            //RenderedControls.Add(CommandControls.CreateDropdownFor("v_CalculationMethod", this));
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Increment", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Increment", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

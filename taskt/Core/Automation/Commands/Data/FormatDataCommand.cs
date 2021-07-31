@@ -17,11 +17,12 @@ namespace taskt.Core.Automation.Commands
     public class FormatDataCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. {{{DateTime.Now}}}, 2500, {{{vNum}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains a date or number requiring formatting")]
-        [Attributes.PropertyAttributes.SampleUsage("{{{DateTime.Now}}}, 1/1/2000, 2500")]
+        [Attributes.PropertyAttributes.SampleUsage("**{{{DateTime.Now}}}** or **1/1/2000** or **2500** or **{{{vNum}}}** or **C:\\temp\\myfile.txt**")]
         [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
@@ -32,14 +33,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Indicate the source type")]
         [Attributes.PropertyAttributes.SampleUsage("Choose **Date** or **Number** or **Path**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_FormatType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify required output format (ex. yy/MM/dd, hh:mm, #.0, file)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify required output format")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify if a specific string format is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("**MM/dd/yy**, **hh:mm**, **C2**, **D2**, **file** etc.")]
+        [Attributes.PropertyAttributes.SampleUsage("**MM/dd/yy** or **hh:mm** or **#.0** or **file** etc.")]
         [Attributes.PropertyAttributes.Remarks("Path supports **file**, **folder**, **filewithoutextension**, **extension**, **drive**")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
@@ -48,6 +51,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
 
 
@@ -149,20 +154,22 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_FormatType", this));
-            //RenderedControls.Add(CommandControls.CreateDropdownFor("v_FormatType", this));
-            var typeCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_FormatType", this, editor);
-            RenderedControls.AddRange(typeCtrls);
+            ////RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_FormatType", this));
+            ////RenderedControls.Add(CommandControls.CreateDropdownFor("v_FormatType", this));
+            //var typeCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_FormatType", this, editor);
+            //RenderedControls.AddRange(typeCtrls);
 
-            var formatCtls = CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor);
-            RenderedControls.AddRange(formatCtls);
+            //var formatCtls = CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor);
+            //RenderedControls.AddRange(formatCtls);
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

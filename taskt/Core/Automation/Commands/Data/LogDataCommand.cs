@@ -15,8 +15,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
     public class LogDataCommand : ScriptCommand
     {
-
-
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Select existing log file or enter a custom name.(ex. MyLog, Engine Log)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Logs")]
@@ -32,6 +30,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Indicate the value of the text to be saved.")]
         [Attributes.PropertyAttributes.SampleUsage("Third Step Complete, {{{vVariable}}}, etc.")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_LogText { get; set; }
 
         public LogDataCommand()
