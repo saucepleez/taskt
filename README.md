@@ -55,7 +55,7 @@ Please note whatever software that taskt is automating can affect the minimum so
  * 1 vCPU
  * .NET Framework 4.8
 ## Recommended
- * Windows 10/Server 2012/Server 2016
+ * Windows 10/Server 2012/Server 2016/Server 2019
  * 4GB ram
  * 1GB disk space
  * 2 CPU
