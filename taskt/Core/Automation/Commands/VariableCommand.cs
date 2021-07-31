@@ -30,12 +30,21 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**1** or **Hello** or {{{vNum}}}")]
         [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
         public string v_Input { get; set; }
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Convert Variables in Input Text Above")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
+        [Attributes.PropertyAttributes.InputSpecification("Select the necessary option.")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_ReplaceInputVariables { get; set; }
+
         public VariableCommand()
         {
             this.CommandName = "VariableCommand";
             this.SelectionName = "Set Variable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+            this.v_ReplaceInputVariables = "Yes";
         }
 
         public override void RunCommand(object sender)
@@ -54,9 +63,15 @@ namespace taskt.Core.Automation.Commands
 
             if (requiredVariable != null)
             {
-
-
-                var variableInput = v_Input.ConvertToUserVariable(sender);
+                string variableInput;
+                if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
+                {
+                    variableInput = v_Input.ConvertToUserVariable(sender);
+                }
+                else
+                {
+                    variableInput = v_Input;
+                }              
 
 
                 if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
@@ -111,7 +126,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(VariableNameControl);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ReplaceInputVariables", this, editor));
             return RenderedControls;
         }
 

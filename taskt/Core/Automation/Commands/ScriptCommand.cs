@@ -186,6 +186,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(RunScriptCommand))]
     [XmlInclude(typeof(StartProcessCommand))]
     [XmlInclude(typeof(StopProcessCommand))]
+    [XmlInclude(typeof(RunPowershellCommand))]
 
     // Regex
     [XmlInclude(typeof(GetRegexMatchesCommand))]

@@ -314,6 +314,22 @@ namespace taskt.Core
             };
             newVariableCommand.RunCommand(sender);
         }
+
+        /// <summary>
+        /// Stores value of the string to a user-defined variable without attempting to convert variables
+        /// </summary>
+        /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
+        /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
+        public static void StoreRawDataInUserVariable(this String str, object sender, string targetVariable)
+        {
+            Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
+            {
+                v_userVariableName = targetVariable,
+                v_Input = str,
+                v_ReplaceInputVariables = "No"            
+            };
+            newVariableCommand.RunCommand(sender);
+        }
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>

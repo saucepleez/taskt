@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="249a7ce3-f8af-4716-a971-46584dee74e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Create .ps file with text 'Write-Host &quot;Hello, World from {rpa}!&quot;'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddVariableCommand" CommandID="1a73c02c-0729-47b6-8656-e582fdf74658" CommandName="AddVariableCommand" IsCommented="false" SelectionName="New Variable" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="rpa" v_Input="taskt">
+        <v_IfExists>Replace If Variable Exists</v_IfExists>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="249a7ce3-f8af-4716-a971-46584dee74e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Execute Powershell and replace with variables" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RunPowershellCommand" CommandID="ef1ea10b-1698-44e3-a116-f0fb94e8d00f" CommandName="RunPowershellCommand" IsCommented="false" SelectionName="Run Powershell" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ScriptPath="C:\Path\to\ps\script\run-me.ps" v_PowerShellArgs="-NoProfile -ExecutionPolicy unrestricted" v_ReplaceScriptVariables="Yes" v_applyToVariableName="vOut" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="249a7ce3-f8af-4716-a971-46584dee74e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Will Show 'Hello World from taskt'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2f51674b-fd4d-4799-bb35-a52c285018ad" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vOut}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="249a7ce3-f8af-4716-a971-46584dee74e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Execute Powershell and do not replace with variables" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RunPowershellCommand" CommandID="ef1ea10b-1698-44e3-a116-f0fb94e8d00f" CommandName="RunPowershellCommand" IsCommented="false" SelectionName="Run Powershell" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_ScriptPath="C:\Path\to\ps\script\run-me.ps" v_PowerShellArgs="-NoProfile -ExecutionPolicy unrestricted" v_ReplaceScriptVariables="No" v_applyToVariableName="vOut" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="249a7ce3-f8af-4716-a971-46584dee74e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Will Show 'Hello World from {rpa}'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2f51674b-fd4d-4799-bb35-a52c285018ad" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="{vOut}" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vOut</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
