@@ -127,24 +127,23 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            //ParametersGridViewHelper = new DataGridView();
-            //ParametersGridViewHelper.AllowUserToAddRows = true;
-            //ParametersGridViewHelper.AllowUserToDeleteRows = true;
-            //ParametersGridViewHelper.Size = new Size(350, 125);
-            //ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            ParametersGridViewHelper = new DataGridView();
+            ParametersGridViewHelper.AllowUserToAddRows = true;
+            ParametersGridViewHelper.AllowUserToDeleteRows = true;
+            ParametersGridViewHelper.Size = new Size(350, 125);
+            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
             ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_TextExtractionTable", false, false, false, 400, 160);
             ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
             ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionType", this));
             var selectionControl = (ComboBox)CommandControls.CreateDropdownFor("v_TextExtractionType", this);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionType", this, new Control[] { selectionControl }, editor));
             selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
             RenderedControls.Add(selectionControl);
-
 
             //create control for variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
@@ -155,8 +154,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionTable", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionTable", this, new Control[] { ParametersGridViewHelper }, editor));
             RenderedControls.Add(ParametersGridViewHelper);
-
-
 
             return RenderedControls;
         }

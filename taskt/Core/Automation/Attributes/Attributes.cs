@@ -224,4 +224,25 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.showSampleUsage = opt;
         }
     }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyDataGridViewSetting : System.Attribute
+    {
+        public bool allowAddRow = true;
+        public bool allowDeleteRow = true;
+        public bool allowResizeRow = true;
+        public int width = 400;
+        public int height = 250;
+        public bool autoGenerateColumns = true;
+        public int headerRowHeight = 1;
+        public PropertyDataGridViewSetting(bool allowAddRow, bool allowDeleteRow, bool allowResizeRow, int width, int height, bool autoGenerateColumns, int headerRowHeight)
+        {
+            this.allowAddRow = allowAddRow;
+            this.allowDeleteRow = allowDeleteRow;
+            this.allowResizeRow = allowResizeRow;
+            this.width = width;
+            this.height = height;
+            this.autoGenerateColumns = autoGenerateColumns;
+            this.headerRowHeight = headerRowHeight;
+        }
+    }
 }
