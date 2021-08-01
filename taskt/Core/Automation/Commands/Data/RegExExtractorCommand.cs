@@ -17,19 +17,21 @@ namespace taskt.Core.Automation.Commands
     public class RegExExtractorCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable (ex. hallo hello, {{{vText}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the value or variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Input the RegEx Extractor Pattern (ex. \\w+)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Input the RegEx Extractor Pattern")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the RegEx extractor pattern that should be used to extract the text")]
-        [Attributes.PropertyAttributes.SampleUsage(@"^([\w\-]+)")]
+        [Attributes.PropertyAttributes.SampleUsage("**\\w+** or **^([\\w\\-]+)**")]
         [Attributes.PropertyAttributes.Remarks("If an extractor splits each word in a sentence, for example, you will need to specify the associated index of the word that is required.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_RegExExtractor { get; set; }
 
         [XmlAttribute]
@@ -45,6 +47,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
 
         public RegExExtractorCommand()

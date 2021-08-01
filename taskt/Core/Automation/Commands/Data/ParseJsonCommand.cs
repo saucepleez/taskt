@@ -18,19 +18,21 @@ namespace taskt.Core.Automation.Commands
     public class ParseJsonCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the JSON text or variable requiring extraction (ex. {\"id\":2} {{{vJSONVariable}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the JSON text or variable requiring extraction")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
         [Attributes.PropertyAttributes.SampleUsage("**{\"id\":2}** or **{{{vSomeVariable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify a JSON extractor (ex. $.id)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Specify a JSON extractor")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input a JSON token extractor")]
-        [Attributes.PropertyAttributes.SampleUsage("$.id")]
+        [Attributes.PropertyAttributes.SampleUsage("**$.id**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
@@ -38,6 +40,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
 
         public ParseJsonCommand()
@@ -119,14 +123,16 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_JsonExtractor", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_JsonExtractor", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 

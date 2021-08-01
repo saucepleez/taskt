@@ -18,19 +18,21 @@ namespace taskt.Core.Automation.Commands
     public class MathCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please supply the input to be computed (ex. (2 + 1), {{{vNum}}}+1)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please supply the input to be computed")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify either text or a variable that contains valid math.")]
-        [Attributes.PropertyAttributes.SampleUsage("2+1, {{{vNum}}}+1")]
+        [Attributes.PropertyAttributes.SampleUsage("**2+1** or **{{{vNum}}}+1**")]
         [Attributes.PropertyAttributes.Remarks("You can use known numbers or variables.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate Thousand Seperator")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate Thousand Seperator")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the seperator used to identify decimal places")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("Typically a comma or a decimal point (period)")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_ThousandSeperator { get; set; }
 
         [XmlAttribute]
@@ -39,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter the seperator used to identify decimal places")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("Typically a comma or a decimal point (period)")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_DecimalSeperator { get; set; }
 
         [XmlAttribute]
@@ -46,6 +49,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
 
         public MathCalculationCommand()
@@ -112,15 +117,16 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ThousandSeperator", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DecimalSeperator", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ThousandSeperator", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DecimalSeperator", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
 
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 

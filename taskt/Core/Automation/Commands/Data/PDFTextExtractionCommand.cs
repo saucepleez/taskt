@@ -17,21 +17,24 @@ namespace taskt.Core.Automation.Commands
     public class PDFTextExtractionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path or PDF file URL (ex. c:\\temp\\myfile.pdf, {{{vPDFPath}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the PDF file path or PDF file URL")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.pdf , {{{vFilePath}}} or https://temp.com/myfile.pdf")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.pdf** or **{{{vFilePath}}}* or **https://temp.com/myfile.pdf**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please select source type of PDF file (default is File Path)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select source type of PDF file (default is File Path)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File Path")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File URL")]
         [Attributes.PropertyAttributes.InputSpecification("Select source type of PDF file")]
         [Attributes.PropertyAttributes.SampleUsage("Select **File Path**, **File URL**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_FileSourceType { get; set; }
 
         [XmlAttribute]
@@ -39,6 +42,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
 
         public PDFTextExtractionCommand()
@@ -113,15 +118,16 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileSourceType", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FileSourceType", this, editor));
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
 
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 

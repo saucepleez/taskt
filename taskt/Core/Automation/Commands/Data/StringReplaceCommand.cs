@@ -16,27 +16,31 @@ namespace taskt.Core.Automation.Commands
     public class StringReplaceCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify (ex. Hello, {{{vText}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the text to be replaced (ex. H, {{{vTextA}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the old value of the text that will be replaced")]
-        [Attributes.PropertyAttributes.SampleUsage("H, {{{vTextA}}}")]
+        [Attributes.PropertyAttributes.SampleUsage("**H** or **{{{vTextA}}}**")]
         [Attributes.PropertyAttributes.Remarks("H in Hello would be targeted for replacement")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_replacementText { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the replacement value (ex. J, {{{vTextB}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the replacement value")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the new value after replacement")]
-        [Attributes.PropertyAttributes.SampleUsage("J, {{{vTextB}}}")]
+        [Attributes.PropertyAttributes.SampleUsage("**J**, **{{{vTextB}}}**")]
         [Attributes.PropertyAttributes.Remarks("H would be replaced with J to create 'Jello'")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_replacementValue { get; set; }
 
         [XmlAttribute]
@@ -44,6 +48,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
         public StringReplaceCommand()
         {
@@ -72,17 +78,19 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
 
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_replacementText", this, editor));
+            ////create standard group controls
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_replacementText", this, editor));
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_replacementValue", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_replacementValue", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 

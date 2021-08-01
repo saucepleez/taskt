@@ -16,32 +16,38 @@ namespace taskt.Core.Automation.Commands
     public class StringSubstringCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text (ex. Hello, {{{vText}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable or text")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vSomeVariable}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
 
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Start from Position (ex, 1, {{{vPosition}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Start from Position")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate the starting position within the string")]
-        [Attributes.PropertyAttributes.SampleUsage("0 for beginning, 1 for first character, etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.SampleUsage("**1** or **{{{vPosition}}}**")]
+        [Attributes.PropertyAttributes.Remarks("0 for beginning, 1 for first character, etc.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_startIndex { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Length (-1 to keep remainder) (ex. 1, -1, {{{vLength}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Length (-1 to keep remainder) (Default is -1)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
-        [Attributes.PropertyAttributes.SampleUsage("-1 to keep remainder, 1 for 1 position after start index, etc.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.SampleUsage("**1** or **-1** or **{{{vLength}}}**")]
+        [Attributes.PropertyAttributes.Remarks("-1 to keep remainder, 1 for 1 position after start index.")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_stringLength { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
         public StringSubstringCommand()
         {
