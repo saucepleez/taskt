@@ -45,6 +45,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Define the required extraction parameters, which is dependent on the type of extraction.")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, true, 400, 135)]
+        [Attributes.PropertyAttributes.PropertySecondaryLabel(true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All After Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All After Text\tSkip Past Occurences", "", "")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Before Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Before Text\tSkip Past Occurences", "")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Between Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Between Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Between Text\tSkip Past Occurences", "")]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
@@ -59,6 +69,18 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         private DataGridView ParametersGridViewHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private Label Parameters2ndLabel;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private ComboBox selectionControl;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo> DGVInfo;
 
         public TextExtractorCommand()
         {
@@ -76,6 +98,9 @@ namespace taskt.Core.Automation.Commands
 
             this.v_TextExtractionTable.Columns.Add("Parameter Name");
             this.v_TextExtractionTable.Columns.Add("Parameter Value");
+
+            var variableProperties = this.GetType().GetProperties().Where(f => f.Name == "v_TextExtractionTable").FirstOrDefault();
+            DGVInfo = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo>().ToList();
         }
 
         public override void RunCommand(object sender)
@@ -127,33 +152,45 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            ParametersGridViewHelper = new DataGridView();
-            ParametersGridViewHelper.AllowUserToAddRows = true;
-            ParametersGridViewHelper.AllowUserToDeleteRows = true;
-            ParametersGridViewHelper.Size = new Size(350, 125);
-            ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_TextExtractionTable", false, false, false, 400, 160);
+            //ParametersGridViewHelper = new DataGridView();
+            //ParametersGridViewHelper.AllowUserToAddRows = true;
+            //ParametersGridViewHelper.AllowUserToDeleteRows = true;
+            //ParametersGridViewHelper.Size = new Size(350, 125);
+            //ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
+            //ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_TextExtractionTable", false, false, false, 400, 160);
+            //ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
+            //ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
+
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionType", this));
+            //var selectionControl = (ComboBox)CommandControls.CreateDropdownFor("v_TextExtractionType", this);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionType", this, new Control[] { selectionControl }, editor));
+            //selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
+            //RenderedControls.Add(selectionControl);
+
+            ////create control for variable name
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionTable", this));
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionTable", this, new Control[] { ParametersGridViewHelper }, editor));
+            //RenderedControls.Add(ParametersGridViewHelper);
+
+            var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctls);
+
+            ParametersGridViewHelper = (DataGridView)ctls.Where(t => t.Name == "v_TextExtractionTable").FirstOrDefault();
             ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
             ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+            Parameters2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_TextExtractionTable").FirstOrDefault();
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionType", this));
-            var selectionControl = (ComboBox)CommandControls.CreateDropdownFor("v_TextExtractionType", this);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionType", this, new Control[] { selectionControl }, editor));
+            selectionControl = (ComboBox)ctls.Where(t => t.Name == "v_TextExtractionType").FirstOrDefault();
             selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
-            RenderedControls.Add(selectionControl);
-
-            //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionTable", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionTable", this, new Control[] { ParametersGridViewHelper }, editor));
-            RenderedControls.Add(ParametersGridViewHelper);
 
             return RenderedControls;
         }
@@ -167,6 +204,7 @@ namespace taskt.Core.Automation.Commands
 
             var textParameters = (DataTable)ParametersGridViewHelper.DataSource;
 
+            Parameters2ndLabel.Text = "";
             textParameters.Rows.Clear();
 
 
@@ -209,6 +247,9 @@ namespace taskt.Core.Automation.Commands
             {
                 ParametersGridViewHelper.BeginEdit(false);
             }
+            string searchedKey = selectionControl.Text + "\t" + ParametersGridViewHelper.Rows[e.RowIndex].Cells[0].Value;
+
+            Parameters2ndLabel.Text = CommandControls.GetDataGridViewRowInfoText(DGVInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault());
         }
         private string GetParameterValue(string parameterName)
         {
