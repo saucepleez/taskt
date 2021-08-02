@@ -321,9 +321,18 @@ namespace taskt.UI.CustomControls
             {
                 variableProperties = pInfo;
             }
-            return CreateDefaultInputFor(parameterName, parent, 30, 300);
+
+            var setting = (Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting));
+            if (setting == null)
+            {
+                return CreateDefaultInputFor(parameterName, parent, 30, 300, true);
+            }
+            else
+            {
+                return CreateDefaultInputFor(parameterName, parent, setting.height * 30, 300, setting.allowNewLine);
+            }
         }
-        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300)
+        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300, bool allowNewLine = true)
         {
             var inputBox = new TextBox();
             //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
@@ -332,13 +341,19 @@ namespace taskt.UI.CustomControls
             inputBox.ForeColor = theme.FontColor;
             inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
-            inputBox.Height = height;
-            inputBox.Width = width;
-
-            if (inputBox.Height != 30)
+            
+            if (!allowNewLine)
+            {
+                inputBox.KeyDown += (sender, e) => TextBoxKeyDown(sender, e);
+                inputBox.ScrollBars = ScrollBars.None;
+            }
+            else
             {
                 inputBox.Multiline = true;
+                inputBox.ScrollBars = ScrollBars.Vertical;
             }
+            inputBox.Height = height;
+            inputBox.Width = width;
 
             inputBox.Name = parameterName;
             return inputBox;
@@ -991,6 +1006,15 @@ namespace taskt.UI.CustomControls
                         }
                     }
                 }
+            }
+        }
+
+        private static void TextBoxKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
             }
         }
 
