@@ -59,7 +59,7 @@ namespace taskt.UI.CustomControls
                 switch (rct.recommendedControl)
                 {
                     case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
-                        input = CreateDefaultInputFor(parameterName, parent);
+                        input = CreateDefaultInputFor(parameterName, parent, variableProperties);
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
                         input = CreateDropdownFor(parameterName, parent, variableProperties);
@@ -78,10 +78,10 @@ namespace taskt.UI.CustomControls
                         }
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
-                        input = CreateDropdownFor(parameterName, parent);
+                        input = CreateDataGridView(parent, parameterName, variableProperties);
                         break;
                     default:
-                        input = CreateDefaultInputFor(parameterName, parent);
+                        input = CreateDefaultInputFor(parameterName, parent, variableProperties);
                         break;
                 }
             }
@@ -108,13 +108,22 @@ namespace taskt.UI.CustomControls
                 }
                 else
                 {
-                    input = CreateDefaultInputFor(parameterName, parent);
+                    input = CreateDefaultInputFor(parameterName, parent, variableProperties);
                 }
             }
 
             var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
 
             controlList.Add(label);
+
+            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
+            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
+            {
+                var label2 = CreateSimpleLabel();
+                label2.Name = "lbl2_" + parameterName;
+                controlList.Add(label2);
+            }
+
             controlList.AddRange(helpers);
             if (additionalLinks != null)
             {
@@ -129,11 +138,23 @@ namespace taskt.UI.CustomControls
         {
             //Todo: Test
             var controlList = new List<Control>();
-            var label = CreateDefaultLabelFor(parameterName, parent);
-            var input = CreateDefaultInputFor(parameterName, parent);
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor);
+
+            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+
+            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
+            var input = CreateDefaultInputFor(parameterName, parent, variableProperties);
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
 
             controlList.Add(label);
+
+            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
+            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
+            {
+                var label2 = CreateSimpleLabel();
+                label2.Name = "lbl2_" + parameterName;
+                controlList.Add(label2);
+            }
+
             controlList.AddRange(helpers);
             if (additionalLinks != null)
             {
@@ -149,11 +170,23 @@ namespace taskt.UI.CustomControls
         {
             //Todo: Test
             var controlList = new List<Control>();
-            var label = CreateDefaultLabelFor(parameterName, parent);
-            var input = CreateDropdownFor(parameterName, parent);
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor);
+
+            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+
+            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
+            var input = CreateDropdownFor(parameterName, parent, variableProperties);
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
 
             controlList.Add(label);
+
+            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
+            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
+            {
+                var label2 = CreateSimpleLabel();
+                label2.Name = "lbl2_" + parameterName;
+                controlList.Add(label2);
+            }
+
             controlList.AddRange(helpers);
             if (additionalLinks != null)
             {
@@ -168,11 +201,23 @@ namespace taskt.UI.CustomControls
         public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
             var controlList = new List<Control>();
-            var label = CreateDefaultLabelFor(parameterName, parent);
-            var gridview = CreateDataGridView(parent, parameterName);
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { gridview }, editor);
+
+            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+
+            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
+            var gridview = CreateDataGridView(parent, parameterName, variableProperties);
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { gridview }, editor, variableProperties);
 
             controlList.Add(label);
+
+            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
+            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
+            {
+                var label2 = CreateSimpleLabel();
+                label2.Name = "lbl2_" + parameterName;
+                controlList.Add(label2);
+            }
+
             controlList.AddRange(helpers);
             if (additionalLinks != null)
             {
@@ -181,6 +226,17 @@ namespace taskt.UI.CustomControls
             controlList.Add(gridview);
 
             return controlList;
+        }
+
+        public static Label CreateSimpleLabel()
+        {
+            Label newLabel = new Label();
+            var theme = CurrentEditor.Theme.Label;
+            newLabel.AutoSize = true;
+            newLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            newLabel.ForeColor = theme.FontColor;
+            newLabel.BackColor = theme.BackColor;
+            return newLabel;
         }
         public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
         {
@@ -199,7 +255,7 @@ namespace taskt.UI.CustomControls
             // var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
             var settings = CurrentEditor.appSettings.EngineSettings;
 
-            Label inputLabel = new Label();
+            Label inputLabel = CreateSimpleLabel();
             if (propertyAttributesAssigned.Length > 0)
             {
                 var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
@@ -214,7 +270,10 @@ namespace taskt.UI.CustomControls
                         {
                             var sampleAttr = (Core.Automation.Attributes.PropertyAttributes.SampleUsage)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage));
                             var sampleText = (sampleAttr == null) ? "" : sampleAttr.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
-                            labelText += " (ex. " + sampleText + ")";
+                            if (sampleText.Length > 0)
+                            {
+                                labelText += " (ex. " + sampleText + ")";
+                            }
                         }
                     }
                 }
@@ -235,16 +294,34 @@ namespace taskt.UI.CustomControls
                 inputLabel.Text = parameterName;
             }
 
-            var theme = CurrentEditor.Theme.Label;
-            inputLabel.AutoSize = true;
+            //var theme = CurrentEditor.Theme.Label;
+            //inputLabel.AutoSize = true;
             //inputLabel.Font = new Font("Segoe UI Light", 12);
             //inputLabel.ForeColor = Color.White;
-            inputLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            inputLabel.ForeColor = theme.FontColor;
-            inputLabel.BackColor = theme.BackColor;
+            //inputLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            //inputLabel.ForeColor = theme.FontColor;
+            //inputLabel.BackColor = theme.BackColor;
 
             inputLabel.Name = "lbl_" + parameterName;
             return inputLabel;
+        }
+        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
+        {
+            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            return CreateDefaultInputFor(parameterName, parent, variableProperties);
+        }
+        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
+        {
+            PropertyInfo variableProperties;
+            if (pInfo == null)
+            {
+                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+            }
+            else
+            {
+                variableProperties = pInfo;
+            }
+            return CreateDefaultInputFor(parameterName, parent, 30, 300);
         }
         public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300)
         {
@@ -355,6 +432,7 @@ namespace taskt.UI.CustomControls
                 return controlList;
             }
 
+            int count = 0;
             foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper attrib in propertyUIHelpers)
             {
                 taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
@@ -365,7 +443,7 @@ namespace taskt.UI.CustomControls
                 helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
                 helperControl.ForeColor = theme.FontColor;
                 helperControl.BackColor = theme.BackColor;
-                helperControl.Name = parameterName + "_helper";
+                helperControl.Name = parameterName + "_helper_" + count.ToString(); ;
                 helperControl.Tag = targetControls.FirstOrDefault();
                 helperControl.HelperType = attrib.additionalHelper;
 
@@ -474,14 +552,26 @@ namespace taskt.UI.CustomControls
                 }
 
                 controlList.Add(helperControl);
-
+                count++;
             }
 
             return controlList;
 
         }
 
-      
+        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, PropertyInfo prop)
+        {
+            var dgvProp = (Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting));
+            if (dgvProp == null)
+            {
+                return CreateDataGridView(sourceCommand, dataSourceName);
+            }
+            else
+            {
+                return CreateDataGridView(sourceCommand, dataSourceName, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
+            }
+        }
+
         public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
         {
             if (width < 100)
@@ -494,6 +584,7 @@ namespace taskt.UI.CustomControls
             }
 
             var gridView = new DataGridView();
+            gridView.Name = dataSourceName;
             gridView.AllowUserToAddRows = AllowAddRows;
             gridView.AllowUserToDeleteRows = AllowDeleteRows;
             gridView.AutoGenerateColumns = AutoGenerateColumns;
@@ -1065,6 +1156,29 @@ namespace taskt.UI.CustomControls
             }
 
             return cbo;
+        }
+
+        public static string GetDataGridViewRowInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo rowInfo)
+        {
+            if (rowInfo == null)
+            {
+                return "";
+            }
+
+            string ret = rowInfo.description.replaceEngineKeyword();
+            if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+            {
+                if (!ret.Contains("(ex."))
+                {
+                    string smp = rowInfo.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
+                    if (smp.Length > 0)
+                    {
+                        ret += " (ex. " + smp + ")";
+                    }
+                }
+            }
+
+            return ret;
         }
 
         private static string replaceEngineKeyword(this string targetString)
