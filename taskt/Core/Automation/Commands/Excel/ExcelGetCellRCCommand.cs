@@ -21,6 +21,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Row (ex. 1, 2, {{{vRow}}})")]
@@ -28,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell row.")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **2** or **{{{vRow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_ExcelCellRow { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Column (ex. 1, 2, {{{vColumn}}})")]
@@ -35,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell column.")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **2** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_ExcelCellColumn { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]

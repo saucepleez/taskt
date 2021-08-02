@@ -36,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell row.")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **2** or **{{{vRow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_ExcelCellRow { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Column (ex. 1, 2, {{{vColumn}}})")]
@@ -43,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell column.")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **2** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_ExcelCellColumn { get; set; }
         public ExcelSetCellRCCommand()
         {

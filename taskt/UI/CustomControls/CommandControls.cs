@@ -80,6 +80,9 @@ namespace taskt.UI.CustomControls
                     case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
                         input = CreateDataGridView(parent, parameterName, variableProperties);
                         break;
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
+                        input = CreateDefaultInputFor(parameterName, parent, variableProperties);
+                        break;
                     default:
                         input = CreateDefaultInputFor(parameterName, parent, variableProperties);
                         break;
@@ -323,13 +326,29 @@ namespace taskt.UI.CustomControls
             }
 
             var setting = (Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting));
+            var rcmCtl = (Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl));
             if (setting == null)
             {
-                return CreateDefaultInputFor(parameterName, parent, 30, 300, true);
+                if (rcmCtl == null || rcmCtl.recommendedControl != Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)
+                {
+                    return CreateDefaultInputFor(parameterName, parent, 30, 300, true);
+                }
+                else
+                {
+                    return CreateDefaultInputFor(parameterName, parent, 90, 300, true);
+                }
             }
             else
             {
-                return CreateDefaultInputFor(parameterName, parent, setting.height * 30, 300, setting.allowNewLine);
+                if (rcmCtl != null && rcmCtl.recommendedControl == Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)
+                {
+                    int height = (setting.height < 2) ? 3 : setting.height;
+                    return CreateDefaultInputFor(parameterName, parent, height * 30, 300, setting.allowNewLine);
+                }
+                else
+                {
+                    return CreateDefaultInputFor(parameterName, parent, setting.height * 30, 300, setting.allowNewLine);
+                }
             }
         }
         public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300, bool allowNewLine = true)
