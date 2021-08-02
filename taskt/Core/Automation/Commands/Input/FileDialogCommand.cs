@@ -118,7 +118,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DialogType", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DialogType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilterIndex", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InitialDirectory", this, editor));
