@@ -211,6 +211,24 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyTextBoxSetting : System.Attribute
+    {
+        public int height = 1;
+        public bool allowNewLine = true;
+        public PropertyTextBoxSetting(int height = 1, bool allowNewLine = true)
+        {
+            if (height < 0)
+            {
+                this.height = 1;
+            }
+            else
+            {
+                this.height = height;
+            }
+            this.allowNewLine = allowNewLine;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyDataGridViewSetting : System.Attribute
     {
         public bool allowAddRow = true;
