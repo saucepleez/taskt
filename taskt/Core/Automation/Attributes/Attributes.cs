@@ -259,13 +259,13 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class PropertyDataGridViewRowInfo : System.Attribute
+    public sealed class PropertyAddtionalParameterInfo : System.Attribute
     {
         public string searchKey = "";
         public string description = "";
         public string sampleUsage = "";
         public string remarks = "";
-        public PropertyDataGridViewRowInfo(string searchKey, string description, string sampleUsage = "", string remarks = "")
+        public PropertyAddtionalParameterInfo(string searchKey, string description, string sampleUsage = "", string remarks = "")
         {
             this.searchKey = searchKey;
             this.description = description;
