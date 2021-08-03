@@ -1201,7 +1201,7 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        public static string GetDataGridViewRowInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo rowInfo)
+        public static string GetDataGridViewRowInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
         {
             if (rowInfo == null)
             {
@@ -1241,14 +1241,24 @@ namespace taskt.UI.CustomControls
                 idxTable = targetString.IndexOf("\\|");
                 if (idxAster >= 0 || idxTable >= 0)
                 {
-                    if (idxAster < idxTable)
+                    if ((idxAster >= 0) && (idxTable < 0))
                     {
                         ret += targetString.Substring(0, idxAster).removeMDFormat() + "*";
                         targetString = targetString.Substring(idxAster + 1);
                     }
-                    else
+                    else if ((idxTable >= 0) && (idxAster < 0))
                     {
-                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "*";
+                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "|";
+                        targetString = targetString.Substring(idxTable + 1);
+                    }
+                    else if (idxAster < idxTable)
+                    {
+                        ret += targetString.Substring(0, idxAster).removeMDFormat() + "*";
+                        targetString = targetString.Substring(idxAster + 1);
+                    }
+                    else if (idxTable < idxAster)
+                    {
+                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "|";
                         targetString = targetString.Substring(idxTable + 1);
                     }
                 }
