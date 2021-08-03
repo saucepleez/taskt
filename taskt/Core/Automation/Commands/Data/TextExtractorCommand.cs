@@ -48,13 +48,13 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, true, 400, 135)]
         [Attributes.PropertyAttributes.PropertySecondaryLabel(true)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All After Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All After Text\tSkip Past Occurences", "", "")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Before Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Before Text\tSkip Past Occurences", "")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Between Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Between Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewRowInfo("Extract All Between Text\tSkip Past Occurences", "")]
+        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All After Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
+        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All After Text\tSkip Past Occurences", "", "")]
+        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Before Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
+        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Before Text\tSkip Past Occurences", "")]
+        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
+        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
+        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tSkip Past Occurences", "")]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        private List<Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo> DGVInfo;
+        private List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> DGVInfo;
 
         public TextExtractorCommand()
         {
@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             this.v_TextExtractionTable.Columns.Add("Parameter Value");
 
             var variableProperties = this.GetType().GetProperties().Where(f => f.Name == "v_TextExtractionTable").FirstOrDefault();
-            DGVInfo = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewRowInfo>().ToList();
+            DGVInfo = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
         }
 
         public override void RunCommand(object sender)

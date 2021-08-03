@@ -23,6 +23,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
         [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
@@ -34,12 +36,15 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
         [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_SearchMethod { get; set; }
 
         [Attributes.PropertyAttributes.PropertyDescription("Set Keys and Parameters")]
         [Attributes.PropertyAttributes.InputSpecification("Define the parameters for the actions.")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
         [Attributes.PropertyAttributes.Remarks("Select Valid Options from the dropdowns")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         public DataTable v_KeyActions { get; set; }
 
         [XmlElement]
@@ -49,6 +54,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select either 'Yes' or 'No' as to a preference")]
         [Attributes.PropertyAttributes.SampleUsage("**Yes** or **No**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_KeyUpDefault { get; set; }
 
         [XmlIgnore]

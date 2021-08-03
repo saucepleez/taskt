@@ -32,6 +32,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error On Close")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Do Not Error On Close")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_ErrorOnClose { get; set; }
 
 
