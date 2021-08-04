@@ -184,6 +184,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelRenameWorksheetCommand.cs" />

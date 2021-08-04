@@ -447,6 +447,7 @@ namespace taskt.UI
             {"ParseJsonModelCommand", "taskt.Properties.Resources.command_parse"},
             {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
             {"RegExExtractorCommand", "taskt.Properties.Resources.command_function"},
+            {"StringCheckStringCommand", "taskt.Properties.Resources.command_string"},
             {"StringReplaceCommand", "taskt.Properties.Resources.command_string"},
             {"StringSplitCommand", "taskt.Properties.Resources.command_string"},
             {"StringSubstringCommand", "taskt.Properties.Resources.command_string"},

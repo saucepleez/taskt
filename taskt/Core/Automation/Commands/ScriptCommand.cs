@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -30,6 +31,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ParseJsonModelCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
     [XmlInclude(typeof(RegExExtractorCommand))]
+    [XmlInclude(typeof(StringCheckTextCommand))]
     [XmlInclude(typeof(StringReplaceCommand))]
     [XmlInclude(typeof(StringSubstringCommand))]
     [XmlInclude(typeof(StringSplitCommand))]
@@ -378,5 +380,14 @@ namespace taskt.Core.Automation.Commands
             return true;
         }
 
+        public System.Reflection.PropertyInfo GetProperty(string propertyName)
+        {
+            return this.GetType().GetProperty(propertyName);
+        }
+
+        public static List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> GetAdditionalParameterInfo(System.Reflection.PropertyInfo prop)
+        {
+            return prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
+        }
     }
 }
