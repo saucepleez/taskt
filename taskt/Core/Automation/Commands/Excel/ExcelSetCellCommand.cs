@@ -16,28 +16,44 @@ namespace taskt.Core.Automation.Commands
     public class ExcelSetCellCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set (ex. Hello, {{{vText}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to set")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello World** or **{{{vText}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_TextToSet { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location (ex. A1, {{{vAddress}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
         [Attributes.PropertyAttributes.SampleUsage("**A1** or **B10** or **{{{vAddress}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_ExcelCellAddress { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Value type (Default is Cell)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Cell** or **Formula** or **Format** or **Color** or **Comment**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Cell")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Formula")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Format")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Color")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        public string v_ValueType { get; set; }
         public ExcelSetCellCommand()
         {
             this.CommandName = "ExcelSetCellCommand";
@@ -54,22 +70,48 @@ namespace taskt.Core.Automation.Commands
 
             var excelObject = engine.GetAppInstance(vInstance);
 
-           
             var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
+            var valueType = v_ValueType.ConvertToUserVariable(sender);
+            if (String.IsNullOrWhiteSpace(valueType))
+            {
+                valueType = "Cell";
+            }
+
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            excelSheet.Range[targetAddress].Value = targetText;
+
+            switch (valueType)
+            {
+                case "Cell":
+                    excelSheet.Range[targetAddress].Value = targetText;
+                    break;
+                case "Formula":
+                    excelSheet.Range[targetAddress].Formula = targetText;
+                    break;
+                case "Format":
+                    excelSheet.Range[targetAddress].NumberFormatLocal = targetText;
+                    break;
+                case "Color":
+                    excelSheet.Range[targetAddress].Interior.Color = long.Parse(targetText);
+                    break;
+                default:
+                    throw new Exception(valueType + " is not support.");
+                    break;
+            }
+            
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
@@ -80,7 +122,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Set Cell '" + v_ExcelCellAddress + "' to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Set Cell " + v_ValueType + " '" + v_ExcelCellAddress + "' to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
