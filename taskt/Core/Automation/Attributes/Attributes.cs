@@ -163,22 +163,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public bool allowCurrentWindow = true;
         public bool allowAllWindows = false;
         public bool allowDesktop = false;
-        public PropertyIsWindowNamesList(bool isWindowNameList)
-        {
-            this.isWindowNamesList = isWindowNameList;
-        }
-        public PropertyIsWindowNamesList(bool isWindowNameList, bool allowCurrent)
-        {
-            this.isWindowNamesList = isWindowNameList;
-            this.allowCurrentWindow = allowCurrent;
-        }
-        public PropertyIsWindowNamesList(bool isWindowNameList, bool allowCurrent, bool allowAll)
-        {
-            this.isWindowNamesList = isWindowNameList;
-            this.allowCurrentWindow = allowCurrent;
-            this.allowAllWindows = allowAll;
-        }
-        public PropertyIsWindowNamesList(bool isWindowNameList, bool allowCurrent, bool allowAll, bool allowDesktop)
+
+        public PropertyIsWindowNamesList(bool isWindowNameList = false, bool allowCurrent = true, bool allowAll = false, bool allowDesktop = false)
         {
             this.isWindowNamesList = isWindowNameList;
             this.allowCurrentWindow = allowCurrent;
@@ -222,6 +208,69 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public PropertyShowSampleUsageInDescription(bool opt)
         {
             this.showSampleUsage = opt;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyTextBoxSetting : System.Attribute
+    {
+        public int height = 1;
+        public bool allowNewLine = true;
+        public PropertyTextBoxSetting(int height = 1, bool allowNewLine = true)
+        {
+            if (height < 0)
+            {
+                this.height = 1;
+            }
+            else
+            {
+                this.height = height;
+            }
+            this.allowNewLine = allowNewLine;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyDataGridViewSetting : System.Attribute
+    {
+        public bool allowAddRow = true;
+        public bool allowDeleteRow = true;
+        public bool allowResizeRow = true;
+        public int width = 400;
+        public int height = 250;
+        public bool autoGenerateColumns = true;
+        public int headerRowHeight = 1;
+        public PropertyDataGridViewSetting(bool allowAddRow = true, bool allowDeleteRow =true, bool allowResizeRow =true, int width =400, int height=250, bool autoGenerateColumns=true, int headerRowHeight=1)
+        {
+            this.allowAddRow = allowAddRow;
+            this.allowDeleteRow = allowDeleteRow;
+            this.allowResizeRow = allowResizeRow;
+            this.width = width;
+            this.height = height;
+            this.autoGenerateColumns = autoGenerateColumns;
+            this.headerRowHeight = headerRowHeight;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertySecondaryLabel : System.Attribute
+    {
+        public bool useSecondaryLabel = false;
+        public PropertySecondaryLabel(bool opt)
+        {
+            this.useSecondaryLabel = opt;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyAddtionalParameterInfo : System.Attribute
+    {
+        public string searchKey = "";
+        public string description = "";
+        public string sampleUsage = "";
+        public string remarks = "";
+        public PropertyAddtionalParameterInfo(string searchKey, string description, string sampleUsage = "", string remarks = "")
+        {
+            this.searchKey = searchKey;
+            this.description = description;
+            this.sampleUsage = sampleUsage;
+            this.remarks = remarks;
         }
     }
 }

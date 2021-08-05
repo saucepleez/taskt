@@ -118,6 +118,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabEditorSettings = new System.Windows.Forms.TabPage();
+            this.chkGruopingBySubgruop = new System.Windows.Forms.CheckBox();
             this.chkInsertCommentIfLoop = new System.Windows.Forms.CheckBox();
             this.txtDefaultDBInstanceName = new System.Windows.Forms.TextBox();
             this.lblDBInstance = new System.Windows.Forms.Label();
@@ -137,7 +138,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.chkGruopingBySubgruop = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -1229,6 +1229,7 @@
             // 
             // tabEditorSettings
             // 
+            this.tabEditorSettings.AutoScroll = true;
             this.tabEditorSettings.Controls.Add(this.chkGruopingBySubgruop);
             this.tabEditorSettings.Controls.Add(this.chkInsertCommentIfLoop);
             this.tabEditorSettings.Controls.Add(this.txtDefaultDBInstanceName);
@@ -1252,6 +1253,19 @@
             this.tabEditorSettings.TabIndex = 4;
             this.tabEditorSettings.Text = "Editor";
             this.tabEditorSettings.UseVisualStyleBackColor = true;
+            // 
+            // chkGruopingBySubgruop
+            // 
+            this.chkGruopingBySubgruop.AutoSize = true;
+            this.chkGruopingBySubgruop.BackColor = System.Drawing.Color.Transparent;
+            this.chkGruopingBySubgruop.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGruopingBySubgruop.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGruopingBySubgruop.Location = new System.Drawing.Point(10, 161);
+            this.chkGruopingBySubgruop.Name = "chkGruopingBySubgruop";
+            this.chkGruopingBySubgruop.Size = new System.Drawing.Size(176, 24);
+            this.chkGruopingBySubgruop.TabIndex = 21;
+            this.chkGruopingBySubgruop.Text = "Gruoping by subgroup";
+            this.chkGruopingBySubgruop.UseVisualStyleBackColor = false;
             // 
             // chkInsertCommentIfLoop
             // 
@@ -1452,19 +1466,6 @@
             // 
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
-            // 
-            // chkGruopingBySubgruop
-            // 
-            this.chkGruopingBySubgruop.AutoSize = true;
-            this.chkGruopingBySubgruop.BackColor = System.Drawing.Color.Transparent;
-            this.chkGruopingBySubgruop.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkGruopingBySubgruop.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkGruopingBySubgruop.Location = new System.Drawing.Point(10, 161);
-            this.chkGruopingBySubgruop.Name = "chkGruopingBySubgruop";
-            this.chkGruopingBySubgruop.Size = new System.Drawing.Size(176, 24);
-            this.chkGruopingBySubgruop.TabIndex = 21;
-            this.chkGruopingBySubgruop.Text = "Gruoping by subgroup";
-            this.chkGruopingBySubgruop.UseVisualStyleBackColor = false;
             // 
             // frmSettings
             // 
