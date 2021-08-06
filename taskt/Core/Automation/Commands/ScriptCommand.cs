@@ -90,6 +90,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelGetCellCommand))]
     [XmlInclude(typeof(ExcelGetCellRCCommand))]
     [XmlInclude(typeof(ExcelGetCurrentWorksheetCommand))]
+    [XmlInclude(typeof(ExcelGetExcelInfoCommand))]
     [XmlInclude(typeof(ExcelGetLastRowCommand))]
     [XmlInclude(typeof(ExcelGetRangeCommand))]
     [XmlInclude(typeof(ExcelGetRangeCommandAsDT))]
