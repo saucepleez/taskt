@@ -123,8 +123,8 @@ namespace taskt.Core
         public bool AutoCloseMessagesOnServerExecution { get; set; }
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
         public bool AutoCalcVariables { get; set; }
-
         public string CurrentWindowKeyword { get; set; }
+        public string CurrentWorksheetKeyword { get; set; }
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -142,6 +142,7 @@ namespace taskt.Core
             AutoCloseDebugWindowOnServerExecution = true;
             AutoCalcVariables = true;
             CurrentWindowKeyword = "Current Window";
+            CurrentWorksheetKeyword = "Current Sheet";
         }
     }
     /// <summary>

@@ -10,10 +10,10 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Sheet")]
-    [Attributes.ClassAttributes.Description("This command allows you to check existance sheet")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
+    [Attributes.ClassAttributes.Description("This command copy a Excel Worksheet.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy a new worksheet to an Excel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
-    public class ExcelCheckWorksheetExistsCommand : ScriptCommand
+    public class ExcelCopyWorksheetCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
@@ -24,59 +24,60 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to check")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
-        [Attributes.PropertyAttributes.SampleUsage("**mySheet**, **%kwd_current_worksheet%**, **{{{vSheet}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the target worksheet name")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**mySheet** or **%kwd_current_worksheet%** or **{{{vSheet}}}**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        public string v_SheetName { get; set; }
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the existance sheet")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("Result is **TRUE** or **FALSE**")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        public string v_applyToVariable { get; set; }
+        public string v_sourceSheet { get; set; }
 
-        public ExcelCheckWorksheetExistsCommand()
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new worksheet name")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**newSheet** or **{{{vNewSheet}}}**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        public string v_newSheetName { get; set; }
+
+        public ExcelCopyWorksheetCommand()
         {
-            this.CommandName = "ExcelCheckWorksheetExistsCommand";
-            this.SelectionName = "Check Worksheet Exists";
+            this.CommandName = "ExcelCopyWorksheetCommand";
+            this.SelectionName = "Copy Worksheet";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var targetSheet = v_sourceSheet.ConvertToUserVariable(engine);
 
             var excelObject = engine.GetAppInstance(vInstance);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            string targetSheet = v_SheetName.ConvertToUserVariable(sender);
 
             if (targetSheet == engine.engineSettings.CurrentWorksheetKeyword)
             {
-                "TRUE".StoreInUserVariable(sender, v_applyToVariable);
+                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Copy(Before:excelInstance.Worksheets[1]);
             }
             else
             {
-                bool result = false;
-                foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
-                {
-                    if (sht.Name == targetSheet)
-                    {
-                        result = true;
-                        break;
-                    }
-                }
-                (result ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
+                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[targetSheet]).Copy(Before: excelInstance.Worksheets[1]);
             }
+
+            var newName = v_newSheetName.ConvertToUserVariable(sender);
+            if (!String.IsNullOrEmpty(newName))
+            {
+                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
+            }
+
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -91,12 +92,10 @@ namespace taskt.Core.Automation.Commands
             }
 
             return RenderedControls;
-
         }
-
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Check Existance Sheet Name: " + v_SheetName + ", Instance Name: '" + v_InstanceName + "', Result: '" + v_applyToVariable + "']";
+            return base.GetDisplayValue() + " [Copy sheet '" + v_sourceSheet + "', Instance Name: '" + v_InstanceName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -108,14 +107,9 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Instance is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_SheetName))
+            if (String.IsNullOrEmpty(this.v_sourceSheet))
             {
-                this.validationResult += "Sheet is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariable))
-            {
-                this.validationResult += "Variable is empty.\n";
+                this.validationResult += "Worksheet is empty.\n";
                 this.IsValid = false;
             }
 

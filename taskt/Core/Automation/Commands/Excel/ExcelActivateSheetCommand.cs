@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate (ex. Sheet1, {{{vSheet}}})")]
         [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
-        [Attributes.PropertyAttributes.SampleUsage("**Sheet1**, **mySheetName**, **{{{vSheet}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**mySheet**, **%kwd_current_worksheet%**, **{{{vSheet}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
@@ -49,8 +49,16 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             string sheetToActive = v_SheetName.ConvertToUserVariable(sender);
-            var workSheet = excelInstance.Sheets[sheetToActive] as Microsoft.Office.Interop.Excel.Worksheet;
-            workSheet.Select();
+
+            if (sheetToActive == engine.engineSettings.CurrentWorksheetKeyword)
+            {
+                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Select();
+            }
+            else
+            {
+                var workSheet = excelInstance.Sheets[sheetToActive] as Microsoft.Office.Interop.Excel.Worksheet;
+                workSheet.Select();
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet to search (Default is empty, and get all sheets)")]
         [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
-        [Attributes.PropertyAttributes.SampleUsage("**mySheet** or **{{{vSheet}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**mySheet** or **%kwd_current_worksheet%** or **{{{vSheet}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
@@ -76,8 +76,12 @@ namespace taskt.Core.Automation.Commands
 
             List<string> sheetNames = new List<string>();
 
-            var sheetName = v_SheetName.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(sheetName))
+            var targetSheetName = v_SheetName.ConvertToUserVariable(sender);
+            if (targetSheetName == engine.engineSettings.CurrentWorksheetKeyword)
+            {
+                targetSheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+            }
+            if (String.IsNullOrEmpty(targetSheetName))
             {
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)
                 {
@@ -109,7 +113,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)
                 {
-                    if (func(sh.Name, sheetName))
+                    if (func(sh.Name, targetSheetName))
                     {
                         sheetNames.Add(sh.Name);
                     }

@@ -24,7 +24,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
-        
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive a sheet name")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]

@@ -186,11 +186,13 @@
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetWorksheetInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetExcelInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCurrentWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetWorksheetsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCopyWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelRenameWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
