@@ -50,7 +50,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Cell")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Formula")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Format")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Color")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Font Color")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Back Color")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_ValueType { get; set; }
@@ -94,7 +95,10 @@ namespace taskt.Core.Automation.Commands
                 case "Format":
                     cellValue = (string)excelInstance.Range[targetAddress].NumberFormatLocal;
                     break;
-                case "Color":
+                case "Font Color":
+                    cellValue = ((long)excelInstance.Range[targetAddress].Font.Color).ToString();
+                    break;
+                case "Back Color":
                     cellValue = ((long)excelInstance.Range[targetAddress].Interior.Color).ToString();
                     break;
                 default:
