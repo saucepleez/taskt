@@ -661,6 +661,7 @@ namespace taskt.UI
             {"CloseWindowCommand", "taskt.Properties.Resources.command_window_close"},
             {"GetWindowNamesCommand", "taskt.Properties.Resources.command_window"},
             {"GetWindowPositionCommand", "taskt.Properties.Resources.command_window"},
+            {"GetWindowStateCommand", "taskt.Properties.Resources.command_window"},
             {"MoveWindowCommand", "taskt.Properties.Resources.command_window"},
             {"ResizeWindowCommand", "taskt.Properties.Resources.command_window"},
             {"SetWindowStateCommand", "taskt.Properties.Resources.command_window"},
