@@ -587,11 +587,12 @@ namespace taskt.UI
             // Misc
             {"CommentCommand", "taskt.Properties.Resources.command_comment"},
             {"EncryptionCommand", "taskt.Properties.Resources.command_input"},
+            {"ClipboardClearTextCommand", "taskt.Properties.Resources.command_files"},
+            {"ClipboardSetTextCommand", "taskt.Properties.Resources.command_files"},
             {"ClipboardGetTextCommand", "taskt.Properties.Resources.command_files"},
             {"PingCommand", "taskt.Properties.Resources.command_web"},
             {"SMTPSendEmailCommand", "taskt.Properties.Resources.command_smtp"},
             {"SequenceCommand", "taskt.Properties.Resources.command_sequence"},
-            {"ClipboardSetTextCommand", "taskt.Properties.Resources.command_files"},
             {"MessageBoxCommand", "taskt.Properties.Resources.command_comment"},
 
             // NLG
