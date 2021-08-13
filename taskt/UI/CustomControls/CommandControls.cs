@@ -1227,9 +1227,7 @@ namespace taskt.UI.CustomControls
         private static string replaceEngineKeyword(this string targetString)
         {
             var settings = CurrentEditor.appSettings.EngineSettings;
-            return targetString.Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker)
-                    .Replace("%kwd_current_window%", settings.CurrentWindowKeyword)
-                    .Replace("%kwd_current_worksheet%", settings.CurrentWorksheetKeyword);
+            return settings.replaceEngineKeyword(targetString);
         }
 
         private static string getTextMDFormat(this string targetString)

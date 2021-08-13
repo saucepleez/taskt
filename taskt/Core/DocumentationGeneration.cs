@@ -40,9 +40,6 @@ namespace taskt.Core
             string fullFileName;
 
             var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
-            var vs = settings.VariableStartMarker;
-            var ve = settings.VariableEndMarker;
-            var cw = settings.CurrentWindowKeyword;
 
             //loop each command
             foreach (var commandClass in commandClasses)
@@ -86,14 +83,10 @@ namespace taskt.Core
                 {
 
                     //pull attributes from property
-                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw); 
-                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
-                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
+                    var commandLabel = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)));
+                    var helpfulExplanation = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification)));
+                    var sampleUsage = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage)));
+                    var remarks = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks)));
 
                     commandLabel = commandLabel.Replace("*", "\\*").Replace("|", "\\|");
 

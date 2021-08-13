@@ -125,6 +125,17 @@ namespace taskt.Core
         public bool AutoCalcVariables { get; set; }
         public string CurrentWindowKeyword { get; set; }
         public string CurrentWorksheetKeyword { get; set; }
+        public string CurrentWindowPositionKeyword { get; set; }
+        public string CurrentWindowXPositionKeyword { get; set; }
+        public string CurrentWindowYPositionKeyword { get; set; }
+
+        private static string InterStartVariableMaker = "{{{";
+        private static string InterEndVariableMaker = "}}}";
+        private static string InterCurrentWindowKeyword = "%kwd_current_window%";
+        private static string InterCurrentWindowPositionKeyword = "%kwd_current_position%";
+        private static string InterCurrentWindowXPositionKeyword = "%kwd_current_xposition%";
+        private static string InterCurrentWindowYPositionKeyword = "%kwd_current_yposition%";
+        private static string InterCurrentWorksheetKeyword = "%kwd_current_worksheet%";
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -143,6 +154,19 @@ namespace taskt.Core
             AutoCalcVariables = true;
             CurrentWindowKeyword = "Current Window";
             CurrentWorksheetKeyword = "Current Sheet";
+            CurrentWindowPositionKeyword = "Current Position";
+            CurrentWindowXPositionKeyword = "Current XPosition";
+            CurrentWindowYPositionKeyword = "Current YPosition";
+        }
+
+        public string replaceEngineKeyword(string targetString)
+        {
+            return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker).Replace(InterEndVariableMaker, this.VariableEndMarker)
+                    .Replace(InterCurrentWindowKeyword, this.CurrentWindowKeyword)
+                    .Replace(InterCurrentWindowPositionKeyword, this.CurrentWindowPositionKeyword)
+                    .Replace(InterCurrentWindowXPositionKeyword, this.CurrentWindowXPositionKeyword)
+                    .Replace(InterCurrentWindowYPositionKeyword, this.CurrentWindowYPositionKeyword)
+                    .Replace(InterCurrentWorksheetKeyword, this.CurrentWorksheetKeyword);
         }
     }
     /// <summary>
