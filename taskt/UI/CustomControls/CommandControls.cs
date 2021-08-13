@@ -1201,7 +1201,7 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        public static string GetDataGridViewRowInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
+        public static string GetAddtionalParameterInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
         {
             if (rowInfo == null)
             {
