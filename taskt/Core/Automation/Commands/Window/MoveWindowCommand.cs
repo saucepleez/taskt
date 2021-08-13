@@ -45,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vXPos}}}** or **%kwd_current_position%**")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_XWindowPosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -53,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vYPos}}}** or **%kwd_current_position%**")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_YWindowPosition { get; set; }
 
         [XmlIgnore]
