@@ -249,7 +249,7 @@ namespace taskt.Core.Automation.Commands
             }
             string searchedKey = selectionControl.Text + "\t" + ParametersGridViewHelper.Rows[e.RowIndex].Cells[0].Value;
 
-            Parameters2ndLabel.Text = CommandControls.GetDataGridViewRowInfoText(DGVInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault());
+            Parameters2ndLabel.Text = CommandControls.GetAddtionalParameterInfoText(DGVInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault());
         }
         private string GetParameterValue(string parameterName)
         {
