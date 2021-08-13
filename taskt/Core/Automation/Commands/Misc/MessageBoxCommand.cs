@@ -23,16 +23,19 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the message to be displayed.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify any text that should be displayed on screen.  You may also include variables for display purposes.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello World** or **{vMyText}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**Hello World** or **{{{vMyText}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_Message { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Close After X (Seconds) - 0 to bypass (Default is 0) (ex. 0, {{{vTime}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Close After X (Seconds) - 0 to bypass (Default is 0)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Specify how many seconds to display on screen. After the amount of seconds passes, the message box will be automatically closed and script will resume execution.")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** to remain open indefinitely or **5** to stay open for 5 seconds.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vTime}}}**")]
+        [Attributes.PropertyAttributes.Remarks("**0** to remain open indefinitely or **5** to stay open for 5 seconds.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_AutoCloseAfter { get; set; }
         public MessageBoxCommand()
         {
@@ -80,15 +83,15 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            //create message controls
-            var messageControlSet = CommandControls.CreateDefaultInputGroupFor("v_Message", this, editor);
-            RenderedControls.AddRange(messageControlSet);
+            ////create message controls
+            //var messageControlSet = CommandControls.CreateDefaultInputGroupFor("v_Message", this, editor);
+            //RenderedControls.AddRange(messageControlSet);
+            ////create auto close control set
+            //var autocloseControlSet = CommandControls.CreateDefaultInputGroupFor("v_AutoCloseAfter", this, editor);
+            //RenderedControls.AddRange(autocloseControlSet);
 
-
-            //create auto close control set
-            var autocloseControlSet = CommandControls.CreateDefaultInputGroupFor("v_AutoCloseAfter", this, editor);
-            RenderedControls.AddRange(autocloseControlSet);
-
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
 

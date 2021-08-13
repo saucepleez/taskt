@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter ip address or host name that you want to ping (ex. 192.168.0.1, {{{vHost}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Ip address or hostname you want to ping")]
-        [Attributes.PropertyAttributes.SampleUsage("**192.168.0.1** or **www.google.com**")]
+        [Attributes.PropertyAttributes.SampleUsage("**192.168.0.1** or **www.google.com** or **{{{vHost}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_HostName { get; set; }
 
