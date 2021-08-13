@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command handles text encryption")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to store some data encrypted")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

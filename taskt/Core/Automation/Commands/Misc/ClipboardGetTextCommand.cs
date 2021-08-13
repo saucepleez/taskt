@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.SubGruop("Clipboard")]
     [Attributes.ClassAttributes.Description("This command allows you to get text from the clipboard.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy the data from the clipboard and apply it to a variable.  You can then use the variable to extract the value.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against the VariableList from the scripting engine using System.Windows.Forms.Clipboard.")]

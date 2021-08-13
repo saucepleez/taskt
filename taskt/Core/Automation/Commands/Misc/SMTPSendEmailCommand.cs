@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.SubGruop("Network/Internet")]
     [Attributes.ClassAttributes.Description("This command allows you to send email using SMTP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an email and have access to SMTP server credentials to generate an email.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements the System.Net Namespace to achieve automation")]

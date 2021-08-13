@@ -167,6 +167,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(NextLoopCommand))]
 
     // Misc
+    [XmlInclude(typeof(ClipboardClearTextCommand))]
     [XmlInclude(typeof(CommentCommand))]
     [XmlInclude(typeof(EncryptionCommand))]
     [XmlInclude(typeof(ClipboardGetTextCommand))]
