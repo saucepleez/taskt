@@ -533,6 +533,7 @@ namespace taskt.UI
             {"CheckFileExistsCommand", "taskt.Properties.Resources.command_files"},
             {"DeleteFileCommand", "taskt.Properties.Resources.command_files"},
             {"ExtractFileCommand", "taskt.Properties.Resources.command_files"},
+            {"GetFileInfoCommand", "taskt.Properties.Resources.command_files"},
             {"GetFilesCommand", "taskt.Properties.Resources.command_files"},
             {"MoveFileCommand", "taskt.Properties.Resources.command_files"},
             {"RenameFileCommand", "taskt.Properties.Resources.command_files"},

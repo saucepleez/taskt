@@ -115,6 +115,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(CheckFileExistsCommand))]
     [XmlInclude(typeof(DeleteFileCommand))]
     [XmlInclude(typeof(ExtractFileCommand))]
+    [XmlInclude(typeof(GetFileInfoCommand))]
     [XmlInclude(typeof(GetFilesCommand))]
     [XmlInclude(typeof(MoveFileCommand))]
     [XmlInclude(typeof(RenameFileCommand))]
