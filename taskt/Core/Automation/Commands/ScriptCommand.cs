@@ -80,6 +80,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelAppendCellCommand))]
     [XmlInclude(typeof(ExcelAppendRowCommand))]
     [XmlInclude(typeof(ExcelCheckCellValueExistsCommand))]
+    [XmlInclude(typeof(ExcelCheckCellValueExistsRCCommand))]
     [XmlInclude(typeof(ExcelCheckExcelInstanceExistsCommand))]
     [XmlInclude(typeof(ExcelCheckWorksheetExistsCommand))]
     [XmlInclude(typeof(ExcelCloseApplicationCommand))]

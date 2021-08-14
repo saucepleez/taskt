@@ -499,6 +499,7 @@ namespace taskt.UI
             {"ExcelAppendCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelAppendRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCheckCellValueExistsCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelCheckCellValueExistsRCCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCheckExcelInstanceExistsCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCheckWorksheetExistsCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCloseApplicationCommand", "taskt.Properties.Resources.command_spreadsheet"},
