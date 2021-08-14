@@ -78,10 +78,12 @@ namespace taskt.Core
                 sb.AppendLine("| Parameter Question   	| What to input  	|  Sample Data 	| Remarks  	|");
                 sb.AppendLine("| ---                    | ---               | ---           | ---       |");
 
-                //loop each property
-                foreach (var prop in commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList())
-                {
+                List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
 
+                //loop each property
+                //foreach (var prop in commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList())
+                foreach (var prop in propInfos)
+                {
                     //pull attributes from property
                     var commandLabel = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)));
                     var helpfulExplanation = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification)));
@@ -106,8 +108,29 @@ namespace taskt.Core
 
                 sb.AppendLine(Environment.NewLine);
 
+                // add additional parameter info
+                foreach(var prop in propInfos)
+                {
+                    var commandLabel = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)));
+                    var paramInfos = prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true);
+                    if (paramInfos.Length > 0)
+                    {
+                        sb.AppendLine("### Addtional Info about &quot;" + commandLabel + "&quot;");
+                        sb.AppendLine("| Parameter Value(s) | Description   | Sample Data 	| Remarks  	|");
+                        sb.AppendLine("| ---             | ---           | ---          | ---       |");
 
+                        foreach (Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo pInfo in paramInfos)
+                        {
+                            var searchKey = pInfo.searchKey.Replace("\t", " &amp; ");
+                            var desc = pInfo.description;
+                            var sample = settings.replaceEngineKeyword(pInfo.sampleUsage);
+                            var remarks = settings.replaceEngineKeyword(pInfo.remarks);
+                            sb.AppendLine("|" + searchKey + "|" + desc + "|" + sample + "|" + remarks + "|");
+                        }
+                    }
 
+                    sb.AppendLine(Environment.NewLine);
+                }
 
                 sb.AppendLine("## Developer/Additional Reference");
                 sb.AppendLine("Automation Class Name: " + commandClass.Name);
