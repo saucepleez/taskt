@@ -21,7 +21,7 @@ namespace taskt.UI.CustomControls
         {
             var controlList = new List<string>();
             var parentProps = parent.GetType().GetProperties();
-            foreach(var prop in parentProps)
+            foreach (var prop in parentProps)
             {
                 if (prop.Name.StartsWith("v_") && prop.Name != "v_Comment")
                 {
@@ -36,7 +36,7 @@ namespace taskt.UI.CustomControls
         {
             var controlList = new List<Control>();
 
-            foreach(var parameterName in parameterNames)
+            foreach (var parameterName in parameterNames)
             {
                 controlList.AddRange(CreateInferenceDefaultControlGroupFor(parameterName, parent, editor));
             }
@@ -52,7 +52,7 @@ namespace taskt.UI.CustomControls
             //var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
 
             Control createdInput;
-            
+
             var rct = (Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl));
             if (rct != null)
             {
@@ -399,7 +399,7 @@ namespace taskt.UI.CustomControls
             inputBox.ForeColor = theme.FontColor;
             inputBox.BackColor = theme.BackColor;
             inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
-            
+
             if (!allowNewLine)
             {
                 inputBox.KeyDown += (sender, e) => TextBoxKeyDown(sender, e);
@@ -496,7 +496,7 @@ namespace taskt.UI.CustomControls
             {
                 variableProperties = pInfo;
             }
-            
+
             var propertyUIHelpers = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper), true);
             var controlList = new List<Control>();
 
@@ -635,7 +635,7 @@ namespace taskt.UI.CustomControls
         /// This method call & wrap CreateDataGridView(object, string, PropertyInfo)
         /// </summary>
         /// <returns>DataGridView</returns>
-        public static DataGridView CreateDataGridView(string dataSourceName, object sourceCommand,  PropertyInfo prop)
+        public static DataGridView CreateDataGridView(string dataSourceName, object sourceCommand, PropertyInfo prop)
         {
             return CreateDataGridView(sourceCommand, dataSourceName, prop);
         }
@@ -719,14 +719,14 @@ namespace taskt.UI.CustomControls
                     cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
                     cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
                 }
-            }  
+            }
         }
         public static void ShowVariableSelector(object sender, EventArgs e, taskt.UI.Forms.frmCommandEditor editor)
         {
             //create variable selector form
             UI.Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector();
 
-       
+
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
@@ -855,7 +855,7 @@ namespace taskt.UI.CustomControls
                     //concat variable name with brackets [vVariable] as engine searches for the same
                     targetTextbox.Text = ofd.FileName;
                 }
-            }     
+            }
         }
         private static void ShowFolderSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
@@ -1162,7 +1162,7 @@ namespace taskt.UI.CustomControls
                 }
                 var subGroupAttr = (Core.Automation.Attributes.ClassAttributes.SubGruop)commandClass.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.SubGruop));
                 string subGroupName = (subGroupAttr != null) ? subGroupAttr.subGruopName : "";
-                    
+
                 //Instantiate Class
                 Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
 
@@ -1280,7 +1280,7 @@ namespace taskt.UI.CustomControls
         {
             int idxAster, idxTable;
             string ret = "";
-            while(targetString.Length > 0)
+            while (targetString.Length > 0)
             {
                 idxAster = targetString.IndexOf("\\*");
                 idxTable = targetString.IndexOf("\\|");
@@ -1325,7 +1325,7 @@ namespace taskt.UI.CustomControls
 
 
 
-public class AutomationCommand
+    public class AutomationCommand
     {
         public Type CommandClass { get; set; }
         public string FullName { get; set; }
@@ -1344,7 +1344,7 @@ public class AutomationCommand
             UIControls = new List<Control>();
             if (Command.CustomRendering)
             {
-   
+
                 var renderedControls = Command.Render(editorForm);
 
                 if (renderedControls.Count == 0)
@@ -1374,7 +1374,7 @@ public class AutomationCommand
                     if (!commentControlExists)
                     {
                         UIControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", Command));
-                        UIControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", Command, 100, 300));                      
+                        UIControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", Command, 100, 300));
                     }
 
                 }
@@ -1396,7 +1396,7 @@ public class AutomationCommand
                 label.Text = "Command not enabled for custom rendering!";
                 UIControls.Add(label);
             }
-        }  
+        }
         public void Bind(UI.Forms.frmCommandEditor editor)
         {
             //preference to preload is false
@@ -1441,7 +1441,7 @@ public class AutomationCommand
                 //{
 
                 //    var typedControl = (UIPictureBox)InputControl;
-                
+
                 //}
 
                 //Todo: helper for loading variables, move to attribute
@@ -1454,7 +1454,7 @@ public class AutomationCommand
                         variableCbo.Items.Add(var.VariableName);
                     }
                 }
-              
+
             }
         }
     }
