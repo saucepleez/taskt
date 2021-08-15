@@ -57,19 +57,30 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var targetSheet = v_sourceSheet.ConvertToUserVariable(engine);
+            var targetSheetName = v_sourceSheet.ConvertToUserVariable(engine);
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //if (targetSheetName == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Copy(Before:excelInstance.Worksheets[1]);
+            //}
+            //else
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[targetSheetName]).Copy(Before: excelInstance.Worksheets[1]);
+            //}
 
-            if (targetSheet == engine.engineSettings.CurrentWorksheetKeyword)
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+            Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, targetSheetName);
+
+            if (targetSheet != null)
             {
-                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Copy(Before:excelInstance.Worksheets[1]);
+                targetSheet.Copy(Before: excelInstance.Worksheets[1]);
             }
             else
             {
-                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[targetSheet]).Copy(Before: excelInstance.Worksheets[1]);
+                throw new Exception("Worksheet " + targetSheetName + " does not exists.");
             }
 
             var newName = v_newSheetName.ConvertToUserVariable(sender);

@@ -47,19 +47,56 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var excelObject = engine.GetAppInstance(vInstance);
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+
             string sheetToActive = v_SheetName.ConvertToUserVariable(sender);
 
-            if (sheetToActive == engine.engineSettings.CurrentWorksheetKeyword)
+            //if (sheetToActive == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Select();
+            //}
+            //else if (sheetToActive == engine.engineSettings.NextWorksheetKeyword)
+            //{
+            //    var nextSheet = ExcelControls.getNextWorksheet(excelInstance);
+            //    if (nextSheet != null)
+            //    {
+            //        nextSheet.Select();
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //}
+            //else if (sheetToActive == engine.engineSettings.PreviousWorksheetKeyword)
+            //{
+            //    var prevSheet = ExcelControls.getPreviousWorksheet(excelInstance);
+            //    if (prevSheet != null)
+            //    {
+            //        prevSheet.Select();
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //}
+            //else
+            //{
+            //    var workSheet = excelInstance.Sheets[sheetToActive] as Microsoft.Office.Interop.Excel.Worksheet;
+            //    workSheet.Select();
+            //}
+
+            Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetToActive);
+            if (targetSheet != null)
             {
-                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Select();
+                targetSheet.Select();
             }
             else
             {
-                var workSheet = excelInstance.Sheets[sheetToActive] as Microsoft.Office.Interop.Excel.Worksheet;
-                workSheet.Select();
+                throw new Exception("Worksheet " + sheetToActive + " does not exists.");
             }
         }
         public override List<Control> Render(frmCommandEditor editor)

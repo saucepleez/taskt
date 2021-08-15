@@ -77,10 +77,16 @@ namespace taskt.Core.Automation.Commands
             List<string> sheetNames = new List<string>();
 
             var targetSheetName = v_SheetName.ConvertToUserVariable(sender);
-            if (targetSheetName == engine.engineSettings.CurrentWorksheetKeyword)
+            //if (targetSheetName == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    targetSheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+            //}
+            Microsoft.Office.Interop.Excel.Worksheet searchedSheet = ExcelControls.getWorksheet(engine, excelInstance, targetSheetName);
+            if (searchedSheet != null)
             {
-                targetSheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+                targetSheetName = searchedSheet.Name;
             }
+
             if (String.IsNullOrEmpty(targetSheetName))
             {
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)

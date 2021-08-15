@@ -55,28 +55,33 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var excelObject = engine.GetAppInstance(vInstance);
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //string targetSheet = v_SheetName.ConvertToUserVariable(sender);
+
+            //if (targetSheet == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    "TRUE".StoreInUserVariable(sender, v_applyToVariable);
+            //}
+            //else
+            //{
+            //    bool result = false;
+            //    foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
+            //    {
+            //        if (sht.Name == targetSheet)
+            //        {
+            //            result = true;
+            //            break;
+            //        }
+            //    }
+            //    (result ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
+            //}
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
             string targetSheet = v_SheetName.ConvertToUserVariable(sender);
-
-            if (targetSheet == engine.engineSettings.CurrentWorksheetKeyword)
-            {
-                "TRUE".StoreInUserVariable(sender, v_applyToVariable);
-            }
-            else
-            {
-                bool result = false;
-                foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
-                {
-                    if (sht.Name == targetSheet)
-                    {
-                        result = true;
-                        break;
-                    }
-                }
-                (result ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
-            }
+            Microsoft.Office.Interop.Excel.Worksheet sht = ExcelControls.getWorksheet(engine, excelInstance, targetSheet);
+            (sht != null ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

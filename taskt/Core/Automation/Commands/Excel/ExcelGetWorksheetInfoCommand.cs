@@ -38,10 +38,15 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the information type")]
         [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Name** or **Visible** or **Is first sheet** or **Is last sheet** or **Next sheet** or **Previous sheet** or **Sheet index**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Visible")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Is first sheet")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Is last sheet")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Next sheet")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Previous sheet")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Sheet index")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InfoType { get; set; }
 
@@ -68,22 +73,29 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
 
             var sheetName = v_SheetName.ConvertToUserVariable(sender);
-            Microsoft.Office.Interop.Excel.Worksheet targetSheet;
-            if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
+            //Microsoft.Office.Interop.Excel.Worksheet targetSheet;
+            //if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    targetSheet = excelInstance.ActiveSheet;
+            //}
+            //else
+            //{
+            //    targetSheet = excelInstance.Worksheets[sheetName];
+            //}
+            Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetName);
+            if (targetSheet == null)
             {
-                targetSheet = excelInstance.ActiveSheet;
-            }
-            else
-            {
-                targetSheet = excelInstance.Worksheets[sheetName];
+                throw new Exception("Worksheet " + targetSheet + " does not exists.");
             }
 
             string ret;
+            int idx = 1;
             var infoType = v_InfoType.ConvertToUserVariable(sender);
             switch (infoType)
             {
@@ -92,6 +104,31 @@ namespace taskt.Core.Automation.Commands
                     break;
                 case "Visible":
                     ret = (targetSheet.Visible == Microsoft.Office.Interop.Excel.XlSheetVisibility.xlSheetVisible) ? "TRUE" : "FALSE";
+                    break;
+                case "Is first sheet":
+                    ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
+                    break;
+                case "Is last sheet":
+                    ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
+                    break;
+                case "Next sheet":
+                    var nextSht = ExcelControls.getNextWorksheet(excelInstance, targetSheet);
+                    ret = (nextSht == null) ? "" : nextSht.Name;
+                    break;
+                case "Previous sheet":
+                    var prevSht = ExcelControls.getPreviousWorksheet(excelInstance, targetSheet);
+                    ret = (prevSht == null) ? "" : prevSht.Name;
+                    break;
+                case "Sheet index":
+                    foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
+                    {
+                        if (sht.Name == targetSheet.Name)
+                        {
+                            break;
+                        }
+                        idx++;
+                    }
+                    ret = idx.ToString();
                     break;
                 default:
                     throw new Exception("Information type " + infoType + " is not support.");

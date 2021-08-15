@@ -28,12 +28,15 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the information type to receive")]
         [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**File name** or **Full path file name** or **Current sheet**")]
+        [Attributes.PropertyAttributes.SampleUsage("**File name** or **Full path file name** or **Current sheet** or **Number of sheets** or **First sheet** or **Last sheet**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("File name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Full path file name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Current sheet")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Number of sheets")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("First sheet")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Last sheet")]
         public string v_infoType { get; set; }
         
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive a sheet name")]
@@ -58,9 +61,10 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
 
             var infoType = v_infoType.ConvertToUserVariable(sender);
             string ret;
@@ -74,6 +78,15 @@ namespace taskt.Core.Automation.Commands
                     break;
                 case "Current sheet":
                     ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+                    break;
+                case "Number of sheets":
+                    ret = excelInstance.Worksheets.Count.ToString();
+                    break;
+                case "First sheet":
+                    ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
+                    break;
+                case "Last sheet":
+                    ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
                     break;
                 default:
                     throw new Exception("Information type " + infoType + " is not support.");

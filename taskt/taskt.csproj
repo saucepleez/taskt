@@ -439,6 +439,7 @@
     <Compile Include="UI\CustomControls\CustomControls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\CustomControls\ExcelControls.cs" />
     <Compile Include="UI\Forms\frmAttendedMode.cs">
       <SubType>Form</SubType>
     </Compile>
