@@ -84,11 +84,11 @@ namespace taskt.Core.Automation.Commands
 
             if (!int.TryParse(variableXSize, out int xPos))
             {
-                throw new Exception("X Position Invalid - " + v_XWindowSize);
+                throw new Exception("Width Invalid - " + v_XWindowSize);
             }
             if (!int.TryParse(variableYSize, out int yPos))
             {
-                throw new Exception("X Position Invalid - " + v_YWindowSize);
+                throw new Exception("Height Invalid - " + v_YWindowSize);
             }
 
             if (searchMethod == "Contains" || targetIsCurrentWindow)

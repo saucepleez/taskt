@@ -9,11 +9,11 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("File/Book")]
-    [Attributes.ClassAttributes.Description("This command opens an Excel Workbook.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to open an existing Excel Workbook.")]
+    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.Description("This command copy a Excel Worksheet.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy a new worksheet to an Excel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
-    public class ExcelOpenWorkbookCommand : ScriptCommand
+    public class ExcelCopyWorksheetCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
@@ -26,62 +26,73 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the target worksheet name")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**mySheet** or **%kwd_current_worksheet%** or **{{{vSheet}}}**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        public string v_FilePath { get; set; }
+        public string v_sourceSheet { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate open password")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new worksheet name")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**newSheet** or **{{{vNewSheet}}}**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myPassword** or **{{{vPassword}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        public string v_Password { get; set; }
-        public ExcelOpenWorkbookCommand()
+        public string v_newSheetName { get; set; }
+
+        public ExcelCopyWorksheetCommand()
         {
-            this.CommandName = "ExcelOpenWorkbookCommand";
-            this.SelectionName = "Open Workbook";
+            this.CommandName = "ExcelCopyWorksheetCommand";
+            this.SelectionName = "Copy Worksheet";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            var targetSheetName = v_sourceSheet.ConvertToUserVariable(engine);
 
-            var excelObject = engine.GetAppInstance(vInstance);
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            var pass = v_Password.ConvertToUserVariable(sender);
+            //if (targetSheetName == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Copy(Before:excelInstance.Worksheets[1]);
+            //}
+            //else
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[targetSheetName]).Copy(Before: excelInstance.Worksheets[1]);
+            //}
 
-            if (String.IsNullOrEmpty(pass))
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+            Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, targetSheetName);
+
+            if (targetSheet != null)
             {
-                excelInstance.Workbooks.Open(vFilePath);
+                targetSheet.Copy(Before: excelInstance.Worksheets[1]);
             }
             else
             {
-                excelInstance.Workbooks.Open(vFilePath, Password: pass);
+                throw new Exception("Worksheet " + targetSheetName + " does not exists.");
             }
+
+            var newName = v_newSheetName.ConvertToUserVariable(sender);
+            if (!String.IsNullOrEmpty(newName))
+            {
+                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
+            }
+
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
-            //create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
 
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
@@ -95,7 +106,7 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Open from '" + v_FilePath + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Copy sheet '" + v_sourceSheet + "', Instance Name: '" + v_InstanceName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -107,9 +118,9 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Instance is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_FilePath))
+            if (String.IsNullOrEmpty(this.v_sourceSheet))
             {
-                this.validationResult += "File is empty.\n";
+                this.validationResult += "Worksheet is empty.\n";
                 this.IsValid = false;
             }
 

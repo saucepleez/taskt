@@ -100,7 +100,18 @@ namespace taskt.Core.Automation.Commands
                 //loop each window and set the window state
                 foreach (var targetedWindow in targetWindows)
                 {
-                    User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
+                    //if (User32Functions.IsIconic(targetedWindow) && (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE))
+                    //{
+                    //    User32Functions.ShowWindowAsync(targetedWindow, WINDOW_STATE);
+                    //}
+
+                    //User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
+
+                    //if (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE)
+                    //{
+                    //    User32Functions.SetForegroundWindow(targetedWindow);
+                    //}
+                    SetWindowState(targetedWindow, WINDOW_STATE);
                 }
             }
             else
@@ -130,7 +141,18 @@ namespace taskt.Core.Automation.Commands
                 {
                     if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
                     {
-                        User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
+                        //if (User32Functions.IsIconic(targetedWindow) && (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE))
+                        //{
+                        //    User32Functions.ShowWindowAsync(targetedWindow, WINDOW_STATE);
+                        //}
+
+                        //User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
+
+                        //if (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE)
+                        //{
+                        //    User32Functions.SetForegroundWindow(targetedWindow);
+                        //}
+                        SetWindowState(targetedWindow, WINDOW_STATE);
                         isChanged = true;
                     }
                 }
@@ -140,6 +162,22 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+
+        private void SetWindowState(IntPtr whnd, User32Functions.WindowState state)
+        {
+            if (User32Functions.IsIconic(whnd) && (state != User32Functions.WindowState.SW_MINIMIZE))
+            {
+                User32Functions.ShowWindowAsync(whnd, state);
+            }
+
+            User32Functions.SetWindowState(whnd, state);
+
+            if (state != User32Functions.WindowState.SW_MINIMIZE)
+            {
+                User32Functions.SetForegroundWindow(whnd);
+            }
+        }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

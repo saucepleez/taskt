@@ -42,17 +42,19 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new X horizontal coordinate (pixel) for the window's location.  0 starts at the left of the screen.")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes to the right")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vXPos}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vXPos}}}** or **%kwd_current_position%**")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_XWindowPosition { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new Y vertical coordinate (pixel) for the window's location.  0 starts at the top of the screen.")]
         [Attributes.PropertyAttributes.InputSpecification("Input the new vertical coordinate of the window, 0 starts at the top and goes downwards")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vYPos}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vYPos}}}** or **%kwd_current_position%**")]
         [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_YWindowPosition { get; set; }
 
         [XmlIgnore]
@@ -70,6 +72,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             string windowName = v_WindowName.ConvertToUserVariable(sender);
 
             string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
@@ -85,11 +88,25 @@ namespace taskt.Core.Automation.Commands
             var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);
             var variableYPosition = v_YWindowPosition.ConvertToUserVariable(sender);
 
-            if (!int.TryParse(variableXPosition, out int xPos))
+            var settings = engine.engineSettings;
+
+            int xPos, yPos;
+            if (variableXPosition == settings.CurrentWindowPositionKeyword || variableXPosition == settings.CurrentWindowXPositionKeyword ||
+                variableXPosition == settings.CurrentWindowYPositionKeyword)
+            {
+                xPos = 0;
+            }
+            else if (!int.TryParse(variableXPosition, out xPos))
             {
                 throw new Exception("X Position Invalid - " + v_XWindowPosition);
             }
-            if (!int.TryParse(variableYPosition, out int yPos))
+
+            if (variableYPosition == settings.CurrentWindowPositionKeyword || variableYPosition == settings.CurrentWindowXPositionKeyword ||
+                variableYPosition == settings.CurrentWindowYPositionKeyword)
+            {
+                yPos = 0;
+            }
+            else if (!int.TryParse(variableYPosition, out yPos))
             {
                 throw new Exception("X Position Invalid - " + v_XWindowPosition);
             }
@@ -99,7 +116,8 @@ namespace taskt.Core.Automation.Commands
                 //loop each window
                 foreach (var targetedWindow in targetWindows)
                 {
-                    User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
+                    //User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
+                    MoveWindow(targetedWindow, xPos, yPos, variableXPosition, variableYPosition, settings);
                 }
             }
             else
@@ -130,7 +148,8 @@ namespace taskt.Core.Automation.Commands
                 {
                     if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
                     {
-                        User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
+                        //User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
+                        MoveWindow(targetedWindow, xPos, yPos, variableXPosition, variableYPosition, settings);
                         isMoveWindow = true;
                     }
                 }
@@ -139,8 +158,35 @@ namespace taskt.Core.Automation.Commands
                     throw new Exception("Window name '" + windowName + "' is not found.Search method " + searchMethod + ".");
                 }
             }
-            
         }
+
+        private static void MoveWindow(IntPtr hwnd, int xPos, int yPos, string xKeyword, string yKeyword, EngineSettings setting)
+        {
+            int xWin, yWin;
+            User32Functions.RECT rc = User32Functions.GetWindowPosition(hwnd);
+            xWin = rc.left;
+            yWin = rc.top;
+
+            if ((xKeyword == setting.CurrentWindowPositionKeyword) || (xKeyword == setting.CurrentWindowXPositionKeyword))
+            {
+                xPos = xWin;
+            }
+            else if (xKeyword == setting.CurrentWindowYPositionKeyword)
+            {
+                xPos = yWin;
+            }
+            if ((yKeyword == setting.CurrentWindowPositionKeyword) || (yKeyword == setting.CurrentWindowYPositionKeyword))
+            {
+                yPos = yWin;
+            }
+            else if (yKeyword == setting.CurrentWindowXPositionKeyword)
+            {
+                yPos = xWin;
+            }
+
+            User32Functions.SetWindowPosition(hwnd, xPos, yPos);
+        }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

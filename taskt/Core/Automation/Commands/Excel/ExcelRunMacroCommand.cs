@@ -16,27 +16,31 @@ namespace taskt.Core.Automation.Commands
     public class ExcelRunMacroCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the macro name (ex. Macro1, Module1.Macro1, {{{vMacro}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the macro name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the name of the macro as it exists in the spreadsheet")]
         [Attributes.PropertyAttributes.SampleUsage("**Macro1** or **Module1.Macro1** or **{{{vMacro}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_MacroName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please Enter the macro argument1")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the macro argument1")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the value of the macro argument")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **Hello** or **{{{vArgument}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_Argument1 { get; set; }
 
         public ExcelRunMacroCommand()
@@ -74,9 +78,12 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MacroName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Argument1", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MacroName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Argument1", this, editor));
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

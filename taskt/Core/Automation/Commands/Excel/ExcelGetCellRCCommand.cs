@@ -16,35 +16,54 @@ namespace taskt.Core.Automation.Commands
     public class ExcelGetCellRCCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Row (ex. 1, 2, {{{vRow}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Row")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell row.")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **2** or **{{{vRow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_ExcelCellRow { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Column (ex. 1, 2, {{{vColumn}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Column")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell column.")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **2** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_ExcelCellColumn { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_userVariableName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Value type (Default is Cell)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Cell** or **Formula** or **Format** or **Color** or **Comment**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Cell")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Formula")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Format")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Font Color")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Back Color")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        public string v_ValueType { get; set; }
 
         public ExcelGetCellRCCommand()
         {
@@ -71,23 +90,55 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            var cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Text;
+
+            var valueType = v_ValueType.ConvertToUserVariable(sender);
+            if (String.IsNullOrEmpty(valueType))
+            {
+                valueType = "Cell";
+            }
+
+            string cellValue;
+            switch (valueType)
+            {
+                case "Cell":
+                    cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Text;
+                    break;
+                case "Formula":
+                    cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Formula;
+                    break;
+                case "Format":
+                    cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).NumberFormatLocal;
+                    break;
+                case "Font Color":
+                    cellValue = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Font.Color).ToString();
+                    break;
+                case "Back Color":
+                    cellValue = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Interior.Color).ToString();
+                    break;
+                default:
+                    throw new Exception("Value type " + valueType + " is not support.");
+                    break;
+            }
+
             cellValue.StoreInUserVariable(sender, v_userVariableName);            
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellRow", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellColumn", this, editor));
+            ////create standard group controls
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellRow", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellColumn", this, editor));
 
-            //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            ////create control for variable name
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
@@ -99,7 +150,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get Value From Row: " + v_ExcelCellRow + ", Column: " + v_ExcelCellColumn + " and apply to variable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get " + v_ValueType + " Value From Row: " + v_ExcelCellRow + ", Column: " + v_ExcelCellColumn + " and apply to variable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)

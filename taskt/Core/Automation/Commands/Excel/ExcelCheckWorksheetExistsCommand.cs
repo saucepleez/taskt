@@ -9,11 +9,11 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Other")]
-    [Attributes.ClassAttributes.Description("This command allows you to find the last row in a used range in an Excel Workbook.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to determine how many rows have been used in the Excel Workbook.  You can use this value in a **Number Of Times** Loop to get data.")]
+    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.Description("This command allows you to check existance sheet")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
-    public class ExcelGetLastRowCommand : ScriptCommand
+    public class ExcelCheckWorksheetExistsCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
@@ -25,27 +25,26 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter Letter of the Column to check (Default is A)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid column letter")]
-        [Attributes.PropertyAttributes.SampleUsage("**A** or **B** or **{{{vColumn}}}**")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to check")]
+        [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
+        [Attributes.PropertyAttributes.SampleUsage("**mySheet**, **%kwd_current_worksheet%**, **{{{vSheet}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        public string v_ColumnLetter { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the row number")]
+        public string v_SheetName { get; set; }
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the existance sheet")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.Remarks("Result is **TRUE** or **FALSE**")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        public string v_applyToVariableName { get; set; }
-        public ExcelGetLastRowCommand()
+        public string v_applyToVariable { get; set; }
+
+        public ExcelCheckWorksheetExistsCommand()
         {
-            this.CommandName = "ExcelGetLastRowCommand";
-            this.SelectionName = "Get Last Row Index";
+            this.CommandName = "ExcelCheckWorksheetExistsCommand";
+            this.SelectionName = "Check Worksheet Exists";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
@@ -55,34 +54,38 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var columnLetter = v_ColumnLetter.ConvertToUserVariable(engine);
-            if (String.IsNullOrEmpty(columnLetter))
-            {
-                columnLetter = "A";
-            }
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var excelObject = engine.GetAppInstance(vInstance);
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelSheet = excelInstance.ActiveSheet;
-            var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, columnLetter).End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //string targetSheet = v_SheetName.ConvertToUserVariable(sender);
 
+            //if (targetSheet == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    "TRUE".StoreInUserVariable(sender, v_applyToVariable);
+            //}
+            //else
+            //{
+            //    bool result = false;
+            //    foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
+            //    {
+            //        if (sht.Name == targetSheet)
+            //        {
+            //            result = true;
+            //            break;
+            //        }
+            //    }
+            //    (result ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
+            //}
 
-            lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+            string targetSheet = v_SheetName.ConvertToUserVariable(sender);
+            Microsoft.Office.Interop.Excel.Worksheet sht = ExcelControls.getWorksheet(engine, excelInstance, targetSheet);
+            (sht != null ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
-            //create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ColumnLetter", this, editor));
-
-            ////create control for variable name
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
 
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
@@ -93,10 +96,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             return RenderedControls;
+
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Column '" + v_ColumnLetter + "', Apply to '" + v_applyToVariableName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Check Existance Sheet Name: " + v_SheetName + ", Instance Name: '" + v_InstanceName + "', Result: '" + v_applyToVariable + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -108,7 +113,12 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Instance is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_applyToVariableName))
+            if (String.IsNullOrEmpty(this.v_SheetName))
+            {
+                this.validationResult += "Sheet is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_applyToVariable))
             {
                 this.validationResult += "Variable is empty.\n";
                 this.IsValid = false;

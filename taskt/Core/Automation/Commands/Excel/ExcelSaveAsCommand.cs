@@ -16,21 +16,23 @@ namespace taskt.Core.Automation.Commands
     public class ExcelSaveAsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance]}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file (ex. C:\\temp\\myfile.xlsx, {{{vFilePath}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
         [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vExcelFilePath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_FileName { get; set; }
 
         public ExcelSaveAsCommand()
@@ -68,8 +70,10 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

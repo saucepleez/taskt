@@ -40,9 +40,6 @@ namespace taskt.Core
             string fullFileName;
 
             var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
-            var vs = settings.VariableStartMarker;
-            var ve = settings.VariableEndMarker;
-            var cw = settings.CurrentWindowKeyword;
 
             //loop each command
             foreach (var commandClass in commandClasses)
@@ -81,19 +78,17 @@ namespace taskt.Core
                 sb.AppendLine("| Parameter Question   	| What to input  	|  Sample Data 	| Remarks  	|");
                 sb.AppendLine("| ---                    | ---               | ---           | ---       |");
 
-                //loop each property
-                foreach (var prop in commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList())
-                {
+                List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
 
+                //loop each property
+                //foreach (var prop in commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList())
+                foreach (var prop in propInfos)
+                {
                     //pull attributes from property
-                    var commandLabel = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
-                    var helpfulExplanation = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw); 
-                    var sampleUsage = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
-                    var remarks = GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks))
-                            .Replace("{{{", vs).Replace("}}}", ve).Replace("%kwd_current_window%", cw);
+                    var commandLabel = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)));
+                    var helpfulExplanation = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification)));
+                    var sampleUsage = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage)));
+                    var remarks = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks)));
 
                     commandLabel = commandLabel.Replace("*", "\\*").Replace("|", "\\|");
 
@@ -113,8 +108,29 @@ namespace taskt.Core
 
                 sb.AppendLine(Environment.NewLine);
 
+                // add additional parameter info
+                foreach(var prop in propInfos)
+                {
+                    var commandLabel = settings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)));
+                    var paramInfos = prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true);
+                    if (paramInfos.Length > 0)
+                    {
+                        sb.AppendLine("### Addtional Info about &quot;" + commandLabel + "&quot;");
+                        sb.AppendLine("| Parameter Value(s) | Description   | Sample Data 	| Remarks  	|");
+                        sb.AppendLine("| ---             | ---           | ---          | ---       |");
 
+                        foreach (Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo pInfo in paramInfos)
+                        {
+                            var searchKey = pInfo.searchKey.Replace("\t", " &amp; ");
+                            var desc = pInfo.description;
+                            var sample = settings.replaceEngineKeyword(pInfo.sampleUsage);
+                            var remarks = settings.replaceEngineKeyword(pInfo.remarks);
+                            sb.AppendLine("|" + searchKey + "|" + desc + "|" + sample + "|" + remarks + "|");
+                        }
+                    }
 
+                    sb.AppendLine(Environment.NewLine);
+                }
 
                 sb.AppendLine("## Developer/Additional Reference");
                 sb.AppendLine("Automation Class Name: " + commandClass.Name);

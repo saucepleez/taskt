@@ -16,12 +16,13 @@ namespace taskt.Core.Automation.Commands
     public class ExcelAddWorkbookCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
 
         public ExcelAddWorkbookCommand()

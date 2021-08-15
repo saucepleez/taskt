@@ -427,6 +427,27 @@ namespace taskt.Core.Automation.User32
             public int left, top, right, bottom;
         }
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        public struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public int showCmd;
+            Point ptMinPosition;
+            Point ptMaxPosition;
+            RECT rcNormalPosition;
+            RECT rcDevice;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool IsIconic(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindowAsync(IntPtr hWnd, WindowState nCmdShow);
+
         [DllImport("user32.dll")]
         static extern IntPtr GetClipboardData(uint uFormat);
         [DllImport("user32.dll")]

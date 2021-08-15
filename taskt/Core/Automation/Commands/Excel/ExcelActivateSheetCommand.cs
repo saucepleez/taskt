@@ -16,20 +16,22 @@ namespace taskt.Core.Automation.Commands
     public class ExcelActivateSheetCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate (ex. Sheet1, {{{vSheet}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
         [Attributes.PropertyAttributes.InputSpecification("Specify the name of the actual sheet")]
-        [Attributes.PropertyAttributes.SampleUsage("**Sheet1**, **mySheetName**, **{{{vSheet}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**mySheet**, **%kwd_current_worksheet%**, **{{{vSheet}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_SheetName { get; set; }
         public ExcelActivateSheetCommand()
         {
@@ -45,20 +47,67 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var excelObject = engine.GetAppInstance(vInstance);
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+
+            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+
             string sheetToActive = v_SheetName.ConvertToUserVariable(sender);
-            var workSheet = excelInstance.Sheets[sheetToActive] as Microsoft.Office.Interop.Excel.Worksheet;
-            workSheet.Select();
+
+            //if (sheetToActive == engine.engineSettings.CurrentWorksheetKeyword)
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Select();
+            //}
+            //else if (sheetToActive == engine.engineSettings.NextWorksheetKeyword)
+            //{
+            //    var nextSheet = ExcelControls.getNextWorksheet(excelInstance);
+            //    if (nextSheet != null)
+            //    {
+            //        nextSheet.Select();
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //}
+            //else if (sheetToActive == engine.engineSettings.PreviousWorksheetKeyword)
+            //{
+            //    var prevSheet = ExcelControls.getPreviousWorksheet(excelInstance);
+            //    if (prevSheet != null)
+            //    {
+            //        prevSheet.Select();
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //}
+            //else
+            //{
+            //    var workSheet = excelInstance.Sheets[sheetToActive] as Microsoft.Office.Interop.Excel.Worksheet;
+            //    workSheet.Select();
+            //}
+
+            Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetToActive);
+            if (targetSheet != null)
+            {
+                targetSheet.Select();
+            }
+            else
+            {
+                throw new Exception("Worksheet " + sheetToActive + " does not exists.");
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

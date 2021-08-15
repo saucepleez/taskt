@@ -9,34 +9,35 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Cell")]
-    [Attributes.ClassAttributes.Description("This command moves to a specific cell.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move to a new cell from your currently selected cell.")]
+    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.Description("This command allows you to get current sheet name.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
-    public class ExcelGoToCellCommand : ScriptCommand
+    public class ExcelGetCurrentWorksheetCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        public string v_InstanceName { get; set; }
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("**A1** or **{{{vAddress}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        public string v_CellLocation { get; set; }
-        public ExcelGoToCellCommand()
+        public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive a sheet name")]
+        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
+        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        public string v_applyToVariable { get; set; }
+
+        public ExcelGetCurrentWorksheetCommand()
         {
-            this.CommandName = "ExcelGoToCellCommand";
-            this.SelectionName = "Go To Cell";
+            this.CommandName = "ExcelGetCurrentWorksheetCommand";
+            this.SelectionName = "Get Current Worksheet";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
@@ -49,21 +50,15 @@ namespace taskt.Core.Automation.Commands
 
             var excelObject = engine.GetAppInstance(vInstance);
 
-            var location = v_CellLocation.ConvertToUserVariable(sender);
-
-
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            excelSheet.Range[location].Select();
-            
+
+            var sheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+
+            sheetName.StoreInUserVariable(sender, v_applyToVariable);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
-            //create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_CellLocation", this, editor));
 
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
@@ -75,9 +70,10 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
+
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Go To: '" + v_CellLocation + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -89,9 +85,9 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Instance is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_CellLocation))
+            if (String.IsNullOrEmpty(this.v_applyToVariable))
             {
-                this.validationResult += "Cell location is empty.\n";
+                this.validationResult += "Variable is empty.\n";
                 this.IsValid = false;
             }
 

@@ -185,11 +185,23 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetWorksheetInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetExcelInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetCurrentWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetWorksheetsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCopyWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelRenameWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\ClipboardClearTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordCheckWordInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckExcelInstanceExistsCommand.cs" />
@@ -427,6 +439,7 @@
     <Compile Include="UI\CustomControls\CustomControls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\CustomControls\ExcelControls.cs" />
     <Compile Include="UI\Forms\frmAttendedMode.cs">
       <SubType>Form</SubType>
     </Compile>

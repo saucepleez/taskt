@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("Command that groups multiple actions")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to group multiple commands together.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements many commands in a list.")]

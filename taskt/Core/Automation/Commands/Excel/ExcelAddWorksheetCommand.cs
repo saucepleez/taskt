@@ -16,13 +16,25 @@ namespace taskt.Core.Automation.Commands
     public class ExcelAddWorksheetCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the new sheet name")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [Attributes.PropertyAttributes.SampleUsage("**myNewSheet** or **{{{vSheet}}}**")]
+        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        public string v_NewSheetName { get; set; }
 
         public ExcelAddWorksheetCommand()
         {
@@ -37,17 +49,24 @@ namespace taskt.Core.Automation.Commands
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
 
-
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             excelInstance.Worksheets.Add();
-            
+
+            var sheetName = v_NewSheetName.ConvertToUserVariable(engine);
+            if (!String.IsNullOrEmpty(sheetName))
+            {
+                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_InstanceName", this, editor));
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
