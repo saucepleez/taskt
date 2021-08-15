@@ -124,11 +124,12 @@ namespace taskt.Core
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
         public bool AutoCalcVariables { get; set; }
         public string CurrentWindowKeyword { get; set; }
-        public string CurrentWorksheetKeyword { get; set; }
         public string CurrentWindowPositionKeyword { get; set; }
         public string CurrentWindowXPositionKeyword { get; set; }
         public string CurrentWindowYPositionKeyword { get; set; }
-
+        public string CurrentWorksheetKeyword { get; set; }
+        public string NextWorksheetKeyword { get; set; }
+        public string PreviousWorksheetKeyword { get; set; }
         private static string InterStartVariableMaker = "{{{";
         private static string InterEndVariableMaker = "}}}";
         private static string InterCurrentWindowKeyword = "%kwd_current_window%";
@@ -136,6 +137,8 @@ namespace taskt.Core
         private static string InterCurrentWindowXPositionKeyword = "%kwd_current_xposition%";
         private static string InterCurrentWindowYPositionKeyword = "%kwd_current_yposition%";
         private static string InterCurrentWorksheetKeyword = "%kwd_current_worksheet%";
+        private static string InterNextWorksheetKeyword = "%kwd_next_worksheet%";
+        private static string InterPreviousWorksheetKeyword = "%kwd_previous_worksheet%";
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -153,10 +156,12 @@ namespace taskt.Core
             AutoCloseDebugWindowOnServerExecution = true;
             AutoCalcVariables = true;
             CurrentWindowKeyword = "Current Window";
-            CurrentWorksheetKeyword = "Current Sheet";
             CurrentWindowPositionKeyword = "Current Position";
             CurrentWindowXPositionKeyword = "Current XPosition";
             CurrentWindowYPositionKeyword = "Current YPosition";
+            CurrentWorksheetKeyword = "Current Sheet";
+            NextWorksheetKeyword = "Next Sheet";
+            PreviousWorksheetKeyword = "Previous Sheet";
         }
 
         public string replaceEngineKeyword(string targetString)
@@ -166,7 +171,9 @@ namespace taskt.Core
                     .Replace(InterCurrentWindowPositionKeyword, this.CurrentWindowPositionKeyword)
                     .Replace(InterCurrentWindowXPositionKeyword, this.CurrentWindowXPositionKeyword)
                     .Replace(InterCurrentWindowYPositionKeyword, this.CurrentWindowYPositionKeyword)
-                    .Replace(InterCurrentWorksheetKeyword, this.CurrentWorksheetKeyword);
+                    .Replace(InterCurrentWorksheetKeyword, this.CurrentWorksheetKeyword)
+                    .Replace(InterNextWorksheetKeyword, this.NextWorksheetKeyword)
+                    .Replace(InterPreviousWorksheetKeyword, this.PreviousWorksheetKeyword);
         }
     }
     /// <summary>
