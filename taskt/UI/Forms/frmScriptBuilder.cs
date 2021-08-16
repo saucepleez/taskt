@@ -40,6 +40,7 @@ namespace taskt.UI.Forms
         #region Instance and Form Events
         //private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
+        private Core.Script.ScriptInformation scriptInfo;
         private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
         bool editMode { get; set; }
         private ImageList uiImages; 
@@ -189,6 +190,7 @@ namespace taskt.UI.Forms
             if (!editMode)
             {
                 scriptVariables = new List<Core.Script.ScriptVariable>();
+                scriptInfo = new Core.Script.ScriptInformation();
             }
 
 
@@ -956,7 +958,8 @@ namespace taskt.UI.Forms
 
             moveToParentToolStripMenuItem.Visible = true;
             lstContextStripSep2.Visible = true;
-
+            lstContextStripSep4.Visible = false;
+            showScriptInfoMenuItem.Visible = false;
         }
 
 
@@ -1577,6 +1580,7 @@ namespace taskt.UI.Forms
                 //reinitialize
                 lstScriptActions.Items.Clear();
                 scriptVariables = new List<Core.Script.ScriptVariable>();
+                scriptInfo = null;
 
                 //get deserialized script
                 Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
@@ -1591,6 +1595,13 @@ namespace taskt.UI.Forms
 
                 //assign variables
                 scriptVariables = deserializedScript.Variables;
+
+                //script information
+                scriptInfo = deserializedScript.Info;
+                if (scriptInfo == null)
+                {
+                    scriptInfo = new Core.Script.ScriptInformation();
+                }
 
                 //populate commands
                 PopulateExecutionCommands(deserializedScript.Commands);
@@ -1860,7 +1871,8 @@ namespace taskt.UI.Forms
             //serialize script
             try
             {
-                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, this.ScriptFilePath);
+                scriptInfo.TasktVersion = Application.ProductVersion;
+                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, this.ScriptFilePath);
                 //show success dialog
                 Notify("File has been saved successfully!");
                 ChangeSaveState(false);
@@ -1915,6 +1927,7 @@ namespace taskt.UI.Forms
             this.ScriptFilePath = null;
             lstScriptActions.Items.Clear();
             scriptVariables = new List<Core.Script.ScriptVariable>();
+            scriptInfo = new Core.Script.ScriptInformation();
 
             ChangeSaveState(false);
         }
@@ -2402,6 +2415,8 @@ namespace taskt.UI.Forms
         {
             //saveToolStripMenuItem_Click(null, null);
             //runToolStripMenuItem_Click(null, null);
+            scriptInfo.RunTimes++;
+            scriptInfo.LastRunTime = DateTime.Now;
             BeginSaveScriptProcess((this.ScriptFilePath == ""));
             BeginRunScriptProcess();
         }
@@ -2478,6 +2493,15 @@ namespace taskt.UI.Forms
             }
         }
 
+        private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
+        {
+            using (frmScriptInformations frm = new frmScriptInformations())
+            {
+                frm.infos = scriptInfo;
+                frm.ShowDialog();
+                this.dontSaveFlag = true;
+            }
+        }
     }
 
 }
