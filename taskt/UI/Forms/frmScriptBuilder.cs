@@ -2415,7 +2415,10 @@ namespace taskt.UI.Forms
         {
             //saveToolStripMenuItem_Click(null, null);
             //runToolStripMenuItem_Click(null, null);
-            scriptInfo.RunTimes++;
+            if (scriptInfo.RunTimes != int.MaxValue)
+            {
+                scriptInfo.RunTimes++;
+            }
             scriptInfo.LastRunTime = DateTime.Now;
             BeginSaveScriptProcess((this.ScriptFilePath == ""));
             BeginRunScriptProcess();
