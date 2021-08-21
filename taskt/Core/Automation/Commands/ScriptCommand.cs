@@ -486,7 +486,7 @@ namespace taskt.Core.Automation.Commands
                                 }
                                 for (int j = 0; j < rows; j++)
                                 {
-                                    var v = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                                    var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
                                     trgDT.Rows[j][i] = v;
                                 }
                             }
@@ -580,7 +580,7 @@ namespace taskt.Core.Automation.Commands
                                 }
                                 for (int j = 0; j < rows; j++)
                                 {
-                                    var v = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                                    var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
                                     trgDT.Rows[j][i] = v;
                                 }
                             }
