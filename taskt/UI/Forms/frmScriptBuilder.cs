@@ -96,9 +96,9 @@ namespace taskt.UI.Forms
             }
         }
 
-        private void ChangeSaveState(bool s)
+        private void ChangeSaveState(bool dontSaveNow)
         {
-            this.dontSaveFlag = s;
+            this.dontSaveFlag = dontSaveNow;
             UpdateWindowTitle();
         }
 
@@ -2502,7 +2502,7 @@ namespace taskt.UI.Forms
             {
                 frm.infos = scriptInfo;
                 frm.ShowDialog();
-                this.dontSaveFlag = true;
+                ChangeSaveState(true);
             }
         }
     }
