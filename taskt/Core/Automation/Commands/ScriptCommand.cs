@@ -401,5 +401,199 @@ namespace taskt.Core.Automation.Commands
         {
             return prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
         }
+
+        public virtual void convertToIntermediate(Core.EngineSettings settings)
+        {
+            var parentProps = this.GetType().GetProperties();
+            foreach (var prop in parentProps)
+            {
+                if (prop.Name.StartsWith("v_"))
+                {
+                    var targetValue = prop.GetValue(this);
+                    if (targetValue != null)
+                    {
+                        if (targetValue is string)
+                        {
+                            targetValue = settings.convertToIntermediate(targetValue.ToString());
+                            prop.SetValue(this, targetValue);
+                        }
+                        else if (targetValue is System.Data.DataTable)
+                        {
+                            ((System.Data.DataTable)targetValue).AcceptChanges();
+                            var trgDT = ((System.Data.DataTable)targetValue).Copy();
+                            var rows = trgDT.Rows.Count;
+                            var cols = trgDT.Columns.Count;
+                            for (int i = 0; i < cols; i++)
+                            {
+                                if (trgDT.Columns[i].ReadOnly)
+                                {
+                                    continue;
+                                }
+                                for (int j = 0; j < rows; j++) 
+                                {
+                                    var v = settings.convertToIntermediate(trgDT.Rows[j][i].ToString());
+                                    trgDT.Rows[j][i] = v;
+                                }
+                            }
+                            prop.SetValue(this, trgDT);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void convertToIntermediate(Core.EngineSettings settings, Dictionary<string, string> convertMethods)
+        {
+            Type settingsType = settings.GetType();
+            var parentProps = this.GetType().GetProperties();
+            foreach (var prop in parentProps)
+            {
+                if (prop.Name.StartsWith("v_"))
+                {
+                    var targetValue = prop.GetValue(this);
+                    if (targetValue != null)
+                    {
+                        System.Reflection.MethodInfo methodOfConverting = null;
+                        foreach(var meth in convertMethods)
+                        {
+                            if (meth.Key == prop.Name)
+                            {
+                                methodOfConverting = settingsType.GetMethod(meth.Value);
+                                break;
+                            }
+                        }
+                        if (methodOfConverting == null)
+                        {
+                            methodOfConverting = settingsType.GetMethod("convertToIntermediate");
+                        }
+
+                        if (targetValue is string)
+                        {
+                            targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                            prop.SetValue(this, targetValue);
+                        }
+                        else if (targetValue is System.Data.DataTable)
+                        {
+                            ((System.Data.DataTable)targetValue).AcceptChanges();
+                            var trgDT = ((System.Data.DataTable)targetValue).Copy();
+                            var rows = trgDT.Rows.Count;
+                            var cols = trgDT.Columns.Count;
+                            for (int i = 0; i < cols; i++)
+                            {
+                                if (trgDT.Columns[i].ReadOnly)
+                                {
+                                    continue;
+                                }
+                                for (int j = 0; j < rows; j++)
+                                {
+                                    var v = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                                    trgDT.Rows[j][i] = v;
+                                }
+                            }
+                            prop.SetValue(this, trgDT);
+                        }
+                    }
+                }
+            }
+        }
+
+        public virtual void convertToRaw(Core.EngineSettings settings)
+        {
+            var parentProps = this.GetType().GetProperties();
+            foreach (var prop in parentProps)
+            {
+                if (prop.Name.StartsWith("v_"))
+                {
+                    var targetValue = prop.GetValue(this);
+                    if (targetValue != null)
+                    {
+                        if (targetValue is string)
+                        {
+                            targetValue = settings.convertToRaw(targetValue.ToString());
+                            prop.SetValue(this, targetValue);
+                        }
+                        else if (targetValue is System.Data.DataTable)
+                        {
+                            var trgDT = (System.Data.DataTable)targetValue;
+                            var rows = trgDT.Rows.Count;
+                            var cols = trgDT.Columns.Count;
+                            for (int i = 0; i < cols; i++)
+                            {
+                                if (trgDT.Columns[i].ReadOnly)
+                                {
+                                    continue;
+                                }
+                                for (int j = 0; j < rows; j++)
+                                {
+                                    var v = settings.convertToRaw(trgDT.Rows[j][i].ToString());
+                                    trgDT.Rows[j][i] = v;
+                                }
+                            }
+                            prop.SetValue(this, trgDT);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void convertToRaw(Core.EngineSettings settings, Dictionary<string, string> convertMethods)
+        {
+            Type settingsType = settings.GetType();
+            var parentProps = this.GetType().GetProperties();
+            foreach (var prop in parentProps)
+            {
+                if (prop.Name.StartsWith("v_"))
+                {
+                    var targetValue = prop.GetValue(this);
+                    if (targetValue != null)
+                    {
+                        System.Reflection.MethodInfo methodOfConverting = null;
+                        foreach (var meth in convertMethods)
+                        {
+                            if (meth.Key == prop.Name)
+                            {
+                                methodOfConverting = settingsType.GetMethod(meth.Value);
+                                break;
+                            }
+                        }
+                        if (methodOfConverting == null)
+                        {
+                            methodOfConverting = settingsType.GetMethod("convertToRaw");
+                        }
+
+                        if (targetValue is string)
+                        {
+                            targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                            prop.SetValue(this, targetValue);
+                        }
+                        else if (targetValue is System.Data.DataTable)
+                        {
+                            ((System.Data.DataTable)targetValue).AcceptChanges();
+                            var trgDT = ((System.Data.DataTable)targetValue).Copy();
+                            var rows = trgDT.Rows.Count;
+                            var cols = trgDT.Columns.Count;
+                            for (int i = 0; i < cols; i++)
+                            {
+                                if (trgDT.Columns[i].ReadOnly)
+                                {
+                                    continue;
+                                }
+                                for (int j = 0; j < rows; j++)
+                                {
+                                    var v = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                                    trgDT.Rows[j][i] = v;
+                                }
+                            }
+                            prop.SetValue(this, trgDT);
+                        }
+                    }
+                }
+            }
+        }
+
+        public ScriptCommand Clone()
+        {
+            return (ScriptCommand)MemberwiseClone();
+        }
     }
 }
