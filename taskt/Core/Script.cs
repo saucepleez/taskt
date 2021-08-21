@@ -58,7 +58,7 @@ namespace taskt.Core.Script
         /// <summary>
         /// Converts and serializes the user-defined commands into an XML file  
         /// </summary>
-        public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, ScriptInformation info, string scriptFilePath = "")
+        public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, ScriptInformation info, Core.EngineSettings engineSettings, string scriptFilePath = "")
         {
             var script = new Core.Script.Script();
 
@@ -75,7 +75,7 @@ namespace taskt.Core.Script
 
             foreach (ListViewItem commandItem in scriptCommands)
             {
-                var command = (Core.Automation.Commands.ScriptCommand)commandItem.Tag;
+                var command = ((Core.Automation.Commands.ScriptCommand)commandItem.Tag).Clone();
                 command.LineNumber = lineNumber;
 
                 if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginMultiIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (command is Core.Automation.Commands.TryCommand) || (command is Core.Automation.Commands.BeginLoopCommand) || (command is Core.Automation.Commands.BeginMultiLoopCommand))
@@ -120,6 +120,13 @@ namespace taskt.Core.Script
                 lineNumber++;
             }
 
+            // Convert Intermediate
+            foreach(var cmd in script.Commands)
+            {
+                cmd.ConvertToIntermediate(engineSettings);
+            }
+
+
             //output to xml file
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
             var settings = new XmlWriterSettings
@@ -146,7 +153,7 @@ namespace taskt.Core.Script
         /// <summary>
         /// Deserializes a valid XML file back into user-defined commands
         /// </summary>
-        public static Script DeserializeFile(string scriptFilePath)
+        public static Script DeserializeFile(string scriptFilePath, Core.EngineSettings engineSettings)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
 
@@ -159,6 +166,11 @@ namespace taskt.Core.Script
 
                 // release
                 serializer = null;
+
+                foreach (var cmd in deserializedData.Commands)
+                {
+                    cmd.ConvertToRaw(engineSettings);
+                }
 
                 return deserializedData;
             }
@@ -236,6 +248,30 @@ namespace taskt.Core.Script
             ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
             AdditionalScriptCommands.Add(newExecutionCommand);
             return newExecutionCommand;
+        }
+
+        public void ConvertToIntermediate(Core.EngineSettings settings)
+        {
+            ScriptCommand.convertToIntermediate(settings);
+            if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
+            {
+                foreach(var cmd in AdditionalScriptCommands)
+                {
+                    cmd.ConvertToIntermediate(settings);
+                }
+            }
+        }
+
+        public void ConvertToRaw(Core.EngineSettings settings)
+        {
+            ScriptCommand.convertToRaw(settings);
+            if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
+            {
+                foreach (var cmd in AdditionalScriptCommands)
+                {
+                    cmd.ConvertToRaw(settings);
+                }
+            }
         }
     }
     [Serializable]

@@ -175,6 +175,41 @@ namespace taskt.Core
                     .Replace(InterNextWorksheetKeyword, this.NextWorksheetKeyword)
                     .Replace(InterPreviousWorksheetKeyword, this.PreviousWorksheetKeyword);
         }
+
+        public string convertToIntermediate(string targetString)
+        {
+            return targetString.Replace(this.VariableStartMarker, Convert.ToChar(10627).ToString())
+                    .Replace(this.VariableEndMarker, Convert.ToChar(10628).ToString());
+        }
+
+        public string convertToRaw(string targetString)
+        {
+            return targetString.Replace(Convert.ToChar(10627).ToString(), this.VariableStartMarker)
+                    .Replace(Convert.ToChar(10628).ToString(), this.VariableEndMarker);
+        }
+
+        public string convertToIntermediateExcelSheet(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(this.CurrentWorksheetKeyword, wrapKeyword(InterCurrentWorksheetKeyword))
+                        .Replace(this.NextWorksheetKeyword, wrapKeyword(InterNextWorksheetKeyword))
+                        .Replace(this.PreviousWorksheetKeyword, wrapKeyword(InterPreviousWorksheetKeyword))
+                    );
+        }
+
+        public string convertToRawExcelSheet(string targetString)
+        {
+            return convertToRaw(
+                    targetString.Replace(wrapKeyword(InterCurrentWorksheetKeyword), this.CurrentWindowKeyword)
+                        .Replace(wrapKeyword(InterNextWorksheetKeyword), this.NextWorksheetKeyword)
+                        .Replace(wrapKeyword(InterPreviousWorksheetKeyword), this.PreviousWorksheetKeyword)
+                );
+        }
+
+        private static string wrapKeyword(string kw)
+        {
+            return Char.ConvertFromUtf32(120130).ToString() + kw + Char.ConvertFromUtf32(120142).ToString();
+        }
     }
     /// <summary>
     /// Defines application/client-level settings which can be managed by the user
