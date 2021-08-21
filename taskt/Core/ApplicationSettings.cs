@@ -124,6 +124,8 @@ namespace taskt.Core
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
         public bool AutoCalcVariables { get; set; }
         public string CurrentWindowKeyword { get; set; }
+        public string DesktopKeyword { get; set; }
+        public string AllWindowsKeyword { get; set; }
         public string CurrentWindowPositionKeyword { get; set; }
         public string CurrentWindowXPositionKeyword { get; set; }
         public string CurrentWindowYPositionKeyword { get; set; }
@@ -133,6 +135,8 @@ namespace taskt.Core
         private static string InterStartVariableMaker = "{{{";
         private static string InterEndVariableMaker = "}}}";
         private static string InterCurrentWindowKeyword = "%kwd_current_window%";
+        private static string InterDesktopKeyword = "%kwd_desktop%";
+        private static string InterAllWindowsKeyword = "%kwd_all_windows%";
         private static string InterCurrentWindowPositionKeyword = "%kwd_current_position%";
         private static string InterCurrentWindowXPositionKeyword = "%kwd_current_xposition%";
         private static string InterCurrentWindowYPositionKeyword = "%kwd_current_yposition%";
@@ -156,6 +160,8 @@ namespace taskt.Core
             AutoCloseDebugWindowOnServerExecution = true;
             AutoCalcVariables = true;
             CurrentWindowKeyword = "Current Window";
+            DesktopKeyword = "Desktop";
+            AllWindowsKeyword = "All Windows";
             CurrentWindowPositionKeyword = "Current Position";
             CurrentWindowXPositionKeyword = "Current XPosition";
             CurrentWindowYPositionKeyword = "Current YPosition";
@@ -166,7 +172,8 @@ namespace taskt.Core
 
         public string replaceEngineKeyword(string targetString)
         {
-            return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker).Replace(InterEndVariableMaker, this.VariableEndMarker)
+            return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker)
+                    .Replace(InterEndVariableMaker, this.VariableEndMarker)
                     .Replace(InterCurrentWindowKeyword, this.CurrentWindowKeyword)
                     .Replace(InterCurrentWindowPositionKeyword, this.CurrentWindowPositionKeyword)
                     .Replace(InterCurrentWindowXPositionKeyword, this.CurrentWindowXPositionKeyword)
@@ -203,6 +210,24 @@ namespace taskt.Core
                     targetString.Replace(wrapKeyword(InterCurrentWorksheetKeyword), this.CurrentWorksheetKeyword)
                         .Replace(wrapKeyword(InterNextWorksheetKeyword), this.NextWorksheetKeyword)
                         .Replace(wrapKeyword(InterPreviousWorksheetKeyword), this.PreviousWorksheetKeyword)
+                );
+        }
+
+        public string convertToIntermediateWindowName(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(this.CurrentWindowKeyword, wrapKeyword(InterCurrentWindowKeyword))
+                        .Replace(this.DesktopKeyword, wrapKeyword(InterDesktopKeyword))
+                        .Replace(this.AllWindowsKeyword, wrapKeyword(InterAllWindowsKeyword))
+                );
+        }
+
+        public string convertToRawWindowName(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(wrapKeyword(InterCurrentWindowKeyword), this.CurrentWindowKeyword)
+                        .Replace(wrapKeyword(InterDesktopKeyword), this.DesktopKeyword)
+                        .Replace(wrapKeyword(InterAllWindowsKeyword), this.AllWindowsKeyword)
                 );
         }
 
