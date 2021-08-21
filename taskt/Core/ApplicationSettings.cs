@@ -143,6 +143,28 @@ namespace taskt.Core
         private static string InterCurrentWorksheetKeyword = "%kwd_current_worksheet%";
         private static string InterNextWorksheetKeyword = "%kwd_next_worksheet%";
         private static string InterPreviousWorksheetKeyword = "%kwd_previous_worksheet%";
+
+        private static string[] m_KeyNameList = new string[]
+        {
+            "BACKSPACE", "BS", "BKSP",
+            "BREAK",
+            "CAPSLOCK",
+            "DELETE", "DEL",
+            "UP", "DOWN", "LEFT", "RIGHT",
+            "END",
+            "ENTER",
+            "INSERT", "INS",
+            "NUMLOCK",
+            "PGDN",
+            "PGUP",
+            "SCROLLROCK",
+            "TAB",
+            "F1", "F2", "F3", "F4", "F5", "F6",
+            "F7", "F8", "F9", "F10", "F11", "F12",
+            "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE",
+            "WIN_KEY"
+        };
+
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -168,6 +190,11 @@ namespace taskt.Core
             CurrentWorksheetKeyword = "Current Sheet";
             NextWorksheetKeyword = "Next Sheet";
             PreviousWorksheetKeyword = "Previous Sheet";
+        }
+
+        public string[] KeyNameList()
+        {
+            return m_KeyNameList;
         }
 
         public string replaceEngineKeyword(string targetString)
