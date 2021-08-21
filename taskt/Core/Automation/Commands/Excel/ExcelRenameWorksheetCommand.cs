@@ -128,5 +128,19 @@ namespace taskt.Core.Automation.Commands
 
             return this.IsValid;
         }
+
+        public override void convertToIntermediate(EngineSettings settings)
+        {
+            var cnv = new Dictionary<string, string>();
+            cnv.Add("v_sourceSheet", "convertToIntermediateExcelSheet");
+            convertToIntermediate(settings, cnv);
+        }
+
+        public override void convertToRaw(EngineSettings settings)
+        {
+            var cnv = new Dictionary<string, string>();
+            cnv.Add("v_sourceSheet", "convertToRawExcelSheet");
+            convertToRaw(settings, cnv);
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Number of sheets")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("First sheet")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Last sheet")]
-        public string v_infoType { get; set; }
+        public string v_InfoType { get; set; }
         
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive a sheet name")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
 
             Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
 
-            var infoType = v_infoType.ConvertToUserVariable(sender);
+            var infoType = v_InfoType.ConvertToUserVariable(sender);
             string ret;
             switch (infoType)
             {
@@ -112,7 +112,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get Info: '" + v_infoType + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get Info: '" + v_InfoType + "', Instance Name: '" + v_InstanceName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -124,7 +124,7 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Instance is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_infoType))
+            if (String.IsNullOrEmpty(this.v_InfoType))
             {
                 this.validationResult += "Information type is empty.\n";
                 this.IsValid = false;
