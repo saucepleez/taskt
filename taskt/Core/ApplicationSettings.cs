@@ -231,6 +231,24 @@ namespace taskt.Core
                 );
         }
 
+        public string convertToIntermediateWindowPosition(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(this.CurrentWindowPositionKeyword, wrapKeyword(InterCurrentWindowPositionKeyword))
+                        .Replace(this.CurrentWindowXPositionKeyword, wrapKeyword(InterCurrentWindowXPositionKeyword))
+                        .Replace(this.CurrentWindowYPositionKeyword, wrapKeyword(InterCurrentWindowYPositionKeyword))
+                );
+        }
+
+        public string convertToRawWindowPosition(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(wrapKeyword(InterCurrentWindowPositionKeyword), this.CurrentWindowPositionKeyword)
+                        .Replace(wrapKeyword(InterCurrentWindowXPositionKeyword), this.CurrentWindowXPositionKeyword)
+                        .Replace(wrapKeyword(InterCurrentWindowYPositionKeyword), this.CurrentWindowYPositionKeyword)
+                );
+        }
+
         private static string wrapKeyword(string kw)
         {
             return Char.ConvertFromUtf32(120130).ToString() + kw + Char.ConvertFromUtf32(120142).ToString();

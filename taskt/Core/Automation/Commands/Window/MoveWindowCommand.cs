@@ -259,6 +259,8 @@ namespace taskt.Core.Automation.Commands
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToIntermediateWindowName");
+            cnv.Add("v_XWindowPosition", "convertToIntermediateWindowPosition");
+            cnv.Add("v_YWindowPosition", "convertToIntermediateWindowPosition");
             convertToIntermediate(settings, cnv);
         }
 
@@ -266,6 +268,8 @@ namespace taskt.Core.Automation.Commands
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToRawWindowName");
+            cnv.Add("v_XWindowPosition", "convertToRawWindowPosition");
+            cnv.Add("v_YWindowPosition", "convertToRawWindowPosition");
             convertToRaw(settings, cnv);
         }
     }
