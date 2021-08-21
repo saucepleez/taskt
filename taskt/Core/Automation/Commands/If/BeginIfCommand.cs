@@ -1316,5 +1316,33 @@ namespace taskt.Core.Automation.Commands
                 this.IsValid = false;
             }
         }
+
+        public override void convertToIntermediate(EngineSettings settings)
+        {
+            if (this.v_IfActionType == "GUI Element Exists")
+            {
+                var cnv = new Dictionary<string, string>();
+                cnv.Add("v_IfActionParameterTable", "convertToIntermediateWindowName");
+                convertToIntermediate(settings, cnv);
+            }
+            else
+            {
+                base.convertToIntermediate(settings);
+            }
+        }
+
+        public override void convertToRaw(EngineSettings settings)
+        {
+            if (this.v_IfActionType == "GUI Element Exists")
+            {
+                var cnv = new Dictionary<string, string>();
+                cnv.Add("v_IfActionParameterTable", "convertToRawWindowName");
+                convertToRaw(settings, cnv);
+            }
+            else
+            {
+                base.convertToRaw(settings);
+            }
+        }
     }
 }
