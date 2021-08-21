@@ -200,7 +200,7 @@ namespace taskt.Core
         public string convertToRawExcelSheet(string targetString)
         {
             return convertToRaw(
-                    targetString.Replace(wrapKeyword(InterCurrentWorksheetKeyword), this.CurrentWindowKeyword)
+                    targetString.Replace(wrapKeyword(InterCurrentWorksheetKeyword), this.CurrentWorksheetKeyword)
                         .Replace(wrapKeyword(InterNextWorksheetKeyword), this.NextWorksheetKeyword)
                         .Replace(wrapKeyword(InterPreviousWorksheetKeyword), this.PreviousWorksheetKeyword)
                 );
