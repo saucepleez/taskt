@@ -224,7 +224,7 @@ namespace taskt.Core
 
         public string convertToRawWindowName(string targetString)
         {
-            return convertToIntermediate(
+            return convertToRaw(
                     targetString.Replace(wrapKeyword(InterCurrentWindowKeyword), this.CurrentWindowKeyword)
                         .Replace(wrapKeyword(InterDesktopKeyword), this.DesktopKeyword)
                         .Replace(wrapKeyword(InterAllWindowsKeyword), this.AllWindowsKeyword)
@@ -242,7 +242,7 @@ namespace taskt.Core
 
         public string convertToRawWindowPosition(string targetString)
         {
-            return convertToIntermediate(
+            return convertToRaw(
                     targetString.Replace(wrapKeyword(InterCurrentWindowPositionKeyword), this.CurrentWindowPositionKeyword)
                         .Replace(wrapKeyword(InterCurrentWindowXPositionKeyword), this.CurrentWindowXPositionKeyword)
                         .Replace(wrapKeyword(InterCurrentWindowYPositionKeyword), this.CurrentWindowYPositionKeyword)
