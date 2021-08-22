@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        public string v_sourceSheet { get; set; }
+        public string v_SheetName { get; set; }
 
         public ExcelDeleteWorksheetCommand()
         {
@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var targetSheetName = v_sourceSheet.ConvertToUserVariable(engine);
+            var targetSheetName = v_SheetName.ConvertToUserVariable(engine);
 
             //var excelObject = engine.GetAppInstance(vInstance);
 
@@ -103,13 +103,27 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Instance is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_sourceSheet))
+            if (String.IsNullOrEmpty(this.v_SheetName))
             {
                 this.validationResult += "Worksheet is empty.\n";
                 this.IsValid = false;
             }
 
             return this.IsValid;
+        }
+
+        public override void convertToIntermediate(EngineSettings settings)
+        {
+            var cnv = new Dictionary<string, string>();
+            cnv.Add("v_SheetName", "convertToIntermediateExcelSheet");
+            convertToIntermediate(settings, cnv);
+        }
+
+        public override void convertToRaw(EngineSettings settings)
+        {
+            var cnv = new Dictionary<string, string>();
+            cnv.Add("v_SheetName", "convertToRawExcelSheet");
+            convertToRaw(settings, cnv);
         }
     }
 }

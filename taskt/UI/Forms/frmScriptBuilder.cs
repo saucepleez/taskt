@@ -96,9 +96,9 @@ namespace taskt.UI.Forms
             }
         }
 
-        private void ChangeSaveState(bool s)
+        private void ChangeSaveState(bool dontSaveNow)
         {
-            this.dontSaveFlag = s;
+            this.dontSaveFlag = dontSaveNow;
             UpdateWindowTitle();
         }
 
@@ -1583,7 +1583,7 @@ namespace taskt.UI.Forms
                 scriptInfo = null;
 
                 //get deserialized script
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
+                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -1650,7 +1650,7 @@ namespace taskt.UI.Forms
             try
             {
                 //deserialize file      
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath);
+                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -1872,7 +1872,7 @@ namespace taskt.UI.Forms
             try
             {
                 scriptInfo.TasktVersion = Application.ProductVersion;
-                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, this.ScriptFilePath);
+                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, this.ScriptFilePath);
                 //show success dialog
                 Notify("File has been saved successfully!");
                 ChangeSaveState(false);
@@ -2502,7 +2502,7 @@ namespace taskt.UI.Forms
             {
                 frm.infos = scriptInfo;
                 frm.ShowDialog();
-                this.dontSaveFlag = true;
+                ChangeSaveState(true);
             }
         }
     }

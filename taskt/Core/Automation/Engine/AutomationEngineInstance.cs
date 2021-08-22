@@ -153,7 +153,7 @@ namespace taskt.Core.Automation.Engine
                     ReportProgress("Deserializing File");
                     engineLogger.Information("Script Path: " + data);
                     FileName = data;              
-                    automationScript = Core.Script.Script.DeserializeFile(data);
+                    automationScript = Core.Script.Script.DeserializeFile(data, engineSettings);
                 }
                 else if (dataIsFile && preLoadedTask)
                 {

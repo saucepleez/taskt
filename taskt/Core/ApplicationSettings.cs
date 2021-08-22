@@ -124,6 +124,8 @@ namespace taskt.Core
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
         public bool AutoCalcVariables { get; set; }
         public string CurrentWindowKeyword { get; set; }
+        public string DesktopKeyword { get; set; }
+        public string AllWindowsKeyword { get; set; }
         public string CurrentWindowPositionKeyword { get; set; }
         public string CurrentWindowXPositionKeyword { get; set; }
         public string CurrentWindowYPositionKeyword { get; set; }
@@ -133,12 +135,36 @@ namespace taskt.Core
         private static string InterStartVariableMaker = "{{{";
         private static string InterEndVariableMaker = "}}}";
         private static string InterCurrentWindowKeyword = "%kwd_current_window%";
+        private static string InterDesktopKeyword = "%kwd_desktop%";
+        private static string InterAllWindowsKeyword = "%kwd_all_windows%";
         private static string InterCurrentWindowPositionKeyword = "%kwd_current_position%";
         private static string InterCurrentWindowXPositionKeyword = "%kwd_current_xposition%";
         private static string InterCurrentWindowYPositionKeyword = "%kwd_current_yposition%";
         private static string InterCurrentWorksheetKeyword = "%kwd_current_worksheet%";
         private static string InterNextWorksheetKeyword = "%kwd_next_worksheet%";
         private static string InterPreviousWorksheetKeyword = "%kwd_previous_worksheet%";
+
+        private static string[] m_KeyNameList = new string[]
+        {
+            "BACKSPACE", "BS", "BKSP",
+            "BREAK",
+            "CAPSLOCK",
+            "DELETE", "DEL",
+            "UP", "DOWN", "LEFT", "RIGHT",
+            "END",
+            "ENTER",
+            "INSERT", "INS",
+            "NUMLOCK",
+            "PGDN",
+            "PGUP",
+            "SCROLLROCK",
+            "TAB",
+            "F1", "F2", "F3", "F4", "F5", "F6",
+            "F7", "F8", "F9", "F10", "F11", "F12",
+            "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE",
+            "WIN_KEY"
+        };
+
         public EngineSettings()
         {
             ShowDebugWindow = true;
@@ -156,6 +182,8 @@ namespace taskt.Core
             AutoCloseDebugWindowOnServerExecution = true;
             AutoCalcVariables = true;
             CurrentWindowKeyword = "Current Window";
+            DesktopKeyword = "Desktop";
+            AllWindowsKeyword = "All Windows";
             CurrentWindowPositionKeyword = "Current Position";
             CurrentWindowXPositionKeyword = "Current XPosition";
             CurrentWindowYPositionKeyword = "Current YPosition";
@@ -164,9 +192,15 @@ namespace taskt.Core
             PreviousWorksheetKeyword = "Previous Sheet";
         }
 
+        public string[] KeyNameList()
+        {
+            return m_KeyNameList;
+        }
+
         public string replaceEngineKeyword(string targetString)
         {
-            return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker).Replace(InterEndVariableMaker, this.VariableEndMarker)
+            return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker)
+                    .Replace(InterEndVariableMaker, this.VariableEndMarker)
                     .Replace(InterCurrentWindowKeyword, this.CurrentWindowKeyword)
                     .Replace(InterCurrentWindowPositionKeyword, this.CurrentWindowPositionKeyword)
                     .Replace(InterCurrentWindowXPositionKeyword, this.CurrentWindowXPositionKeyword)
@@ -174,6 +208,77 @@ namespace taskt.Core
                     .Replace(InterCurrentWorksheetKeyword, this.CurrentWorksheetKeyword)
                     .Replace(InterNextWorksheetKeyword, this.NextWorksheetKeyword)
                     .Replace(InterPreviousWorksheetKeyword, this.PreviousWorksheetKeyword);
+        }
+
+        public string convertToIntermediate(string targetString)
+        {
+            return targetString.Replace(this.VariableStartMarker, Convert.ToChar(10627).ToString())
+                    .Replace(this.VariableEndMarker, Convert.ToChar(10628).ToString());
+        }
+
+        public string convertToRaw(string targetString)
+        {
+            return targetString.Replace(Convert.ToChar(10627).ToString(), this.VariableStartMarker)
+                    .Replace(Convert.ToChar(10628).ToString(), this.VariableEndMarker);
+        }
+
+        public string convertToIntermediateExcelSheet(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(this.CurrentWorksheetKeyword, wrapKeyword(InterCurrentWorksheetKeyword))
+                        .Replace(this.NextWorksheetKeyword, wrapKeyword(InterNextWorksheetKeyword))
+                        .Replace(this.PreviousWorksheetKeyword, wrapKeyword(InterPreviousWorksheetKeyword))
+                    );
+        }
+
+        public string convertToRawExcelSheet(string targetString)
+        {
+            return convertToRaw(
+                    targetString.Replace(wrapKeyword(InterCurrentWorksheetKeyword), this.CurrentWorksheetKeyword)
+                        .Replace(wrapKeyword(InterNextWorksheetKeyword), this.NextWorksheetKeyword)
+                        .Replace(wrapKeyword(InterPreviousWorksheetKeyword), this.PreviousWorksheetKeyword)
+                );
+        }
+
+        public string convertToIntermediateWindowName(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(this.CurrentWindowKeyword, wrapKeyword(InterCurrentWindowKeyword))
+                        .Replace(this.DesktopKeyword, wrapKeyword(InterDesktopKeyword))
+                        .Replace(this.AllWindowsKeyword, wrapKeyword(InterAllWindowsKeyword))
+                );
+        }
+
+        public string convertToRawWindowName(string targetString)
+        {
+            return convertToRaw(
+                    targetString.Replace(wrapKeyword(InterCurrentWindowKeyword), this.CurrentWindowKeyword)
+                        .Replace(wrapKeyword(InterDesktopKeyword), this.DesktopKeyword)
+                        .Replace(wrapKeyword(InterAllWindowsKeyword), this.AllWindowsKeyword)
+                );
+        }
+
+        public string convertToIntermediateWindowPosition(string targetString)
+        {
+            return convertToIntermediate(
+                    targetString.Replace(this.CurrentWindowPositionKeyword, wrapKeyword(InterCurrentWindowPositionKeyword))
+                        .Replace(this.CurrentWindowXPositionKeyword, wrapKeyword(InterCurrentWindowXPositionKeyword))
+                        .Replace(this.CurrentWindowYPositionKeyword, wrapKeyword(InterCurrentWindowYPositionKeyword))
+                );
+        }
+
+        public string convertToRawWindowPosition(string targetString)
+        {
+            return convertToRaw(
+                    targetString.Replace(wrapKeyword(InterCurrentWindowPositionKeyword), this.CurrentWindowPositionKeyword)
+                        .Replace(wrapKeyword(InterCurrentWindowXPositionKeyword), this.CurrentWindowXPositionKeyword)
+                        .Replace(wrapKeyword(InterCurrentWindowYPositionKeyword), this.CurrentWindowYPositionKeyword)
+                );
+        }
+
+        private static string wrapKeyword(string kw)
+        {
+            return Char.ConvertFromUtf32(120130).ToString() + kw + Char.ConvertFromUtf32(120142).ToString();
         }
     }
     /// <summary>

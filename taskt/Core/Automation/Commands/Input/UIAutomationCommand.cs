@@ -980,5 +980,19 @@ namespace taskt.Core.Automation.Commands
                 this.IsValid = false;
             }
         }
+
+        public override void convertToIntermediate(EngineSettings settings)
+        {
+            var cnv = new Dictionary<string, string>();
+            cnv.Add("v_WindowName", "convertToIntermediateWindowName");
+            convertToIntermediate(settings, cnv);
+        }
+
+        public override void convertToRaw(EngineSettings settings)
+        {
+            var cnv = new Dictionary<string, string>();
+            cnv.Add("v_WindowName", "convertToRawWindowName");
+            convertToRaw(settings, cnv);
+        }
     }
 }

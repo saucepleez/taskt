@@ -109,22 +109,30 @@ namespace taskt.UI.Forms
                 //validate if user added variable
                 if (addVariableForm.ShowDialog() == DialogResult.OK)
                 {
-                    string newVaiable = addVariableForm.txtVariableName.Text.Trim();
-                    if (checkVariableName(newVaiable))
+                    string newVariable = addVariableForm.txtVariableName.Text.Trim();
+                    if (checkVariableName(newVariable))
                     {
-                        if (!isVariableExists(newVaiable))
+                        if (!isVariableExists(newVariable))
                         {
                             //add newly edited node
-                            AddUserVariableNode(userVariableParentNode, newVaiable, addVariableForm.txtDefaultValue.Text);
+                            AddUserVariableNode(userVariableParentNode, newVariable, addVariableForm.txtDefaultValue.Text);
                         }
                         else
                         {
-                            MessageBox.Show("'" + newVaiable + "' is already exists.", "Variable Error");
+                            //MessageBox.Show("'" + newVaiable + "' is already exists.", "Variable Error");
+                            using (var fm = new Forms.Supplemental.frmDialog("'" + newVariable + "' is already exists.", "Variable Error",Supplemental.frmDialog.DialogType.OkOnly, 0))
+                            {
+                                fm.ShowDialog();
+                            }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("'" + newVaiable + "' contains bad character(ex. { } [ ] + - * /).", "Variable Error");
+                        //MessageBox.Show("'" + newVaiable + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error");
+                        using (var fm = new Forms.Supplemental.frmDialog("'" + newVariable + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                        {
+                            fm.ShowDialog();
+                        }
                     }
                 }
             }
@@ -204,12 +212,20 @@ namespace taskt.UI.Forms
                             }
                             else
                             {
-                                MessageBox.Show("'" + newVariable + "' is already exists.", "Variable Error");
+                                //MessageBox.Show("'" + newVariable + "' is already exists.", "Variable Error");
+                                using (var fm = new Forms.Supplemental.frmDialog("'" + newVariable + "' is already exists.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                                {
+                                    fm.ShowDialog();
+                                }
                             }
                         }
                         else
                         {
-                            MessageBox.Show("'" + newVariable + "' contains bad character(ex. { } [ ] + - * /).", "Variable Error");
+                            //MessageBox.Show("'" + newVariable + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error");
+                            using (var fm = new Forms.Supplemental.frmDialog("'" + newVariable + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                            {
+                                fm.ShowDialog();
+                            }
                         }
                     }
                 }
@@ -328,6 +344,15 @@ namespace taskt.UI.Forms
             }
             else
             {
+                var keyNames = appSettings.EngineSettings.KeyNameList();
+                var upperVarName = variableName.ToUpper();
+                foreach(string k in keyNames)
+                {
+                    if (upperVarName == k)
+                    {
+                        return false;
+                    }
+                }
                 return true;
             }
         }

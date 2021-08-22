@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
             //deserialize task
             Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var startFile = v_taskPath.ConvertToUserVariable(sender);
-            Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile);
+            Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile, currentScriptEngine.engineSettings);
 
             currentScriptEngine.PreloadedTasks.Add(startFile, deserializedScript);
 

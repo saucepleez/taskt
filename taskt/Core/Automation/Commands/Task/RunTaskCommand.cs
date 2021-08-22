@@ -201,6 +201,7 @@ namespace taskt.Core.Automation.Commands
             var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);
 
             var Sender = (CheckBox)sender;
+            var engineSettings = ((UI.Forms.frmCommandEditor)Sender.FindForm()).appSettings.EngineSettings;
             
             AssignmentsGridViewHelper.Visible = Sender.Checked;
 
@@ -208,7 +209,7 @@ namespace taskt.Core.Automation.Commands
             if ((Sender.Checked) && (System.IO.File.Exists(startFile)))
             {
               
-                Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile);
+                Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile, engineSettings);
                 
                 foreach (var variable in deserializedScript.Variables)
                 {
