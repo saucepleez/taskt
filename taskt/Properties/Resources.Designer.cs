@@ -213,6 +213,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap actionbar_edit {
+            get {
+                object obj = ResourceManager.GetObject("actionbar_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap command_begin_if {
             get {
                 object obj = ResourceManager.GetObject("command_begin_if", resourceCulture);
