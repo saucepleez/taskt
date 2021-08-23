@@ -604,6 +604,14 @@ namespace taskt.UI.Forms
 
         }
 
+        private void SelectAllRows()
+        {
+            foreach (ListViewItem itm in lstScriptActions.Items)
+            {
+                itm.Selected = true;
+            }
+        }
+
         private void DeleteRows()
         {
             foreach (ListViewItem itm in lstScriptActions.SelectedItems)
@@ -2523,6 +2531,39 @@ namespace taskt.UI.Forms
                 ChangeSaveState(true);
             }
         }
+
+        #region Edit menu
+        private void SelectAllStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectAllRows();
+        }
+        private void CutScriptStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CutRows();
+        }
+
+        private void CopyStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyRows();
+        }
+
+        private void PasteStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteRows();
+        }
+
+        private void SearchStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ReplaceStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        
     }
 
 }
