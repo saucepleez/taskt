@@ -164,6 +164,13 @@ namespace taskt.Core
             "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE",
             "WIN_KEY"
         };
+        private static string[] m_DisallowVariableCharList = new string[]
+        {
+            "+", "-", "*", "%",
+            "[", "]", "{", "}",
+            ".",
+            " "
+        };
 
         public EngineSettings()
         {
@@ -195,6 +202,11 @@ namespace taskt.Core
         public string[] KeyNameList()
         {
             return m_KeyNameList;
+        }
+
+        public string[] DisallowVariableCharList()
+        {
+            return m_DisallowVariableCharList;
         }
 
         public string replaceEngineKeyword(string targetString)
