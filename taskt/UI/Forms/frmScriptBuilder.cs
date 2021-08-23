@@ -614,6 +614,10 @@ namespace taskt.UI.Forms
             }
 
             CreateUndoSnapshot();
+
+            // check indent
+            IndentListViewItems();
+
             lstScriptActions.Invalidate();
             //FormatCommandListView();
         }
@@ -653,6 +657,9 @@ namespace taskt.UI.Forms
                 // release
                 commands.Clear();
                 commands = null;
+
+                // check indent
+                IndentListViewItems();
             }
         }
 
@@ -735,6 +742,9 @@ namespace taskt.UI.Forms
                 Notify(sc.Commands.Count + " item(s) pasted!");
                 // release
                 sc = null;
+
+                // check indent
+                IndentListViewItems();
             }
             else
             {
@@ -763,8 +773,10 @@ namespace taskt.UI.Forms
 
                 undoIndex--;
 
-                lstScriptActions.Invalidate();
+                // check indent
+                IndentListViewItems();
 
+                lstScriptActions.Invalidate();
             }
 
         }
@@ -791,9 +803,10 @@ namespace taskt.UI.Forms
                 }
 
 
+                // check indent
+                IndentListViewItems();
+
                 lstScriptActions.Invalidate();
-
-
             }
 
         }
@@ -1085,9 +1098,12 @@ namespace taskt.UI.Forms
 
             CreateUndoSnapshot();
 
+            // check indent
+            IndentListViewItems();
+
             lstScriptActions.Invalidate();
 
-            AutoSizeLineNumberColumn();
+            //AutoSizeLineNumberColumn();
 
         }
 
@@ -1144,7 +1160,7 @@ namespace taskt.UI.Forms
         {
 
             //handle indents
-            IndentListViewItems();
+            //IndentListViewItems();
 
             //auto size line numbers based on command count
             AutoSizeLineNumberColumn();
@@ -1168,7 +1184,6 @@ namespace taskt.UI.Forms
                     //draw row number
                     e.Graphics.DrawString((e.ItemIndex + 1).ToString(),
                         lstScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
-
                     break;
                 case 1:
                     //draw command icon
@@ -1679,6 +1694,9 @@ namespace taskt.UI.Forms
 
 
                 ChangeSaveState(true);
+
+                // check indent
+                IndentListViewItems();
 
                 //format listview
 
