@@ -595,10 +595,11 @@ namespace taskt.UI.Forms
             }
             else if ((e.Control) && (e.KeyCode == Keys.A))
             {
-                foreach (ListViewItem item in lstScriptActions.Items)
-                {
-                    item.Selected = true;
-                }
+                //foreach (ListViewItem item in lstScriptActions.Items)
+                //{
+                //    item.Selected = true;
+                //}
+                SelectAllRows();
             }
 
 
@@ -1415,6 +1416,8 @@ namespace taskt.UI.Forms
             lstScriptActions.SelectedIndices.Clear();
 
         }
+
+        #region lstContextStrip click event handlers
         private void disableSelectedCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSelectedCodeToCommented(true);
@@ -1447,6 +1450,29 @@ namespace taskt.UI.Forms
         {
             lstScriptActions_DoubleClick(null, null);
         }
+        private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var currentCommand = lstScriptActions.SelectedItems[0].Tag;
+
+            var jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(currentCommand, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
+
+            using (var dialog = new Supplemental.frmDialog(jsonText, "Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0))
+            {
+                dialog.ShowDialog();
+            }
+        }
+        private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
+        {
+            using (frmScriptInformations frm = new frmScriptInformations())
+            {
+                frm.infos = scriptInfo;
+                frm.ShowDialog();
+                ChangeSaveState(true);
+            }
+        }
+        #endregion
+
         #endregion
 
         #endregion
@@ -2330,85 +2356,9 @@ namespace taskt.UI.Forms
             }        
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BeginNewScriptProcess();
-        }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BeginOpenScriptProcess();
-        }
 
-        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BeginImportProcess();
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BeginSaveScriptProcess(false);
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BeginSaveScriptProcess(true);
-        }
-
-        private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //{
-            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //}
-            showVariableManager();
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //show settings dialog
-            using (frmSettings newSettings = new frmSettings(this))
-            {
-                newSettings.ShowDialog();
-            }
-                
-            //reload app settings
-            appSettings = new Core.ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
-
-            //reinit
-            Core.Server.HttpServerClient.Initialize();
-        }
-
-        private void recordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-
-            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
-            {
-                sequenceRecorder.callBackForm = this;
-                sequenceRecorder.ShowDialog();
-            }
-
-            pnlCommandHelper.Hide();
-
-            this.Show();
-            this.BringToFront();
-        }
-
-        private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement();
-            scheduleManager.Show();
-        }
-
-        private void runToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BeginRunScriptProcess();
-        }
+        
 
         private void BeginRunScriptProcess()
         {
@@ -2437,19 +2387,37 @@ namespace taskt.UI.Forms
             newEngine.Show();
         }
 
-        private void saveAndRunToolStripMenuItem_Clicked(object sender, EventArgs e)
+        
+
+        
+
+        #region MenuStrip1 click event handler
+
+        #region File Actions menu event handler
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //saveToolStripMenuItem_Click(null, null);
-            //runToolStripMenuItem_Click(null, null);
-            if (scriptInfo.RunTimes != int.MaxValue)
-            {
-                scriptInfo.RunTimes++;
-            }
-            scriptInfo.LastRunTime = DateTime.Now;
-            BeginSaveScriptProcess((this.ScriptFilePath == ""));
-            BeginRunScriptProcess();
+            BeginNewScriptProcess();
         }
 
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginOpenScriptProcess();
+        }
+
+        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginSaveScriptProcess(false);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginSaveScriptProcess(true);
+        }
         private void restartApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CheckAndSaveScriptIfForget();
@@ -2462,77 +2430,9 @@ namespace taskt.UI.Forms
             BeginFormCloseProcess();
             Application.Exit();
         }
+        #endregion
 
-        private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //set to empty
-            tsSearchResult.Text = "";
-            tsSearchBox.Text = "";
-
-            //show or hide
-            tsSearchBox.Visible = !tsSearchBox.Visible;
-            tsSearchButton.Visible = !tsSearchButton.Visible;
-            tsSearchResult.Visible = !tsSearchResult.Visible;
-
-            //update verbiage
-            if (tsSearchBox.Visible)
-            {
-                showSearchBarToolStripMenuItem.Text = "Hide Search Bar";
-            }
-            else
-            {
-                showSearchBarToolStripMenuItem.Text = "Show Search Bar";
-            }
-
-        }
-
-        private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = !BeginFormCloseProcess();
-        }
-
-        private bool BeginFormCloseProcess()
-        {
-            if (notifyTray != null)
-            {
-                notifyTray.Visible = false;
-                notifyTray.Dispose();
-            }
-
-            if (this.parentBuilder != null)
-            {
-                //TODO: i want to do better.
-                return true;
-            }
-
-            CheckAndSaveScriptIfForget();
-            return true;
-        }
-
-        private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-         
-            var currentCommand = lstScriptActions.SelectedItems[0].Tag;
-
-            var jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(currentCommand, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
-
-            using (var dialog = new Supplemental.frmDialog(jsonText, "Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0))
-            {
-                dialog.ShowDialog();
-            }
-        }
-
-        private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
-        {
-            using (frmScriptInformations frm = new frmScriptInformations())
-            {
-                frm.infos = scriptInfo;
-                frm.ShowDialog();
-                ChangeSaveState(true);
-            }
-        }
-
-        #region Edit menu
+        #region Edit menu items click handler
         private void SelectAllStripMenuItem_Click(object sender, EventArgs e)
         {
             SelectAllRows();
@@ -2563,7 +2463,128 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-        
+        #region Options menu event handler
+        private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
+            //scriptVariableEditor.scriptVariables = this.scriptVariables;
+
+            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            //{
+            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
+            //}
+            showVariableManager();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //show settings dialog
+            using (frmSettings newSettings = new frmSettings(this))
+            {
+                newSettings.ShowDialog();
+            }
+
+            //reload app settings
+            appSettings = new Core.ApplicationSettings();
+            appSettings = appSettings.GetOrCreateApplicationSettings();
+
+            //reinit
+            Core.Server.HttpServerClient.Initialize();
+        }
+
+        private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //set to empty
+            tsSearchResult.Text = "";
+            tsSearchBox.Text = "";
+
+            //show or hide
+            tsSearchBox.Visible = !tsSearchBox.Visible;
+            tsSearchButton.Visible = !tsSearchButton.Visible;
+            tsSearchResult.Visible = !tsSearchResult.Visible;
+
+            //update verbiage
+            if (tsSearchBox.Visible)
+            {
+                showSearchBarToolStripMenuItem.Text = "Hide Search Bar";
+            }
+            else
+            {
+                showSearchBarToolStripMenuItem.Text = "Show Search Bar";
+            }
+
+        }
+        #endregion
+
+        #region Script Actions menu event handler
+        private void recordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
+            {
+                sequenceRecorder.callBackForm = this;
+                sequenceRecorder.ShowDialog();
+            }
+
+            pnlCommandHelper.Hide();
+
+            this.Show();
+            this.BringToFront();
+        }
+
+        private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement();
+            scheduleManager.Show();
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginRunScriptProcess();
+        }
+        #endregion
+
+        #region Save And Run menu event handler
+        private void saveAndRunToolStripMenuItem_Clicked(object sender, EventArgs e)
+        {
+            //saveToolStripMenuItem_Click(null, null);
+            //runToolStripMenuItem_Click(null, null);
+            if (scriptInfo.RunTimes != int.MaxValue)
+            {
+                scriptInfo.RunTimes++;
+            }
+            scriptInfo.LastRunTime = DateTime.Now;
+            BeginSaveScriptProcess((this.ScriptFilePath == ""));
+            BeginRunScriptProcess();
+        }
+        #endregion
+
+        #endregion
+
+        private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = !BeginFormCloseProcess();
+        }
+
+        private bool BeginFormCloseProcess()
+        {
+            if (notifyTray != null)
+            {
+                notifyTray.Visible = false;
+                notifyTray.Dispose();
+            }
+
+            if (this.parentBuilder != null)
+            {
+                //TODO: i want to do better.
+                return true;
+            }
+
+            CheckAndSaveScriptIfForget();
+            return true;
+        }
+
     }
 
 }
