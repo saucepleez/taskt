@@ -184,7 +184,6 @@ namespace taskt.Core.Automation.Commands
                         continue;
                     }
                      
-                    Console.WriteLine(newName);
                     Microsoft.Office.Interop.Excel.Workbook newWorkBook = excelInstance.Workbooks.Add(Type.Missing);
                     Microsoft.Office.Interop.Excel.Worksheet newSheet = newWorkBook.ActiveSheet;
                     for (int i = 1; i < newDT.Columns.Count + 1; i++)

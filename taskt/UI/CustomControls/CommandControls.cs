@@ -1087,13 +1087,11 @@ namespace taskt.UI.CustomControls
         {
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
-            Console.WriteLine(trg.Tag);
         }
         private static void ComboBoxClick(object sender, System.EventArgs e)
         {
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
-            Console.WriteLine(trg.Tag);
         }
 
         private static void AddInputParameter(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)

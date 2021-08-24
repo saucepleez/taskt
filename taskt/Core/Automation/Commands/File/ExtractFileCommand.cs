@@ -169,7 +169,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         if (!reader.Entry.IsDirectory)
                         {
-                            Console.WriteLine(reader.Entry.Key);
+                            //Console.WriteLine(reader.Entry.Key);
                             reader.WriteEntryToDirectory(vExtractionFolder, new ExtractionOptions() { ExtractFullPath = true, Overwrite = true });
                             fileList.Add(vExtractionFolder + reader.Entry.Key.Replace("/", "\\"));
 
