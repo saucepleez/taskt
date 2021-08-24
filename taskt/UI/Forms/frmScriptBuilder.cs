@@ -57,6 +57,8 @@ namespace taskt.UI.Forms
         private int currentIndex = -1;
         private frmScriptBuilder parentBuilder { get; set; }
 
+        private Pen indentDashLine;
+
         public frmScriptBuilder()
         {
             InitializeComponent();
@@ -106,6 +108,10 @@ namespace taskt.UI.Forms
         {
             //load all commands
             automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
+
+            // init Pen
+            indentDashLine = new Pen(Color.LightGray, 1);
+            indentDashLine.DashStyle = DashStyle.Dash;
 
             //set controls double buffered
             foreach (Control control in Controls)
@@ -160,11 +166,6 @@ namespace taskt.UI.Forms
                 tlpControls.RowStyles[1].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[1].Height = 0;
             }
-
-
-
-
-
 
             //get scripts folder
             var rpaScriptsFolder = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
@@ -1299,7 +1300,6 @@ namespace taskt.UI.Forms
                     //e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
                     e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
 
-
                     //get indent count
                     var indentPixels = (item.IndentCount * 15);
 
@@ -1311,6 +1311,31 @@ namespace taskt.UI.Forms
                     //               lstScriptActions.Font, commandNameBrush, modifiedBounds);
                     e.Graphics.DrawString(command.GetDisplayValue(),
                                    new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
+
+                    if (item.IndentCount > 0)
+                    {
+                        int offset;
+                        int i;
+                        if (item.IndentCount % 4 == 0)
+                        {
+                            offset = 30;
+                            i = item.IndentCount - 2;
+                        }
+                        else
+                        {
+                            offset = 0;
+                            i = item.IndentCount;
+                        }
+                        int bottomY = modifiedBounds.Y + modifiedBounds.Height;
+                        for (i = (item.IndentCount % 4 != 0 ? item.IndentCount - 2 : item.IndentCount); i > 0; i -= 4)
+                        {
+                            int x = modifiedBounds.X - (i * 15) + offset;
+                            e.Graphics.DrawLine(indentDashLine, x, modifiedBounds.Y, x, bottomY);
+                        }
+
+                        int baseX = modifiedBounds.X - (item.IndentCount * 15) + 2;
+                        e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
+                    }
 
                     break;
             }
@@ -1654,6 +1679,9 @@ namespace taskt.UI.Forms
 
                 //populate commands
                 PopulateExecutionCommands(deserializedScript.Commands);
+
+                // check indent
+                IndentListViewItems();
 
                 //format listview
                 ChangeSaveState(false);
