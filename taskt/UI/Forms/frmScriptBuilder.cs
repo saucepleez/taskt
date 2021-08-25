@@ -311,6 +311,56 @@ namespace taskt.UI.Forms
             GC.Collect();
 
         }
+        
+        private void frmScriptBuilder_Shown(object sender, EventArgs e)
+        {
+
+            taskt.Program.SplashForm.Hide();
+
+            if (editMode)
+                return;
+
+            Notify("Welcome! Press 'Start Edit Script' to get started!");
+        }
+        private void pnlControlContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+            //Rectangle rect = new Rectangle(0, 0, pnlControlContainer.Width, pnlControlContainer.Height);
+            //using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.White, Color.WhiteSmoke, LinearGradientMode.Vertical))
+            //{
+            //    e.Graphics.FillRectangle(brush, rect);
+            //}
+
+            //Pen steelBluePen = new Pen(Color.SteelBlue, 2);
+            //Pen lightSteelBluePen = new Pen(Color.LightSteelBlue, 1);
+            ////e.Graphics.DrawLine(steelBluePen, 0, 0, pnlControlContainer.Width, 0);
+            //e.Graphics.DrawLine(lightSteelBluePen, 0, 0, pnlControlContainer.Width, 0);
+            //e.Graphics.DrawLine(lightSteelBluePen, 0, pnlControlContainer.Height - 1, pnlControlContainer.Width, pnlControlContainer.Height - 1);
+
+        }
+        
+        
+        private void frmScriptBuilder_Resize(object sender, EventArgs e)
+        {
+            //check when minimized
+
+            if ((this.WindowState == FormWindowState.Minimized) && (appSettings.ClientSettings.MinimizeToTray))
+            {
+                appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                if (appSettings.ClientSettings.MinimizeToTray)
+                {
+                    notifyTray.Visible = true;
+                    notifyTray.ShowBalloonTip(3000);
+                    this.ShowInTaskbar = false;
+                }
+            }
+
+            pnlMain.Invalidate();
+
+        }
+        #endregion
+
+        #region Link Labels
         private void GenerateRecentFiles()
         {
             flwRecentFiles.Controls.Clear();
@@ -372,58 +422,33 @@ namespace taskt.UI.Forms
                 flwRecentFiles.ResumeLayout();
             }
         }
-        private void frmScriptBuilder_Shown(object sender, EventArgs e)
+        private void lnkStartEdit_Click(object sender, EventArgs e)
         {
-
-            taskt.Program.SplashForm.Hide();
-
-            if (editMode)
-                return;
-
-            Notify("Welcome! Press 'Start Edit Script' to get started!");
+            pnlCommandHelper.Visible = false;
         }
-        private void pnlControlContainer_Paint(object sender, PaintEventArgs e)
+        private void lnkGitProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
-            //Rectangle rect = new Rectangle(0, 0, pnlControlContainer.Width, pnlControlContainer.Height);
-            //using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.White, Color.WhiteSmoke, LinearGradientMode.Vertical))
-            //{
-            //    e.Graphics.FillRectangle(brush, rect);
-            //}
-
-            //Pen steelBluePen = new Pen(Color.SteelBlue, 2);
-            //Pen lightSteelBluePen = new Pen(Color.LightSteelBlue, 1);
-            ////e.Graphics.DrawLine(steelBluePen, 0, 0, pnlControlContainer.Width, 0);
-            //e.Graphics.DrawLine(lightSteelBluePen, 0, 0, pnlControlContainer.Width, 0);
-            //e.Graphics.DrawLine(lightSteelBluePen, 0, pnlControlContainer.Height - 1, pnlControlContainer.Width, pnlControlContainer.Height - 1);
-
+            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
         }
-        private void lblMainLogo_Click(object sender, EventArgs e)
+        private void lnkGitLatestReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (Supplemental.frmAbout aboutForm = new Supplemental.frmAbout())
-            {
-                aboutForm.ShowDialog();
-            }
+            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/releases");
         }
-        private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
+        private void lnkGitIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
-            if (!appSettings.ClientSettings.InsertCommandsInline)
-                return;
-
-            //check to see if an item has been selected last
-            if (lstScriptActions.SelectedItems.Count > 0)
-            {
-                selectedIndex = lstScriptActions.SelectedItems[0].Index;
-                //FormatCommandListView();
-            }
-            else
-            {
-                //nothing is selected
-                selectedIndex = -1;
-            }
+            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/issues/new");
+        }
+        private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://wiki.taskt.net/");
+        }
+        private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            LinkLabel senderLink = (LinkLabel)sender;
+            OpenFile(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text);
         }
         #endregion
+
 
         #region ListView Events
         #region ListView DragDrop
@@ -549,62 +574,116 @@ namespace taskt.UI.Forms
 
         #endregion
 
-        #region ListView Copy, Paste, Edit, Delete
-        private void lstScriptActions_KeyDown(object sender, KeyEventArgs e)
+        #region ListView Search
+
+        private void txtCommandSearch_TextChanged(object sender, EventArgs e)
         {
-            //delete from listview if required
-            if (e.KeyCode == Keys.Delete)
-            {
-                DeleteRows();
-            }
-            else if(e.KeyCode == Keys.Enter)
-            {
-                //if user presses enter simulate double click event
-                lstScriptActions_DoubleClick(null, null);
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.X))
-            {     
-                CutRows();
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.C))
-            {
-                CopyRows();
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.V))
-            {        
-                PasteRows();
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.Z))
-            {
-                UndoChange();
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.R))
-            {
-                RedoChange();
-            }
-            else if ((e.Control) && (e.Shift) && (e.KeyCode == Keys.E))
-            {
-                lstScriptActions_DoubleClick(null, null);
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.E))
-            {
-                SetSelectedCodeToCommented(false);
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.D))
-            {
-                SetSelectedCodeToCommented(true);
-            }
-            else if ((e.Control) && (e.KeyCode == Keys.A))
-            {
-                //foreach (ListViewItem item in lstScriptActions.Items)
-                //{
-                //    item.Selected = true;
-                //}
-                SelectAllRows();
-            }
+            if (lstScriptActions.Items.Count == 0)
+                return;
 
+            reqdIndex = 0;
 
+            if (txtCommandSearch.Text == "")
+            {
+                //hide info
+                HideSearchInfo();
+
+                //clear indexes
+                matchingSearchIndex.Clear();
+                currentIndex = -1;
+
+                //repaint
+                lstScriptActions.Invalidate();
+            }
+            else
+            {
+                lblCurrentlyViewing.Show();
+                lblTotalResults.Show();
+                SearchForItemInListView();
+
+                //repaint
+                lstScriptActions.Invalidate();
+            }
         }
+
+        private void HideSearchInfo()
+        {
+            lblCurrentlyViewing.Hide();
+            lblTotalResults.Hide();
+        }
+
+        private void SearchForItemInListView()
+        {
+            var searchCriteria = txtCommandSearch.Text;
+
+            if (searchCriteria == "")
+            {
+                searchCriteria = tsSearchBox.Text;
+            }
+
+            var matchingItems = (from ListViewItem itm in lstScriptActions.Items
+                                 where itm.Text.Contains(searchCriteria)
+                                 select itm).ToList();
+
+
+            int? matchCount = matchingItems.Count();
+            int totalMatches = matchCount ?? 0;
+
+
+            if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
+            {
+                reqdIndex = 0;
+            }
+
+            lblTotalResults.Show();
+
+            if (totalMatches == 0)
+            {
+                reqdIndex = -1;
+                lblTotalResults.Text = "No Matches Found";
+                lblCurrentlyViewing.Hide();
+                //clear indexes
+                matchingSearchIndex.Clear();
+                reqdIndex = -1;
+                lstScriptActions.Invalidate();
+                return;
+            }
+            else
+            {
+                lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
+                tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
+                lblTotalResults.Text = totalMatches + " total results found";
+            }
+
+            matchingSearchIndex = new List<int>();
+            foreach (ListViewItem itm in matchingItems)
+            {
+                matchingSearchIndex.Add(itm.Index);
+                itm.BackColor = Color.LightGoldenrodYellow;
+            }
+
+            currentIndex = matchingItems[reqdIndex].Index;
+
+            lstScriptActions.Invalidate();
+
+            lstScriptActions.EnsureVisible(currentIndex);
+        }
+
+        private void pbSearch_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+        }
+
+        private void pbSearch_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Arrow;
+        }
+        #endregion
+
+
+
+        #region ListView Copy, Paste, Edit, Delete
+
 
         private void SelectAllRows()
         {
@@ -820,6 +899,58 @@ namespace taskt.UI.Forms
             }
 
         }
+        private void SetSelectedCodeToCommented(bool setCommented)
+        {
+
+            //warn if nothing was selected
+            if (lstScriptActions.SelectedItems.Count == 0)
+            {
+                Notify("No code was selected!");
+            }
+
+            //get each item and set appropriately
+            foreach (ListViewItem item in lstScriptActions.SelectedItems)
+            {
+                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
+                selectedCommand.IsCommented = setCommented;
+            }
+
+            ChangeSaveState(true);
+
+            //recolor
+            lstScriptActions.Invalidate();
+
+            //clear selection
+            lstScriptActions.SelectedIndices.Clear();
+
+        }
+        private void SetPauseBeforeExecution()
+        {
+
+            //warn if nothing was selected
+            if (lstScriptActions.SelectedItems.Count == 0)
+            {
+                Notify("No code was selected!");
+            }
+
+            //get each item and set appropriately
+            foreach (ListViewItem item in lstScriptActions.SelectedItems)
+            {
+                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
+                selectedCommand.PauseBeforeExeucution = !selectedCommand.PauseBeforeExeucution;
+            }
+
+            //recolor
+            //FormatCommandListView();
+
+            ChangeSaveState(true);
+
+            lstScriptActions.Invalidate();
+
+            //clear selection
+            lstScriptActions.SelectedIndices.Clear();
+
+        }
 
         private void CreateUndoSnapshot()
         {
@@ -843,120 +974,7 @@ namespace taskt.UI.Forms
 
         }
 
-        private void lstScriptActions_DoubleClick(object sender, EventArgs e)
-        {
-
-            if (lstScriptActions.SelectedItems.Count != 1)
-            {
-                return;
-            }
-
-
-            //bring up edit mode to edit the action
-            ListViewItem selectedCommandItem = lstScriptActions.SelectedItems[0];
-
-
-            //set selected command from the listview item tag object which was assigned to the command
-            var currentCommand = (Core.Automation.Commands.ScriptCommand)selectedCommandItem.Tag;
-
-
-            //check if editing a sequence
-            if (currentCommand is Core.Automation.Commands.SequenceCommand)
-            {
-
-                if (editMode)
-                {
-                    MessageBox.Show("Embedding Sequence Commands within Sequence Commands not yet supported.");
-                    return;
-                }
-
-
-                //get sequence events
-                Core.Automation.Commands.SequenceCommand sequence = (Core.Automation.Commands.SequenceCommand)currentCommand;
-
-                using (frmScriptBuilder newBuilder = new frmScriptBuilder())
-                {
-                    //add variables
-
-                    newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
-
-                    foreach (var variable in this.scriptVariables)
-                    {
-                        newBuilder.scriptVariables.Add(variable);
-                    }
-
-                    //append to new builder
-                    foreach (var cmd in sequence.v_scriptActions)
-                    {
-                        newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
-                    }
-
-                    //apply editor style format
-                    newBuilder.ApplyEditorFormat();
-
-                    newBuilder.parentBuilder = this;
-
-                    //if data has been changed
-                    if (newBuilder.ShowDialog() == DialogResult.OK)
-                    {
-                        ChangeSaveState(true);
-
-                        //create updated list
-                        List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
-
-                        //update to list
-                        for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
-                        {
-                            var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
-                            updatedList.Add(command);
-                        }
-
-                        //apply new list to existing sequence
-                        sequence.v_scriptActions = updatedList;
-
-                        //update label
-                        selectedCommandItem.Text = sequence.GetDisplayValue();
-                    }
-                }
-            }
-            else
-            {
-
-                //create new command editor form
-                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
-                {
-                    //creation mode edit locks form to current command
-                    editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
-
-                    //editCommand.defaultStartupCommand = currentCommand.SelectionName;
-                    editCommand.editingCommand = currentCommand;
-
-                    //create clone of current command so databinding does not affect if changes are not saved
-                    editCommand.originalCommand = Core.Common.Clone(currentCommand);
-
-                    //set variables
-                    editCommand.scriptVariables = this.scriptVariables;
-
-                    // set taskt settings
-                    editCommand.appSettings = this.appSettings;
-
-                    //show edit command form and save changes on OK result
-                    if (editCommand.ShowDialog() == DialogResult.OK)
-                    {
-                        ChangeSaveState(true);
-
-                        selectedCommandItem.Tag = editCommand.selectedCommand;
-                        selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
-                        selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
-                    }
-                }
-            }
-        }
-
-
-
-
-
+        
         #endregion
 
         #region Editor Mode
@@ -984,20 +1002,6 @@ namespace taskt.UI.Forms
             lstContextStripSep4.Visible = false;
             showScriptInfoMenuItem.Visible = false;
         }
-
-
-        private void uiBtnKeep_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
-        }
-
-        private void uiPictureButton3_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-        }
-
-
-
         #endregion
 
         #region ListView Create Item
@@ -1119,7 +1123,7 @@ namespace taskt.UI.Forms
 
         #endregion
 
-        #region ListView Comment, Coloring, ToolStrip
+        #region ListView Comment, Coloring
         private void IndentListViewItems()
         {
             int indent = 0;
@@ -1339,14 +1343,9 @@ namespace taskt.UI.Forms
 
                     break;
             }
-
-
         }
 
-        private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
-        {
-            lstScriptActions.Invalidate();
-        }
+        
 
         private int debugLine;
         public int DebugLine
@@ -1376,9 +1375,81 @@ namespace taskt.UI.Forms
                 //FormatCommandListView();
             }
         }
+
+
+        #region lstScriptActions event
+        private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!appSettings.ClientSettings.InsertCommandsInline)
+                return;
+
+            //check to see if an item has been selected last
+            if (lstScriptActions.SelectedItems.Count > 0)
+            {
+                selectedIndex = lstScriptActions.SelectedItems[0].Index;
+                //FormatCommandListView();
+            }
+            else
+            {
+                //nothing is selected
+                selectedIndex = -1;
+            }
+        }
+        private void lstScriptActions_KeyDown(object sender, KeyEventArgs e)
+        {
+            //delete from listview if required
+            if (e.KeyCode == Keys.Delete)
+            {
+                DeleteRows();
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                //if user presses enter simulate double click event
+                lstScriptActions_DoubleClick(null, null);
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.X))
+            {
+                CutRows();
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.C))
+            {
+                CopyRows();
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.V))
+            {
+                PasteRows();
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.Z))
+            {
+                UndoChange();
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.R))
+            {
+                RedoChange();
+            }
+            else if ((e.Control) && (e.Shift) && (e.KeyCode == Keys.E))
+            {
+                lstScriptActions_DoubleClick(null, null);
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.E))
+            {
+                SetSelectedCodeToCommented(false);
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.D))
+            {
+                SetSelectedCodeToCommented(true);
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.A))
+            {
+                //foreach (ListViewItem item in lstScriptActions.Items)
+                //{
+                //    item.Selected = true;
+                //}
+                SelectAllRows();
+            }
+        }
         private void lstScriptActions_MouseClick(object sender, MouseEventArgs e)
         {
-       
             if (e.Button == MouseButtons.Right)
             {
                 if (lstScriptActions.FocusedItem.Bounds.Contains(e.Location) == true)
@@ -1386,61 +1457,122 @@ namespace taskt.UI.Forms
                     lstContextStrip.Show(Cursor.Position);
                 }
             }
-
-
         }
-        private void SetSelectedCodeToCommented(bool setCommented)
+        private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
+        {
+            lstScriptActions.Invalidate();
+        }
+        private void lstScriptActions_DoubleClick(object sender, EventArgs e)
         {
 
-            //warn if nothing was selected
-            if (lstScriptActions.SelectedItems.Count == 0)
+            if (lstScriptActions.SelectedItems.Count != 1)
             {
-                Notify("No code was selected!");
+                return;
             }
 
-            //get each item and set appropriately
-            foreach (ListViewItem item in lstScriptActions.SelectedItems)
+
+            //bring up edit mode to edit the action
+            ListViewItem selectedCommandItem = lstScriptActions.SelectedItems[0];
+
+
+            //set selected command from the listview item tag object which was assigned to the command
+            var currentCommand = (Core.Automation.Commands.ScriptCommand)selectedCommandItem.Tag;
+
+
+            //check if editing a sequence
+            if (currentCommand is Core.Automation.Commands.SequenceCommand)
             {
-                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
-                selectedCommand.IsCommented = setCommented;
+
+                if (editMode)
+                {
+                    MessageBox.Show("Embedding Sequence Commands within Sequence Commands not yet supported.");
+                    return;
+                }
+
+
+                //get sequence events
+                Core.Automation.Commands.SequenceCommand sequence = (Core.Automation.Commands.SequenceCommand)currentCommand;
+
+                using (frmScriptBuilder newBuilder = new frmScriptBuilder())
+                {
+                    //add variables
+
+                    newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
+
+                    foreach (var variable in this.scriptVariables)
+                    {
+                        newBuilder.scriptVariables.Add(variable);
+                    }
+
+                    //append to new builder
+                    foreach (var cmd in sequence.v_scriptActions)
+                    {
+                        newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
+                    }
+
+                    //apply editor style format
+                    newBuilder.ApplyEditorFormat();
+
+                    newBuilder.parentBuilder = this;
+
+                    //if data has been changed
+                    if (newBuilder.ShowDialog() == DialogResult.OK)
+                    {
+                        ChangeSaveState(true);
+
+                        //create updated list
+                        List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
+
+                        //update to list
+                        for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
+                        {
+                            var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
+                            updatedList.Add(command);
+                        }
+
+                        //apply new list to existing sequence
+                        sequence.v_scriptActions = updatedList;
+
+                        //update label
+                        selectedCommandItem.Text = sequence.GetDisplayValue();
+                    }
+                }
             }
+            else
+            {
 
-            ChangeSaveState(true);
+                //create new command editor form
+                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
+                {
+                    //creation mode edit locks form to current command
+                    editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
 
-            //recolor
-            lstScriptActions.Invalidate();
+                    //editCommand.defaultStartupCommand = currentCommand.SelectionName;
+                    editCommand.editingCommand = currentCommand;
 
-            //clear selection
-            lstScriptActions.SelectedIndices.Clear();
+                    //create clone of current command so databinding does not affect if changes are not saved
+                    editCommand.originalCommand = Core.Common.Clone(currentCommand);
 
+                    //set variables
+                    editCommand.scriptVariables = this.scriptVariables;
+
+                    // set taskt settings
+                    editCommand.appSettings = this.appSettings;
+
+                    //show edit command form and save changes on OK result
+                    if (editCommand.ShowDialog() == DialogResult.OK)
+                    {
+                        ChangeSaveState(true);
+
+                        selectedCommandItem.Tag = editCommand.selectedCommand;
+                        selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
+                        selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
+                    }
+                }
+            }
         }
-        private void SetPauseBeforeExecution()
-        {
+        #endregion
 
-            //warn if nothing was selected
-            if (lstScriptActions.SelectedItems.Count == 0)
-            {
-                Notify("No code was selected!");
-            }
-
-            //get each item and set appropriately
-            foreach (ListViewItem item in lstScriptActions.SelectedItems)
-            {
-                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
-                selectedCommand.PauseBeforeExeucution = !selectedCommand.PauseBeforeExeucution;
-            }
-
-            //recolor
-            //FormatCommandListView();
-
-            ChangeSaveState(true);
-
-            lstScriptActions.Invalidate();
-
-            //clear selection
-            lstScriptActions.SelectedIndices.Clear();
-
-        }
 
         #region lstContextStrip click event handlers
         private void disableSelectedCodeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1470,6 +1602,29 @@ namespace taskt.UI.Forms
         private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteRows();
+        }
+        private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            //create command list
+            var commandList = new List<Core.Automation.Commands.ScriptCommand>();
+
+            //loop each
+            for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                //add to list and remove existing
+                commandList.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
+                lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+            }
+
+            //reverse commands only if not inserting inline
+            if (!appSettings.ClientSettings.InsertCommandsInline)
+            {
+                commandList.Reverse();
+            }
+
+            //add to parent
+            commandList.ForEach(x => parentBuilder.AddCommandToListView(x));
         }
         private void editThisCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1586,20 +1741,14 @@ namespace taskt.UI.Forms
 
         }
 
-        private void btnManageVariables_Click(object sender, EventArgs e)
+        private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
-            //using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
-            //{
-            //    scriptVariableEditor.appSettings = this.appSettings;
-            //    scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //    if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //    {
-            //        this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //    }
-            //}
-            showVariableManager();
+            if (appSettings.ClientSettings.MinimizeToTray)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyTray.Visible = false;
+            }
         }
 
         private void frmScriptBuilder_SizeChanged(object sender, EventArgs e)
@@ -1608,12 +1757,7 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-        #region Open, Save, Parse File
-        private void uiBtnOpen_Click(object sender, EventArgs e)
-        {
-            BeginOpenScriptProcess();
-        }
-
+        #region Open, Save, Parse, Import File
         private void BeginOpenScriptProcess()
         {
             CheckAndSaveScriptIfForget();
@@ -1698,10 +1842,7 @@ namespace taskt.UI.Forms
                 Notify("An Error Occured: " + ex.Message);
             }
         }
-        private void uiBtnImport_Click(object sender, EventArgs e)
-        {
-            BeginImportProcess();
-        }
+
         private void BeginImportProcess()
         {
             //show ofd
@@ -1772,13 +1913,6 @@ namespace taskt.UI.Forms
                 Notify("An Error Occured: " + ex.Message);
             }
         }
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            for (int i = 30; i > 0; i--)
-            {
-                tlpControls.RowStyles[4].Height = i;
-            }
-        }
 
         public void PopulateExecutionCommands(List<Core.Script.ScriptAction> commandDetails)
         {
@@ -1823,15 +1957,6 @@ namespace taskt.UI.Forms
             lstScriptActions.SelectedItems.Clear();
             selectedIndex = -1;
             lstScriptActions.Invalidate();
-        }
-
-        private void uiBtnSave_Click(object sender, EventArgs e)
-        {
-            BeginSaveScriptProcess(false);
-        }
-        private void uiBtnSaveAs_Click(object sender, EventArgs e)
-        {
-            BeginSaveScriptProcess(true);
         }
 
         private void BeginSaveScriptProcess(bool SaveAs)
@@ -1964,33 +2089,9 @@ namespace taskt.UI.Forms
 
 
         }
-
         #endregion
 
-        #region UI Buttons
-
-        private void uiBtnAddVariable_Click(object sender, EventArgs e)
-        {
-            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //{
-            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //}
-            showVariableManager();
-        }
-
-        private void uiBtnRunScript_Click(object sender, EventArgs e)
-        {
-            BeginRunScriptProcess();
-        }
-
-        private void uiBtnNew_Click(object sender, EventArgs e)
-        {
-            BeginNewScriptProcess();
-        }
-
+        #region New script file
         private void BeginNewScriptProcess()
         {
             CheckAndSaveScriptIfForget();
@@ -2011,36 +2112,78 @@ namespace taskt.UI.Forms
 
             ChangeSaveState(false);
         }
+        #endregion
 
-        private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
+        #region Run Script file
+        private void BeginRunScriptProcess()
         {
-            using (UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement())
+            if (lstScriptActions.Items.Count == 0)
             {
-                scheduleManager.Show();
+                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
+                Notify("You must first build the script by adding commands!");
+                return;
+            }
+
+
+            if (ScriptFilePath == null)
+            {
+                //MessageBox.Show("You must first save your script before you can run it!", "Please Save Script");
+                Notify("You must first save your script before you can run it!");
+                return;
+            }
+
+            //clear selected items
+            ClearSelectedListViewItems();
+
+            Notify("Running Script..");
+
+            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
+            newEngine.callBackForm = this;
+            newEngine.Show();
+        }
+        #endregion
+
+
+        #region Automation Engine Delegate
+
+        #endregion
+
+        #region misc?
+        private void btnManageVariables_Click(object sender, EventArgs e)
+        {
+
+            //using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
+            //{
+            //    scriptVariableEditor.appSettings = this.appSettings;
+            //    scriptVariableEditor.scriptVariables = this.scriptVariables;
+
+            //    if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            //    {
+            //        this.scriptVariables = scriptVariableEditor.scriptVariables;
+            //    }
+            //}
+            showVariableManager();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder())
+            {
+                recorder.ShowDialog();
             }
         }
 
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            for (int i = 30; i > 0; i--)
+            {
+                tlpControls.RowStyles[4].Height = i;
+            }
+        }
         private void uiBtnAbout_Click(object sender, EventArgs e)
         {
             using (UI.Forms.Supplemental.frmAbout frmAboutForm = new UI.Forms.Supplemental.frmAbout())
             {
                 frmAboutForm.ShowDialog();
-            }
-        }
-
-        private void uiBtnSettings_Click(object sender, EventArgs e)
-        {
-            //show settings dialog
-            using (frmSettings newSettings = new frmSettings(this))
-            {
-                newSettings.ShowDialog();
-
-                //reload app settings
-                appSettings = new Core.ApplicationSettings();
-                appSettings = appSettings.GetOrCreateApplicationSettings();
-
-                //reinit
-                Core.Server.HttpServerClient.Initialize();
             }
         }
 
@@ -2053,28 +2196,6 @@ namespace taskt.UI.Forms
             mouseMove.v_YMousePosition = (Cursor.Position.Y + 1).ToString();
             Notify("Anti-Idle Triggered");
         }
-
-        private void uiBtnRecordSequence_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
-            {
-                sequenceRecorder.callBackForm = this;
-                sequenceRecorder.ShowDialog();
-            }
-
-            pnlCommandHelper.Hide();
-
-            this.Show();
-            this.BringToFront();
-        }
-
-        private void uiBtnClearAll_Click(object sender, EventArgs e)
-        {
-            HideSearchInfo();
-            lstScriptActions.Items.Clear();
-        }
-
         #endregion
 
         #region Create Command Logic
@@ -2101,6 +2222,7 @@ namespace taskt.UI.Forms
             }
         }
         #endregion
+
 
         #region TreeView Events
         private void tvCommands_DoubleClick(object sender, EventArgs e)
@@ -2139,165 +2261,11 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-        #region Link Labels
-        private void lnkStartEdit_Click(object sender, EventArgs e)
-        {
-            pnlCommandHelper.Visible = false;
-        }
-        private void lnkGitProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
-        }
-        private void lnkGitLatestReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/releases");
-        }
-        private void lnkGitIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/issues/new");
-        }
-        private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://wiki.taskt.net/");
-        }
-        private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            LinkLabel senderLink = (LinkLabel)sender;
-            OpenFile(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text);
-        }
+        
 
-        #endregion
-
-        #region ListView Search
-
-        private void txtCommandSearch_TextChanged(object sender, EventArgs e)
-        {
-            if (lstScriptActions.Items.Count == 0)
-                return;
-
-            reqdIndex = 0;
-
-            if (txtCommandSearch.Text == "")
-            {
-                //hide info
-                HideSearchInfo();
-
-                //clear indexes
-                matchingSearchIndex.Clear();
-                currentIndex = -1;
-
-                //repaint
-                lstScriptActions.Invalidate();
-            }
-            else
-            {
-                lblCurrentlyViewing.Show();
-                lblTotalResults.Show();
-                SearchForItemInListView();
-
-                //repaint
-                lstScriptActions.Invalidate();
-            }
-        }
-
-        private void HideSearchInfo()
-        {
-            lblCurrentlyViewing.Hide();
-            lblTotalResults.Hide();
-        }
-
-        private void pbSearch_Click(object sender, EventArgs e)
-        {
-            if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
-            {
-                reqdIndex++;
-                SearchForItemInListView();
-            }
-        }
-
-        private void SearchForItemInListView()
-        {
-            var searchCriteria = txtCommandSearch.Text;
-
-            if (searchCriteria == "")
-            {
-                searchCriteria = tsSearchBox.Text;
-            }
-
-            var matchingItems = (from ListViewItem itm in lstScriptActions.Items
-                                 where itm.Text.Contains(searchCriteria)
-                                 select itm).ToList();
+        
 
 
-            int? matchCount = matchingItems.Count();
-            int totalMatches = matchCount ?? 0;
-
-
-            if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
-            {
-                reqdIndex = 0;
-            }
-
-            lblTotalResults.Show();
-
-            if (totalMatches == 0)
-            {
-                reqdIndex = -1;
-                lblTotalResults.Text = "No Matches Found";
-                lblCurrentlyViewing.Hide();
-                //clear indexes
-                matchingSearchIndex.Clear();
-                reqdIndex = -1;
-                lstScriptActions.Invalidate();
-                return;
-            }
-            else
-            {
-                lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-                tsSearchResult.Text =  "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-                lblTotalResults.Text = totalMatches + " total results found";
-            }
-
-
-
-
-
-            matchingSearchIndex = new List<int>();
-            foreach (ListViewItem itm in matchingItems)
-            {
-                matchingSearchIndex.Add(itm.Index);
-                itm.BackColor = Color.LightGoldenrodYellow;
-            }
-
-           
-
-            currentIndex = matchingItems[reqdIndex].Index;
-
-
-            lstScriptActions.Invalidate();
-
-
-
-
-            lstScriptActions.EnsureVisible(currentIndex);
-        }
-
-        private void pbSearch_MouseEnter(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.Hand;
-        }
-
-        private void pbSearch_MouseLeave(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.Arrow;
-        }
-
-
-        #endregion
-
-        #region Automation Engine Delegate
-
-        #endregion
 
         #region Variable Edit
         private void showVariableManager()
@@ -2316,108 +2284,116 @@ namespace taskt.UI.Forms
         #endregion
 
 
-        private void button1_Click(object sender, EventArgs e)
+
+        #region taskt header icon
+        private void lblMainLogo_Click(object sender, EventArgs e)
         {
-            using (UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder())
+            using (Supplemental.frmAbout aboutForm = new Supplemental.frmAbout())
             {
-                recorder.ShowDialog();
+                aboutForm.ShowDialog();
             }
         }
+        #endregion
 
-        private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
+        #region pnlControlContainer event handler
+        private void uiBtnNew_Click(object sender, EventArgs e)
         {
-
-            //create command list
-            var commandList = new List<Core.Automation.Commands.ScriptCommand>();
-
-           //loop each
-            for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
-            {
-                //add to list and remove existing
-                commandList.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
-                lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
-            }
-
-            //reverse commands only if not inserting inline
-            if (!appSettings.ClientSettings.InsertCommandsInline)
-            {
-                commandList.Reverse();
-            }
-         
-            //add to parent
-            commandList.ForEach(x => parentBuilder.AddCommandToListView(x));
-
-
+            BeginNewScriptProcess();
         }
+        private void uiBtnOpen_Click(object sender, EventArgs e)
+        {
+            BeginOpenScriptProcess();
+        }
+        private void uiBtnImport_Click(object sender, EventArgs e)
+        {
+            BeginImportProcess();
+        }
+        private void uiBtnSave_Click(object sender, EventArgs e)
+        {
+            BeginSaveScriptProcess(false);
+        }
+        private void uiBtnSaveAs_Click(object sender, EventArgs e)
+        {
+            BeginSaveScriptProcess(true);
+        }
+        private void uiBtnAddVariable_Click(object sender, EventArgs e)
+        {
+            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
+            //scriptVariableEditor.scriptVariables = this.scriptVariables;
 
+            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
+            //{
+            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
+            //}
+            showVariableManager();
+        }
+        private void uiBtnSettings_Click(object sender, EventArgs e)
+        {
+            //show settings dialog
+            using (frmSettings newSettings = new frmSettings(this))
+            {
+                newSettings.ShowDialog();
+
+                //reload app settings
+                appSettings = new Core.ApplicationSettings();
+                appSettings = appSettings.GetOrCreateApplicationSettings();
+
+                //reinit
+                Core.Server.HttpServerClient.Initialize();
+            }
+        }
+        private void uiBtnClearAll_Click(object sender, EventArgs e)
+        {
+            HideSearchInfo();
+            lstScriptActions.Items.Clear();
+        }
+        private void uiBtnRecordSequence_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
+            {
+                sequenceRecorder.callBackForm = this;
+                sequenceRecorder.ShowDialog();
+            }
+
+            pnlCommandHelper.Hide();
+
+            this.Show();
+            this.BringToFront();
+        }
+        private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
+        {
+            using (UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement())
+            {
+                scheduleManager.Show();
+            }
+        }
+        private void uiBtnRunScript_Click(object sender, EventArgs e)
+        {
+            BeginRunScriptProcess();
+        }
+        private void pbSearch_Click(object sender, EventArgs e)
+        {
+            if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
+            {
+                reqdIndex++;
+                SearchForItemInListView();
+            }
+        }
+        private void uiBtnKeep_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+        }
+        private void uiBtnClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
         private void btnSequenceImport_Click(object sender, EventArgs e)
         {
             BeginImportProcess();
         }
+        #endregion
 
-        private void frmScriptBuilder_Resize(object sender, EventArgs e)
-        {
-            //check when minimized
-          
-            if ((this.WindowState == FormWindowState.Minimized) && (appSettings.ClientSettings.MinimizeToTray))
-            {
-                appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                if (appSettings.ClientSettings.MinimizeToTray)
-                {
-                    notifyTray.Visible = true;
-                    notifyTray.ShowBalloonTip(3000);
-                    this.ShowInTaskbar = false;
-                }        
-            }
-
-            pnlMain.Invalidate();
-
-        }
-
-        private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (appSettings.ClientSettings.MinimizeToTray)
-            {
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
-                notifyTray.Visible = false;
-            }        
-        }
-
-
-
-        
-
-        private void BeginRunScriptProcess()
-        {
-            if (lstScriptActions.Items.Count == 0)
-            {
-                // MessageBox.Show("You must first build the script by adding commands!", "Please Build Script");
-                Notify("You must first build the script by adding commands!");
-                return;
-            }
-
-
-            if (ScriptFilePath == null)
-            {
-                //MessageBox.Show("You must first save your script before you can run it!", "Please Save Script");
-                Notify("You must first save your script before you can run it!");
-                return;
-            }
-
-            //clear selected items
-            ClearSelectedListViewItems();
-
-            Notify("Running Script..");
-
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
-            newEngine.callBackForm = this;
-            newEngine.Show();
-        }
-
-        
-
-        
 
         #region MenuStrip1 click event handler
 
