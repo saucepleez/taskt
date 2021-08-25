@@ -333,7 +333,7 @@ namespace taskt.UI.Forms
 
             var directory = new System.IO.DirectoryInfo(scriptPath);
 
-            var recentFiles = directory.GetFiles()
+            var recentFiles = directory.GetFiles("*.xml")
                 .OrderByDescending(file => file.LastWriteTime).Select(f => f.Name);
 
 
