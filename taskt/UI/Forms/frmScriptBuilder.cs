@@ -1250,7 +1250,7 @@ namespace taskt.UI.Forms
                     //    //commandBackgroundBrush = Brushes.Goldenrod;
                     //    trg = taskt.Core.Theme.scriptTexts["current"];
                     //}
-                    else if (matchingSearchIndex.Contains(e.ItemIndex))
+                    else if (matchingSearchIndex.Contains(e.ItemIndex) && currentScriptEditMode == EditMode.Search)
                     {
                         //search match item coloring
                         //commandNameBrush = Brushes.Black;
