@@ -107,7 +107,7 @@ namespace taskt.Core
             { "comment", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.ForestGreen, Color.WhiteSmoke)},
             { "pause", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.MediumPurple, Color.Lavender)},
             { "debug", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.White, Color.OrangeRed)},
-            { "current", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Black, Color.Goldenrod)},
+            { "current-match", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Black, Color.Goldenrod)},
             { "match", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Black, Color.LightYellow)},
             { "selected-normal", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.White, Color.DodgerBlue)},
             { "selected-invalid", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Crimson, Color.DodgerBlue)},

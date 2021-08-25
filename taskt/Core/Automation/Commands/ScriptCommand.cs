@@ -313,6 +313,15 @@ namespace taskt.Core.Automation.Commands
         public string validationResult { get; protected set; }
 
         [XmlIgnore]
+        public bool IsMatched { get; set; }
+
+        [XmlIgnore]
+        public bool IsDontSavedCommand { get; set; }
+
+        [XmlIgnore]
+        public bool IsNewInsertedCommand { get; set; }
+
+        [XmlIgnore]
         public bool CustomRendering { get; set; }
 
         [XmlIgnore]
@@ -329,6 +338,9 @@ namespace taskt.Core.Automation.Commands
             this.GenerateID();
             this.IsValid = true;
             this.validationResult = "";
+            this.IsMatched = false;
+            this.IsDontSavedCommand = false;
+            this.IsNewInsertedCommand = false;
         }
 
         public void GenerateID()

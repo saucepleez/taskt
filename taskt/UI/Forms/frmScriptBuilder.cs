@@ -54,7 +54,7 @@ namespace taskt.UI.Forms
         private bool dontSaveFlag = false;
 
         private List<int> matchingSearchIndex = new List<int>();
-        private int currentIndex = -1;
+        private int currentIndexInMatchItems = -1;
         private frmScriptBuilder parentBuilder { get; set; }
 
         private Pen indentDashLine;
@@ -590,7 +590,7 @@ namespace taskt.UI.Forms
 
                 //clear indexes
                 matchingSearchIndex.Clear();
-                currentIndex = -1;
+                currentIndexInMatchItems = -1;
 
                 //repaint
                 lstScriptActions.Invalidate();
@@ -662,11 +662,11 @@ namespace taskt.UI.Forms
                 itm.BackColor = Color.LightGoldenrodYellow;
             }
 
-            currentIndex = matchingItems[reqdIndex].Index;
+            currentIndexInMatchItems = matchingItems[reqdIndex].Index;
 
             lstScriptActions.Invalidate();
 
-            lstScriptActions.EnsureVisible(currentIndex);
+            lstScriptActions.EnsureVisible(currentIndexInMatchItems);
         }
 
         private void pbSearch_MouseEnter(object sender, EventArgs e)
@@ -1222,19 +1222,26 @@ namespace taskt.UI.Forms
                         //commandBackgroundBrush = Brushes.OrangeRed;
                         trg = taskt.Core.Theme.scriptTexts["debug"];
                     }
-                    else if ((currentIndex >= 0) && (e.ItemIndex == currentIndex))
-                    {
-                        //search primary item coloring
-                        //commandNameBrush = Brushes.Black;
-                        //commandBackgroundBrush = Brushes.Goldenrod;
-                        trg = taskt.Core.Theme.scriptTexts["current"];
-                    }
+                    //else if ((currentIndexInMatchItems >= 0) && (e.ItemIndex == currentIndexInMatchItems))
+                    //{
+                    //    //search primary item coloring
+                    //    //commandNameBrush = Brushes.Black;
+                    //    //commandBackgroundBrush = Brushes.Goldenrod;
+                    //    trg = taskt.Core.Theme.scriptTexts["current"];
+                    //}
                     else if (matchingSearchIndex.Contains(e.ItemIndex))
                     {
                         //search match item coloring
                         //commandNameBrush = Brushes.Black;
                         //commandBackgroundBrush = Brushes.LightYellow;
-                        trg = taskt.Core.Theme.scriptTexts["match"];
+                        if ((e.Item.Focused) || (e.Item.Selected))
+                        {
+                            trg = taskt.Core.Theme.scriptTexts["current-match"];
+                        }
+                        else
+                        {
+                            trg = taskt.Core.Theme.scriptTexts["match"];
+                        }
                     }
                     else if ((e.Item.Focused) || (e.Item.Selected))
                     {
