@@ -333,25 +333,26 @@ namespace taskt.UI.Forms
 
         private bool checkVariableName(string variableName)
         {
-            var disallowChars = appSettings.EngineSettings.DisallowVariableCharList();
-            foreach(string k in disallowChars)
-            {
-                if (variableName.Contains(k))
-                {
-                    return false;
-                }
-            }
+            //var disallowChars = appSettings.EngineSettings.DisallowVariableCharList();
+            //foreach(string k in disallowChars)
+            //{
+            //    if (variableName.Contains(k))
+            //    {
+            //        return false;
+            //    }
+            //}
 
-            var keyNames = appSettings.EngineSettings.KeyNameList();
-            var upperVarName = variableName.ToUpper();
-            foreach(string k in keyNames)
-            {
-                if (upperVarName == k)
-                {
-                    return false;
-                }
-            }
-            return true;
+            //var keyNames = appSettings.EngineSettings.KeyNameList();
+            //var upperVarName = variableName.ToUpper();
+            //foreach(string k in keyNames)
+            //{
+            //    if (upperVarName == k)
+            //    {
+            //        return false;
+            //    }
+            //}
+            //return true;
+            return appSettings.EngineSettings.isValidVariableName(variableName);
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)

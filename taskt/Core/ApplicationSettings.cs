@@ -169,7 +169,9 @@ namespace taskt.Core
             "+", "-", "*", "%",
             "[", "]", "{", "}",
             ".",
-            " "
+            " ",
+            "\u2983", "\u2984",
+            "\U0001D542", "\U0001D54E"
         };
 
         public EngineSettings()
@@ -291,6 +293,25 @@ namespace taskt.Core
         private static string wrapKeyword(string kw)
         {
             return Char.ConvertFromUtf32(120130).ToString() + kw + Char.ConvertFromUtf32(120142).ToString();
+        }
+
+        public bool isValidVariableName(string vName)
+        {
+            foreach(string s in m_KeyNameList)
+            {
+                if (vName == s)
+                {
+                    return false;
+                }
+            }
+            foreach(string s in m_DisallowVariableCharList)
+            {
+                if (vName.Contains(s))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
     /// <summary>
