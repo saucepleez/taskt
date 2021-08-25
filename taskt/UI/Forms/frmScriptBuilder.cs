@@ -53,11 +53,19 @@ namespace taskt.UI.Forms
 
         private bool dontSaveFlag = false;
 
+        private EditMode currentScriptEditMode = EditMode.Normal;
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndexInMatchItems = -1;
         private frmScriptBuilder parentBuilder { get; set; }
 
         private Pen indentDashLine;
+
+        private enum EditMode
+        {
+            Normal,
+            Search,
+            AdvencedSearch
+        }
 
         public frmScriptBuilder()
         {
@@ -639,6 +647,7 @@ namespace taskt.UI.Forms
 
             if (totalMatches == 0)
             {
+                currentScriptEditMode = EditMode.Normal;
                 reqdIndex = -1;
                 lblTotalResults.Text = "No Matches Found";
                 lblCurrentlyViewing.Hide();
@@ -650,23 +659,28 @@ namespace taskt.UI.Forms
             }
             else
             {
+                currentScriptEditMode = EditMode.Search;
                 lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 lblTotalResults.Text = totalMatches + " total results found";
             }
 
+            ClearSelectedListViewItems();
+
             matchingSearchIndex = new List<int>();
             foreach (ListViewItem itm in matchingItems)
             {
                 matchingSearchIndex.Add(itm.Index);
-                itm.BackColor = Color.LightGoldenrodYellow;
+                //itm.BackColor = Color.LightGoldenrodYellow;
             }
 
-            currentIndexInMatchItems = matchingItems[reqdIndex].Index;
+            currentIndexInMatchItems = matchingItems[0].Index;
+            lstScriptActions.Items[0].Selected = true;
+            //currentIndexInMatchItems = matchingItems[reqdIndex].Index;
 
             lstScriptActions.Invalidate();
 
-            lstScriptActions.EnsureVisible(currentIndexInMatchItems);
+            //lstScriptActions.EnsureVisible(currentIndexInMatchItems);
         }
 
         private void pbSearch_MouseEnter(object sender, EventArgs e)
@@ -952,6 +966,13 @@ namespace taskt.UI.Forms
 
         }
 
+        private void ClearSelectedListViewItems()
+        {
+            lstScriptActions.SelectedItems.Clear();
+            selectedIndex = -1;
+            lstScriptActions.Invalidate();
+        }
+
         private void CreateUndoSnapshot()
         {
             List<ListViewItem> itemList = new List<ListViewItem>();
@@ -1123,7 +1144,7 @@ namespace taskt.UI.Forms
 
         #endregion
 
-        #region ListView Comment, Coloring
+        #region ListView Comment, Coloring, Drawing
         private void IndentListViewItems()
         {
             int indent = 0;
@@ -1959,12 +1980,6 @@ namespace taskt.UI.Forms
             return position;
         }
 
-        private void ClearSelectedListViewItems()
-        {
-            lstScriptActions.SelectedItems.Clear();
-            selectedIndex = -1;
-            lstScriptActions.Invalidate();
-        }
 
         private void BeginSaveScriptProcess(bool SaveAs)
         {
