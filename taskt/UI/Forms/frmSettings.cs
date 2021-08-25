@@ -98,6 +98,7 @@ namespace taskt.UI.Forms
             chkInsertElse.DataBindings.Add("Checked", clientSettings, "InsertElseAutomatically", false, DataSourceUpdateMode.OnPropertyChanged);
             chkInsertCommentIfLoop.DataBindings.Add("Checked", clientSettings, "InsertCommentIfLoopAbove", false, DataSourceUpdateMode.OnPropertyChanged);
             chkGruopingBySubgruop.DataBindings.Add("Checked", clientSettings, "GroupingBySubgroup", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkShowIndentLine.DataBindings.Add("Checked", clientSettings, "ShowIndentLine", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);

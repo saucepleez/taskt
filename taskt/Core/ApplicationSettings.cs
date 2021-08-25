@@ -335,6 +335,7 @@ namespace taskt.Core
         public bool GroupingBySubgroup { get; set; }
         public bool DontShowValidationMessage { get; set; }
         public bool ShowSampleUsageInDescription { get; set; }
+        public bool ShowIndentLine { get; set; }
         public string DefaultBrowserInstanceName { get; set; }
         public string DefaultStopWatchInstanceName { get; set; }
         public string DefaultExcelInstanceName { get; set; }
@@ -357,6 +358,7 @@ namespace taskt.Core
             GroupingBySubgroup = true;
             DontShowValidationMessage = false;
             ShowSampleUsageInDescription = true;
+            ShowIndentLine = true;
             DefaultBrowserInstanceName = "RPABrowser";
             DefaultStopWatchInstanceName = "RPAStopwatch";
             DefaultExcelInstanceName = "RPAExcel";

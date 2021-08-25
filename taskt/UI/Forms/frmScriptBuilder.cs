@@ -1312,7 +1312,7 @@ namespace taskt.UI.Forms
                     e.Graphics.DrawString(command.GetDisplayValue(),
                                    new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
 
-                    if (item.IndentCount > 0)
+                    if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
                     {
                         int offset;
                         int i;
