@@ -29,6 +29,7 @@ namespace taskt.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptInformations));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.lblMainLogo = new System.Windows.Forms.Label();
@@ -259,6 +260,7 @@ namespace taskt.UI.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(441, 354);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmScriptInformations";
             this.Text = "Script Informations";
             this.Load += new System.EventHandler(this.frmScriptInformations_Load);
