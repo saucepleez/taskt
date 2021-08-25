@@ -99,7 +99,7 @@
             this.grpSaveClose = new taskt.UI.CustomControls.UIGroupBox();
             this.btnSequenceImport = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnKeep = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiPictureButton3 = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnClose = new taskt.UI.CustomControls.UIPictureButton();
             this.grpFileActions = new taskt.UI.CustomControls.UIGroupBox();
             this.uiBtnImport = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnSaveAs = new taskt.UI.CustomControls.UIPictureButton();
@@ -150,7 +150,7 @@
             this.grpSaveClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnClose)).BeginInit();
             this.grpFileActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSaveAs)).BeginInit();
@@ -937,7 +937,7 @@
             this.grpSaveClose.BackColor = System.Drawing.Color.Transparent;
             this.grpSaveClose.Controls.Add(this.btnSequenceImport);
             this.grpSaveClose.Controls.Add(this.uiBtnKeep);
-            this.grpSaveClose.Controls.Add(this.uiPictureButton3);
+            this.grpSaveClose.Controls.Add(this.uiBtnClose);
             this.grpSaveClose.Location = new System.Drawing.Point(787, 3);
             this.grpSaveClose.Name = "grpSaveClose";
             this.grpSaveClose.Size = new System.Drawing.Size(165, 73);
@@ -984,22 +984,22 @@
             this.uiBtnKeep.Text = "Keep";
             this.uiBtnKeep.Click += new System.EventHandler(this.uiBtnKeep_Click);
             // 
-            // uiPictureButton3
+            // uiBtnClose
             // 
-            this.uiPictureButton3.BackColor = System.Drawing.Color.Transparent;
-            this.uiPictureButton3.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiPictureButton3.DisplayText = "Close";
-            this.uiPictureButton3.DisplayTextBrush = System.Drawing.Color.AliceBlue;
-            this.uiPictureButton3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiPictureButton3.Image = global::taskt.Properties.Resources.action_bar_schedule;
-            this.uiPictureButton3.IsMouseOver = false;
-            this.uiPictureButton3.Location = new System.Drawing.Point(54, 18);
-            this.uiPictureButton3.Name = "uiPictureButton3";
-            this.uiPictureButton3.Size = new System.Drawing.Size(52, 50);
-            this.uiPictureButton3.TabIndex = 13;
-            this.uiPictureButton3.TabStop = false;
-            this.uiPictureButton3.Text = "Close";
-            this.uiPictureButton3.Click += new System.EventHandler(this.uiPictureButton3_Click);
+            this.uiBtnClose.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnClose.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnClose.DisplayText = "Close";
+            this.uiBtnClose.DisplayTextBrush = System.Drawing.Color.AliceBlue;
+            this.uiBtnClose.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnClose.Image = global::taskt.Properties.Resources.action_bar_schedule;
+            this.uiBtnClose.IsMouseOver = false;
+            this.uiBtnClose.Location = new System.Drawing.Point(54, 18);
+            this.uiBtnClose.Name = "uiBtnClose";
+            this.uiBtnClose.Size = new System.Drawing.Size(52, 50);
+            this.uiBtnClose.TabIndex = 13;
+            this.uiBtnClose.TabStop = false;
+            this.uiBtnClose.Text = "Close";
+            this.uiBtnClose.Click += new System.EventHandler(this.uiBtnClose_Click);
             // 
             // grpFileActions
             // 
@@ -1428,7 +1428,7 @@
             this.grpSaveClose.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnClose)).EndInit();
             this.grpFileActions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSaveAs)).EndInit();
@@ -1494,7 +1494,7 @@
         private CustomControls.UIPictureButton uiBtnClearAll;
         private CustomControls.UIGroupBox grpSaveClose;
         private CustomControls.UIPictureButton uiBtnKeep;
-        private CustomControls.UIPictureButton uiPictureButton3;
+        private CustomControls.UIPictureButton uiBtnClose;
         private CustomControls.UIGroupBox grpSearch;
         private System.Windows.Forms.TextBox txtCommandSearch;
         private System.Windows.Forms.Label lblCurrentlyViewing;
