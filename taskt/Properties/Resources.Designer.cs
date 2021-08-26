@@ -763,6 +763,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap taskt_logo_alt {
+            get {
+                object obj = ResourceManager.GetObject("taskt_logo_alt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap taskt_splash {
             get {
                 object obj = ResourceManager.GetObject("taskt-splash", resourceCulture);

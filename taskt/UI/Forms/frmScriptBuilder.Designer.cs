@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme1 = new taskt.Core.Theme();
+            taskt.Core.Theme theme5 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -64,6 +64,14 @@
             this.tsSearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.tsSearchButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSearchResult = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tasktProjectPageStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tasktWikiStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.releaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.issueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.aboutStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
@@ -208,7 +216,8 @@
             this.saveAndRunToolStripMenuItem,
             this.tsSearchBox,
             this.tsSearchButton,
-            this.tsSearchResult});
+            this.tsSearchResult,
+            this.helpStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 41);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.ShowItemToolTips = true;
@@ -515,6 +524,76 @@
             this.tsSearchResult.Size = new System.Drawing.Size(12, 26);
             this.tsSearchResult.Visible = false;
             // 
+            // helpStripMenuItem
+            // 
+            this.helpStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.helpStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tasktProjectPageStripMenuItem,
+            this.tasktWikiStripMenuItem,
+            this.helpToolStripSeparator1,
+            this.releaseToolStripMenuItem,
+            this.issueToolStripMenuItem,
+            this.helpToolStripSeparator2,
+            this.aboutStripMenuItem});
+            this.helpStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.helpStripMenuItem.Image = global::taskt.Properties.Resources.various_question;
+            this.helpStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 40, 0);
+            this.helpStripMenuItem.Name = "helpStripMenuItem";
+            this.helpStripMenuItem.Size = new System.Drawing.Size(60, 26);
+            this.helpStripMenuItem.Text = "&Help";
+            // 
+            // tasktProjectPageStripMenuItem
+            // 
+            this.tasktProjectPageStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.tasktProjectPageStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
+            this.tasktProjectPageStripMenuItem.Name = "tasktProjectPageStripMenuItem";
+            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktProjectPageStripMenuItem.Text = "taskt &Project Page";
+            this.tasktProjectPageStripMenuItem.Click += new System.EventHandler(this.tasktProjectPageStripMenuItem_Click);
+            // 
+            // tasktWikiStripMenuItem
+            // 
+            this.tasktWikiStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.tasktWikiStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
+            this.tasktWikiStripMenuItem.Name = "tasktWikiStripMenuItem";
+            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktWikiStripMenuItem.Text = "taskt &Wiki";
+            this.tasktWikiStripMenuItem.Click += new System.EventHandler(this.tasktWikiStripMenuItem_Click);
+            // 
+            // helpToolStripSeparator1
+            // 
+            this.helpToolStripSeparator1.Name = "helpToolStripSeparator1";
+            this.helpToolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // releaseToolStripMenuItem
+            // 
+            this.releaseToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
+            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.releaseToolStripMenuItem.Text = "&Release";
+            this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
+            // 
+            // issueToolStripMenuItem
+            // 
+            this.issueToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.issueToolStripMenuItem.Name = "issueToolStripMenuItem";
+            this.issueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.issueToolStripMenuItem.Text = "&Issue";
+            this.issueToolStripMenuItem.Click += new System.EventHandler(this.issueToolStripMenuItem_Click);
+            // 
+            // helpToolStripSeparator2
+            // 
+            this.helpToolStripSeparator2.Name = "helpToolStripSeparator2";
+            this.helpToolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // aboutStripMenuItem
+            // 
+            this.aboutStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.aboutStripMenuItem.Name = "aboutStripMenuItem";
+            this.aboutStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutStripMenuItem.Text = "&About";
+            this.aboutStripMenuItem.Click += new System.EventHandler(this.aboutStripMenuItem_Click);
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
@@ -807,9 +886,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme1;
+            theme5.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme5.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme5;
             // 
             // lblMainLogo
             // 
@@ -1550,6 +1629,14 @@
         private System.Windows.Forms.ToolStripMenuItem ReplaceStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator editSplitMenuSeparator1;
         private System.Windows.Forms.ToolStripMenuItem SelectAllStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tasktProjectPageStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tasktWikiStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator helpToolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem aboutStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem releaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem issueToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator helpToolStripSeparator2;
     }
 }
 

@@ -418,6 +418,7 @@
     <Compile Include="Core\Server\WebSocketClient.cs" />
     <Compile Include="Core\Automation\User32\User32Functionas.cs" />
     <Compile Include="Core\Script.cs" />
+    <Compile Include="Core\URL.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -857,6 +858,7 @@
     </Content>
     <Content Include="Resources\refresh.png" />
     <None Include="Resources\taskt-element-helper.png" />
+    <None Include="Resources\rpalogo.ico" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -867,6 +869,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\taskt-variable-helper.png" />
+    <None Include="Resources\taskt_logo_alt.ico" />
+    <None Include="Resources\taskt_logo_alt.png" />
     <Content Include="Resources\various-cancel.png" />
     <Content Include="Resources\various-ok.png" />
     <Content Include="taskt_logo_alt.ico" />

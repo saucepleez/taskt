@@ -436,24 +436,47 @@ namespace taskt.UI.Forms
         }
         private void lnkGitProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
+            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
+            showGitProjectPage();
         }
         private void lnkGitLatestReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/releases");
+            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/releases");
+            showGitReleasePage();
         }
         private void lnkGitIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/issues/new");
+            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/issues/new");
+            showGitIssuePage();
         }
         private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://wiki.taskt.net/");
+            //System.Diagnostics.Process.Start("https://wiki.taskt.net/");
+            showWikiPage();
         }
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel senderLink = (LinkLabel)sender;
             OpenFile(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text);
+        }
+        #endregion
+
+        #region show sites
+        private void showGitProjectPage()
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.GitProjectURL);
+        }
+        private void showGitReleasePage()
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.GitReleaseURL);
+        }
+        private void showGitIssuePage()
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.GitIssueURL);
+        }
+        private void showWikiPage()
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.WikiURL);
         }
         #endregion
 
@@ -2305,15 +2328,22 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-
-
-        #region taskt header icon
-        private void lblMainLogo_Click(object sender, EventArgs e)
+        #region taskt About Form
+        private void showAboutForm()
         {
             using (Supplemental.frmAbout aboutForm = new Supplemental.frmAbout())
             {
                 aboutForm.ShowDialog();
             }
+        }
+        #endregion
+
+
+
+        #region taskt header icon
+        private void lblMainLogo_Click(object sender, EventArgs e)
+        {
+            showAboutForm();
         }
         #endregion
 
@@ -2586,6 +2616,33 @@ namespace taskt.UI.Forms
         }
         #endregion
 
+        #region Help tool strip
+        private void tasktProjectPageStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showGitProjectPage();
+        }
+
+        private void tasktWikiStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showWikiPage();
+        }
+
+        private void releaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showGitReleasePage();
+        }
+
+        private void issueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showGitIssuePage();
+        }
+
+        private void aboutStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showAboutForm();
+        }
+        #endregion
+
         #endregion
 
         private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
@@ -2611,6 +2668,7 @@ namespace taskt.UI.Forms
             return true;
         }
 
+        
     }
 
 }
