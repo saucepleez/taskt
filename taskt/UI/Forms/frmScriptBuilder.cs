@@ -53,14 +53,16 @@ namespace taskt.UI.Forms
 
         private bool dontSaveFlag = false;
 
-        private EditMode currentScriptEditMode = EditMode.Normal;
+        public EditMode currentScriptEditMode = EditMode.Normal;
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndexInMatchItems = -1;
         private frmScriptBuilder parentBuilder { get; set; }
 
         private Pen indentDashLine;
 
-        private enum EditMode
+        private Supplement_Forms.frmSearchCommands frmSearch = null;
+
+        public enum EditMode
         {
             Normal,
             Search,
@@ -314,6 +316,10 @@ namespace taskt.UI.Forms
             }
 
             this.dontSaveFlag = false;
+
+            // set searchform
+            frmSearch = new Supplement_Forms.frmSearchCommands();
+            frmSearch.parentForm = this;
 
             // release
             GC.Collect();
@@ -715,6 +721,64 @@ namespace taskt.UI.Forms
         {
             this.Cursor = Cursors.Arrow;
         }
+
+        public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText)
+        {
+            int matchedCount = 0;
+
+            this.currentIndexInMatchItems = -1;
+            lstScriptActions.SuspendLayout();
+            foreach(ListViewItem itm in lstScriptActions.Items)
+            {
+                if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText))
+                {
+                    matchedCount++;
+                }
+            }
+            lstScriptActions.ResumeLayout();
+
+            this.currentScriptEditMode = EditMode.AdvencedSearch;
+            lstScriptActions.Invalidate();
+            return matchedCount;
+        }
+
+        public void MoveMostNearMatchedLine()
+        {
+            if (this.currentScriptEditMode != EditMode.AdvencedSearch)
+            {
+                return;
+            }
+
+            int currentIndex;
+            if (this.currentIndexInMatchItems >= 0)
+            {
+                currentIndex = this.currentIndexInMatchItems;
+            }
+            else
+            {
+                currentIndex = (lstScriptActions.SelectedIndices.Count == 0) ? 0 : lstScriptActions.SelectedIndices[0];
+            }
+            int maxItems = lstScriptActions.Items.Count;
+
+            ClearSelectedListViewItems();
+
+            for (int i = 0; i < maxItems; i++)
+            {
+                var idx = (i + currentIndex + 1) % maxItems;
+                if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[idx].Tag).IsMatched)
+                {
+                    this.currentIndexInMatchItems = idx;
+                    lstScriptActions.Items[idx].Selected = true;
+
+                    // move & draw
+                    lstScriptActions.EnsureVisible(idx);
+                    lstScriptActions.Invalidate();
+
+                    break;
+                }
+            }
+        }
+
         #endregion
 
 
@@ -1285,6 +1349,32 @@ namespace taskt.UI.Forms
                         else
                         {
                             trg = taskt.Core.Theme.scriptTexts["match"];
+                        }
+                    }
+                    else if (this.currentScriptEditMode == EditMode.AdvencedSearch)
+                    {
+                        if (command.IsMatched)
+                        {
+                            if ((e.Item.Focused) || (e.Item.Selected))
+                            {
+                                trg = taskt.Core.Theme.scriptTexts["current-match"];
+                            }
+                            else
+                            {
+                                trg = taskt.Core.Theme.scriptTexts["match"];
+                            }
+                        }
+                        else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+                        {
+                            trg = taskt.Core.Theme.scriptTexts["comment"];
+                        }
+                        else if (!command.IsValid)
+                        {
+                            trg = taskt.Core.Theme.scriptTexts["invalid"];
+                        }
+                        else
+                        {
+                            trg = taskt.Core.Theme.scriptTexts["normal"];
                         }
                     }
                     else if ((e.Item.Focused) || (e.Item.Selected))
@@ -2510,12 +2600,17 @@ namespace taskt.UI.Forms
 
         private void SearchStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmSearch.Show();
         }
 
         private void ReplaceStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("sorry, work in process ;-)");
+        }
+        private void clearSearchHighlightsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.currentScriptEditMode = EditMode.Normal;
+            lstScriptActions.Invalidate();
         }
         #endregion
 
@@ -2652,6 +2747,11 @@ namespace taskt.UI.Forms
 
         private bool BeginFormCloseProcess()
         {
+            if (frmSearch != null)
+            {
+                frmSearch = null;
+            }
+
             if (notifyTray != null)
             {
                 notifyTray.Visible = false;

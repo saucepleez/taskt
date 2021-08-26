@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme5 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -140,6 +140,7 @@
             this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
             this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.clearSearchHighlightsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -339,7 +340,8 @@
             this.PasteStripMenuItem,
             this.editSplitMenuSeparator1,
             this.SearchStripMenuItem,
-            this.ReplaceStripMenuItem});
+            this.ReplaceStripMenuItem,
+            this.clearSearchHighlightsToolStripMenuItem1});
             this.editStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.editStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.editStripMenuItem.Name = "editStripMenuItem";
@@ -351,7 +353,7 @@
             this.SelectAllStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.SelectAllStripMenuItem.Name = "SelectAllStripMenuItem";
             this.SelectAllStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.SelectAllStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.SelectAllStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.SelectAllStripMenuItem.Text = "Select All";
             this.SelectAllStripMenuItem.Click += new System.EventHandler(this.SelectAllStripMenuItem_Click);
             // 
@@ -361,7 +363,7 @@
             this.CutScriptStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.CutScriptStripMenuItem.Name = "CutScriptStripMenuItem";
             this.CutScriptStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.CutScriptStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.CutScriptStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.CutScriptStripMenuItem.Text = "Cut";
             this.CutScriptStripMenuItem.Click += new System.EventHandler(this.CutScriptStripMenuItem_Click);
             // 
@@ -371,7 +373,7 @@
             this.CopyStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.CopyStripMenuItem.Name = "CopyStripMenuItem";
             this.CopyStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.CopyStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.CopyStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.CopyStripMenuItem.Text = "Copy";
             this.CopyStripMenuItem.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
             // 
@@ -381,14 +383,14 @@
             this.PasteStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.PasteStripMenuItem.Name = "PasteStripMenuItem";
             this.PasteStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.PasteStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.PasteStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.PasteStripMenuItem.Text = "Paste";
             this.PasteStripMenuItem.Click += new System.EventHandler(this.PasteStripMenuItem_Click);
             // 
             // editSplitMenuSeparator1
             // 
             this.editSplitMenuSeparator1.Name = "editSplitMenuSeparator1";
-            this.editSplitMenuSeparator1.Size = new System.Drawing.Size(160, 6);
+            this.editSplitMenuSeparator1.Size = new System.Drawing.Size(193, 6);
             // 
             // SearchStripMenuItem
             // 
@@ -396,7 +398,7 @@
             this.SearchStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
             this.SearchStripMenuItem.Name = "SearchStripMenuItem";
             this.SearchStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.SearchStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.SearchStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.SearchStripMenuItem.Text = "Search";
             this.SearchStripMenuItem.Click += new System.EventHandler(this.SearchStripMenuItem_Click);
             // 
@@ -406,7 +408,7 @@
             this.ReplaceStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
             this.ReplaceStripMenuItem.Name = "ReplaceStripMenuItem";
             this.ReplaceStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.ReplaceStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.ReplaceStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.ReplaceStripMenuItem.Text = "Replace";
             this.ReplaceStripMenuItem.Click += new System.EventHandler(this.ReplaceStripMenuItem_Click);
             // 
@@ -547,7 +549,7 @@
             this.tasktProjectPageStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktProjectPageStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktProjectPageStripMenuItem.Name = "tasktProjectPageStripMenuItem";
-            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.tasktProjectPageStripMenuItem.Text = "taskt &Project Page";
             this.tasktProjectPageStripMenuItem.Click += new System.EventHandler(this.tasktProjectPageStripMenuItem_Click);
             // 
@@ -556,20 +558,20 @@
             this.tasktWikiStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktWikiStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktWikiStripMenuItem.Name = "tasktWikiStripMenuItem";
-            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.tasktWikiStripMenuItem.Text = "taskt &Wiki";
             this.tasktWikiStripMenuItem.Click += new System.EventHandler(this.tasktWikiStripMenuItem_Click);
             // 
             // helpToolStripSeparator1
             // 
             this.helpToolStripSeparator1.Name = "helpToolStripSeparator1";
-            this.helpToolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.helpToolStripSeparator1.Size = new System.Drawing.Size(165, 6);
             // 
             // releaseToolStripMenuItem
             // 
             this.releaseToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
-            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.releaseToolStripMenuItem.Text = "&Release";
             this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
             // 
@@ -577,20 +579,20 @@
             // 
             this.issueToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.issueToolStripMenuItem.Name = "issueToolStripMenuItem";
-            this.issueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.issueToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.issueToolStripMenuItem.Text = "&Issue";
             this.issueToolStripMenuItem.Click += new System.EventHandler(this.issueToolStripMenuItem_Click);
             // 
             // helpToolStripSeparator2
             // 
             this.helpToolStripSeparator2.Name = "helpToolStripSeparator2";
-            this.helpToolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.helpToolStripSeparator2.Size = new System.Drawing.Size(165, 6);
             // 
             // aboutStripMenuItem
             // 
             this.aboutStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.aboutStripMenuItem.Name = "aboutStripMenuItem";
-            this.aboutStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.aboutStripMenuItem.Text = "&About";
             this.aboutStripMenuItem.Click += new System.EventHandler(this.aboutStripMenuItem_Click);
             // 
@@ -886,9 +888,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme5.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme5.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme5;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1467,6 +1469,15 @@
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
             // 
+            // clearSearchHighlightsToolStripMenuItem1
+            // 
+            this.clearSearchHighlightsToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.clearSearchHighlightsToolStripMenuItem1.Image = global::taskt.Properties.Resources.action_bar_clear;
+            this.clearSearchHighlightsToolStripMenuItem1.Name = "clearSearchHighlightsToolStripMenuItem1";
+            this.clearSearchHighlightsToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.clearSearchHighlightsToolStripMenuItem1.Text = "Clear Search &Highlights";
+            this.clearSearchHighlightsToolStripMenuItem1.Click += new System.EventHandler(this.clearSearchHighlightsToolStripMenuItem1_Click);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1637,6 +1648,7 @@
         private System.Windows.Forms.ToolStripMenuItem releaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem issueToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator helpToolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem clearSearchHighlightsToolStripMenuItem1;
     }
 }
 

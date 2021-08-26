@@ -418,7 +418,7 @@
     <Compile Include="Core\Server\WebSocketClient.cs" />
     <Compile Include="Core\Automation\User32\User32Functionas.cs" />
     <Compile Include="Core\Script.cs" />
-    <Compile Include="Core\URL.cs" />
+    <Compile Include="Core\MyURLs.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -524,6 +524,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.Designer.cs">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSearchCommands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSearchCommands.Designer.cs">
+      <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmSplash.cs">
       <SubType>Form</SubType>
@@ -698,6 +704,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmSearchCommands.resx">
+      <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmShowCursorPosition.resx">
       <DependentUpon>frmShowCursorPosition.cs</DependentUpon>

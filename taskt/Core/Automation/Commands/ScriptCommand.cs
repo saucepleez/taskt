@@ -313,7 +313,7 @@ namespace taskt.Core.Automation.Commands
         public string validationResult { get; protected set; }
 
         [XmlIgnore]
-        public bool IsMatched { get; set; }
+        public bool IsMatched { get; protected set; }
 
         [XmlIgnore]
         public bool IsDontSavedCommand { get; set; }
@@ -607,5 +607,128 @@ namespace taskt.Core.Automation.Commands
         {
             return (ScriptCommand)MemberwiseClone();
         }
+
+        public bool checkMatched(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText)
+        {
+            if (!caseSensitive)
+            {
+                keyword = keyword.ToLower();
+            }
+
+            // command name
+            if (checkCommandName)
+            {
+                string name = this.SelectionName;
+                if (!caseSensitive)
+                {
+                    name = name.ToLower();
+                }
+                if (name.Contains(keyword))
+                {
+                    this.IsMatched = true;
+                    return true;
+                }
+            }
+            
+            // display text
+            if (checkDisplayText)
+            {
+                string disp = this.GetDisplayValue();
+                if (!caseSensitive)
+                {
+                    disp = disp.ToLower();
+                }
+                if (disp.Contains(keyword))
+                {
+                    this.IsMatched = true;
+                    return true;
+                }
+            }
+
+            // comment
+            if (checkComment)
+            {
+                var cmt = this.v_Comment;
+                if (cmt != null)
+                {
+                    if (!caseSensitive)
+                    {
+                        cmt = cmt.ToLower();
+                    }
+                    if (cmt.Contains(keyword))
+                    {
+                        this.IsMatched = true;
+                        return true;
+                    }
+                }
+            }
+
+            // parameters
+            if (checkParameters)
+            {
+                var parentProps = this.GetType().GetProperties();
+                // case sensitive function
+                Func<string, string> CaseFunc;
+                if (caseSensitive)
+                {
+                    CaseFunc = (str) =>
+                    {
+                        return str;
+                    };
+                }
+                else
+                {
+                    CaseFunc = (str) =>
+                    {
+                        return str.ToLower();
+                    };
+                }
+                foreach(var prop in parentProps)
+                {
+                    if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+                    {
+                        var propValue = prop.GetValue(this);
+                        if (propValue == null)
+                        {
+                            continue;   // next
+                        }
+                        if (propValue is string)
+                        {
+                            if (CaseFunc((string)propValue).Contains(keyword))
+                            {
+                                this.IsMatched = true;
+                                return true;
+                            }
+                        }
+                        else if (propValue is System.Data.DataTable)
+                        {
+                            ((System.Data.DataTable)propValue).AcceptChanges();
+                            var trgDT = ((System.Data.DataTable)propValue);
+                            var rows = trgDT.Rows.Count;
+                            var cols = trgDT.Columns.Count;
+                            for (var i = 0; i < cols; i++)
+                            {
+                                if (trgDT.Columns[i].ReadOnly)
+                                {
+                                    continue;
+                                }
+                                for (var j = 0; j < rows; j++)
+                                {
+                                    if (CaseFunc(trgDT.Rows[j][i].ToString()).Contains(keyword))
+                                    {
+                                        this.IsMatched = true;
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.IsMatched = false;
+            return false;
+        }
+
     }
 }
