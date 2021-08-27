@@ -99,11 +99,13 @@ namespace taskt.UI.Forms
             chkInsertCommentIfLoop.DataBindings.Add("Checked", clientSettings, "InsertCommentIfLoopAbove", false, DataSourceUpdateMode.OnPropertyChanged);
             chkGruopingBySubgruop.DataBindings.Add("Checked", clientSettings, "GroupingBySubgroup", false, DataSourceUpdateMode.OnPropertyChanged);
             chkShowIndentLine.DataBindings.Add("Checked", clientSettings, "ShowIndentLine", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtIndentWidth.DataBindings.Add("Text", clientSettings, "IndentWidth", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultWordInstanceName.DataBindings.Add("Text", clientSettings, "DefaultWordInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultDBInstanceName.DataBindings.Add("Text", clientSettings, "DefaultDBInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkExportIntermediate.DataBindings.Add("Checked", engineSettings, "ExportIntermediateXML", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics
             bgwMetrics.RunWorkerAsync();
