@@ -823,6 +823,15 @@ namespace taskt.UI.Forms
             lstScriptActions.Invalidate();
         }
 
+        private void HighlightAllCurrentSelectedCommand()
+        {
+            if (lstScriptActions.SelectedIndices.Count > 0)
+            {
+                string keyword = ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
+                AdvancedSearchItemInCommands(keyword, false, false, true, false, false);
+            }
+        }
+
         #endregion
 
 
@@ -1746,6 +1755,11 @@ namespace taskt.UI.Forms
                 //}
                 SelectAllRows();
             }
+            else if ((e.Control) && (e.Shift) && (e.KeyCode == Keys.F))
+            {
+                // highlight this command
+                HighlightAllCurrentSelectedCommand();
+            }
         }
         private void lstScriptActions_MouseClick(object sender, MouseEventArgs e)
         {
@@ -1943,11 +1957,7 @@ namespace taskt.UI.Forms
         }
         private void searchThisCommnadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lstScriptActions.SelectedIndices.Count > 0)
-            {
-                string keyword = ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
-                AdvancedSearchItemInCommands(keyword, false, false, true, false, false);
-            }
+            HighlightAllCurrentSelectedCommand();
         }
 
         private void clearHighlightToolStripMenuItem_Click(object sender, EventArgs e)
