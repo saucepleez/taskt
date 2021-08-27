@@ -2081,7 +2081,7 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-        #region Open, Save, Parse, Import File
+        #region Open, Save, Parse, Import, Validate File
         private void BeginOpenScriptProcess()
         {
             CheckAndSaveScriptIfForget();
@@ -2150,6 +2150,9 @@ namespace taskt.UI.Forms
 
                 // check indent
                 IndentListViewItems();
+
+                // validate
+                ValidateScriptFile();
 
                 //format listview
                 ChangeSaveState(false);
@@ -2407,6 +2410,22 @@ namespace taskt.UI.Forms
 
 
         }
+
+        private void ValidateScriptFile()
+        {
+            lstScriptActions.SuspendLayout();
+            using (var fm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
+            {
+                fm.appSettings = this.appSettings;
+                foreach (ListViewItem item in lstScriptActions.Items)
+                {
+                    ((Core.Automation.Commands.ScriptCommand)item.Tag).IsValidate(fm);
+                }
+            }
+            lstScriptActions.ResumeLayout();
+            lstScriptActions.Invalidate();
+        }
+
         #endregion
 
         #region New script file
