@@ -2152,7 +2152,7 @@ namespace taskt.UI.Forms
                 IndentListViewItems();
 
                 // validate
-                ValidateScriptFile();
+                CheckValidateScriptFile();
 
                 //format listview
                 ChangeSaveState(false);
@@ -2411,7 +2411,7 @@ namespace taskt.UI.Forms
 
         }
 
-        private void ValidateScriptFile()
+        private void CheckValidateScriptFile()
         {
             lstScriptActions.SuspendLayout();
             using (var fm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
