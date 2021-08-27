@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme3 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -244,7 +244,7 @@
             this.fileActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
             this.fileActionsToolStripMenuItem.Name = "fileActionsToolStripMenuItem";
-            this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(104, 26);
+            this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(96, 26);
             this.fileActionsToolStripMenuItem.Text = "&File Actions";
             // 
             // newToolStripMenuItem
@@ -347,7 +347,7 @@
             this.editStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.editStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.editStripMenuItem.Name = "editStripMenuItem";
-            this.editStripMenuItem.Size = new System.Drawing.Size(77, 26);
+            this.editStripMenuItem.Size = new System.Drawing.Size(69, 26);
             this.editStripMenuItem.Text = "Edit(&T)";
             // 
             // SelectAllStripMenuItem
@@ -432,7 +432,7 @@
             this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(85, 26);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(77, 26);
             this.modifyToolStripMenuItem.Text = "&Options";
             // 
             // variablesToolStripMenuItem
@@ -470,7 +470,7 @@
             this.scriptActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.scriptActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
             this.scriptActionsToolStripMenuItem.Name = "scriptActionsToolStripMenuItem";
-            this.scriptActionsToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
+            this.scriptActionsToolStripMenuItem.Size = new System.Drawing.Size(108, 26);
             this.scriptActionsToolStripMenuItem.Text = "&Script Actions";
             // 
             // recordToolStripMenuItem
@@ -506,7 +506,7 @@
             this.saveAndRunToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
             this.saveAndRunToolStripMenuItem.Name = "saveAndRunToolStripMenuItem";
             this.saveAndRunToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.saveAndRunToolStripMenuItem.Size = new System.Drawing.Size(114, 26);
+            this.saveAndRunToolStripMenuItem.Size = new System.Drawing.Size(106, 26);
             this.saveAndRunToolStripMenuItem.Text = "Save and &Run";
             this.saveAndRunToolStripMenuItem.ToolTipText = "F5";
             this.saveAndRunToolStripMenuItem.Click += new System.EventHandler(this.saveAndRunToolStripMenuItem_Clicked);
@@ -524,7 +524,7 @@
             this.tsSearchButton.ForeColor = System.Drawing.Color.White;
             this.tsSearchButton.Image = global::taskt.Properties.Resources.command_search;
             this.tsSearchButton.Name = "tsSearchButton";
-            this.tsSearchButton.Size = new System.Drawing.Size(36, 26);
+            this.tsSearchButton.Size = new System.Drawing.Size(28, 26);
             this.tsSearchButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsSearchButton.Visible = false;
             this.tsSearchButton.Click += new System.EventHandler(this.pbSearch_Click);
@@ -551,7 +551,7 @@
             this.helpStripMenuItem.Image = global::taskt.Properties.Resources.various_question;
             this.helpStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 40, 0);
             this.helpStripMenuItem.Name = "helpStripMenuItem";
-            this.helpStripMenuItem.Size = new System.Drawing.Size(68, 26);
+            this.helpStripMenuItem.Size = new System.Drawing.Size(60, 26);
             this.helpStripMenuItem.Text = "&Help";
             // 
             // tasktProjectPageStripMenuItem
@@ -601,6 +601,7 @@
             // aboutStripMenuItem
             // 
             this.aboutStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.aboutStripMenuItem.Image = global::taskt.Properties.Resources.logo;
             this.aboutStripMenuItem.Name = "aboutStripMenuItem";
             this.aboutStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.aboutStripMenuItem.Text = "&About";
@@ -898,9 +899,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme3.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme3.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme3;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1360,7 +1361,7 @@
             this.lstContextStripSep4,
             this.showScriptInfoMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 362);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 340);
             // 
             // enableSelectedCodeToolStripMenuItem
             // 
