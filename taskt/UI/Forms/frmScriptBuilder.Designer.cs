@@ -52,6 +52,7 @@
             this.editSplitMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.SearchStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReplaceStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearSearchHighlightsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,7 +141,6 @@
             this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
             this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
-            this.clearSearchHighlightsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -412,6 +412,15 @@
             this.ReplaceStripMenuItem.Text = "Replace";
             this.ReplaceStripMenuItem.Click += new System.EventHandler(this.ReplaceStripMenuItem_Click);
             // 
+            // clearSearchHighlightsToolStripMenuItem1
+            // 
+            this.clearSearchHighlightsToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.clearSearchHighlightsToolStripMenuItem1.Image = global::taskt.Properties.Resources.action_bar_clear;
+            this.clearSearchHighlightsToolStripMenuItem1.Name = "clearSearchHighlightsToolStripMenuItem1";
+            this.clearSearchHighlightsToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.clearSearchHighlightsToolStripMenuItem1.Text = "Clear Search &Highlights";
+            this.clearSearchHighlightsToolStripMenuItem1.Click += new System.EventHandler(this.clearSearchHighlightsToolStripMenuItem1_Click);
+            // 
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -429,7 +438,7 @@
             this.variablesToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.variablesToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
             this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
-            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.variablesToolStripMenuItem.Text = "&Variable Manager";
             this.variablesToolStripMenuItem.Click += new System.EventHandler(this.variablesToolStripMenuItem_Click);
             // 
@@ -438,16 +447,15 @@
             this.settingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.settingsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "&Settings Manager";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // showSearchBarToolStripMenuItem
             // 
             this.showSearchBarToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.showSearchBarToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.showSearchBarToolStripMenuItem.Name = "showSearchBarToolStripMenuItem";
-            this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.showSearchBarToolStripMenuItem.Text = "Show Search &Bar";
             this.showSearchBarToolStripMenuItem.Click += new System.EventHandler(this.showSearchBarToolStripMenuItem_Click);
             // 
@@ -1468,15 +1476,6 @@
             this.notifyTray.Text = "taskt, free and open-source process automation";
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
-            // 
-            // clearSearchHighlightsToolStripMenuItem1
-            // 
-            this.clearSearchHighlightsToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
-            this.clearSearchHighlightsToolStripMenuItem1.Image = global::taskt.Properties.Resources.action_bar_clear;
-            this.clearSearchHighlightsToolStripMenuItem1.Name = "clearSearchHighlightsToolStripMenuItem1";
-            this.clearSearchHighlightsToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
-            this.clearSearchHighlightsToolStripMenuItem1.Text = "Clear Search &Highlights";
-            this.clearSearchHighlightsToolStripMenuItem1.Click += new System.EventHandler(this.clearSearchHighlightsToolStripMenuItem1_Click);
             // 
             // frmScriptBuilder
             // 

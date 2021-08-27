@@ -269,6 +269,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.txtSearchKeyword.Name = "txtSearchKeyword";
             this.txtSearchKeyword.Size = new System.Drawing.Size(306, 29);
             this.txtSearchKeyword.TabIndex = 1;
+            this.txtSearchKeyword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearchKeyword_KeyUp);
             // 
             // tabReplace
             // 

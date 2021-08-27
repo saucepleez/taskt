@@ -91,11 +91,23 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.Enabled = false;
             int matchNum = parentForm.AdvancedSearchItemInCommands(kwd, chkSearchCaseSensitive.Checked, chkSearchTargetIsParameter.Checked, chkSearchTargetIsName.Checked, chkSearchTargetIsComment.Checked, chkSearchTargetIsDisplayText.Checked);
             this.Enabled = true;
+
+            parentForm.Activate();
         }
 
         private void btnSearchNext_Click(object sender, EventArgs e)
         {
-            parentForm.MoveMostNearMatchedLine();
+            parentForm.MoveMostNearMatchedLine(chkSearchBackToTop.Checked);
+        }
+
+        private void txtSearchKeyword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                btnSearchSearch_Click(null, null);
+            }
         }
     }
 }

@@ -724,6 +724,8 @@ namespace taskt.UI.Forms
 
         public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText)
         {
+            matchingSearchIndex.Clear();
+            matchingSearchIndex = new List<int>();
             int matchedCount = 0;
 
             this.currentIndexInMatchItems = -1;
@@ -733,6 +735,7 @@ namespace taskt.UI.Forms
                 if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText))
                 {
                     matchedCount++;
+                    matchingSearchIndex.Add(itm.Index);
                 }
             }
             lstScriptActions.ResumeLayout();
@@ -742,41 +745,82 @@ namespace taskt.UI.Forms
             return matchedCount;
         }
 
-        public void MoveMostNearMatchedLine()
+        public void MoveMostNearMatchedLine(bool backToTop)
         {
             if (this.currentScriptEditMode != EditMode.AdvencedSearch)
             {
                 return;
             }
+            if (matchingSearchIndex.Count == 0)
+            {
+                return;
+            }
 
-            int currentIndex;
             if (this.currentIndexInMatchItems >= 0)
             {
-                currentIndex = this.currentIndexInMatchItems;
+                // select matched item yet
+                int nextIndex = this.currentIndexInMatchItems + 1;
+                if (backToTop)
+                {
+                    nextIndex %= matchingSearchIndex.Count;
+                }
+                else
+                {
+                    if (nextIndex >= matchingSearchIndex.Count)
+                    {
+                        nextIndex--;
+                    }
+                }
+                this.currentIndexInMatchItems = nextIndex;
+                ClearSelectedListViewItems();
+
+                lstScriptActions.Items[matchingSearchIndex[nextIndex]].Selected = true;
             }
             else
             {
-                currentIndex = (lstScriptActions.SelectedIndices.Count == 0) ? 0 : lstScriptActions.SelectedIndices[0];
-            }
-            int maxItems = lstScriptActions.Items.Count;
-
-            ClearSelectedListViewItems();
-
-            for (int i = 0; i < maxItems; i++)
-            {
-                var idx = (i + currentIndex + 1) % maxItems;
-                if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[idx].Tag).IsMatched)
+                if (lstScriptActions.SelectedIndices.Count > 0)
                 {
-                    this.currentIndexInMatchItems = idx;
-                    lstScriptActions.Items[idx].Selected = true;
-
-                    // move & draw
-                    lstScriptActions.EnsureVisible(idx);
-                    lstScriptActions.Invalidate();
-
-                    break;
+                    // some item selected yet. -> search near item
+                    int currentIndex = lstScriptActions.SelectedIndices[0];
+                    if (matchingSearchIndex[matchingSearchIndex.Count - 1] > currentIndex)
+                    {
+                        if (backToTop)
+                        {
+                            this.currentIndexInMatchItems = 0;
+                            ClearSelectedListViewItems();
+                            lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
+                        }
+                        else
+                        {
+                            ClearSelectedListViewItems();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        int targetIndex = matchingSearchIndex.Count - 1;
+                        while (currentIndex > matchingSearchIndex[targetIndex])
+                        {
+                            targetIndex--;
+                        }
+                        targetIndex++;
+                        this.currentIndexInMatchItems = targetIndex;
+                        ClearSelectedListViewItems();
+                        lstScriptActions.Items[matchingSearchIndex[targetIndex]].Selected = true;
+                    }
+                }
+                else
+                {
+                    // no selected item -> select fist matched item
+                    this.currentIndexInMatchItems = 0;
+                    ClearSelectedListViewItems();
+                    lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
                 }
             }
+
+            // scroll
+            lstScriptActions.EnsureVisible(matchingSearchIndex[this.currentIndexInMatchItems]);
+            lstScriptActions.Invalidate();
         }
 
         #endregion
@@ -1055,6 +1099,11 @@ namespace taskt.UI.Forms
 
         private void ClearSelectedListViewItems()
         {
+            if (lstScriptActions.FocusedItem != null)
+            {
+                lstScriptActions.FocusedItem.Focused = false;
+            }
+            
             lstScriptActions.SelectedItems.Clear();
             selectedIndex = -1;
             lstScriptActions.Invalidate();
@@ -1319,173 +1368,276 @@ namespace taskt.UI.Forms
                     break;
 
                 case 2:
-                    //write command text
-                    //Brush commandNameBrush, commandBackgroundBrush;
-                    taskt.Core.Theme.UIFont trg;
+                    ////write command text
+                    ////Brush commandNameBrush, commandBackgroundBrush;
+                    //taskt.Core.Theme.UIFont trg;
 
-                    if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
-                    {
-                        //debugging coloring
-                        //commandNameBrush = Brushes.White;
-                        //commandBackgroundBrush = Brushes.OrangeRed;
-                        trg = taskt.Core.Theme.scriptTexts["debug"];
-                    }
-                    //else if ((currentIndexInMatchItems >= 0) && (e.ItemIndex == currentIndexInMatchItems))
+                    //if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
                     //{
-                    //    //search primary item coloring
-                    //    //commandNameBrush = Brushes.Black;
-                    //    //commandBackgroundBrush = Brushes.Goldenrod;
-                    //    trg = taskt.Core.Theme.scriptTexts["current"];
+                    //    //debugging coloring
+                    //    //commandNameBrush = Brushes.White;
+                    //    //commandBackgroundBrush = Brushes.OrangeRed;
+                    //    trg = taskt.Core.Theme.scriptTexts["debug"];
                     //}
-                    else if (matchingSearchIndex.Contains(e.ItemIndex) && currentScriptEditMode == EditMode.Search)
-                    {
-                        //search match item coloring
-                        //commandNameBrush = Brushes.Black;
-                        //commandBackgroundBrush = Brushes.LightYellow;
-                        if ((e.Item.Focused) || (e.Item.Selected))
-                        {
-                            trg = taskt.Core.Theme.scriptTexts["current-match"];
-                        }
-                        else
-                        {
-                            trg = taskt.Core.Theme.scriptTexts["match"];
-                        }
-                    }
-                    else if (this.currentScriptEditMode == EditMode.AdvencedSearch)
-                    {
-                        if (command.IsMatched)
-                        {
-                            if ((e.Item.Focused) || (e.Item.Selected))
-                            {
-                                trg = taskt.Core.Theme.scriptTexts["current-match"];
-                            }
-                            else
-                            {
-                                trg = taskt.Core.Theme.scriptTexts["match"];
-                            }
-                        }
-                        else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                        {
-                            trg = taskt.Core.Theme.scriptTexts["comment"];
-                        }
-                        else if (!command.IsValid)
-                        {
-                            trg = taskt.Core.Theme.scriptTexts["invalid"];
-                        }
-                        else
-                        {
-                            trg = taskt.Core.Theme.scriptTexts["normal"];
-                        }
-                    }
-                    else if ((e.Item.Focused) || (e.Item.Selected))
-                    {
-                        //selected item coloring
-                        if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                        {
-                            // disable command
-                            //commandNameBrush = Brushes.LightGreen;
-                            trg = taskt.Core.Theme.scriptTexts["selected-comment"];
-                        }
-                        else if (command.PauseBeforeExeucution)
-                        {
-                            // pause
-                            //commandNameBrush = Brushes.Plum;
-                            trg = taskt.Core.Theme.scriptTexts["selected-pause"];
-                        }
-                        else if (!command.IsValid)
-                        {
-                            // invalid
-                            //commandNameBrush = Brushes.Crimson;
-                            trg = taskt.Core.Theme.scriptTexts["selected-invalid"];
-                        }
-                        else
-                        {
-                            //commandNameBrush = Brushes.White;
-                            trg = taskt.Core.Theme.scriptTexts["selected-normal"];
-                        }
-                        //commandBackgroundBrush = Brushes.DodgerBlue;
-                    }
-                    else if (command.PauseBeforeExeucution)
-                    {
-                        //pause before execution coloring
-                        //commandNameBrush = Brushes.MediumPurple;
-                        //commandBackgroundBrush = Brushes.Lavender;
-                        trg = taskt.Core.Theme.scriptTexts["pause"];
-                    }
-                    else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                    {
-                        //comments and commented command coloring
-                        //commandNameBrush = Brushes.ForestGreen;
-                        //commandBackgroundBrush = Brushes.WhiteSmoke;
-                        trg = taskt.Core.Theme.scriptTexts["comment"];
-                    }
-                    else if (!command.IsValid)
-                    {
-                        //standard coloring
-                        //if (command.IsValid)
-                        //{
-                        //    //commandNameBrush = Brushes.SteelBlue;
-                        //    trg = taskt.Core.Theme.scriptTexts["normal"];
+                    ////else if ((currentIndexInMatchItems >= 0) && (e.ItemIndex == currentIndexInMatchItems))
+                    ////{
+                    ////    //search primary item coloring
+                    ////    //commandNameBrush = Brushes.Black;
+                    ////    //commandBackgroundBrush = Brushes.Goldenrod;
+                    ////    trg = taskt.Core.Theme.scriptTexts["current"];
+                    ////}
+                    //else if (matchingSearchIndex.Contains(e.ItemIndex) && currentScriptEditMode == EditMode.Search)
+                    //{
+                    //    //search match item coloring
+                    //    //commandNameBrush = Brushes.Black;
+                    //    //commandBackgroundBrush = Brushes.LightYellow;
+                    //    if ((e.Item.Focused) || (e.Item.Selected))
+                    //    {
+                    //        trg = taskt.Core.Theme.scriptTexts["current-match"];
+                    //    }
+                    //    else
+                    //    {
+                    //        trg = taskt.Core.Theme.scriptTexts["match"];
+                    //    }
+                    //}
+                    //else if (this.currentScriptEditMode == EditMode.AdvencedSearch)
+                    //{
+                    //    if (command.IsMatched)
+                    //    {
+                    //        if ((e.Item.Focused) || (e.Item.Selected))
+                    //        {
+                    //            trg = taskt.Core.Theme.scriptTexts["current-match"];
+                    //        }
+                    //        else
+                    //        {
+                    //            trg = taskt.Core.Theme.scriptTexts["match"];
+                    //        }
+                    //    }
+                    //    else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+                    //    {
+                    //        trg = taskt.Core.Theme.scriptTexts["comment"];
+                    //    }
+                    //    else if (!command.IsValid)
+                    //    {
+                    //        trg = taskt.Core.Theme.scriptTexts["invalid"];
+                    //    }
+                    //    else
+                    //    {
+                    //        trg = taskt.Core.Theme.scriptTexts["normal"];
+                    //    }
+                    //}
+                    //else if ((e.Item.Focused) || (e.Item.Selected))
+                    //{
+                    //    //selected item coloring
+                    //    if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+                    //    {
+                    //        // disable command
+                    //        //commandNameBrush = Brushes.LightGreen;
+                    //        trg = taskt.Core.Theme.scriptTexts["selected-comment"];
+                    //    }
+                    //    else if (command.PauseBeforeExeucution)
+                    //    {
+                    //        // pause
+                    //        //commandNameBrush = Brushes.Plum;
+                    //        trg = taskt.Core.Theme.scriptTexts["selected-pause"];
+                    //    }
+                    //    else if (!command.IsValid)
+                    //    {
+                    //        // invalid
+                    //        //commandNameBrush = Brushes.Crimson;
+                    //        trg = taskt.Core.Theme.scriptTexts["selected-invalid"];
+                    //    }
+                    //    else
+                    //    {
+                    //        //commandNameBrush = Brushes.White;
+                    //        trg = taskt.Core.Theme.scriptTexts["selected-normal"];
+                    //    }
+                    //    //commandBackgroundBrush = Brushes.DodgerBlue;
+                    //}
+                    //else if (command.PauseBeforeExeucution)
+                    //{
+                    //    //pause before execution coloring
+                    //    //commandNameBrush = Brushes.MediumPurple;
+                    //    //commandBackgroundBrush = Brushes.Lavender;
+                    //    trg = taskt.Core.Theme.scriptTexts["pause"];
+                    //}
+                    //else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+                    //{
+                    //    //comments and commented command coloring
+                    //    //commandNameBrush = Brushes.ForestGreen;
+                    //    //commandBackgroundBrush = Brushes.WhiteSmoke;
+                    //    trg = taskt.Core.Theme.scriptTexts["comment"];
+                    //}
+                    //else if (!command.IsValid)
+                    //{
+                    //    //standard coloring
+                    //    //if (command.IsValid)
+                    //    //{
+                    //    //    //commandNameBrush = Brushes.SteelBlue;
+                    //    //    trg = taskt.Core.Theme.scriptTexts["normal"];
 
-                        //}
-                        //else
-                        //{
-                        //    //commandNameBrush = Brushes.Crimson;
-                        //    trg = taskt.Core.Theme.scriptTexts["invalid"];
-                        //}
-                        //commandBackgroundBrush = Brushes.WhiteSmoke;
-                        trg = taskt.Core.Theme.scriptTexts["invalid"];
-                    }
-                    else
-                    {
-                        trg = taskt.Core.Theme.scriptTexts["normal"];
-                    }
+                    //    //}
+                    //    //else
+                    //    //{
+                    //    //    //commandNameBrush = Brushes.Crimson;
+                    //    //    trg = taskt.Core.Theme.scriptTexts["invalid"];
+                    //    //}
+                    //    //commandBackgroundBrush = Brushes.WhiteSmoke;
+                    //    trg = taskt.Core.Theme.scriptTexts["invalid"];
+                    //}
+                    //else
+                    //{
+                    //    trg = taskt.Core.Theme.scriptTexts["normal"];
+                    //}
 
-                    //fille with background color
-                    //e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
-                    e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
+                    ////fille with background color
+                    ////e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
+                    //e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
 
-                    //get indent count
-                    var indentPixels = (item.IndentCount * 15);
+                    ////get indent count
+                    //var indentPixels = (item.IndentCount * 15);
 
-                    //set indented X position
-                    modifiedBounds.X += indentPixels;
+                    ////set indented X position
+                    //modifiedBounds.X += indentPixels;
 
-                    //draw string
+                    ////draw string
+                    ////e.Graphics.DrawString(command.GetDisplayValue(),
+                    ////               lstScriptActions.Font, commandNameBrush, modifiedBounds);
                     //e.Graphics.DrawString(command.GetDisplayValue(),
-                    //               lstScriptActions.Font, commandNameBrush, modifiedBounds);
-                    e.Graphics.DrawString(command.GetDisplayValue(),
-                                   new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
+                    //               new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
 
-                    if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
-                    {
-                        int offset;
-                        int i;
-                        if (item.IndentCount % 4 == 0)
-                        {
-                            offset = 30;
-                            i = item.IndentCount - 2;
-                        }
-                        else
-                        {
-                            offset = 0;
-                            i = item.IndentCount;
-                        }
-                        int bottomY = modifiedBounds.Y + modifiedBounds.Height;
-                        for (i = (item.IndentCount % 4 != 0 ? item.IndentCount - 2 : item.IndentCount); i > 0; i -= 4)
-                        {
-                            int x = modifiedBounds.X - (i * 15) + offset;
-                            e.Graphics.DrawLine(indentDashLine, x, modifiedBounds.Y, x, bottomY);
-                        }
+                    //if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
+                    //{
+                    //    int offset;
+                    //    int i;
+                    //    if (item.IndentCount % 4 == 0)
+                    //    {
+                    //        offset = 30;
+                    //        i = item.IndentCount - 2;
+                    //    }
+                    //    else
+                    //    {
+                    //        offset = 0;
+                    //        i = item.IndentCount;
+                    //    }
+                    //    int bottomY = modifiedBounds.Y + modifiedBounds.Height;
+                    //    for (i = (item.IndentCount % 4 != 0 ? item.IndentCount - 2 : item.IndentCount); i > 0; i -= 4)
+                    //    {
+                    //        int x = modifiedBounds.X - (i * 15) + offset;
+                    //        e.Graphics.DrawLine(indentDashLine, x, modifiedBounds.Y, x, bottomY);
+                    //    }
 
-                        int baseX = modifiedBounds.X - (item.IndentCount * 15) + 2;
-                        e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
-                    }
+                    //    int baseX = modifiedBounds.X - (item.IndentCount * 15) + 2;
+                    //    e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
+                    //}
+                    drawCommandText(e);
 
                     break;
             }
         }
 
+        private void drawCommandText(DrawListViewSubItemEventArgs e)
+        {
+            //get listviewitem
+            ListViewItem item = e.Item;
+            var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
+            var modifiedBounds = e.Bounds;
+
+            taskt.Core.Theme.UIFont trg;
+
+            if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
+            {
+                trg = taskt.Core.Theme.scriptTexts["debug"];
+            }
+            else if ((currentScriptEditMode == EditMode.Search) || (currentScriptEditMode == EditMode.AdvencedSearch))
+            {
+                if (matchingSearchIndex.Contains(e.ItemIndex))
+                { 
+                    if ((e.Item.Focused) || (e.Item.Selected))
+                    {
+                        trg = taskt.Core.Theme.scriptTexts["current-match"];
+                    }
+                    else
+                    {
+                        trg = taskt.Core.Theme.scriptTexts["match"];
+                    }
+                }
+                else
+                {
+                    trg = taskt.Core.Theme.scriptTexts[decideNormalCommandText(e, command)];
+                }
+            }
+            else
+            {
+                trg = taskt.Core.Theme.scriptTexts[decideNormalCommandText(e, command)];
+            }
+
+            //fille with background color
+            e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
+
+            //get indent count
+            var indentPixels = (item.IndentCount * 15);
+
+            //set indented X position
+            modifiedBounds.X += indentPixels;
+
+            //draw string
+            e.Graphics.DrawString(command.GetDisplayValue(),
+                           new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
+
+            if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
+            {
+                int offset;
+                int i;
+                if (item.IndentCount % 4 == 0)
+                {
+                    offset = 30;
+                    i = item.IndentCount - 2;
+                }
+                else
+                {
+                    offset = 0;
+                    i = item.IndentCount;
+                }
+                int bottomY = modifiedBounds.Y + modifiedBounds.Height;
+                for (i = (item.IndentCount % 4 != 0 ? item.IndentCount - 2 : item.IndentCount); i > 0; i -= 4)
+                {
+                    int x = modifiedBounds.X - (i * 15) + offset;
+                    e.Graphics.DrawLine(indentDashLine, x, modifiedBounds.Y, x, bottomY);
+                }
+
+                int baseX = modifiedBounds.X - (item.IndentCount * 15) + 2;
+                e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
+            }
+        }
+        private string decideNormalCommandText(DrawListViewSubItemEventArgs e, Core.Automation.Commands.ScriptCommand command)
+        {
+            string ret;
+            
+            if (command.PauseBeforeExeucution)
+            {
+                ret = "pause";
+            }
+            else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+            {
+                ret = "comment";
+            }
+            else if (!command.IsValid)
+            {
+                ret = "invalid";
+            }
+            else
+            {
+                ret = "normal";
+            }
+
+            if ((e.Item.Focused) || (e.Item.Selected))
+            {
+                ret = "selected-" + ret;
+            }
+
+            return ret;
+        }
         
 
         private int debugLine;
@@ -2658,10 +2810,12 @@ namespace taskt.UI.Forms
             if (tsSearchBox.Visible)
             {
                 showSearchBarToolStripMenuItem.Text = "Hide Search Bar";
+                showSearchBarToolStripMenuItem.Checked = true;
             }
             else
             {
                 showSearchBarToolStripMenuItem.Text = "Show Search Bar";
+                showSearchBarToolStripMenuItem.Checked = false;
             }
 
         }
