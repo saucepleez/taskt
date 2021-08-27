@@ -131,6 +131,7 @@ namespace taskt.Core
         public string CurrentWindowYPositionKeyword { get; set; }
         public string CurrentWorksheetKeyword { get; set; }
         public string NextWorksheetKeyword { get; set; }
+        public bool ExportIntermediateXML { get; set; }
         public string PreviousWorksheetKeyword { get; set; }
         private static string InterStartVariableMaker = "{{{";
         private static string InterEndVariableMaker = "}}}";
@@ -199,6 +200,7 @@ namespace taskt.Core
             CurrentWorksheetKeyword = "Current Sheet";
             NextWorksheetKeyword = "Next Sheet";
             PreviousWorksheetKeyword = "Previous Sheet";
+            ExportIntermediateXML = true;
         }
 
         public string[] KeyNameList()
@@ -336,6 +338,21 @@ namespace taskt.Core
         public bool DontShowValidationMessage { get; set; }
         public bool ShowSampleUsageInDescription { get; set; }
         public bool ShowIndentLine { get; set; }
+        private int _IndentWidth = 16;
+        public int IndentWidth 
+        {
+            get
+            {
+                return this._IndentWidth;
+            }
+            set
+            {
+                if (value >= 1 && value <= 32)
+                {
+                    this._IndentWidth = value;
+                }
+            }
+        }
         public string DefaultBrowserInstanceName { get; set; }
         public string DefaultStopWatchInstanceName { get; set; }
         public string DefaultExcelInstanceName { get; set; }
