@@ -118,6 +118,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabEditorSettings = new System.Windows.Forms.TabPage();
+            this.chkShowIndentLine = new System.Windows.Forms.CheckBox();
             this.chkGruopingBySubgruop = new System.Windows.Forms.CheckBox();
             this.chkInsertCommentIfLoop = new System.Windows.Forms.CheckBox();
             this.txtDefaultDBInstanceName = new System.Windows.Forms.TextBox();
@@ -138,7 +139,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.chkShowIndentLine = new System.Windows.Forms.CheckBox();
+            this.lblIndentWidth = new System.Windows.Forms.Label();
+            this.txtIndentWidth = new System.Windows.Forms.TextBox();
+            this.chkExportIntermediate = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
@@ -1231,6 +1234,9 @@
             // tabEditorSettings
             // 
             this.tabEditorSettings.AutoScroll = true;
+            this.tabEditorSettings.Controls.Add(this.chkExportIntermediate);
+            this.tabEditorSettings.Controls.Add(this.lblIndentWidth);
+            this.tabEditorSettings.Controls.Add(this.txtIndentWidth);
             this.tabEditorSettings.Controls.Add(this.chkShowIndentLine);
             this.tabEditorSettings.Controls.Add(this.chkGruopingBySubgruop);
             this.tabEditorSettings.Controls.Add(this.chkInsertCommentIfLoop);
@@ -1255,6 +1261,19 @@
             this.tabEditorSettings.TabIndex = 4;
             this.tabEditorSettings.Text = "Editor";
             this.tabEditorSettings.UseVisualStyleBackColor = true;
+            // 
+            // chkShowIndentLine
+            // 
+            this.chkShowIndentLine.AutoSize = true;
+            this.chkShowIndentLine.BackColor = System.Drawing.Color.Transparent;
+            this.chkShowIndentLine.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkShowIndentLine.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkShowIndentLine.Location = new System.Drawing.Point(10, 191);
+            this.chkShowIndentLine.Name = "chkShowIndentLine";
+            this.chkShowIndentLine.Size = new System.Drawing.Size(134, 24);
+            this.chkShowIndentLine.TabIndex = 22;
+            this.chkShowIndentLine.Text = "Show indent line";
+            this.chkShowIndentLine.UseVisualStyleBackColor = false;
             // 
             // chkGruopingBySubgruop
             // 
@@ -1284,7 +1303,7 @@
             // 
             // txtDefaultDBInstanceName
             // 
-            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 459);
+            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 475);
             this.txtDefaultDBInstanceName.Name = "txtDefaultDBInstanceName";
             this.txtDefaultDBInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultDBInstanceName.TabIndex = 19;
@@ -1295,7 +1314,7 @@
             this.lblDBInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblDBInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDBInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblDBInstance.Location = new System.Drawing.Point(7, 439);
+            this.lblDBInstance.Location = new System.Drawing.Point(7, 455);
             this.lblDBInstance.Name = "lblDBInstance";
             this.lblDBInstance.Size = new System.Drawing.Size(192, 17);
             this.lblDBInstance.TabIndex = 18;
@@ -1329,7 +1348,7 @@
             // 
             // txtDefaultWordInstanceName
             // 
-            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 408);
+            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 424);
             this.txtDefaultWordInstanceName.Name = "txtDefaultWordInstanceName";
             this.txtDefaultWordInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultWordInstanceName.TabIndex = 15;
@@ -1340,7 +1359,7 @@
             this.lblWordInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblWordInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWordInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblWordInstance.Location = new System.Drawing.Point(7, 388);
+            this.lblWordInstance.Location = new System.Drawing.Point(7, 404);
             this.lblWordInstance.Name = "lblWordInstance";
             this.lblWordInstance.Size = new System.Drawing.Size(169, 17);
             this.lblWordInstance.TabIndex = 14;
@@ -1348,7 +1367,7 @@
             // 
             // txtDefaultExcelInstanceName
             // 
-            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 358);
+            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 374);
             this.txtDefaultExcelInstanceName.Name = "txtDefaultExcelInstanceName";
             this.txtDefaultExcelInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultExcelInstanceName.TabIndex = 13;
@@ -1359,7 +1378,7 @@
             this.lblExcelInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblExcelInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExcelInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblExcelInstance.Location = new System.Drawing.Point(7, 338);
+            this.lblExcelInstance.Location = new System.Drawing.Point(7, 354);
             this.lblExcelInstance.Name = "lblExcelInstance";
             this.lblExcelInstance.Size = new System.Drawing.Size(168, 17);
             this.lblExcelInstance.TabIndex = 12;
@@ -1367,7 +1386,7 @@
             // 
             // txtDefaultStopwatchInstanceName
             // 
-            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 305);
+            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 321);
             this.txtDefaultStopwatchInstanceName.Name = "txtDefaultStopwatchInstanceName";
             this.txtDefaultStopwatchInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultStopwatchInstanceName.TabIndex = 11;
@@ -1378,7 +1397,7 @@
             this.lblStopwatchInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblStopwatchInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStopwatchInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 285);
+            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 301);
             this.lblStopwatchInstance.Name = "lblStopwatchInstance";
             this.lblStopwatchInstance.Size = new System.Drawing.Size(193, 17);
             this.lblStopwatchInstance.TabIndex = 10;
@@ -1386,7 +1405,7 @@
             // 
             // txtDefaultBrowserInstanceName
             // 
-            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 253);
+            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 269);
             this.txtDefaultBrowserInstanceName.Name = "txtDefaultBrowserInstanceName";
             this.txtDefaultBrowserInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultBrowserInstanceName.TabIndex = 9;
@@ -1397,7 +1416,7 @@
             this.lblBrowserInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblBrowserInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBrowserInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 233);
+            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 249);
             this.lblBrowserInstance.Name = "lblBrowserInstance";
             this.lblBrowserInstance.Size = new System.Drawing.Size(182, 17);
             this.lblBrowserInstance.TabIndex = 8;
@@ -1469,18 +1488,38 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // chkShowIndentLine
+            // lblIndentWidth
             // 
-            this.chkShowIndentLine.AutoSize = true;
-            this.chkShowIndentLine.BackColor = System.Drawing.Color.Transparent;
-            this.chkShowIndentLine.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkShowIndentLine.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkShowIndentLine.Location = new System.Drawing.Point(10, 191);
-            this.chkShowIndentLine.Name = "chkShowIndentLine";
-            this.chkShowIndentLine.Size = new System.Drawing.Size(134, 24);
-            this.chkShowIndentLine.TabIndex = 22;
-            this.chkShowIndentLine.Text = "Show indent line";
-            this.chkShowIndentLine.UseVisualStyleBackColor = false;
+            this.lblIndentWidth.AutoSize = true;
+            this.lblIndentWidth.BackColor = System.Drawing.Color.Transparent;
+            this.lblIndentWidth.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIndentWidth.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblIndentWidth.Location = new System.Drawing.Point(11, 220);
+            this.lblIndentWidth.Name = "lblIndentWidth";
+            this.lblIndentWidth.Size = new System.Drawing.Size(172, 21);
+            this.lblIndentWidth.TabIndex = 23;
+            this.lblIndentWidth.Text = "Indent Width (1 to 32):";
+            // 
+            // txtIndentWidth
+            // 
+            this.txtIndentWidth.Location = new System.Drawing.Point(189, 217);
+            this.txtIndentWidth.Name = "txtIndentWidth";
+            this.txtIndentWidth.Size = new System.Drawing.Size(36, 29);
+            this.txtIndentWidth.TabIndex = 24;
+            this.txtIndentWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // chkExportIntermediate
+            // 
+            this.chkExportIntermediate.AutoSize = true;
+            this.chkExportIntermediate.BackColor = System.Drawing.Color.Transparent;
+            this.chkExportIntermediate.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkExportIntermediate.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 516);
+            this.chkExportIntermediate.Name = "chkExportIntermediate";
+            this.chkExportIntermediate.Size = new System.Drawing.Size(225, 24);
+            this.chkExportIntermediate.TabIndex = 25;
+            this.chkExportIntermediate.Text = "Export Intermediate Script File";
+            this.chkExportIntermediate.UseVisualStyleBackColor = false;
             // 
             // frmSettings
             // 
@@ -1622,5 +1661,8 @@
         private System.Windows.Forms.CheckBox chkInsertCommentIfLoop;
         private System.Windows.Forms.CheckBox chkGruopingBySubgruop;
         private System.Windows.Forms.CheckBox chkShowIndentLine;
+        private System.Windows.Forms.Label lblIndentWidth;
+        private System.Windows.Forms.TextBox txtIndentWidth;
+        private System.Windows.Forms.CheckBox chkExportIntermediate;
     }
 }
