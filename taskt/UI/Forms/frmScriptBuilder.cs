@@ -1560,6 +1560,8 @@ namespace taskt.UI.Forms
 
             taskt.Core.Theme.UIFont trg;
 
+            int indentWidth = appSettings.ClientSettings.IndentWidth;
+
             if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
             {
                 trg = taskt.Core.Theme.scriptTexts["debug"];
@@ -1591,7 +1593,7 @@ namespace taskt.UI.Forms
             e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
 
             //get indent count
-            var indentPixels = (item.IndentCount * 15);
+            var indentPixels = (item.IndentCount * indentWidth);
 
             //set indented X position
             modifiedBounds.X += indentPixels;
@@ -1606,7 +1608,7 @@ namespace taskt.UI.Forms
                 int i;
                 if (item.IndentCount % 4 == 0)
                 {
-                    offset = 30;
+                    offset = indentWidth * 2;
                     i = item.IndentCount - 2;
                 }
                 else
@@ -1617,11 +1619,11 @@ namespace taskt.UI.Forms
                 int bottomY = modifiedBounds.Y + modifiedBounds.Height;
                 for (i = (item.IndentCount % 4 != 0 ? item.IndentCount - 2 : item.IndentCount); i > 0; i -= 4)
                 {
-                    int x = modifiedBounds.X - (i * 15) + offset;
+                    int x = modifiedBounds.X - (i * indentWidth) + offset;
                     e.Graphics.DrawLine(indentDashLine, x, modifiedBounds.Y, x, bottomY);
                 }
 
-                int baseX = modifiedBounds.X - (item.IndentCount * 15) + 2;
+                int baseX = modifiedBounds.X - (item.IndentCount * indentWidth) + 2;
                 e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
             }
         }
