@@ -121,11 +121,13 @@ namespace taskt.Core.Script
             }
 
             // Convert Intermediate
-            foreach (var cmd in script.Commands)
+            if (engineSettings.ExportIntermediateXML)
             {
-                cmd.ConvertToIntermediate(engineSettings);
+                foreach (var cmd in script.Commands)
+                {
+                    cmd.ConvertToIntermediate(engineSettings);
+                }
             }
-
 
             //output to xml file
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
