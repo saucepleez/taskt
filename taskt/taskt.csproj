@@ -856,6 +856,7 @@
     <None Include="Resources\command-dictionary.png" />
     <None Include="Resources\action-bar-add-variable.png" />
     <None Include="Resources\actionbar-edit.png" />
+    <None Include="Resources\action-bar-config.png" />
     <Content Include="Resources\geckodriver.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

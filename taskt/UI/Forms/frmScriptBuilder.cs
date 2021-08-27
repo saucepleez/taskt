@@ -53,7 +53,7 @@ namespace taskt.UI.Forms
 
         private bool dontSaveFlag = false;
 
-        public EditMode currentScriptEditMode = EditMode.Normal;
+        public CommandEditorState currentScriptEditMode = CommandEditorState.Normal;
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndexInMatchItems = -1;
         private frmScriptBuilder parentBuilder { get; set; }
@@ -62,7 +62,7 @@ namespace taskt.UI.Forms
 
         private Supplement_Forms.frmSearchCommands frmSearch = null;
 
-        public enum EditMode
+        public enum CommandEditorState
         {
             Normal,
             Search,
@@ -676,7 +676,7 @@ namespace taskt.UI.Forms
 
             if (totalMatches == 0)
             {
-                currentScriptEditMode = EditMode.Normal;
+                currentScriptEditMode = CommandEditorState.Normal;
                 reqdIndex = -1;
                 lblTotalResults.Text = "No Matches Found";
                 lblCurrentlyViewing.Hide();
@@ -688,7 +688,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                currentScriptEditMode = EditMode.Search;
+                currentScriptEditMode = CommandEditorState.Search;
                 lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 lblTotalResults.Text = totalMatches + " total results found";
@@ -740,14 +740,14 @@ namespace taskt.UI.Forms
             }
             lstScriptActions.ResumeLayout();
 
-            this.currentScriptEditMode = EditMode.AdvencedSearch;
+            this.currentScriptEditMode = CommandEditorState.AdvencedSearch;
             lstScriptActions.Invalidate();
             return matchedCount;
         }
 
         public void MoveMostNearMatchedLine(bool backToTop)
         {
-            if (this.currentScriptEditMode != EditMode.AdvencedSearch)
+            if (this.currentScriptEditMode != CommandEditorState.AdvencedSearch)
             {
                 return;
             }
@@ -1106,6 +1106,12 @@ namespace taskt.UI.Forms
             
             lstScriptActions.SelectedItems.Clear();
             selectedIndex = -1;
+            lstScriptActions.Invalidate();
+        }
+
+        private void ClearHighlightListViewItem()
+        {
+            this.currentScriptEditMode = CommandEditorState.Normal;
             lstScriptActions.Invalidate();
         }
 
@@ -1549,7 +1555,7 @@ namespace taskt.UI.Forms
             {
                 trg = taskt.Core.Theme.scriptTexts["debug"];
             }
-            else if ((currentScriptEditMode == EditMode.Search) || (currentScriptEditMode == EditMode.AdvencedSearch))
+            else if ((currentScriptEditMode == CommandEditorState.Search) || (currentScriptEditMode == CommandEditorState.AdvencedSearch))
             {
                 if (matchingSearchIndex.Contains(e.ItemIndex))
                 { 
@@ -1934,6 +1940,19 @@ namespace taskt.UI.Forms
             {
                 dialog.ShowDialog();
             }
+        }
+        private void searchThisCommnadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstScriptActions.SelectedIndices.Count > 0)
+            {
+                string keyword = ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
+                AdvancedSearchItemInCommands(keyword, false, false, true, false, false);
+            }
+        }
+
+        private void clearHighlightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearHighlightListViewItem();
         }
         private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
         {
@@ -2761,8 +2780,9 @@ namespace taskt.UI.Forms
         }
         private void clearSearchHighlightsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            this.currentScriptEditMode = EditMode.Normal;
-            lstScriptActions.Invalidate();
+            //this.currentScriptEditMode = CommandEditorState.Normal;
+            //lstScriptActions.Invalidate();
+            ClearHighlightListViewItem();
         }
         #endregion
 
