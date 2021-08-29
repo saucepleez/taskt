@@ -20,6 +20,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Provide a unique instance or way to refer to the stopwatch")]
         [Attributes.PropertyAttributes.SampleUsage("**myStopwatch**, **{{{vStopWatch}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch)]
         public string v_StopwatchName { get; set; }
 
         [XmlAttribute]
