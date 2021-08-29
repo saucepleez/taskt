@@ -109,7 +109,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 }
             }
 
-            if (!(chkSearchTargetIsParameter.Checked || chkSearchTargetIsName.Checked || chkSearchTargetIsComment.Checked || chkSearchTargetIsDisplayText.Checked))
+            if (!(chkSearchTargetIsParameter.Checked || chkSearchTargetIsName.Checked || chkSearchTargetIsComment.Checked || chkSearchTargetIsDisplayText.Checked || chkSearchTargetIsInstance.Checked))
             {
                 using (var frm = new taskt.UI.Forms.Supplemental.frmDialog("No target.", "Search Commands", Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
@@ -119,7 +119,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
 
             this.Enabled = false;
-            int matchNum = parentForm.AdvancedSearchItemInCommands(kwd, chkSearchCaseSensitive.Checked, chkSearchTargetIsParameter.Checked, chkSearchTargetIsName.Checked, chkSearchTargetIsComment.Checked, chkSearchTargetIsDisplayText.Checked);
+            int matchNum = parentForm.AdvancedSearchItemInCommands(kwd, chkSearchCaseSensitive.Checked, chkSearchTargetIsParameter.Checked, chkSearchTargetIsName.Checked, chkSearchTargetIsComment.Checked, chkSearchTargetIsDisplayText.Checked, chkSearchTargetIsInstance.Checked, cmbSearchInstance.Text);
             this.Enabled = true;
 
             parentForm.Activate();
@@ -137,6 +137,19 @@ namespace taskt.UI.Forms.Supplement_Forms
                 e.SuppressKeyPress = true;
                 e.Handled = true;
                 btnSearchSearch_Click(null, null);
+            }
+        }
+
+        private void chkSearchTargetIsInstance_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkSearchTargetIsInstance.Checked)
+            {
+                cmbSearchInstance.Enabled = true;
+                cmbSearchInstance.Focus();
+            }
+            else
+            {
+                cmbSearchInstance.Enabled = false;
             }
         }
         #endregion
@@ -206,8 +219,9 @@ namespace taskt.UI.Forms.Supplement_Forms
             parentForm.Activate();
         }
 
+
         #endregion
 
-
+       
     }
 }

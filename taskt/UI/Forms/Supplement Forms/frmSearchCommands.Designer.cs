@@ -70,6 +70,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.barOpacity = new System.Windows.Forms.TrackBar();
+            this.cmbSearchInstance = new System.Windows.Forms.ComboBox();
+            this.chkSearchTargetIsInstance = new System.Windows.Forms.CheckBox();
             this.baseTableLayout.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.searchTab.SuspendLayout();
@@ -181,9 +183,9 @@ namespace taskt.UI.Forms.Supplement_Forms
             // 
             this.groupBox2.Controls.Add(this.chkSearchBackToTop);
             this.groupBox2.Controls.Add(this.chkSearchCaseSensitive);
-            this.groupBox2.Location = new System.Drawing.Point(254, 88);
+            this.groupBox2.Location = new System.Drawing.Point(348, 140);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(180, 147);
+            this.groupBox2.Size = new System.Drawing.Size(180, 95);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Method";
@@ -212,13 +214,15 @@ namespace taskt.UI.Forms.Supplement_Forms
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkSearchTargetIsInstance);
+            this.groupBox1.Controls.Add(this.cmbSearchInstance);
             this.groupBox1.Controls.Add(this.chkSearchTargetIsDisplayText);
             this.groupBox1.Controls.Add(this.chkSearchTargetIsComment);
             this.groupBox1.Controls.Add(this.chkSearchTargetIsName);
             this.groupBox1.Controls.Add(this.chkSearchTargetIsParameter);
-            this.groupBox1.Location = new System.Drawing.Point(10, 88);
+            this.groupBox1.Location = new System.Drawing.Point(10, 50);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(220, 147);
+            this.groupBox1.Size = new System.Drawing.Size(332, 185);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Target";
@@ -567,6 +571,33 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.barOpacity.Value = 100;
             this.barOpacity.Scroll += new System.EventHandler(this.barOpacity_Scroll);
             // 
+            // cmbSearchInstance
+            // 
+            this.cmbSearchInstance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSearchInstance.FormattingEnabled = true;
+            this.cmbSearchInstance.Items.AddRange(new object[] {
+            "DataBase",
+            "Excel",
+            "IE",
+            "StopWtach",
+            "Web Browser",
+            "Word"});
+            this.cmbSearchInstance.Location = new System.Drawing.Point(150, 150);
+            this.cmbSearchInstance.Name = "cmbSearchInstance";
+            this.cmbSearchInstance.Size = new System.Drawing.Size(173, 29);
+            this.cmbSearchInstance.TabIndex = 5;
+            // 
+            // chkSearchTargetIsInstance
+            // 
+            this.chkSearchTargetIsInstance.AutoSize = true;
+            this.chkSearchTargetIsInstance.Location = new System.Drawing.Point(15, 152);
+            this.chkSearchTargetIsInstance.Name = "chkSearchTargetIsInstance";
+            this.chkSearchTargetIsInstance.Size = new System.Drawing.Size(132, 25);
+            this.chkSearchTargetIsInstance.TabIndex = 4;
+            this.chkSearchTargetIsInstance.Text = "&Instance Name";
+            this.chkSearchTargetIsInstance.UseVisualStyleBackColor = true;
+            this.chkSearchTargetIsInstance.CheckedChanged += new System.EventHandler(this.chkSearchTargetIsInstance_CheckedChanged);
+            // 
             // frmSearchCommands
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -651,5 +682,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private System.Windows.Forms.TextBox txtReplaceReplace;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtReplaceSearch;
+        private System.Windows.Forms.CheckBox chkSearchTargetIsInstance;
+        private System.Windows.Forms.ComboBox cmbSearchInstance;
     }
 }

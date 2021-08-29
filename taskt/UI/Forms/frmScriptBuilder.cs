@@ -723,7 +723,7 @@ namespace taskt.UI.Forms
             this.Cursor = Cursors.Arrow;
         }
 
-        public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText)
+        public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool instanceName, string instanceType)
         {
             matchingSearchIndex.Clear();
             matchingSearchIndex = new List<int>();
@@ -733,10 +733,19 @@ namespace taskt.UI.Forms
             lstScriptActions.SuspendLayout();
             foreach(ListViewItem itm in lstScriptActions.Items)
             {
-                if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText))
+                Core.Automation.Commands.ScriptCommand cmd = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                if (cmd.checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText))
                 {
                     matchedCount++;
                     matchingSearchIndex.Add(itm.Index);
+                }
+                else if (instanceName)
+                {
+                    if (cmd.checkInstanceMatched(keyword, instanceType, caseSensitive))
+                    {
+                        matchedCount++;
+                        matchingSearchIndex.Add(itm.Index);
+                    }
                 }
             }
             lstScriptActions.ResumeLayout();
@@ -829,7 +838,7 @@ namespace taskt.UI.Forms
             if (lstScriptActions.SelectedIndices.Count > 0)
             {
                 string keyword = ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
-                AdvancedSearchItemInCommands(keyword, false, false, true, false, false);
+                AdvancedSearchItemInCommands(keyword, false, false, true, false, false, false, "");
             }
         }
         public int ReplaceSearchInItemCommands(string keyword, bool caseSensitive, string instanceType, bool allProperties, bool instanceName, bool comment)
