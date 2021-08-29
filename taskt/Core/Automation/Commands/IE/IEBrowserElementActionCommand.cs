@@ -24,6 +24,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE)]
         public string v_InstanceName { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter or capture element search parameters")]
