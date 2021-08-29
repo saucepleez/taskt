@@ -66,7 +66,8 @@ namespace taskt.UI.Forms
         {
             Normal,
             Search,
-            AdvencedSearch
+            AdvencedSearch,
+            ReplaceSearch
         }
 
         public frmScriptBuilder()
@@ -830,6 +831,164 @@ namespace taskt.UI.Forms
                 string keyword = ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
                 AdvancedSearchItemInCommands(keyword, false, false, true, false, false);
             }
+        }
+        public int ReplaceSearchInItemCommands(string keyword, bool caseSensitive, string instanceType, bool allProperties, bool instanceName, bool comment)
+        {
+            matchingSearchIndex.Clear();
+            matchingSearchIndex = new List<int>();
+            int matchedCount = 0;
+
+            this.currentIndexInMatchItems = -1;
+            lstScriptActions.SuspendLayout();
+
+            if (allProperties)
+            {
+                foreach(ListViewItem itm in lstScriptActions.Items)
+                {
+                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, true, false, false, false ))
+                    {
+                        matchedCount++;
+                        matchingSearchIndex.Add(itm.Index);
+                    }
+                }
+            }
+            else if (instanceName)
+            {
+                foreach (ListViewItem itm in lstScriptActions.Items)
+                {
+                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkInstanceMatched(keyword, instanceType, caseSensitive))
+                    {
+                        matchedCount++;
+                        matchingSearchIndex.Add(itm.Index);
+                    }
+                }
+            }
+            else if (comment)
+            {
+                foreach (ListViewItem itm in lstScriptActions.Items)
+                {
+                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, false, false, false, true, false))
+                    {
+                        matchedCount++;
+                        matchingSearchIndex.Add(itm.Index);
+                    }
+                }
+            }
+            lstScriptActions.ResumeLayout();
+
+            this.currentScriptEditMode = CommandEditorState.AdvencedSearch;
+            lstScriptActions.Invalidate();
+            return matchedCount;
+        }
+
+        public bool ReplaceInItemCommands(string keyword, string replacedText, bool caseSensitive, bool backToTop, string instanceType, bool allProparties, bool instanceName, bool comment)
+        {
+            int currentIndex = (lstScriptActions.SelectedIndices.Count > 0) ? lstScriptActions.SelectedIndices[0] : 0;
+            int rows = lstScriptActions.Items.Count;
+
+            int loopTimes = (backToTop) ? rows : (rows - currentIndex);
+            int newIndex = -1;
+
+            lstScriptActions.SuspendLayout();
+            if (allProparties)
+            {
+                for (int i = 0; i < loopTimes; i++)
+                {
+                    int trgIdx = (i + currentIndex) % rows;
+                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag).ReplaceAllParameters(keyword, replacedText, caseSensitive))
+                    {
+                        newIndex = trgIdx;
+                        break;
+                    }
+                }
+            }
+            else if (instanceName)
+            {
+                for (int i = 0; i < loopTimes; i++)
+                {
+                    int trgIdx = (i + currentIndex) % rows;
+                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag).ReplaceInstance(keyword, replacedText, instanceType, caseSensitive))
+                    {
+                        newIndex = trgIdx;
+                        break;
+                    }
+                }
+            }
+            else if (comment)
+            {
+                for (int i = 0; i < loopTimes; i++)
+                {
+                    int trgIdx = (i + currentIndex) % rows;
+                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag).ReplaceComment(keyword, replacedText, caseSensitive))
+                    {
+                        newIndex = trgIdx;
+                        break;
+                    }
+                }
+            }
+            lstScriptActions.ResumeLayout();
+
+            if (newIndex >= 0)
+            {
+                ClearSelectedListViewItems();
+                lstScriptActions.Items[newIndex].Selected = true;
+                lstScriptActions.Invalidate();
+                lstScriptActions.EnsureVisible(newIndex);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int ReplaceAllInItemCommands(string keyword, string replacedText, bool caseSensitive, string instanceType, bool allProparties, bool instanceName, bool comment)
+        {
+            int currentIndex = (lstScriptActions.SelectedIndices.Count > 0) ? lstScriptActions.SelectedIndices[0] : 0;
+            int rows = lstScriptActions.Items.Count;
+
+            int replaceCount = 0;
+
+            lstScriptActions.SuspendLayout();
+            if (allProparties)
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[(i + currentIndex) % rows].Tag).ReplaceAllParameters(keyword, replacedText, caseSensitive))
+                    {
+                        replaceCount++;
+                    }
+                }
+            }
+            else if (instanceName)
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[(i + currentIndex) % rows].Tag).ReplaceInstance(keyword, replacedText, instanceType, caseSensitive))
+                    {
+                        replaceCount++;
+                    }
+                }
+            }
+            else if (comment)
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[(i + currentIndex) % rows].Tag).ReplaceComment(keyword, replacedText, caseSensitive))
+                    {
+                        replaceCount++;
+                    }
+                }
+            }
+            lstScriptActions.ResumeLayout();
+
+            // draw
+            if (replaceCount > 0)
+            {
+                lstScriptActions.Invalidate();
+            }
+
+            return replaceCount;
         }
 
         #endregion
@@ -2802,12 +2961,15 @@ namespace taskt.UI.Forms
 
         private void SearchStripMenuItem_Click(object sender, EventArgs e)
         {
+            frmSearch.CurrentMode = Supplement_Forms.frmSearchCommands.SearchReplaceMode.Search;
             frmSearch.Show();
         }
 
         private void ReplaceStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("sorry, work in process ;-)");
+            frmSearch.CurrentMode = Supplement_Forms.frmSearchCommands.SearchReplaceMode.Replace;
+            frmSearch.Show();
+            //MessageBox.Show("sorry, work in process ;-)");
         }
         private void clearSearchHighlightsToolStripMenuItem1_Click(object sender, EventArgs e)
         {

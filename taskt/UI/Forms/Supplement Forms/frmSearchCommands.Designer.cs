@@ -314,6 +314,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.btnReplaceReplaceAll.TabIndex = 7;
             this.btnReplaceReplaceAll.Text = "Replace &All";
             this.btnReplaceReplaceAll.UseVisualStyleBackColor = true;
+            this.btnReplaceReplaceAll.Click += new System.EventHandler(this.btnReplaceReplaceAll_Click);
             // 
             // btnReplaceReplace
             // 
@@ -323,6 +324,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.btnReplaceReplace.TabIndex = 6;
             this.btnReplaceReplace.Text = "&Replace";
             this.btnReplaceReplace.UseVisualStyleBackColor = true;
+            this.btnReplaceReplace.Click += new System.EventHandler(this.btnReplaceReplace_Click);
             // 
             // btnReplaceSearch
             // 
@@ -348,6 +350,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             // chkReplaceBackToTop
             // 
             this.chkReplaceBackToTop.AutoSize = true;
+            this.chkReplaceBackToTop.Checked = true;
+            this.chkReplaceBackToTop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkReplaceBackToTop.Location = new System.Drawing.Point(6, 57);
             this.chkReplaceBackToTop.Name = "chkReplaceBackToTop";
             this.chkReplaceBackToTop.Size = new System.Drawing.Size(108, 25);
@@ -401,7 +405,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.radioTargetIsComment.Name = "radioTargetIsComment";
             this.radioTargetIsComment.Size = new System.Drawing.Size(97, 25);
             this.radioTargetIsComment.TabIndex = 3;
-            this.radioTargetIsComment.TabStop = true;
             this.radioTargetIsComment.Text = "&Comment";
             this.radioTargetIsComment.UseVisualStyleBackColor = true;
             // 
@@ -412,7 +415,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.radioTargetIsInstance.Name = "radioTargetIsInstance";
             this.radioTargetIsInstance.Size = new System.Drawing.Size(131, 25);
             this.radioTargetIsInstance.TabIndex = 1;
-            this.radioTargetIsInstance.TabStop = true;
             this.radioTargetIsInstance.Text = "&Instance Name";
             this.radioTargetIsInstance.UseVisualStyleBackColor = true;
             this.radioTargetIsInstance.CheckedChanged += new System.EventHandler(this.radioTargetIsInstance_CheckedChanged);
@@ -420,6 +422,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             // radioTargetIsAll
             // 
             this.radioTargetIsAll.AutoSize = true;
+            this.radioTargetIsAll.Checked = true;
             this.radioTargetIsAll.Location = new System.Drawing.Point(13, 28);
             this.radioTargetIsAll.Name = "radioTargetIsAll";
             this.radioTargetIsAll.Size = new System.Drawing.Size(213, 25);

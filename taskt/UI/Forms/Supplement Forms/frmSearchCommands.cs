@@ -52,6 +52,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         #region form load, close, activate
         private void frmSearchCommands_Load(object sender, EventArgs e)
         {
+            this.DoubleBuffered = true;
         }
         private void frmSearchCommands_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -164,7 +165,47 @@ namespace taskt.UI.Forms.Supplement_Forms
                     return;
                 }
             }
+            this.Enabled = false;
+            int matchNum = parentForm.ReplaceSearchInItemCommands(kwd, chkReplaceCaseSensitive.Checked, cmbReplaceInstance.Text, radioTargetIsAll.Checked, radioTargetIsInstance.Checked, radioTargetIsComment.Checked);
+            this.Enabled = true;
+
+            parentForm.Activate();
         }
+        private void btnReplaceReplace_Click(object sender, EventArgs e)
+        {
+            string kwd = txtReplaceSearch.Text;
+            if (kwd.Length == 0)
+            {
+                using (var frm = new taskt.UI.Forms.Supplemental.frmDialog("Keyword is empty.", "Search Commands", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                {
+                    frm.ShowDialog();
+                    return;
+                }
+            }
+            this.Enabled = false;
+            bool res = parentForm.ReplaceInItemCommands(kwd, txtReplaceReplace.Text, chkReplaceCaseSensitive.Checked, chkReplaceBackToTop.Checked, cmbReplaceInstance.Text, radioTargetIsAll.Checked, radioTargetIsInstance.Checked, radioTargetIsComment.Checked);
+            this.Enabled = true;
+
+            parentForm.Activate();
+        }
+        private void btnReplaceReplaceAll_Click(object sender, EventArgs e)
+        {
+            string kwd = txtReplaceSearch.Text;
+            if (kwd.Length == 0)
+            {
+                using (var frm = new taskt.UI.Forms.Supplemental.frmDialog("Keyword is empty.", "Search Commands", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                {
+                    frm.ShowDialog();
+                    return;
+                }
+            }
+            this.Enabled = false;
+            parentForm.ReplaceAllInItemCommands(kwd, txtReplaceReplace.Text, chkReplaceCaseSensitive.Checked, cmbReplaceInstance.Text, radioTargetIsAll.Checked, radioTargetIsInstance.Checked, radioTargetIsComment.Checked);
+            this.Enabled = true;
+
+            parentForm.Activate();
+        }
+
         #endregion
 
 

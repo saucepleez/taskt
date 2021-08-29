@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
+using System.Reflection;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -416,8 +417,8 @@ namespace taskt.Core.Automation.Commands
 
         public virtual void convertToIntermediate(Core.EngineSettings settings)
         {
-            var parentProps = this.GetType().GetProperties();
-            foreach (var prop in parentProps)
+            var myPropaties = this.GetType().GetProperties();
+            foreach (var prop in myPropaties)
             {
                 if (prop.Name.StartsWith("v_"))
                 {
@@ -457,8 +458,8 @@ namespace taskt.Core.Automation.Commands
         public void convertToIntermediate(Core.EngineSettings settings, Dictionary<string, string> convertMethods)
         {
             Type settingsType = settings.GetType();
-            var parentProps = this.GetType().GetProperties();
-            foreach (var prop in parentProps)
+            var myPropaties = this.GetType().GetProperties();
+            foreach (var prop in myPropaties)
             {
                 if (prop.Name.StartsWith("v_"))
                 {
@@ -511,8 +512,8 @@ namespace taskt.Core.Automation.Commands
 
         public virtual void convertToRaw(Core.EngineSettings settings)
         {
-            var parentProps = this.GetType().GetProperties();
-            foreach (var prop in parentProps)
+            var myPropaties = this.GetType().GetProperties();
+            foreach (var prop in myPropaties)
             {
                 if (prop.Name.StartsWith("v_"))
                 {
@@ -551,8 +552,8 @@ namespace taskt.Core.Automation.Commands
         public void convertToRaw(Core.EngineSettings settings, Dictionary<string, string> convertMethods)
         {
             Type settingsType = settings.GetType();
-            var parentProps = this.GetType().GetProperties();
-            foreach (var prop in parentProps)
+            var myPropaties = this.GetType().GetProperties();
+            foreach (var prop in myPropaties)
             {
                 if (prop.Name.StartsWith("v_"))
                 {
@@ -666,7 +667,7 @@ namespace taskt.Core.Automation.Commands
             // parameters
             if (checkParameters)
             {
-                var parentProps = this.GetType().GetProperties();
+                
                 // case sensitive function
                 Func<string, string> CaseFunc;
                 if (caseSensitive)
@@ -683,7 +684,8 @@ namespace taskt.Core.Automation.Commands
                         return str.ToLower();
                     };
                 }
-                foreach(var prop in parentProps)
+                var myPropaties = this.GetType().GetProperties();
+                foreach (var prop in myPropaties)
                 {
                     if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
                     {
@@ -728,6 +730,249 @@ namespace taskt.Core.Automation.Commands
 
             this.IsMatched = false;
             return false;
+        }
+
+        public bool checkInstanceMatched(string keyword, string instanceType, bool caseSensitive)
+        {
+            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
+            switch (instanceType.ToLower())
+            {
+                case "database":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
+                    break;
+                case "excel":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
+                    break;
+                case "ie":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
+                    break;
+                case "stopwatch":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
+                    break;
+                case "web browser":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
+                    break;
+                case "word":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
+                    break;
+                case "none":
+                    return false;
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+
+            Func<string, string> convFunc;
+            if (caseSensitive)
+            {
+                convFunc = (trg) =>
+                {
+                    return trg;
+                };
+            }
+            else
+            {
+                keyword = keyword.ToLower();
+                convFunc = (trg) =>
+                {
+                    return trg.ToLower();
+                };
+            }
+          
+            System.Reflection.PropertyInfo[] myPropaties = this.GetType().GetProperties();
+            foreach(System.Reflection.PropertyInfo prop in myPropaties)
+            {
+                var ins = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
+                if ((ins != null) && (ins.instanceType == comparedType))
+                {
+                    var targetValue = prop.GetValue(this);
+                    if ((targetValue != null) && convFunc(targetValue.ToString()).Contains(keyword))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool ReplaceAllParameters(string keyword, string replacedText, bool caseSensitive)
+        {
+            Func<string, string> convFunc;
+            if (caseSensitive)
+            {
+                convFunc = (trg) =>
+                {
+                    return trg;
+                };
+            }
+            else
+            {
+                keyword = keyword.ToLower();
+                convFunc = (trg) =>
+                {
+                    return trg.ToLower();
+                };
+            }
+
+            bool isReplaced = false;
+            var targetProperties = this.GetType().GetProperties().Where(f => (f.Name.StartsWith("v_") && (f.Name != "v_Comment")));
+            foreach(var prop in targetProperties)
+            {
+                var targetValue = prop.GetValue(this);
+                if (targetValue == null)
+                {
+                    continue;
+                }
+                else if (targetValue is string)
+                {
+                    var currentValue = convFunc(targetValue.ToString());
+                    var newValue = currentValue.Replace(keyword, replacedText);
+                    if (currentValue != newValue)
+                    {
+                        prop.SetValue(this, newValue);
+                        isReplaced = true;
+                    }
+                }
+                else if (targetValue is System.Data.DataTable)
+                {
+                    var targetDT = (System.Data.DataTable)targetValue;
+                    var rows = targetDT.Rows.Count;
+                    var cols = targetDT.Columns.Count;
+                    for (int i = 0; i < cols; i++)
+                    {
+                        if (targetDT.Columns[i].ReadOnly)
+                        {
+                            continue;
+                        }
+                        for (int j = 0; j < rows; j++)
+                        {
+                            var currentValue = convFunc(targetDT.Rows[j][i].ToString());
+                            var newValue = currentValue.Replace(keyword, replacedText);
+                            if (currentValue != newValue)
+                            {
+                                prop.SetValue(this, newValue);
+                                isReplaced = true;
+                            }
+                        }
+                    }
+                }
+            }
+            return isReplaced;
+        }
+
+        public bool ReplaceInstance(string keyword, string replacedText, string instanceType, bool caseSensitive)
+        {
+            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
+            switch (instanceType.ToLower())
+            {
+                case "database":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
+                    break;
+                case "excel":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
+                    break;
+                case "ie":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
+                    break;
+                case "stopwatch":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
+                    break;
+                case "web browser":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
+                    break;
+                case "word":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
+                    break;
+                case "none":
+                    return false;
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+
+            Func<string, string> convFunc;
+            if (caseSensitive)
+            {
+                convFunc = (trg) =>
+                {
+                    return trg;
+                };
+            }
+            else
+            {
+                keyword = keyword.ToLower();
+                convFunc = (trg) =>
+                {
+                    return trg.ToLower();
+                };
+            }
+
+            bool isReplaced = false;
+
+            var myPropaties = this.GetType().GetProperties();
+            foreach(var prop in myPropaties)
+            {
+                var attr = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
+                if (attr == null)
+                {
+                    continue;
+                }
+                else if (attr.instanceType == comparedType)
+                {
+                    var currentValue = convFunc(prop.GetValue(this).ToString());
+                    var newValue = currentValue.Replace(keyword, replacedText);
+                    if (currentValue != newValue)
+                    {
+                        prop.SetValue(this, newValue);
+                        isReplaced = true;
+                    }
+                }
+            }
+
+            return isReplaced;
+        }
+
+        public bool ReplaceComment(string keyword, string replacedText, bool caseSensitive)
+        {
+            Func<string, string> convFunc;
+            if (caseSensitive)
+            {
+                convFunc = (trg) =>
+                {
+                    return trg;
+                };
+            }
+            else
+            {
+                keyword = keyword.ToLower();
+                convFunc = (trg) =>
+                {
+                    return trg.ToLower();
+                };
+            }
+
+            var commentProp = this.GetProperty("v_Comment");
+            var commentValue = commentProp.GetValue(this);
+            if (commentValue != null)
+            {
+                var currentComment = convFunc(commentValue.ToString());
+                var newComment = currentComment.Replace(keyword, replacedText);
+                if (currentComment != newComment)
+                {
+                    commentProp.SetValue(this, newComment);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }
