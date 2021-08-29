@@ -273,4 +273,39 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.remarks = remarks;
         }
     }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyInstanceType : System.Attribute
+    {
+        public InstanceType instanceType = InstanceType.none;
+
+        public PropertyInstanceType(InstanceType type)
+        {
+            this.instanceType = type;
+        }
+
+        public enum InstanceType
+        {
+            none,
+            DataBase,
+            Excel,
+            IE,
+            WebBrowser,
+            StopWatch,
+            Word
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyParameterPorpose : System.Attribute
+    {
+        public ParameterPorpose porpose = ParameterPorpose.unknown;
+        public PropertyParameterPorpose(ParameterPorpose porpose)
+        {
+            this.porpose = porpose;
+        }
+        public enum ParameterPorpose
+        {
+            unknown,
+            OutputVariableName
+        }
+    }
 }
