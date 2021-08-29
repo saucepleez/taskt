@@ -26,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
