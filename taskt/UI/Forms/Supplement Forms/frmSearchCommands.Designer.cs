@@ -33,7 +33,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.baseTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
-            this.searchTabl = new taskt.UI.CustomControls.UITabControl();
+            this.searchTab = new taskt.UI.CustomControls.UITabControl();
             this.tabSearch = new System.Windows.Forms.TabPage();
             this.btnSearchNext = new System.Windows.Forms.Button();
             this.btnSearchSearch = new System.Windows.Forms.Button();
@@ -48,7 +48,21 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.label9 = new System.Windows.Forms.Label();
             this.txtSearchKeyword = new System.Windows.Forms.TextBox();
             this.tabReplace = new System.Windows.Forms.TabPage();
+            this.btnReplaceReplaceAll = new System.Windows.Forms.Button();
+            this.btnReplaceReplace = new System.Windows.Forms.Button();
+            this.btnReplaceSearch = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chkReplaceBackToTop = new System.Windows.Forms.CheckBox();
+            this.chkReplaceCaseSensitive = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cmbReplaceInstance = new System.Windows.Forms.ComboBox();
+            this.radioTargetIsComment = new System.Windows.Forms.RadioButton();
+            this.radioTargetIsInstance = new System.Windows.Forms.RadioButton();
+            this.radioTargetIsAll = new System.Windows.Forms.RadioButton();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtReplaceReplace = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.txtReplaceSearch = new System.Windows.Forms.TextBox();
             this.footarTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.footerButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.btnClose = new taskt.UI.CustomControls.UIPictureButton();
@@ -58,11 +72,13 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.barOpacity = new System.Windows.Forms.TrackBar();
             this.baseTableLayout.SuspendLayout();
             this.pnlHeader.SuspendLayout();
-            this.searchTabl.SuspendLayout();
+            this.searchTab.SuspendLayout();
             this.tabSearch.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabReplace.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.footarTableLayout.SuspendLayout();
             this.footerButtonsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
@@ -77,7 +93,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.baseTableLayout.ColumnCount = 1;
             this.baseTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.baseTableLayout.Controls.Add(this.pnlHeader, 0, 0);
-            this.baseTableLayout.Controls.Add(this.searchTabl, 0, 1);
+            this.baseTableLayout.Controls.Add(this.searchTab, 0, 1);
             this.baseTableLayout.Controls.Add(this.footarTableLayout, 0, 2);
             this.baseTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.baseTableLayout.Location = new System.Drawing.Point(0, 0);
@@ -108,21 +124,21 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.lblHeader.Location = new System.Drawing.Point(6, 6);
             this.lblHeader.Margin = new System.Windows.Forms.Padding(0);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(271, 45);
+            this.lblHeader.Size = new System.Drawing.Size(385, 45);
             this.lblHeader.TabIndex = 1;
-            this.lblHeader.Text = "Search Commands";
+            this.lblHeader.Text = "Search Replace Commands";
             // 
-            // searchTabl
+            // searchTab
             // 
-            this.searchTabl.Controls.Add(this.tabSearch);
-            this.searchTabl.Controls.Add(this.tabReplace);
-            this.searchTabl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchTabl.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.searchTabl.Location = new System.Drawing.Point(3, 68);
-            this.searchTabl.Name = "searchTabl";
-            this.searchTabl.SelectedIndex = 0;
-            this.searchTabl.Size = new System.Drawing.Size(599, 275);
-            this.searchTabl.TabIndex = 1;
+            this.searchTab.Controls.Add(this.tabSearch);
+            this.searchTab.Controls.Add(this.tabReplace);
+            this.searchTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchTab.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.searchTab.Location = new System.Drawing.Point(3, 68);
+            this.searchTab.Name = "searchTab";
+            this.searchTab.SelectedIndex = 0;
+            this.searchTab.Size = new System.Drawing.Size(599, 275);
+            this.searchTab.TabIndex = 1;
             // 
             // tabSearch
             // 
@@ -143,7 +159,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             // 
             // btnSearchNext
             // 
-            this.btnSearchNext.Location = new System.Drawing.Point(480, 75);
+            this.btnSearchNext.Location = new System.Drawing.Point(480, 64);
             this.btnSearchNext.Name = "btnSearchNext";
             this.btnSearchNext.Size = new System.Drawing.Size(93, 43);
             this.btnSearchNext.TabIndex = 3;
@@ -189,9 +205,9 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.chkSearchCaseSensitive.AutoSize = true;
             this.chkSearchCaseSensitive.Location = new System.Drawing.Point(15, 28);
             this.chkSearchCaseSensitive.Name = "chkSearchCaseSensitive";
-            this.chkSearchCaseSensitive.Size = new System.Drawing.Size(152, 25);
+            this.chkSearchCaseSensitive.Size = new System.Drawing.Size(150, 25);
             this.chkSearchCaseSensitive.TabIndex = 0;
-            this.chkSearchCaseSensitive.Text = "Case Sensitive (&A)";
+            this.chkSearchCaseSensitive.Text = "Case Sensitive (&E)";
             this.chkSearchCaseSensitive.UseVisualStyleBackColor = true;
             // 
             // groupBox1
@@ -273,7 +289,15 @@ namespace taskt.UI.Forms.Supplement_Forms
             // 
             // tabReplace
             // 
+            this.tabReplace.Controls.Add(this.btnReplaceReplaceAll);
+            this.tabReplace.Controls.Add(this.btnReplaceReplace);
+            this.tabReplace.Controls.Add(this.btnReplaceSearch);
+            this.tabReplace.Controls.Add(this.groupBox4);
+            this.tabReplace.Controls.Add(this.groupBox3);
+            this.tabReplace.Controls.Add(this.label3);
+            this.tabReplace.Controls.Add(this.txtReplaceReplace);
             this.tabReplace.Controls.Add(this.label2);
+            this.tabReplace.Controls.Add(this.txtReplaceSearch);
             this.tabReplace.Location = new System.Drawing.Point(4, 30);
             this.tabReplace.Name = "tabReplace";
             this.tabReplace.Padding = new System.Windows.Forms.Padding(3);
@@ -282,14 +306,165 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.tabReplace.Text = "Replace";
             this.tabReplace.UseVisualStyleBackColor = true;
             // 
+            // btnReplaceReplaceAll
+            // 
+            this.btnReplaceReplaceAll.Location = new System.Drawing.Point(480, 116);
+            this.btnReplaceReplaceAll.Name = "btnReplaceReplaceAll";
+            this.btnReplaceReplaceAll.Size = new System.Drawing.Size(105, 43);
+            this.btnReplaceReplaceAll.TabIndex = 7;
+            this.btnReplaceReplaceAll.Text = "Replace &All";
+            this.btnReplaceReplaceAll.UseVisualStyleBackColor = true;
+            // 
+            // btnReplaceReplace
+            // 
+            this.btnReplaceReplace.Location = new System.Drawing.Point(480, 64);
+            this.btnReplaceReplace.Name = "btnReplaceReplace";
+            this.btnReplaceReplace.Size = new System.Drawing.Size(93, 43);
+            this.btnReplaceReplace.TabIndex = 6;
+            this.btnReplaceReplace.Text = "&Replace";
+            this.btnReplaceReplace.UseVisualStyleBackColor = true;
+            // 
+            // btnReplaceSearch
+            // 
+            this.btnReplaceSearch.Location = new System.Drawing.Point(480, 15);
+            this.btnReplaceSearch.Name = "btnReplaceSearch";
+            this.btnReplaceSearch.Size = new System.Drawing.Size(93, 43);
+            this.btnReplaceSearch.TabIndex = 5;
+            this.btnReplaceSearch.Text = "&Search";
+            this.btnReplaceSearch.UseVisualStyleBackColor = true;
+            this.btnReplaceSearch.Click += new System.EventHandler(this.btnReplaceSearch_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.chkReplaceBackToTop);
+            this.groupBox4.Controls.Add(this.chkReplaceCaseSensitive);
+            this.groupBox4.Location = new System.Drawing.Point(355, 147);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(169, 88);
+            this.groupBox4.TabIndex = 0;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Method";
+            // 
+            // chkReplaceBackToTop
+            // 
+            this.chkReplaceBackToTop.AutoSize = true;
+            this.chkReplaceBackToTop.Location = new System.Drawing.Point(6, 57);
+            this.chkReplaceBackToTop.Name = "chkReplaceBackToTop";
+            this.chkReplaceBackToTop.Size = new System.Drawing.Size(108, 25);
+            this.chkReplaceBackToTop.TabIndex = 1;
+            this.chkReplaceBackToTop.Text = "&Back To Top";
+            this.chkReplaceBackToTop.UseVisualStyleBackColor = true;
+            // 
+            // chkReplaceCaseSensitive
+            // 
+            this.chkReplaceCaseSensitive.AutoSize = true;
+            this.chkReplaceCaseSensitive.Location = new System.Drawing.Point(6, 29);
+            this.chkReplaceCaseSensitive.Name = "chkReplaceCaseSensitive";
+            this.chkReplaceCaseSensitive.Size = new System.Drawing.Size(150, 25);
+            this.chkReplaceCaseSensitive.TabIndex = 0;
+            this.chkReplaceCaseSensitive.Text = "Case Sensitive (&E)";
+            this.chkReplaceCaseSensitive.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cmbReplaceInstance);
+            this.groupBox3.Controls.Add(this.radioTargetIsComment);
+            this.groupBox3.Controls.Add(this.radioTargetIsInstance);
+            this.groupBox3.Controls.Add(this.radioTargetIsAll);
+            this.groupBox3.Location = new System.Drawing.Point(10, 88);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(339, 147);
+            this.groupBox3.TabIndex = 8;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Target";
+            // 
+            // cmbReplaceInstance
+            // 
+            this.cmbReplaceInstance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbReplaceInstance.FormattingEnabled = true;
+            this.cmbReplaceInstance.Items.AddRange(new object[] {
+            "DataBase",
+            "Excel",
+            "IE",
+            "StopWtach",
+            "Web Browser",
+            "Word"});
+            this.cmbReplaceInstance.Location = new System.Drawing.Point(150, 59);
+            this.cmbReplaceInstance.Name = "cmbReplaceInstance";
+            this.cmbReplaceInstance.Size = new System.Drawing.Size(173, 29);
+            this.cmbReplaceInstance.TabIndex = 2;
+            // 
+            // radioTargetIsComment
+            // 
+            this.radioTargetIsComment.AutoSize = true;
+            this.radioTargetIsComment.Location = new System.Drawing.Point(13, 90);
+            this.radioTargetIsComment.Name = "radioTargetIsComment";
+            this.radioTargetIsComment.Size = new System.Drawing.Size(97, 25);
+            this.radioTargetIsComment.TabIndex = 3;
+            this.radioTargetIsComment.TabStop = true;
+            this.radioTargetIsComment.Text = "&Comment";
+            this.radioTargetIsComment.UseVisualStyleBackColor = true;
+            // 
+            // radioTargetIsInstance
+            // 
+            this.radioTargetIsInstance.AutoSize = true;
+            this.radioTargetIsInstance.Location = new System.Drawing.Point(13, 59);
+            this.radioTargetIsInstance.Name = "radioTargetIsInstance";
+            this.radioTargetIsInstance.Size = new System.Drawing.Size(131, 25);
+            this.radioTargetIsInstance.TabIndex = 1;
+            this.radioTargetIsInstance.TabStop = true;
+            this.radioTargetIsInstance.Text = "&Instance Name";
+            this.radioTargetIsInstance.UseVisualStyleBackColor = true;
+            this.radioTargetIsInstance.CheckedChanged += new System.EventHandler(this.radioTargetIsInstance_CheckedChanged);
+            // 
+            // radioTargetIsAll
+            // 
+            this.radioTargetIsAll.AutoSize = true;
+            this.radioTargetIsAll.Location = new System.Drawing.Point(13, 28);
+            this.radioTargetIsAll.Name = "radioTargetIsAll";
+            this.radioTargetIsAll.Size = new System.Drawing.Size(213, 25);
+            this.radioTargetIsAll.TabIndex = 0;
+            this.radioTargetIsAll.TabStop = true;
+            this.radioTargetIsAll.Text = "All &Parameters / Properties";
+            this.radioTargetIsAll.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label3.Location = new System.Drawing.Point(6, 53);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 21);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "&Replace Text :";
+            // 
+            // txtReplaceReplace
+            // 
+            this.txtReplaceReplace.Location = new System.Drawing.Point(148, 50);
+            this.txtReplaceReplace.Name = "txtReplaceReplace";
+            this.txtReplaceReplace.Size = new System.Drawing.Size(306, 29);
+            this.txtReplaceReplace.TabIndex = 4;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(121, 95);
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label2.Location = new System.Drawing.Point(6, 18);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(177, 21);
+            this.label2.Size = new System.Drawing.Size(136, 21);
             this.label2.TabIndex = 0;
-            this.label2.Text = "sorry work in process :-)";
+            this.label2.Text = "Search &Keyword :";
+            // 
+            // txtReplaceSearch
+            // 
+            this.txtReplaceSearch.Location = new System.Drawing.Point(148, 15);
+            this.txtReplaceSearch.Name = "txtReplaceSearch";
+            this.txtReplaceSearch.Size = new System.Drawing.Size(306, 29);
+            this.txtReplaceSearch.TabIndex = 1;
             // 
             // footarTableLayout
             // 
@@ -407,7 +582,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.baseTableLayout.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
-            this.searchTabl.ResumeLayout(false);
+            this.searchTab.ResumeLayout(false);
             this.tabSearch.ResumeLayout(false);
             this.tabSearch.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -416,6 +591,10 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.groupBox1.PerformLayout();
             this.tabReplace.ResumeLayout(false);
             this.tabReplace.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.footarTableLayout.ResumeLayout(false);
             this.footerButtonsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
@@ -432,7 +611,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private System.Windows.Forms.TableLayoutPanel baseTableLayout;
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblHeader;
-        private CustomControls.UITabControl searchTabl;
+        private CustomControls.UITabControl searchTab;
         private System.Windows.Forms.TabPage tabSearch;
         private System.Windows.Forms.TabPage tabReplace;
         private System.Windows.Forms.TextBox txtSearchKeyword;
@@ -454,6 +633,20 @@ namespace taskt.UI.Forms.Supplement_Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar barOpacity;
         private System.Windows.Forms.CheckBox chkSearchTargetIsDisplayText;
+        private System.Windows.Forms.Button btnReplaceReplaceAll;
+        private System.Windows.Forms.Button btnReplaceReplace;
+        private System.Windows.Forms.Button btnReplaceSearch;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox chkReplaceBackToTop;
+        private System.Windows.Forms.CheckBox chkReplaceCaseSensitive;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox cmbReplaceInstance;
+        private System.Windows.Forms.RadioButton radioTargetIsComment;
+        private System.Windows.Forms.RadioButton radioTargetIsInstance;
+        private System.Windows.Forms.RadioButton radioTargetIsAll;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtReplaceReplace;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtReplaceSearch;
     }
 }

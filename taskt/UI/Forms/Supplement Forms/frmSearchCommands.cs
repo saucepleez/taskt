@@ -14,6 +14,35 @@ namespace taskt.UI.Forms.Supplement_Forms
     {
         public taskt.UI.Forms.frmScriptBuilder parentForm = null;
 
+        private SearchReplaceMode _currentMode = SearchReplaceMode.Search;
+        public SearchReplaceMode CurrentMode
+        {
+            set
+            {
+                switch (value)
+                {
+                    case SearchReplaceMode.Search:
+                        searchTab.SelectedIndex = 0;
+                        txtSearchKeyword.Focus();
+                        break;
+                    case SearchReplaceMode.Replace:
+                        searchTab.SelectedIndex = 1;
+                        txtReplaceSearch.Focus();
+                        break;
+                }
+            }
+            get
+            {
+                return this._currentMode;
+            }
+        }
+
+        public enum SearchReplaceMode
+        {
+            Search,
+            Replace
+        }
+
         public frmSearchCommands()
         {
             InitializeComponent();
@@ -23,7 +52,6 @@ namespace taskt.UI.Forms.Supplement_Forms
         #region form load, close, activate
         private void frmSearchCommands_Load(object sender, EventArgs e)
         {
-
         }
         private void frmSearchCommands_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -67,6 +95,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         #endregion
 
+        #region search
         private void btnSearchSearch_Click(object sender, EventArgs e)
         {
             string kwd = txtSearchKeyword.Text;
@@ -109,5 +138,35 @@ namespace taskt.UI.Forms.Supplement_Forms
                 btnSearchSearch_Click(null, null);
             }
         }
+        #endregion
+
+        #region replace
+        private void radioTargetIsInstance_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioTargetIsInstance.Checked)
+            {
+                cmbReplaceInstance.Enabled = true;
+                cmbReplaceInstance.Focus();
+            }
+            else
+            {
+                cmbReplaceInstance.Enabled = false;
+            }
+        }
+        private void btnReplaceSearch_Click(object sender, EventArgs e)
+        {
+            string kwd = txtReplaceSearch.Text;
+            if (kwd.Length == 0)
+            {
+                using (var frm = new taskt.UI.Forms.Supplemental.frmDialog("Keyword is empty.", "Search Commands", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                {
+                    frm.ShowDialog();
+                    return;
+                }
+            }
+        }
+        #endregion
+
+
     }
 }
