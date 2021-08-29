@@ -885,7 +885,7 @@ namespace taskt.UI.Forms
             }
             lstScriptActions.ResumeLayout();
 
-            this.currentScriptEditMode = CommandEditorState.AdvencedSearch;
+            this.currentScriptEditMode = CommandEditorState.ReplaceSearch;
             lstScriptActions.Invalidate();
             return matchedCount;
         }
@@ -1734,7 +1734,7 @@ namespace taskt.UI.Forms
             {
                 trg = taskt.Core.Theme.scriptTexts["debug"];
             }
-            else if ((currentScriptEditMode == CommandEditorState.Search) || (currentScriptEditMode == CommandEditorState.AdvencedSearch))
+            else if ((currentScriptEditMode == CommandEditorState.Search) || (currentScriptEditMode == CommandEditorState.AdvencedSearch) || (currentScriptEditMode == CommandEditorState.ReplaceSearch))
             {
                 if (matchingSearchIndex.Contains(e.ItemIndex))
                 { 
