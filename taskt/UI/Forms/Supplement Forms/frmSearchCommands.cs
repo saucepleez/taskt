@@ -146,6 +146,10 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 cmbSearchInstance.Enabled = true;
                 cmbSearchInstance.Focus();
+                if (cmbSearchInstance.Text == "")
+                {
+                    cmbSearchInstance.Text = "Excel";
+                }
             }
             else
             {
@@ -161,6 +165,10 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 cmbReplaceInstance.Enabled = true;
                 cmbReplaceInstance.Focus();
+                if (cmbReplaceInstance.Text == "")
+                {
+                    cmbReplaceInstance.Text = "Excel";
+                }
             }
             else
             {
