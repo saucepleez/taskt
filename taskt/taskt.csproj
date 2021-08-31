@@ -447,6 +447,12 @@
     <Compile Include="UI\Forms\frmAttendedMode.Designer.cs">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\frmSample.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmSample.Designer.cs">
+      <DependentUpon>frmSample.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\frmScriptInformations.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -637,6 +643,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmAttendedMode.resx">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmSample.resx">
+      <DependentUpon>frmSample.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>
@@ -934,6 +943,7 @@
   <ItemGroup>
     <Folder Include="External Dependencies\" />
     <Folder Include="Sample Scripts\" />
+    <Folder Include="Samples\" />
     <Folder Include="UI\Utilities\" />
   </ItemGroup>
   <ItemGroup>
@@ -952,6 +962,9 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>robocopy "$(ProjectDir)Samples" "$(ProjectDir)$(OutDir)Samples" *.xml /xo /E /S</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
