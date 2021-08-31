@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="6d9324c7-6b42-48cc-8f7b-711b0c96763f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Open &quot;Rpa Challange&quot; and input first name" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ff5db608-6309-403b-ac56-64516ccf83ec" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Please install Google Chrome before run this script." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCreateCommand" CommandID="a8abd782-05b1-4a5b-88bf-9bcf2a362252" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Create Browser" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_EngineType="Chrome" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandID="09b10890-d4e4-4e8f-bc30-4f9692526963" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Go RPA Challenge" CommandEnabled="true" v_InstanceName="RPABrowser" v_URL="http://rpachallenge.com/" v_UseHttps="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserElementActionCommand" CommandID="57ad411b-66bf-4aa0-9dde-a40e3d13bf5f" CommandName="SeleniumBrowserElementActionCommand" IsCommented="false" SelectionName="Element Action" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Wait &quot;FirstName&quot; is shown" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//input[@ng-reflect-name=&quot;labelFirstName&quot;]">
+        <v_SeleniumElementAction>Wait For Element To Exist</v_SeleniumElementAction>
+        <v_WebActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebActionParamTable083121.101500" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="WebActionParamTable083121.101500">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <WebActionParamTable083121.101500 diffgr:id="WebActionParamTable083121.1015001" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Timeout (Seconds)</Parameter_x0020_Name>
+                <Parameter_x0020_Value>30</Parameter_x0020_Value>
+              </WebActionParamTable083121.101500>
+            </DocumentElement>
+            <diffgr:before>
+              <WebActionParamTable083121.101500 diffgr:id="WebActionParamTable083121.1015001" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Timeout (Seconds)</Parameter_x0020_Name>
+                <Parameter_x0020_Value>30</Parameter_x0020_Value>
+              </WebActionParamTable083121.101500>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_WebActionParameterTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserElementActionCommand" CommandID="c6d3d880-281f-4672-87aa-2bbf87989b46" CommandName="SeleniumBrowserElementActionCommand" IsCommented="false" SelectionName="Element Action" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="input first name" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//input[@ng-reflect-name=&quot;labelFirstName&quot;]">
+        <v_SeleniumElementAction>Set Text</v_SeleniumElementAction>
+        <v_WebActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="WebActionParamTable083121.101532">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebActionParamTable083121.101532" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="WebActionParamTable083121.101532" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015321" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Text To Set</Parameter_x0020_Name>
+                <Parameter_x0020_Value>My name is Taskt!</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015322" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Clear Element Before Setting Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>No</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015323" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Encrypted Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Not Encrypted</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015324" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Optional - Click to Encrypt 'Text To Set'</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Encrypt Text</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+            </DocumentElement>
+            <diffgr:before>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015321" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Text To Set</Parameter_x0020_Name>
+                <Parameter_x0020_Value>My name is Taskt!</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015322" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Clear Element Before Setting Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>No</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015323" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Encrypted Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Not Encrypted</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+              <WebActionParamTable083121.101532 diffgr:id="WebActionParamTable083121.1015324" msdata:rowOrder="3">
+                <Parameter_x0020_Name>Optional - Click to Encrypt 'Text To Set'</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Encrypt Text</Parameter_x0020_Value>
+              </WebActionParamTable083121.101532>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_WebActionParameterTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="0d2a9af7-49cc-49f5-b39a-e03dfc3bf9df" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="wait 5 sec." CommandEnabled="true" v_PauseLength="5000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserElementActionCommand" CommandID="48fd8902-4616-48af-a9d0-6feb839cfc64" CommandName="SeleniumBrowserElementActionCommand" IsCommented="false" SelectionName="Element Action" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Click &quot;Submit&quot;" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//input[@value=&quot;Submit&quot;]">
+        <v_SeleniumElementAction>Invoke Click</v_SeleniumElementAction>
+        <v_WebActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebActionParamTable083121.101620" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="WebActionParamTable083121.101620">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1" />
+        </v_WebActionParameterTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="0d2a9af7-49cc-49f5-b39a-e03dfc3bf9df" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="wait 5 sec." CommandEnabled="true" v_PauseLength="5000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCloseCommand" CommandID="e29e12d0-5cab-4947-bc4f-16fb148a2f54" CommandName="SeleniumBrowserCloseCommand" IsCommented="false" SelectionName="Close Browser" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.23</TasktVersion>
+    <Author />
+    <LastRunTime>2021-08-31T22:17:53.6678142+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>
