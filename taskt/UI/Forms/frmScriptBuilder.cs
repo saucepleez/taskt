@@ -2134,6 +2134,10 @@ namespace taskt.UI.Forms
         {
             ClearHighlightListViewItem();
         }
+        private void helpThisCommandToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
         private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
         {
             using (frmScriptInformations frm = new frmScriptInformations())
@@ -2594,6 +2598,19 @@ namespace taskt.UI.Forms
             lstScriptActions.Invalidate();
         }
 
+        public bool ImportSampleScript(string filePath)
+        {
+            Import(filePath);
+            return true;
+        }
+
+        public bool OpenSampleScript(string filePath)
+        {
+            CheckAndSaveScriptIfForget();
+            OpenFile(filePath);
+            this.ScriptFilePath = null;
+            return true;
+        }
         #endregion
 
         #region New script file
@@ -2923,6 +2940,13 @@ namespace taskt.UI.Forms
         private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BeginImportProcess();
+        }
+        private void sampleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var fm = new Forms.frmSample(this))
+            {
+                fm.ShowDialog();
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

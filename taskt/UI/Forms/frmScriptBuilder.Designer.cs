@@ -38,6 +38,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileActionsSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileActionsSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,6 +144,7 @@
             this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
             this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.helpThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -235,6 +237,7 @@
             this.openToolStripMenuItem,
             this.fileActionsSep1,
             this.importFileToolStripMenuItem,
+            this.sampleToolStripMenuItem,
             this.fileActionsSep2,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
@@ -282,6 +285,14 @@
             this.importFileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.importFileToolStripMenuItem.Text = "Import File";
             this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
+            // 
+            // sampleToolStripMenuItem
+            // 
+            this.sampleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.sampleToolStripMenuItem.Name = "sampleToolStripMenuItem";
+            this.sampleToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.sampleToolStripMenuItem.Text = "Sample/Templete (&M)";
+            this.sampleToolStripMenuItem.Click += new System.EventHandler(this.sampleToolStripMenuItem_Click);
             // 
             // fileActionsSep2
             // 
@@ -1354,14 +1365,15 @@
             this.lstContextStripSep2,
             this.moveToParentToolStripMenuItem,
             this.lstContextStripSep3,
-            this.viewCodeToolStripMenuItem,
             this.editThisCodeToolStripMenuItem,
             this.searchThisCommnadToolStripMenuItem,
             this.clearHighlightToolStripMenuItem,
+            this.helpThisCommandToolStripMenuItem1,
+            this.viewCodeToolStripMenuItem,
             this.lstContextStripSep4,
             this.showScriptInfoMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 340);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 386);
             // 
             // enableSelectedCodeToolStripMenuItem
             // 
@@ -1502,6 +1514,14 @@
             this.notifyTray.Text = "taskt, free and open-source process automation";
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
+            // 
+            // helpThisCommandToolStripMenuItem1
+            // 
+            this.helpThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.command_web;
+            this.helpThisCommandToolStripMenuItem1.Name = "helpThisCommandToolStripMenuItem1";
+            this.helpThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(344, 24);
+            this.helpThisCommandToolStripMenuItem1.Text = "&Help This Command (Web)";
+            this.helpThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.helpThisCommandToolStripMenuItem1_Click);
             // 
             // frmScriptBuilder
             // 
@@ -1676,6 +1696,8 @@
         private System.Windows.Forms.ToolStripMenuItem clearSearchHighlightsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem searchThisCommnadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearHighlightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sampleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpThisCommandToolStripMenuItem1;
     }
 }
 
