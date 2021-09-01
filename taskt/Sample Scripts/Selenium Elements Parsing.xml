@@ -2,25 +2,25 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Selenium Example with Multi-Element Support" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="b762547e-d453-4e0e-a675-42a9f8ba3a7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Selenium Example with Multi-Element Support" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserCreateCommand" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Create Browser" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_InstanceTracking="Forget Instance" v_BrowserWindowOption="Maximize" />
+      <ScriptCommand xsi:type="SeleniumBrowserCreateCommand" CommandID="d985afb2-c476-42b0-9030-e2eaf461e7e9" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Create Browser" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="rpaBrowser" v_InstanceTracking="Forget Instance" v_BrowserWindowOption="Maximize" v_EngineType="Chrome" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Navigate to URL" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="54cf7914-4e09-4c2b-9e04-26c26d22ae42" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Navigate to URL" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_URL="https://wiki.taskt.net/" />
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandID="eca52c80-bae2-4c1f-8002-8fcfc2f214c1" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="rpaBrowser" v_URL="https://wiki.taskt.net/" v_UseHttps="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Find Elements and Apply To Variable for Processing" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="145f64b6-aece-4d84-a2c8-824a71fe1360" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Find Elements and Apply To Variable for Processing" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="In this example, we will find and process h1 tags" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d6573f7c-5747-4545-9dd7-9d603437e89b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="In this example, we will find and process h1 tags" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserElementActionCommand" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Element Action" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_SeleniumSearchType="Find Elements By Tag Name" v_SeleniumSearchParameter="h1">
+      <ScriptCommand xsi:type="SeleniumBrowserElementActionCommand" CommandID="f3b3fdb1-dc4d-4be2-bc79-12cbdd927aa8" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Element Action" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="rpaBrowser" v_SeleniumSearchType="Find Elements By Tag Name" v_SeleniumSearchParameter="h1">
         <v_SeleniumElementAction>Get Matching Elements</v_SeleniumElementAction>
         <v_WebActionParameterTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
@@ -42,122 +42,101 @@
           </xs:schema>
           <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
             <DocumentElement>
-              <WebAcPionPara51Table101918.045135 diffgr:id="WebAcPionPara51Table101918.0451351" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+              <WebAcPionPara51Table101918.045135 diffgr:id="WebAcPionPara51Table101918.0451351" msdata:rowOrder="0" diffgr:hasChanges="modified">
                 <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
                 <Parameter_x0020_Value>vElements</Parameter_x0020_Value>
               </WebAcPionPara51Table101918.045135>
             </DocumentElement>
+            <diffgr:before>
+              <WebAcPionPara51Table101918.045135 diffgr:id="WebAcPionPara51Table101918.0451351" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>vElements</Parameter_x0020_Value>
+              </WebAcPionPara51Table101918.045135>
+            </diffgr:before>
           </diffgr:diffgram>
         </v_WebActionParameterTable>
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Loop List vElements which contains Element Data" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e3789a9c-2681-4f29-bb8b-04b6667160a6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Loop List vElements which contains Element Data" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="BeginListLoopCommand" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="vElements" />
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="f8111159-1338-43eb-acb3-6aa3fafdfc59" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="⦃vElements⦄" />
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Show Full Complex Variable WARNING: SLOW TO PARSE" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="cfcc3bdd-8120-43e4-838d-a5e5fdec4127" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Show Full Complex Variable WARNING: SLOW TO PARSE" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="true" SelectionName="Show Message" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vElements]" v_AutoCloseAfter="0" />
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="a6cf0103-b374-4038-9c04-a32dcaab305b" CommandName="MessageBoxCommand" IsCommented="true" SelectionName="Show Message" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vElements]" v_AutoCloseAfter="0" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" v_Comment="To call a complex variable property use the pattern [VariableName =&gt; $.Property]" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="890c19b9-2e8e-4847-bbc7-4cc1bf5d275f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" v_Comment="To call a complex variable property use the pattern [VariableName =&gt; $.Property]" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" v_Comment="To call a complex variable use the pattern [VariableName =&gt; $.PropertyName]" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="7b6e113a-7001-47cf-8d37-06b1ce954eba" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" v_Comment="To call a complex variable use the pattern [VariableName =&gt; $.PropertyName]" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The text of the element is '[vElements =&gt; $.Text]'" v_AutoCloseAfter="0" />
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="8c0c3f65-acaa-4bc3-9254-faceaf36d7be" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The text of the element is '⦃vElements =&gt; $.Text⦄'" v_AutoCloseAfter="0" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Test to see if a value was found" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="7c062946-fffc-4b32-9aa8-9cd7419b0ff4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Test to see if a value was found" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Has Value">
+        <ScriptCommand xsi:type="BeginIfCommand" CommandID="1c608b5a-88e1-4223-899a-4f442029eeb2" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Has Value">
           <v_IfActionParameterTable>
             <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="I9AcPionPara55Table101918.085551">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                    <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
               <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9AcPionPara55Table101918.085551" msdata:UseCurrentLocale="true">
                 <xs:complexType>
                   <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="I9AcPionPara55Table101918.085551">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
-                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
+                    <xs:element ref="I9AcPionPara55Table101918.085551" />
                   </xs:choice>
                 </xs:complexType>
               </xs:element>
             </xs:schema>
             <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
               <DocumentElement>
-                <I9AcPionPara55Table101918.085551 diffgr:id="I9AcPionPara55Table101918.0855511" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <I9AcPionPara55Table101918.085551 diffgr:id="I9AcPionPara55Table101918.0855511" msdata:rowOrder="0" diffgr:hasChanges="modified">
                   <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
-                  <Parameter_x0020_Value>[vElements =&gt;$.Text]</Parameter_x0020_Value>
+                  <Parameter_x0020_Value>⦃vElements =&gt;$.Text⦄</Parameter_x0020_Value>
                 </I9AcPionPara55Table101918.085551>
               </DocumentElement>
+              <diffgr:before>
+                <I9AcPionPara55Table101918.085551 diffgr:id="I9AcPionPara55Table101918.0855511" msdata:rowOrder="0">
+                  <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>{vElements =&gt;$.Text}</Parameter_x0020_Value>
+                </I9AcPionPara55Table101918.085551>
+              </diffgr:before>
             </diffgr:diffgram>
           </v_IfActionParameterTable>
         </ScriptCommand>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Element has Value" v_AutoCloseAfter="0" />
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f745cff6-5d39-463e-b981-5b04f5f703fe" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Element has Value" v_AutoCloseAfter="0" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="EndIfCommand" CommandID="dece8e47-b8b3-479e-aa05-d100d245f44e" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The size of the element is '[vElements =&gt; $.Size]'" v_AutoCloseAfter="0" />
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="1d055a77-5ee8-4713-8f54-f35ccd42ed26" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The size of the element is '⦃vElements =&gt; $.Size⦄'" v_AutoCloseAfter="0" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Example for how to call nested property" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="9595895f-436a-4b4e-9172-502b6d4f9400" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Example for how to call nested property" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The approximate coordinate location of the element is at '[vElements =&gt; $.Coordinates.LocationInViewport]'. Lets move the mouse to that location!" v_AutoCloseAfter="0" />
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="07036edb-6381-4a16-b602-44798578b814" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The approximate coordinate location of the element is at '⦃vElements =&gt; $.Coordinates.LocationInViewport⦄'. Lets move the mouse to that location!" v_AutoCloseAfter="0" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="22" PauseBeforeExeucution="false" v_Comment="Extract Coordinates From Element" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="7c4dbbdc-a09c-499a-891c-825724d5cbbe" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="22" PauseBeforeExeucution="false" v_Comment="Extract Coordinates From Element" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="TextExtractorCommand" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="[vElements =&gt; $.Coordinates.LocationInViewport]" v_TextExtractionType="Extract All Before Text" v_applyToVariableName="vXLoc">
-          <v_TextExtractionTable>
-            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara39Table101918.073919" msdata:UseCurrentLocale="true">
-                <xs:complexType>
-                  <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="TexPExPracPorPara39Table101918.073919">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
-                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:choice>
-                </xs:complexType>
-              </xs:element>
-            </xs:schema>
-            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
-              <DocumentElement>
-                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0" diffgr:hasChanges="inserted">
-                  <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
-                  <Parameter_x0020_Value>,</Parameter_x0020_Value>
-                </TexPExPracPorPara39Table101918.073919>
-                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1" diffgr:hasChanges="inserted">
-                  <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
-                  <Parameter_x0020_Value>0</Parameter_x0020_Value>
-                </TexPExPracPorPara39Table101918.073919>
-              </DocumentElement>
-            </diffgr:diffgram>
-          </v_TextExtractionTable>
-        </ScriptCommand>
-      </AdditionalScriptCommands>
-      <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="TextExtractorCommand" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="[vElements =&gt; $.Coordinates.LocationInViewport]" v_TextExtractionType="Extract All After Text" v_applyToVariableName="vYLoc">
+        <ScriptCommand xsi:type="TextExtractorCommand" CommandID="637ce5a3-1915-41c8-a0b8-6f12babe460b" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vElements =&gt; $.Coordinates.LocationInViewport⦄" v_TextExtractionType="Extract All Before Text" v_applyToVariableName="vXLoc">
           <v_TextExtractionTable>
             <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
               <xs:element name="TexPExPracPorPara39Table101918.073919">
@@ -178,33 +157,102 @@
             </xs:schema>
             <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
               <DocumentElement>
-                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0" diffgr:hasChanges="inserted">
-                  <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
-                  <Parameter_x0020_Value>, </Parameter_x0020_Value>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                  <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>,</Parameter_x0020_Value>
                 </TexPExPracPorPara39Table101918.073919>
-                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1" diffgr:hasChanges="modified">
                   <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
                   <Parameter_x0020_Value>0</Parameter_x0020_Value>
                 </TexPExPracPorPara39Table101918.073919>
               </DocumentElement>
+              <diffgr:before>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0">
+                  <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>,</Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1">
+                  <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>0</Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+              </diffgr:before>
             </diffgr:diffgram>
           </v_TextExtractionTable>
         </ScriptCommand>
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="25" PauseBeforeExeucution="false" v_Comment="Move Mouse to Coordinates" CommandEnabled="true" />
+        <ScriptCommand xsi:type="TextExtractorCommand" CommandID="185a498a-7697-40c3-a6a0-0d44844d10b1" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vElements =&gt; $.Coordinates.LocationInViewport⦄" v_TextExtractionType="Extract All After Text" v_applyToVariableName="vYLoc">
+          <v_TextExtractionTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="TexPExPracPorPara39Table101918.073919">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                    <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara39Table101918.073919" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="TexPExPracPorPara39Table101918.073919" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                  <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>, </Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                  <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>0</Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+              </DocumentElement>
+              <diffgr:before>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739191" msdata:rowOrder="0">
+                  <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>, </Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+                <TexPExPracPorPara39Table101918.073919 diffgr:id="TexPExPracPorPara39Table101918.0739192" msdata:rowOrder="1">
+                  <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>0</Parameter_x0020_Value>
+                </TexPExPracPorPara39Table101918.073919>
+              </diffgr:before>
+            </diffgr:diffgram>
+          </v_TextExtractionTable>
+        </ScriptCommand>
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="26" PauseBeforeExeucution="false" v_Comment="+50 and + 130 offsets due to difference in DOM vs On-Screen (Nav Bar, etc)" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="27727af8-20b8-440e-81cf-a6688e19f558" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="25" PauseBeforeExeucution="false" v_Comment="Move Mouse to Coordinates" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="SendMouseMoveCommand" CommandName="SendMouseMoveCommand" IsCommented="false" SelectionName="Send Mouse Move" DefaultPause="250" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" v_XMousePosition="[vXLoc] + 50" v_YMousePosition="[vYLoc] + 130" v_MouseClick="None" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="03281aae-7ad7-4b59-a54e-a0ff505ae962" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="26" PauseBeforeExeucution="false" v_Comment="+50 and + 130 offsets due to difference in DOM vs On-Screen (Nav Bar, etc)" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" />
+        <ScriptCommand xsi:type="SendMouseMoveCommand" CommandID="21afea1d-5f59-4690-9ffd-7bad79e3c6bf" CommandName="SendMouseMoveCommand" IsCommented="false" SelectionName="Send Mouse Move" DefaultPause="250" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" v_XMousePosition="⦃vXLoc⦄ + 50" v_YMousePosition="⦃vYLoc⦄ + 130" v_MouseClick="None" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="5fdd3b96-8471-49cc-a193-b2ba7ca2369f" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" />
       </AdditionalScriptCommands>
     </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="ce2ee729-0d6c-43bf-9dcf-eb9613b6c984" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="29" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Finished. Close Broser now." v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCloseCommand" CommandID="ef80a78e-7099-4fab-af9a-98720f192b28" CommandName="SeleniumBrowserCloseCommand" IsCommented="false" SelectionName="Close Browser" DefaultPause="0" LineNumber="30" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="rpaBrowser" />
+    </ScriptAction>
   </Commands>
+  <Info>
+    <TasktVersion>3.5.0.24</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-01T21:02:13.9595942+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
   <Variables>
     <ScriptVariable>
       <VariableName>vElements</VariableName>
