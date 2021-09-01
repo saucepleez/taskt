@@ -2609,6 +2609,7 @@ namespace taskt.UI.Forms
             CheckAndSaveScriptIfForget();
             OpenFile(filePath);
             this.ScriptFilePath = null;
+            ChangeSaveState(true);
             return true;
         }
         #endregion
