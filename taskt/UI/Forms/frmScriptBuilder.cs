@@ -2163,6 +2163,10 @@ namespace taskt.UI.Forms
                 ChangeSaveState(true);
             }
         }
+        private void variableManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showVariableManager();
+        }
         #endregion
 
         #endregion
