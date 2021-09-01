@@ -45,7 +45,7 @@ namespace taskt.UI.Forms
                 string[] absParts = absPath.Split('\\');
                 if (absParts[0] == oldFolder)
                 {
-                    TreeNode newNode = new TreeNode(absParts[1]);
+                    TreeNode newNode = new TreeNode(convertFileNameToTreeNode(absParts[1]));
                     parentGroup.Nodes.Add(newNode);
                 }
                 else
@@ -56,7 +56,7 @@ namespace taskt.UI.Forms
                     }
                     oldFolder = absParts[0];
                     parentGroup = new TreeNode(absParts[0]);
-                    TreeNode newNode = new TreeNode(absParts[1]);
+                    TreeNode newNode = new TreeNode(convertFileNameToTreeNode(absParts[1]));
                     parentGroup.Nodes.Add(newNode);
                 }
             }
@@ -106,6 +106,14 @@ namespace taskt.UI.Forms
         #endregion
 
         #region Open/Import sample
+        private string convertFileNameToTreeNode(string filaName)
+        {
+            return System.IO.Path.GetFileNameWithoutExtension(filaName).Replace("_", " ");
+        }
+        private string convertTreeNodeToFileName(string treeText)
+        {
+            return treeText.Replace(" ", "_") + ".xml";
+        }
         private string getSelectedScriptPath()
         {
             if (tvSamples.SelectedNode.Level != 1)
@@ -114,7 +122,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                return samplePath + "\\" + tvSamples.SelectedNode.Parent.Text + "\\" + tvSamples.SelectedNode.Text;
+                return samplePath + "\\" + tvSamples.SelectedNode.Parent.Text + "\\" + convertTreeNodeToFileName(tvSamples.SelectedNode.Text);
             }
         }
         private void openSampleScriptProcess()
