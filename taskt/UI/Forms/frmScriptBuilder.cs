@@ -485,6 +485,12 @@ namespace taskt.UI.Forms
         {
             System.Diagnostics.Process.Start(Core.MyURLs.WikiURL);
         }
+        private void showThisCommandHelp(Core.Automation.Commands.ScriptCommand command)
+        {
+            string page = command.SelectionName.ToLower().Replace(" ", "-") + "-command.md";
+            string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-");
+            System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
+        }
         #endregion
 
 
@@ -1930,6 +1936,13 @@ namespace taskt.UI.Forms
                 // highlight this command
                 HighlightAllCurrentSelectedCommand();
             }
+            else if (e.KeyCode == Keys.F1)
+            {
+                if (lstScriptActions.SelectedItems.Count > 0)
+                {
+                    showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
+                }
+            }
         }
         private void lstScriptActions_MouseClick(object sender, MouseEventArgs e)
         {
@@ -2136,7 +2149,10 @@ namespace taskt.UI.Forms
         }
         private void helpThisCommandToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
+            if (lstScriptActions.SelectedItems.Count > 0)
+            {
+                showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
+            }
         }
         private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
         {

@@ -137,14 +137,14 @@
             this.lstContextStripSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep3 = new System.Windows.Forms.ToolStripSeparator();
-            this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editThisCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchThisCommnadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearHighlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
             this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
-            this.helpThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1458,13 +1458,6 @@
             this.lstContextStripSep3.Name = "lstContextStripSep3";
             this.lstContextStripSep3.Size = new System.Drawing.Size(341, 6);
             // 
-            // viewCodeToolStripMenuItem
-            // 
-            this.viewCodeToolStripMenuItem.Name = "viewCodeToolStripMenuItem";
-            this.viewCodeToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
-            this.viewCodeToolStripMenuItem.Text = "View Code (&I)";
-            this.viewCodeToolStripMenuItem.Click += new System.EventHandler(this.viewCodeToolStripMenuItem_Click);
-            // 
             // editThisCodeToolStripMenuItem
             // 
             this.editThisCodeToolStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
@@ -1492,6 +1485,22 @@
             this.clearHighlightToolStripMenuItem.Text = "Clear Highlight (&L)";
             this.clearHighlightToolStripMenuItem.Click += new System.EventHandler(this.clearHighlightToolStripMenuItem_Click);
             // 
+            // helpThisCommandToolStripMenuItem1
+            // 
+            this.helpThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.command_web;
+            this.helpThisCommandToolStripMenuItem1.Name = "helpThisCommandToolStripMenuItem1";
+            this.helpThisCommandToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(344, 24);
+            this.helpThisCommandToolStripMenuItem1.Text = "&Help This Command (Web)";
+            this.helpThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.helpThisCommandToolStripMenuItem1_Click);
+            // 
+            // viewCodeToolStripMenuItem
+            // 
+            this.viewCodeToolStripMenuItem.Name = "viewCodeToolStripMenuItem";
+            this.viewCodeToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.viewCodeToolStripMenuItem.Text = "View Code (&I)";
+            this.viewCodeToolStripMenuItem.Click += new System.EventHandler(this.viewCodeToolStripMenuItem_Click);
+            // 
             // lstContextStripSep4
             // 
             this.lstContextStripSep4.Name = "lstContextStripSep4";
@@ -1514,14 +1523,6 @@
             this.notifyTray.Text = "taskt, free and open-source process automation";
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
-            // 
-            // helpThisCommandToolStripMenuItem1
-            // 
-            this.helpThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.command_web;
-            this.helpThisCommandToolStripMenuItem1.Name = "helpThisCommandToolStripMenuItem1";
-            this.helpThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(344, 24);
-            this.helpThisCommandToolStripMenuItem1.Text = "&Help This Command (Web)";
-            this.helpThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.helpThisCommandToolStripMenuItem1_Click);
             // 
             // frmScriptBuilder
             // 
