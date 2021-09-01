@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f64f2dc9-b844-417b-b817-e495552c21c3" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Text Extraction Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e51d1bdc-32bf-4fe7-92a3-4e28c8f68f43" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set Variable &quot;vText&quot; to 'This is an amazing sentence!'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="7ff2d035-5b42-4068-9aa1-fa42944fea16" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_Input="This is an amazing sentence!" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4ea2aea5-6a6d-42a0-a654-4312b6208aa0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Extract everything after first &quot;is&quot; occurence" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TextExtractorCommand" CommandID="f2cad2e1-34bd-4a99-9dca-c683340e99f7" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vText⦄" v_TextExtractionType="Extract All After Text" v_applyToVariableName="vExtractionResult">
+        <v_TextExtractionTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="TexPExPracPorPara20Table092018.092041">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara20Table092018.092041" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="TexPExPracPorPara20Table092018.092041" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </DocumentElement>
+            <diffgr:before>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_TextExtractionTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="c965b586-65ad-4332-8c2c-2ceb5775b808" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vExtractionResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0f6a759f-9189-4249-9b3a-469f300bf691" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Extract everything after skipping 1 &quot;is&quot; occurence" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="29f302f7-deb3-4c8a-9e94-b309a0fb70f9" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vSkipOccurences" v_Input="1" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TextExtractorCommand" CommandID="d6c9ea7e-0ab5-40b5-9ea3-c7b41729ad14" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vText⦄" v_TextExtractionType="Extract All After Text" v_applyToVariableName="vExtractionResult">
+        <v_TextExtractionTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="TexPExPracPorPara20Table092018.092041">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara20Table092018.092041" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="TexPExPracPorPara20Table092018.092041" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vSkipOccurences⦄</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </DocumentElement>
+            <diffgr:before>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vSkipOccurences}</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_TextExtractionTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="63647429-8e00-4b58-a708-3a98895499c6" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vExtractionResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="68089962-d941-49dc-a465-455bc901ac3a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Extract everything before the word 'sentence'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TextExtractorCommand" CommandID="f0e3c0d5-7717-4ace-a605-a30f33c40060" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vText⦄" v_TextExtractionType="Extract All Before Text" v_applyToVariableName="vExtractionResult">
+        <v_TextExtractionTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="TexPExPracPorPara20Table092018.092041">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara20Table092018.092041" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="TexPExPracPorPara20Table092018.092041" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>sentence</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </DocumentElement>
+            <diffgr:before>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>sentence</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_TextExtractionTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="18061de6-4a86-4fef-8972-651aaf5365d1" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vExtractionResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e5c542c3-2fa3-4630-b7b9-555e897246f2" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Extract everything between 'This and '!'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="TextExtractorCommand" CommandID="139f50b7-dfe3-4fef-ac13-0c6fd5933812" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vText⦄" v_TextExtractionType="Extract All Between Text" v_applyToVariableName="vExtractionResult">
+        <v_TextExtractionTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="TexPExPracPorPara20Table092018.092041">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TexPExPracPorPara20Table092018.092041" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="TexPExPracPorPara20Table092018.092041" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>This</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>!</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920413" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </DocumentElement>
+            <diffgr:before>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920411" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Leading Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>This</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920412" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Trailing Text</Parameter_x0020_Name>
+                <Parameter_x0020_Value>!</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+              <TexPExPracPorPara20Table092018.092041 diffgr:id="TexPExPracPorPara20Table092018.0920413" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Skip Past Occurences</Parameter_x0020_Name>
+                <Parameter_x0020_Value>0</Parameter_x0020_Value>
+              </TexPExPracPorPara20Table092018.092041>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_TextExtractionTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="115bc658-6081-45ad-a2a9-be895a86f178" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vExtractionResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.24</TasktVersion>
+    <Author />
+    <LastRunTime>2021-08-31T23:38:23.245415+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vExtractionResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vSkipOccurences</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2bc67d74-8bfa-4591-a8bd-101d3bf6a122" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Set Variable Text 'New York,Florida,California'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="c228e173-b76a-43b4-ac00-4c1b000fc151" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPlacesToVisit" v_Input="New York, Florida, California" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ea26984b-24c0-4bc2-870f-dd1dd954591d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Perform split and apply to variable" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StringSplitCommand" CommandID="4d806754-3eda-45fd-9007-60309bc38428" CommandName="StringSplitCommand" IsCommented="false" SelectionName="Split" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vPlacesToVisit⦄" v_splitCharacter="," v_applyConvertToUserVariableName="vParsedList" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8f6900cb-e818-430e-bbad-50c3f9dba92f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="loop each item that was split 'New York' -&gt; 'Florida' -&gt; 'California'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="8a859387-3495-4e08-ae95-e788bae6cbc8" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="⦃vParsedList⦄" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="b5ce2201-5d7c-40dc-b256-523d4c3efc41" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Items in this section will run within the loop" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="b80ff7b6-7807-4b0e-8137-55b8da1994fc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="show output to user" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="bd2f8881-3d52-4dec-ad06-1e68f02a30af" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="I want to visit ⦃vParsedList⦄!" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="363895bd-394a-4184-8d06-8cd3f0428ac2" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.24</TasktVersion>
+    <Author />
+    <LastRunTime>2021-08-31T23:45:08.4936115+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vParsedList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vPlacesToVisit</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
