@@ -2,18 +2,18 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Exit Loop On Condition Test" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1b9493eb-2cda-489a-b679-f6a584ffc313" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Exit Loop On Condition Test" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="The loop should exit once the number variable beocmes &gt;= 2" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="9c0dc5b2-6587-46f9-b746-6e25ae628e3d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="The loop should exit once the number variable beocmes &gt;= 2" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="3" />
+      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandID="4559518c-ca0b-409d-aa32-d47a0de1e587" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="3" v_LoopStart="0" />
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="[vNumber]+1" />
+        <ScriptCommand xsi:type="VariableCommand" CommandID="bfaa374e-1ce4-46f2-99e5-f635702e00cc" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="⦃vNumber⦄+1" v_ReplaceInputVariables="Yes" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <ScriptCommand xsi:type="BeginIfCommand" CommandID="4a3a4c3a-086c-4e0a-a37c-dd8bb97193b6" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
           <v_IfActionParameterTable>
             <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
               <xs:element name="I6AcPionPara16Table100218.101610">
@@ -34,79 +34,101 @@
             </xs:schema>
             <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
               <DocumentElement>
-                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016101" msdata:rowOrder="0" diffgr:hasChanges="inserted">
+                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016101" msdata:rowOrder="0" diffgr:hasChanges="modified">
                   <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
-                  <Parameter_x0020_Value>[vNumber]</Parameter_x0020_Value>
+                  <Parameter_x0020_Value>⦃vNumber⦄</Parameter_x0020_Value>
                 </I6AcPionPara16Table100218.101610>
-                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016102" msdata:rowOrder="1" diffgr:hasChanges="inserted">
+                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016102" msdata:rowOrder="1" diffgr:hasChanges="modified">
                   <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
                   <Parameter_x0020_Value>is greater than or equal to</Parameter_x0020_Value>
                 </I6AcPionPara16Table100218.101610>
-                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016103" msdata:rowOrder="2" diffgr:hasChanges="inserted">
+                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016103" msdata:rowOrder="2" diffgr:hasChanges="modified">
                   <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
                   <Parameter_x0020_Value>2</Parameter_x0020_Value>
                 </I6AcPionPara16Table100218.101610>
               </DocumentElement>
+              <diffgr:before>
+                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016101" msdata:rowOrder="0">
+                  <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>{vNumber}</Parameter_x0020_Value>
+                </I6AcPionPara16Table100218.101610>
+                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016102" msdata:rowOrder="1">
+                  <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>is greater than or equal to</Parameter_x0020_Value>
+                </I6AcPionPara16Table100218.101610>
+                <I6AcPionPara16Table100218.101610 diffgr:id="I6AcPionPara16Table100218.1016103" msdata:rowOrder="2">
+                  <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>2</Parameter_x0020_Value>
+                </I6AcPionPara16Table100218.101610>
+              </diffgr:before>
             </diffgr:diffgram>
           </v_IfActionParameterTable>
         </ScriptCommand>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Exit Loop" CommandEnabled="true" />
+          <ScriptCommand xsi:type="CommentCommand" CommandID="49f8d5e1-0d8c-4fe3-8384-24e91259ae3d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Exit Loop" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Exiting Loop because condition has been met" v_AutoCloseAfter="0" />
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="0c0ddef4-d82e-4a0d-abae-9d8241d9b83c" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Exiting Loop because condition has been met" v_AutoCloseAfter="0" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="ExitLoopCommand" CommandName="ExitLoopCommand" IsCommented="false" SelectionName="Exit Loop" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="ExitLoopCommand" CommandID="14d45fd8-dbd1-4f1c-9ffc-239a3de4a266" CommandName="ExitLoopCommand" IsCommented="false" SelectionName="Exit Loop" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="ElseCommand" CommandID="841b5cfb-4f8f-4a75-ba1a-e82d0bc6d89c" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Show Message" CommandEnabled="true" />
+          <ScriptCommand xsi:type="CommentCommand" CommandID="8384d634-0d4c-4323-880d-ebb261fe8b2b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Show Message" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The number is not &gt;= 2, it is [vNumber]" v_AutoCloseAfter="0" />
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="a2078c02-2ccf-4e1e-857c-fdc16dfb7225" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The number is not &gt;= 2, it is ⦃vNumber⦄" v_AutoCloseAfter="0" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="EndIfCommand" CommandID="48a95c5d-06f7-4d5b-9fe9-5bd608f43202" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" />
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="6c10b4aa-22b9-4a0b-9771-ad302a78e265" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" />
       </AdditionalScriptCommands>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Exit Loop (Nested) Test" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="64c145d0-a660-475a-b5af-59b2714155d5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Exit Loop (Nested) Test" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" v_Comment="The 'Loop 2 Times' should exit therefore only running once but it should loop a total of 3 times." CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="183bd0cf-6e1c-4ee4-992b-dd52ccdd50d7" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" v_Comment="The 'Loop 2 Times' should exit therefore only running once but it should loop a total of 3 times." CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="0" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="f778fbb8-cebb-4dca-b9df-e7413522c677" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="0" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="3" />
+      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandID="9433adf9-8a66-4804-b9f7-13b7c89fd066" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="3" v_LoopStart="0" />
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="2" />
+        <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandID="2dd2e8ea-5cab-41a7-b3c8-7122f9d05496" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="2" v_LoopStart="0" />
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="[vNumber]+1" />
+          <ScriptCommand xsi:type="VariableCommand" CommandID="54809dd1-e908-48b2-bc7e-aca2bf59138d" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="⦃vNumber⦄+1" v_ReplaceInputVariables="Yes" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The number is currently [vNumber]." v_AutoCloseAfter="0" />
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d0ff41ee-c129-4d3c-bf93-5318f4258269" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The number is currently ⦃vNumber⦄." v_AutoCloseAfter="0" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="ExitLoopCommand" CommandName="ExitLoopCommand" IsCommented="false" SelectionName="Exit Loop" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="ExitLoopCommand" CommandID="7a19fd35-1d11-4e7f-9362-32d26a89b5a6" CommandName="ExitLoopCommand" IsCommented="false" SelectionName="Exit Loop" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="EndLoopCommand" CommandID="005f6282-c2f6-4f48-8ded-22d469db1a1b" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" />
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="560e3ac9-edf0-442b-a1c7-6f1e79f3d086" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" />
       </AdditionalScriptCommands>
     </ScriptAction>
   </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-02T20:57:06.857017+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
   <Variables>
     <ScriptVariable>
       <VariableName>vNumber</VariableName>
