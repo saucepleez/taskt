@@ -132,13 +132,7 @@ namespace taskt.UI.Forms
             if (targetFile != "")
             {
                 parentForm.OpenSampleScript(targetFile);
-                using (var fm = new UI.Forms.Supplemental.frmDialog(fileName + " is opened.\nClose this window ?", "Open script", Supplemental.frmDialog.DialogType.YesNo, 0))
-                {
-                    if (fm.ShowDialog() == DialogResult.OK)
-                    {
-                        this.Close();
-                    }
-                }
+                this.Close();
             }
         }
         private void importSampleScriptProcess()
@@ -148,13 +142,7 @@ namespace taskt.UI.Forms
             if (targetFile != "")
             {
                 parentForm.ImportSampleScript(targetFile);
-                using (var fm = new UI.Forms.Supplemental.frmDialog(fileName + " is imported.\nClose this window ?", "Open script", Supplemental.frmDialog.DialogType.YesNo, 0))
-                {
-                    if (fm.ShowDialog() == DialogResult.OK)
-                    {
-                        this.Close();
-                    }
-                }
+                this.Close();
             }
         }
         #endregion
