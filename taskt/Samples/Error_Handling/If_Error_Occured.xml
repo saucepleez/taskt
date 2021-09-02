@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="16c44d11-ad5a-4f62-ac1e-dc213945701b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Sample Error Handling" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="53acf397-81f3-4c26-9a98-5839f156951a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set Behavior when error occurred." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ErrorHandlingCommand" CommandID="d896da5b-7bc0-491a-8feb-f2a09ca62acc" CommandName="ErrorHandlingCommand" IsCommented="false" SelectionName="Error Handling" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ErrorHandlingAction="Continue Processing" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="23ea73ae-40f3-4c80-bd1b-e095ae8b84a9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Activate an unknown window, causing error" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ActivateWindowCommand" CommandID="0fa6bdde-cf53-4541-84f0-20dbed46d857" CommandName="ActivateWindowCommand" IsCommented="false" SelectionName="Activate Window" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="This window name does not exists." CommandEnabled="true" v_WindowName=":-)SampleWindow(-:" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="5de1800f-b07d-4a5f-bed2-98262d421558" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Error Occured">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I8AcPionPara34Table100718.053410">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I8AcPionPara34Table100718.053410" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I8AcPionPara34Table100718.053410" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I8AcPionPara34Table100718.053410 diffgr:id="I8AcPionPara34Table100718.0534101" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Line Number</Parameter_x0020_Name>
+                <Parameter_x0020_Value>5</Parameter_x0020_Value>
+              </I8AcPionPara34Table100718.053410>
+            </DocumentElement>
+            <diffgr:before>
+              <I8AcPionPara34Table100718.053410 diffgr:id="I8AcPionPara34Table100718.0534101" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Line Number</Parameter_x0020_Name>
+                <Parameter_x0020_Value>5</Parameter_x0020_Value>
+              </I8AcPionPara34Table100718.053410>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="553dbb86-798e-4d07-a88b-592fdf754a21" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Error Handling Variables" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="7d6aec2f-fdf1-4f0f-814a-8f06ff2c9703" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Error Occured at Line: ⦃Error.Line⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4ebf50bc-24ee-42bb-b667-887cce794956" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The Error Message was: ⦃Error.Message⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="19911e31-578d-456e-950b-4a3bae1eb29a" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Stack Trace: ⦃Error.StackTrace⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="a84d2e41-5c95-4d6c-b2a7-e4cb3ef2f1ff" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="3624c7a7-848a-421a-baa9-14ce4c9c3d4a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Else Condition Supported" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="75998e61-397b-4f53-9550-e4672e751a9c" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Error Did Not Occur" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="f69f27b1-9800-416d-b5a4-6ca22970da05" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-02T20:17:32.4623025+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>
