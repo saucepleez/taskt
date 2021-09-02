@@ -60,7 +60,9 @@ namespace taskt.UI.Forms
                     parentGroup.Nodes.Add(newNode);
                 }
             }
+            tvSamples.BeginUpdate();
             tvSamples.Nodes.Add(parentGroup);
+            tvSamples.EndUpdate();
             //tvSamples.ExpandAll();
         }
 
