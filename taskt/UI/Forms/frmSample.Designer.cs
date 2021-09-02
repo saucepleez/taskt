@@ -114,17 +114,17 @@ namespace taskt.UI.Forms
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Transparent;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnCancel.DisplayText = "Cancel";
+            this.btnCancel.DisplayText = "Close";
             this.btnCancel.DisplayTextBrush = System.Drawing.Color.White;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.btnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.btnCancel.IsMouseOver = false;
-            this.btnCancel.Location = new System.Drawing.Point(111, 3);
+            this.btnCancel.Location = new System.Drawing.Point(130, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(48, 48);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.TabStop = false;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Close";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnImport
