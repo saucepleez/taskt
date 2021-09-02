@@ -376,7 +376,6 @@
             // CutScriptStripMenuItem
             // 
             this.CutScriptStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.CutScriptStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.CutScriptStripMenuItem.Name = "CutScriptStripMenuItem";
             this.CutScriptStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.CutScriptStripMenuItem.Size = new System.Drawing.Size(196, 22);
@@ -386,7 +385,6 @@
             // CopyStripMenuItem
             // 
             this.CopyStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.CopyStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.CopyStripMenuItem.Name = "CopyStripMenuItem";
             this.CopyStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.CopyStripMenuItem.Size = new System.Drawing.Size(196, 22);
@@ -396,7 +394,6 @@
             // PasteStripMenuItem
             // 
             this.PasteStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.PasteStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.PasteStripMenuItem.Name = "PasteStripMenuItem";
             this.PasteStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.PasteStripMenuItem.Size = new System.Drawing.Size(196, 22);
@@ -1379,7 +1376,7 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 440);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 418);
             // 
             // editThisCodeToolStripMenuItem
             // 
