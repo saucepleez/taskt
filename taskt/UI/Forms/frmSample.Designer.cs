@@ -95,6 +95,7 @@ namespace taskt.UI.Forms
             this.tvSamples.Name = "tvSamples";
             this.tvSamples.Size = new System.Drawing.Size(591, 241);
             this.tvSamples.TabIndex = 0;
+            this.tvSamples.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvSamples_NodeMouseClick);
             this.tvSamples.DoubleClick += new System.EventHandler(this.tvSamples_DoubleClick);
             this.tvSamples.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvSamples_MouseClick);
             // 

@@ -89,6 +89,14 @@ namespace taskt.UI.Forms
                 tvContextMenuStrip.Show(Cursor.Position);
             }
         }
+
+        private void tvSamples_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                tvSamples.SelectedNode = e.Node;
+            }
+        }
         #endregion
 
         #region footer buttons
@@ -159,5 +167,6 @@ namespace taskt.UI.Forms
             importSampleScriptProcess();
         }
         #endregion
+
     }
 }
