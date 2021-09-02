@@ -2341,8 +2341,12 @@ namespace taskt.UI.Forms
                     scriptInfo = new Core.Script.ScriptInformation();
                 }
 
+                lstScriptActions.BeginUpdate();
+
                 //populate commands
                 PopulateExecutionCommands(deserializedScript.Commands);
+
+                lstScriptActions.EndUpdate();
 
                 // check indent
                 IndentListViewItems();
@@ -2402,6 +2406,8 @@ namespace taskt.UI.Forms
                 var fileName = new System.IO.FileInfo(filePath).Name;
                 var dateTimeNow = DateTime.Now.ToString();
 
+                lstScriptActions.BeginUpdate();
+
                 //comment
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
 
@@ -2418,6 +2424,7 @@ namespace taskt.UI.Forms
                 //comment
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
 
+                lstScriptActions.EndUpdate();
 
                 ChangeSaveState(true);
 
