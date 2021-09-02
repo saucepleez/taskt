@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7da77d54-bbb5-41c4-892a-b0ac37d210e9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Excel Delete Row" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7da77d54-bbb5-41c4-892a-b0ac37d210e9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create Excel Instance 'RPAExcel'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandID="765f9b19-22ad-4b7b-be83-7ed023c36245" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7da77d54-bbb5-41c4-892a-b0ac37d210e9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Create new Excel file" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelAddWorkbookCommand" CommandID="c55bbaaf-d42d-4197-8dcf-a813543d6cf4" CommandName="ExcelAddWorkbookCommand" IsCommented="false" SelectionName="Add Workbook" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelActivateSheetCommand" CommandID="0ad43f2e-ab82-452a-b3d9-67888da96b22" CommandName="ExcelActivateSheetCommand" IsCommented="false" SelectionName="Activate Sheet" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_SheetName="Sheet1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7da77d54-bbb5-41c4-892a-b0ac37d210e9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Write A1 to A4" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetCellCommand" CommandID="f43cbe84-a03f-4d29-8bb1-f3f25d1f7fde" CommandName="ExcelSetCellCommand" IsCommented="false" SelectionName="Set Cell" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_TextToSet="Hello1" v_ExcelCellAddress="A1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetCellCommand" CommandID="f43cbe84-a03f-4d29-8bb1-f3f25d1f7fde" CommandName="ExcelSetCellCommand" IsCommented="false" SelectionName="Set Cell" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_TextToSet="Hello2" v_ExcelCellAddress="A2" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetCellCommand" CommandID="f43cbe84-a03f-4d29-8bb1-f3f25d1f7fde" CommandName="ExcelSetCellCommand" IsCommented="false" SelectionName="Set Cell" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_TextToSet="Hello3" v_ExcelCellAddress="A3" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetCellCommand" CommandID="f43cbe84-a03f-4d29-8bb1-f3f25d1f7fde" CommandName="ExcelSetCellCommand" IsCommented="false" SelectionName="Set Cell" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_TextToSet="Hello4" v_ExcelCellAddress="A4" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7da77d54-bbb5-41c4-892a-b0ac37d210e9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Delete row number 3" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelDeleteRowCommand" CommandID="2b435f68-cd60-4674-b716-527a28a4c7b2" CommandName="ExcelDeleteRowCommand" IsCommented="false" SelectionName="Delete Row" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_RowNumber="3" v_ShiftUp="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="0ffbef10-2e46-4f98-b400-dce07a123a82" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Check Excel" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCloseApplicationCommand" CommandID="1c7a7cc9-c6f9-44df-8654-db6b7e048227" CommandName="ExcelCloseApplicationCommand" IsCommented="false" SelectionName="Close Excel Application" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>1990-01-01T00:00:00</LastRunTime>
+    <RunTimes>0</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable />
+  </Variables>
+</Script>

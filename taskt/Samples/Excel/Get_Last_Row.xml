@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="90f42127-3670-4f10-ace3-d33c83d611fd" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Excel Get Last Row" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="90f42127-3670-4f10-ace3-d33c83d611fd" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create Excel Instance 'RPAExcel'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandID="dd11f20c-1f9f-4db7-86a3-bd040904dae3" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="90f42127-3670-4f10-ace3-d33c83d611fd" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Open Excel file, please chose your file" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelOpenWorkbookCommand" CommandID="d3c51f25-820a-432a-950a-9f6f967d121f" CommandName="ExcelOpenWorkbookCommand" IsCommented="false" SelectionName="Open Workbook" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_FilePath="C:\temp\myfile.xlsx" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelActivateSheetCommand" CommandID="cf1c54b1-6976-450b-9b63-433f9f6400ff" CommandName="ExcelActivateSheetCommand" IsCommented="false" SelectionName="Activate Sheet" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_SheetName="Sheet1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="90f42127-3670-4f10-ace3-d33c83d611fd" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get Column 'A' rows" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelGetLastRowCommand" CommandID="982bae6e-fe1a-4b95-82ce-2a778a22fb6c" CommandName="ExcelGetLastRowCommand" IsCommented="false" SelectionName="Get Last Row" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_ColumnLetter="A" v_applyToVariableName="vTotalRows" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="99fd9073-6242-4e1a-b0b9-a827ad9b6d4e" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vTotalRows⦄ total rows were found" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCloseApplicationCommand" CommandID="bdd75c06-3516-47d1-b722-2a36e1e3b03e" CommandName="ExcelCloseApplicationCommand" IsCommented="false" SelectionName="Close Excel Application" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>1990-01-01T00:00:00</LastRunTime>
+    <RunTimes>0</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vTotalRows</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
