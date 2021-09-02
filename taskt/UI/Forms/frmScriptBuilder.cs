@@ -1344,8 +1344,8 @@ namespace taskt.UI.Forms
             grpSearch.Left = grpSaveClose.Right + 20;
 
             moveToParentToolStripMenuItem.Visible = true;
-            lstContextStripSep2.Visible = true;
-            lstContextStripSep4.Visible = false;
+            lstContextStripSep3.Visible = true;
+            //lstContextStripSep4.Visible = false;
             showScriptInfoMenuItem.Visible = false;
         }
         #endregion
@@ -2082,6 +2082,10 @@ namespace taskt.UI.Forms
         private void pauseBeforeExecutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetPauseBeforeExecution();
+        }
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectAllRows();
         }
         private void cutSelectedActionssToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -3189,7 +3193,6 @@ namespace taskt.UI.Forms
             return true;
         }
 
-        
     }
 
 }

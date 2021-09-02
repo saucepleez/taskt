@@ -126,27 +126,28 @@
             this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrNotify = new System.Windows.Forms.Timer(this.components);
             this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editThisCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.lstContextStripSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lstContextStripSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.lstContextStripSep2 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutSelectedActionssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lstContextStripSep2 = new System.Windows.Forms.ToolStripSeparator();
-            this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep3 = new System.Windows.Forms.ToolStripSeparator();
-            this.editThisCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
             this.searchThisCommnadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearHighlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
-            this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.lstContextStripSep5 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variableManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1356,28 +1357,53 @@
             // 
             this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editThisCodeToolStripMenuItem,
+            this.helpThisCommandToolStripMenuItem1,
+            this.lstContextStripSep1,
             this.enableSelectedCodeToolStripMenuItem,
             this.disableSelectedCodeToolStripMenuItem,
             this.pauseBeforeExecutionToolStripMenuItem,
-            this.lstContextStripSep1,
+            this.lstContextStripSep2,
+            this.selectAllToolStripMenuItem,
             this.cutSelectedActionssToolStripMenuItem,
             this.copySelectedToolStripMenuItem,
             this.pasteSelectedToolStripMenuItem,
             this.deleteSelectedToolStripMenuItem,
-            this.lstContextStripSep2,
-            this.moveToParentToolStripMenuItem,
             this.lstContextStripSep3,
-            this.editThisCodeToolStripMenuItem,
-            this.helpThisCommandToolStripMenuItem1,
-            this.viewCodeToolStripMenuItem,
+            this.moveToParentToolStripMenuItem,
             this.lstContextStripSep4,
             this.searchThisCommnadToolStripMenuItem,
             this.clearHighlightToolStripMenuItem,
             this.lstContextStripSep5,
+            this.viewCodeToolStripMenuItem,
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 416);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 440);
+            // 
+            // editThisCodeToolStripMenuItem
+            // 
+            this.editThisCodeToolStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
+            this.editThisCodeToolStripMenuItem.Name = "editThisCodeToolStripMenuItem";
+            this.editThisCodeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.E)));
+            this.editThisCodeToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.editThisCodeToolStripMenuItem.Text = "Edit &This Action";
+            this.editThisCodeToolStripMenuItem.Click += new System.EventHandler(this.editThisCodeToolStripMenuItem_Click);
+            // 
+            // helpThisCommandToolStripMenuItem1
+            // 
+            this.helpThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.web_help;
+            this.helpThisCommandToolStripMenuItem1.Name = "helpThisCommandToolStripMenuItem1";
+            this.helpThisCommandToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(344, 24);
+            this.helpThisCommandToolStripMenuItem1.Text = "Help This Command (&Web)";
+            this.helpThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.helpThisCommandToolStripMenuItem1_Click);
+            // 
+            // lstContextStripSep1
+            // 
+            this.lstContextStripSep1.Name = "lstContextStripSep1";
+            this.lstContextStripSep1.Size = new System.Drawing.Size(341, 6);
             // 
             // enableSelectedCodeToolStripMenuItem
             // 
@@ -1406,10 +1432,18 @@
             this.pauseBeforeExecutionToolStripMenuItem.Text = "&Pause Before Execution";
             this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
             // 
-            // lstContextStripSep1
+            // lstContextStripSep2
             // 
-            this.lstContextStripSep1.Name = "lstContextStripSep1";
-            this.lstContextStripSep1.Size = new System.Drawing.Size(341, 6);
+            this.lstContextStripSep2.Name = "lstContextStripSep2";
+            this.lstContextStripSep2.Size = new System.Drawing.Size(341, 6);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.selectAllToolStripMenuItem.Text = "Select &All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
             // cutSelectedActionssToolStripMenuItem
             // 
@@ -1443,11 +1477,11 @@
             this.deleteSelectedToolStripMenuItem.Text = "Delete Selected Action(s)";
             this.deleteSelectedToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedToolStripMenuItem_Click);
             // 
-            // lstContextStripSep2
+            // lstContextStripSep3
             // 
-            this.lstContextStripSep2.Name = "lstContextStripSep2";
-            this.lstContextStripSep2.Size = new System.Drawing.Size(341, 6);
-            this.lstContextStripSep2.Visible = false;
+            this.lstContextStripSep3.Name = "lstContextStripSep3";
+            this.lstContextStripSep3.Size = new System.Drawing.Size(341, 6);
+            this.lstContextStripSep3.Visible = false;
             // 
             // moveToParentToolStripMenuItem
             // 
@@ -1457,20 +1491,10 @@
             this.moveToParentToolStripMenuItem.Visible = false;
             this.moveToParentToolStripMenuItem.Click += new System.EventHandler(this.moveToParentToolStripMenuItem_Click);
             // 
-            // lstContextStripSep3
+            // lstContextStripSep4
             // 
-            this.lstContextStripSep3.Name = "lstContextStripSep3";
-            this.lstContextStripSep3.Size = new System.Drawing.Size(341, 6);
-            // 
-            // editThisCodeToolStripMenuItem
-            // 
-            this.editThisCodeToolStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
-            this.editThisCodeToolStripMenuItem.Name = "editThisCodeToolStripMenuItem";
-            this.editThisCodeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.E)));
-            this.editThisCodeToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
-            this.editThisCodeToolStripMenuItem.Text = "Edit This Action";
-            this.editThisCodeToolStripMenuItem.Click += new System.EventHandler(this.editThisCodeToolStripMenuItem_Click);
+            this.lstContextStripSep4.Name = "lstContextStripSep4";
+            this.lstContextStripSep4.Size = new System.Drawing.Size(341, 6);
             // 
             // searchThisCommnadToolStripMenuItem
             // 
@@ -1489,14 +1513,10 @@
             this.clearHighlightToolStripMenuItem.Text = "Clear Highlight (&L)";
             this.clearHighlightToolStripMenuItem.Click += new System.EventHandler(this.clearHighlightToolStripMenuItem_Click);
             // 
-            // helpThisCommandToolStripMenuItem1
+            // lstContextStripSep5
             // 
-            this.helpThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.web_help;
-            this.helpThisCommandToolStripMenuItem1.Name = "helpThisCommandToolStripMenuItem1";
-            this.helpThisCommandToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(344, 24);
-            this.helpThisCommandToolStripMenuItem1.Text = "&Help This Command (Web)";
-            this.helpThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.helpThisCommandToolStripMenuItem1_Click);
+            this.lstContextStripSep5.Name = "lstContextStripSep5";
+            this.lstContextStripSep5.Size = new System.Drawing.Size(341, 6);
             // 
             // viewCodeToolStripMenuItem
             // 
@@ -1505,11 +1525,6 @@
             this.viewCodeToolStripMenuItem.Text = "View Code (&I)";
             this.viewCodeToolStripMenuItem.Click += new System.EventHandler(this.viewCodeToolStripMenuItem_Click);
             // 
-            // lstContextStripSep4
-            // 
-            this.lstContextStripSep4.Name = "lstContextStripSep4";
-            this.lstContextStripSep4.Size = new System.Drawing.Size(341, 6);
-            // 
             // showScriptInfoMenuItem
             // 
             this.showScriptInfoMenuItem.Image = global::taskt.Properties.Resources.various_question;
@@ -1517,6 +1532,14 @@
             this.showScriptInfoMenuItem.Size = new System.Drawing.Size(344, 24);
             this.showScriptInfoMenuItem.Text = "&Show Script Informations";
             this.showScriptInfoMenuItem.Click += new System.EventHandler(this.showScriptInfoMenuItem_Click);
+            // 
+            // variableManagerToolStripMenuItem
+            // 
+            this.variableManagerToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
+            this.variableManagerToolStripMenuItem.Name = "variableManagerToolStripMenuItem";
+            this.variableManagerToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.variableManagerToolStripMenuItem.Text = "Variable &Manager";
+            this.variableManagerToolStripMenuItem.Click += new System.EventHandler(this.variableManagerToolStripMenuItem_Click);
             // 
             // notifyTray
             // 
@@ -1527,19 +1550,6 @@
             this.notifyTray.Text = "taskt, free and open-source process automation";
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
-            // 
-            // lstContextStripSep5
-            // 
-            this.lstContextStripSep5.Name = "lstContextStripSep5";
-            this.lstContextStripSep5.Size = new System.Drawing.Size(341, 6);
-            // 
-            // variableManagerToolStripMenuItem
-            // 
-            this.variableManagerToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
-            this.variableManagerToolStripMenuItem.Name = "variableManagerToolStripMenuItem";
-            this.variableManagerToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
-            this.variableManagerToolStripMenuItem.Text = "Variable &Manager";
-            this.variableManagerToolStripMenuItem.Click += new System.EventHandler(this.variableManagerToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 
@@ -1718,6 +1728,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpThisCommandToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator lstContextStripSep5;
         private System.Windows.Forms.ToolStripMenuItem variableManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
     }
 }
 
