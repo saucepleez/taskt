@@ -89,7 +89,6 @@ namespace taskt.UI.Forms
                 tvContextMenuStrip.Show(Cursor.Position);
             }
         }
-
         #endregion
 
         #region footer buttons
