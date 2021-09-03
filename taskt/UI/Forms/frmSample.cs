@@ -14,7 +14,8 @@ namespace taskt.UI.Forms
     public partial class frmSample : ThemedForm
     {
         private string samplePath;
-        public UI.Forms.frmScriptBuilder parentForm;
+        private UI.Forms.frmScriptBuilder parentForm;
+        private List<TreeNode> bufferdSampleNodes;
 
         public frmSample(UI.Forms.frmScriptBuilder parentForm)
         {
@@ -38,6 +39,7 @@ namespace taskt.UI.Forms
             string oldFolder;
             oldFolder = "----";
 
+            List<TreeNode> root = new List<TreeNode>();
             TreeNode parentGroup = null;
             foreach(var file in files)
             {
@@ -52,7 +54,9 @@ namespace taskt.UI.Forms
                 {
                     if (oldFolder != "----")
                     {
-                        tvSamples.Nodes.Add(parentGroup);
+                        //tvSamples.Nodes.Add(parentGroup);
+                        //root.Nodes.Add(parentGroup);
+                        root.Add(parentGroup);
                     }
                     oldFolder = absParts[0];
                     parentGroup = new TreeNode(absParts[0]);
@@ -60,8 +64,12 @@ namespace taskt.UI.Forms
                     parentGroup.Nodes.Add(newNode);
                 }
             }
+            root.Add(parentGroup);
+            bufferdSampleNodes = root;
+
             tvSamples.BeginUpdate();
-            tvSamples.Nodes.Add(parentGroup);
+            tvSamples.Nodes.AddRange(root.ToArray());
+
             tvSamples.EndUpdate();
             //tvSamples.ExpandAll();
         }
@@ -80,7 +88,7 @@ namespace taskt.UI.Forms
         }
         private void tvSamples_MouseClick(object sender, MouseEventArgs e)
         {
-            if (tvSamples.SelectedNode.Level == 0)
+            if ((tvSamples.SelectedNode == null) || (tvSamples.SelectedNode.Level == 0))
             {
                 return;
             }
@@ -167,6 +175,81 @@ namespace taskt.UI.Forms
             importSampleScriptProcess();
         }
         #endregion
+        #region search filter
+        private void picSearch_Click(object sender, EventArgs e)
+        {
+            filterSampleProcess();
+        }
+        private void picClear_Click(object sender, EventArgs e)
+        {
+            txtSearchBox.Text = "";
+            showAllSamples();
+        }
+        private void txtSearchBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                filterSampleProcess();
+            }
+        }
+
+        private void filterSampleProcess()
+        {
+            string keyword = txtSearchBox.Text.ToLower().Trim();
+            if (keyword.Length == 0)
+            {
+                showAllSamples();
+            }
+            else
+            {
+                filterSamples(keyword);
+            }
+        }
+
+        private void filterSamples(string keyword)
+        {
+            tvSamples.BeginUpdate();
+            tvSamples.Nodes.Clear();
+
+            foreach(TreeNode parentNode in bufferdSampleNodes)
+            {
+                TreeNode paNode = new TreeNode();
+                foreach(TreeNode node in parentNode.Nodes)
+                {
+                    if (node.Text.ToLower().Contains(keyword))
+                    {
+                        paNode.Nodes.Add(node.Text);
+                    }
+                }
+                if (paNode.Nodes.Count > 0)
+                {
+                    paNode.Text = parentNode.Text;
+                    tvSamples.Nodes.Add(paNode);
+                }
+            }
+
+            if (tvSamples.Nodes.Count == 0)
+            {
+                tvSamples.Nodes.Add(new TreeNode("nothing :-("));
+            }
+            tvSamples.ExpandAll();
+
+            tvSamples.EndUpdate();
+        }
+
+        private void showAllSamples()
+        {
+            tvSamples.BeginUpdate();
+
+            tvSamples.Nodes.Clear();
+            tvSamples.Nodes.AddRange(bufferdSampleNodes.ToArray());
+
+            tvSamples.EndUpdate();
+        }
+
+
+        #endregion
+
 
     }
 }

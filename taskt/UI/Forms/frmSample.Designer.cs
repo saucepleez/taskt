@@ -41,6 +41,11 @@ namespace taskt.UI.Forms
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.lblMain = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.picClear = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.picSearch = new System.Windows.Forms.PictureBox();
+            this.txtSearchBox = new System.Windows.Forms.TextBox();
             this.tvContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +56,9 @@ namespace taskt.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.btnImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOpen)).BeginInit();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSearch)).BeginInit();
             this.tvContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,17 +67,18 @@ namespace taskt.UI.Forms
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel4, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(591, 361);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -77,10 +86,10 @@ namespace taskt.UI.Forms
             // 
             this.panel1.Controls.Add(this.tvSamples);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 65);
+            this.panel1.Location = new System.Drawing.Point(0, 100);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(591, 241);
+            this.panel1.Size = new System.Drawing.Size(591, 206);
             this.panel1.TabIndex = 17;
             // 
             // tvSamples
@@ -93,7 +102,7 @@ namespace taskt.UI.Forms
             this.tvSamples.Location = new System.Drawing.Point(0, 0);
             this.tvSamples.Margin = new System.Windows.Forms.Padding(8);
             this.tvSamples.Name = "tvSamples";
-            this.tvSamples.Size = new System.Drawing.Size(591, 241);
+            this.tvSamples.Size = new System.Drawing.Size(591, 206);
             this.tvSamples.TabIndex = 0;
             this.tvSamples.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvSamples_NodeMouseClick);
             this.tvSamples.DoubleClick += new System.EventHandler(this.tvSamples_DoubleClick);
@@ -109,7 +118,7 @@ namespace taskt.UI.Forms
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(591, 55);
-            this.panel2.TabIndex = 18;
+            this.panel2.TabIndex = 0;
             // 
             // btnCancel
             // 
@@ -197,6 +206,67 @@ namespace taskt.UI.Forms
             this.lblMain.TabIndex = 16;
             this.lblMain.Text = "Sample / Template";
             // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Black;
+            this.panel4.Controls.Add(this.picClear);
+            this.panel4.Controls.Add(this.label2);
+            this.panel4.Controls.Add(this.picSearch);
+            this.panel4.Controls.Add(this.txtSearchBox);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 65);
+            this.panel4.Margin = new System.Windows.Forms.Padding(0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(591, 35);
+            this.panel4.TabIndex = 1;
+            // 
+            // picClear
+            // 
+            this.picClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picClear.Image = global::taskt.Properties.Resources.command_error;
+            this.picClear.Location = new System.Drawing.Point(544, 3);
+            this.picClear.Name = "picClear";
+            this.picClear.Size = new System.Drawing.Size(30, 30);
+            this.picClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picClear.TabIndex = 19;
+            this.picClear.TabStop = false;
+            this.picClear.Click += new System.EventHandler(this.picClear_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label2.Location = new System.Drawing.Point(3, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 20);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "&Filter:";
+            // 
+            // picSearch
+            // 
+            this.picSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.picSearch.Location = new System.Drawing.Point(508, 3);
+            this.picSearch.Name = "picSearch";
+            this.picSearch.Size = new System.Drawing.Size(30, 30);
+            this.picSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picSearch.TabIndex = 1;
+            this.picSearch.TabStop = false;
+            this.picSearch.Click += new System.EventHandler(this.picSearch_Click);
+            // 
+            // txtSearchBox
+            // 
+            this.txtSearchBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchBox.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtSearchBox.Location = new System.Drawing.Point(57, 3);
+            this.txtSearchBox.Name = "txtSearchBox";
+            this.txtSearchBox.Size = new System.Drawing.Size(444, 29);
+            this.txtSearchBox.TabIndex = 1;
+            this.txtSearchBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearchBox_KeyUp);
+            // 
             // tvContextMenuStrip
             // 
             this.tvContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -239,6 +309,10 @@ namespace taskt.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.btnOpen)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSearch)).EndInit();
             this.tvContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -257,7 +331,12 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblMain;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TextBox txtSearchBox;
+        private System.Windows.Forms.PictureBox picSearch;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox picClear;
     }
 }
