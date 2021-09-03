@@ -2,54 +2,62 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="This sample shows how to format data" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7342a865-cf9f-4dbf-afaa-59f9d3c6786c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="This sample shows how to format data" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Additional formats can be found: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings?view=netframework-4.7.2" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="95c14cc1-7fa6-417b-975d-f2e9edd7c035" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Additional formats can be found: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings?view=netframework-4.7.2" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Format Date Example - No Time" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="acf4de26-2743-4841-b870-bfc8f245955d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Format Date Example - No Time" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vDate" v_Input="11/20/2018 12:34:54PM" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="596bfc36-68a5-42b7-a598-32a359848282" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vDate" v_Input="11/20/2018 12:34:54PM" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="FormatDataCommand" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="[vDate]" v_FormatType="Date" v_ToStringFormat="MM/dd/yyyy" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="FormatDataCommand" CommandID="d9fdf4bc-c23b-4ccf-ac57-23ef1f19ab96" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vDate⦄" v_FormatType="Date" v_ToStringFormat="MM/dd/yyyy" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vResult]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="50acb664-9ea9-4082-833b-276648d67f4b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Format Number Example - Currency" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ee2dab51-dc33-4b5f-ba56-eae2017a8611" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Format Number Example - Currency" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="1102.48" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="610d1cb2-a8ce-4b06-8bbd-a1af154a7cc6" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="1102.48" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="FormatDataCommand" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="[vNumber]" v_FormatType="Number" v_ToStringFormat="C2" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="FormatDataCommand" CommandID="f65617c7-a307-45dc-b1f8-619dda55b714" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vNumber⦄" v_FormatType="Number" v_ToStringFormat="C2" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vResult]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="24ecb562-e054-4bfc-8335-037680828681" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Format Number Example - Percent" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d75afeeb-cd9b-495e-a594-6864509d0ffc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Format Number Example - Percent" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="FormatDataCommand" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="[vNumber]" v_FormatType="Number" v_ToStringFormat="P" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="FormatDataCommand" CommandID="452b6ff0-3f87-4617-aa65-911cf0cb403c" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vNumber⦄" v_FormatType="Number" v_ToStringFormat="P" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vResult]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="852e492d-a7c0-4188-a2d7-e6865888286d" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Format Number Example - Decimal Points" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e7c91f87-b7a4-4f50-9e48-913566b50437" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Format Number Example - Decimal Points" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="FormatDataCommand" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="[vNumber]" v_FormatType="Number" v_ToStringFormat="F5" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="FormatDataCommand" CommandID="f91cd14e-509e-4491-aec2-9d6398db0ac7" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vNumber⦄" v_FormatType="Number" v_ToStringFormat="F5" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vResult]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="30b87894-1602-458b-aa79-62d443fcee78" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
   </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-03T13:08:53.5269189+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
   <Variables>
     <ScriptVariable>
       <VariableName>vDate</VariableName>
