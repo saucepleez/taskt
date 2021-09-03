@@ -208,7 +208,7 @@ namespace taskt.UI.Forms
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.Black;
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.panel4.Controls.Add(this.picClear);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.picSearch);
