@@ -64,7 +64,7 @@ namespace taskt.UI.Forms
             bufferdSampleNodes.Add(parentGroup);
 
             tvSamples.BeginUpdate();
-            tvSamples.Nodes.AddRange(root.ToArray());
+            tvSamples.Nodes.AddRange(bufferdSampleNodes.ToArray());
 
             tvSamples.EndUpdate();
             //tvSamples.ExpandAll();
