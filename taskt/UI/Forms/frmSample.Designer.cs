@@ -264,7 +264,7 @@ namespace taskt.UI.Forms
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.Size = new System.Drawing.Size(444, 29);
             this.txtSearchBox.TabIndex = 1;
-            this.txtSearchBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearchBox_KeyUp);
+            this.txtSearchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearchBox_KeyDown);
             // 
             // tvContextMenuStrip
             // 

@@ -183,14 +183,15 @@ namespace taskt.UI.Forms
             txtSearchBox.Text = "";
             showAllSamples();
         }
-        private void txtSearchBox_KeyUp(object sender, KeyEventArgs e)
+        private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
                 filterSampleProcess();
             }
         }
-
         private void filterSampleProcess()
         {
             string keyword = txtSearchBox.Text.ToLower().Trim();
