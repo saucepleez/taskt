@@ -851,7 +851,8 @@ namespace taskt.Core.Automation.Commands
                             var newValue = currentValue.Replace(keyword, replacedText);
                             if (currentValue != newValue)
                             {
-                                prop.SetValue(this, newValue);
+                                //prop.SetValue(this, newValue);
+                                targetDT.Rows[j][i] = newValue;
                                 isReplaced = true;
                             }
                         }
