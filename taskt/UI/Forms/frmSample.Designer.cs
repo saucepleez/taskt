@@ -86,10 +86,9 @@ namespace taskt.UI.Forms
             // 
             this.panel1.Controls.Add(this.tvSamples);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 100);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Location = new System.Drawing.Point(3, 103);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(591, 206);
+            this.panel1.Size = new System.Drawing.Size(585, 200);
             this.panel1.TabIndex = 17;
             // 
             // tvSamples
@@ -102,7 +101,7 @@ namespace taskt.UI.Forms
             this.tvSamples.Location = new System.Drawing.Point(0, 0);
             this.tvSamples.Margin = new System.Windows.Forms.Padding(8);
             this.tvSamples.Name = "tvSamples";
-            this.tvSamples.Size = new System.Drawing.Size(591, 206);
+            this.tvSamples.Size = new System.Drawing.Size(585, 200);
             this.tvSamples.TabIndex = 0;
             this.tvSamples.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvSamples_NodeMouseClick);
             this.tvSamples.DoubleClick += new System.EventHandler(this.tvSamples_DoubleClick);
