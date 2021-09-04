@@ -221,6 +221,7 @@ namespace taskt.UI.Forms
                             }
                             //add newly edited node
                             AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
+                            AddUserVariableNode(tvScriptVariables.Nodes[1], newVariableName, addVariableForm.txtDefaultValue.Text);
                         }
                         else
                         {
@@ -230,6 +231,7 @@ namespace taskt.UI.Forms
                                 targetVariable.Remove();
                                 //add newly edited node
                                 AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
+                                AddUserVariableNode(tvScriptVariables.Nodes[1], newVariableName, addVariableForm.txtDefaultValue.Text);
                             }
                             else
                             {
@@ -250,8 +252,9 @@ namespace taskt.UI.Forms
                     }
                 }
             }
+            tvScriptVariables.Nodes[1].ExpandAll();
             tvScriptVariables.Sort();
-            ExpandUserVariableNode();
+            //ExpandUserVariableNode();
             tvScriptVariables.EndUpdate();
         }
         private void EditSelectedVariableProcess()
@@ -552,22 +555,37 @@ namespace taskt.UI.Forms
 
         private void ExpandUserVariableNode()
         {
-            if (bufferedUserVariableParentNode != null)
-            {
-                bufferedUserVariableParentNode.ExpandAll();
-            }
+            //if (bufferedUserVariableParentNode != null)
+            //{
+            //    bufferedUserVariableParentNode.ExpandAll();
+            //}
+            tvScriptVariables.Nodes[1].ExpandAll();
         }
 
         private bool isVariableExists(string variableName)
         {
-            foreach(TreeNode parentNode in tvScriptVariables.Nodes)
+            //foreach(TreeNode parentNode in tvScriptVariables.Nodes)
+            //{
+            //    foreach(TreeNode child in parentNode.Nodes)
+            //    {
+            //        if (variableName == child.Text)
+            //        {
+            //            return true;
+            //        }
+            //    }
+            //}
+            foreach(TreeNode item in bufferedSystemVariableParentNode.Nodes)
             {
-                foreach(TreeNode child in parentNode.Nodes)
+                if (item.Text == variableName)
                 {
-                    if (variableName == child.Text)
-                    {
-                        return true;
-                    }
+                    return true;
+                }
+            }
+            foreach(TreeNode item in bufferedUserVariableParentNode.Nodes)
+            {
+                if (item.Text == variableName)
+                {
+                    return true;
                 }
             }
             return false;
@@ -691,7 +709,8 @@ namespace taskt.UI.Forms
             tvScriptVariables.Nodes.Clear();
             tvScriptVariables.Nodes.Add(systemVars);
             tvScriptVariables.Nodes.Add(userVars);
-            tvScriptVariables.ExpandAll();
+            //tvScriptVariables.ExpandAll();
+            tvScriptVariables.Nodes[1].ExpandAll();
             tvScriptVariables.EndUpdate();
         }
         private void showAllVariables()
