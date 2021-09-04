@@ -93,7 +93,7 @@ namespace taskt.UI.Forms
             // 
             // tvSamples
             // 
-            this.tvSamples.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.tvSamples.BackColor = System.Drawing.Color.DimGray;
             this.tvSamples.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvSamples.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvSamples.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
