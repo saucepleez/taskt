@@ -116,19 +116,25 @@ namespace taskt.Core.Automation.Commands
 
         private void LoadSchemaControl_Click(object sender, EventArgs e)
         {
-            UI.Forms.Supplemental.frmItemSelector selectionForm = new UI.Forms.Supplemental.frmItemSelector();
-            selectionForm.Text = "Load Schema";
-            selectionForm.lblHeader.Text = "Select a table from the list";
+            var items = new List<string>();
             foreach (var item in DataTableCreationCommands)
             {
-                selectionForm.lstVariables.Items.Add(item.v_DataTableName);
+                items.Add(item.v_DataTableName);
             }
+            UI.Forms.Supplemental.frmItemSelector selectionForm = new UI.Forms.Supplemental.frmItemSelector(items, "Load Schema", "Select a table from the list");
+            //selectionForm.Text = "Load Schema";
+            //selectionForm.lblHeader.Text = "Select a table from the list";
+            //foreach (var item in DataTableCreationCommands)
+            //{
+            //    selectionForm.lstVariables.Items.Add(item.v_DataTableName);
+            //}
 
            var result = selectionForm.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                var tableName = selectionForm.lstVariables.SelectedItem.ToString();
+                //var tableName = selectionForm.lstVariables.SelectedItem.ToString();
+                var tableName = selectionForm.selectedItem.ToString();
                 var schema = DataTableCreationCommands.Where(f => f.v_DataTableName == tableName).FirstOrDefault();
 
                 v_AddDataDataTable.Rows.Clear();
@@ -137,7 +143,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_AddDataDataTable.Rows.Add(rw.Field<string>("Column Name"), "");
                 }
-
             }   
         }
 

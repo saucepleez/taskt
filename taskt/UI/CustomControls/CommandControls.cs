@@ -723,20 +723,24 @@ namespace taskt.UI.CustomControls
         }
         public static void ShowVariableSelector(object sender, EventArgs e, taskt.UI.Forms.frmCommandEditor editor)
         {
-            //create variable selector form
-            UI.Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector();
-
-
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
-            newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
+
+            //create variable selector form
+            UI.Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList);
+
+            ////get copy of user variables and append system variables, then load to combobox
+            //var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
+            //variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
+            //newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
 
             //if user pressed "OK"
             if (newVariableSelector.ShowDialog() == DialogResult.OK)
             {
                 //ensure that a variable was actually selected
-                if (newVariableSelector.lstVariables.SelectedItem == null)
+                //if (newVariableSelector.lstVariables.SelectedItem == null)
+                if (newVariableSelector.selectedItem == null)
                 {
                     //return out as nothing was selected
                     MessageBox.Show("There were no variables selected!");
@@ -759,7 +763,8 @@ namespace taskt.UI.CustomControls
                     {
                         string str = targetTextbox.Text;
                         int cursorPos = targetTextbox.SelectionStart;
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        //string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                         targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
                         targetTextbox.Focus();
                         targetTextbox.SelectionStart = cursorPos + ins.Length;
@@ -767,7 +772,8 @@ namespace taskt.UI.CustomControls
                     }
                     else
                     {
-                        targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        //targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                         targetTextbox.Focus();
                         targetTextbox.SelectionStart = targetTextbox.Text.Length;
                         targetTextbox.SelectionLength = 0;
@@ -784,7 +790,8 @@ namespace taskt.UI.CustomControls
                         {
                             cursorPos = str.Length;
                         }
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        //string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                         targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
                         targetCombobox.Focus();
                         targetCombobox.SelectionStart = cursorPos + ins.Length;
@@ -793,7 +800,8 @@ namespace taskt.UI.CustomControls
                     else
                     {
                         //concat variable name with brackets [vVariable] as engine searches for the same
-                        targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        //targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                        targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                         targetCombobox.Focus();
                         targetCombobox.SelectionStart = targetCombobox.Text.Length;
                         targetCombobox.SelectionLength = 0;
@@ -837,10 +845,9 @@ namespace taskt.UI.CustomControls
                         source.Rows.Add(source.NewRow());
                     }
                     var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
-                    targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    //targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
+                    targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                 }
-
-
             }
         }
         private static void ShowFileSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
