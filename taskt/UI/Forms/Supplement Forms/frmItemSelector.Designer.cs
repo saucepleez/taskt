@@ -46,6 +46,7 @@
             this.lstVariables.Name = "lstVariables";
             this.lstVariables.Size = new System.Drawing.Size(328, 130);
             this.lstVariables.TabIndex = 0;
+            this.lstVariables.SelectedIndexChanged += new System.EventHandler(this.lstVariables_SelectedIndexChanged);
             this.lstVariables.DoubleClick += new System.EventHandler(this.lstVariables_DoubleClick);
             // 
             // lblHeader
@@ -119,7 +120,7 @@
         #endregion
         private CustomControls.UIPictureButton uiBtnOk;
         private CustomControls.UIPictureButton uiBtnCancel;
-        public System.Windows.Forms.ListBox lstVariables;
-        public System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.ListBox lstVariables;
+        private System.Windows.Forms.Label lblHeader;
     }
 }
