@@ -12,20 +12,31 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmAddVariable : ThemedForm
     {
-        public Core.ApplicationSettings appSettings;
+        private Core.ApplicationSettings appSettings;
+        public frmAddVariablesEditMode editMode { get; }
 
-        public frmAddVariable()
+        public enum frmAddVariablesEditMode
         {
-            InitializeComponent();
+            Add,
+            Edit
         }
 
-        public frmAddVariable(string VariableName, string variableValue)
+        public frmAddVariable(Core.ApplicationSettings appSettings)
+        {
+            InitializeComponent();
+            this.editMode = frmAddVariablesEditMode.Add;
+            this.appSettings = appSettings;
+        }
+
+        public frmAddVariable(string VariableName, string variableValue, Core.ApplicationSettings appSettings)
         {
             InitializeComponent();
             this.Text = "edit variable";
             lblHeader.Text = "edit variable";
             txtVariableName.Text = VariableName;
             txtDefaultValue.Text = variableValue;
+            this.editMode = frmAddVariablesEditMode.Edit;
+            this.appSettings = appSettings;
         }
 
         private void frmAddVariable_Load(object sender, EventArgs e)
