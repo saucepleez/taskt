@@ -44,7 +44,9 @@ namespace taskt.UI.Forms.Supplemental
         }
         private void frmVariableSelector_Load(object sender, EventArgs e)
         {
+            lstVariables.BeginUpdate();
             lstVariables.Items.AddRange(bufferdItems);
+            lstVariables.EndUpdate();
         }
         #endregion
 
@@ -77,6 +79,63 @@ namespace taskt.UI.Forms.Supplemental
         }
         #endregion
 
+        #region variable filter
+        private void picSearch_Click(object sender, EventArgs e)
+        {
+            BeginFilterVariableProcess();
+        }
+        private void picClear_Click(object sender, EventArgs e)
+        {
+            txtSearchBox.Text = "";
+            showAllVariables();
+        }
+        private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                BeginFilterVariableProcess();
+            }
+        }
+        private void BeginFilterVariableProcess()
+        {
+            string keyword = txtSearchBox.Text.ToLower().Trim();
+            if (keyword.Length > 0)
+            {
+                FilterVariableProcess(keyword);
+            }
+            else
+            {
+                showAllVariables();
+            }
+        }
+        private void FilterVariableProcess(string keyword)
+        {
+            var matchedList = new List<string>();
+            foreach (var item in bufferdItems)
+            {
+                if (item.ToLower().Contains(keyword))
+                {
+                    matchedList.Add(item);
+                }
+            }
+            lstVariables.BeginUpdate();
+            lstVariables.Items.Clear();
+            lstVariables.Items.AddRange(matchedList.ToArray());
+            lstVariables.EndUpdate();
+            lstVariables.Focus();
+        }
+        private void showAllVariables()
+        {
+            lstVariables.BeginUpdate();
+            lstVariables.Items.Clear();
+            lstVariables.Items.AddRange(bufferdItems);
+            lstVariables.EndUpdate();
+            lstVariables.Focus();
+        }
+
+        #endregion
 
     }
 }
