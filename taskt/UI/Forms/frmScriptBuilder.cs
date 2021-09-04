@@ -1015,20 +1015,23 @@ namespace taskt.UI.Forms
 
         private void SelectAllRows()
         {
+            lstScriptActions.BeginUpdate();
             foreach (ListViewItem itm in lstScriptActions.Items)
             {
                 itm.Selected = true;
             }
+            lstScriptActions.EndUpdate();
         }
 
         private void DeleteRows()
         {
+            lstScriptActions.BeginUpdate();
             foreach (ListViewItem itm in lstScriptActions.SelectedItems)
             {
                 lstScriptActions.Items.Remove(itm);
-
-                ChangeSaveState(true);
             }
+            lstScriptActions.EndUpdate();
+            ChangeSaveState(true);
 
             CreateUndoSnapshot();
 
@@ -1059,12 +1062,14 @@ namespace taskt.UI.Forms
 
                 var commands = new List<Core.Automation.Commands.ScriptCommand>();
 
+                lstScriptActions.BeginUpdate();
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
                 {
                     commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
                     //rowsSelectedForCopy.Add(item);
                     lstScriptActions.Items.Remove(item);
                 }
+                lstScriptActions.EndUpdate();
                 // set clipborad xml string
                 Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands));
 
@@ -1154,7 +1159,9 @@ namespace taskt.UI.Forms
             {
                 ChangeSaveState(true);
 
+                lstScriptActions.BeginUpdate();
                 InsertExecutionCommands(sc.Commands);
+                lstScriptActions.EndUpdate();
 
                 Notify(sc.Commands.Count + " item(s) pasted!");
                 // release
