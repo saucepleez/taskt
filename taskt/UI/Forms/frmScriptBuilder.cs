@@ -2824,10 +2824,10 @@ namespace taskt.UI.Forms
         #region Variable Edit
         private void showVariableManager()
         {
-            using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
+            using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables(this.scriptVariables, this.appSettings))
             {
-                scriptVariableEditor.appSettings = this.appSettings;
-                scriptVariableEditor.scriptVariables = this.scriptVariables;
+                //scriptVariableEditor.appSettings = this.appSettings;
+                //scriptVariableEditor.scriptVariables = this.scriptVariables;
 
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
