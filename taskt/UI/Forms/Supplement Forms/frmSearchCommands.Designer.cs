@@ -41,6 +41,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.chkSearchBackToTop = new System.Windows.Forms.CheckBox();
             this.chkSearchCaseSensitive = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkSearchTargetIsInstance = new System.Windows.Forms.CheckBox();
+            this.cmbSearchInstance = new System.Windows.Forms.ComboBox();
             this.chkSearchTargetIsDisplayText = new System.Windows.Forms.CheckBox();
             this.chkSearchTargetIsComment = new System.Windows.Forms.CheckBox();
             this.chkSearchTargetIsName = new System.Windows.Forms.CheckBox();
@@ -70,8 +72,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.barOpacity = new System.Windows.Forms.TrackBar();
-            this.cmbSearchInstance = new System.Windows.Forms.ComboBox();
-            this.chkSearchTargetIsInstance = new System.Windows.Forms.CheckBox();
             this.baseTableLayout.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.searchTab.SuspendLayout();
@@ -226,6 +226,33 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Target";
+            // 
+            // chkSearchTargetIsInstance
+            // 
+            this.chkSearchTargetIsInstance.AutoSize = true;
+            this.chkSearchTargetIsInstance.Location = new System.Drawing.Point(15, 152);
+            this.chkSearchTargetIsInstance.Name = "chkSearchTargetIsInstance";
+            this.chkSearchTargetIsInstance.Size = new System.Drawing.Size(132, 25);
+            this.chkSearchTargetIsInstance.TabIndex = 4;
+            this.chkSearchTargetIsInstance.Text = "&Instance Name";
+            this.chkSearchTargetIsInstance.UseVisualStyleBackColor = true;
+            this.chkSearchTargetIsInstance.CheckedChanged += new System.EventHandler(this.chkSearchTargetIsInstance_CheckedChanged);
+            // 
+            // cmbSearchInstance
+            // 
+            this.cmbSearchInstance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSearchInstance.FormattingEnabled = true;
+            this.cmbSearchInstance.Items.AddRange(new object[] {
+            "DataBase",
+            "Excel",
+            "IE",
+            "StopWatch",
+            "Web Browser",
+            "Word"});
+            this.cmbSearchInstance.Location = new System.Drawing.Point(150, 150);
+            this.cmbSearchInstance.Name = "cmbSearchInstance";
+            this.cmbSearchInstance.Size = new System.Drawing.Size(173, 29);
+            this.cmbSearchInstance.TabIndex = 5;
             // 
             // chkSearchTargetIsDisplayText
             // 
@@ -394,7 +421,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             "DataBase",
             "Excel",
             "IE",
-            "StopWtach",
+            "StopWatch",
             "Web Browser",
             "Word"});
             this.cmbReplaceInstance.Location = new System.Drawing.Point(150, 59);
@@ -570,33 +597,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.barOpacity.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.barOpacity.Value = 100;
             this.barOpacity.Scroll += new System.EventHandler(this.barOpacity_Scroll);
-            // 
-            // cmbSearchInstance
-            // 
-            this.cmbSearchInstance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSearchInstance.FormattingEnabled = true;
-            this.cmbSearchInstance.Items.AddRange(new object[] {
-            "DataBase",
-            "Excel",
-            "IE",
-            "StopWtach",
-            "Web Browser",
-            "Word"});
-            this.cmbSearchInstance.Location = new System.Drawing.Point(150, 150);
-            this.cmbSearchInstance.Name = "cmbSearchInstance";
-            this.cmbSearchInstance.Size = new System.Drawing.Size(173, 29);
-            this.cmbSearchInstance.TabIndex = 5;
-            // 
-            // chkSearchTargetIsInstance
-            // 
-            this.chkSearchTargetIsInstance.AutoSize = true;
-            this.chkSearchTargetIsInstance.Location = new System.Drawing.Point(15, 152);
-            this.chkSearchTargetIsInstance.Name = "chkSearchTargetIsInstance";
-            this.chkSearchTargetIsInstance.Size = new System.Drawing.Size(132, 25);
-            this.chkSearchTargetIsInstance.TabIndex = 4;
-            this.chkSearchTargetIsInstance.Text = "&Instance Name";
-            this.chkSearchTargetIsInstance.UseVisualStyleBackColor = true;
-            this.chkSearchTargetIsInstance.CheckedChanged += new System.EventHandler(this.chkSearchTargetIsInstance_CheckedChanged);
             // 
             // frmSearchCommands
             // 
