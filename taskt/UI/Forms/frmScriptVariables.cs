@@ -25,49 +25,79 @@ namespace taskt.UI.Forms
 {
     public partial class frmScriptVariables : ThemedForm
     {
-        public List<Core.Script.ScriptVariable> scriptVariables { get; set; }
-        TreeNode userVariableParentNode;
+        public List<Core.Script.ScriptVariable> scriptVariables { get; }
+        TreeNode bufferedUserVariableParentNode = new TreeNode();
+        TreeNode bufferedSystemVariableParentNode = new TreeNode();
+
         private string leadingValue = "Default Value: ";
         private string emptyValue = "(no default value)";
         public Core.ApplicationSettings appSettings;
 
-        static string UserVariableText = "My Task Variables";
-        static string TasktVariableText = "Default Task Variables";
+        static string User_Variables_Text = "My Task Variables";
+        static string System_Variables_Text = "Default Task Variables";
 
         #region Initialization and Form Load
 
-        public frmScriptVariables()
+        public frmScriptVariables(List<Core.Script.ScriptVariable> variables, Core.ApplicationSettings appSettings)
         {
             InitializeComponent();
+            this.scriptVariables = variables;
+            this.appSettings = appSettings;
         }
         private void frmScriptVariables_Load(object sender, EventArgs e)
         {
-           //initialize
-            userVariableParentNode = InitializeNodes(UserVariableText, scriptVariables);
-            InitializeNodes(TasktVariableText, Core.Common.GenerateSystemVariables());
+            ////initialize
+            // bufferedUserVariableParentNode = InitializeNodes(User_Variable_Text, scriptVariables);
+            // InitializeNodes(Taskt_Variable_Text, Core.Common.GenerateSystemVariables());
+            InitializeNodes();
         }
 
         // create variables TreeNode
-        private TreeNode InitializeNodes(string parentName, List<Core.Script.ScriptVariable> variables)
+        private void InitializeNodes()
         {
-            //create a root node (parent)
-            TreeNode parentNode = new TreeNode(parentName);
+            ////create a root node (parent)
+            //TreeNode parentNode = new TreeNode(parentName);
 
-            //add each item to parent
-            foreach (var item in variables)
+            ////add each item to parent
+            //foreach (var item in variables)
+            //{
+            //    AddUserVariableNode(parentNode, item.VariableName, (string)item.VariableValue);
+            //}
+
+            //tvScriptVariables.BeginUpdate();
+            ////add parent to treeview
+            //tvScriptVariables.Nodes.Add(parentNode);
+            //tvScriptVariables.Sort();
+            //ExpandUserVariableNode();
+            //tvScriptVariables.EndUpdate();
+
+            ////return parent and utilize if needed
+            //return parentNode;
+
+            // System Variables
+            bufferedSystemVariableParentNode.Nodes.Clear();
+            bufferedSystemVariableParentNode.Text = System_Variables_Text;
+            List<Core.Script.ScriptVariable> systemVars = Core.Common.GenerateSystemVariables();
+            foreach(var item in systemVars)
             {
-                AddUserVariableNode(parentNode, item.VariableName, (string)item.VariableValue);
+                AddUserVariableNode(bufferedSystemVariableParentNode, item.VariableName, (string)item.VariableValue);
+            }
+
+            // User Variables
+            bufferedUserVariableParentNode.Nodes.Clear();
+            bufferedUserVariableParentNode.Text = User_Variables_Text;
+            foreach(var item in scriptVariables)
+            {
+                AddUserVariableNode(bufferedUserVariableParentNode, item.VariableName, (string)item.VariableValue);
             }
 
             tvScriptVariables.BeginUpdate();
-            //add parent to treeview
-            tvScriptVariables.Nodes.Add(parentNode);
+            tvScriptVariables.Nodes.Clear();
+            tvScriptVariables.Nodes.Add(bufferedSystemVariableParentNode);
+            tvScriptVariables.Nodes.Add(bufferedUserVariableParentNode);
+            tvScriptVariables.Nodes[1].ExpandAll();
             tvScriptVariables.Sort();
-            ExpandUserVariableNode();
             tvScriptVariables.EndUpdate();
-
-            //return parent and utilize if needed
-            return parentNode;
         }
 
         #endregion
@@ -89,7 +119,7 @@ namespace taskt.UI.Forms
             //    //add to list
             //    scriptVariables.Add(new Core.Script.ScriptVariable() { VariableName = VariableName, VariableValue = VariableValue });
             //}
-            foreach(TreeNode targetVariable in userVariableParentNode.Nodes)
+            foreach(TreeNode targetVariable in bufferedUserVariableParentNode.Nodes)
             {
                 var variableName = targetVariable.Text;
                 var variableValue = targetVariable.Nodes[0].Text.Replace(leadingValue, "").Replace(emptyValue, "");
@@ -190,7 +220,7 @@ namespace taskt.UI.Forms
                                 targetVariable.Remove();
                             }
                             //add newly edited node
-                            AddUserVariableNode(userVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
+                            AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
                         }
                         else
                         {
@@ -199,7 +229,7 @@ namespace taskt.UI.Forms
                             {
                                 targetVariable.Remove();
                                 //add newly edited node
-                                AddUserVariableNode(userVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
+                                AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
                             }
                             else
                             {
@@ -242,7 +272,7 @@ namespace taskt.UI.Forms
             //top node check
             var topNode = GetSelectedTopNode();
 
-            if (topNode.Text != UserVariableText)
+            if (topNode.Text != User_Variables_Text)
             {
                 return;
             }
@@ -392,7 +422,7 @@ namespace taskt.UI.Forms
             //top node check
             var topNode = GetSelectedTopNode();
 
-            if (topNode.Text != UserVariableText)
+            if (topNode.Text != User_Variables_Text)
             {
                 return;
             }
@@ -428,13 +458,13 @@ namespace taskt.UI.Forms
                 return;
             }
             TreeNode topNode = GetSelectedTopNode();
-            if ((topNode.Text == UserVariableText) && (e.Button == MouseButtons.Right))
+            if ((topNode.Text == User_Variables_Text) && (e.Button == MouseButtons.Right))
             {
                 //if (tvScriptVariables.Parent != null)
                 //{
                 //    addToolStripMenuItem.Visible = false;
                 //}
-                if (tvScriptVariables.SelectedNode.Text == UserVariableText)
+                if (tvScriptVariables.SelectedNode.Text == User_Variables_Text)
                 {
                     addToolStripMenuItem.Visible = true;
                     editToolStripMenuItem.Visible = false;
@@ -522,9 +552,9 @@ namespace taskt.UI.Forms
 
         private void ExpandUserVariableNode()
         {
-            if (userVariableParentNode != null)
+            if (bufferedUserVariableParentNode != null)
             {
-                userVariableParentNode.ExpandAll();
+                bufferedUserVariableParentNode.ExpandAll();
             }
         }
 
@@ -576,8 +606,8 @@ namespace taskt.UI.Forms
         private void frmScriptVariables_FormClosed(object sender, FormClosedEventArgs e)
         {
             // release
-            userVariableParentNode.Remove();
-            userVariableParentNode = null;
+            bufferedUserVariableParentNode.Remove();
+            bufferedUserVariableParentNode = null;
         }
 
         #region form events
@@ -590,8 +620,93 @@ namespace taskt.UI.Forms
                 AddOrEditVaiableProcess(null);
             }
         }
+
         #endregion
 
+        #region filter variables
+        private void picSearch_Click(object sender, EventArgs e)
+        {
+            BeginFilterVariablesProcess();
+        }
+        private void picClear_Click(object sender, EventArgs e)
+        {
+            txtSearchBox.Text = "";
+            showAllVariables();
+        }
+        private void txtSearchBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+        }
+        private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                BeginFilterVariablesProcess();
+            }
+        }
+        private void BeginFilterVariablesProcess()
+        {
+            string keyword = txtSearchBox.Text.ToLower().Trim();
+            if (keyword.Length > 0)
+            {
+                filterVariables(keyword);
+            }
+            else
+            {
+                showAllVariables();
+            }
+        }
 
+        private void filterVariables(string keyword)
+        {
+            string variableName = "", variableValue = "";
+
+            // System variables
+            TreeNode systemVars = new TreeNode();
+            systemVars.Text = System_Variables_Text;
+            foreach(TreeNode item in bufferedSystemVariableParentNode.Nodes)
+            {
+                if (item.Text.ToLower().Contains(keyword))
+                {
+                    GetVariableNameAndValue(item, out variableName, out variableValue);
+                    AddUserVariableNode(systemVars, variableName, variableValue);
+                }
+            }
+
+            // User variables
+            TreeNode userVars = new TreeNode();
+            userVars.Text = User_Variables_Text;
+            foreach(TreeNode item in bufferedUserVariableParentNode.Nodes)
+            {
+                if (item.Text.ToLower().Contains(keyword))
+                {
+                    GetVariableNameAndValue(item, out variableName, out variableValue);
+                    AddUserVariableNode(userVars, variableName, variableValue);
+                }
+            }
+
+            tvScriptVariables.BeginUpdate();
+            tvScriptVariables.Nodes.Clear();
+            tvScriptVariables.Nodes.Add(systemVars);
+            tvScriptVariables.Nodes.Add(userVars);
+            tvScriptVariables.ExpandAll();
+            tvScriptVariables.EndUpdate();
+        }
+        private void showAllVariables()
+        {
+            tvScriptVariables.BeginUpdate();
+            tvScriptVariables.Nodes.Clear();
+            tvScriptVariables.Nodes.Add(bufferedSystemVariableParentNode);
+            tvScriptVariables.Nodes.Add(bufferedUserVariableParentNode);
+            tvScriptVariables.Nodes[1].ExpandAll();
+            tvScriptVariables.Sort();
+            tvScriptVariables.EndUpdate();
+        }
+
+        #endregion
+
+        
     }
 }
