@@ -15,7 +15,7 @@ namespace taskt.UI.Forms
     {
         private string samplePath;
         private UI.Forms.frmScriptBuilder parentForm;
-        private List<TreeNode> bufferdSampleNodes = new List<TreeNode>();
+        private TreeNode[] bufferdSampleNodes;
 
         public frmSample(UI.Forms.frmScriptBuilder parentForm)
         {
@@ -39,6 +39,7 @@ namespace taskt.UI.Forms
             string oldFolder;
             oldFolder = "----";
 
+            List<TreeNode> tempNodes = new List<TreeNode>();
             TreeNode parentGroup = null;
             foreach(var file in files)
             {
@@ -53,7 +54,7 @@ namespace taskt.UI.Forms
                 {
                     if (oldFolder != "----")
                     {
-                        bufferdSampleNodes.Add(parentGroup);
+                        tempNodes.Add(parentGroup);
                     }
                     oldFolder = absParts[0];
                     parentGroup = new TreeNode(absParts[0]);
@@ -61,10 +62,11 @@ namespace taskt.UI.Forms
                     parentGroup.Nodes.Add(newNode);
                 }
             }
-            bufferdSampleNodes.Add(parentGroup);
+            tempNodes.Add(parentGroup);
+            bufferdSampleNodes = tempNodes.ToArray();
 
             tvSamples.BeginUpdate();
-            tvSamples.Nodes.AddRange(bufferdSampleNodes.ToArray());
+            tvSamples.Nodes.AddRange(bufferdSampleNodes);
 
             tvSamples.EndUpdate();
             //tvSamples.ExpandAll();
@@ -238,7 +240,7 @@ namespace taskt.UI.Forms
             tvSamples.BeginUpdate();
 
             tvSamples.Nodes.Clear();
-            tvSamples.Nodes.AddRange(bufferdSampleNodes.ToArray());
+            tvSamples.Nodes.AddRange(bufferdSampleNodes);
 
             tvSamples.EndUpdate();
         }

@@ -43,6 +43,11 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.picClear = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.picSearch = new System.Windows.Forms.PictureBox();
+            this.txtSearchBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -50,6 +55,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).BeginInit();
             this.panel2.SuspendLayout();
             this.editVariableContextMenuStrip.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSearch)).BeginInit();
             this.SuspendLayout();
             // 
             // lblMainLogo
@@ -103,18 +111,19 @@
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.tvScriptVariables, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tvScriptVariables, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(607, 385);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(607, 421);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // tvScriptVariables
@@ -124,10 +133,10 @@
             this.tvScriptVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvScriptVariables.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tvScriptVariables.ForeColor = System.Drawing.Color.White;
-            this.tvScriptVariables.Location = new System.Drawing.Point(3, 93);
+            this.tvScriptVariables.Location = new System.Drawing.Point(3, 128);
             this.tvScriptVariables.Name = "tvScriptVariables";
             this.tvScriptVariables.ShowLines = false;
-            this.tvScriptVariables.Size = new System.Drawing.Size(601, 242);
+            this.tvScriptVariables.Size = new System.Drawing.Size(601, 243);
             this.tvScriptVariables.TabIndex = 1;
             this.tvScriptVariables.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvScriptVariables_NodeMouseClick);
             this.tvScriptVariables.DoubleClick += new System.EventHandler(this.tvScriptVariables_DoubleClick);
@@ -183,7 +192,7 @@
             this.panel2.Controls.Add(this.uiBtnOK);
             this.panel2.Controls.Add(this.uiBtnCancel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 338);
+            this.panel2.Location = new System.Drawing.Point(0, 374);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(607, 47);
@@ -225,12 +234,71 @@
             this.removeToolStripMenuItem.Text = "&Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.panel3.Controls.Add(this.picClear);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.picSearch);
+            this.panel3.Controls.Add(this.txtSearchBox);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.panel3.Location = new System.Drawing.Point(0, 90);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(607, 35);
+            this.panel3.TabIndex = 3;
+            // 
+            // picClear
+            // 
+            this.picClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picClear.Image = global::taskt.Properties.Resources.command_error;
+            this.picClear.Location = new System.Drawing.Point(542, 3);
+            this.picClear.Name = "picClear";
+            this.picClear.Size = new System.Drawing.Size(30, 30);
+            this.picClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picClear.TabIndex = 23;
+            this.picClear.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label2.Location = new System.Drawing.Point(1, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 20);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "&Filter:";
+            // 
+            // picSearch
+            // 
+            this.picSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.picSearch.Location = new System.Drawing.Point(506, 3);
+            this.picSearch.Name = "picSearch";
+            this.picSearch.Size = new System.Drawing.Size(30, 30);
+            this.picSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picSearch.TabIndex = 21;
+            this.picSearch.TabStop = false;
+            // 
+            // txtSearchBox
+            // 
+            this.txtSearchBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchBox.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtSearchBox.Location = new System.Drawing.Point(55, 3);
+            this.txtSearchBox.Name = "txtSearchBox";
+            this.txtSearchBox.Size = new System.Drawing.Size(444, 29);
+            this.txtSearchBox.TabIndex = 22;
+            // 
             // frmScriptVariables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(607, 385);
+            this.ClientSize = new System.Drawing.Size(607, 421);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -247,6 +315,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).EndInit();
             this.panel2.ResumeLayout(false);
             this.editVariableContextMenuStrip.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSearch)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -265,5 +337,10 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.PictureBox picClear;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox picSearch;
+        private System.Windows.Forms.TextBox txtSearchBox;
     }
 }
