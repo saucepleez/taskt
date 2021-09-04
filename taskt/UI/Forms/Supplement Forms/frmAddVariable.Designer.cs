@@ -50,9 +50,9 @@
             this.lblDefineName.ForeColor = System.Drawing.Color.White;
             this.lblDefineName.Location = new System.Drawing.Point(10, 44);
             this.lblDefineName.Name = "lblDefineName";
-            this.lblDefineName.Size = new System.Drawing.Size(167, 21);
+            this.lblDefineName.Size = new System.Drawing.Size(192, 21);
             this.lblDefineName.TabIndex = 1;
-            this.lblDefineName.Text = "Define Variable Name";
+            this.lblDefineName.Text = "Define Variable &Name (&A)";
             // 
             // lblHeader
             // 
@@ -118,9 +118,9 @@
             this.lblDefineDefaultValue.ForeColor = System.Drawing.Color.White;
             this.lblDefineDefaultValue.Location = new System.Drawing.Point(12, 162);
             this.lblDefineDefaultValue.Name = "lblDefineDefaultValue";
-            this.lblDefineDefaultValue.Size = new System.Drawing.Size(220, 21);
+            this.lblDefineDefaultValue.Size = new System.Drawing.Size(244, 21);
             this.lblDefineDefaultValue.TabIndex = 4;
-            this.lblDefineDefaultValue.Text = "Define Variable Default Value";
+            this.lblDefineDefaultValue.Text = "Define Variable Default Value (&V)";
             // 
             // uiBtnOk
             // 

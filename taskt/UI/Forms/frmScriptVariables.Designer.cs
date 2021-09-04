@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptVariables));
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
@@ -38,12 +39,17 @@
             this.lblDefineName = new System.Windows.Forms.Label();
             this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.editVariableContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).BeginInit();
             this.panel2.SuspendLayout();
+            this.editVariableContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblMainLogo
@@ -123,12 +129,14 @@
             this.tvScriptVariables.ShowLines = false;
             this.tvScriptVariables.Size = new System.Drawing.Size(601, 242);
             this.tvScriptVariables.TabIndex = 1;
+            this.tvScriptVariables.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvScriptVariables_NodeMouseClick);
             this.tvScriptVariables.DoubleClick += new System.EventHandler(this.tvScriptVariables_DoubleClick);
             this.tvScriptVariables.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvScriptVariables_KeyDown);
+            this.tvScriptVariables.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvScriptVariables_MouseClick);
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.lblDefineName);
             this.panel1.Controls.Add(this.uiBtnNew);
             this.panel1.Controls.Add(this.lblMainLogo);
@@ -143,14 +151,14 @@
             // 
             this.lblDefineName.AutoSize = true;
             this.lblDefineName.BackColor = System.Drawing.Color.Transparent;
-            this.lblDefineName.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDefineName.ForeColor = System.Drawing.Color.LightSteelBlue;
+            this.lblDefineName.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.lblDefineName.ForeColor = System.Drawing.Color.White;
             this.lblDefineName.Location = new System.Drawing.Point(55, 45);
             this.lblDefineName.Name = "lblDefineName";
-            this.lblDefineName.Size = new System.Drawing.Size(294, 40);
+            this.lblDefineName.Size = new System.Drawing.Size(494, 40);
             this.lblDefineName.TabIndex = 1;
-            this.lblDefineName.Text = "Enter or Double-Click to edit existing variables\r\nPress \'DEL\' key to delete exist" +
-    "ing variables";
+            this.lblDefineName.Text = "Enter or Double-Click to edit existing variables.\r\nPress \'DEL\' key to delete exis" +
+    "ting variables. Available right click menu too.";
             // 
             // uiBtnNew
             // 
@@ -182,6 +190,41 @@
             this.panel2.TabIndex = 2;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
+            // editVariableContextMenuStrip
+            // 
+            this.editVariableContextMenuStrip.Font = new System.Drawing.Font("Yu Gothic UI", 12F);
+            this.editVariableContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.removeToolStripMenuItem});
+            this.editVariableContextMenuStrip.Name = "editVariableContextMenuStrip";
+            this.editVariableContextMenuStrip.Size = new System.Drawing.Size(171, 82);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_add_variable;
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.addToolStripMenuItem.Text = "&Add";
+            this.addToolStripMenuItem.Visible = false;
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.editToolStripMenuItem.Text = "&Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.removeToolStripMenuItem.Text = "&Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
             // frmScriptVariables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -190,10 +233,12 @@
             this.ClientSize = new System.Drawing.Size(607, 385);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmScriptVariables";
             this.Text = "Variables";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmScriptVariables_FormClosed);
             this.Load += new System.EventHandler(this.frmScriptVariables_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmScriptVariables_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -201,6 +246,7 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).EndInit();
             this.panel2.ResumeLayout(false);
+            this.editVariableContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -215,5 +261,9 @@
         private CustomControls.UITreeView tvScriptVariables;
         private CustomControls.UIPictureButton uiBtnNew;
         private System.Windows.Forms.Label lblDefineName;
+        private System.Windows.Forms.ContextMenuStrip editVariableContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
     }
 }
