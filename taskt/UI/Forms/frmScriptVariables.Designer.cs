@@ -40,14 +40,18 @@
             this.uiBtnNew = new taskt.UI.CustomControls.UIPictureButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.picAdd = new System.Windows.Forms.PictureBox();
             this.picClear = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.picSearch = new System.Windows.Forms.PictureBox();
             this.txtSearchBox = new System.Windows.Forms.TextBox();
             this.editVariableContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rootVariableContestMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -55,9 +59,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnNew)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picClear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSearch)).BeginInit();
             this.editVariableContextMenuStrip.SuspendLayout();
+            this.rootVariableContestMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblMainLogo
@@ -162,7 +168,7 @@
             this.lblDefineName.BackColor = System.Drawing.Color.Transparent;
             this.lblDefineName.Font = new System.Drawing.Font("Segoe UI", 11.25F);
             this.lblDefineName.ForeColor = System.Drawing.Color.White;
-            this.lblDefineName.Location = new System.Drawing.Point(55, 45);
+            this.lblDefineName.Location = new System.Drawing.Point(86, 43);
             this.lblDefineName.Name = "lblDefineName";
             this.lblDefineName.Size = new System.Drawing.Size(494, 40);
             this.lblDefineName.TabIndex = 1;
@@ -180,7 +186,7 @@
             this.uiBtnNew.IsMouseOver = false;
             this.uiBtnNew.Location = new System.Drawing.Point(5, 42);
             this.uiBtnNew.Name = "uiBtnNew";
-            this.uiBtnNew.Size = new System.Drawing.Size(48, 45);
+            this.uiBtnNew.Size = new System.Drawing.Size(75, 45);
             this.uiBtnNew.TabIndex = 13;
             this.uiBtnNew.TabStop = false;
             this.uiBtnNew.Text = "Add";
@@ -202,6 +208,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.panel3.Controls.Add(this.picAdd);
             this.panel3.Controls.Add(this.picClear);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.picSearch);
@@ -214,11 +221,24 @@
             this.panel3.Size = new System.Drawing.Size(607, 35);
             this.panel3.TabIndex = 2;
             // 
+            // picAdd
+            // 
+            this.picAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picAdd.Image = global::taskt.Properties.Resources.action_bar_add_variable;
+            this.picAdd.Location = new System.Drawing.Point(574, 2);
+            this.picAdd.Name = "picAdd";
+            this.picAdd.Size = new System.Drawing.Size(30, 30);
+            this.picAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picAdd.TabIndex = 24;
+            this.picAdd.TabStop = false;
+            this.picAdd.Visible = false;
+            this.picAdd.Click += new System.EventHandler(this.picAdd_Click);
+            // 
             // picClear
             // 
             this.picClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picClear.Image = global::taskt.Properties.Resources.command_error;
-            this.picClear.Location = new System.Drawing.Point(542, 3);
+            this.picClear.Location = new System.Drawing.Point(540, 3);
             this.picClear.Name = "picClear";
             this.picClear.Size = new System.Drawing.Size(30, 30);
             this.picClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -265,21 +285,10 @@
             // 
             this.editVariableContextMenuStrip.Font = new System.Drawing.Font("Yu Gothic UI", 12F);
             this.editVariableContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
             this.editToolStripMenuItem,
             this.removeToolStripMenuItem});
             this.editVariableContextMenuStrip.Name = "editVariableContextMenuStrip";
-            this.editVariableContextMenuStrip.Size = new System.Drawing.Size(171, 82);
-            // 
-            // addToolStripMenuItem
-            // 
-            this.addToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_add_variable;
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
-            this.addToolStripMenuItem.Text = "&Add";
-            this.addToolStripMenuItem.Visible = false;
-            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            this.editVariableContextMenuStrip.Size = new System.Drawing.Size(171, 56);
             // 
             // editToolStripMenuItem
             // 
@@ -295,6 +304,39 @@
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
             this.removeToolStripMenuItem.Text = "&Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
+            // rootVariableContestMenuStrip
+            // 
+            this.rootVariableContestMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.rootVariableContestMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.expandToolStripMenuItem,
+            this.collapseToolStripMenuItem});
+            this.rootVariableContestMenuStrip.Name = "rootVariableContestMenuStrip";
+            this.rootVariableContestMenuStrip.Size = new System.Drawing.Size(167, 82);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_add_variable;
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.addToolStripMenuItem.Text = "&Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // expandToolStripMenuItem
+            // 
+            this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.expandToolStripMenuItem.Text = "&Expand";
+            this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
+            // 
+            // collapseToolStripMenuItem
+            // 
+            this.collapseToolStripMenuItem.Name = "collapseToolStripMenuItem";
+            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.collapseToolStripMenuItem.Text = "&Collapse";
+            this.collapseToolStripMenuItem.Click += new System.EventHandler(this.collapseToolStripMenuItem_Click);
             // 
             // frmScriptVariables
             // 
@@ -319,9 +361,11 @@
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAdd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picClear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSearch)).EndInit();
             this.editVariableContextMenuStrip.ResumeLayout(false);
+            this.rootVariableContestMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -337,7 +381,6 @@
         private CustomControls.UIPictureButton uiBtnNew;
         private System.Windows.Forms.Label lblDefineName;
         private System.Windows.Forms.ContextMenuStrip editVariableContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.Panel panel3;
@@ -345,5 +388,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox picSearch;
         private System.Windows.Forms.TextBox txtSearchBox;
+        private System.Windows.Forms.PictureBox picAdd;
+        private System.Windows.Forms.ContextMenuStrip rootVariableContestMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expandToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem collapseToolStripMenuItem;
     }
 }

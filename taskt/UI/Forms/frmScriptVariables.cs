@@ -209,7 +209,8 @@ namespace taskt.UI.Forms
                 //validate if user added variable
                 if (addVariableForm.ShowDialog() == DialogResult.OK)
                 {
-                    string newVariableName = addVariableForm.txtVariableName.Text.Trim();
+                    string newVariableName = addVariableForm.VariableName.Trim();
+                    string newVariableValue = addVariableForm.VariableValue.Trim();
                     // check variable name
                     if (checkVariableNameIsValid(newVariableName))
                     {
@@ -221,8 +222,8 @@ namespace taskt.UI.Forms
                                 targetVariable.Remove();
                             }
                             //add newly edited node
-                            AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
-                            AddUserVariableNode(tvScriptVariables.Nodes[1], newVariableName, addVariableForm.txtDefaultValue.Text);
+                            AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, newVariableValue);
+                            AddUserVariableNode(tvScriptVariables.Nodes[1], newVariableName, newVariableValue);
                         }
                         else
                         {
@@ -231,8 +232,8 @@ namespace taskt.UI.Forms
                             {
                                 targetVariable.Remove();
                                 //add newly edited node
-                                AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, addVariableForm.txtDefaultValue.Text);
-                                AddUserVariableNode(tvScriptVariables.Nodes[1], newVariableName, addVariableForm.txtDefaultValue.Text);
+                                AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, newVariableValue);
+                                AddUserVariableNode(tvScriptVariables.Nodes[1], newVariableName, newVariableValue);
                             }
                             else
                             {
@@ -462,25 +463,49 @@ namespace taskt.UI.Forms
                 return;
             }
             TreeNode topNode = GetSelectedTopNode();
-            if ((topNode.Text == User_Variables_Text) && (e.Button == MouseButtons.Right))
+            if (e.Button == MouseButtons.Right)
             {
                 //if (tvScriptVariables.Parent != null)
                 //{
                 //    addToolStripMenuItem.Visible = false;
                 //}
-                if (tvScriptVariables.SelectedNode.Text == User_Variables_Text)
+                if (topNode.Text == User_Variables_Text)
                 {
-                    addToolStripMenuItem.Visible = true;
-                    editToolStripMenuItem.Visible = false;
-                    removeToolStripMenuItem.Visible = false;
+                    if (tvScriptVariables.SelectedNode.Text == User_Variables_Text)
+                    {
+                        if (tvScriptVariables.SelectedNode.IsExpanded)
+                        {
+                            collapseToolStripMenuItem.Visible = true;
+                            expandToolStripMenuItem.Visible = false;
+                        }
+                        else
+                        {
+                            collapseToolStripMenuItem.Visible = false;
+                            expandToolStripMenuItem.Visible = true;
+                        }
+                        addToolStripMenuItem.Visible = true;
+                        rootVariableContestMenuStrip.Show(Cursor.Position);
+                    }
+                    else
+                    {
+                        editVariableContextMenuStrip.Show(Cursor.Position);
+                    }
                 }
                 else
                 {
+                    if (tvScriptVariables.SelectedNode.IsExpanded)
+                    {
+                        collapseToolStripMenuItem.Visible = true;
+                        expandToolStripMenuItem.Visible = false;
+                    }
+                    else
+                    {
+                        collapseToolStripMenuItem.Visible = false;
+                        expandToolStripMenuItem.Visible = true;
+                    }
                     addToolStripMenuItem.Visible = false;
-                    editToolStripMenuItem.Visible = true;
-                    removeToolStripMenuItem.Visible = true;
+                    rootVariableContestMenuStrip.Show(Cursor.Position);
                 }
-                editVariableContextMenuStrip.Show(Cursor.Position);
             }
         }
         private void tvScriptVariables_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -521,11 +546,6 @@ namespace taskt.UI.Forms
         #endregion
 
         #region editVariableToolStripMenu events
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AddOrEditVaiableProcess(null);
-        }
-
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditSelectedVariableProcess();
@@ -534,6 +554,26 @@ namespace taskt.UI.Forms
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RemoveSelectedVariableProcess();
+        }
+        #endregion
+
+        #region rootVariableToolStripMenu events
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddOrEditVaiableProcess(null);
+        }
+        private void expandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvScriptVariables.BeginUpdate();
+            tvScriptVariables.SelectedNode.ExpandAll();
+            tvScriptVariables.EndUpdate();
+        }
+
+        private void collapseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvScriptVariables.BeginUpdate();
+            tvScriptVariables.SelectedNode.Collapse();
+            tvScriptVariables.EndUpdate();
         }
         #endregion
 
@@ -652,9 +692,9 @@ namespace taskt.UI.Forms
             txtSearchBox.Text = "";
             showAllVariables();
         }
-        private void txtSearchBox_KeyUp(object sender, KeyEventArgs e)
+        private void picAdd_Click(object sender, EventArgs e)
         {
-            
+
         }
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -724,6 +764,8 @@ namespace taskt.UI.Forms
             tvScriptVariables.Sort();
             tvScriptVariables.EndUpdate();
         }
+
+
         #endregion
 
         
