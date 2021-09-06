@@ -91,13 +91,14 @@ namespace taskt.UI.Forms
                 AddUserVariableNode(bufferedUserVariableParentNode, item.VariableName, (string)item.VariableValue);
             }
 
-            tvScriptVariables.BeginUpdate();
-            tvScriptVariables.Nodes.Clear();
-            tvScriptVariables.Nodes.Add(bufferedSystemVariableParentNode);
-            tvScriptVariables.Nodes.Add(bufferedUserVariableParentNode);
-            tvScriptVariables.Nodes[1].ExpandAll();
-            tvScriptVariables.Sort();
-            tvScriptVariables.EndUpdate();
+            //tvScriptVariables.BeginUpdate();
+            //tvScriptVariables.Nodes.Clear();
+            //tvScriptVariables.Nodes.Add((TreeNode)bufferedSystemVariableParentNode.Clone());
+            //tvScriptVariables.Nodes.Add((TreeNode)bufferedUserVariableParentNode.Clone());
+            //tvScriptVariables.Nodes[1].ExpandAll();
+            //tvScriptVariables.Sort();
+            //tvScriptVariables.EndUpdate();
+            showAllVariables();
         }
 
         #endregion
@@ -717,13 +718,12 @@ namespace taskt.UI.Forms
         {
             tvScriptVariables.BeginUpdate();
             tvScriptVariables.Nodes.Clear();
-            tvScriptVariables.Nodes.Add(bufferedSystemVariableParentNode);
-            tvScriptVariables.Nodes.Add(bufferedUserVariableParentNode);
+            tvScriptVariables.Nodes.Add((TreeNode)bufferedSystemVariableParentNode.Clone());
+            tvScriptVariables.Nodes.Add((TreeNode)bufferedUserVariableParentNode.Clone());
             tvScriptVariables.Nodes[1].ExpandAll();
             tvScriptVariables.Sort();
             tvScriptVariables.EndUpdate();
         }
-
         #endregion
 
         
