@@ -231,7 +231,6 @@
             this.picAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picAdd.TabIndex = 24;
             this.picAdd.TabStop = false;
-            this.picAdd.Visible = false;
             this.picAdd.Click += new System.EventHandler(this.picAdd_Click);
             // 
             // picClear
