@@ -1026,9 +1026,15 @@ namespace taskt.UI.Forms
         private void DeleteRows()
         {
             lstScriptActions.BeginUpdate();
-            foreach (ListViewItem itm in lstScriptActions.SelectedItems)
+            int[] indices = new int[lstScriptActions.SelectedItems.Count];
+            lstScriptActions.SelectedIndices.CopyTo(indices, 0);
+            //foreach (ListViewItem itm in lstScriptActions.SelectedItems)
+            //{
+            //    lstScriptActions.Items.Remove(itm);
+            //}
+            for (var i = indices.Length - 1; i >= 0; i--)
             {
-                lstScriptActions.Items.Remove(itm);
+                lstScriptActions.Items.RemoveAt(indices[i]);
             }
             lstScriptActions.EndUpdate();
             ChangeSaveState(true);
@@ -1063,11 +1069,21 @@ namespace taskt.UI.Forms
                 var commands = new List<Core.Automation.Commands.ScriptCommand>();
 
                 lstScriptActions.BeginUpdate();
-                foreach (ListViewItem item in lstScriptActions.SelectedItems)
+                int[] indices = new int[lstScriptActions.SelectedItems.Count];
+                lstScriptActions.SelectedIndices.CopyTo(indices, 0);
+                //foreach (ListViewItem item in lstScriptActions.SelectedItems)
+                //{
+                //    commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
+                //    //rowsSelectedForCopy.Add(item);
+                //    //lstScriptActions.Items.Remove(item);
+                //}
+                for (int i = 0; i <indices.Length; i++)
                 {
-                    commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
-                    //rowsSelectedForCopy.Add(item);
-                    lstScriptActions.Items.Remove(item);
+                    commands.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[indices[i]].Tag);
+                }
+                for (int i = indices.Length - 1; i >= 0; i--)
+                {
+                    lstScriptActions.Items.RemoveAt(indices[i]);
                 }
                 lstScriptActions.EndUpdate();
                 // set clipborad xml string
