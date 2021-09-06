@@ -505,25 +505,63 @@ namespace taskt.UI.Forms
         private void lstScriptActions_DragEnter(object sender, DragEventArgs e)
         {
             int len = e.Data.GetFormats().Length - 1;
-            int i;
-            for (i = 0; i <= len; i++)
+            if (e.Data.GetFormats()[0] == "System.Windows.Forms.ListView+SelectedListViewItemCollection")
             {
-                if (e.Data.GetFormats()[i].Equals("System.Windows.Forms.ListView+SelectedListViewItemCollection"))
+                e.Effect = DragDropEffects.Move;
+            }
+            else
+            {
+                //Console.WriteLine(formatType);
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    //The data from the drag source is moved to the target.
-                    e.Effect = DragDropEffects.Move;
+                    e.Effect = DragDropEffects.Copy;
+                    lstScriptActions.BackColor = Color.LightGray;
                 }
             }
+            //for (int i = 0; i <= len; i++)
+            //{
+            //    if (e.Data.GetFormats()[i].Equals("System.Windows.Forms.ListView+SelectedListViewItemCollection"))
+            //    {
+            //        //The data from the drag source is moved to the target.
+            //        e.Effect = DragDropEffects.Move;
+            //    }
+            //}
+        }
+        private void lstScriptActions_DragLeave(object sender, EventArgs e)
+        {
+            lstScriptActions.BackColor = Color.WhiteSmoke;
         }
 
         private void lstScriptActions_DragDrop(object sender, DragEventArgs e)
         {
+            lstScriptActions.BackColor = Color.WhiteSmoke;
 
-            //Return if the items are not selected in the ListView control.
-            if (lstScriptActions.SelectedItems.Count == 0)
+            string[] fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            if ((fileNames != null) && (fileNames.Length > 0))
             {
-                return;
+                var targetFile = fileNames[0];
+                if (System.IO.Path.GetExtension(targetFile).ToLower() == ".xml")
+                {
+                    Console.WriteLine(targetFile);
+                }
+                else
+                {
+                    Console.WriteLine(targetFile);
+                }
             }
+            else if (lstScriptActions.SelectedItems.Count > 0)
+            {
+                MoveCommands(e);
+            }
+        }
+
+        private void MoveCommands(DragEventArgs e)
+        {
+            ////Return if the items are not selected in the ListView control.
+            //if (lstScriptActions.SelectedItems.Count == 0)
+            //{
+            //    return;
+            //}
 
             CreateUndoSnapshot();
 
@@ -535,6 +573,8 @@ namespace taskt.UI.Forms
             {
                 return;
             }
+
+            lstScriptActions.BeginUpdate();
 
             //drag and drop for sequence
             if ((dragToItem.Tag is Core.Automation.Commands.SequenceCommand) && (appSettings.ClientSettings.EnableSequenceDragDrop))
@@ -550,41 +590,24 @@ namespace taskt.UI.Forms
                 }
 
                 //remove originals
-                for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0 ; i--)
+                //for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
+                //{
+                //    lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+                //}
+                int[] indices = new int[lstScriptActions.SelectedIndices.Count];
+                lstScriptActions.SelectedIndices.CopyTo(indices, 0);
+                for (int i = indices.Length - 1; i>=0; i--)
                 {
-                    lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
+                    lstScriptActions.Items.RemoveAt(indices[i]);
                 }
 
+                lstScriptActions.EndUpdate();
                 //return back
                 return;
             }
 
-
-
-
             //Obtain the index of the item at the mouse pointer.
             int dragIndex = dragToItem.Index;
-
-
-            //foreach (ListViewItem command in lstScriptActions.SelectedItems)
-            //{
-
-            //    if (command.Tag is Core.Automation.Commands.EndLoopCommand)
-            //    {
-            //        for (int i = 0; i < dragIndex; i++)
-            //        {
-            //            if (lstScriptActions.Items[i].Tag is Core.Automation.Commands.BeginLoopCommand)
-            //            {
-
-            //            }
-            //        }
-
-
-            //    }
-
-            //}
-
-
 
             ListViewItem[] sel = new ListViewItem[lstScriptActions.SelectedItems.Count];
             for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
@@ -598,7 +621,8 @@ namespace taskt.UI.Forms
                 int itemIndex = dragIndex;
                 if (itemIndex == dragItem.Index)
                 {
-                    return;
+                    //return;
+                    break;
                 }
                 if (dragItem.Index < itemIndex)
                     itemIndex++;
@@ -611,9 +635,10 @@ namespace taskt.UI.Forms
                 //the item is moved to the new location.
                 lstScriptActions.Items.Remove(dragItem);
                 //FormatCommandListView();
-                lstScriptActions.Invalidate();
+                //lstScriptActions.Invalidate();
             }
-
+            lstScriptActions.EndUpdate();
+            lstScriptActions.Invalidate();
         }
 
         #endregion
@@ -3195,6 +3220,43 @@ namespace taskt.UI.Forms
 
         #endregion
 
+        #region Drag&Drop script file
+        private void pnlCommandHelper_DragDrop(object sender, DragEventArgs e)
+        {
+            pnlCommandHelper.BackColor = Color.FromArgb(59, 59, 59);
+            string[] fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            if (fileNames.Length > 0)
+            {
+                var targetFile = fileNames[0];
+                if (System.IO.Path.GetExtension(targetFile).ToLower() == ".xml")
+                {
+                    
+                }
+                else
+                {
+                    using(var fm = new UI.Forms.Supplemental.frmDialog("This file type can not open.", "File Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
+                }
+            }
+        }
+
+        private void pnlCommandHelper_DragEnter(object sender, DragEventArgs e)
+        {
+            pnlCommandHelper.BackColor = Color.FromArgb(59, 59, 128);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        private void pnlCommandHelper_DragLeave(object sender, EventArgs e)
+        {
+            pnlCommandHelper.BackColor = Color.FromArgb(59, 59, 59);
+        }
+        #endregion
+
         private void frmScriptBuilder_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = !BeginFormCloseProcess();
@@ -3223,6 +3285,7 @@ namespace taskt.UI.Forms
             return true;
         }
 
+        
     }
 
 }
