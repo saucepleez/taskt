@@ -172,6 +172,7 @@
             this.Controls.Add(this.txtVariableName);
             this.Controls.Add(this.lblDefineName);
             this.Controls.Add(this.lblHeader);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAddVariable";
             this.Text = "Add Variable";
@@ -192,7 +193,7 @@
         private System.Windows.Forms.Label lblDefineDefaultValue;
         private CustomControls.UIPictureButton uiBtnOk;
         private CustomControls.UIPictureButton uiBtnCancel;
-        public System.Windows.Forms.TextBox txtVariableName;
-        public System.Windows.Forms.TextBox txtDefaultValue;
+        private System.Windows.Forms.TextBox txtVariableName;
+        private System.Windows.Forms.TextBox txtDefaultValue;
     }
 }

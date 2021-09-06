@@ -14,6 +14,8 @@ namespace taskt.UI.Forms.Supplement_Forms
     {
         private Core.ApplicationSettings appSettings;
         public frmAddVariablesEditMode editMode { get; }
+        public string VariableName { get; private set; }
+        public string VariableValue { get; private set; }
 
         public enum frmAddVariablesEditMode
         {
@@ -41,8 +43,9 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void frmAddVariable_Load(object sender, EventArgs e)
         {
-            lblDefineNameDescription.Text = lblDefineNameDescription.Tag.ToString().Replace("{{{", appSettings.EngineSettings.VariableStartMarker)
-                    .Replace("}}}", appSettings.EngineSettings.VariableEndMarker);
+            //lblDefineNameDescription.Text = lblDefineNameDescription.Tag.ToString().Replace("{{{", appSettings.EngineSettings.VariableStartMarker)
+            //        .Replace("}}}", appSettings.EngineSettings.VariableEndMarker);
+            lblDefineNameDescription.Text = appSettings.EngineSettings.replaceEngineKeyword(lblDefineNameDescription.Tag.ToString());
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
@@ -53,6 +56,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
 
             this.DialogResult = DialogResult.OK;
+            this.VariableName = txtVariableName.Text;
+            this.VariableValue = txtDefaultValue.Text;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
