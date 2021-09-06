@@ -86,13 +86,30 @@ namespace taskt.UI.Forms
         }
         private void tvSamples_MouseClick(object sender, MouseEventArgs e)
         {
-            if ((tvSamples.SelectedNode == null) || (tvSamples.SelectedNode.Level == 0))
+            if (tvSamples.SelectedNode == null)
             {
                 return;
             }
             if (e.Button == MouseButtons.Right)
             {
-                tvContextMenuStrip.Show(Cursor.Position);
+                if (tvSamples.SelectedNode.Level == 0)
+                {
+                    if (tvSamples.SelectedNode.IsExpanded)
+                    {
+                        expandToolStripMenuItem.Visible = false;
+                        collapseToolStripMenuItem.Visible = true;
+                    }
+                    else
+                    {
+                        expandToolStripMenuItem.Visible = true;
+                        collapseToolStripMenuItem.Visible = false;
+                    }
+                    rootContextMenuStrip.Show(Cursor.Position);
+                }
+                else
+                {
+                    tvContextMenuStrip.Show(Cursor.Position);
+                }
             }
         }
 
@@ -173,6 +190,19 @@ namespace taskt.UI.Forms
             importSampleScriptProcess();
         }
         #endregion
+
+        #region rootContextMenuStrip events
+        private void expandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvSamples.SelectedNode.ExpandAll();
+        }
+
+        private void collapseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvSamples.SelectedNode.Collapse();
+        }
+        #endregion
+
         #region search filter
         private void picSearch_Click(object sender, EventArgs e)
         {
@@ -246,5 +276,7 @@ namespace taskt.UI.Forms
             tvSamples.EndUpdate();
         }
         #endregion
+
+        
     }
 }

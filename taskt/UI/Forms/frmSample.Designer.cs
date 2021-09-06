@@ -49,6 +49,9 @@ namespace taskt.UI.Forms
             this.tvContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rootContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -60,6 +63,7 @@ namespace taskt.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.picClear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSearch)).BeginInit();
             this.tvContextMenuStrip.SuspendLayout();
+            this.rootContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -268,17 +272,18 @@ namespace taskt.UI.Forms
             // 
             // tvContextMenuStrip
             // 
+            this.tvContextMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.tvContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.importToolStripMenuItem});
             this.tvContextMenuStrip.Name = "tvContextMenuStrip";
-            this.tvContextMenuStrip.Size = new System.Drawing.Size(110, 48);
+            this.tvContextMenuStrip.Size = new System.Drawing.Size(128, 56);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(127, 26);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -286,9 +291,32 @@ namespace taskt.UI.Forms
             // 
             this.importToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(127, 26);
             this.importToolStripMenuItem.Text = "&Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // rootContextMenuStrip
+            // 
+            this.rootContextMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.rootContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.expandToolStripMenuItem,
+            this.collapseToolStripMenuItem});
+            this.rootContextMenuStrip.Name = "rootContextMenuStrip";
+            this.rootContextMenuStrip.Size = new System.Drawing.Size(181, 78);
+            // 
+            // expandToolStripMenuItem
+            // 
+            this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.expandToolStripMenuItem.Text = "&Expand";
+            this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
+            // 
+            // collapseToolStripMenuItem
+            // 
+            this.collapseToolStripMenuItem.Name = "collapseToolStripMenuItem";
+            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.collapseToolStripMenuItem.Text = "&Collapse";
+            this.collapseToolStripMenuItem.Click += new System.EventHandler(this.collapseToolStripMenuItem_Click);
             // 
             // frmSample
             // 
@@ -313,6 +341,7 @@ namespace taskt.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.picClear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSearch)).EndInit();
             this.tvContextMenuStrip.ResumeLayout(false);
+            this.rootContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -337,5 +366,8 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox picClear;
+        private System.Windows.Forms.ContextMenuStrip rootContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem expandToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem collapseToolStripMenuItem;
     }
 }
