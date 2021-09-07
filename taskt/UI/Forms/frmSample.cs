@@ -163,6 +163,10 @@ namespace taskt.UI.Forms
         {
             importSampleScriptProcess();
         }
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            newTasktSampleScriptProcess();
+        }
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -209,6 +213,19 @@ namespace taskt.UI.Forms
                 this.Close();
             }
         }
+        private void newTasktSampleScriptProcess()
+        {
+            string targetFile = getSelectedScriptPath();
+            string fileName = System.IO.Path.GetFileName(targetFile);
+            if (targetFile != "")
+            {
+                System.Diagnostics.ProcessStartInfo pInfo = new System.Diagnostics.ProcessStartInfo();
+                pInfo.FileName = Assembly.GetEntryAssembly().Location;
+                pInfo.Arguments = "-o \"" + getSelectedScriptPath() + "\"";
+                System.Diagnostics.Process.Start(pInfo);
+                this.Close();
+            }
+        }
         #endregion
 
         #region tvContextMenuStrip events
@@ -220,6 +237,10 @@ namespace taskt.UI.Forms
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             importSampleScriptProcess();
+        }
+        private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newTasktSampleScriptProcess();
         }
         #endregion
 
@@ -311,5 +332,8 @@ namespace taskt.UI.Forms
 
         #endregion
 
+        
+
+        
     }
 }

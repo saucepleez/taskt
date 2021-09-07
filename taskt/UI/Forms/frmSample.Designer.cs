@@ -35,6 +35,7 @@ namespace taskt.UI.Forms
             this.panel1 = new System.Windows.Forms.Panel();
             this.tvSamples = new taskt.UI.CustomControls.UITreeView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnNew = new taskt.UI.CustomControls.UIPictureButton();
             this.btnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.btnImport = new taskt.UI.CustomControls.UIPictureButton();
             this.btnOpen = new taskt.UI.CustomControls.UIPictureButton();
@@ -49,12 +50,14 @@ namespace taskt.UI.Forms
             this.tvContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rootContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOpen)).BeginInit();
@@ -114,6 +117,7 @@ namespace taskt.UI.Forms
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnNew);
             this.panel2.Controls.Add(this.btnCancel);
             this.panel2.Controls.Add(this.btnImport);
             this.panel2.Controls.Add(this.btnOpen);
@@ -124,6 +128,23 @@ namespace taskt.UI.Forms
             this.panel2.Size = new System.Drawing.Size(591, 55);
             this.panel2.TabIndex = 0;
             // 
+            // btnNew
+            // 
+            this.btnNew.BackColor = System.Drawing.Color.Transparent;
+            this.btnNew.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnNew.DisplayText = "New";
+            this.btnNew.DisplayTextBrush = System.Drawing.Color.White;
+            this.btnNew.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
+            this.btnNew.Image = global::taskt.Properties.Resources.taskt_logo_alt;
+            this.btnNew.IsMouseOver = false;
+            this.btnNew.Location = new System.Drawing.Point(111, 4);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(48, 48);
+            this.btnNew.TabIndex = 3;
+            this.btnNew.TabStop = false;
+            this.btnNew.Text = "New";
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            // 
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Transparent;
@@ -133,7 +154,7 @@ namespace taskt.UI.Forms
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.btnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.btnCancel.IsMouseOver = false;
-            this.btnCancel.Location = new System.Drawing.Point(130, 3);
+            this.btnCancel.Location = new System.Drawing.Point(200, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(48, 48);
             this.btnCancel.TabIndex = 2;
@@ -276,15 +297,16 @@ namespace taskt.UI.Forms
             this.tvContextMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.tvContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.importToolStripMenuItem});
+            this.importToolStripMenuItem,
+            this.newWindowToolStripMenuItem});
             this.tvContextMenuStrip.Name = "tvContextMenuStrip";
-            this.tvContextMenuStrip.Size = new System.Drawing.Size(128, 56);
+            this.tvContextMenuStrip.Size = new System.Drawing.Size(175, 82);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(127, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(174, 26);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -292,9 +314,17 @@ namespace taskt.UI.Forms
             // 
             this.importToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(127, 26);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(174, 26);
             this.importToolStripMenuItem.Text = "&Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // newWindowToolStripMenuItem
+            // 
+            this.newWindowToolStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
+            this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
+            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(174, 26);
+            this.newWindowToolStripMenuItem.Text = "&New Window";
+            this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
             // 
             // rootContextMenuStrip
             // 
@@ -334,6 +364,7 @@ namespace taskt.UI.Forms
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.btnNew)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOpen)).EndInit();
@@ -372,5 +403,7 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.ContextMenuStrip rootContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem expandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem collapseToolStripMenuItem;
+        private CustomControls.UIPictureButton btnNew;
+        private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
     }
 }
