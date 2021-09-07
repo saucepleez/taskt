@@ -64,6 +64,20 @@ namespace taskt.UI.Forms
 
         private Supplement_Forms.frmSearchCommands frmSearch = null;
 
+        private string _scriptFilePath = null;
+        public string ScriptFilePath
+        {
+            get
+            {
+                return _scriptFilePath;
+            }
+            set
+            {
+                _scriptFilePath = value;
+                UpdateWindowTitle();
+            }
+        }
+
         public enum CommandEditorState
         {
             Normal,
@@ -82,25 +96,14 @@ namespace taskt.UI.Forms
         {
             InitializeComponent();
         }
-        private string scriptFilePath;
-        public string ScriptFilePath
+        public frmScriptBuilder(string filePath)
         {
-            get
-            {
-                return scriptFilePath;
-            }
-            set
-            {
-                scriptFilePath = value;
-                UpdateWindowTitle();
-            }
+            InitializeComponent();
+            this._scriptFilePath = filePath;
         }
-
 
         private void UpdateWindowTitle()
         {
-
-
             if (ScriptFilePath != null)
             {
                 System.IO.FileInfo scriptFileInfo = new System.IO.FileInfo(ScriptFilePath);
@@ -226,6 +229,7 @@ namespace taskt.UI.Forms
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
 
+            tvCommands.BeginUpdate();
             tvCommands.SuspendLayout();
 
             if (appSettings.ClientSettings.GroupingBySubgroup)
@@ -311,6 +315,7 @@ namespace taskt.UI.Forms
             }
             tvCommands.Sort();
             tvCommands.ResumeLayout();
+            tvCommands.EndUpdate();
 
             //tvCommands.ImageList = uiImages;
 
@@ -333,6 +338,10 @@ namespace taskt.UI.Forms
             // release
             GC.Collect();
 
+            if (this._scriptFilePath != null)
+            {
+                OpenScriptFromFilePath(this.ScriptFilePath, true);
+            }
         }
         
         private void frmScriptBuilder_Shown(object sender, EventArgs e)
