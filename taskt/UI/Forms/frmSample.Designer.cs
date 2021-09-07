@@ -109,6 +109,7 @@ namespace taskt.UI.Forms
             this.tvSamples.TabIndex = 0;
             this.tvSamples.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvSamples_NodeMouseClick);
             this.tvSamples.DoubleClick += new System.EventHandler(this.tvSamples_DoubleClick);
+            this.tvSamples.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvSamples_KeyDown);
             this.tvSamples.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvSamples_MouseClick);
             // 
             // panel2
@@ -302,19 +303,19 @@ namespace taskt.UI.Forms
             this.expandToolStripMenuItem,
             this.collapseToolStripMenuItem});
             this.rootContextMenuStrip.Name = "rootContextMenuStrip";
-            this.rootContextMenuStrip.Size = new System.Drawing.Size(181, 78);
+            this.rootContextMenuStrip.Size = new System.Drawing.Size(140, 56);
             // 
             // expandToolStripMenuItem
             // 
             this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
-            this.expandToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.expandToolStripMenuItem.Text = "&Expand";
             this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
             // 
             // collapseToolStripMenuItem
             // 
             this.collapseToolStripMenuItem.Name = "collapseToolStripMenuItem";
-            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
             this.collapseToolStripMenuItem.Text = "&Collapse";
             this.collapseToolStripMenuItem.Click += new System.EventHandler(this.collapseToolStripMenuItem_Click);
             // 

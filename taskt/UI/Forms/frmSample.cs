@@ -75,6 +75,10 @@ namespace taskt.UI.Forms
         #region tvSample events
         private void tvSamples_DoubleClick(object sender, EventArgs e)
         {
+            if (tvSamples.SelectedNode == null)
+            {
+                return;
+            }
             if (tvSamples.SelectedNode.Level == 0)
             {
                 return;
@@ -118,6 +122,23 @@ namespace taskt.UI.Forms
             if (e.Button == MouseButtons.Right)
             {
                 tvSamples.SelectedNode = e.Node;
+            }
+        }
+        private void tvSamples_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (tvSamples.SelectedNode.Level == 1)
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    if (e.Control || e.Shift)
+                    {
+                        importSampleScriptProcess();
+                    }
+                    else
+                    {
+                        openSampleScriptProcess();
+                    }
+                }
             }
         }
         #endregion
@@ -275,6 +296,7 @@ namespace taskt.UI.Forms
 
             tvSamples.EndUpdate();
         }
+
         #endregion
 
         
