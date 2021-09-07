@@ -606,6 +606,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.Controls.Add(this.baseTableLayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmSearchCommands";
             this.Text = "Search Replace Commands";
             this.TopMost = true;
@@ -613,6 +614,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.Deactivate += new System.EventHandler(this.frmSearchCommands_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSearchCommands_FormClosing);
             this.Load += new System.EventHandler(this.frmSearchCommands_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSearchCommands_KeyDown);
             this.baseTableLayout.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();

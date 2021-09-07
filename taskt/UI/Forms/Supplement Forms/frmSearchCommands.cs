@@ -76,6 +76,14 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             this.Opacity = newOpa;
         }
+        private void frmSearchCommands_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                parentForm.currentScriptEditorMode = frmScriptBuilder.CommandEditorState.Normal;
+                this.Hide();
+            }
+        }
         #endregion
 
 
@@ -228,8 +236,10 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
 
 
+
+
         #endregion
 
-       
+        
     }
 }
