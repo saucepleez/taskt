@@ -57,7 +57,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void frmSearchCommands_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            parentForm.currentScriptEditMode = frmScriptBuilder.CommandEditorState.Normal;
+            parentForm.currentScriptEditorMode = frmScriptBuilder.CommandEditorState.Normal;
             this.Hide();
         }
         private void frmSearchCommands_Activated(object sender, EventArgs e)
@@ -91,7 +91,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void btnClearAndClose_Click(object sender, EventArgs e)
         {
-            parentForm.currentScriptEditMode = frmScriptBuilder.CommandEditorState.Normal;
+            parentForm.currentScriptEditorMode = frmScriptBuilder.CommandEditorState.Normal;
             this.Hide();
         }
         #endregion

@@ -50,10 +50,12 @@ namespace taskt.UI.Forms
         private int undoIndex = -1;
         private int reqdIndex;
         private int selectedIndex = -1;
+        private int DnDIndex = -1;
 
         private bool dontSaveFlag = false;
 
-        public CommandEditorState currentScriptEditMode = CommandEditorState.Normal;
+        public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
+        public CommandEditAction currentEditAction = CommandEditAction.Normal;
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndexInMatchItems = -1;
         private frmScriptBuilder parentBuilder { get; set; }
@@ -67,7 +69,13 @@ namespace taskt.UI.Forms
             Normal,
             Search,
             AdvencedSearch,
-            ReplaceSearch
+            ReplaceSearch,
+            HighlightCommand,
+        }
+        public enum CommandEditAction
+        {
+            Normal,
+            Move
         }
 
         public frmScriptBuilder()
@@ -507,21 +515,22 @@ namespace taskt.UI.Forms
             int len = e.Data.GetFormats().Length - 1;
             if (e.Data.GetFormats()[0] == "System.Windows.Forms.ListView+SelectedListViewItemCollection")
             {
-                if ((e.KeyState & 12) != 0) // Shift or Ctrl
-                {
-                    e.Effect = DragDropEffects.Copy;
-                }
-                else
-                {
-                    e.Effect = DragDropEffects.Move;
-                }
+                e.Effect = DragDropEffects.Move;
+                this.currentEditAction = CommandEditAction.Move;
             }
             else
             {
                 //Console.WriteLine(formatType);
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    e.Effect = DragDropEffects.Copy;
+                    if ((e.KeyState & 12) != 0) // Shift or Ctrl
+                    {
+                        e.Effect = DragDropEffects.Copy;
+                    }
+                    else
+                    {
+                        e.Effect = DragDropEffects.Move;
+                    }
                     lstScriptActions.BackColor = Color.LightGray;
                 }
             }
@@ -542,6 +551,7 @@ namespace taskt.UI.Forms
         private void lstScriptActions_DragDrop(object sender, DragEventArgs e)
         {
             lstScriptActions.BackColor = Color.WhiteSmoke;
+            this.currentEditAction = CommandEditAction.Normal;
 
             string[] fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if ((fileNames != null) && (fileNames.Length > 0))
@@ -618,42 +628,45 @@ namespace taskt.UI.Forms
                     lstScriptActions.Items.RemoveAt(indices[i]);
                 }
 
-                lstScriptActions.EndUpdate();
+                //lstScriptActions.EndUpdate();
                 //return back
-                return;
+                //return;
             }
-
-            //Obtain the index of the item at the mouse pointer.
-            int dragIndex = dragToItem.Index;
-
-            ListViewItem[] sel = new ListViewItem[lstScriptActions.SelectedItems.Count];
-            for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
+            else
             {
-                sel[i] = lstScriptActions.SelectedItems[i];
-            }
-            for (int i = 0; i < sel.GetLength(0); i++)
-            {
-                //Obtain the ListViewItem to be dragged to the target location.
-                ListViewItem dragItem = sel[i];
-                int itemIndex = dragIndex;
-                if (itemIndex == dragItem.Index)
+                //Obtain the index of the item at the mouse pointer.
+                int dragIndex = dragToItem.Index;
+
+                ListViewItem[] sel = new ListViewItem[lstScriptActions.SelectedItems.Count];
+                for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
                 {
-                    //return;
-                    break;
+                    sel[i] = lstScriptActions.SelectedItems[i];
                 }
-                if (dragItem.Index < itemIndex)
-                    itemIndex++;
-                else
-                    itemIndex = dragIndex + i;
-                //Insert the item at the mouse pointer.
-                ListViewItem insertItem = (ListViewItem)dragItem.Clone();
-                lstScriptActions.Items.Insert(itemIndex, insertItem);
-                //Removes the item from the initial location while
-                //the item is moved to the new location.
-                lstScriptActions.Items.Remove(dragItem);
-                //FormatCommandListView();
-                //lstScriptActions.Invalidate();
+                for (int i = 0; i < sel.GetLength(0); i++)
+                {
+                    //Obtain the ListViewItem to be dragged to the target location.
+                    ListViewItem dragItem = sel[i];
+                    int itemIndex = dragIndex;
+                    if (itemIndex == dragItem.Index)
+                    {
+                        //return;
+                        break;
+                    }
+                    if (dragItem.Index < itemIndex)
+                        itemIndex++;
+                    else
+                        itemIndex = dragIndex + i;
+                    //Insert the item at the mouse pointer.
+                    ListViewItem insertItem = (ListViewItem)dragItem.Clone();
+                    lstScriptActions.Items.Insert(itemIndex, insertItem);
+                    //Removes the item from the initial location while
+                    //the item is moved to the new location.
+                    lstScriptActions.Items.Remove(dragItem);
+                    //FormatCommandListView();
+                    //lstScriptActions.Invalidate();
+                }
             }
+            
             lstScriptActions.EndUpdate();
             lstScriptActions.Invalidate();
         }
@@ -725,7 +738,7 @@ namespace taskt.UI.Forms
 
             if (totalMatches == 0)
             {
-                currentScriptEditMode = CommandEditorState.Normal;
+                currentScriptEditorMode = CommandEditorState.Normal;
                 reqdIndex = -1;
                 lblTotalResults.Text = "No Matches Found";
                 lblCurrentlyViewing.Hide();
@@ -737,7 +750,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                currentScriptEditMode = CommandEditorState.Search;
+                currentScriptEditorMode = CommandEditorState.Search;
                 lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 lblTotalResults.Text = totalMatches + " total results found";
@@ -798,14 +811,14 @@ namespace taskt.UI.Forms
             }
             lstScriptActions.ResumeLayout();
 
-            this.currentScriptEditMode = CommandEditorState.AdvencedSearch;
+            this.currentScriptEditorMode = CommandEditorState.AdvencedSearch;
             lstScriptActions.Invalidate();
             return matchedCount;
         }
 
         public void MoveMostNearMatchedLine(bool backToTop)
         {
-            if (this.currentScriptEditMode != CommandEditorState.AdvencedSearch)
+            if (this.currentScriptEditorMode != CommandEditorState.AdvencedSearch)
             {
                 return;
             }
@@ -933,7 +946,7 @@ namespace taskt.UI.Forms
             }
             lstScriptActions.ResumeLayout();
 
-            this.currentScriptEditMode = CommandEditorState.ReplaceSearch;
+            this.currentScriptEditorMode = CommandEditorState.ReplaceSearch;
             lstScriptActions.Invalidate();
             return matchedCount;
         }
@@ -1359,7 +1372,7 @@ namespace taskt.UI.Forms
 
         private void ClearHighlightListViewItem()
         {
-            this.currentScriptEditMode = CommandEditorState.Normal;
+            this.currentScriptEditorMode = CommandEditorState.Normal;
             lstScriptActions.Invalidate();
         }
 
@@ -1805,7 +1818,7 @@ namespace taskt.UI.Forms
             {
                 trg = taskt.Core.Theme.scriptTexts["debug"];
             }
-            else if ((currentScriptEditMode == CommandEditorState.Search) || (currentScriptEditMode == CommandEditorState.AdvencedSearch) || (currentScriptEditMode == CommandEditorState.ReplaceSearch))
+            else if ((currentScriptEditorMode == CommandEditorState.Search) || (currentScriptEditorMode == CommandEditorState.AdvencedSearch) || (currentScriptEditorMode == CommandEditorState.ReplaceSearch))
             {
                 if (matchingSearchIndex.Contains(e.ItemIndex))
                 { 
@@ -1840,6 +1853,12 @@ namespace taskt.UI.Forms
             //draw string
             e.Graphics.DrawString(command.GetDisplayValue(),
                            new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
+
+            // Emphasis Drag&Drop Line
+            if ((this.currentEditAction == CommandEditAction.Move) && (item.Index == this.DnDIndex))
+            {
+                e.Graphics.DrawLine(new Pen(Color.DarkRed), modifiedBounds.X, modifiedBounds.Y, modifiedBounds.X + modifiedBounds.Width, MousePosition.Y + modifiedBounds.Height);
+            }
 
             if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
             {
@@ -3323,7 +3342,7 @@ namespace taskt.UI.Forms
             return true;
         }
 
-        
+
     }
 
 }
