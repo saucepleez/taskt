@@ -219,7 +219,9 @@ namespace taskt.UI.Forms
                             // variable doesnt exists
                             if (addVariableForm.editMode == Supplement_Forms.frmAddVariable.frmAddVariablesEditMode.Edit)
                             {
-                                targetVariable.Remove();
+                                //targetVariable.Remove();
+                                RemoveUserVariableNode(bufferedUserVariableParentNode, variableName);
+                                RemoveUserVariableNode(tvScriptVariables.Nodes[1], variableName);
                             }
                             //add newly edited node
                             AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, newVariableValue);
@@ -230,7 +232,10 @@ namespace taskt.UI.Forms
                             // variable exists
                             if ((addVariableForm.editMode == Supplement_Forms.frmAddVariable.frmAddVariablesEditMode.Edit) && (variableName == newVariableName))
                             {
-                                targetVariable.Remove();
+                                //targetVariable.Remove();
+                                RemoveUserVariableNode(bufferedUserVariableParentNode, variableName);
+                                RemoveUserVariableNode(tvScriptVariables.Nodes[1], variableName);
+
                                 //add newly edited node
                                 AddUserVariableNode(bufferedUserVariableParentNode, newVariableName, newVariableValue);
                                 AddUserVariableNode(tvScriptVariables.Nodes[1], newVariableName, newVariableValue);
@@ -621,6 +626,17 @@ namespace taskt.UI.Forms
             parentNode.Nodes.Add(childNode);
             //tvScriptVariables.Sort();
             //ExpandUserVariableNode();
+        }
+        private void RemoveUserVariableNode(TreeNode parentNode, string VariableName)
+        {
+            foreach (TreeNode item in parentNode.Nodes)
+            {
+                if (item.Text == VariableName)
+                {
+                    item.Remove();
+                    break;
+                }
+            }
         }
 
         private void ExpandUserVariableNode()
