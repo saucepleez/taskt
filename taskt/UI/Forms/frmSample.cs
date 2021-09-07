@@ -126,6 +126,10 @@ namespace taskt.UI.Forms
         }
         private void tvSamples_KeyDown(object sender, KeyEventArgs e)
         {
+            if (tvSamples.SelectedNode == null)
+            {
+                return;
+            }
             if (tvSamples.SelectedNode.Level == 1)
             {
                 if (e.KeyCode == Keys.Enter)
@@ -297,8 +301,15 @@ namespace taskt.UI.Forms
             tvSamples.EndUpdate();
         }
 
+
         #endregion
 
-        
+        private void frmSample_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
     }
 }

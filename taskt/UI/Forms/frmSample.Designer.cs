@@ -326,9 +326,11 @@ namespace taskt.UI.Forms
             this.ClientSize = new System.Drawing.Size(591, 361);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmSample";
             this.Text = "Sample Templete";
             this.Load += new System.EventHandler(this.frmSample_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSample_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
