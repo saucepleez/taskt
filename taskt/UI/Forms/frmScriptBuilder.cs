@@ -507,7 +507,14 @@ namespace taskt.UI.Forms
             int len = e.Data.GetFormats().Length - 1;
             if (e.Data.GetFormats()[0] == "System.Windows.Forms.ListView+SelectedListViewItemCollection")
             {
-                e.Effect = DragDropEffects.Move;
+                if ((e.KeyState & 12) != 0) // Shift or Ctrl
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.Move;
+                }
             }
             else
             {
@@ -542,11 +549,21 @@ namespace taskt.UI.Forms
                 var targetFile = fileNames[0];
                 if (System.IO.Path.GetExtension(targetFile).ToLower() == ".xml")
                 {
-                    Console.WriteLine(targetFile);
+                    if ((e.KeyState & 12) != 0) // Shift or Ctrl
+                    {
+                        ImportScriptFromFilePath(targetFile);
+                    }
+                    else
+                    {
+                        OpenScriptFromFilePath(targetFile, true);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine(targetFile);
+                    using (var fm = new UI.Forms.Supplemental.frmDialog("This file type can not open.", "File Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
                 }
             }
             else if (lstScriptActions.SelectedItems.Count > 0)
@@ -2677,18 +2694,25 @@ namespace taskt.UI.Forms
             lstScriptActions.Invalidate();
         }
 
-        public bool ImportSampleScript(string filePath)
+        public bool ImportScriptFromFilePath(string filePath)
         {
             Import(filePath);
             return true;
         }
 
-        public bool OpenSampleScript(string filePath)
+        public bool OpenScriptFromFilePath(string filePath, bool normalFileOpen = false)
         {
             CheckAndSaveScriptIfForget();
             OpenFile(filePath);
-            this.ScriptFilePath = null;
-            ChangeSaveState(true);
+            if (normalFileOpen)
+            {
+                this.ScriptFilePath = System.IO.Path.GetFileName(filePath);
+            }
+            else
+            {
+                this.ScriptFilePath = null;
+            }
+            ChangeSaveState(!normalFileOpen);
             return true;
         }
         #endregion
@@ -3230,7 +3254,14 @@ namespace taskt.UI.Forms
                 var targetFile = fileNames[0];
                 if (System.IO.Path.GetExtension(targetFile).ToLower() == ".xml")
                 {
-                    
+                    if ((e.KeyState & 12) != 0) // Shift or Ctrl
+                    {
+                        ImportScriptFromFilePath(targetFile);
+                    }
+                    else
+                    {
+                        OpenScriptFromFilePath(targetFile, true);
+                    }
                 }
                 else
                 {
@@ -3247,7 +3278,14 @@ namespace taskt.UI.Forms
             pnlCommandHelper.BackColor = Color.FromArgb(59, 59, 128);
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                e.Effect = DragDropEffects.Copy;
+                if ((e.KeyState & 12) != 0) // Shift or Ctrl
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.Move;
+                }
             }
         }
 

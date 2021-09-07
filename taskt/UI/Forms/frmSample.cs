@@ -163,7 +163,7 @@ namespace taskt.UI.Forms
             string fileName = System.IO.Path.GetFileName(targetFile);
             if (targetFile != "")
             {
-                parentForm.OpenSampleScript(targetFile);
+                parentForm.OpenScriptFromFilePath(targetFile);
                 this.Close();
             }
         }
@@ -173,7 +173,7 @@ namespace taskt.UI.Forms
             string fileName = System.IO.Path.GetFileName(targetFile);
             if (targetFile != "")
             {
-                parentForm.ImportSampleScript(targetFile);
+                parentForm.ImportScriptFromFilePath(targetFile);
                 this.Close();
             }
         }
