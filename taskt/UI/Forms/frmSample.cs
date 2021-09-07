@@ -71,6 +71,13 @@ namespace taskt.UI.Forms
             tvSamples.EndUpdate();
             //tvSamples.ExpandAll();
         }
+        private void frmSample_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
 
         #region tvSample events
         private void tvSamples_DoubleClick(object sender, EventArgs e)
@@ -304,12 +311,5 @@ namespace taskt.UI.Forms
 
         #endregion
 
-        private void frmSample_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.Close();
-            }
-        }
     }
 }
