@@ -35,7 +35,7 @@
       <ScriptCommand xsi:type="GetListItemCommand" CommandID="a01a6ebd-4043-4366-9616-c9f3201b02d0" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="⦃vList⦄" v_ItemIndex="0" v_UserVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b4856fc-f5ea-4b58-a883-d83d4860d3a4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vList[0] size is ⦃vResult⦄" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b4856fc-f5ea-4b58-a883-d83d4860d3a4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="'vList[0]' value is ⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Get ⦃vList[1]⦄" CommandEnabled="true" />
@@ -44,7 +44,7 @@
       <ScriptCommand xsi:type="GetListItemCommand" CommandID="a01a6ebd-4043-4366-9616-c9f3201b02d0" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="⦃vList⦄" v_ItemIndex="1" v_UserVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b4856fc-f5ea-4b58-a883-d83d4860d3a4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vList[1] size is ⦃vResult⦄" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b4856fc-f5ea-4b58-a883-d83d4860d3a4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="'vList[1]' value is ⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Get ⦃vList[2]⦄" CommandEnabled="true" />
@@ -53,14 +53,14 @@
       <ScriptCommand xsi:type="GetListItemCommand" CommandID="a01a6ebd-4043-4366-9616-c9f3201b02d0" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="⦃vList⦄" v_ItemIndex="2" v_UserVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b4856fc-f5ea-4b58-a883-d83d4860d3a4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vList[2] size is ⦃vResult⦄" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b4856fc-f5ea-4b58-a883-d83d4860d3a4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="'vList[2]' value is ⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
   </Commands>
   <Info>
     <TasktVersion>3.5.0.29</TasktVersion>
     <Author />
-    <LastRunTime>2021-09-08T18:28:58.1206677+09:00</LastRunTime>
-    <RunTimes>3</RunTimes>
+    <LastRunTime>2021-09-08T23:09:31.2817119+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
