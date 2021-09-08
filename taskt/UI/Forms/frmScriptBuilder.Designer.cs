@@ -292,6 +292,7 @@
             // sampleToolStripMenuItem
             // 
             this.sampleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.sampleToolStripMenuItem.Image = global::taskt.Properties.Resources.sample_templete;
             this.sampleToolStripMenuItem.Name = "sampleToolStripMenuItem";
             this.sampleToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.sampleToolStripMenuItem.Text = "Sample/Templete (&M)";

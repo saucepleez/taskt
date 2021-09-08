@@ -753,6 +753,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap sample_templete {
+            get {
+                object obj = ResourceManager.GetObject("sample_templete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap taskt_command_helper {
             get {
                 object obj = ResourceManager.GetObject("taskt_command_helper", resourceCulture);
