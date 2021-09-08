@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme3 = new taskt.Core.Theme();
+            taskt.Core.Theme theme2 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -76,7 +76,6 @@
             this.aboutStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
-            this.tvCommands = new taskt.UI.CustomControls.UITreeView();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
             this.lnkStartEdit = new System.Windows.Forms.LinkLabel();
             this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
@@ -148,6 +147,13 @@
             this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variableManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.commandListTablePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.commandsListPanelU = new System.Windows.Forms.Panel();
+            this.commandListPanelD = new System.Windows.Forms.Panel();
+            this.tvCommands = new taskt.UI.CustomControls.UITreeView();
+            this.txtCommandFilter = new System.Windows.Forms.TextBox();
+            this.picCommandSearch = new System.Windows.Forms.PictureBox();
+            this.picCommandClear = new System.Windows.Forms.PictureBox();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -182,6 +188,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).BeginInit();
             this.lstContextStrip.SuspendLayout();
+            this.commandListTablePanel.SuspendLayout();
+            this.commandsListPanelU.SuspendLayout();
+            this.commandListPanelD.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandClear)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpControls
@@ -491,7 +502,7 @@
             this.recordToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.recordToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
             this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
-            this.recordToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.recordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recordToolStripMenuItem.Text = "R&ecord";
             this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
             // 
@@ -500,7 +511,7 @@
             this.scheduleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.scheduleToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_schedule;
             this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
-            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.scheduleToolStripMenuItem.Text = "&Schedule";
             this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
             // 
@@ -509,7 +520,7 @@
             this.runToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.runToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.runToolStripMenuItem.Text = "&Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
@@ -642,7 +653,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.splitContainer1.Panel1.Controls.Add(this.tvCommands);
+            this.splitContainer1.Panel1.Controls.Add(this.commandListTablePanel);
             // 
             // splitContainer1.Panel2
             // 
@@ -652,21 +663,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(973, 364);
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.TabIndex = 4;
-            // 
-            // tvCommands
-            // 
-            this.tvCommands.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
-            this.tvCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tvCommands.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvCommands.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tvCommands.ForeColor = System.Drawing.Color.White;
-            this.tvCommands.Location = new System.Drawing.Point(0, 0);
-            this.tvCommands.Name = "tvCommands";
-            this.tvCommands.ShowLines = false;
-            this.tvCommands.Size = new System.Drawing.Size(238, 364);
-            this.tvCommands.TabIndex = 8;
-            this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
-            this.tvCommands.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tvCommands_KeyPress);
             // 
             // pnlCommandHelper
             // 
@@ -917,9 +913,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme3.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme3.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme3;
+            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme2;
             // 
             // lblMainLogo
             // 
@@ -1556,6 +1552,88 @@
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
             // 
+            // commandListTablePanel
+            // 
+            this.commandListTablePanel.ColumnCount = 1;
+            this.commandListTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.commandListTablePanel.Controls.Add(this.commandsListPanelU, 0, 0);
+            this.commandListTablePanel.Controls.Add(this.commandListPanelD, 0, 1);
+            this.commandListTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commandListTablePanel.Location = new System.Drawing.Point(0, 0);
+            this.commandListTablePanel.Margin = new System.Windows.Forms.Padding(0);
+            this.commandListTablePanel.Name = "commandListTablePanel";
+            this.commandListTablePanel.RowCount = 2;
+            this.commandListTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.commandListTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.commandListTablePanel.Size = new System.Drawing.Size(238, 364);
+            this.commandListTablePanel.TabIndex = 9;
+            // 
+            // commandsListPanelU
+            // 
+            this.commandsListPanelU.Controls.Add(this.picCommandClear);
+            this.commandsListPanelU.Controls.Add(this.picCommandSearch);
+            this.commandsListPanelU.Controls.Add(this.txtCommandFilter);
+            this.commandsListPanelU.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commandsListPanelU.Location = new System.Drawing.Point(0, 0);
+            this.commandsListPanelU.Margin = new System.Windows.Forms.Padding(0);
+            this.commandsListPanelU.Name = "commandsListPanelU";
+            this.commandsListPanelU.Size = new System.Drawing.Size(238, 25);
+            this.commandsListPanelU.TabIndex = 0;
+            // 
+            // commandListPanelD
+            // 
+            this.commandListPanelD.Controls.Add(this.tvCommands);
+            this.commandListPanelD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commandListPanelD.Location = new System.Drawing.Point(0, 25);
+            this.commandListPanelD.Margin = new System.Windows.Forms.Padding(0);
+            this.commandListPanelD.Name = "commandListPanelD";
+            this.commandListPanelD.Size = new System.Drawing.Size(238, 339);
+            this.commandListPanelD.TabIndex = 1;
+            // 
+            // tvCommands
+            // 
+            this.tvCommands.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.tvCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvCommands.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tvCommands.ForeColor = System.Drawing.Color.White;
+            this.tvCommands.Location = new System.Drawing.Point(0, 0);
+            this.tvCommands.Name = "tvCommands";
+            this.tvCommands.ShowLines = false;
+            this.tvCommands.Size = new System.Drawing.Size(238, 339);
+            this.tvCommands.TabIndex = 19;
+            this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
+            this.tvCommands.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tvCommands_KeyPress);
+            // 
+            // txtCommandFilter
+            // 
+            this.txtCommandFilter.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtCommandFilter.Location = new System.Drawing.Point(0, 0);
+            this.txtCommandFilter.Name = "txtCommandFilter";
+            this.txtCommandFilter.Size = new System.Drawing.Size(182, 23);
+            this.txtCommandFilter.TabIndex = 19;
+            // 
+            // picCommandSearch
+            // 
+            this.picCommandSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.picCommandSearch.Location = new System.Drawing.Point(184, -1);
+            this.picCommandSearch.Name = "picCommandSearch";
+            this.picCommandSearch.Size = new System.Drawing.Size(24, 24);
+            this.picCommandSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandSearch.TabIndex = 20;
+            this.picCommandSearch.TabStop = false;
+            this.picCommandSearch.Click += new System.EventHandler(this.picCommandSearch_Click);
+            // 
+            // picCommandClear
+            // 
+            this.picCommandClear.Image = global::taskt.Properties.Resources.command_error;
+            this.picCommandClear.Location = new System.Drawing.Point(214, 2);
+            this.picCommandClear.Name = "picCommandClear";
+            this.picCommandClear.Size = new System.Drawing.Size(20, 20);
+            this.picCommandClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandClear.TabIndex = 21;
+            this.picCommandClear.TabStop = false;
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1612,6 +1690,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).EndInit();
             this.lstContextStrip.ResumeLayout(false);
+            this.commandListTablePanel.ResumeLayout(false);
+            this.commandsListPanelU.ResumeLayout(false);
+            this.commandsListPanelU.PerformLayout();
+            this.commandListPanelD.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandClear)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1635,7 +1719,6 @@
         private System.Windows.Forms.ToolStripMenuItem pauseBeforeExecutionToolStripMenuItem;
         private System.Windows.Forms.Label lblCoordinatorInfo;
         private CustomControls.UIPictureButton uiBtnSettings;
-        private UI.CustomControls.UITreeView tvCommands;
         private UI.CustomControls.UISplitContainer splitContainer1;
         private CustomControls.UIGroupBox grpFileActions;
         private CustomControls.UIGroupBox grpVariable;
@@ -1734,6 +1817,13 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader commandColumn;
+        private System.Windows.Forms.TableLayoutPanel commandListTablePanel;
+        private System.Windows.Forms.Panel commandsListPanelU;
+        private System.Windows.Forms.Panel commandListPanelD;
+        private CustomControls.UITreeView tvCommands;
+        private System.Windows.Forms.PictureBox picCommandClear;
+        private System.Windows.Forms.PictureBox picCommandSearch;
+        private System.Windows.Forms.TextBox txtCommandFilter;
     }
 }
 

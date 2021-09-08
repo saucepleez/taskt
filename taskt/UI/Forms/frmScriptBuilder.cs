@@ -3356,7 +3356,37 @@ namespace taskt.UI.Forms
             return true;
         }
 
+        private void picCommandSearch_Click(object sender, EventArgs e)
+        {
+            tvCommands.BeginUpdate();
 
+            string keyword = txtCommandFilter.Text.ToLower().Trim();
+            foreach(TreeNode group in tvCommands.Nodes)
+            {
+                foreach(TreeNode subItem in group.Nodes)
+                {
+                    if (subItem.Nodes.Count > 0)
+                    {
+                        foreach(TreeNode sub2Item in subItem.Nodes)
+                        {
+                            if (sub2Item.Text.ToLower().Contains(keyword))
+                            {
+                                Console.WriteLine(sub2Item.Text);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (subItem.Text.ToLower().Contains(keyword))
+                        {
+                            Console.WriteLine(subItem.Text);
+                        }
+                    }
+                }
+            }
+
+            tvCommands.EndUpdate();
+        }
     }
 
 }
