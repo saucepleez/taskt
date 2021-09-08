@@ -363,6 +363,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap command_group {
+            get {
+                object obj = ResourceManager.GetObject("command_group", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap command_input {
             get {
                 object obj = ResourceManager.GetObject("command_input", resourceCulture);
@@ -606,6 +616,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap executing {
             get {
                 object obj = ResourceManager.GetObject("executing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap file_icon {
+            get {
+                object obj = ResourceManager.GetObject("file_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

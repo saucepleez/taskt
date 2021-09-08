@@ -358,4 +358,10 @@
   <data name="web_help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\web_help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="command_group" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-group.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
