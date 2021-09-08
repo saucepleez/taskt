@@ -31,11 +31,20 @@ namespace taskt.UI.Forms.Supplemental
             InitializeComponent();
         }
 
+        #region form events
         private void frmAbout_Load(object sender, EventArgs e)
         {
             lblAppVersion.Text = "version: " + new Version(System.Windows.Forms.Application.ProductVersion);
             lblBuildDate.Text = "build date: " + System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("MM.dd.yy hh.mm.ss");
         }
+        private void frmAbout_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+        #endregion
 
         private void lblOneNote_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -86,5 +95,7 @@ namespace taskt.UI.Forms.Supplemental
         {
             Process.Start("https://github.com/kerryjiang/WebSocket4Net");
         }
+
+
     }
 }
