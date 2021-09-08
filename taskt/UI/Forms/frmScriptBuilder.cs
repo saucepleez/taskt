@@ -675,7 +675,9 @@ namespace taskt.UI.Forms
                     //lstScriptActions.Invalidate();
                 }
             }
-            
+
+            IndentListViewItems();  // update indent
+
             lstScriptActions.EndUpdate();
             lstScriptActions.Invalidate();
         }
@@ -2932,6 +2934,7 @@ namespace taskt.UI.Forms
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
                     this.scriptVariables = scriptVariableEditor.scriptVariables;
+                    ChangeSaveState(true);
                 }
             }
         }
