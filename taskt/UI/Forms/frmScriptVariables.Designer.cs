@@ -52,6 +52,10 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editVariableSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearFilterEditVariableContextMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.rootVariableSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearFilterRootVariableContextMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -285,14 +289,16 @@
             this.editVariableContextMenuStrip.Font = new System.Drawing.Font("Yu Gothic UI", 12F);
             this.editVariableContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
-            this.removeToolStripMenuItem});
+            this.removeToolStripMenuItem,
+            this.editVariableSep1,
+            this.clearFilterEditVariableContextMenuStrip});
             this.editVariableContextMenuStrip.Name = "editVariableContextMenuStrip";
-            this.editVariableContextMenuStrip.Size = new System.Drawing.Size(171, 56);
+            this.editVariableContextMenuStrip.Size = new System.Drawing.Size(181, 110);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.editToolStripMenuItem.Text = "&Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
@@ -300,7 +306,7 @@
             // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.removeToolStripMenuItem.Text = "&Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
@@ -310,32 +316,60 @@
             this.rootVariableContestMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem,
             this.expandToolStripMenuItem,
-            this.collapseToolStripMenuItem});
+            this.collapseToolStripMenuItem,
+            this.rootVariableSep1,
+            this.clearFilterRootVariableContextMenuStrip});
             this.rootVariableContestMenuStrip.Name = "rootVariableContestMenuStrip";
-            this.rootVariableContestMenuStrip.Size = new System.Drawing.Size(167, 82);
+            this.rootVariableContestMenuStrip.Size = new System.Drawing.Size(178, 114);
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_add_variable;
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
             this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.addToolStripMenuItem.Text = "&Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // expandToolStripMenuItem
             // 
             this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
-            this.expandToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.expandToolStripMenuItem.Text = "&Expand";
             this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
             // 
             // collapseToolStripMenuItem
             // 
             this.collapseToolStripMenuItem.Name = "collapseToolStripMenuItem";
-            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.collapseToolStripMenuItem.Text = "&Collapse";
             this.collapseToolStripMenuItem.Click += new System.EventHandler(this.collapseToolStripMenuItem_Click);
+            // 
+            // editVariableSep1
+            // 
+            this.editVariableSep1.Name = "editVariableSep1";
+            this.editVariableSep1.Size = new System.Drawing.Size(174, 6);
+            // 
+            // clearFilterEditVariableContextMenuStrip
+            // 
+            this.clearFilterEditVariableContextMenuStrip.Enabled = false;
+            this.clearFilterEditVariableContextMenuStrip.Name = "clearFilterEditVariableContextMenuStrip";
+            this.clearFilterEditVariableContextMenuStrip.Size = new System.Drawing.Size(180, 26);
+            this.clearFilterEditVariableContextMenuStrip.Text = "Clear Filter (&L)";
+            this.clearFilterEditVariableContextMenuStrip.Click += new System.EventHandler(this.clearFilterEditVariableContextMenuStrip_Click);
+            // 
+            // rootVariableSep1
+            // 
+            this.rootVariableSep1.Name = "rootVariableSep1";
+            this.rootVariableSep1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // clearFilterRootVariableContextMenuStrip
+            // 
+            this.clearFilterRootVariableContextMenuStrip.Enabled = false;
+            this.clearFilterRootVariableContextMenuStrip.Name = "clearFilterRootVariableContextMenuStrip";
+            this.clearFilterRootVariableContextMenuStrip.Size = new System.Drawing.Size(177, 26);
+            this.clearFilterRootVariableContextMenuStrip.Text = "Clear Filter (&L)";
+            this.clearFilterRootVariableContextMenuStrip.Click += new System.EventHandler(this.clearFilterRootVariableContextMenuStrip_Click);
             // 
             // frmScriptVariables
             // 
@@ -392,5 +426,9 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem collapseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator editVariableSep1;
+        private System.Windows.Forms.ToolStripMenuItem clearFilterEditVariableContextMenuStrip;
+        private System.Windows.Forms.ToolStripSeparator rootVariableSep1;
+        private System.Windows.Forms.ToolStripMenuItem clearFilterRootVariableContextMenuStrip;
     }
 }

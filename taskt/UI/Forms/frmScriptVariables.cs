@@ -596,6 +596,10 @@ namespace taskt.UI.Forms
         {
             RemoveSelectedVariableProcess();
         }
+        private void clearFilterEditVariableContextMenuStrip_Click(object sender, EventArgs e)
+        {
+            showAllVariables();
+        }
         #endregion
 
         #region rootVariableToolStripMenu events
@@ -615,6 +619,10 @@ namespace taskt.UI.Forms
             tvScriptVariables.BeginUpdate();
             tvScriptVariables.SelectedNode.Collapse();
             tvScriptVariables.EndUpdate();
+        }
+        private void clearFilterRootVariableContextMenuStrip_Click(object sender, EventArgs e)
+        {
+            showAllVariables();
         }
         #endregion
 
@@ -741,7 +749,7 @@ namespace taskt.UI.Forms
         }
         private void picClear_Click(object sender, EventArgs e)
         {
-            txtSearchBox.Text = "";
+            //txtSearchBox.Text = "";
             showAllVariables();
         }
         private void picAdd_Click(object sender, EventArgs e)
@@ -805,9 +813,14 @@ namespace taskt.UI.Forms
             //tvScriptVariables.ExpandAll();
             tvScriptVariables.Nodes[1].ExpandAll();
             tvScriptVariables.EndUpdate();
+
+            clearFilterEditVariableContextMenuStrip.Enabled = true;
+            clearFilterRootVariableContextMenuStrip.Enabled = true;
         }
         private void showAllVariables()
         {
+            txtSearchBox.Text = "";
+
             tvScriptVariables.BeginUpdate();
             tvScriptVariables.Nodes.Clear();
             tvScriptVariables.Nodes.Add((TreeNode)bufferedSystemVariableParentNode.Clone());
@@ -815,11 +828,11 @@ namespace taskt.UI.Forms
             tvScriptVariables.Nodes[1].ExpandAll();
             tvScriptVariables.Sort();
             tvScriptVariables.EndUpdate();
+
+            clearFilterEditVariableContextMenuStrip.Enabled = false;
+            clearFilterRootVariableContextMenuStrip.Enabled = false;
         }
-
-
         #endregion
 
-        
     }
 }
