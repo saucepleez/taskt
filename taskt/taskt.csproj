@@ -880,6 +880,7 @@
     <Content Include="Resources\refresh.png" />
     <None Include="Resources\taskt-element-helper.png" />
     <None Include="Resources\rpalogo.ico" />
+    <None Include="Resources\sample_templete.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

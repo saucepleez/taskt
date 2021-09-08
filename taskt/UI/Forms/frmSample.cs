@@ -38,7 +38,7 @@ namespace taskt.UI.Forms
 
             ImageList tvImageList = new ImageList();
             tvImageList.ImageSize = new Size(16, 16);
-            tvImageList.Images.Add(Properties.Resources.file_icon);
+            tvImageList.Images.Add(Properties.Resources.sample_templete);
             tvImageList.Images.Add(Properties.Resources.command_group);
             tvSamples.ImageList = tvImageList;
 
