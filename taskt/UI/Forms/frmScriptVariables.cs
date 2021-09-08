@@ -46,6 +46,13 @@ namespace taskt.UI.Forms
         }
         private void frmScriptVariables_Load(object sender, EventArgs e)
         {
+            ImageList tvVariablesImageList = new ImageList();
+            tvVariablesImageList.ImageSize = new Size(16, 16);
+            tvVariablesImageList.Images.Add(Properties.Resources.command_group);
+            tvVariablesImageList.Images.Add(Properties.Resources.action_bar_variable);
+            tvVariablesImageList.Images.Add(Properties.Resources.taskt_variable_helper);
+            tvScriptVariables.ImageList = tvVariablesImageList;
+
             ////initialize
             // bufferedUserVariableParentNode = InitializeNodes(User_Variable_Text, scriptVariables);
             // InitializeNodes(Taskt_Variable_Text, Core.Common.GenerateSystemVariables());
@@ -615,14 +622,14 @@ namespace taskt.UI.Forms
         private void AddUserVariableNode(TreeNode parentNode, string VariableName, string variableText)
         {
             //add new node and sort
-            var childNode = new TreeNode(VariableName);
+            var childNode = new TreeNode(VariableName, 1, 1);
 
             if (variableText == string.Empty)
             {
                 variableText = emptyValue;
             }
 
-            childNode.Nodes.Add(leadingValue + variableText);
+            childNode.Nodes.Add(new TreeNode(leadingValue + variableText, 2, 2));
             parentNode.Nodes.Add(childNode);
             //tvScriptVariables.Sort();
             //ExpandUserVariableNode();
