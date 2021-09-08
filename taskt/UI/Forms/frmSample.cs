@@ -36,6 +36,12 @@ namespace taskt.UI.Forms
 
             int baseLen = samplePath.Length + 1;    // (+1) is \\
 
+            ImageList tvImageList = new ImageList();
+            tvImageList.ImageSize = new Size(16, 16);
+            tvImageList.Images.Add(Properties.Resources.file_icon);
+            tvImageList.Images.Add(Properties.Resources.command_group);
+            tvSamples.ImageList = tvImageList;
+
             string oldFolder;
             oldFolder = "----";
 
@@ -57,7 +63,7 @@ namespace taskt.UI.Forms
                         tempNodes.Add(parentGroup);
                     }
                     oldFolder = absParts[0];
-                    parentGroup = new TreeNode(absParts[0]);
+                    parentGroup = new TreeNode(absParts[0], 1, 1);
                     TreeNode newNode = new TreeNode(convertFileNameToTreeNode(absParts[1]));
                     parentGroup.Nodes.Add(newNode);
                 }
@@ -148,6 +154,13 @@ namespace taskt.UI.Forms
                     else
                     {
                         openSampleScriptProcess();
+                    }
+                }
+                else
+                {
+                    if (e.Control && (e.KeyCode == Keys.N))
+                    {
+                        newTasktSampleScriptProcess();
                     }
                 }
             }
@@ -242,6 +255,11 @@ namespace taskt.UI.Forms
         {
             newTasktSampleScriptProcess();
         }
+        private void clearFilterTvContextMenuStrip_Click(object sender, EventArgs e)
+        {
+            //txtSearchBox.Text = "";
+            showAllSamples();
+        }
         #endregion
 
         #region rootContextMenuStrip events
@@ -254,6 +272,12 @@ namespace taskt.UI.Forms
         {
             tvSamples.SelectedNode.Collapse();
         }
+
+        private void clearFilterRootContextMenuStrop_Click(object sender, EventArgs e)
+        {
+            //txtSearchBox.Text = "";
+            showAllSamples();
+        }
         #endregion
 
         #region search filter
@@ -263,7 +287,7 @@ namespace taskt.UI.Forms
         }
         private void picClear_Click(object sender, EventArgs e)
         {
-            txtSearchBox.Text = "";
+            //txtSearchBox.Text = "";
             showAllSamples();
         }
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -317,23 +341,27 @@ namespace taskt.UI.Forms
             tvSamples.ExpandAll();
 
             tvSamples.EndUpdate();
+
+            clearFilterRootContextMenuStrop.Enabled = true;
+            clearFilterTvContextMenuStrip.Enabled = true;
         }
 
         private void showAllSamples()
         {
+            txtSearchBox.Text = "";
             tvSamples.BeginUpdate();
 
             tvSamples.Nodes.Clear();
             tvSamples.Nodes.AddRange(bufferdSampleNodes);
 
             tvSamples.EndUpdate();
+
+            clearFilterRootContextMenuStrop.Enabled = false;
+            clearFilterTvContextMenuStrip.Enabled = false;
         }
-
-
         #endregion
 
         
 
-        
     }
 }

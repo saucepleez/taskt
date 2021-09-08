@@ -51,9 +51,13 @@ namespace taskt.UI.Forms
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tvContestSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearFilterTvContextMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.rootContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rootContextSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearFilterRootContextMenuStrop = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -298,15 +302,17 @@ namespace taskt.UI.Forms
             this.tvContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.importToolStripMenuItem,
-            this.newWindowToolStripMenuItem});
+            this.newWindowToolStripMenuItem,
+            this.tvContestSep1,
+            this.clearFilterTvContextMenuStrip});
             this.tvContextMenuStrip.Name = "tvContextMenuStrip";
-            this.tvContextMenuStrip.Size = new System.Drawing.Size(175, 82);
+            this.tvContextMenuStrip.Size = new System.Drawing.Size(181, 136);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(174, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -314,7 +320,7 @@ namespace taskt.UI.Forms
             // 
             this.importToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(174, 26);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.importToolStripMenuItem.Text = "&Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -322,32 +328,60 @@ namespace taskt.UI.Forms
             // 
             this.newWindowToolStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
-            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(174, 26);
+            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.newWindowToolStripMenuItem.Text = "&New Window";
             this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
+            // 
+            // tvContestSep1
+            // 
+            this.tvContestSep1.Name = "tvContestSep1";
+            this.tvContestSep1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // clearFilterTvContextMenuStrip
+            // 
+            this.clearFilterTvContextMenuStrip.Enabled = false;
+            this.clearFilterTvContextMenuStrip.Name = "clearFilterTvContextMenuStrip";
+            this.clearFilterTvContextMenuStrip.Size = new System.Drawing.Size(180, 26);
+            this.clearFilterTvContextMenuStrip.Text = "Clear Filter (&L)";
+            this.clearFilterTvContextMenuStrip.Click += new System.EventHandler(this.clearFilterTvContextMenuStrip_Click);
             // 
             // rootContextMenuStrip
             // 
             this.rootContextMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.rootContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.expandToolStripMenuItem,
-            this.collapseToolStripMenuItem});
+            this.collapseToolStripMenuItem,
+            this.rootContextSep1,
+            this.clearFilterRootContextMenuStrop});
             this.rootContextMenuStrip.Name = "rootContextMenuStrip";
-            this.rootContextMenuStrip.Size = new System.Drawing.Size(140, 56);
+            this.rootContextMenuStrip.Size = new System.Drawing.Size(178, 88);
             // 
             // expandToolStripMenuItem
             // 
             this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
-            this.expandToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.expandToolStripMenuItem.Text = "&Expand";
             this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
             // 
             // collapseToolStripMenuItem
             // 
             this.collapseToolStripMenuItem.Name = "collapseToolStripMenuItem";
-            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.collapseToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.collapseToolStripMenuItem.Text = "&Collapse";
             this.collapseToolStripMenuItem.Click += new System.EventHandler(this.collapseToolStripMenuItem_Click);
+            // 
+            // rootContextSep1
+            // 
+            this.rootContextSep1.Name = "rootContextSep1";
+            this.rootContextSep1.Size = new System.Drawing.Size(174, 6);
+            // 
+            // clearFilterRootContextMenuStrop
+            // 
+            this.clearFilterRootContextMenuStrop.Enabled = false;
+            this.clearFilterRootContextMenuStrop.Name = "clearFilterRootContextMenuStrop";
+            this.clearFilterRootContextMenuStrop.Size = new System.Drawing.Size(177, 26);
+            this.clearFilterRootContextMenuStrop.Text = "Clear Filter (&L)";
+            this.clearFilterRootContextMenuStrop.Click += new System.EventHandler(this.clearFilterRootContextMenuStrop_Click);
             // 
             // frmSample
             // 
@@ -405,5 +439,9 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.ToolStripMenuItem collapseToolStripMenuItem;
         private CustomControls.UIPictureButton btnNew;
         private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator tvContestSep1;
+        private System.Windows.Forms.ToolStripMenuItem clearFilterTvContextMenuStrip;
+        private System.Windows.Forms.ToolStripSeparator rootContextSep1;
+        private System.Windows.Forms.ToolStripMenuItem clearFilterRootContextMenuStrop;
     }
 }
