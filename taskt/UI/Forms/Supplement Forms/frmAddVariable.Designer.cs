@@ -174,9 +174,11 @@
             this.Controls.Add(this.lblHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmAddVariable";
             this.Text = "Add Variable";
             this.Load += new System.EventHandler(this.frmAddVariable_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAddVariable_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.ResumeLayout(false);

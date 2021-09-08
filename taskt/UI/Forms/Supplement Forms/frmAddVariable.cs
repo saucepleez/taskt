@@ -64,5 +64,13 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             this.DialogResult = DialogResult.Cancel;
         }
+
+        private void frmAddVariable_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
+        }
     }
 }
