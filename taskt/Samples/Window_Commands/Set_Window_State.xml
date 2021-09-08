@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="58d68a13-25ef-428a-ae64-070c60d8d5bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Set Window State Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="58d68a13-25ef-428a-ae64-070c60d8d5bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandID="22474ff1-5f83-4d69-96fc-afc3559cc4d5" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="2b600e23-707d-4b1d-9c0d-5e09b0dcdbdc" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="ebe627d9-db0e-490d-a77f-1629fa57ec15" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNotepadTitle" v_Input="⦃Env.ActiveWindowTitle⦄" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="58d68a13-25ef-428a-ae64-070c60d8d5bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Window Maximize" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetWindowStateCommand" CommandID="56203676-502f-4776-bc0e-8e370848a8e9" CommandName="SetWindowStateCommand" IsCommented="false" SelectionName="Set Window State" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_WindowState="Maximize" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="2b600e23-707d-4b1d-9c0d-5e09b0dcdbdc" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="58d68a13-25ef-428a-ae64-070c60d8d5bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Window Minimize" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetWindowStateCommand" CommandID="56203676-502f-4776-bc0e-8e370848a8e9" CommandName="SetWindowStateCommand" IsCommented="false" SelectionName="Set Window State" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_WindowState="Minimize" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="2b600e23-707d-4b1d-9c0d-5e09b0dcdbdc" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="58d68a13-25ef-428a-ae64-070c60d8d5bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Show Notepad (Now Notepad is minimize, can not use 'Current Window')" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetWindowStateCommand" CommandID="56203676-502f-4776-bc0e-8e370848a8e9" CommandName="SetWindowStateCommand" IsCommented="false" SelectionName="Set Window State" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃vNotepadTitle⦄" v_WindowState="Restore" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="58d68a13-25ef-428a-ae64-070c60d8d5bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Window normal size" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetWindowStateCommand" CommandID="56203676-502f-4776-bc0e-8e370848a8e9" CommandName="SetWindowStateCommand" IsCommented="false" SelectionName="Set Window State" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_WindowState="Restore" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="58d68a13-25ef-428a-ae64-070c60d8d5bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Please close Notepad after finished :-)" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.29</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-08T12:57:05.6825392+09:00</LastRunTime>
+    <RunTimes>5</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vNotepadTitle</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
