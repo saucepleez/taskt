@@ -127,9 +127,5 @@
       <VariableName>vNumber</VariableName>
       <VariableValue xsi:type="xsd:string"></VariableValue>
     </ScriptVariable>
-    <ScriptVariable>
-      <VariableName>vNumber</VariableName>
-      <VariableValue xsi:type="xsd:string"></VariableValue>
-    </ScriptVariable>
   </Variables>
 </Script>
