@@ -31,6 +31,8 @@ namespace taskt.UI.Forms
     {
         Core.ApplicationSettings newAppSettings;
         public frmScriptBuilder scriptBuilderForm;
+
+        #region form events
         public frmSettings(frmScriptBuilder sender)
         {
             scriptBuilderForm = sender;
@@ -113,6 +115,31 @@ namespace taskt.UI.Forms
             Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
             Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
         }
+
+        private void frmSettings_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+        #endregion
+
+        #region footer buttons
+        private void uiBtnOpen_Click(object sender, EventArgs e)
+        {
+            Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
+            newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.Save(newAppSettings);
+            Core.Server.SocketClient.LoadSettings();
+            this.Close();
+        }
+        private void uiCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
+
         public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
         public delegate void AutomationTCPListener_StoppedDelegate(object sender, EventArgs e);
         private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
@@ -157,15 +184,6 @@ namespace taskt.UI.Forms
             if (newOpenDialog.ShowDialog() == DialogResult.OK)
             {
             }
-        }
-
-        private void uiBtnOpen_Click(object sender, EventArgs e)
-        {
-            Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
-            newAppSettings.EngineSettings.CancellationKey = key;
-            newAppSettings.Save(newAppSettings);
-            Core.Server.SocketClient.LoadSettings();
-            this.Close();
         }
 
         private void btnUpdateCheck_Click(object sender, EventArgs e)

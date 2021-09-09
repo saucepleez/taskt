@@ -42,7 +42,6 @@
             this.chkEnableLogging = new System.Windows.Forms.CheckBox();
             this.chkAutoCloseWindow = new System.Windows.Forms.CheckBox();
             this.chkShowDebug = new System.Windows.Forms.CheckBox();
-            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblOptions = new System.Windows.Forms.Label();
             this.lblApplicationSettings = new System.Windows.Forms.Label();
@@ -118,6 +117,9 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabEditorSettings = new System.Windows.Forms.TabPage();
+            this.chkExportIntermediate = new System.Windows.Forms.CheckBox();
+            this.lblIndentWidth = new System.Windows.Forms.Label();
+            this.txtIndentWidth = new System.Windows.Forms.TextBox();
             this.chkShowIndentLine = new System.Windows.Forms.CheckBox();
             this.chkGruopingBySubgruop = new System.Windows.Forms.CheckBox();
             this.chkInsertCommentIfLoop = new System.Windows.Forms.CheckBox();
@@ -139,10 +141,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.lblIndentWidth = new System.Windows.Forms.Label();
-            this.txtIndentWidth = new System.Windows.Forms.TextBox();
-            this.chkExportIntermediate = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -151,6 +152,9 @@
             this.tabEditorSettings.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiCancel)).BeginInit();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -298,23 +302,6 @@
             this.chkShowDebug.TabIndex = 1;
             this.chkShowDebug.Text = "Show Debug Window";
             this.chkShowDebug.UseVisualStyleBackColor = false;
-            // 
-            // uiBtnOpen
-            // 
-            this.uiBtnOpen.BackColor = System.Drawing.Color.Transparent;
-            this.uiBtnOpen.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiBtnOpen.DisplayText = "Ok";
-            this.uiBtnOpen.DisplayTextBrush = System.Drawing.Color.White;
-            this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOpen.Image = global::taskt.Properties.Resources.various_ok_button;
-            this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 532);
-            this.uiBtnOpen.Name = "uiBtnOpen";
-            this.uiBtnOpen.Size = new System.Drawing.Size(48, 44);
-            this.uiBtnOpen.TabIndex = 13;
-            this.uiBtnOpen.TabStop = false;
-            this.uiBtnOpen.Text = "Ok";
-            this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
             // 
             // lblMainLogo
             // 
@@ -1262,6 +1249,39 @@
             this.tabEditorSettings.Text = "Editor";
             this.tabEditorSettings.UseVisualStyleBackColor = true;
             // 
+            // chkExportIntermediate
+            // 
+            this.chkExportIntermediate.AutoSize = true;
+            this.chkExportIntermediate.BackColor = System.Drawing.Color.Transparent;
+            this.chkExportIntermediate.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkExportIntermediate.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 516);
+            this.chkExportIntermediate.Name = "chkExportIntermediate";
+            this.chkExportIntermediate.Size = new System.Drawing.Size(225, 24);
+            this.chkExportIntermediate.TabIndex = 25;
+            this.chkExportIntermediate.Text = "Export Intermediate Script File";
+            this.chkExportIntermediate.UseVisualStyleBackColor = false;
+            // 
+            // lblIndentWidth
+            // 
+            this.lblIndentWidth.AutoSize = true;
+            this.lblIndentWidth.BackColor = System.Drawing.Color.Transparent;
+            this.lblIndentWidth.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIndentWidth.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblIndentWidth.Location = new System.Drawing.Point(11, 220);
+            this.lblIndentWidth.Name = "lblIndentWidth";
+            this.lblIndentWidth.Size = new System.Drawing.Size(172, 21);
+            this.lblIndentWidth.TabIndex = 23;
+            this.lblIndentWidth.Text = "Indent Width (1 to 32):";
+            // 
+            // txtIndentWidth
+            // 
+            this.txtIndentWidth.Location = new System.Drawing.Point(189, 217);
+            this.txtIndentWidth.Name = "txtIndentWidth";
+            this.txtIndentWidth.Size = new System.Drawing.Size(36, 29);
+            this.txtIndentWidth.TabIndex = 24;
+            this.txtIndentWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // chkShowIndentLine
             // 
             this.chkShowIndentLine.AutoSize = true;
@@ -1454,8 +1474,8 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.uiSettingTabs, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.uiBtnOpen, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -1463,6 +1483,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(638, 584);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
@@ -1488,38 +1509,50 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // lblIndentWidth
+            // panel2
             // 
-            this.lblIndentWidth.AutoSize = true;
-            this.lblIndentWidth.BackColor = System.Drawing.Color.Transparent;
-            this.lblIndentWidth.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIndentWidth.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblIndentWidth.Location = new System.Drawing.Point(11, 220);
-            this.lblIndentWidth.Name = "lblIndentWidth";
-            this.lblIndentWidth.Size = new System.Drawing.Size(172, 21);
-            this.lblIndentWidth.TabIndex = 23;
-            this.lblIndentWidth.Text = "Indent Width (1 to 32):";
+            this.panel2.Controls.Add(this.uiCancel);
+            this.panel2.Controls.Add(this.uiBtnOpen);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 529);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(638, 55);
+            this.panel2.TabIndex = 2;
             // 
-            // txtIndentWidth
+            // uiBtnOpen
             // 
-            this.txtIndentWidth.Location = new System.Drawing.Point(189, 217);
-            this.txtIndentWidth.Name = "txtIndentWidth";
-            this.txtIndentWidth.Size = new System.Drawing.Size(36, 29);
-            this.txtIndentWidth.TabIndex = 24;
-            this.txtIndentWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.uiBtnOpen.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnOpen.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnOpen.DisplayText = "Ok";
+            this.uiBtnOpen.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnOpen.Image = global::taskt.Properties.Resources.various_ok_button;
+            this.uiBtnOpen.IsMouseOver = false;
+            this.uiBtnOpen.Location = new System.Drawing.Point(12, 3);
+            this.uiBtnOpen.Name = "uiBtnOpen";
+            this.uiBtnOpen.Size = new System.Drawing.Size(48, 44);
+            this.uiBtnOpen.TabIndex = 14;
+            this.uiBtnOpen.TabStop = false;
+            this.uiBtnOpen.Text = "Ok";
+            this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
             // 
-            // chkExportIntermediate
+            // uiCancel
             // 
-            this.chkExportIntermediate.AutoSize = true;
-            this.chkExportIntermediate.BackColor = System.Drawing.Color.Transparent;
-            this.chkExportIntermediate.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkExportIntermediate.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 516);
-            this.chkExportIntermediate.Name = "chkExportIntermediate";
-            this.chkExportIntermediate.Size = new System.Drawing.Size(225, 24);
-            this.chkExportIntermediate.TabIndex = 25;
-            this.chkExportIntermediate.Text = "Export Intermediate Script File";
-            this.chkExportIntermediate.UseVisualStyleBackColor = false;
+            this.uiCancel.BackColor = System.Drawing.Color.Transparent;
+            this.uiCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiCancel.DisplayText = "Cancel";
+            this.uiCancel.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
+            this.uiCancel.IsMouseOver = false;
+            this.uiCancel.Location = new System.Drawing.Point(78, 3);
+            this.uiCancel.Name = "uiCancel";
+            this.uiCancel.Size = new System.Drawing.Size(48, 44);
+            this.uiCancel.TabIndex = 15;
+            this.uiCancel.TabStop = false;
+            this.uiCancel.Text = "Cancel";
+            this.uiCancel.Click += new System.EventHandler(this.uiCancel_Click);
             // 
             // frmSettings
             // 
@@ -1529,10 +1562,11 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmSettings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).EndInit();
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSettings_KeyDown);
             this.uiSettingTabs.ResumeLayout(false);
             this.tabAppSettings.ResumeLayout(false);
             this.tabAppSettings.PerformLayout();
@@ -1547,6 +1581,9 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiCancel)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1563,7 +1600,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkAutoCloseWindow;
         private System.Windows.Forms.CheckBox chkShowDebug;
-        private CustomControls.UIPictureButton uiBtnOpen;
         private System.Windows.Forms.CheckBox chkEnableLogging;
         private System.Windows.Forms.Label lblMainLogo;
         private System.Windows.Forms.Label lblOptions;
@@ -1664,5 +1700,8 @@
         private System.Windows.Forms.Label lblIndentWidth;
         private System.Windows.Forms.TextBox txtIndentWidth;
         private System.Windows.Forms.CheckBox chkExportIntermediate;
+        private System.Windows.Forms.Panel panel2;
+        private CustomControls.UIPictureButton uiCancel;
+        private CustomControls.UIPictureButton uiBtnOpen;
     }
 }

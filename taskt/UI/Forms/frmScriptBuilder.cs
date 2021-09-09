@@ -2925,7 +2925,7 @@ namespace taskt.UI.Forms
 
 
 
-        #region Variable Edit
+        #region Variable Edit, Settings form
         private void showVariableManager()
         {
             using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables(this.scriptVariables, this.appSettings))
@@ -2938,6 +2938,22 @@ namespace taskt.UI.Forms
                     this.scriptVariables = scriptVariableEditor.scriptVariables;
                     ChangeSaveState(true);
                 }
+            }
+        }
+
+        private void showSettingForm()
+        {
+            //show settings dialog
+            using (frmSettings newSettings = new frmSettings(this))
+            {
+                newSettings.ShowDialog();
+
+                //reload app settings
+                appSettings = new Core.ApplicationSettings();
+                appSettings = appSettings.GetOrCreateApplicationSettings();
+
+                //reinit
+                Core.Server.HttpServerClient.Initialize();
             }
         }
         #endregion
@@ -2995,18 +3011,19 @@ namespace taskt.UI.Forms
         }
         private void uiBtnSettings_Click(object sender, EventArgs e)
         {
-            //show settings dialog
-            using (frmSettings newSettings = new frmSettings(this))
-            {
-                newSettings.ShowDialog();
+            ////show settings dialog
+            //using (frmSettings newSettings = new frmSettings(this))
+            //{
+            //    newSettings.ShowDialog();
 
-                //reload app settings
-                appSettings = new Core.ApplicationSettings();
-                appSettings = appSettings.GetOrCreateApplicationSettings();
+            //    //reload app settings
+            //    appSettings = new Core.ApplicationSettings();
+            //    appSettings = appSettings.GetOrCreateApplicationSettings();
 
-                //reinit
-                Core.Server.HttpServerClient.Initialize();
-            }
+            //    //reinit
+            //    Core.Server.HttpServerClient.Initialize();
+            //}
+            showSettingForm();
         }
         private void uiBtnClearAll_Click(object sender, EventArgs e)
         {
@@ -3164,18 +3181,19 @@ namespace taskt.UI.Forms
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //show settings dialog
-            using (frmSettings newSettings = new frmSettings(this))
-            {
-                newSettings.ShowDialog();
-            }
+            ////show settings dialog
+            //using (frmSettings newSettings = new frmSettings(this))
+            //{
+            //    newSettings.ShowDialog();
+            //}
 
-            //reload app settings
-            appSettings = new Core.ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
+            ////reload app settings
+            //appSettings = new Core.ApplicationSettings();
+            //appSettings = appSettings.GetOrCreateApplicationSettings();
 
-            //reinit
-            Core.Server.HttpServerClient.Initialize();
+            ////reinit
+            //Core.Server.HttpServerClient.Initialize();
+            showSettingForm();
         }
 
         private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
