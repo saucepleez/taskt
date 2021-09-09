@@ -349,7 +349,9 @@ namespace taskt.UI.Forms
             }
 
             //remove parent node
-            parentNode.Remove();
+            //parentNode.Remove();
+            RemoveUserVariableNode(tvScriptVariables.Nodes[1], parentNode.Text);
+            RemoveUserVariableNode(bufferedUserVariableParentNode, parentNode.Text);
         }
         #endregion
 
