@@ -253,9 +253,9 @@ namespace taskt.UI.Forms
             // 
             this.picClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picClear.Image = global::taskt.Properties.Resources.command_error;
-            this.picClear.Location = new System.Drawing.Point(544, 3);
+            this.picClear.Location = new System.Drawing.Point(544, 6);
             this.picClear.Name = "picClear";
-            this.picClear.Size = new System.Drawing.Size(30, 30);
+            this.picClear.Size = new System.Drawing.Size(24, 24);
             this.picClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picClear.TabIndex = 19;
             this.picClear.TabStop = false;
@@ -306,13 +306,13 @@ namespace taskt.UI.Forms
             this.tvContestSep1,
             this.clearFilterTvContextMenuStrip});
             this.tvContextMenuStrip.Name = "tvContextMenuStrip";
-            this.tvContextMenuStrip.Size = new System.Drawing.Size(181, 136);
+            this.tvContextMenuStrip.Size = new System.Drawing.Size(178, 114);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -320,7 +320,7 @@ namespace taskt.UI.Forms
             // 
             this.importToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.importToolStripMenuItem.Text = "&Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -328,20 +328,20 @@ namespace taskt.UI.Forms
             // 
             this.newWindowToolStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
-            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.newWindowToolStripMenuItem.Text = "&New Window";
             this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
             // 
             // tvContestSep1
             // 
             this.tvContestSep1.Name = "tvContestSep1";
-            this.tvContestSep1.Size = new System.Drawing.Size(177, 6);
+            this.tvContestSep1.Size = new System.Drawing.Size(174, 6);
             // 
             // clearFilterTvContextMenuStrip
             // 
             this.clearFilterTvContextMenuStrip.Enabled = false;
             this.clearFilterTvContextMenuStrip.Name = "clearFilterTvContextMenuStrip";
-            this.clearFilterTvContextMenuStrip.Size = new System.Drawing.Size(180, 26);
+            this.clearFilterTvContextMenuStrip.Size = new System.Drawing.Size(177, 26);
             this.clearFilterTvContextMenuStrip.Text = "Clear Filter (&L)";
             this.clearFilterTvContextMenuStrip.Click += new System.EventHandler(this.clearFilterTvContextMenuStrip_Click);
             // 
