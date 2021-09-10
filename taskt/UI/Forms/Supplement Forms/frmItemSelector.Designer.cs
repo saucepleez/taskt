@@ -161,9 +161,9 @@
             // 
             this.picClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picClear.Image = global::taskt.Properties.Resources.command_error;
-            this.picClear.Location = new System.Drawing.Point(327, 3);
+            this.picClear.Location = new System.Drawing.Point(327, 6);
             this.picClear.Name = "picClear";
-            this.picClear.Size = new System.Drawing.Size(30, 30);
+            this.picClear.Size = new System.Drawing.Size(24, 24);
             this.picClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picClear.TabIndex = 23;
             this.picClear.TabStop = false;
