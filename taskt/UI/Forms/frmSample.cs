@@ -319,7 +319,7 @@ namespace taskt.UI.Forms
 
             foreach(TreeNode parentNode in bufferdSampleNodes)
             {
-                TreeNode paNode = new TreeNode();
+                TreeNode paNode = new TreeNode("", 1, 1);
                 foreach(TreeNode node in parentNode.Nodes)
                 {
                     if (node.Text.ToLower().Contains(keyword))
