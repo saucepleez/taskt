@@ -2746,7 +2746,8 @@ namespace taskt.UI.Forms
             OpenFile(filePath);
             if (normalFileOpen)
             {
-                this.ScriptFilePath = System.IO.Path.GetFileName(filePath);
+                //this.ScriptFilePath = System.IO.Path.GetFileName(filePath);
+                this.ScriptFilePath = filePath;
             }
             else
             {
