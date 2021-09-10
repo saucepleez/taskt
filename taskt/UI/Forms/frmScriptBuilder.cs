@@ -3132,7 +3132,7 @@ namespace taskt.UI.Forms
 
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
-                    this.scriptVariables = scriptVariableEditor.scriptVariables;
+                    this.scriptVariables = scriptVariableEditor.scriptVariables.OrderBy(v => v.VariableName).ToList();
                     ChangeSaveState(true);
                 }
             }

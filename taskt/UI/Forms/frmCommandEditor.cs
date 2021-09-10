@@ -308,6 +308,7 @@ namespace taskt.UI.Forms
 
         }
 
+        #region footer buttons event
         public string ReplaceVariableMaker(string v)
         {
             var s = appSettings.EngineSettings;
@@ -323,7 +324,7 @@ namespace taskt.UI.Forms
 
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
-                    this.scriptVariables = scriptVariableEditor.scriptVariables;
+                    this.scriptVariables = scriptVariableEditor.scriptVariables.OrderBy(v => v.VariableName).ToList();
                 }
             }
         }
@@ -336,5 +337,6 @@ namespace taskt.UI.Forms
             string parent = userSelectedCommand.DisplayGroup.ToLower().Replace(" ", "-");
             System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
         }
+        #endregion
     }
 }
