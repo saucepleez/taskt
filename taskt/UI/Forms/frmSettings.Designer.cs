@@ -446,9 +446,9 @@
             this.chkUseNewParser.ForeColor = System.Drawing.Color.SteelBlue;
             this.chkUseNewParser.Location = new System.Drawing.Point(10, 128);
             this.chkUseNewParser.Name = "chkUseNewParser";
-            this.chkUseNewParser.Size = new System.Drawing.Size(266, 24);
+            this.chkUseNewParser.Size = new System.Drawing.Size(261, 24);
             this.chkUseNewParser.TabIndex = 30;
-            this.chkUseNewParser.Text = "User New Parser (New Parser is beta)";
+            this.chkUseNewParser.Text = "Use New Parser (New Parser is beta)";
             this.chkUseNewParser.UseVisualStyleBackColor = true;
             // 
             // chkSlimActionBar
