@@ -155,6 +155,18 @@
             this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variableManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.rootTVCommandMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.expandRootTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.collapseRootTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.rootTVCommandMenuSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearRootTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdTVCommandMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdTVCommandMenuSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.highlightCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdTVCommandMenuSep2 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -194,6 +206,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).BeginInit();
             this.lstContextStrip.SuspendLayout();
+            this.rootTVCommandMenuStrip.SuspendLayout();
+            this.cmdTVCommandMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpControls
@@ -1649,6 +1663,91 @@
             this.notifyTray.Visible = true;
             this.notifyTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseDoubleClick);
             // 
+            // rootTVCommandMenuStrip
+            // 
+            this.rootTVCommandMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.rootTVCommandMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.expandRootTVCommandMenuStrip,
+            this.collapseRootTVCommandMenuStrip,
+            this.rootTVCommandMenuSep1,
+            this.clearRootTVCommandMenuStrip});
+            this.rootTVCommandMenuStrip.Name = "rootTVCommandMenuStrip";
+            this.rootTVCommandMenuStrip.Size = new System.Drawing.Size(178, 88);
+            // 
+            // expandRootTVCommandMenuStrip
+            // 
+            this.expandRootTVCommandMenuStrip.Name = "expandRootTVCommandMenuStrip";
+            this.expandRootTVCommandMenuStrip.Size = new System.Drawing.Size(177, 26);
+            this.expandRootTVCommandMenuStrip.Text = "&Expand";
+            // 
+            // collapseRootTVCommandMenuStrip
+            // 
+            this.collapseRootTVCommandMenuStrip.Name = "collapseRootTVCommandMenuStrip";
+            this.collapseRootTVCommandMenuStrip.Size = new System.Drawing.Size(177, 26);
+            this.collapseRootTVCommandMenuStrip.Text = "&Collapse";
+            // 
+            // rootTVCommandMenuSep1
+            // 
+            this.rootTVCommandMenuSep1.Name = "rootTVCommandMenuSep1";
+            this.rootTVCommandMenuSep1.Size = new System.Drawing.Size(174, 6);
+            // 
+            // clearRootTVCommandMenuStrip
+            // 
+            this.clearRootTVCommandMenuStrip.Enabled = false;
+            this.clearRootTVCommandMenuStrip.Name = "clearRootTVCommandMenuStrip";
+            this.clearRootTVCommandMenuStrip.Size = new System.Drawing.Size(177, 26);
+            this.clearRootTVCommandMenuStrip.Text = "Clear Filter (&L)";
+            // 
+            // cmdTVCommandMenuStrip
+            // 
+            this.cmdTVCommandMenuStrip.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cmdTVCommandMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addCmdTVCommandMenuStrip,
+            this.helpCmdTVCommandMenuStrip,
+            this.cmdTVCommandMenuSep1,
+            this.highlightCmdTVCommandMenuStrip,
+            this.cmdTVCommandMenuSep2,
+            this.clearCmdTVCommandMenuStrip});
+            this.cmdTVCommandMenuStrip.Name = "cmdTVCommandMenuStrip";
+            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(258, 112);
+            // 
+            // addCmdTVCommandMenuStrip
+            // 
+            this.addCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.actionbar_edit;
+            this.addCmdTVCommandMenuStrip.Name = "addCmdTVCommandMenuStrip";
+            this.addCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.addCmdTVCommandMenuStrip.Text = "Add &This Action";
+            // 
+            // helpCmdTVCommandMenuStrip
+            // 
+            this.helpCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.web_help;
+            this.helpCmdTVCommandMenuStrip.Name = "helpCmdTVCommandMenuStrip";
+            this.helpCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.helpCmdTVCommandMenuStrip.Text = "Help This Command (&Web)";
+            // 
+            // cmdTVCommandMenuSep1
+            // 
+            this.cmdTVCommandMenuSep1.Name = "cmdTVCommandMenuSep1";
+            this.cmdTVCommandMenuSep1.Size = new System.Drawing.Size(254, 6);
+            // 
+            // highlightCmdTVCommandMenuStrip
+            // 
+            this.highlightCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.command_search;
+            this.highlightCmdTVCommandMenuStrip.Name = "highlightCmdTVCommandMenuStrip";
+            this.highlightCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.highlightCmdTVCommandMenuStrip.Text = "&Highlight This Command";
+            // 
+            // cmdTVCommandMenuSep2
+            // 
+            this.cmdTVCommandMenuSep2.Name = "cmdTVCommandMenuSep2";
+            this.cmdTVCommandMenuSep2.Size = new System.Drawing.Size(254, 6);
+            // 
+            // clearCmdTVCommandMenuStrip
+            // 
+            this.clearCmdTVCommandMenuStrip.Name = "clearCmdTVCommandMenuStrip";
+            this.clearCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.clearCmdTVCommandMenuStrip.Text = "Clear Filter (&L)";
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1711,6 +1810,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).EndInit();
             this.lstContextStrip.ResumeLayout(false);
+            this.rootTVCommandMenuStrip.ResumeLayout(false);
+            this.cmdTVCommandMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1840,6 +1941,18 @@
         private System.Windows.Forms.PictureBox picCommandSearch;
         private System.Windows.Forms.TextBox txtCommandFilter;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ContextMenuStrip rootTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem expandRootTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem collapseRootTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripSeparator rootTVCommandMenuSep1;
+        private System.Windows.Forms.ToolStripMenuItem clearRootTVCommandMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip cmdTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addCmdTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem helpCmdTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripSeparator cmdTVCommandMenuSep1;
+        private System.Windows.Forms.ToolStripMenuItem highlightCmdTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripSeparator cmdTVCommandMenuSep2;
+        private System.Windows.Forms.ToolStripMenuItem clearCmdTVCommandMenuStrip;
     }
 }
 
