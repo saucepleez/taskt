@@ -51,6 +51,7 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.chkUseNewParser = new System.Windows.Forms.CheckBox();
             this.chkSlimActionBar = new System.Windows.Forms.CheckBox();
             this.chkPreloadCommands = new System.Windows.Forms.CheckBox();
             this.btnLaunchDisplayManager = new System.Windows.Forms.Button();
@@ -139,11 +140,11 @@
             this.chkInsertCommandsInline = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.uiCancel = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
-            this.uiCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -153,8 +154,8 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiCancel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -408,6 +409,7 @@
             // 
             this.tabAppSettings.AutoScroll = true;
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.chkUseNewParser);
             this.tabAppSettings.Controls.Add(this.chkSlimActionBar);
             this.tabAppSettings.Controls.Add(this.chkPreloadCommands);
             this.tabAppSettings.Controls.Add(this.btnLaunchDisplayManager);
@@ -435,6 +437,19 @@
             this.tabAppSettings.Size = new System.Drawing.Size(624, 424);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // chkUseNewParser
+            // 
+            this.chkUseNewParser.AutoSize = true;
+            this.chkUseNewParser.BackColor = System.Drawing.Color.Transparent;
+            this.chkUseNewParser.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkUseNewParser.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkUseNewParser.Location = new System.Drawing.Point(10, 128);
+            this.chkUseNewParser.Name = "chkUseNewParser";
+            this.chkUseNewParser.Size = new System.Drawing.Size(266, 24);
+            this.chkUseNewParser.TabIndex = 30;
+            this.chkUseNewParser.Text = "User New Parser (New Parser is beta)";
+            this.chkUseNewParser.UseVisualStyleBackColor = true;
             // 
             // chkSlimActionBar
             // 
@@ -1499,16 +1514,6 @@
             this.panel1.Size = new System.Drawing.Size(638, 65);
             this.panel1.TabIndex = 0;
             // 
-            // tmrGetSocketStatus
-            // 
-            this.tmrGetSocketStatus.Interval = 250;
-            this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
-            // 
-            // bgwMetrics
-            // 
-            this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
-            this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.uiCancel);
@@ -1519,6 +1524,23 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(638, 55);
             this.panel2.TabIndex = 2;
+            // 
+            // uiCancel
+            // 
+            this.uiCancel.BackColor = System.Drawing.Color.Transparent;
+            this.uiCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiCancel.DisplayText = "Cancel";
+            this.uiCancel.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
+            this.uiCancel.IsMouseOver = false;
+            this.uiCancel.Location = new System.Drawing.Point(78, 3);
+            this.uiCancel.Name = "uiCancel";
+            this.uiCancel.Size = new System.Drawing.Size(48, 44);
+            this.uiCancel.TabIndex = 15;
+            this.uiCancel.TabStop = false;
+            this.uiCancel.Text = "Cancel";
+            this.uiCancel.Click += new System.EventHandler(this.uiCancel_Click);
             // 
             // uiBtnOpen
             // 
@@ -1537,22 +1559,15 @@
             this.uiBtnOpen.Text = "Ok";
             this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
             // 
-            // uiCancel
+            // tmrGetSocketStatus
             // 
-            this.uiCancel.BackColor = System.Drawing.Color.Transparent;
-            this.uiCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiCancel.DisplayText = "Cancel";
-            this.uiCancel.DisplayTextBrush = System.Drawing.Color.White;
-            this.uiCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
-            this.uiCancel.IsMouseOver = false;
-            this.uiCancel.Location = new System.Drawing.Point(78, 3);
-            this.uiCancel.Name = "uiCancel";
-            this.uiCancel.Size = new System.Drawing.Size(48, 44);
-            this.uiCancel.TabIndex = 15;
-            this.uiCancel.TabStop = false;
-            this.uiCancel.Text = "Cancel";
-            this.uiCancel.Click += new System.EventHandler(this.uiCancel_Click);
+            this.tmrGetSocketStatus.Interval = 250;
+            this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
+            // 
+            // bgwMetrics
+            // 
+            this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
+            this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
             // frmSettings
             // 
@@ -1582,8 +1597,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiCancel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1703,5 +1718,6 @@
         private System.Windows.Forms.Panel panel2;
         private CustomControls.UIPictureButton uiCancel;
         private CustomControls.UIPictureButton uiBtnOpen;
+        private System.Windows.Forms.CheckBox chkUseNewParser;
     }
 }
