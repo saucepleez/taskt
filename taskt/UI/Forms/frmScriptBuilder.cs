@@ -3096,6 +3096,11 @@ namespace taskt.UI.Forms
                 }
             }
 
+            if (tvcmd.Count == 0)
+            {
+                tvcmd.Add(new TreeNode("nothing :-("));
+            }
+
             tvCommands.BeginUpdate();
 
             tvCommands.Nodes.Clear();
