@@ -131,8 +131,10 @@ namespace taskt.Core
         public string CurrentWindowYPositionKeyword { get; set; }
         public string CurrentWorksheetKeyword { get; set; }
         public string NextWorksheetKeyword { get; set; }
-        public bool ExportIntermediateXML { get; set; }
         public string PreviousWorksheetKeyword { get; set; }
+        public bool ExportIntermediateXML { get; set; }
+        public bool UseNewParser { get; set; }
+        
         private static string InterStartVariableMaker = "{{{";
         private static string InterEndVariableMaker = "}}}";
         private static string InterCurrentWindowKeyword = "%kwd_current_window%";
@@ -201,6 +203,7 @@ namespace taskt.Core
             NextWorksheetKeyword = "Next Sheet";
             PreviousWorksheetKeyword = "Previous Sheet";
             ExportIntermediateXML = true;
+            UseNewParser = true;
         }
 
         public string[] KeyNameList()
