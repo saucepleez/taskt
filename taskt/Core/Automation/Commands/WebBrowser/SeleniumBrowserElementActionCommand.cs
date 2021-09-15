@@ -219,8 +219,7 @@ namespace taskt.Core.Automation.Commands
 
                     string textToSet = (from rw in v_WebActionParameterTable.AsEnumerable()
                                         where rw.Field<string>("Parameter Name") == "Text To Set"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
+                                        select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender); ;
 
                     string clearElement = (from rw in v_WebActionParameterTable.AsEnumerable()
                                            where rw.Field<string>("Parameter Name") == "Clear Element Before Setting Text"
