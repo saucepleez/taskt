@@ -323,7 +323,14 @@ namespace taskt.UI.Forms
 
             if (this._scriptFilePath != null)
             {
-                OpenScriptFromFilePath(this.ScriptFilePath, true);
+                if (this._scriptFilePath.StartsWith("*"))
+                {
+                    OpenScriptFromFilePath(this.ScriptFilePath.Substring(1), false);
+                }
+                else
+                {
+                    OpenScriptFromFilePath(this.ScriptFilePath, true);
+                }
             }
         }
         

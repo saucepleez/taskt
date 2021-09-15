@@ -234,7 +234,7 @@ namespace taskt.UI.Forms
             {
                 System.Diagnostics.ProcessStartInfo pInfo = new System.Diagnostics.ProcessStartInfo();
                 pInfo.FileName = Assembly.GetEntryAssembly().Location;
-                pInfo.Arguments = "-o \"" + getSelectedScriptPath() + "\"";
+                pInfo.Arguments = "-oh \"" + getSelectedScriptPath() + "\"";
                 System.Diagnostics.Process.Start(pInfo);
                 this.Close();
             }

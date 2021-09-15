@@ -59,6 +59,10 @@ namespace taskt
                             type = "open";
                             filePath = args[1];
                             break;
+                        case "-oh":
+                            type = "open";
+                            filePath = "*" + args[1];
+                            break;
                         default:
                             using (System.Diagnostics.EventLog eventLog = new System.Diagnostics.EventLog("Application"))
                             {
@@ -71,8 +75,8 @@ namespace taskt
                     }
                 }
 
-
-                if (!System.IO.File.Exists(filePath))
+                string checkFilePath = filePath.StartsWith("*") ? filePath.Substring(1) : filePath;
+                if (!System.IO.File.Exists(checkFilePath))
                 {
                     using (System.Diagnostics.EventLog eventLog = new System.Diagnostics.EventLog("Application"))
                     {
