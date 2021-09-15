@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme1 = new taskt.Core.Theme();
+            taskt.Core.Theme theme2 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -772,8 +772,10 @@
             this.tvCommands.ShowLines = false;
             this.tvCommands.Size = new System.Drawing.Size(238, 339);
             this.tvCommands.TabIndex = 19;
+            this.tvCommands.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCommands_NodeMouseClick);
             this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
             this.tvCommands.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tvCommands_KeyPress);
+            this.tvCommands.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvCommands_MouseClick);
             // 
             // pnlCommandHelper
             // 
@@ -1024,9 +1026,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme1;
+            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme2;
             // 
             // lblMainLogo
             // 
@@ -1700,7 +1702,7 @@
             // 
             // cmdTVCommandMenuStrip
             // 
-            this.cmdTVCommandMenuStrip.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cmdTVCommandMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.cmdTVCommandMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCmdTVCommandMenuStrip,
             this.helpCmdTVCommandMenuStrip,
@@ -1709,7 +1711,7 @@
             this.cmdTVCommandMenuSep2,
             this.clearCmdTVCommandMenuStrip});
             this.cmdTVCommandMenuStrip.Name = "cmdTVCommandMenuStrip";
-            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(258, 112);
+            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(267, 142);
             // 
             // addCmdTVCommandMenuStrip
             // 
@@ -1744,6 +1746,7 @@
             // 
             // clearCmdTVCommandMenuStrip
             // 
+            this.clearCmdTVCommandMenuStrip.Enabled = false;
             this.clearCmdTVCommandMenuStrip.Name = "clearCmdTVCommandMenuStrip";
             this.clearCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
             this.clearCmdTVCommandMenuStrip.Text = "Clear Filter (&L)";

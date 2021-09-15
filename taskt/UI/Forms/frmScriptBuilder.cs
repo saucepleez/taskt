@@ -3583,7 +3583,59 @@ namespace taskt.UI.Forms
             return true;
         }
 
+        private void tvCommands_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                tvCommands.SelectedNode = e.Node;
+            }
+        }
 
+        private void tvCommands_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (tvCommands.SelectedNode == null)
+            {
+                return;
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                if (tvCommands.SelectedNode.Level == 0)
+                {
+                    if (tvCommands.SelectedNode.IsExpanded)
+                    {
+                        expandRootTVCommandMenuStrip.Visible = false;
+                        collapseRootTVCommandMenuStrip.Visible = true;
+                    }
+                    else
+                    {
+                        expandRootTVCommandMenuStrip.Visible = true;
+                        collapseRootTVCommandMenuStrip.Visible = false;
+                    }
+                    rootTVCommandMenuStrip.Show(Cursor.Position);
+                }
+                else
+                {
+                    if (tvCommands.SelectedNode.Nodes.Count > 0)
+                    {
+                        if (tvCommands.SelectedNode.IsExpanded)
+                        {
+                            expandRootTVCommandMenuStrip.Visible = false;
+                            collapseRootTVCommandMenuStrip.Visible = true;
+                        }
+                        else
+                        {
+                            expandRootTVCommandMenuStrip.Visible = true;
+                            collapseRootTVCommandMenuStrip.Visible = false;
+                        }
+                        rootTVCommandMenuStrip.Show(Cursor.Position);
+                    }
+                    else
+                    {
+                        cmdTVCommandMenuStrip.Show(Cursor.Position);
+                    }
+                }
+            }
+        }
     }
 
 }
