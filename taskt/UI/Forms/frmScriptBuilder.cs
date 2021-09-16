@@ -705,31 +705,50 @@ namespace taskt.UI.Forms
 
         private void txtCommandSearch_TextChanged(object sender, EventArgs e)
         {
-            if (lstScriptActions.Items.Count == 0)
-                return;
+            //if (lstScriptActions.Items.Count == 0)
+            //    return;
 
-            reqdIndex = 0;
+            //reqdIndex = 0;
 
-            if (txtCommandSearch.Text == "")
+            //if (txtCommandSearch.Text == "")
+            //{
+            //    //hide info
+            //    HideSearchInfo();
+
+            //    //clear indexes
+            //    matchingSearchIndex.Clear();
+            //    currentIndexInMatchItems = -1;
+
+            //    //repaint
+            //    lstScriptActions.Invalidate();
+            //}
+            //else
+            //{
+            //    lblCurrentlyViewing.Show();
+            //    lblTotalResults.Show();
+            //    SearchForItemInListView();
+
+            //    //repaint
+            //    lstScriptActions.Invalidate();
+            //}
+        }
+
+        private void tsSearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
             {
-                //hide info
-                HideSearchInfo();
-
-                //clear indexes
-                matchingSearchIndex.Clear();
-                currentIndexInMatchItems = -1;
-
-                //repaint
-                lstScriptActions.Invalidate();
-            }
-            else
-            {
-                lblCurrentlyViewing.Show();
-                lblTotalResults.Show();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
                 SearchForItemInListView();
-
-                //repaint
-                lstScriptActions.Invalidate();
+            }
+        }
+        private void txtCommandSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                SearchForItemInListView();
             }
         }
 
@@ -748,58 +767,67 @@ namespace taskt.UI.Forms
                 searchCriteria = tsSearchBox.Text;
             }
 
-            var matchingItems = (from ListViewItem itm in lstScriptActions.Items
-                                 where itm.Text.Contains(searchCriteria)
-                                 select itm).ToList();
+            //var matchingItems = (from ListViewItem itm in lstScriptActions.Items
+            //                     where itm.Text.Contains(searchCriteria)
+            //                     select itm).ToList();
 
 
-            int? matchCount = matchingItems.Count();
-            int totalMatches = matchCount ?? 0;
+            //int? matchCount = matchingItems.Count();
+            //int totalMatches = matchCount ?? 0;
 
 
-            if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
+            //if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
+            //{
+            //    reqdIndex = 0;
+            //}
+
+            //lblTotalResults.Show();
+
+            //if (totalMatches == 0)
+            //{
+            //    currentScriptEditorMode = CommandEditorState.Normal;
+            //    reqdIndex = -1;
+            //    lblTotalResults.Text = "No Matches Found";
+            //    lblCurrentlyViewing.Hide();
+            //    //clear indexes
+            //    matchingSearchIndex.Clear();
+            //    reqdIndex = -1;
+            //    lstScriptActions.Invalidate();
+            //    return;
+            //}
+            //else
+            //{
+            //    currentScriptEditorMode = CommandEditorState.Search;
+            //    lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
+            //    tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
+            //    lblTotalResults.Text = totalMatches + " total results found";
+            //}
+
+            //ClearSelectedListViewItems();
+
+            //matchingSearchIndex = new List<int>();
+            //foreach (ListViewItem itm in matchingItems)
+            //{
+            //    matchingSearchIndex.Add(itm.Index);
+            //    //itm.BackColor = Color.LightGoldenrodYellow;
+            //}
+
+            //currentIndexInMatchItems = matchingItems[0].Index;
+            //lstScriptActions.Items[0].Selected = true;
+            ////currentIndexInMatchItems = matchingItems[reqdIndex].Index;
+
+            //lstScriptActions.Invalidate();
+
+            ////lstScriptActions.EnsureVisible(currentIndexInMatchItems);
+
+            if (searchCriteria.Length > 0)
             {
-                reqdIndex = 0;
-            }
-
-            lblTotalResults.Show();
-
-            if (totalMatches == 0)
-            {
-                currentScriptEditorMode = CommandEditorState.Normal;
-                reqdIndex = -1;
-                lblTotalResults.Text = "No Matches Found";
-                lblCurrentlyViewing.Hide();
-                //clear indexes
-                matchingSearchIndex.Clear();
-                reqdIndex = -1;
-                lstScriptActions.Invalidate();
-                return;
+                AdvancedSearchItemInCommands(searchCriteria, true, false, false, false, true, false, "");
             }
             else
             {
-                currentScriptEditorMode = CommandEditorState.Search;
-                lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-                tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-                lblTotalResults.Text = totalMatches + " total results found";
+                ClearHighlightListViewItem();
             }
-
-            ClearSelectedListViewItems();
-
-            matchingSearchIndex = new List<int>();
-            foreach (ListViewItem itm in matchingItems)
-            {
-                matchingSearchIndex.Add(itm.Index);
-                //itm.BackColor = Color.LightGoldenrodYellow;
-            }
-
-            currentIndexInMatchItems = matchingItems[0].Index;
-            lstScriptActions.Items[0].Selected = true;
-            //currentIndexInMatchItems = matchingItems[reqdIndex].Index;
-
-            lstScriptActions.Invalidate();
-
-            //lstScriptActions.EnsureVisible(currentIndexInMatchItems);
         }
 
         private void pbSearch_MouseEnter(object sender, EventArgs e)
@@ -3762,9 +3790,8 @@ namespace taskt.UI.Forms
         {
             ShowAllCommands();
         }
+
         #endregion
-
-
     }
 
 }
