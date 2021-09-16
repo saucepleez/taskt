@@ -1874,10 +1874,21 @@ namespace taskt.UI.Forms
             {
                 trg = taskt.Core.Theme.scriptTexts["debug"];
             }
-            else if ((currentScriptEditorMode == CommandEditorState.Search) || (currentScriptEditorMode == CommandEditorState.AdvencedSearch) || (currentScriptEditorMode == CommandEditorState.ReplaceSearch))
+            else if ((currentScriptEditorMode == CommandEditorState.Search) || (currentScriptEditorMode == CommandEditorState.AdvencedSearch) || (currentScriptEditorMode == CommandEditorState.ReplaceSearch) || (currentScriptEditorMode == CommandEditorState.HighlightCommand))
             {
-                if (matchingSearchIndex.Contains(e.ItemIndex))
-                { 
+                //if (matchingSearchIndex.Contains(e.ItemIndex))
+                //{ 
+                //    if ((e.Item.Focused) || (e.Item.Selected))
+                //    {
+                //        trg = taskt.Core.Theme.scriptTexts["current-match"];
+                //    }
+                //    else
+                //    {
+                //        trg = taskt.Core.Theme.scriptTexts["match"];
+                //    }
+                //}
+                if (command.IsMatched)
+                {
                     if ((e.Item.Focused) || (e.Item.Selected))
                     {
                         trg = taskt.Core.Theme.scriptTexts["current-match"];
