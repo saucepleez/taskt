@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme2 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -396,7 +396,7 @@
             this.SelectAllStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.SelectAllStripMenuItem.Name = "SelectAllStripMenuItem";
             this.SelectAllStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.SelectAllStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.SelectAllStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SelectAllStripMenuItem.Text = "Select &All";
             this.SelectAllStripMenuItem.Click += new System.EventHandler(this.SelectAllStripMenuItem_Click);
             // 
@@ -405,7 +405,7 @@
             this.CutScriptStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.CutScriptStripMenuItem.Name = "CutScriptStripMenuItem";
             this.CutScriptStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.CutScriptStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.CutScriptStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CutScriptStripMenuItem.Text = "Cut (&X)";
             this.CutScriptStripMenuItem.Click += new System.EventHandler(this.CutScriptStripMenuItem_Click);
             // 
@@ -414,7 +414,7 @@
             this.CopyStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.CopyStripMenuItem.Name = "CopyStripMenuItem";
             this.CopyStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.CopyStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.CopyStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CopyStripMenuItem.Text = "&Copy";
             this.CopyStripMenuItem.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
             // 
@@ -423,14 +423,14 @@
             this.PasteStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.PasteStripMenuItem.Name = "PasteStripMenuItem";
             this.PasteStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.PasteStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.PasteStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.PasteStripMenuItem.Text = "Paste (&V)";
             this.PasteStripMenuItem.Click += new System.EventHandler(this.PasteStripMenuItem_Click);
             // 
             // editSplitMenuSeparator1
             // 
             this.editSplitMenuSeparator1.Name = "editSplitMenuSeparator1";
-            this.editSplitMenuSeparator1.Size = new System.Drawing.Size(210, 6);
+            this.editSplitMenuSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // SearchStripMenuItem
             // 
@@ -438,7 +438,7 @@
             this.SearchStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
             this.SearchStripMenuItem.Name = "SearchStripMenuItem";
             this.SearchStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.SearchStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.SearchStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SearchStripMenuItem.Text = "&Search";
             this.SearchStripMenuItem.Click += new System.EventHandler(this.SearchStripMenuItem_Click);
             // 
@@ -448,17 +448,16 @@
             this.ReplaceStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
             this.ReplaceStripMenuItem.Name = "ReplaceStripMenuItem";
             this.ReplaceStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.ReplaceStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.ReplaceStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ReplaceStripMenuItem.Text = "&Replace";
             this.ReplaceStripMenuItem.Click += new System.EventHandler(this.ReplaceStripMenuItem_Click);
             // 
             // clearSearchHighlightsToolStripMenuItem1
             // 
             this.clearSearchHighlightsToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
-            this.clearSearchHighlightsToolStripMenuItem1.Image = global::taskt.Properties.Resources.action_bar_clear;
             this.clearSearchHighlightsToolStripMenuItem1.Name = "clearSearchHighlightsToolStripMenuItem1";
-            this.clearSearchHighlightsToolStripMenuItem1.Size = new System.Drawing.Size(213, 22);
-            this.clearSearchHighlightsToolStripMenuItem1.Text = "Clear Search &Highlights (&L)";
+            this.clearSearchHighlightsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.clearSearchHighlightsToolStripMenuItem1.Text = "Clear &Highlights (&L)";
             this.clearSearchHighlightsToolStripMenuItem1.Click += new System.EventHandler(this.clearSearchHighlightsToolStripMenuItem1_Click);
             // 
             // modifyToolStripMenuItem
@@ -1026,9 +1025,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme2;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1681,12 +1680,14 @@
             this.expandRootTVCommandMenuStrip.Name = "expandRootTVCommandMenuStrip";
             this.expandRootTVCommandMenuStrip.Size = new System.Drawing.Size(177, 26);
             this.expandRootTVCommandMenuStrip.Text = "&Expand";
+            this.expandRootTVCommandMenuStrip.Click += new System.EventHandler(this.expandRootTVCommandMenuStrip_Click);
             // 
             // collapseRootTVCommandMenuStrip
             // 
             this.collapseRootTVCommandMenuStrip.Name = "collapseRootTVCommandMenuStrip";
             this.collapseRootTVCommandMenuStrip.Size = new System.Drawing.Size(177, 26);
             this.collapseRootTVCommandMenuStrip.Text = "&Collapse";
+            this.collapseRootTVCommandMenuStrip.Click += new System.EventHandler(this.collapseRootTVCommandMenuStrip_Click);
             // 
             // rootTVCommandMenuSep1
             // 
@@ -1699,6 +1700,7 @@
             this.clearRootTVCommandMenuStrip.Name = "clearRootTVCommandMenuStrip";
             this.clearRootTVCommandMenuStrip.Size = new System.Drawing.Size(177, 26);
             this.clearRootTVCommandMenuStrip.Text = "Clear Filter (&L)";
+            this.clearRootTVCommandMenuStrip.Click += new System.EventHandler(this.clearRootTVCommandMenuStrip_Click);
             // 
             // cmdTVCommandMenuStrip
             // 
@@ -1711,45 +1713,49 @@
             this.cmdTVCommandMenuSep2,
             this.clearCmdTVCommandMenuStrip});
             this.cmdTVCommandMenuStrip.Name = "cmdTVCommandMenuStrip";
-            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(267, 142);
+            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(267, 120);
             // 
             // addCmdTVCommandMenuStrip
             // 
             this.addCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.addCmdTVCommandMenuStrip.Name = "addCmdTVCommandMenuStrip";
-            this.addCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.addCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
             this.addCmdTVCommandMenuStrip.Text = "Add &This Action";
+            this.addCmdTVCommandMenuStrip.Click += new System.EventHandler(this.addCmdTVCommandMenuStrip_Click);
             // 
             // helpCmdTVCommandMenuStrip
             // 
             this.helpCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.web_help;
             this.helpCmdTVCommandMenuStrip.Name = "helpCmdTVCommandMenuStrip";
-            this.helpCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.helpCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
             this.helpCmdTVCommandMenuStrip.Text = "Help This Command (&Web)";
+            this.helpCmdTVCommandMenuStrip.Click += new System.EventHandler(this.helpCmdTVCommandMenuStrip_Click);
             // 
             // cmdTVCommandMenuSep1
             // 
             this.cmdTVCommandMenuSep1.Name = "cmdTVCommandMenuSep1";
-            this.cmdTVCommandMenuSep1.Size = new System.Drawing.Size(254, 6);
+            this.cmdTVCommandMenuSep1.Size = new System.Drawing.Size(263, 6);
             // 
             // highlightCmdTVCommandMenuStrip
             // 
             this.highlightCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.command_search;
             this.highlightCmdTVCommandMenuStrip.Name = "highlightCmdTVCommandMenuStrip";
-            this.highlightCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.highlightCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
             this.highlightCmdTVCommandMenuStrip.Text = "&Highlight This Command";
+            this.highlightCmdTVCommandMenuStrip.Click += new System.EventHandler(this.highlightCmdTVCommandMenuStrip_Click);
             // 
             // cmdTVCommandMenuSep2
             // 
             this.cmdTVCommandMenuSep2.Name = "cmdTVCommandMenuSep2";
-            this.cmdTVCommandMenuSep2.Size = new System.Drawing.Size(254, 6);
+            this.cmdTVCommandMenuSep2.Size = new System.Drawing.Size(263, 6);
             // 
             // clearCmdTVCommandMenuStrip
             // 
             this.clearCmdTVCommandMenuStrip.Enabled = false;
             this.clearCmdTVCommandMenuStrip.Name = "clearCmdTVCommandMenuStrip";
-            this.clearCmdTVCommandMenuStrip.Size = new System.Drawing.Size(257, 24);
+            this.clearCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
             this.clearCmdTVCommandMenuStrip.Text = "Clear Filter (&L)";
+            this.clearCmdTVCommandMenuStrip.Click += new System.EventHandler(this.clearCmdTVCommandMenuStrip_Click);
             // 
             // frmScriptBuilder
             // 

@@ -2895,6 +2895,62 @@ namespace taskt.UI.Forms
                 }
             }
         }
+        private void BeforeAddNewCommandProcess()
+        {
+            if (tvCommands.SelectedNode == null)
+            {
+                return;
+            }
+            //if (tvCommands.SelectedNode.Level == 1)
+            //{
+            //    if (tvCommands.SelectedNode.Nodes.Count > 0)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        AddNewCommand(tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text);
+            //    }
+            //}
+            //else
+            //{
+            //    // maybe level == 2
+            //    AddNewCommand(tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text);
+            //}
+            string commandName = GetSelectedCommandFullName();
+            if (commandName.Length > 0)
+            {
+                AddNewCommand(commandName);
+            }
+        }
+        private string GetSelectedCommandFullName()
+        {
+            switch (tvCommands.SelectedNode.Level)
+            {
+                case 0:
+                    return "";
+                    break;
+
+                case 1:
+                    if (tvCommands.SelectedNode.Nodes.Count > 0)
+                    {
+                        return "";
+                    }
+                    else
+                    {
+                        return tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text;
+                    }
+                    break;
+
+                case 2:
+                    return tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text;
+                    break;
+
+                default:
+                    return "";
+                    break;
+            }
+        }
         #endregion
 
 
@@ -3000,28 +3056,29 @@ namespace taskt.UI.Forms
 
         private void tvCommands_DoubleClick(object sender, EventArgs e)
         {
-            //exit if parent node is clicked
-            if (tvCommands.SelectedNode.Parent == null)
-            {
-                return;
-            }
+            ////exit if parent node is clicked
+            //if (tvCommands.SelectedNode.Parent == null)
+            //{
+            //    return;
+            //}
 
-            if (tvCommands.SelectedNode.Level == 1)
-            {
-                if (tvCommands.SelectedNode.Nodes.Count > 0)
-                {
-                    return;
-                }
-                else
-                {
-                    AddNewCommand(tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text);
-                }
-            }
-            else
-            {
-                // maybe level == 2
-                AddNewCommand(tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text);
-            }
+            //if (tvCommands.SelectedNode.Level == 1)
+            //{
+            //    if (tvCommands.SelectedNode.Nodes.Count > 0)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        AddNewCommand(tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text);
+            //    }
+            //}
+            //else
+            //{
+            //    // maybe level == 2
+            //    AddNewCommand(tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text);
+            //}
+            BeforeAddNewCommandProcess();
         }
        private void tvCommands_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -3029,6 +3086,60 @@ namespace taskt.UI.Forms
             {
                 e.Handled = true;
                 tvCommands_DoubleClick(this, null);
+            }
+        }
+
+        private void tvCommands_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                tvCommands.SelectedNode = e.Node;
+            }
+        }
+
+        private void tvCommands_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (tvCommands.SelectedNode == null)
+            {
+                return;
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                if (tvCommands.SelectedNode.Level == 0)
+                {
+                    if (tvCommands.SelectedNode.IsExpanded)
+                    {
+                        expandRootTVCommandMenuStrip.Visible = false;
+                        collapseRootTVCommandMenuStrip.Visible = true;
+                    }
+                    else
+                    {
+                        expandRootTVCommandMenuStrip.Visible = true;
+                        collapseRootTVCommandMenuStrip.Visible = false;
+                    }
+                    rootTVCommandMenuStrip.Show(Cursor.Position);
+                }
+                else
+                {
+                    if (tvCommands.SelectedNode.Nodes.Count > 0)
+                    {
+                        if (tvCommands.SelectedNode.IsExpanded)
+                        {
+                            expandRootTVCommandMenuStrip.Visible = false;
+                            collapseRootTVCommandMenuStrip.Visible = true;
+                        }
+                        else
+                        {
+                            expandRootTVCommandMenuStrip.Visible = true;
+                            collapseRootTVCommandMenuStrip.Visible = false;
+                        }
+                        rootTVCommandMenuStrip.Show(Cursor.Position);
+                    }
+                    else
+                    {
+                        cmdTVCommandMenuStrip.Show(Cursor.Position);
+                    }
+                }
             }
         }
         private void picCommandSearch_Click(object sender, EventArgs e)
@@ -3115,6 +3226,9 @@ namespace taskt.UI.Forms
             tvCommands.ExpandAll();
 
             tvCommands.EndUpdate();
+
+            clearCmdTVCommandMenuStrip.Enabled = true;
+            clearRootTVCommandMenuStrip.Enabled = true;
         }
         private void ShowAllCommands()
         {
@@ -3130,6 +3244,9 @@ namespace taskt.UI.Forms
 
             tvCommands.ResumeLayout();
             tvCommands.EndUpdate();
+
+            clearCmdTVCommandMenuStrip.Enabled = false;
+            clearRootTVCommandMenuStrip.Enabled = false;
         }
         #endregion
 
@@ -3583,59 +3700,71 @@ namespace taskt.UI.Forms
             return true;
         }
 
-        private void tvCommands_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        #region tvCommandMenuStrip events
+
+        private void expandRootTVCommandMenuStrip_Click(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                tvCommands.SelectedNode = e.Node;
-            }
+            tvCommands.SelectedNode.Expand();
         }
 
-        private void tvCommands_MouseClick(object sender, MouseEventArgs e)
+        private void collapseRootTVCommandMenuStrip_Click(object sender, EventArgs e)
+        {
+            tvCommands.SelectedNode.Collapse();
+        }
+
+        private void clearRootTVCommandMenuStrip_Click(object sender, EventArgs e)
+        {
+            ShowAllCommands();
+        }
+
+        private void addCmdTVCommandMenuStrip_Click(object sender, EventArgs e)
+        {
+            BeforeAddNewCommandProcess();
+        }
+
+        private void helpCmdTVCommandMenuStrip_Click(object sender, EventArgs e)
         {
             if (tvCommands.SelectedNode == null)
             {
                 return;
             }
-            if (e.Button == MouseButtons.Right)
+            string commandName = GetSelectedCommandFullName();
+            if (commandName.Length == 0)
             {
-                if (tvCommands.SelectedNode.Level == 0)
-                {
-                    if (tvCommands.SelectedNode.IsExpanded)
-                    {
-                        expandRootTVCommandMenuStrip.Visible = false;
-                        collapseRootTVCommandMenuStrip.Visible = true;
-                    }
-                    else
-                    {
-                        expandRootTVCommandMenuStrip.Visible = true;
-                        collapseRootTVCommandMenuStrip.Visible = false;
-                    }
-                    rootTVCommandMenuStrip.Show(Cursor.Position);
-                }
-                else
-                {
-                    if (tvCommands.SelectedNode.Nodes.Count > 0)
-                    {
-                        if (tvCommands.SelectedNode.IsExpanded)
-                        {
-                            expandRootTVCommandMenuStrip.Visible = false;
-                            collapseRootTVCommandMenuStrip.Visible = true;
-                        }
-                        else
-                        {
-                            expandRootTVCommandMenuStrip.Visible = true;
-                            collapseRootTVCommandMenuStrip.Visible = false;
-                        }
-                        rootTVCommandMenuStrip.Show(Cursor.Position);
-                    }
-                    else
-                    {
-                        cmdTVCommandMenuStrip.Show(Cursor.Position);
-                    }
-                }
+                return;
+            }
+            var cmd = automationCommands.Where(t => t.FullName == commandName).FirstOrDefault();
+            if (cmd != null)
+            {
+                showThisCommandHelp(cmd.Command);
             }
         }
+
+        private void highlightCmdTVCommandMenuStrip_Click(object sender, EventArgs e)
+        {
+            if (tvCommands.SelectedNode == null)
+            {
+                return;
+            }
+            string commandName = GetSelectedCommandFullName();
+            if (commandName.Length == 0)
+            {
+                return;
+            }
+            var cmd = automationCommands.Where(t => t.FullName == commandName).FirstOrDefault();
+            if (cmd != null)
+            {
+                AdvancedSearchItemInCommands(((Core.Automation.Commands.ScriptCommand)cmd.Command).SelectionName, false, false, true, false, false, false, "");
+            }
+        }
+
+        private void clearCmdTVCommandMenuStrip_Click(object sender, EventArgs e)
+        {
+            ShowAllCommands();
+        }
+        #endregion
+
+
     }
 
 }
