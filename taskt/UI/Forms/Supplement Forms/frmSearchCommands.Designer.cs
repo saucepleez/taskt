@@ -35,6 +35,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.lblHeader = new System.Windows.Forms.Label();
             this.searchTab = new taskt.UI.CustomControls.UITabControl();
             this.tabSearch = new System.Windows.Forms.TabPage();
+            this.btnSearchKeywordVariable = new System.Windows.Forms.Button();
             this.btnSearchNext = new System.Windows.Forms.Button();
             this.btnSearchSearch = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -72,6 +73,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.barOpacity = new System.Windows.Forms.TrackBar();
+            this.btnReplaceSearchVariable = new System.Windows.Forms.Button();
+            this.btnReplaceReplaceVariable = new System.Windows.Forms.Button();
             this.baseTableLayout.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.searchTab.SuspendLayout();
@@ -140,10 +143,11 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.searchTab.Name = "searchTab";
             this.searchTab.SelectedIndex = 0;
             this.searchTab.Size = new System.Drawing.Size(599, 275);
-            this.searchTab.TabIndex = 1;
+            this.searchTab.TabIndex = 0;
             // 
             // tabSearch
             // 
+            this.tabSearch.Controls.Add(this.btnSearchKeywordVariable);
             this.tabSearch.Controls.Add(this.btnSearchNext);
             this.tabSearch.Controls.Add(this.btnSearchSearch);
             this.tabSearch.Controls.Add(this.groupBox2);
@@ -159,12 +163,24 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.tabSearch.Text = "Search";
             this.tabSearch.UseVisualStyleBackColor = true;
             // 
+            // btnSearchKeywordVariable
+            // 
+            this.btnSearchKeywordVariable.BackgroundImage = global::taskt.Properties.Resources.action_bar_variable;
+            this.btnSearchKeywordVariable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSearchKeywordVariable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchKeywordVariable.Location = new System.Drawing.Point(441, 16);
+            this.btnSearchKeywordVariable.Name = "btnSearchKeywordVariable";
+            this.btnSearchKeywordVariable.Size = new System.Drawing.Size(24, 24);
+            this.btnSearchKeywordVariable.TabIndex = 2;
+            this.btnSearchKeywordVariable.UseVisualStyleBackColor = true;
+            this.btnSearchKeywordVariable.Click += new System.EventHandler(this.btnSearchKeywordVariable_Click);
+            // 
             // btnSearchNext
             // 
             this.btnSearchNext.Location = new System.Drawing.Point(480, 64);
             this.btnSearchNext.Name = "btnSearchNext";
             this.btnSearchNext.Size = new System.Drawing.Size(93, 43);
-            this.btnSearchNext.TabIndex = 3;
+            this.btnSearchNext.TabIndex = 4;
             this.btnSearchNext.Text = "&Next";
             this.btnSearchNext.UseVisualStyleBackColor = true;
             this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
@@ -174,7 +190,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.btnSearchSearch.Location = new System.Drawing.Point(480, 15);
             this.btnSearchSearch.Name = "btnSearchSearch";
             this.btnSearchSearch.Size = new System.Drawing.Size(93, 43);
-            this.btnSearchSearch.TabIndex = 2;
+            this.btnSearchSearch.TabIndex = 3;
             this.btnSearchSearch.Text = "&Search";
             this.btnSearchSearch.UseVisualStyleBackColor = true;
             this.btnSearchSearch.Click += new System.EventHandler(this.btnSearchSearch_Click);
@@ -186,7 +202,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.groupBox2.Location = new System.Drawing.Point(348, 140);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(180, 95);
-            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Method";
             // 
@@ -223,7 +239,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.groupBox1.Location = new System.Drawing.Point(10, 50);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(332, 185);
-            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Target";
             // 
@@ -314,12 +330,14 @@ namespace taskt.UI.Forms.Supplement_Forms
             // 
             this.txtSearchKeyword.Location = new System.Drawing.Point(148, 15);
             this.txtSearchKeyword.Name = "txtSearchKeyword";
-            this.txtSearchKeyword.Size = new System.Drawing.Size(306, 29);
+            this.txtSearchKeyword.Size = new System.Drawing.Size(287, 29);
             this.txtSearchKeyword.TabIndex = 1;
             this.txtSearchKeyword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearchKeyword_KeyUp);
             // 
             // tabReplace
             // 
+            this.tabReplace.Controls.Add(this.btnReplaceReplaceVariable);
+            this.tabReplace.Controls.Add(this.btnReplaceSearchVariable);
             this.tabReplace.Controls.Add(this.btnReplaceReplaceAll);
             this.tabReplace.Controls.Add(this.btnReplaceReplace);
             this.tabReplace.Controls.Add(this.btnReplaceSearch);
@@ -342,7 +360,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.btnReplaceReplaceAll.Location = new System.Drawing.Point(480, 116);
             this.btnReplaceReplaceAll.Name = "btnReplaceReplaceAll";
             this.btnReplaceReplaceAll.Size = new System.Drawing.Size(105, 43);
-            this.btnReplaceReplaceAll.TabIndex = 7;
+            this.btnReplaceReplaceAll.TabIndex = 8;
             this.btnReplaceReplaceAll.Text = "Replace &All";
             this.btnReplaceReplaceAll.UseVisualStyleBackColor = true;
             this.btnReplaceReplaceAll.Click += new System.EventHandler(this.btnReplaceReplaceAll_Click);
@@ -352,7 +370,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.btnReplaceReplace.Location = new System.Drawing.Point(480, 64);
             this.btnReplaceReplace.Name = "btnReplaceReplace";
             this.btnReplaceReplace.Size = new System.Drawing.Size(93, 43);
-            this.btnReplaceReplace.TabIndex = 6;
+            this.btnReplaceReplace.TabIndex = 7;
             this.btnReplaceReplace.Text = "&Replace";
             this.btnReplaceReplace.UseVisualStyleBackColor = true;
             this.btnReplaceReplace.Click += new System.EventHandler(this.btnReplaceReplace_Click);
@@ -362,7 +380,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.btnReplaceSearch.Location = new System.Drawing.Point(480, 15);
             this.btnReplaceSearch.Name = "btnReplaceSearch";
             this.btnReplaceSearch.Size = new System.Drawing.Size(93, 43);
-            this.btnReplaceSearch.TabIndex = 5;
+            this.btnReplaceSearch.TabIndex = 6;
             this.btnReplaceSearch.Text = "&Search";
             this.btnReplaceSearch.UseVisualStyleBackColor = true;
             this.btnReplaceSearch.Click += new System.EventHandler(this.btnReplaceSearch_Click);
@@ -374,7 +392,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.groupBox4.Location = new System.Drawing.Point(355, 147);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(169, 88);
-            this.groupBox4.TabIndex = 0;
+            this.groupBox4.TabIndex = 10;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Method";
             // 
@@ -409,7 +427,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.groupBox3.Location = new System.Drawing.Point(10, 88);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(339, 147);
-            this.groupBox3.TabIndex = 8;
+            this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Target";
             // 
@@ -478,7 +496,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             // 
             this.txtReplaceReplace.Location = new System.Drawing.Point(148, 50);
             this.txtReplaceReplace.Name = "txtReplaceReplace";
-            this.txtReplaceReplace.Size = new System.Drawing.Size(306, 29);
+            this.txtReplaceReplace.Size = new System.Drawing.Size(287, 29);
             this.txtReplaceReplace.TabIndex = 4;
             // 
             // label2
@@ -497,7 +515,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             // 
             this.txtReplaceSearch.Location = new System.Drawing.Point(148, 15);
             this.txtReplaceSearch.Name = "txtReplaceSearch";
-            this.txtReplaceSearch.Size = new System.Drawing.Size(306, 29);
+            this.txtReplaceSearch.Size = new System.Drawing.Size(287, 29);
             this.txtReplaceSearch.TabIndex = 1;
             // 
             // footarTableLayout
@@ -598,6 +616,30 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.barOpacity.Value = 100;
             this.barOpacity.Scroll += new System.EventHandler(this.barOpacity_Scroll);
             // 
+            // btnReplaceSearchVariable
+            // 
+            this.btnReplaceSearchVariable.BackgroundImage = global::taskt.Properties.Resources.action_bar_variable;
+            this.btnReplaceSearchVariable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnReplaceSearchVariable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReplaceSearchVariable.Location = new System.Drawing.Point(441, 16);
+            this.btnReplaceSearchVariable.Name = "btnReplaceSearchVariable";
+            this.btnReplaceSearchVariable.Size = new System.Drawing.Size(24, 24);
+            this.btnReplaceSearchVariable.TabIndex = 2;
+            this.btnReplaceSearchVariable.UseVisualStyleBackColor = true;
+            this.btnReplaceSearchVariable.Click += new System.EventHandler(this.btnReplaceSearchVariable_Click);
+            // 
+            // btnReplaceReplaceVariable
+            // 
+            this.btnReplaceReplaceVariable.BackgroundImage = global::taskt.Properties.Resources.action_bar_variable;
+            this.btnReplaceReplaceVariable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnReplaceReplaceVariable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReplaceReplaceVariable.Location = new System.Drawing.Point(441, 53);
+            this.btnReplaceReplaceVariable.Name = "btnReplaceReplaceVariable";
+            this.btnReplaceReplaceVariable.Size = new System.Drawing.Size(24, 24);
+            this.btnReplaceReplaceVariable.TabIndex = 5;
+            this.btnReplaceReplaceVariable.UseVisualStyleBackColor = true;
+            this.btnReplaceReplaceVariable.Click += new System.EventHandler(this.btnReplaceReplaceVariable_Click);
+            // 
             // frmSearchCommands
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -686,5 +728,8 @@ namespace taskt.UI.Forms.Supplement_Forms
         private System.Windows.Forms.TextBox txtReplaceSearch;
         private System.Windows.Forms.CheckBox chkSearchTargetIsInstance;
         private System.Windows.Forms.ComboBox cmbSearchInstance;
+        private System.Windows.Forms.Button btnSearchKeywordVariable;
+        private System.Windows.Forms.Button btnReplaceReplaceVariable;
+        private System.Windows.Forms.Button btnReplaceSearchVariable;
     }
 }

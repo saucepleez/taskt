@@ -318,8 +318,7 @@ namespace taskt.UI.Forms
             this.dontSaveFlag = false;
 
             // set searchform
-            frmSearch = new Supplement_Forms.frmSearchCommands();
-            frmSearch.parentForm = this;
+            frmSearch = new Supplement_Forms.frmSearchCommands(this);
 
             // release
             GC.Collect();
@@ -3407,6 +3406,14 @@ namespace taskt.UI.Forms
             }
         }
 
+        private List<string> getAllVariablesNames()
+        {
+            List<string> variables = new List<string>();
+            variables.AddRange(scriptVariables.Select(f => f.VariableName));
+            variables.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
+            return variables;
+        }
+
         private void showSettingForm()
         {
             //show settings dialog
@@ -3616,12 +3623,14 @@ namespace taskt.UI.Forms
         private void SearchStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSearch.CurrentMode = Supplement_Forms.frmSearchCommands.SearchReplaceMode.Search;
+            frmSearch.variables = getAllVariablesNames();
             frmSearch.Show();
         }
 
         private void ReplaceStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSearch.CurrentMode = Supplement_Forms.frmSearchCommands.SearchReplaceMode.Replace;
+            frmSearch.variables = getAllVariablesNames();
             frmSearch.Show();
             //MessageBox.Show("sorry, work in process ;-)");
         }

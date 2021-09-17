@@ -12,7 +12,8 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmSearchCommands : ThemedForm
     {
-        public taskt.UI.Forms.frmScriptBuilder parentForm = null;
+        public List<string> variables { set; get; }
+        private taskt.UI.Forms.frmScriptBuilder parentForm = null;
 
         private SearchReplaceMode _currentMode = SearchReplaceMode.Search;
         public SearchReplaceMode CurrentMode
@@ -43,9 +44,10 @@ namespace taskt.UI.Forms.Supplement_Forms
             Replace
         }
 
-        public frmSearchCommands()
+        public frmSearchCommands(UI.Forms.frmScriptBuilder parentForm)
         {
             InitializeComponent();
+            this.parentForm = parentForm;
         }
 
 
@@ -238,6 +240,45 @@ namespace taskt.UI.Forms.Supplement_Forms
 
 
 
+
+        #endregion
+
+        #region variable insert
+        private void btnSearchKeywordVariable_Click(object sender, EventArgs e)
+        {
+            InsertVariableToTextBoxProcess(txtSearchKeyword);
+        }
+        private void btnReplaceSearchVariable_Click(object sender, EventArgs e)
+        {
+            InsertVariableToTextBoxProcess(txtReplaceSearch);
+        }
+
+        private void btnReplaceReplaceVariable_Click(object sender, EventArgs e)
+        {
+            InsertVariableToTextBoxProcess(txtReplaceReplace);
+        }
+        private void InsertVariableToTextBoxProcess(TextBox targetTextBox)
+        {
+            using (var fm = new UI.Forms.Supplemental.frmItemSelector(this.variables))
+            {
+                var settings = parentForm.appSettings;
+                this.TopMost = false;
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    if (settings.ClientSettings.InsertVariableAtCursor)
+                    {
+                        string head = targetTextBox.Text.Substring(0, targetTextBox.SelectionStart);
+                        string tail = targetTextBox.Text.Substring(targetTextBox.SelectionStart);
+                        targetTextBox.Text = head + settings.EngineSettings.VariableStartMarker + fm.selectedItem.ToString() + settings.EngineSettings.VariableEndMarker + tail;
+                    }
+                    else
+                    {
+                        targetTextBox.Text += settings.EngineSettings.VariableStartMarker + fm.selectedItem.ToString() + settings.EngineSettings.VariableEndMarker;
+                    }
+                }
+                this.TopMost = true;
+            }
+        }
         #endregion
 
         
