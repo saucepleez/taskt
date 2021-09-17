@@ -2418,12 +2418,7 @@ namespace taskt.UI.Forms
         }
         private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
         {
-            using (frmScriptInformations frm = new frmScriptInformations())
-            {
-                frm.infos = scriptInfo;
-                frm.ShowDialog();
-                ChangeSaveState(true);
-            }
+            showScriptInformationForm();
         }
         private void variableManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -3436,6 +3431,16 @@ namespace taskt.UI.Forms
                 Core.Server.HttpServerClient.Initialize();
             }
         }
+
+        private void showScriptInformationForm()
+        {
+            using (frmScriptInformations frm = new frmScriptInformations())
+            {
+                frm.infos = scriptInfo;
+                frm.ShowDialog();
+                ChangeSaveState(true);
+            }
+        }
         #endregion
 
         #region taskt About Form
@@ -3694,6 +3699,10 @@ namespace taskt.UI.Forms
             //    this.scriptVariables = scriptVariableEditor.scriptVariables;
             //}
             showVariableManager();
+        }
+        private void scriptInformationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showScriptInformationForm();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3958,6 +3967,7 @@ namespace taskt.UI.Forms
 
         #endregion
 
+        
     }
 
 }

@@ -896,6 +896,7 @@
     <Content Include="Resources\various-cancel.png" />
     <Content Include="Resources\various-ok.png" />
     <None Include="Resources\web_help.png" />
+    <None Include="Resources\various_info.png" />
     <Content Include="taskt_logo_alt.ico" />
     <None Include="Resources\item-header96.png" />
     <None Include="Resources\item-header.png" />
