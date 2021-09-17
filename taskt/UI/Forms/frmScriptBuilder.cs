@@ -527,6 +527,13 @@ namespace taskt.UI.Forms
             string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-");
             System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
         }
+        private void BeginShowThisCommandHelpProcess()
+        {
+            if (lstScriptActions.SelectedItems.Count > 0)
+            {
+                showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
+            }
+        }
         #endregion
 
 
@@ -1225,6 +1232,110 @@ namespace taskt.UI.Forms
 
         #region ListView Copy, Paste, Edit, Delete
 
+        private void EditSelectedCommand()
+        {
+            if (lstScriptActions.SelectedItems.Count != 1)
+            {
+                return;
+            }
+
+            //bring up edit mode to edit the action
+            ListViewItem selectedCommandItem = lstScriptActions.SelectedItems[0];
+
+            //set selected command from the listview item tag object which was assigned to the command
+            var currentCommand = (Core.Automation.Commands.ScriptCommand)selectedCommandItem.Tag;
+
+            //check if editing a sequence
+            if (currentCommand is Core.Automation.Commands.SequenceCommand)
+            {
+
+                if (editMode)
+                {
+                    MessageBox.Show("Embedding Sequence Commands within Sequence Commands not yet supported.");
+                    return;
+                }
+
+
+                //get sequence events
+                Core.Automation.Commands.SequenceCommand sequence = (Core.Automation.Commands.SequenceCommand)currentCommand;
+
+                using (frmScriptBuilder newBuilder = new frmScriptBuilder())
+                {
+                    //add variables
+
+                    newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
+
+                    foreach (var variable in this.scriptVariables)
+                    {
+                        newBuilder.scriptVariables.Add(variable);
+                    }
+
+                    //append to new builder
+                    foreach (var cmd in sequence.v_scriptActions)
+                    {
+                        newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
+                    }
+
+                    //apply editor style format
+                    newBuilder.ApplyEditorFormat();
+
+                    newBuilder.parentBuilder = this;
+
+                    //if data has been changed
+                    if (newBuilder.ShowDialog() == DialogResult.OK)
+                    {
+                        ChangeSaveState(true);
+
+                        //create updated list
+                        List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
+
+                        //update to list
+                        for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
+                        {
+                            var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
+                            updatedList.Add(command);
+                        }
+
+                        //apply new list to existing sequence
+                        sequence.v_scriptActions = updatedList;
+
+                        //update label
+                        selectedCommandItem.Text = sequence.GetDisplayValue();
+                    }
+                }
+            }
+            else
+            {
+                //create new command editor form
+                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
+                {
+                    //creation mode edit locks form to current command
+                    editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
+
+                    //editCommand.defaultStartupCommand = currentCommand.SelectionName;
+                    editCommand.editingCommand = currentCommand;
+
+                    //create clone of current command so databinding does not affect if changes are not saved
+                    editCommand.originalCommand = Core.Common.Clone(currentCommand);
+
+                    //set variables
+                    editCommand.scriptVariables = this.scriptVariables;
+
+                    // set taskt settings
+                    editCommand.appSettings = this.appSettings;
+
+                    //show edit command form and save changes on OK result
+                    if (editCommand.ShowDialog() == DialogResult.OK)
+                    {
+                        ChangeSaveState(true);
+
+                        selectedCommandItem.Tag = editCommand.selectedCommand;
+                        selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
+                        selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
+                    }
+                }
+            }
+        }
 
         private void SelectAllRows()
         {
@@ -1481,12 +1592,12 @@ namespace taskt.UI.Forms
 
             ChangeSaveState(true);
 
+            //clear selection
+            //lstScriptActions.SelectedIndices.Clear();
+            //ClearSelectedListViewItems();
+
             //recolor
             lstScriptActions.Invalidate();
-
-            //clear selection
-            lstScriptActions.SelectedIndices.Clear();
-
         }
         private void SetPauseBeforeExecution()
         {
@@ -1509,11 +1620,11 @@ namespace taskt.UI.Forms
 
             ChangeSaveState(true);
 
-            lstScriptActions.Invalidate();
-
             //clear selection
-            lstScriptActions.SelectedIndices.Clear();
+            //lstScriptActions.SelectedIndices.Clear();
+            //ClearSelectedListViewItems();
 
+            lstScriptActions.Invalidate();
         }
 
         private void ClearSelectedListViewItems()
@@ -2211,112 +2322,7 @@ namespace taskt.UI.Forms
         }
         private void lstScriptActions_DoubleClick(object sender, EventArgs e)
         {
-
-            if (lstScriptActions.SelectedItems.Count != 1)
-            {
-                return;
-            }
-
-
-            //bring up edit mode to edit the action
-            ListViewItem selectedCommandItem = lstScriptActions.SelectedItems[0];
-
-
-            //set selected command from the listview item tag object which was assigned to the command
-            var currentCommand = (Core.Automation.Commands.ScriptCommand)selectedCommandItem.Tag;
-
-
-            //check if editing a sequence
-            if (currentCommand is Core.Automation.Commands.SequenceCommand)
-            {
-
-                if (editMode)
-                {
-                    MessageBox.Show("Embedding Sequence Commands within Sequence Commands not yet supported.");
-                    return;
-                }
-
-
-                //get sequence events
-                Core.Automation.Commands.SequenceCommand sequence = (Core.Automation.Commands.SequenceCommand)currentCommand;
-
-                using (frmScriptBuilder newBuilder = new frmScriptBuilder())
-                {
-                    //add variables
-
-                    newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
-
-                    foreach (var variable in this.scriptVariables)
-                    {
-                        newBuilder.scriptVariables.Add(variable);
-                    }
-
-                    //append to new builder
-                    foreach (var cmd in sequence.v_scriptActions)
-                    {
-                        newBuilder.lstScriptActions.Items.Add(CreateScriptCommandListViewItem(cmd));
-                    }
-
-                    //apply editor style format
-                    newBuilder.ApplyEditorFormat();
-
-                    newBuilder.parentBuilder = this;
-
-                    //if data has been changed
-                    if (newBuilder.ShowDialog() == DialogResult.OK)
-                    {
-                        ChangeSaveState(true);
-
-                        //create updated list
-                        List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
-
-                        //update to list
-                        for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
-                        {
-                            var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
-                            updatedList.Add(command);
-                        }
-
-                        //apply new list to existing sequence
-                        sequence.v_scriptActions = updatedList;
-
-                        //update label
-                        selectedCommandItem.Text = sequence.GetDisplayValue();
-                    }
-                }
-            }
-            else
-            {
-
-                //create new command editor form
-                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
-                {
-                    //creation mode edit locks form to current command
-                    editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
-
-                    //editCommand.defaultStartupCommand = currentCommand.SelectionName;
-                    editCommand.editingCommand = currentCommand;
-
-                    //create clone of current command so databinding does not affect if changes are not saved
-                    editCommand.originalCommand = Core.Common.Clone(currentCommand);
-
-                    //set variables
-                    editCommand.scriptVariables = this.scriptVariables;
-
-                    // set taskt settings
-                    editCommand.appSettings = this.appSettings;
-
-                    //show edit command form and save changes on OK result
-                    if (editCommand.ShowDialog() == DialogResult.OK)
-                    {
-                        ChangeSaveState(true);
-
-                        selectedCommandItem.Tag = editCommand.selectedCommand;
-                        selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
-                        selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
-                    }
-                }
-            }
+            EditSelectedCommand();
         }
         #endregion
 
@@ -2404,10 +2410,11 @@ namespace taskt.UI.Forms
         }
         private void helpThisCommandToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (lstScriptActions.SelectedItems.Count > 0)
-            {
-                showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
-            }
+            //if (lstScriptActions.SelectedItems.Count > 0)
+            //{
+            //    showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
+            //}
+            BeginShowThisCommandHelpProcess();
         }
         private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
         {
@@ -3601,6 +3608,31 @@ namespace taskt.UI.Forms
         #endregion
 
         #region Edit menu items click handler
+        private void editThisActionStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditSelectedCommand();
+        }
+
+        private void helpThisCommandStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BeginShowThisCommandHelpProcess();
+        }
+
+        private void enableSelectedActionsStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetSelectedCodeToCommented(false);
+        }
+
+        private void disableSelectedActionsStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetSelectedCodeToCommented(true);
+        }
+
+        private void pauseBeforeExeutionStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetPauseBeforeExecution();
+        }
+
         private void SelectAllStripMenuItem_Click(object sender, EventArgs e)
         {
             SelectAllRows();
@@ -3620,6 +3652,11 @@ namespace taskt.UI.Forms
             PasteRows();
         }
 
+        private void deleteStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteRows();
+        }
+
         private void SearchStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSearch.CurrentMode = Supplement_Forms.frmSearchCommands.SearchReplaceMode.Search;
@@ -3633,6 +3670,10 @@ namespace taskt.UI.Forms
             frmSearch.variables = getAllVariablesNames();
             frmSearch.Show();
             //MessageBox.Show("sorry, work in process ;-)");
+        }
+        private void highlightThisCommandStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HighlightAllCurrentSelectedCommand();
         }
         private void clearSearchHighlightsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -3913,9 +3954,10 @@ namespace taskt.UI.Forms
             ShowAllCommands();
         }
 
+
+
         #endregion
 
-        
     }
 
 }
