@@ -37,7 +37,6 @@ namespace taskt.UI.Forms
     //Form tracks the overall configuration and enables script editing, saving, and running
     //Features ability to add, drag/drop reorder commands
     {
-
         private TreeNode[] bufferedCommandList;
 
         //private List<ListViewItem> rowsSelectedForCopy { get; set; }
@@ -50,7 +49,7 @@ namespace taskt.UI.Forms
         private List<List<ListViewItem>> undoList;
         private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
-        private int reqdIndex;
+        //private int reqdIndex;
         private int selectedIndex = -1;
         private int DnDIndex = -1;
 
@@ -58,8 +57,12 @@ namespace taskt.UI.Forms
 
         public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
         public CommandEditAction currentEditAction = CommandEditAction.Normal;
+
+        // search & replace
         private List<int> matchingSearchIndex = new List<int>();
         private int currentIndexInMatchItems = -1;
+        public int MatchedLines { private set; get; }
+
         private frmScriptBuilder parentBuilder { get; set; }
 
         private Pen indentDashLine;
@@ -822,7 +825,16 @@ namespace taskt.UI.Forms
 
             if (searchCriteria.Length > 0)
             {
-                AdvancedSearchItemInCommands(searchCriteria, true, false, false, false, true, false, "");
+                if ((string)pbSearch.Tag != searchCriteria)
+                {
+                    pbSearch.Tag = searchCriteria;
+                    AdvancedSearchItemInCommands(searchCriteria, false, false, false, false, true, false, "");
+                }
+                else
+                {
+                    MoveMostNearMatchedLine(true);
+                }
+                
             }
             else
             {
@@ -842,31 +854,34 @@ namespace taskt.UI.Forms
 
         public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool instanceName, string instanceType)
         {
-            matchingSearchIndex.Clear();
-            matchingSearchIndex = new List<int>();
+            //matchingSearchIndex.Clear();
+            //matchingSearchIndex = new List<int>();
             int matchedCount = 0;
 
             this.currentIndexInMatchItems = -1;
             lstScriptActions.SuspendLayout();
+            lstScriptActions.BeginUpdate();
             foreach(ListViewItem itm in lstScriptActions.Items)
             {
                 Core.Automation.Commands.ScriptCommand cmd = (Core.Automation.Commands.ScriptCommand)itm.Tag;
                 if (cmd.checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText))
                 {
                     matchedCount++;
-                    matchingSearchIndex.Add(itm.Index);
+                    //matchingSearchIndex.Add(itm.Index);
                 }
                 else if (instanceName)
                 {
                     if (cmd.checkInstanceMatched(keyword, instanceType, caseSensitive))
                     {
                         matchedCount++;
-                        matchingSearchIndex.Add(itm.Index);
+                        //matchingSearchIndex.Add(itm.Index);
                     }
                 }
             }
+            lstScriptActions.EndUpdate();
             lstScriptActions.ResumeLayout();
 
+            this.MatchedLines = matchedCount;
             this.currentScriptEditorMode = CommandEditorState.AdvencedSearch;
             lstScriptActions.Invalidate();
             return matchedCount;
@@ -874,80 +889,151 @@ namespace taskt.UI.Forms
 
         public void MoveMostNearMatchedLine(bool backToTop)
         {
-            if (this.currentScriptEditorMode != CommandEditorState.AdvencedSearch)
+            //if (this.currentScriptEditorMode != CommandEditorState.AdvencedSearch)
+            //{
+            //    return;
+            //}
+            switch (this.currentScriptEditorMode)
+            {
+                case CommandEditorState.Normal:
+                    return;
+                    break;
+
+                case CommandEditorState.Search:
+                case CommandEditorState.AdvencedSearch:
+                case CommandEditorState.ReplaceSearch:
+                case CommandEditorState.HighlightCommand:
+                    break;
+
+                default:
+                    return;
+                    break;
+            }
+
+            if (this.MatchedLines == 0)
             {
                 return;
             }
-            if (matchingSearchIndex.Count == 0)
-            {
-                return;
-            }
+
+            //if (matchingSearchIndex.Count == 0)
+            //{
+            //    return;
+            //}
+
+            //if (this.currentIndexInMatchItems >= 0)
+            //{
+            //    // select matched item yet
+            //    int nextIndex = this.currentIndexInMatchItems + 1;
+            //    if (backToTop)
+            //    {
+            //        nextIndex %= matchingSearchIndex.Count;
+            //    }
+            //    else
+            //    {
+            //        if (nextIndex >= matchingSearchIndex.Count)
+            //        {
+            //            nextIndex--;
+            //        }
+            //    }
+            //    this.currentIndexInMatchItems = nextIndex;
+            //    ClearSelectedListViewItems();
+
+            //    lstScriptActions.Items[matchingSearchIndex[nextIndex]].Selected = true;
+            //}
+            //else
+            //{
+            //    if (lstScriptActions.SelectedIndices.Count > 0)
+            //    {
+            //        // some item selected yet. -> search near item
+            //        int currentIndex = lstScriptActions.SelectedIndices[0];
+            //        if (matchingSearchIndex[matchingSearchIndex.Count - 1] > currentIndex)
+            //        {
+            //            if (backToTop)
+            //            {
+            //                this.currentIndexInMatchItems = 0;
+            //                ClearSelectedListViewItems();
+            //                lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
+            //            }
+            //            else
+            //            {
+            //                ClearSelectedListViewItems();
+            //                return;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            int targetIndex = matchingSearchIndex.Count - 1;
+            //            while (currentIndex > matchingSearchIndex[targetIndex])
+            //            {
+            //                targetIndex--;
+            //            }
+            //            targetIndex++;
+            //            this.currentIndexInMatchItems = targetIndex;
+            //            ClearSelectedListViewItems();
+            //            lstScriptActions.Items[matchingSearchIndex[targetIndex]].Selected = true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // no selected item -> select fist matched item
+            //        this.currentIndexInMatchItems = 0;
+            //        ClearSelectedListViewItems();
+            //        lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
+            //    }
+            //}
+
+            int lines = lstScriptActions.Items.Count;
 
             if (this.currentIndexInMatchItems >= 0)
             {
-                // select matched item yet
-                int nextIndex = this.currentIndexInMatchItems + 1;
                 if (backToTop)
                 {
-                    nextIndex %= matchingSearchIndex.Count;
+                    for (int i = 1; i < lines; i++)
+                    {
+                        int idx = (i + this.currentIndexInMatchItems) % lines;
+                        if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[idx].Tag).IsMatched)
+                        {
+                            ClearSelectedListViewItems();
+                            this.currentIndexInMatchItems = idx;
+                            lstScriptActions.Items[idx].Selected = true;
+                            break;
+                        }
+                    }
                 }
                 else
                 {
-                    if (nextIndex >= matchingSearchIndex.Count)
+                    for (int i = this.currentIndexInMatchItems + 1; i < lines; i++)
                     {
-                        nextIndex--;
+                        if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag).IsMatched)
+                        {
+                            ClearSelectedListViewItems();
+                            this.currentIndexInMatchItems = i;
+                            lstScriptActions.Items[i].Selected = true;
+                            break;
+                        }
                     }
                 }
-                this.currentIndexInMatchItems = nextIndex;
-                ClearSelectedListViewItems();
-
-                lstScriptActions.Items[matchingSearchIndex[nextIndex]].Selected = true;
             }
             else
             {
-                if (lstScriptActions.SelectedIndices.Count > 0)
+                for (int i = 0; i < lines; i++)
                 {
-                    // some item selected yet. -> search near item
-                    int currentIndex = lstScriptActions.SelectedIndices[0];
-                    if (matchingSearchIndex[matchingSearchIndex.Count - 1] > currentIndex)
+                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag).IsMatched)
                     {
-                        if (backToTop)
-                        {
-                            this.currentIndexInMatchItems = 0;
-                            ClearSelectedListViewItems();
-                            lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
-                        }
-                        else
-                        {
-                            ClearSelectedListViewItems();
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        int targetIndex = matchingSearchIndex.Count - 1;
-                        while (currentIndex > matchingSearchIndex[targetIndex])
-                        {
-                            targetIndex--;
-                        }
-                        targetIndex++;
-                        this.currentIndexInMatchItems = targetIndex;
                         ClearSelectedListViewItems();
-                        lstScriptActions.Items[matchingSearchIndex[targetIndex]].Selected = true;
+                        this.currentIndexInMatchItems = i;
+                        lstScriptActions.Items[i].Selected = true;
+                        break;
                     }
-                }
-                else
-                {
-                    // no selected item -> select fist matched item
-                    this.currentIndexInMatchItems = 0;
-                    ClearSelectedListViewItems();
-                    lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
                 }
             }
 
             // scroll
-            lstScriptActions.EnsureVisible(matchingSearchIndex[this.currentIndexInMatchItems]);
-            lstScriptActions.Invalidate();
+            if (this.currentIndexInMatchItems >= 0)
+            {
+                lstScriptActions.EnsureVisible(this.currentIndexInMatchItems);
+                lstScriptActions.Invalidate();
+            }
         }
 
         private void HighlightAllCurrentSelectedCommand()
@@ -956,6 +1042,7 @@ namespace taskt.UI.Forms
             {
                 string keyword = ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
                 AdvancedSearchItemInCommands(keyword, false, false, true, false, false, false, "");
+                this.currentScriptEditorMode = CommandEditorState.HighlightCommand;
             }
         }
         public int ReplaceSearchInItemCommands(string keyword, bool caseSensitive, string instanceType, bool allProperties, bool instanceName, bool comment)
@@ -3422,11 +3509,12 @@ namespace taskt.UI.Forms
         }
         private void pbSearch_Click(object sender, EventArgs e)
         {
-            if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
-            {
-                reqdIndex++;
-                SearchForItemInListView();
-            }
+            //if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
+            //{
+            //    //reqdIndex++;
+            //    SearchForItemInListView();
+            //}
+            SearchForItemInListView();
         }
         private void uiBtnKeep_Click(object sender, EventArgs e)
         {
