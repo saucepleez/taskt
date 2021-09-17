@@ -536,9 +536,20 @@ namespace taskt.UI.Forms
 
         private void lstScriptActions_ItemDrag(object sender, ItemDragEventArgs e)
         {
+            this.currentEditAction = CommandEditAction.Move;
             lstScriptActions.DoDragDrop(lstScriptActions.SelectedItems, DragDropEffects.Move);
         }
 
+        private void lstScriptActions_DragOver(object sender, DragEventArgs e)
+        {
+            if (this.currentEditAction == CommandEditAction.Move)
+            {
+                Point cp = lstScriptActions.PointToClient(new Point(e.X, e.Y));
+                var dragToItem = lstScriptActions.HitTest(cp.X, cp.Y);
+                this.DnDIndex = (dragToItem == null) ? -1 : dragToItem.Item.Index;
+            }
+            lstScriptActions.Invalidate();
+        }
         private void lstScriptActions_DragEnter(object sender, DragEventArgs e)
         {
             int len = e.Data.GetFormats().Length - 1;
@@ -561,6 +572,7 @@ namespace taskt.UI.Forms
                         e.Effect = DragDropEffects.Move;
                     }
                     lstScriptActions.BackColor = Color.LightGray;
+                    this.currentEditAction = CommandEditAction.Normal;
                 }
             }
             //for (int i = 0; i <= len; i++)
@@ -580,7 +592,7 @@ namespace taskt.UI.Forms
         private void lstScriptActions_DragDrop(object sender, DragEventArgs e)
         {
             lstScriptActions.BackColor = Color.WhiteSmoke;
-            this.currentEditAction = CommandEditAction.Normal;
+            //this.currentEditAction = CommandEditAction.Normal;
 
             string[] fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if ((fileNames != null) && (fileNames.Length > 0))
@@ -609,6 +621,10 @@ namespace taskt.UI.Forms
             {
                 MoveCommands(e);
             }
+        }
+        private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
+        {
+            lstScriptActions.Invalidate();
         }
 
         private void MoveCommands(DragEventArgs e)
@@ -656,7 +672,6 @@ namespace taskt.UI.Forms
                 {
                     lstScriptActions.Items.RemoveAt(indices[i]);
                 }
-
                 //lstScriptActions.EndUpdate();
                 //return back
                 //return;
@@ -695,6 +710,7 @@ namespace taskt.UI.Forms
                     //lstScriptActions.Invalidate();
                 }
             }
+            this.currentEditAction = CommandEditAction.Normal;
 
             IndentListViewItems();  // update indent
 
@@ -2009,9 +2025,11 @@ namespace taskt.UI.Forms
                            new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
 
             // Emphasis Drag&Drop Line
+            //Console.WriteLine("DRW " + this.currentEditAction + ", " + this.DnDIndex);
             if ((this.currentEditAction == CommandEditAction.Move) && (item.Index == this.DnDIndex))
             {
-                e.Graphics.DrawLine(new Pen(Color.DarkRed), modifiedBounds.X, modifiedBounds.Y, modifiedBounds.X + modifiedBounds.Width, MousePosition.Y + modifiedBounds.Height);
+                int y = modifiedBounds.Y + modifiedBounds.Height - 1;
+                e.Graphics.DrawLine(new Pen(Color.DarkRed), modifiedBounds.X, y, modifiedBounds.X + modifiedBounds.Width, y);
             }
 
             if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
@@ -2191,10 +2209,6 @@ namespace taskt.UI.Forms
                     lstContextStrip.Show(Cursor.Position);
                 }
             }
-        }
-        private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
-        {
-            lstScriptActions.Invalidate();
         }
         private void lstScriptActions_DoubleClick(object sender, EventArgs e)
         {
@@ -3891,6 +3905,8 @@ namespace taskt.UI.Forms
         }
 
         #endregion
+
+        
     }
 
 }

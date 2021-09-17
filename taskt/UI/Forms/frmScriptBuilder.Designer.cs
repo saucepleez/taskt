@@ -989,6 +989,7 @@
             this.lstScriptActions.SelectedIndexChanged += new System.EventHandler(this.lstScriptActions_SelectedIndexChanged);
             this.lstScriptActions.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstScriptActions_DragDrop);
             this.lstScriptActions.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstScriptActions_DragEnter);
+            this.lstScriptActions.DragOver += new System.Windows.Forms.DragEventHandler(this.lstScriptActions_DragOver);
             this.lstScriptActions.DragLeave += new System.EventHandler(this.lstScriptActions_DragLeave);
             this.lstScriptActions.DoubleClick += new System.EventHandler(this.lstScriptActions_DoubleClick);
             this.lstScriptActions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstScriptActions_KeyDown);
