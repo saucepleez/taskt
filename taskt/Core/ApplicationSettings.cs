@@ -361,6 +361,7 @@ namespace taskt.Core
         public string DefaultExcelInstanceName { get; set; }
         public string DefaultWordInstanceName { get; set; }
         public string DefaultDBInstanceName { get; set; }
+        public string DefaultNLGInstanceName { get; set; }
         public ClientSettings()
         {
             MinimizeToTray = false;
@@ -384,6 +385,7 @@ namespace taskt.Core
             DefaultExcelInstanceName = "RPAExcel";
             DefaultWordInstanceName = "RPAWord";
             DefaultDBInstanceName = "RPADB";
+            DefaultNLGInstanceName = "nlgDefaultInstance";
         }
     }
     /// <summary>
