@@ -1069,12 +1069,14 @@ namespace taskt.UI.Forms
         }
         public int ReplaceSearchInItemCommands(string keyword, bool caseSensitive, string instanceType, bool allProperties, bool instanceName, bool comment)
         {
-            matchingSearchIndex.Clear();
-            matchingSearchIndex = new List<int>();
+            //matchingSearchIndex.Clear();
+            //matchingSearchIndex = new List<int>();
             int matchedCount = 0;
 
             this.currentIndexInMatchItems = -1;
+
             lstScriptActions.SuspendLayout();
+            lstScriptActions.BeginUpdate();
 
             if (allProperties)
             {
@@ -1083,7 +1085,7 @@ namespace taskt.UI.Forms
                     if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, true, false, false, false ))
                     {
                         matchedCount++;
-                        matchingSearchIndex.Add(itm.Index);
+                        //matchingSearchIndex.Add(itm.Index);
                     }
                 }
             }
@@ -1094,7 +1096,7 @@ namespace taskt.UI.Forms
                     if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkInstanceMatched(keyword, instanceType, caseSensitive))
                     {
                         matchedCount++;
-                        matchingSearchIndex.Add(itm.Index);
+                        //matchingSearchIndex.Add(itm.Index);
                     }
                 }
             }
@@ -1105,10 +1107,11 @@ namespace taskt.UI.Forms
                     if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, false, false, false, true, false))
                     {
                         matchedCount++;
-                        matchingSearchIndex.Add(itm.Index);
+                        //matchingSearchIndex.Add(itm.Index);
                     }
                 }
             }
+            lstScriptActions.EndUpdate();
             lstScriptActions.ResumeLayout();
 
             this.currentScriptEditorMode = CommandEditorState.ReplaceSearch;
@@ -1125,6 +1128,7 @@ namespace taskt.UI.Forms
             int newIndex = -1;
 
             lstScriptActions.SuspendLayout();
+            lstScriptActions.BeginUpdate();
             if (allProparties)
             {
                 for (int i = 0; i < loopTimes; i++)
@@ -1161,6 +1165,7 @@ namespace taskt.UI.Forms
                     }
                 }
             }
+            lstScriptActions.EndUpdate();
             lstScriptActions.ResumeLayout();
 
             if (newIndex >= 0)
@@ -1185,6 +1190,7 @@ namespace taskt.UI.Forms
             int replaceCount = 0;
 
             lstScriptActions.SuspendLayout();
+            lstScriptActions.BeginUpdate();
             if (allProparties)
             {
                 for (int i = 0; i < rows; i++)
@@ -1215,6 +1221,7 @@ namespace taskt.UI.Forms
                     }
                 }
             }
+            lstScriptActions.EndUpdate();
             lstScriptActions.ResumeLayout();
 
             // draw

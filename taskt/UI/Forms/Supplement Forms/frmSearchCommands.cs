@@ -236,11 +236,6 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             parentForm.Activate();
         }
-
-
-
-
-
         #endregion
 
         #region variable insert

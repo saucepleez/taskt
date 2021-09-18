@@ -746,6 +746,9 @@ namespace taskt.Core.Automation.Commands
                 case "ie":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
                     break;
+                case "nlg":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG;
+                    break;
                 case "stopwatch":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
                     break;
@@ -789,6 +792,7 @@ namespace taskt.Core.Automation.Commands
                     var targetValue = prop.GetValue(this);
                     if ((targetValue != null) && convFunc(targetValue.ToString()).Contains(keyword))
                     {
+                        this.IsMatched = true;
                         return true;
                     }
                 }

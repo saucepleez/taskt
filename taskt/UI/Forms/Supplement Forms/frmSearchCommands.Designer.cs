@@ -51,6 +51,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.label9 = new System.Windows.Forms.Label();
             this.txtSearchKeyword = new System.Windows.Forms.TextBox();
             this.tabReplace = new System.Windows.Forms.TabPage();
+            this.btnReplaceReplaceVariable = new System.Windows.Forms.Button();
+            this.btnReplaceSearchVariable = new System.Windows.Forms.Button();
             this.btnReplaceReplaceAll = new System.Windows.Forms.Button();
             this.btnReplaceReplace = new System.Windows.Forms.Button();
             this.btnReplaceSearch = new System.Windows.Forms.Button();
@@ -73,8 +75,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.barOpacity = new System.Windows.Forms.TrackBar();
-            this.btnReplaceSearchVariable = new System.Windows.Forms.Button();
-            this.btnReplaceReplaceVariable = new System.Windows.Forms.Button();
             this.baseTableLayout.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.searchTab.SuspendLayout();
@@ -262,6 +262,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             "DataBase",
             "Excel",
             "IE",
+            "NLG",
             "StopWatch",
             "Web Browser",
             "Word"});
@@ -355,6 +356,30 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.tabReplace.Text = "Replace";
             this.tabReplace.UseVisualStyleBackColor = true;
             // 
+            // btnReplaceReplaceVariable
+            // 
+            this.btnReplaceReplaceVariable.BackgroundImage = global::taskt.Properties.Resources.action_bar_variable;
+            this.btnReplaceReplaceVariable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnReplaceReplaceVariable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReplaceReplaceVariable.Location = new System.Drawing.Point(441, 53);
+            this.btnReplaceReplaceVariable.Name = "btnReplaceReplaceVariable";
+            this.btnReplaceReplaceVariable.Size = new System.Drawing.Size(24, 24);
+            this.btnReplaceReplaceVariable.TabIndex = 5;
+            this.btnReplaceReplaceVariable.UseVisualStyleBackColor = true;
+            this.btnReplaceReplaceVariable.Click += new System.EventHandler(this.btnReplaceReplaceVariable_Click);
+            // 
+            // btnReplaceSearchVariable
+            // 
+            this.btnReplaceSearchVariable.BackgroundImage = global::taskt.Properties.Resources.action_bar_variable;
+            this.btnReplaceSearchVariable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnReplaceSearchVariable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReplaceSearchVariable.Location = new System.Drawing.Point(441, 16);
+            this.btnReplaceSearchVariable.Name = "btnReplaceSearchVariable";
+            this.btnReplaceSearchVariable.Size = new System.Drawing.Size(24, 24);
+            this.btnReplaceSearchVariable.TabIndex = 2;
+            this.btnReplaceSearchVariable.UseVisualStyleBackColor = true;
+            this.btnReplaceSearchVariable.Click += new System.EventHandler(this.btnReplaceSearchVariable_Click);
+            // 
             // btnReplaceReplaceAll
             // 
             this.btnReplaceReplaceAll.Location = new System.Drawing.Point(480, 116);
@@ -439,6 +464,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             "DataBase",
             "Excel",
             "IE",
+            "NLG",
             "StopWatch",
             "Web Browser",
             "Word"});
@@ -615,30 +641,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.barOpacity.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.barOpacity.Value = 100;
             this.barOpacity.Scroll += new System.EventHandler(this.barOpacity_Scroll);
-            // 
-            // btnReplaceSearchVariable
-            // 
-            this.btnReplaceSearchVariable.BackgroundImage = global::taskt.Properties.Resources.action_bar_variable;
-            this.btnReplaceSearchVariable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnReplaceSearchVariable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReplaceSearchVariable.Location = new System.Drawing.Point(441, 16);
-            this.btnReplaceSearchVariable.Name = "btnReplaceSearchVariable";
-            this.btnReplaceSearchVariable.Size = new System.Drawing.Size(24, 24);
-            this.btnReplaceSearchVariable.TabIndex = 2;
-            this.btnReplaceSearchVariable.UseVisualStyleBackColor = true;
-            this.btnReplaceSearchVariable.Click += new System.EventHandler(this.btnReplaceSearchVariable_Click);
-            // 
-            // btnReplaceReplaceVariable
-            // 
-            this.btnReplaceReplaceVariable.BackgroundImage = global::taskt.Properties.Resources.action_bar_variable;
-            this.btnReplaceReplaceVariable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnReplaceReplaceVariable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReplaceReplaceVariable.Location = new System.Drawing.Point(441, 53);
-            this.btnReplaceReplaceVariable.Name = "btnReplaceReplaceVariable";
-            this.btnReplaceReplaceVariable.Size = new System.Drawing.Size(24, 24);
-            this.btnReplaceReplaceVariable.TabIndex = 5;
-            this.btnReplaceReplaceVariable.UseVisualStyleBackColor = true;
-            this.btnReplaceReplaceVariable.Click += new System.EventHandler(this.btnReplaceReplaceVariable_Click);
             // 
             // frmSearchCommands
             // 
