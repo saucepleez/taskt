@@ -874,7 +874,7 @@ namespace taskt.UI.Forms
             this.Cursor = Cursors.Arrow;
         }
 
-        public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool instanceName, string instanceType)
+        public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
         {
             //matchingSearchIndex.Clear();
             //matchingSearchIndex = new List<int>();
@@ -886,19 +886,19 @@ namespace taskt.UI.Forms
             foreach(ListViewItem itm in lstScriptActions.Items)
             {
                 Core.Automation.Commands.ScriptCommand cmd = (Core.Automation.Commands.ScriptCommand)itm.Tag;
-                if (cmd.checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText))
+                if (cmd.checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText, checkInstanceType, instanceType))
                 {
                     matchedCount++;
                     //matchingSearchIndex.Add(itm.Index);
                 }
-                else if (instanceName)
-                {
-                    if (cmd.checkInstanceMatched(keyword, instanceType, caseSensitive))
-                    {
-                        matchedCount++;
-                        //matchingSearchIndex.Add(itm.Index);
-                    }
-                }
+                //else if (instanceName)
+                //{
+                //    if (cmd.checkInstanceMatched(keyword, instanceType, caseSensitive))
+                //    {
+                //        matchedCount++;
+                //        //matchingSearchIndex.Add(itm.Index);
+                //    }
+                //}
             }
             lstScriptActions.EndUpdate();
             lstScriptActions.ResumeLayout();
@@ -1082,7 +1082,7 @@ namespace taskt.UI.Forms
             {
                 foreach(ListViewItem itm in lstScriptActions.Items)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, true, false, false, false ))
+                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, true, false, false, false, false, ""))
                     {
                         matchedCount++;
                         //matchingSearchIndex.Add(itm.Index);
@@ -1093,7 +1093,7 @@ namespace taskt.UI.Forms
             {
                 foreach (ListViewItem itm in lstScriptActions.Items)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkInstanceMatched(keyword, instanceType, caseSensitive))
+                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, false, false, false, false, true, instanceType))
                     {
                         matchedCount++;
                         //matchingSearchIndex.Add(itm.Index);
@@ -1104,7 +1104,7 @@ namespace taskt.UI.Forms
             {
                 foreach (ListViewItem itm in lstScriptActions.Items)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, false, false, false, true, false))
+                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, false, false, false, true, false, false, ""))
                     {
                         matchedCount++;
                         //matchingSearchIndex.Add(itm.Index);

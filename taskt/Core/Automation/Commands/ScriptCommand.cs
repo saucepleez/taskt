@@ -609,7 +609,7 @@ namespace taskt.Core.Automation.Commands
             return (ScriptCommand)MemberwiseClone();
         }
 
-        public bool checkMatched(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText)
+        public bool checkMatched(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
         {
             if (!caseSensitive)
             {
@@ -725,6 +725,15 @@ namespace taskt.Core.Automation.Commands
                             }
                         }
                     }
+                }
+            }
+
+            if (checkInstanceType)
+            {
+                if (checkInstanceMatched(keyword, instanceType, caseSensitive))
+                {
+                    this.IsMatched = true;
+                    return true;
                 }
             }
 
