@@ -2572,6 +2572,15 @@ namespace taskt.UI.Forms
 
         private void OpenFile(string filePath)
         {
+            // check file exists
+            if (!System.IO.File.Exists(filePath))
+            {
+                using(var fm = new UI.Forms.Supplemental.frmDialog(filePath + " does not exits.", "Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                {
+                    fm.ShowDialog();
+                    return;
+                }
+            }
 
             try
             {
@@ -2651,6 +2660,15 @@ namespace taskt.UI.Forms
         }
         private void Import(string filePath)
         {
+            // check file exists
+            if (!System.IO.File.Exists(filePath))
+            {
+                using (var fm = new UI.Forms.Supplemental.frmDialog(filePath + " does not exits.", "Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                {
+                    fm.ShowDialog();
+                    return;
+                }
+            }
 
             try
             {
@@ -2855,6 +2873,12 @@ namespace taskt.UI.Forms
 
                     this.ScriptFilePath = saveFileDialog.FileName;
                 }
+            }
+
+            // check file path is only filename
+            if (System.IO.Path.GetFileName(this.ScriptFilePath) == this.ScriptFilePath)
+            {
+                this.ScriptFilePath = appSettings.ClientSettings.RootFolder + "\\" + this.ScriptFilePath;
             }
 
             //serialize script
