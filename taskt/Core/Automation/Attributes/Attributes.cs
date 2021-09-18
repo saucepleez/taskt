@@ -291,7 +291,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             IE,
             WebBrowser,
             StopWatch,
-            Word
+            Word,
+            NLG
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]
