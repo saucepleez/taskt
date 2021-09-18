@@ -107,6 +107,7 @@ namespace taskt.UI.Forms
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultWordInstanceName.DataBindings.Add("Text", clientSettings, "DefaultWordInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultDBInstanceName.DataBindings.Add("Text", clientSettings, "DefaultDBInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultNLGInstanceName.DataBindings.Add("Text", clientSettings, "DefaultNLGInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             chkExportIntermediate.DataBindings.Add("Checked", engineSettings, "ExportIntermediateXML", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics

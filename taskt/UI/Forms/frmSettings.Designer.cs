@@ -145,6 +145,8 @@
             this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.txtDefaultNLGInstanceName = new System.Windows.Forms.TextBox();
+            this.lblDefaultNLGInstance = new System.Windows.Forms.Label();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -1236,6 +1238,8 @@
             // tabEditorSettings
             // 
             this.tabEditorSettings.AutoScroll = true;
+            this.tabEditorSettings.Controls.Add(this.txtDefaultNLGInstanceName);
+            this.tabEditorSettings.Controls.Add(this.lblDefaultNLGInstance);
             this.tabEditorSettings.Controls.Add(this.chkExportIntermediate);
             this.tabEditorSettings.Controls.Add(this.lblIndentWidth);
             this.tabEditorSettings.Controls.Add(this.txtIndentWidth);
@@ -1270,7 +1274,7 @@
             this.chkExportIntermediate.BackColor = System.Drawing.Color.Transparent;
             this.chkExportIntermediate.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkExportIntermediate.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 516);
+            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 577);
             this.chkExportIntermediate.Name = "chkExportIntermediate";
             this.chkExportIntermediate.Size = new System.Drawing.Size(225, 24);
             this.chkExportIntermediate.TabIndex = 25;
@@ -1569,6 +1573,25 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // txtDefaultNLGInstanceName
+            // 
+            this.txtDefaultNLGInstanceName.Location = new System.Drawing.Point(10, 531);
+            this.txtDefaultNLGInstanceName.Name = "txtDefaultNLGInstanceName";
+            this.txtDefaultNLGInstanceName.Size = new System.Drawing.Size(490, 29);
+            this.txtDefaultNLGInstanceName.TabIndex = 27;
+            // 
+            // lblDefaultNLGInstance
+            // 
+            this.lblDefaultNLGInstance.AutoSize = true;
+            this.lblDefaultNLGInstance.BackColor = System.Drawing.Color.Transparent;
+            this.lblDefaultNLGInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDefaultNLGInstance.ForeColor = System.Drawing.Color.SlateGray;
+            this.lblDefaultNLGInstance.Location = new System.Drawing.Point(7, 511);
+            this.lblDefaultNLGInstance.Name = "lblDefaultNLGInstance";
+            this.lblDefaultNLGInstance.Size = new System.Drawing.Size(163, 17);
+            this.lblDefaultNLGInstance.TabIndex = 26;
+            this.lblDefaultNLGInstance.Text = "Default NLG instance name";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1719,5 +1742,7 @@
         private CustomControls.UIPictureButton uiCancel;
         private CustomControls.UIPictureButton uiBtnOpen;
         private System.Windows.Forms.CheckBox chkUseNewParser;
+        private System.Windows.Forms.TextBox txtDefaultNLGInstanceName;
+        private System.Windows.Forms.Label lblDefaultNLGInstance;
     }
 }
