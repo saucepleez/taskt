@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Create NLG Instance";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_InstanceName = "nlgDefaultInstance";
+            this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
@@ -55,6 +55,11 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
+            }
+
             return RenderedControls;
         }
 

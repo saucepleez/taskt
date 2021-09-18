@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Set NLG Parameter";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_InstanceName = "nlgDefaultInstance";
+            this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
@@ -107,6 +107,11 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
+
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
+            }
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ParameterType", this, editor));
