@@ -275,7 +275,6 @@ namespace taskt.Core.Automation.Commands
     // ?
     [XmlInclude(typeof(ThickAppClickItemCommand))]
     [XmlInclude(typeof(ThickAppGetTextCommand))]
-    [XmlInclude(typeof(DatabaseRunQueryCommand))]
     [XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
     [XmlInclude(typeof(ExcelAddWorksheetCommand))]
     [XmlInclude(typeof(LoadTaskCommand))]
