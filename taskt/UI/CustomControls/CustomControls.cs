@@ -456,7 +456,6 @@ namespace taskt.UI
             // Database
             {"DatabaseDefineConnectionCommand", "taskt.Properties.Resources.command_database"},
             {"DatabaseExecuteQueryCommand", "taskt.Properties.Resources.command_database"},
-            {"DatabaseRunQueryCommand", "taskt.Properties.Resources.command_database"},
 
             // DataTable
             {"LoadTaskCommand", "taskt.Properties.Resources.command_start_process"},

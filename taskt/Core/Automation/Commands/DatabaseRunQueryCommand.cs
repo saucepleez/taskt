@@ -4,9 +4,7 @@ using System.Data;
 
 namespace taskt.Core.Automation.Commands
 {
- 
 
-   
     [Serializable]
     [Attributes.ClassAttributes.Group("Database Commands")]
     [Attributes.ClassAttributes.Description("This command selects data from a database and applies it against a dataset")]

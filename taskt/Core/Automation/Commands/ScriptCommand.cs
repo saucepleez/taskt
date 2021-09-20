@@ -41,7 +41,6 @@ namespace taskt.Core.Automation.Commands
     // Database
     [XmlInclude(typeof(DatabaseDefineConnectionCommand))]
     [XmlInclude(typeof(DatabaseExecuteQueryCommand))]
-    [XmlInclude(typeof(DatabaseRunQueryCommand))]
 
     // DataTable
     [XmlInclude(typeof(AddDataRowCommand))]
@@ -276,6 +275,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ThickAppClickItemCommand))]
     [XmlInclude(typeof(ThickAppGetTextCommand))]
     [XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
+    [XmlInclude(typeof(DatabaseRunQueryCommand))]
     [XmlInclude(typeof(ExcelAddWorksheetCommand))]
     [XmlInclude(typeof(LoadTaskCommand))]
     [XmlInclude(typeof(UnloadTaskCommand))]
