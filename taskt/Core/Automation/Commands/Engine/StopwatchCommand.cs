@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Linq;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -20,6 +21,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Provide a unique instance or way to refer to the stopwatch")]
         [Attributes.PropertyAttributes.SampleUsage("**myStopwatch**, **{{{vStopWatch}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch)]
         public string v_StopwatchName { get; set; }
 
@@ -126,7 +128,8 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            var ctlStopwatchName = CommandControls.CreateDefaultInputGroupFor("v_StopwatchName", this, editor);
+            var ctlStopwatchName = CommandControls.CreateDefaultDropdownGroupFor("v_StopwatchName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)ctlStopwatchName.Where(t => (t is ComboBox)).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch);
             RenderedControls.AddRange(ctlStopwatchName);
 
             //var StopWatchComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_StopwatchAction", this);
