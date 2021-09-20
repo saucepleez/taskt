@@ -2,11 +2,12 @@
 using System.Xml.Serialization;
 using System.Data;
 using System.Collections.Generic;
-using taskt.UI.Forms;
 using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using System.Data.OleDb;
 using System.Drawing;
+using System.Linq;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -112,7 +113,9 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t is ComboBox)).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
+            RenderedControls.AddRange(instanceCtrls);
 
             CommandItemControl helperControl = new CommandItemControl();
             helperControl.Padding = new Padding(10, 0, 0, 0);
