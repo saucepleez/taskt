@@ -64,17 +64,19 @@ namespace taskt.UI.CustomControls
                     case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
                         createdInput = CreateDropdownFor(parameterName, parent, variableProperties);
                         var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
+                        var winList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList));
+                        var instanceList = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
                         if ((varList != null) && varList.isVariablesList)
                         {
                             ((ComboBox)createdInput).AddVariableNames(editor);
                         }
-                        else
+                        else if((winList != null) && (winList.isWindowNamesList))
                         {
-                            var winList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList));
-                            if ((winList != null) && (winList.isWindowNamesList))
-                            {
-                                ((ComboBox)createdInput).AddWindowNames(editor);
-                            }
+                            ((ComboBox)createdInput).AddWindowNames(editor);
+                        }
+                        else if (instanceList != null)
+                        {
+                            ((ComboBox)createdInput).AddInstanceNames(editor, instanceList.instanceType);
                         }
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
@@ -93,6 +95,7 @@ namespace taskt.UI.CustomControls
                 // check combobox
                 var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
                 var winList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList));
+                var instanceList = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
                 var uiList = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption), true);
 
                 if (uiList.Length > 0)
@@ -107,7 +110,12 @@ namespace taskt.UI.CustomControls
                 else if (winList != null && winList.isWindowNamesList)
                 {
                     createdInput = CreateDropdownFor(parameterName, parent, variableProperties);
-                    ((ComboBox)createdInput).AddVariableNames(editor);
+                    ((ComboBox)createdInput).AddWindowNames(editor);
+                }
+                else if (instanceList != null)
+                {
+                    createdInput = CreateDropdownFor(parameterName, parent, variableProperties);
+                    ((ComboBox)createdInput).AddInstanceNames(editor, instanceList.instanceType);
                 }
                 else
                 {
@@ -1248,6 +1256,57 @@ namespace taskt.UI.CustomControls
                 cbo.EndUpdate();
 
             }
+
+            return cbo;
+        }
+        public static ComboBox AddInstanceNames(this ComboBox cbo, UI.Forms.frmCommandEditor editor, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType tp)
+        {
+            if ((cbo == null) || (editor == null))
+            {
+                return null;
+            }
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+            switch (tp)
+            {
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
+                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultDBInstanceName);
+                    break;
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel:
+                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultExcelInstanceName);
+                    break;
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE:
+                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
+                    break;
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
+                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultNLGInstanceName);
+                    break;
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
+                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultStopWatchInstanceName);
+                    break;
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser:
+                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
+                    break;
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word:
+                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultWordInstanceName);
+                    break;
+                default:
+                    break;
+            }
+
+            //pull the main window title for each
+            string[] instances = editor.instanceList.getInstances(tp);
+            foreach (string ins in instances)
+            {
+                if ((!String.IsNullOrEmpty(ins)) && (!cbo.Items.Contains(ins)))
+                {
+                    cbo.Items.Add(ins);
+                }
+            }
+
+            cbo.EndUpdate();
 
             return cbo;
         }

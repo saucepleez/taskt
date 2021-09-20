@@ -1340,6 +1340,9 @@ namespace taskt.UI.Forms
                     // set taskt settings
                     editCommand.appSettings = this.appSettings;
 
+                    // set instance counter
+                    editCommand.instanceList = this.instanceList;
+
                     //show edit command form and save changes on OK result
                     if (editCommand.ShowDialog() == DialogResult.OK)
                     {
@@ -3118,6 +3121,9 @@ namespace taskt.UI.Forms
                 newCommandForm.scriptVariables = this.scriptVariables;
                 // set taskt settings
                 newCommandForm.appSettings = this.appSettings;
+                // set instance counter
+                newCommandForm.instanceList = this.instanceList;
+
                 if (specificCommand != "")
                     newCommandForm.defaultStartupCommand = specificCommand;
 

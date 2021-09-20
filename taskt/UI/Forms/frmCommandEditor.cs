@@ -51,6 +51,8 @@ namespace taskt.UI.Forms
         public List<Core.Automation.Commands.ScriptCommand> configuredCommands;
         // taskt setting
         public Core.ApplicationSettings appSettings;
+        // instance counter
+        public Core.InstanceCounter instanceList;
         public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
         {
             InitializeComponent();
