@@ -1276,6 +1276,7 @@ namespace taskt.UI.Forms
                     //add variables
 
                     newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
+                    newBuilder.instanceList = instanceList;
 
                     foreach (var variable in this.scriptVariables)
                     {
@@ -1318,6 +1319,9 @@ namespace taskt.UI.Forms
             }
             else
             {
+                Core.InstanceNameType nameType = instanceList.getInstanceNameType(currentCommand);
+                instanceList.removeInstance(currentCommand);
+
                 //create new command editor form
                 using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
                 {
@@ -1344,6 +1348,15 @@ namespace taskt.UI.Forms
                         selectedCommandItem.Tag = editCommand.selectedCommand;
                         selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
                         selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
+
+                        instanceList.addInstance(editCommand.selectedCommand);
+                    }
+                    else
+                    {
+                        if (nameType != null)
+                        {
+                            instanceList.addInstance(nameType);
+                        }
                     }
                 }
             }
@@ -1362,12 +1375,22 @@ namespace taskt.UI.Forms
         private void DeleteRows()
         {
             lstScriptActions.BeginUpdate();
+
             int[] indices = new int[lstScriptActions.SelectedItems.Count];
             lstScriptActions.SelectedIndices.CopyTo(indices, 0);
             //foreach (ListViewItem itm in lstScriptActions.SelectedItems)
             //{
             //    lstScriptActions.Items.Remove(itm);
             //}
+
+            // remove instance name
+            List<Core.Automation.Commands.ScriptCommand> removeCommands = new List<Core.Automation.Commands.ScriptCommand>();
+            foreach(int i in indices)
+            {
+                removeCommands.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag);
+            }
+            RemoveInstanceName(removeCommands);
+
             for (var i = indices.Length - 1; i >= 0; i--)
             {
                 lstScriptActions.Items.RemoveAt(indices[i]);
@@ -1424,6 +1447,9 @@ namespace taskt.UI.Forms
                 lstScriptActions.EndUpdate();
                 // set clipborad xml string
                 Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands));
+
+                // remove instance name
+                RemoveInstanceName(commands);
 
                 //Notify(rowsSelectedForCopy.Count + " item(s) cut to clipboard!");
                 Notify(commands.Count + " item(s) cut to clipboard!");
@@ -1514,6 +1540,9 @@ namespace taskt.UI.Forms
                 lstScriptActions.BeginUpdate();
                 InsertExecutionCommands(sc.Commands);
                 lstScriptActions.EndUpdate();
+
+                // add instance name
+                AddInstanceName(sc.Commands.Select(t => t.ScriptCommand).ToList());
 
                 Notify(sc.Commands.Count + " item(s) pasted!");
                 // release
@@ -1734,6 +1763,9 @@ namespace taskt.UI.Forms
             }
 
             var command = CreateScriptCommandListViewItem(selectedCommand);
+
+            // count instance name
+            AddInstanceName(new List<Core.Automation.Commands.ScriptCommand>() { selectedCommand });
 
             //insert to end by default
             var insertionIndex = lstScriptActions.Items.Count;
@@ -2633,9 +2665,7 @@ namespace taskt.UI.Forms
                 //CheckValidateScriptFile();
 
                 // Instance Count
-                ListViewItem[] items = new ListViewItem[lstScriptActions.Items.Count];
-                lstScriptActions.Items.CopyTo(items, 0);
-                AddInstanceName(items);
+                AddInstanceName(deserializedScript.Commands.Select(t => t.ScriptCommand).ToList());
 
                 //format listview
                 ChangeSaveState(false);
@@ -2719,6 +2749,9 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
 
                 lstScriptActions.EndUpdate();
+
+                // count instance name
+                AddInstanceName(deserializedScript.Commands.Select(t => t.ScriptCommand).ToList());
 
                 ChangeSaveState(true);
 
@@ -2949,75 +2982,19 @@ namespace taskt.UI.Forms
             return true;
         }
 
-        private void AddInstanceName(ListViewItem[] items)
+        private void AddInstanceName(List<Core.Automation.Commands.ScriptCommand> items)
         {
-            foreach(ListViewItem item in items)
+            foreach(Core.Automation.Commands.ScriptCommand command in items)
             {
-                var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
-                if (command is Core.Automation.Commands.DatabaseDefineConnectionCommand)
-                {
-                    instanceList.addInstance(((Core.Automation.Commands.DatabaseDefineConnectionCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
-                }
-                else if (command is Core.Automation.Commands.ExcelCreateApplicationCommand)
-                {
-                    instanceList.addInstance(((Core.Automation.Commands.ExcelCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel);
-                }
-                else if (command is Core.Automation.Commands.IEBrowserCreateCommand)
-                {
-                    instanceList.addInstance(((Core.Automation.Commands.IEBrowserCreateCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE);
-                }
-                else if (command is Core.Automation.Commands.NLGCreateInstanceCommand)
-                {
-                    instanceList.addInstance(((Core.Automation.Commands.NLGCreateInstanceCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG);
-                }
-                else if (command is Core.Automation.Commands.StopwatchCommand)
-                {
-                    instanceList.addInstance(((Core.Automation.Commands.StopwatchCommand)command).v_StopwatchName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch);
-                }
-                else if (command is Core.Automation.Commands.SeleniumBrowserCreateCommand)
-                {
-                    instanceList.addInstance(((Core.Automation.Commands.SeleniumBrowserCreateCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
-                }
-                else if (command is Core.Automation.Commands.WordCreateApplicationCommand)
-                {
-                    instanceList.addInstance(((Core.Automation.Commands.WordCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word);
-                }
+                instanceList.addInstance(command);
             }
         }
 
-        private void RemoveInstanceName(ListViewItem[] items)
+        private void RemoveInstanceName(List<Core.Automation.Commands.ScriptCommand> items)
         {
-            foreach (ListViewItem item in items)
+            foreach (Core.Automation.Commands.ScriptCommand command in items)
             {
-                var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
-                if (command is Core.Automation.Commands.DatabaseDefineConnectionCommand)
-                {
-                    instanceList.removeInstance(((Core.Automation.Commands.DatabaseDefineConnectionCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
-                }
-                else if (command is Core.Automation.Commands.ExcelCreateApplicationCommand)
-                {
-                    instanceList.removeInstance(((Core.Automation.Commands.ExcelCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel);
-                }
-                else if (command is Core.Automation.Commands.IEBrowserCreateCommand)
-                {
-                    instanceList.removeInstance(((Core.Automation.Commands.IEBrowserCreateCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE);
-                }
-                else if (command is Core.Automation.Commands.NLGCreateInstanceCommand)
-                {
-                    instanceList.removeInstance(((Core.Automation.Commands.NLGCreateInstanceCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG);
-                }
-                else if (command is Core.Automation.Commands.StopwatchCommand)
-                {
-                    instanceList.removeInstance(((Core.Automation.Commands.StopwatchCommand)command).v_StopwatchName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch);
-                }
-                else if (command is Core.Automation.Commands.SeleniumBrowserCreateCommand)
-                {
-                    instanceList.removeInstance(((Core.Automation.Commands.SeleniumBrowserCreateCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
-                }
-                else if (command is Core.Automation.Commands.WordCreateApplicationCommand)
-                {
-                    instanceList.removeInstance(((Core.Automation.Commands.WordCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word);
-                }
+                instanceList.removeInstance(command);
             }
         }
 
@@ -3041,6 +3018,7 @@ namespace taskt.UI.Forms
             lstScriptActions.Items.Clear();
             scriptVariables = new List<Core.Script.ScriptVariable>();
             scriptInfo = new Core.Script.ScriptInformation();
+            instanceList = new Core.InstanceCounter();
 
             ChangeSaveState(false);
         }

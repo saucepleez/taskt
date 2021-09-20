@@ -407,6 +407,7 @@
     <Compile Include="Core\DatasetCommands.cs" />
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="Core\InstanceCounter.cs" />
     <Compile Include="Core\IO\Folders.cs" />
     <Compile Include="Core\Server\LocalTCPListener.cs" />
     <Compile Include="Core\Server\HttpServerClient.cs" />
