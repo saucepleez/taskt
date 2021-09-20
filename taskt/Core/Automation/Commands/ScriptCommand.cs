@@ -41,6 +41,7 @@ namespace taskt.Core.Automation.Commands
     // Database
     [XmlInclude(typeof(DatabaseDefineConnectionCommand))]
     [XmlInclude(typeof(DatabaseExecuteQueryCommand))]
+    [XmlInclude(typeof(DatabaseRunQueryCommand))]
 
     // DataTable
     [XmlInclude(typeof(AddDataRowCommand))]
