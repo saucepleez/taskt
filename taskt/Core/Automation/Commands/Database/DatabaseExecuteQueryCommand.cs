@@ -205,7 +205,7 @@ namespace taskt.Core.Automation.Commands
 
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t is ComboBox)).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
             RenderedControls.AddRange(instanceCtrls);
 
             var queryControls = CommandControls.CreateDefaultInputGroupFor("v_Query", this, editor);
