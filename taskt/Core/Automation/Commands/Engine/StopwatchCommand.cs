@@ -129,7 +129,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             var ctlStopwatchName = CommandControls.CreateDefaultDropdownGroupFor("v_StopwatchName", this, editor);
-            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)ctlStopwatchName.Where(t => (t is ComboBox)).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)ctlStopwatchName.Where(t => (t.Name == "v_StopwatchName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch);
             RenderedControls.AddRange(ctlStopwatchName);
 
             //var StopWatchComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_StopwatchAction", this);
