@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter or capture element search parameters")]
@@ -407,7 +408,10 @@ namespace taskt.Core.Automation.Commands
             ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
             ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => t.Name == "v_InstanceName").FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE);
+            RenderedControls.AddRange(instanceCtrls);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
             SearchParameterControls = new List<Control>();
             SearchParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebSearchParameter", this));
