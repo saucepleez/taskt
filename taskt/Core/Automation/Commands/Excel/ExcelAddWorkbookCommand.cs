@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Linq;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -21,9 +22,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
 
         public ExcelAddWorkbookCommand()
@@ -49,7 +50,10 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel);
+            RenderedControls.AddRange(instanceCtrls);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
