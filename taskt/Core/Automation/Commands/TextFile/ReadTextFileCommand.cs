@@ -54,6 +54,12 @@ namespace taskt.Core.Automation.Commands
             //convert variables
             var filePath = v_FilePath.ConvertToUserVariable(sender);
 
+            filePath = Core.FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
+            if (!System.IO.File.Exists(filePath))
+            {
+                filePath += ".txt";
+            }
+
             var readPreference = v_ReadOption.ConvertToUserVariable(sender).ToUpperInvariant();
             if (String.IsNullOrEmpty(readPreference))
             {

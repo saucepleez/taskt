@@ -7,11 +7,6 @@ using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Text File Commands")]
     [Attributes.ClassAttributes.Description("This command writes specified data to a text file")]
@@ -56,6 +51,9 @@ namespace taskt.Core.Automation.Commands
         {
             //convert variables
             var filePath = v_FilePath.ConvertToUserVariable(sender);
+
+            filePath = Core.FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
+            
             var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
 
             var overwrite = v_Overwrite.ConvertToUserVariable(sender);
