@@ -62,7 +62,7 @@ namespace taskt.Core
                 if (startIndex >= 0)
                 {
                     convertedStr += str.Substring(0, startIndex);
-                    str = str.Substring(startIndex + 1);
+                    str = str.Substring(startIndex + startVariableMarker.Length);
                     string[] varResult = SearchVariable(str, searchList, engine);
                     convertedStr += varResult[0];
                     str = varResult[1];
@@ -137,7 +137,7 @@ namespace taskt.Core
                             {
                                 // nest search
                                 variableName += str.Substring(0, nestStartIndex);
-                                str = str.Substring(nestStartIndex + 1);
+                                str = str.Substring(nestStartIndex + startMarker.Length);
                                 string[] nestResult = SearchVariable(str, variables, engine);
                                 variableName += nestResult[0];
                                 str = nestResult[1];
@@ -147,7 +147,7 @@ namespace taskt.Core
                             {
                                 // end marker found
                                 variableName += str.Substring(0, endIndex);
-                                str = str.Substring(endIndex + 1);
+                                str = str.Substring(endIndex + endMarker.Length);
                                 // expands
                                 string variableValue;
                                 if (ExpandVariable(variableName, variables, engine, out variableValue))
@@ -166,7 +166,7 @@ namespace taskt.Core
                         {
                             // end marker found
                             variableName += str.Substring(0, endIndex);
-                            str = str.Substring(endIndex + 1);
+                            str = str.Substring(endIndex + endMarker.Length);
                             // expands
                             string variableValue;
                             if (ExpandVariable(variableName, variables, engine, out variableValue))
@@ -209,6 +209,7 @@ namespace taskt.Core
 
         private static bool ExpandVariable(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
         {
+            variableName = variableName.Trim();
             result = null;
             if (isExpandJSON(variableName, engine)) // =>
             {
@@ -235,7 +236,6 @@ namespace taskt.Core
                 }
             }
             return ExpandVariableNormal(variableName, variables, out result);
-            
         }
         private static bool ExpandVariableNormal(string variableName, List<Core.Script.ScriptVariable> variables, out string result)
         {
@@ -320,8 +320,8 @@ namespace taskt.Core
         private static bool ExpandVariableListIndex(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
         {
             int startPos = variableName.IndexOf('[');
-            string newVariableName = variableName.Substring(0, startPos);
-            string variableIndex = variableName.Substring(startPos + 1, variableName.Length - startPos - 2);
+            string newVariableName = variableName.Substring(0, startPos).Trim();
+            string variableIndex = variableName.Substring(startPos + 1, variableName.Length - startPos - 2).Trim();
 
             int listIndex;
             if (!int.TryParse(variableIndex, out listIndex))
@@ -375,8 +375,8 @@ namespace taskt.Core
             }
 
             string[] sptVar = variableName.Split('.');
-            string newVariableName = sptVar[0];
-            string variableProperty = sptVar[1];
+            string newVariableName = sptVar[0].Trim();
+            string variableProperty = sptVar[1].Trim();
 
             Core.Script.ScriptVariable targetVariable;
             if (ExpandVariableScriptVariable(newVariableName, variables, out targetVariable))
