@@ -60,44 +60,55 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            //define script path
+            var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
+            scriptPath = Core.FilePathControls.formatFilePath(scriptPath, (Engine.AutomationEngineInstance)sender);
+
+            if (!System.IO.File.Exists(scriptPath) && !Core.FilePathControls.hasExtension(scriptPath))
             {
-               
-                //define script path
-                var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
-
-                //get script text
-                var psCommand = System.IO.File.ReadAllText(scriptPath);
-
-                  if (v_ReplaceScriptVariables.ToUpperInvariant() == "YES")
+                string[] exts = new string[] { ".ps1", ".bat" };
+                foreach(string ext in exts)
                 {
-                    //convert variables
-                    psCommand = psCommand.ConvertToUserVariable(sender);
+                    if (System.IO.File.Exists(scriptPath + ext))
+                    {
+                        scriptPath += ext;
+                        break;
+                    }
                 }
-             
-                //convert ps script
-                var psCommandBytes = System.Text.Encoding.Unicode.GetBytes(psCommand);
-                var psCommandBase64 = Convert.ToBase64String(psCommandBytes);
-
-                //execute
-                var startInfo = new ProcessStartInfo()
-                {
-                    FileName = "powershell.exe",
-                    Arguments = $"{v_PowerShellArgs} -EncodedCommand {psCommandBase64}",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true                  
-                };
-
-
-               var proc =  Process.Start(startInfo);
-
-                proc.WaitForExit();
-
-                //store output into variable
-                StreamReader reader = proc.StandardOutput;
-                string output = reader.ReadToEnd();
-                output.StoreRawDataInUserVariable(sender, v_applyToVariableName);
-         
             }
+
+            //get script text
+            var psCommand = System.IO.File.ReadAllText(scriptPath);
+
+            if (v_ReplaceScriptVariables.ToUpperInvariant() == "YES")
+            {
+                //convert variables
+                psCommand = psCommand.ConvertToUserVariable(sender);
+            }
+             
+            //convert ps script
+            var psCommandBytes = System.Text.Encoding.Unicode.GetBytes(psCommand);
+            var psCommandBase64 = Convert.ToBase64String(psCommandBytes);
+
+            //execute
+            var startInfo = new ProcessStartInfo()
+            {
+                FileName = "powershell.exe",
+                Arguments = $"{v_PowerShellArgs} -EncodedCommand {psCommandBase64}",
+                UseShellExecute = false,
+                RedirectStandardOutput = true                  
+            };
+
+
+            var proc =  Process.Start(startInfo);
+
+            proc.WaitForExit();
+
+            //store output into variable
+            StreamReader reader = proc.StandardOutput;
+            string output = reader.ReadToEnd();
+            output.StoreRawDataInUserVariable(sender, v_applyToVariableName);
+         
         }
 
         public override List<Control> Render(frmCommandEditor editor)
