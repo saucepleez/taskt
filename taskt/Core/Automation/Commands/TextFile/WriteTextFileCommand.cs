@@ -53,6 +53,10 @@ namespace taskt.Core.Automation.Commands
             var filePath = v_FilePath.ConvertToUserVariable(sender);
 
             filePath = Core.FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
+            if (!Core.FilePathControls.hasExtension(filePath))
+            {
+                filePath += ".txt";
+            }
             
             var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
 

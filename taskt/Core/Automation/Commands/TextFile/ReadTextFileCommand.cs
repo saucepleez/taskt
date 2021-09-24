@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             var filePath = v_FilePath.ConvertToUserVariable(sender);
 
             filePath = Core.FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
-            if (!System.IO.File.Exists(filePath))
+            if (!System.IO.File.Exists(filePath) && !Core.FilePathControls.hasExtension(filePath))
             {
                 filePath += ".txt";
             }
