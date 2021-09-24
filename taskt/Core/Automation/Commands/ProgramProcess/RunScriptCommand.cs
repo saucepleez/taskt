@@ -37,7 +37,15 @@ namespace taskt.Core.Automation.Commands
             scriptPath = Core.FilePathControls.formatFilePath(scriptPath, (Engine.AutomationEngineInstance)sender);
             if (!System.IO.File.Exists(scriptPath) && !Core.FilePathControls.hasExtension(scriptPath))
             {
-                scriptPath += ".bat";
+                string[] exts = new string[] { ".bat", ".vbs", ".js", ".wsf" };
+                foreach(string ext in exts)
+                {
+                    if (System.IO.File.Exists(scriptPath + ext))
+                    {
+                        scriptPath += ext;
+                        break;
+                    }
+                }
             }
 
             System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
