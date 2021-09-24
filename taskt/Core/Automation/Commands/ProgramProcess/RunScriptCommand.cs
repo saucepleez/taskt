@@ -33,17 +33,20 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
+            scriptPath = Core.FilePathControls.formatFilePath(scriptPath, (Engine.AutomationEngineInstance)sender);
+            if (!System.IO.File.Exists(scriptPath) && !Core.FilePathControls.hasExtension(scriptPath))
             {
-                System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
-
-                var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
-                scriptProc.StartInfo.FileName = scriptPath;
-                scriptProc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                scriptProc.Start();
-                scriptProc.WaitForExit();
-
-                scriptProc.Close();
+                scriptPath += ".bat";
             }
+
+            System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
+            scriptProc.StartInfo.FileName = scriptPath;
+            scriptProc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            scriptProc.Start();
+            scriptProc.WaitForExit();
+
+            scriptProc.Close();
         }
 
         public override List<Control> Render(frmCommandEditor editor)
