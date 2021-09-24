@@ -53,6 +53,11 @@ namespace taskt.Core.Automation.Commands
             //convert variables
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var fileName = v_FileName.ConvertToUserVariable(engine);
+            fileName = Core.FilePathControls.formatFilePath(fileName, engine);
+            if (!Core.FilePathControls.hasExtension(fileName))
+            {
+                fileName += ".xlsx";
+            }
 
             //get excel app object
             var excelObject = engine.GetAppInstance(vInstance);
