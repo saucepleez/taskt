@@ -85,6 +85,12 @@ namespace taskt.Core
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
                     return databaseInstance;
                     break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable:
+                    return dataTableInstance;
+                    break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary:
+                    return dictionaryInstance;
+                    break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel:
                     return excelInstance;
                     break;

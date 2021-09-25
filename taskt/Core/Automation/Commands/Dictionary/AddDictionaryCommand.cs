@@ -22,6 +22,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Indicate a Dictionary to add to")]
         [Attributes.PropertyAttributes.SampleUsage("vMyDictionary")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
