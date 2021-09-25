@@ -15,6 +15,8 @@ namespace taskt.Core
         private Dictionary<string, int> stopWatchInstance = new Dictionary<string, int>();
         private Dictionary<string, int> wordInstance = new Dictionary<string, int>();
         private Dictionary<string, int> nlgInstance = new Dictionary<string, int>();
+        private Dictionary<string, int> dictionaryInstance = new Dictionary<string, int>();
+        private Dictionary<string, int> dataTableInstance = new Dictionary<string, int>();
 
         public InstanceCounter()
         {
