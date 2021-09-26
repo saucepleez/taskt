@@ -794,6 +794,10 @@ namespace taskt.UI.CustomControls
                     {
                         string str = targetCombobox.Text;
                         int cursorPos;
+                        if (targetCombobox.Tag == null)
+                        {
+                            targetCombobox.Tag = 0;
+                        }
                         if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
                         {
                             cursorPos = str.Length;
