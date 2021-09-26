@@ -86,7 +86,7 @@ namespace taskt.Core.Automation.Commands
                     click = "None";
                 }
 
-                if (v_MouseClick != "") 
+                if (click != "") 
                 {
                     User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
                 }
