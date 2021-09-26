@@ -41,6 +41,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            Engine.AutomationEngineInstance engine = (Engine.AutomationEngineInstance)sender;
+
             var targetWindowName = v_ScreenshotWindowName.ConvertToUserVariable(sender);
             if (targetWindowName == ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
@@ -48,12 +50,14 @@ namespace taskt.Core.Automation.Commands
             }
 
             var image = User32Functions.CaptureWindow(targetWindowName);
-            string outputFile = v_FilePath.ConvertToUserVariable(sender);
-            outputFile = Core.FilePathControls.formatFilePath(outputFile, (Engine.AutomationEngineInstance)sender);
-            if (!Core.FilePathControls.hasExtension(outputFile))
-            {
-                outputFile += ".png";
-            }
+
+            //string outputFile = v_FilePath.ConvertToUserVariable(sender);
+            //outputFile = Core.FilePathControls.formatFilePath(outputFile, (Engine.AutomationEngineInstance)sender);
+            //if (!Core.FilePathControls.hasExtension(outputFile))
+            //{
+            //    outputFile += ".png";
+            //}
+            string outputFile = Core.FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".png");
 
             image.Save(outputFile);
         }
