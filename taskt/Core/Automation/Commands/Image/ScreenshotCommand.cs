@@ -48,8 +48,14 @@ namespace taskt.Core.Automation.Commands
             }
 
             var image = User32Functions.CaptureWindow(targetWindowName);
-            string ConvertToUserVariabledString = v_FilePath.ConvertToUserVariable(sender);
-            image.Save(ConvertToUserVariabledString);
+            string outputFile = v_FilePath.ConvertToUserVariable(sender);
+            outputFile = Core.FilePathControls.formatFilePath(outputFile, (Engine.AutomationEngineInstance)sender);
+            if (!Core.FilePathControls.hasExtension(outputFile))
+            {
+                outputFile += ".png";
+            }
+
+            image.Save(outputFile);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
