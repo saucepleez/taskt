@@ -244,54 +244,54 @@ namespace taskt.Core
         public string convertToIntermediateExcelSheet(string targetString)
         {
             return convertToIntermediate(
-                    targetString.Replace(this.CurrentWorksheetKeyword, wrapKeyword(InterCurrentWorksheetKeyword))
-                        .Replace(this.NextWorksheetKeyword, wrapKeyword(InterNextWorksheetKeyword))
-                        .Replace(this.PreviousWorksheetKeyword, wrapKeyword(InterPreviousWorksheetKeyword))
+                    targetString.Replace(this.CurrentWorksheetKeyword, wrapIntermediateKeyword(InterCurrentWorksheetKeyword))
+                        .Replace(this.NextWorksheetKeyword, wrapIntermediateKeyword(InterNextWorksheetKeyword))
+                        .Replace(this.PreviousWorksheetKeyword, wrapIntermediateKeyword(InterPreviousWorksheetKeyword))
                     );
         }
 
         public string convertToRawExcelSheet(string targetString)
         {
             return convertToRaw(
-                    targetString.Replace(wrapKeyword(InterCurrentWorksheetKeyword), this.CurrentWorksheetKeyword)
-                        .Replace(wrapKeyword(InterNextWorksheetKeyword), this.NextWorksheetKeyword)
-                        .Replace(wrapKeyword(InterPreviousWorksheetKeyword), this.PreviousWorksheetKeyword)
+                    targetString.Replace(wrapIntermediateKeyword(InterCurrentWorksheetKeyword), this.CurrentWorksheetKeyword)
+                        .Replace(wrapIntermediateKeyword(InterNextWorksheetKeyword), this.NextWorksheetKeyword)
+                        .Replace(wrapIntermediateKeyword(InterPreviousWorksheetKeyword), this.PreviousWorksheetKeyword)
                 );
         }
 
         public string convertToIntermediateWindowName(string targetString)
         {
             return convertToIntermediate(
-                    targetString.Replace(this.CurrentWindowKeyword, wrapKeyword(InterCurrentWindowKeyword))
-                        .Replace(this.DesktopKeyword, wrapKeyword(InterDesktopKeyword))
-                        .Replace(this.AllWindowsKeyword, wrapKeyword(InterAllWindowsKeyword))
+                    targetString.Replace(this.CurrentWindowKeyword, wrapIntermediateKeyword(InterCurrentWindowKeyword))
+                        .Replace(this.DesktopKeyword, wrapIntermediateKeyword(InterDesktopKeyword))
+                        .Replace(this.AllWindowsKeyword, wrapIntermediateKeyword(InterAllWindowsKeyword))
                 );
         }
 
         public string convertToRawWindowName(string targetString)
         {
             return convertToRaw(
-                    targetString.Replace(wrapKeyword(InterCurrentWindowKeyword), this.CurrentWindowKeyword)
-                        .Replace(wrapKeyword(InterDesktopKeyword), this.DesktopKeyword)
-                        .Replace(wrapKeyword(InterAllWindowsKeyword), this.AllWindowsKeyword)
+                    targetString.Replace(wrapIntermediateKeyword(InterCurrentWindowKeyword), this.CurrentWindowKeyword)
+                        .Replace(wrapIntermediateKeyword(InterDesktopKeyword), this.DesktopKeyword)
+                        .Replace(wrapIntermediateKeyword(InterAllWindowsKeyword), this.AllWindowsKeyword)
                 );
         }
 
         public string convertToIntermediateWindowPosition(string targetString)
         {
             return convertToIntermediate(
-                    targetString.Replace(this.CurrentWindowPositionKeyword, wrapKeyword(InterCurrentWindowPositionKeyword))
-                        .Replace(this.CurrentWindowXPositionKeyword, wrapKeyword(InterCurrentWindowXPositionKeyword))
-                        .Replace(this.CurrentWindowYPositionKeyword, wrapKeyword(InterCurrentWindowYPositionKeyword))
+                    targetString.Replace(this.CurrentWindowPositionKeyword, wrapIntermediateKeyword(InterCurrentWindowPositionKeyword))
+                        .Replace(this.CurrentWindowXPositionKeyword, wrapIntermediateKeyword(InterCurrentWindowXPositionKeyword))
+                        .Replace(this.CurrentWindowYPositionKeyword, wrapIntermediateKeyword(InterCurrentWindowYPositionKeyword))
                 );
         }
 
         public string convertToRawWindowPosition(string targetString)
         {
             return convertToRaw(
-                    targetString.Replace(wrapKeyword(InterCurrentWindowPositionKeyword), this.CurrentWindowPositionKeyword)
-                        .Replace(wrapKeyword(InterCurrentWindowXPositionKeyword), this.CurrentWindowXPositionKeyword)
-                        .Replace(wrapKeyword(InterCurrentWindowYPositionKeyword), this.CurrentWindowYPositionKeyword)
+                    targetString.Replace(wrapIntermediateKeyword(InterCurrentWindowPositionKeyword), this.CurrentWindowPositionKeyword)
+                        .Replace(wrapIntermediateKeyword(InterCurrentWindowXPositionKeyword), this.CurrentWindowXPositionKeyword)
+                        .Replace(wrapIntermediateKeyword(InterCurrentWindowYPositionKeyword), this.CurrentWindowYPositionKeyword)
                 );
         }
 
@@ -303,12 +303,17 @@ namespace taskt.Core
             return Core.ExtensionMethods.ConvertToUserVariable_Intermediate(targetString, engine);
         }
 
+        public string wrapVariableMarker(string variableName)
+        {
+            return this.VariableStartMarker + variableName + this.VariableEndMarker;
+        }
+
         public string wrapIntermediateVariableMaker(string variableName)
         {
             return "\u2983" + variableName + "\u2984";
         }
 
-        private static string wrapKeyword(string kw)
+        private static string wrapIntermediateKeyword(string kw)
         {
             return Char.ConvertFromUtf32(120130).ToString() + kw + Char.ConvertFromUtf32(120142).ToString();
         }
