@@ -127,5 +127,11 @@ namespace taskt.Core.Automation.Commands
 
             return this.IsValid;
         }
+        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        {
+            var cnv = new Dictionary<string, string>();
+            cnv.Add("v_Code", "convertToIntermediateVariableParser");
+            convertToIntermediate(settings, cnv, variables);
+        }
     }
 }
