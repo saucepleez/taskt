@@ -72,7 +72,7 @@ namespace taskt.UI.CustomControls
                         }
                         else if((winList != null) && (winList.isWindowNamesList))
                         {
-                            ((ComboBox)createdInput).AddWindowNames(editor);
+                            ((ComboBox)createdInput).AddWindowNames(editor, winList.allowCurrentWindow, winList.allowAllWindows, winList.allowDesktop);
                         }
                         else if (instanceList != null)
                         {
@@ -110,7 +110,7 @@ namespace taskt.UI.CustomControls
                 else if (winList != null && winList.isWindowNamesList)
                 {
                     createdInput = CreateDropdownFor(parameterName, parent, variableProperties);
-                    ((ComboBox)createdInput).AddWindowNames(editor);
+                    ((ComboBox)createdInput).AddWindowNames(editor, winList.allowCurrentWindow, winList.allowAllWindows, winList.allowDesktop);
                 }
                 else if (instanceList != null)
                 {
@@ -1208,7 +1208,7 @@ namespace taskt.UI.CustomControls
             return commandList;
 
         }
-        public static ComboBox AddWindowNames(this ComboBox cbo, UI.Forms.frmCommandEditor editor = null)
+        public static ComboBox AddWindowNames(this ComboBox cbo, UI.Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             if (cbo == null)
                 return null;
@@ -1217,13 +1217,39 @@ namespace taskt.UI.CustomControls
 
             cbo.Items.Clear();
 
-            if (editor != null)
+            if (addCurrentWindow)
             {
-                cbo.Items.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+                if (editor != null)
+                {
+                    cbo.Items.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+                }
+                else
+                {
+                    cbo.Items.Add("Current Window");
+                }
             }
-            else
+
+            if (addAllWindows)
             {
-                cbo.Items.Add("Current Window");
+                if (editor != null)
+                {
+                    cbo.Items.Add(editor.appSettings.EngineSettings.AllWindowsKeyword);
+                }
+                else
+                {
+                    cbo.Items.Add("All Windows");
+                }
+            }
+            if (addDesktop)
+            {
+                if (editor != null)
+                {
+                    cbo.Items.Add(editor.appSettings.EngineSettings.DesktopKeyword);
+                }
+                else
+                {
+                    cbo.Items.Add("Desktop");
+                }
             }
 
             Process[] processlist = Process.GetProcesses();
