@@ -162,7 +162,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             //begin search
-            double timeoutSeconds = double.Parse(v_TimeoutSeconds.ConvertToUserVariable(sender));
+            string p = v_TimeoutSeconds.ConvertToUserVariable(sender);
+            double timeoutSeconds = double.Parse(p);
             DateTime timeoutDue = DateTime.Now.AddSeconds(timeoutSeconds);
 
             bool imageFound = false;

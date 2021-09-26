@@ -955,7 +955,7 @@ namespace taskt.UI.CustomControls
                 Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
                 imageRecognitionCommand.v_ImageCapture = imageSource;
                 imageRecognitionCommand.TestMode = true;
-                imageRecognitionCommand.RunCommand(null);
+                imageRecognitionCommand.RunCommand(new Core.Automation.Engine.AutomationEngineInstance());
             }
             catch (Exception ex)
             {
