@@ -17,7 +17,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("TBD")]
     public class ImageRecognitionCommand : ScriptCommand
     {
-
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Capture the search image")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper)]
@@ -26,19 +25,27 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("The image will be used as the image to be found on screen.")]
         public string v_ImageCapture { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Offset X Coordinate - Optional")]
+        [Attributes.PropertyAttributes.PropertyDescription("Offset X Coordinate (Default is 0)")]
         [Attributes.PropertyAttributes.InputSpecification("Specify if an offset is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or 100")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **100** or **{{{vXOffset}}}**")]
         [Attributes.PropertyAttributes.Remarks("This will move the mouse X pixels to the right of the location of the image")]
-        public int v_xOffsetAdjustment { get; set; }
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        public string v_xOffsetAdjustment { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Offset Y Coordinate - Optional")]
+        [Attributes.PropertyAttributes.PropertyDescription("Offset Y Coordinate (Default is 0)")]
         [Attributes.PropertyAttributes.InputSpecification("Specify if an offset is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or 100")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **100** or **{{{vYOffset}}}**")]
         [Attributes.PropertyAttributes.Remarks("This will move the mouse X pixels down from the top of the location of the image")]
-        public int v_YOffsetAdjustment { get; set; }
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        public string v_YOffsetAdjustment { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type if required (Default is None)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("None")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
@@ -53,13 +60,20 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Indicate the type of click required")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
         [Attributes.PropertyAttributes.Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_MouseClick { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Timeout (seconds, 0 for unlimited search time)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Timeout (seconds, 0 for unlimited search time) (Default is 30)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a timeout length if required.")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.SampleUsage("**30** or **0** or **{{{vTimeout}}}**")]
         [Attributes.PropertyAttributes.Remarks("Search times become excessive for colors such as white. For best results, capture a large color variance on screen, not just a white block.")]
-        public double v_TimeoutSeconds { get; set; }
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        public string v_TimeoutSeconds { get; set; }
+
         public bool TestMode = false;
         public ImageRecognitionCommand()
         {
@@ -68,9 +82,9 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            v_xOffsetAdjustment = 0;
-            v_YOffsetAdjustment = 0;
-            v_TimeoutSeconds = 30;
+            v_xOffsetAdjustment = "0";
+            v_YOffsetAdjustment = "0";
+            v_TimeoutSeconds = "30";
         }
         public override void RunCommand(object sender)
         {
@@ -130,12 +144,26 @@ namespace taskt.Core.Automation.Commands
                 iteration++;
             }
 
-
-
+            if (String.IsNullOrEmpty(v_xOffsetAdjustment))
+            {
+                v_xOffsetAdjustment = "0";
+            }
+            if (String.IsNullOrEmpty(v_YOffsetAdjustment))
+            {
+                v_YOffsetAdjustment = "0";
+            }
+            if (String.IsNullOrEmpty(v_MouseClick))
+            {
+                v_MouseClick = "None";
+            }
+            if (String.IsNullOrEmpty(v_TimeoutSeconds))
+            {
+                v_TimeoutSeconds = "30";
+            }
 
             //begin search
-            DateTime timeoutDue = DateTime.Now.AddSeconds(v_TimeoutSeconds);
-
+            double timeoutSeconds = double.Parse(v_TimeoutSeconds.ConvertToUserVariable(sender));
+            DateTime timeoutDue = DateTime.Now.AddSeconds(timeoutSeconds);
 
             bool imageFound = false;
             //for each row on the screen
@@ -143,29 +171,27 @@ namespace taskt.Core.Automation.Commands
             {
 
                 if (rowPixel + uniqueFingerprint.First().yLocation >= desktopImage.Height)
+                {
                     continue;
-
+                }
+                    
 
                 //for each column on screen
                 for (int columnPixel = 0; columnPixel < desktopImage.Width - 1; columnPixel++)
                 {
 
-                    if ((v_TimeoutSeconds > 0) && (DateTime.Now > timeoutDue))
+                    if ((timeoutSeconds > 0) && (DateTime.Now > timeoutDue))
                     {
                         throw new Exception("Image recognition command ran out of time searching for image");
                     }
 
                     if (columnPixel + uniqueFingerprint.First().xLocation >= desktopImage.Width)
+                    {
                         continue;
-
-
-
+                    }
+                        
                     try
                     {
-
-
-
-
                         //get the current pixel from current row and column
                         // userImageFingerPrint.First() for now will always be from top left (0,0)
                         var currentPixel = desktopImage.GetPixel(columnPixel + uniqueFingerprint.First().xLocation, rowPixel + uniqueFingerprint.First().yLocation);
@@ -218,27 +244,25 @@ namespace taskt.Core.Automation.Commands
                                     screenShotUpdate.FillRectangle(brush, Rectangle);
                                 }
 
+                                int xOffset = int.Parse(v_xOffsetAdjustment.ConvertToUserVariable(sender));
+                                int yOffset = int.Parse(v_YOffsetAdjustment.ConvertToUserVariable(sender));
+
                                 //move mouse to position
                                 var mouseMove = new SendMouseMoveCommand
                                 {
-                                    v_XMousePosition = (topLeftX + (v_xOffsetAdjustment)).ToString(),
-                                    v_YMousePosition = (topLeftY + (v_xOffsetAdjustment)).ToString(),
+                                    v_XMousePosition = (topLeftX + xOffset).ToString(),
+                                    v_YMousePosition = (topLeftY + yOffset).ToString(),
                                     v_MouseClick = v_MouseClick
                                 };
 
                                 mouseMove.RunCommand(sender);
-
-
                             }
-
-
-
                         }
 
-
                         if (imageFound)
+                        {
                             break;
-
+                        }
                     }
                     catch (Exception)
                     {
@@ -246,22 +270,11 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
 
-
                 if (imageFound)
+                {
                     break;
+                }
             }
-
-
-
-
-
-
-
-
-
-
-
-
 
             if (testMode)
             {
@@ -289,8 +302,6 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("Specified image was not found in window!");
             }
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -306,11 +317,13 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_ImageCapture", this, new Control[] { imageCapture }, editor));
             RenderedControls.Add(imageCapture);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_xOffsetAdjustment", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_YOffsetAdjustment", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MouseClick", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TimeoutSeconds", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_xOffsetAdjustment", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_YOffsetAdjustment", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MouseClick", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TimeoutSeconds", this, editor));
 
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(new List<string>(){ "v_xOffsetAdjustment", "v_YOffsetAdjustment", "v_MouseClick", "v_TimeoutSeconds"}, this, editor);
+            RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
         }
@@ -318,6 +331,20 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Find On Screen]";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(v_ImageCapture))
+            {
+                this.validationResult += "Search image is empty.\n";
+                this.IsValid = false;
+                return false;
+            }
+
+            return true;
         }
     }
 }
