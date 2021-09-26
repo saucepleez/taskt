@@ -15,8 +15,9 @@ namespace taskt.Core
 
         public static bool hasExtension(string path)
         {
-            string file = System.IO.Path.GetFileName(path);
-            return (file != System.IO.Path.GetExtension(path));
+            //string file = System.IO.Path.GetFileName(path);
+            //return (file != System.IO.Path.GetExtension(path));
+            return (System.IO.Path.GetExtension(path).Length > 0);
         }
 
         public static string formatFilePath(string path, Core.Automation.Engine.AutomationEngineInstance engine)
