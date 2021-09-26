@@ -415,7 +415,7 @@ namespace taskt.Core.Automation.Commands
             return prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
         }
 
-        public virtual void convertToIntermediate(Core.EngineSettings settings)
+        public virtual void convertToIntermediate(Core.EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
             var myPropaties = this.GetType().GetProperties();
             foreach (var prop in myPropaties)
@@ -455,7 +455,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public void convertToIntermediate(Core.EngineSettings settings, Dictionary<string, string> convertMethods)
+        public void convertToIntermediate(Core.EngineSettings settings, Dictionary<string, string> convertMethods, List<Core.Script.ScriptVariable> variables)
         {
             Type settingsType = settings.GetType();
             var myPropaties = this.GetType().GetProperties();
@@ -471,18 +471,34 @@ namespace taskt.Core.Automation.Commands
                         {
                             if (meth.Key == prop.Name)
                             {
-                                methodOfConverting = settingsType.GetMethod(meth.Value);
+                                switch (meth.Value)
+                                {
+                                    case "convertToIntermediateVariableParser":
+                                        methodOfConverting = settingsType.GetMethod(meth.Value, new Type[] { typeof(string), typeof(List<Core.Script.ScriptVariable>) });
+                                        break;
+                                    default:
+                                        methodOfConverting = settingsType.GetMethod(meth.Value, new Type[] { typeof(string) });
+                                        break;
+                                }
                                 break;
                             }
                         }
                         if (methodOfConverting == null)
                         {
-                            methodOfConverting = settingsType.GetMethod("convertToIntermediate");
+                            methodOfConverting = settingsType.GetMethod("convertToIntermediate", new Type[] { typeof(string) });
                         }
 
                         if (targetValue is string)
                         {
-                            targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                            switch (methodOfConverting.Name)
+                            {
+                                case "convertToIntermediateVariableParser":
+                                    targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString(), variables });
+                                    break;
+                                default:
+                                    targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString()});
+                                    break;
+                            }
                             prop.SetValue(this, targetValue);
                         }
                         else if (targetValue is System.Data.DataTable)
@@ -499,7 +515,7 @@ namespace taskt.Core.Automation.Commands
                                 }
                                 for (int j = 0; j < rows; j++)
                                 {
-                                    var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
+                                    var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
                                     trgDT.Rows[j][i] = v;
                                 }
                             }

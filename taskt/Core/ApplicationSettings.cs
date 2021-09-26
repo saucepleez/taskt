@@ -295,6 +295,19 @@ namespace taskt.Core
                 );
         }
 
+        public string convertToIntermediateVariableParser(string targetString, List<Core.Script.ScriptVariable> variables)
+        {
+            Core.Automation.Engine.AutomationEngineInstance engine = new Automation.Engine.AutomationEngineInstance();
+            engine.engineSettings = this;
+            engine.VariableList = variables;
+            return Core.ExtensionMethods.ConvertToUserVariable_Intermediate(targetString, engine);
+        }
+
+        public string wrapIntermediateVariableMaker(string variableName)
+        {
+            return "\u2983" + variableName + "\u2984";
+        }
+
         private static string wrapKeyword(string kw)
         {
             return Char.ConvertFromUtf32(120130).ToString() + kw + Char.ConvertFromUtf32(120142).ToString();

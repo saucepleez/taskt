@@ -1317,17 +1317,17 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void convertToIntermediate(EngineSettings settings)
+        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
             if (this.v_IfActionType == "GUI Element Exists")
             {
                 var cnv = new Dictionary<string, string>();
                 cnv.Add("v_IfActionParameterTable", "convertToIntermediateWindowName");
-                convertToIntermediate(settings, cnv);
+                convertToIntermediate(settings, cnv, variables);
             }
             else
             {
-                base.convertToIntermediate(settings);
+                base.convertToIntermediate(settings, variables);
             }
         }
 

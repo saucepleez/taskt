@@ -1296,17 +1296,17 @@ namespace taskt.Core.Automation.Commands
                 this.IsValid = false;
             }
         }
-        public override void convertToIntermediate(EngineSettings settings)
+        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
             if (this.v_LoopActionType == "GUI Element Exists")
             {
                 var cnv = new Dictionary<string, string>();
                 cnv.Add("v_LoopActionParameterTable", "convertToIntermediateWindowName");
-                convertToIntermediate(settings, cnv);
+                convertToIntermediate(settings, cnv, variables);
             }
             else
             {
-                base.convertToIntermediate(settings);
+                base.convertToIntermediate(settings, variables);
             }
         }
 

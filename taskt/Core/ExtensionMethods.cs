@@ -400,7 +400,143 @@ namespace taskt.Core
             }
         }
 
-        // backup
+        public static string ConvertToUserVariable_Intermediate(this String str, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            if (str == null)
+            {
+                return string.Empty;
+            }
+
+            if (engine == null)
+            {
+                return str;
+            }
+
+            var variableList = engine.VariableList;
+            var systemVariables = Core.Common.GenerateSystemVariables();
+
+            var searchList = new List<Core.Script.ScriptVariable>();
+            searchList.AddRange(variableList);
+            searchList.AddRange(systemVariables);
+
+            //custom variable markers
+            var startVariableMarker = engine.engineSettings.VariableStartMarker;
+
+            string convertedStr = "";
+            while (str.Length > 0)
+            {
+                int startIndex = str.IndexOf(startVariableMarker);
+                if (startIndex >= 0)
+                {
+                    convertedStr += str.Substring(0, startIndex);
+                    str = str.Substring(startIndex + startVariableMarker.Length);
+                    string[] varResult = SearchVariable_Intermediate(str, searchList, engine);
+                    convertedStr += varResult[0];
+                    str = varResult[1];
+                }
+                else
+                {
+                    convertedStr += str;
+                    str = "";
+                }
+            }
+            return convertedStr;
+        }
+
+        private static string[] SearchVariable_Intermediate(string str, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            int state = 1;
+            string variableName = "";
+            string ret = "";
+
+            string startMarker = engine.engineSettings.VariableStartMarker;
+            string endMarker = engine.engineSettings.VariableEndMarker;
+
+            while (str.Length > 0)
+            {
+                switch (state)
+                {
+                    case 1: // search end marker, nest start marker
+                        int nestStartIndex = str.IndexOf(startMarker);
+                        int endIndex = str.IndexOf(endMarker);
+                        if (nestStartIndex >= 0 && endIndex >= 0)
+                        {
+                            // both found
+                            if (nestStartIndex < endIndex)
+                            {
+                                // nest search
+                                variableName += str.Substring(0, nestStartIndex);
+                                str = str.Substring(nestStartIndex + startMarker.Length);
+                                string[] nestResult = SearchVariable_Intermediate(str, variables, engine);
+                                variableName += nestResult[0];
+                                str = nestResult[1];
+                                state = 1;
+                            }
+                            else
+                            {
+                                // end marker found
+                                variableName += str.Substring(0, endIndex);
+                                str = str.Substring(endIndex + endMarker.Length);
+                                // expands
+                                string variableValue;
+                                if (ExpandVariable(variableName, variables, engine, out variableValue))
+                                {
+                                    ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                    state = 2;
+                                }
+                                else
+                                {
+                                    ret = startMarker + variableName + endMarker;
+                                    state = 3;
+                                }
+                            }
+                        }
+                        else if (nestStartIndex < 0 && endIndex >= 0)
+                        {
+                            // end marker found
+                            variableName += str.Substring(0, endIndex);
+                            str = str.Substring(endIndex + endMarker.Length);
+                            // expands
+                            string variableValue;
+                            if (ExpandVariable(variableName, variables, engine, out variableValue))
+                            {
+                                ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                state = 2;
+                            }
+                            else
+                            {
+                                ret = startMarker + variableName + endMarker;
+                                state = 3;
+                            }
+                        }
+                        else
+                        {
+                            // not variable
+                            variableName += str;
+                            str = "";
+                            ret = startMarker + variableName + endMarker;
+                            state = 3;
+                        }
+                        break;
+
+                    case 2: // end marker found
+                        break;
+
+                    case 3: // not variable
+                        break;
+
+                    default:
+                        break;
+                }
+                if ((state == 2) || (state == 3))
+                {
+                    break;
+                }
+            }
+            return new string[] { ret, str };
+        }
+
+        // official parser
         public static string ConvertToUserVariable_Official(this String str, object sender)
         {
             if (str == null)

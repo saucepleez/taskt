@@ -10,7 +10,6 @@ using OpenQA.Selenium;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using SHDocVw;
-using System.Data;
 using MSHTML;
 using taskt.Core.Automation.User32;
 

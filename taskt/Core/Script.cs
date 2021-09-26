@@ -125,7 +125,7 @@ namespace taskt.Core.Script
             {
                 foreach (var cmd in script.Commands)
                 {
-                    cmd.ConvertToIntermediate(engineSettings);
+                    cmd.ConvertToIntermediate(engineSettings, scriptVariables);
                 }
             }
 
@@ -252,14 +252,14 @@ namespace taskt.Core.Script
             return newExecutionCommand;
         }
 
-        public void ConvertToIntermediate(Core.EngineSettings settings)
+        public void ConvertToIntermediate(Core.EngineSettings settings, List<ScriptVariable> variables)
         {
-            ScriptCommand.convertToIntermediate(settings);
+            ScriptCommand.convertToIntermediate(settings, variables);
             if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
             {
                 foreach (var cmd in AdditionalScriptCommands)
                 {
-                    cmd.ConvertToIntermediate(settings);
+                    cmd.ConvertToIntermediate(settings, variables);
                 }
             }
         }

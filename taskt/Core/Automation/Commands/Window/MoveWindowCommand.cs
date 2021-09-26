@@ -255,13 +255,13 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        public override void convertToIntermediate(EngineSettings settings)
+        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToIntermediateWindowName");
             cnv.Add("v_XWindowPosition", "convertToIntermediateWindowPosition");
             cnv.Add("v_YWindowPosition", "convertToIntermediateWindowPosition");
-            convertToIntermediate(settings, cnv);
+            convertToIntermediate(settings, cnv, variables);
         }
 
         public override void convertToRaw(EngineSettings settings)
