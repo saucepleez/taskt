@@ -33,6 +33,25 @@ namespace taskt.Core
             }
         }
 
+        public static bool containsFileCounter(string path, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            var settings = engine.engineSettings;
+            if (path.Contains(settings.wrapVariableMarker("FileCounter.F0")))
+            {
+                return true;
+            }
+            else if (path.Contains(settings.wrapVariableMarker("FileCounter.F00")))
+            {
+                return true;
+            }
+            else if (path.Contains(settings.wrapVariableMarker("FileCounter.F000")))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static string formatFileCounter_NotExists(string path, Core.Automation.Engine.AutomationEngineInstance engine, string extension)
         {
             var settings = engine.engineSettings;
@@ -55,12 +74,7 @@ namespace taskt.Core
             }
             else
             {
-                string newPath = formatFilePath(path.ConvertToUserVariable(engine), engine);
-                if (!hasExtension(newPath))
-                {
-                    newPath += (extension.StartsWith(".") ? extension : "." + extension);
-                }
-                return newPath;
+                return path;
             }
 
             int cnt = 1;
