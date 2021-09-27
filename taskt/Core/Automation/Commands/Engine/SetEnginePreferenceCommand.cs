@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using System.Linq;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -158,6 +159,50 @@ namespace taskt.Core.Automation.Commands
             }
 
             return this.IsValid;
+        }
+
+        public override void convertToIntermediate(EngineSettings settings, List<ScriptVariable> variables)
+        {
+            switch (v_PreferenceType)
+            {
+                case "Start Variable Marker":
+                case "End Variable Marker":
+                    // not convert
+                    break;
+
+                default:
+                    if (v_ParameterValue != null)
+                    {
+                        v_ParameterValue = settings.convertToIntermediate(v_ParameterValue);
+                    }
+                    if (v_PreferenceType != null)
+                    {
+                        v_PreferenceType = settings.convertToIntermediate(v_PreferenceType);
+                    }
+                    break;
+            }
+        }
+
+        public override void convertToRaw(EngineSettings settings)
+        {
+            switch (v_PreferenceType)
+            {
+                case "Start Variable Marker":
+                case "End Variable Marker":
+                    // not convert
+                    break;
+
+                default:
+                    if (v_ParameterValue != null)
+                    {
+                        v_ParameterValue = settings.convertToRaw(v_ParameterValue);
+                    }
+                    if (v_PreferenceType != null)
+                    {
+                        v_PreferenceType = settings.convertToRaw(v_PreferenceType);
+                    }
+                    break;
+            }
         }
     }
 }
