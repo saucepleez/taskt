@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="274dbc7b-2791-4905-8aa9-7b9bca7fb16d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Image Recognition Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="274dbc7b-2791-4905-8aa9-7b9bca7fb16d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Run MS Paint" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandID="84a4d7ac-53a2-47ff-b18f-9229560c9399" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="mspaint" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="274dbc7b-2791-4905-8aa9-7b9bca7fb16d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Wait" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="9f3447bf-0ff0-4bce-85bd-9ffa27d2903c" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="1000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="274dbc7b-2791-4905-8aa9-7b9bca7fb16d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Click Fill Bucket Tool" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ImageRecognitionCommand" CommandID="19cf9672-a877-4433-9957-1460384c9701" CommandName="ImageRecognitionCommand" IsCommented="false" SelectionName="Image Recognition" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_ImageCapture="Qk3+BAAAAAAAADYAAAAoAAAAEQAAABIAAAABACAAAAAAAAAAAADEDgAAxA4AAAAAAAAAAAAA9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1/+rf1P/HnnD/6t/U//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/q39T/x55w/9qibf/HnnD/6t/U//f29f/39vX/9/b1//f29f/39vX/hqLo//f29f/39vX/9/b1//f29f/39vX/6t/U/8eecP/cpnP/366B/+K7kv/HnnD/6t/U//f29f/39vX/9/b1//f29f8WTtz/hqLo//f29f/39vX/9/b1/+rf1P/HnnD/3Kh2/+Czhv/jv5n/58us/+zYvf/HnnD/6t/U//f29f/39vX/9/b1/xZO3P8WTtz/9/b1//f29f/q39T/x55w/92se//gtoz/5MOe/+nPsv/s2sP/7ePR//r58//HnnD/6t/U//f29f/39vX/Fk7c/xZO3P/39vX/6t/U/8eecP/fsIH/4rqS/+bHpP/p1Lb/7d/J/+7m1f/6+fP///////r58//HnnD/6t/U//f29f8cV/D/Fk7c/+rf1P/HnnD/4LKG/+O+mP/ny6z/6ta9/9/Sv//i3M7/7Ork////////////+vnz/+3dx//HnnD/9/b1/ydj//8WTtz/Fk7c/+C3jP/kw5//6c+x/+zawv/Dvrf/rayr/9XU0v/u7u7///////r58//t3cf/582u/9CxiP/39vX/fKD8/ydj//8WTtz/58mk/+rUt//s3cf/7ubV/62sq//z8/D/wcC+///////59vH/7N3H/+nOsP/QsYj/7eTa//f29f/39vX/U4P//ydj//8WTtz/7ODL/+7n2P/u59j/6unn/5GRj//V1NL/+vnz/+zcxv/pzrD/0LGI/+3k2v/39vX/9/b1//f29f/39vX/fKD8/ydj///hv5P/7ufY//r58///////mZiW//r58//t3cf/586u/9CxiP/t5Nr/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//Hn3P/hv5P///////////+hoJ//7d3H/+nOsP/QsYj/7eTa//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//Hn3P/hv5P/+vnz/6inpv/pzrD/0LGI/+3k2v/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//Hn3P/hv5P/rayr/9CxiP+ZmJb/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//Hn3P+trKv/09LQ/6Ggn//39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1/+bl4/+hoJ//5uXj//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/9/b1//f29f/39vX/" v_xOffsetAdjustment="4" v_YOffsetAdjustment="4" v_MouseClick="Left Click" v_TimeoutSeconds="30">
+        <TestMode>false</TestMode>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="274dbc7b-2791-4905-8aa9-7b9bca7fb16d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Please close MS Paint, after finished :-)" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.6.0.0</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-27T22:06:11.6409177+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>
