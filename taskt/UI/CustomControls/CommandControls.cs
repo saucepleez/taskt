@@ -917,6 +917,12 @@ namespace taskt.UI.CustomControls
                         var convertedImage = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
                         var convertedLength = convertedImage.Length;
                         targetPictureBox.EncodedImage = convertedImage;
+
+                        // force set property value
+                        if (editor.selectedCommand.CommandName == "ImageRecognitionCommand")
+                        {
+                            ((Core.Automation.Commands.ImageRecognitionCommand)editor.selectedCommand).v_ImageCapture = convertedImage;
+                        }
                         //imageCaptureForm.Show();
                     }
                 }
@@ -932,7 +938,6 @@ namespace taskt.UI.CustomControls
         }
         private static void RunImageCapture(object sender, EventArgs e)
         {
-
             //get input control
             CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
             UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
@@ -946,8 +951,6 @@ namespace taskt.UI.CustomControls
 
             //hide all
             HideAllForms();
-
-
 
             try
             {

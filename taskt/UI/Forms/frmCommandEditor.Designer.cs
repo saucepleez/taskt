@@ -37,12 +37,14 @@
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.uiButtonVariable = new taskt.UI.CustomControls.UIPictureButton();
             this.btnHelpThisCommand = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiPictureBox1 = new taskt.UI.CustomControls.UIPictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiButtonVariable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnHelpThisCommand)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiPictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // cboSelectedCommand
@@ -100,6 +102,7 @@
             this.flowLayoutPanel1.Controls.Add(this.uiBtnCancel);
             this.flowLayoutPanel1.Controls.Add(this.uiButtonVariable);
             this.flowLayoutPanel1.Controls.Add(this.btnHelpThisCommand);
+            this.flowLayoutPanel1.Controls.Add(this.uiPictureBox1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 530);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -179,6 +182,15 @@
             this.btnHelpThisCommand.Text = "Help Command";
             this.btnHelpThisCommand.Click += new System.EventHandler(this.btnHelpThisCommand_Click);
             // 
+            // uiPictureBox1
+            // 
+            this.uiPictureBox1.EncodedImage = null;
+            this.uiPictureBox1.Location = new System.Drawing.Point(396, 3);
+            this.uiPictureBox1.Name = "uiPictureBox1";
+            this.uiPictureBox1.Size = new System.Drawing.Size(8, 8);
+            this.uiPictureBox1.TabIndex = 18;
+            this.uiPictureBox1.TabStop = false;
+            // 
             // frmCommandEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -202,6 +214,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiButtonVariable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnHelpThisCommand)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiPictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -215,5 +228,6 @@
         public System.Windows.Forms.FlowLayoutPanel flw_InputVariables;
         private CustomControls.UIPictureButton uiButtonVariable;
         private CustomControls.UIPictureButton btnHelpThisCommand;
+        private CustomControls.UIPictureBox uiPictureBox1;
     }
 }

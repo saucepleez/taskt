@@ -262,12 +262,12 @@ namespace taskt.UI.Forms
                     currentControl.EndEdit();
                 }
 
-                if (ctrl is UIPictureBox)
-                {
-                    var typedControl = (UIPictureBox)ctrl;
-                    var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
-                    cmd.v_ImageCapture = typedControl.EncodedImage;
-                }
+                //if (ctrl is UIPictureBox)
+                //{
+                //    var typedControl = (UIPictureBox)ctrl;
+                //    var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
+                //    cmd.v_ImageCapture = typedControl.EncodedImage;
+                //}
             }
 
             if (selectedCommand.IsValidate(this))
