@@ -3874,7 +3874,28 @@ namespace taskt.UI.Forms
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //string bk_ScriptFilePath = this.ScriptFilePath;
+
+            //// create templete script file
+            //string cur = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff");
+            //Random rnd = new Random();
+            //do
+            //{
+            //    int v = rnd.Next();
+            //    if (!System.IO.File.Exists(this.ScriptFilePath + cur + "-" + v.ToString() + ".xml"))
+            //    {
+            //        this.ScriptFilePath += cur + "-" + v.ToString() + ".xml";
+            //        break;
+            //    }
+            //} while (true);
+            //BeginSaveScriptProcess(false);
+
             BeginRunScriptProcess();
+
+            //// remove templete script file
+            //System.IO.File.Delete(this.ScriptFilePath);
+
+            //this.ScriptFilePath = bk_ScriptFilePath;
         }
         #endregion
 
