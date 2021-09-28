@@ -49,13 +49,22 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            //convert variables
-            var filePath = v_FilePath.ConvertToUserVariable(sender);
+            Engine.AutomationEngineInstance engine = (Engine.AutomationEngineInstance)sender;
 
-            filePath = Core.FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
-            if (!Core.FilePathControls.hasExtension(filePath))
+            //convert variables
+            string filePath;
+            if (Core.FilePathControls.containsFileCounter(v_FilePath, engine))
             {
-                filePath += ".txt";
+                filePath = Core.FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".txt");
+            }
+            else
+            {
+                filePath = v_FilePath.ConvertToUserVariable(sender);
+                filePath = Core.FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
+                if (!Core.FilePathControls.hasExtension(filePath))
+                {
+                    filePath += ".txt";
+                }
             }
             
             var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
