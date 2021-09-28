@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
         [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be saved in the same folder as script file.")]
+        [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]

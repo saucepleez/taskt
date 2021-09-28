@@ -30,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**c:\\Temp\\image.png** or **{{{vPath}}}**")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, suppliment png extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
         public string v_FilePath { get; set; }
         public ScreenshotCommand()
         {
