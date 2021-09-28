@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f826431a-be8a-40c1-a3c5-73e250a87bb8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Automatic Calculations Date behavior sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f826431a-be8a-40c1-a3c5-73e250a87bb8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Automatic Calculations ON" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetEnginePreferenceCommand" CommandID="20c645c0-8ebc-4030-8220-096e01dbf1a1" CommandName="SetEnginePreferenceCommand" IsCommented="false" SelectionName="Set Engine Preference" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_PreferenceType="Enable Automatic Calculations" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f826431a-be8a-40c1-a3c5-73e250a87bb8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="ISO 8601 like date format means (2021-10-15) = 1996" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="86899eb2-a287-4971-a22f-bbf05d73cf18" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vDate" v_Input="2021-10-15" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6f5f2ce5-c00b-4e34-9e31-50382497af78" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vDate⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f826431a-be8a-40c1-a3c5-73e250a87bb8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Automatic Calculations OFF" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetEnginePreferenceCommand" CommandID="20c645c0-8ebc-4030-8220-096e01dbf1a1" CommandName="SetEnginePreferenceCommand" IsCommented="false" SelectionName="Set Engine Preference" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_PreferenceType="Disable Automatic Calculations" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f826431a-be8a-40c1-a3c5-73e250a87bb8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="ISO 8601 like date format means string &quot;2021-10-15&quot; and not calculated" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="86899eb2-a287-4971-a22f-bbf05d73cf18" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vDate" v_Input="2021-10-15" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6f5f2ce5-c00b-4e34-9e31-50382497af78" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vDate⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.35</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-28T10:58:19.8866524+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vDate</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

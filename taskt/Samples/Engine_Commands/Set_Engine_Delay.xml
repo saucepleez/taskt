@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d29de7c5-60d3-4ae8-bec4-0c0f14977ebe" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Set Engine Delay sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d29de7c5-60d3-4ae8-bec4-0c0f14977ebe" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="(1) Delay is 500 msec." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetEngineDelayCommand" CommandID="3ea1305a-534b-4720-86d0-c305a97306c2" CommandName="SetEngineDelayCommand" IsCommented="false" SelectionName="Set Engine Delay" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_EngineSpeed="500" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandID="242c040d-11f4-43c1-bda1-8223d3cf7288" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="5" v_LoopStart="0" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="VariableCommand" CommandID="3e033fde-3dff-4567-81f7-9066bacd1e3f" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vTest" v_Input="1" v_ReplaceInputVariables="Yes" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="9c15c95c-5b0c-402f-ba91-50daed1a629e" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d29de7c5-60d3-4ae8-bec4-0c0f14977ebe" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="(2) Delay is 50 msec." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetEngineDelayCommand" CommandID="3ea1305a-534b-4720-86d0-c305a97306c2" CommandName="SetEngineDelayCommand" IsCommented="false" SelectionName="Set Engine Delay" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_EngineSpeed="50" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandID="242c040d-11f4-43c1-bda1-8223d3cf7288" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="5" v_LoopStart="0" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="VariableCommand" CommandID="3e033fde-3dff-4567-81f7-9066bacd1e3f" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vTest" v_Input="1" v_ReplaceInputVariables="Yes" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="9c15c95c-5b0c-402f-ba91-50daed1a629e" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.35</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-28T20:54:03.6500973+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vTest</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
