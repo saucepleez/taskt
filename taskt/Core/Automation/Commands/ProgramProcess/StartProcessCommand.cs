@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the name or path to the program (ex. notepad, calc, C:\\temp\\myapp.exe, {{{vPath}}})")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Provide a valid program name or enter a full path to the script/executable including the extension")]
+        [Attributes.PropertyAttributes.InputSpecification("Provide a valid program name or enter a full path to the script/executable including the extension.\nIf file does not contain folder path, this command do not supplement folder path.")]
         [Attributes.PropertyAttributes.SampleUsage("**notepad** or **calc** or **c:\\temp\\myapp.exe** or **{{{vPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ProgramName { get; set; }
