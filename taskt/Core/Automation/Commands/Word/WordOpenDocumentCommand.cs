@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
         [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.docx or {vFilePath}")]
-        [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, suppliment extentions supported by Word.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
+        [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, supplement extentions supported by Word.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
         public string v_FilePath { get; set; }
         public WordOpenDocumentCommand()
         {
