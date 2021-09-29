@@ -76,7 +76,7 @@
             this.attendetMenuSep1,
             this.closeAttendedMenuItem});
             this.attededMenuStrip.Name = "attededMenuStrip";
-            this.attededMenuStrip.Size = new System.Drawing.Size(214, 104);
+            this.attededMenuStrip.Size = new System.Drawing.Size(214, 82);
             // 
             // selectFolderAttendedMenuItem
             // 
@@ -153,11 +153,13 @@
             this.Controls.Add(this.cboSelectedScript);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmAttendedMode";
             this.Text = "taskt Attended Mode";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmAttendedMode_Load);
             this.Shown += new System.EventHandler(this.frmAttendedMode_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAttendedMode_KeyDown);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.frmAttendedMode_MouseDoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmAttendedMode_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmAttendedMode_MouseMove);

@@ -138,6 +138,82 @@ namespace taskt.UI.Forms
         {
             LoadAttendedScripts();
         }
+        
+        #endregion
+
+        #region menu events
+        private void uiBtnMenu_Click(object sender, EventArgs e)
+        {
+            attededMenuStrip.Show(Cursor.Position);
+        }
+        private void closeAttendedMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void selectFolderAttendedMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeFolderProcess();
+        }
+
+        private void selectFileAttendedMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectFileProcess();
+        }
+        #endregion
+
+        #region form shortcut key
+        private void frmAttendedMode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                if (e.KeyCode == Keys.F)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    ChangeFolderProcess();
+                }
+                else if (e.KeyCode == Keys.O)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    SelectFileProcess();
+                }
+                else if (e.KeyCode == Keys.W)
+                {
+                    this.Close();
+                }
+            }
+        }
+        #endregion
+
+        #region file process
+        private void ChangeFolderProcess()
+        {
+            using (var fm = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    attendedScriptWatcher.Path = fm.SelectedPath;
+                    LoadAttendedScripts();
+                }
+            }
+        }
+        private void SelectFileProcess()
+        {
+            using (var fm = new OpenFileDialog())
+            {
+                fm.Filter = "Script file (*.xml)|*.xml|All files (*.*)|*.*";
+                fm.InitialDirectory = attendedScriptWatcher.Path;
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    string newPath = fm.FileName;
+                    attendedScriptWatcher.Path = System.IO.Path.GetDirectoryName(newPath);
+                    LoadAttendedScripts();
+
+                    cboSelectedScript.SelectedItem = System.IO.Path.GetFileName(newPath);
+                }
+            }
+        }
         private void LoadAttendedScripts()
         {
             //get script files
@@ -155,45 +231,6 @@ namespace taskt.UI.Forms
             }
 
             cboSelectedScript.EndUpdate();
-        }
-        #endregion
-
-        #region menu events
-        private void uiBtnMenu_Click(object sender, EventArgs e)
-        {
-            attededMenuStrip.Show(Cursor.Position);
-        }
-        private void closeAttendedMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        private void selectFolderAttendedMenuItem_Click(object sender, EventArgs e)
-        {
-            using(var fm = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                if (fm.ShowDialog() == DialogResult.OK)
-                {
-                    attendedScriptWatcher.Path = fm.SelectedPath;
-                    LoadAttendedScripts();
-                }
-            }
-        }
-
-        private void selectFileAttendedMenuItem_Click(object sender, EventArgs e)
-        {
-            using(var fm = new OpenFileDialog())
-            {
-                fm.Filter = "Script file (*.xml)|*.xml|All files (*.*)|*.*";
-                fm.InitialDirectory = attendedScriptWatcher.Path;
-                if (fm.ShowDialog() == DialogResult.OK)
-                {
-                    string newPath = fm.FileName;
-                    attendedScriptWatcher.Path = System.IO.Path.GetDirectoryName(newPath);
-                    LoadAttendedScripts();
-
-                    cboSelectedScript.SelectedItem = System.IO.Path.GetFileName(newPath);
-                }
-            }
         }
         #endregion
     }
