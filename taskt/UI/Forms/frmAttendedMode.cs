@@ -13,6 +13,8 @@ namespace taskt.UI.Forms
     public partial class frmAttendedMode : Form
     {
         Core.ApplicationSettings appSettings { get; set; }
+
+        #region form events
         public frmAttendedMode()
         {
             InitializeComponent();
@@ -32,16 +34,13 @@ namespace taskt.UI.Forms
             //load scripts to be used for attended automation
             LoadAttendedScripts();
         }
+        #endregion
 
+        #region DoubleClick event
         private void frmAttendedMode_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             //move to default location
             MoveToDefaultFormLocation();
-        }
-
-        private void uiBtnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void MoveToDefaultFormLocation()
@@ -53,24 +52,7 @@ namespace taskt.UI.Forms
             this.Top = 0;
             this.Left = (area.Width - this.Width) / 2;
         }
-
-        private void LoadAttendedScripts()
-        {
-            //clear script list
-            cboSelectedScript.Items.Clear();
-        
-            //get script files
-            var files = System.IO.Directory.GetFiles(appSettings.ClientSettings.AttendedTasksFolder);
-
-            //loop each file and add to potential
-            foreach (var fil in files)
-            {
-                var filInfo = new System.IO.FileInfo(fil);
-                cboSelectedScript.Items.Add(filInfo.Name);
-            }
-
-
-        }
+        #endregion
 
         #region Flashing Animation
         private void frmAttendedMode_Shown(object sender, EventArgs e)
@@ -102,9 +84,7 @@ namespace taskt.UI.Forms
             {
                 tmrBackColorFlash.Enabled = false;
             }
-
         }
-
         #endregion
 
         #region Form Dragging
@@ -133,11 +113,20 @@ namespace taskt.UI.Forms
         {
             dragging = false;
         }
-
         #endregion
 
+        #region buttons
+        private void uiBtnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
         private void uiBtnRun_Click(object sender, EventArgs e)
         {
+            if (cboSelectedScript.Text == "")
+            {
+                return;
+            }
+
             //build script path and execute
             var scriptFilePath = System.IO.Path.Combine(appSettings.ClientSettings.AttendedTasksFolder, cboSelectedScript.Text);
             UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(scriptFilePath, null);
@@ -148,5 +137,21 @@ namespace taskt.UI.Forms
         {
             LoadAttendedScripts();
         }
+        private void LoadAttendedScripts()
+        {
+            //clear script list
+            cboSelectedScript.Items.Clear();
+
+            //get script files
+            var files = System.IO.Directory.GetFiles(appSettings.ClientSettings.AttendedTasksFolder);
+
+            //loop each file and add to potential
+            foreach (var fil in files)
+            {
+                var filInfo = new System.IO.FileInfo(fil);
+                cboSelectedScript.Items.Add(filInfo.Name);
+            }
+        }
+        #endregion
     }
 }
