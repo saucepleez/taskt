@@ -528,8 +528,8 @@ namespace taskt.UI.Forms
         }
         private void showThisCommandHelp(Core.Automation.Commands.ScriptCommand command)
         {
-            string page = command.SelectionName.ToLower().Replace(" ", "-") + "-command.md";
-            string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-");
+            string page = command.SelectionName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
+            string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-").Replace("/", "-");
             System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
         }
         private void BeginShowThisCommandHelpProcess()
