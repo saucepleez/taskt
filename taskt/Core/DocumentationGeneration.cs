@@ -101,6 +101,8 @@ namespace taskt.Core
                         }
                     }
 
+                    remarks = remarks.Replace("\n", "<br>");
+
                     //append to parameter table
                     sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
 
