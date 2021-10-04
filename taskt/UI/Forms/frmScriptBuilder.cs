@@ -32,7 +32,6 @@ using System.Xml.Serialization;
 
 namespace taskt.UI.Forms
 {
-
     public partial class frmScriptBuilder : Form
     //Form tracks the overall configuration and enables script editing, saving, and running
     //Features ability to add, drag/drop reorder commands
@@ -69,7 +68,9 @@ namespace taskt.UI.Forms
 
         private Pen indentDashLine;
 
+        // forms
         private Supplement_Forms.frmSearchCommands frmSearch = null;
+        private frmAttendedMode frmAttended = null;
 
         private string _scriptFilePath = null;
         public string ScriptFilePath
@@ -310,11 +311,10 @@ namespace taskt.UI.Forms
             //start attended mode if selected
             if (appSettings.ClientSettings.StartupMode == "Attended Task Mode")
             {
-
                 this.WindowState = FormWindowState.Minimized;
-                var frmAttended = new frmAttendedMode();
-                frmAttended.Show();
-
+                //var frmAttended = new frmAttendedMode();
+                //frmAttended.Show();
+                showAttendedModeFormProcess();
             }
 
             this.dontSaveFlag = false;
@@ -3554,8 +3554,6 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-
-
         #region taskt header icon
         private void lblMainLogo_Click(object sender, EventArgs e)
         {
@@ -4084,12 +4082,33 @@ namespace taskt.UI.Forms
         {
             ShowAllCommands();
         }
-
-
-
         #endregion
 
-        
+        #region AttendedMode
+        public void showAttendedModeFormProcess()
+        {
+            try
+            {
+                if (this.frmAttended == null)
+                {
+                    this.frmAttended = new frmAttendedMode();
+                    this.frmAttended.Show();
+                }
+                else
+                {
+                    this.frmAttended.Show();
+                }
+            }
+            catch 
+            {
+                this.frmAttended = null;
+                this.frmAttended = new frmAttendedMode();
+                this.frmAttended.Show();
+            }
+        }
+        #endregion
+
+
     }
 
 }

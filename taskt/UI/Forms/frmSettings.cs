@@ -427,8 +427,9 @@ namespace taskt.UI.Forms
 
         private void btnLaunchAttendedMode_Click(object sender, EventArgs e)
         {
-            var frmAttended = new frmAttendedMode();
-            frmAttended.Show();
+            //var frmAttended = new frmAttendedMode();
+            //frmAttended.Show();
+            scriptBuilderForm.showAttendedModeFormProcess();
             this.Close();
         }
 
