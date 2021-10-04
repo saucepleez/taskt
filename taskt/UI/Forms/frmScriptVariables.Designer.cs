@@ -56,6 +56,7 @@
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rootVariableSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.clearFilterRootVariableContextMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -194,6 +195,7 @@
             this.uiBtnNew.TabIndex = 13;
             this.uiBtnNew.TabStop = false;
             this.uiBtnNew.Text = "Add";
+            this.myToolTip.SetToolTip(this.uiBtnNew, "Add Variable");
             this.uiBtnNew.Click += new System.EventHandler(this.uiBtnNew_Click);
             // 
             // panel2
@@ -235,6 +237,7 @@
             this.picAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picAdd.TabIndex = 24;
             this.picAdd.TabStop = false;
+            this.myToolTip.SetToolTip(this.picAdd, "Add Variable");
             this.picAdd.Click += new System.EventHandler(this.picAdd_Click);
             // 
             // picClear
@@ -247,6 +250,7 @@
             this.picClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picClear.TabIndex = 23;
             this.picClear.TabStop = false;
+            this.myToolTip.SetToolTip(this.picClear, "Clear Filter");
             this.picClear.Click += new System.EventHandler(this.picClear_Click);
             // 
             // label2
@@ -271,6 +275,7 @@
             this.picSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picSearch.TabIndex = 21;
             this.picSearch.TabStop = false;
+            this.myToolTip.SetToolTip(this.picSearch, "Search");
             this.picSearch.Click += new System.EventHandler(this.picSearch_Click);
             // 
             // txtSearchBox
@@ -282,6 +287,7 @@
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.Size = new System.Drawing.Size(444, 29);
             this.txtSearchBox.TabIndex = 1;
+            this.myToolTip.SetToolTip(this.txtSearchBox, "Filter Keyword");
             this.txtSearchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearchBox_KeyDown);
             // 
             // editVariableContextMenuStrip
@@ -430,5 +436,6 @@
         private System.Windows.Forms.ToolStripMenuItem clearFilterEditVariableContextMenuStrip;
         private System.Windows.Forms.ToolStripSeparator rootVariableSep1;
         private System.Windows.Forms.ToolStripMenuItem clearFilterRootVariableContextMenuStrip;
+        private System.Windows.Forms.ToolTip myToolTip;
     }
 }
