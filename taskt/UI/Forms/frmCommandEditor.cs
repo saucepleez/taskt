@@ -331,6 +331,7 @@ namespace taskt.UI.Forms
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
                     this.scriptVariables = scriptVariableEditor.scriptVariables.OrderBy(v => v.VariableName).ToList();
+                    reloadVariableList();
                 }
             }
         }
@@ -342,6 +343,28 @@ namespace taskt.UI.Forms
             //string parent = ((Core.Automation.Attributes.ClassAttributes.Group)userSelectedCommand.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-");
             string parent = userSelectedCommand.DisplayGroup.ToLower().Replace(" ", "-");
             System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
+        }
+        #endregion
+
+        #region reload variable list
+        private void reloadVariableList()
+        {
+            PropertyInfo[] props = selectedCommand.GetType().GetProperties();
+            foreach(PropertyInfo prop in props)
+            {
+                if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+                {
+                    var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
+                    var trgCtrl = flw_InputVariables.Controls.Find(prop.Name, false).FirstOrDefault();
+                    if ((varList != null) && (varList.isVariablesList))
+                    {
+                        if ((trgCtrl != null) && (trgCtrl is ComboBox))
+                        {
+                            CommandControls.AddVariableNames((ComboBox)trgCtrl, this);
+                        }
+                    }
+                }
+            }
         }
         #endregion
     }
