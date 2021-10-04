@@ -314,8 +314,44 @@ namespace taskt.Core.Script
             else if (VariableValue is DataTable)
             {
                 DataTable dataTable = (DataTable)VariableValue;
-                var dataRow = dataTable.Rows[CurrentPosition];
-                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
+                switch (requiredProperty)
+                {
+                    case "rows":
+                    case "Rows":
+                    case "ROWS":
+                        return dataTable.Rows.ToString();
+                    case "cols":
+                    case "Cols":
+                    case "COLS":
+                    case "columns":
+                    case "Columns":
+                    case "COLUMNS":
+                        return dataTable.Columns.ToString();
+                    case "type":
+                    case "Type":
+                    case "TYPE":
+                        return "DATATABLE";
+                    default:
+                        var dataRow = dataTable.Rows[CurrentPosition];
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
+                }
+            }
+            else if (VariableValue is Dictionary<string, string>)
+            {
+                Dictionary<string, string> trgDic = (Dictionary<string, string>)VariableValue;
+                switch (requiredProperty)
+                {
+                    case "count":
+                    case "Count":
+                    case "COUNT":
+                        return trgDic.Values.Count.ToString();
+                    case "type":
+                    case "Type":
+                    case "TYPE":
+                        return "DICTIONARY";
+                    default:
+                        return (trgDic.Values.ToArray())[CurrentPosition];
+                }
             }
             else
             {
