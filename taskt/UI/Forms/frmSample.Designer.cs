@@ -58,6 +58,7 @@ namespace taskt.UI.Forms
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rootContextSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.clearFilterRootContextMenuStrop = new System.Windows.Forms.ToolStripMenuItem();
+            this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -147,6 +148,7 @@ namespace taskt.UI.Forms
             this.btnNew.TabIndex = 3;
             this.btnNew.TabStop = false;
             this.btnNew.Text = "New";
+            this.myToolTip.SetToolTip(this.btnNew, "Open Sample/Templete in New taskt");
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // btnCancel
@@ -181,6 +183,7 @@ namespace taskt.UI.Forms
             this.btnImport.TabIndex = 1;
             this.btnImport.TabStop = false;
             this.btnImport.Text = "Import";
+            this.myToolTip.SetToolTip(this.btnImport, "Import Sample/Templete");
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // btnOpen
@@ -198,6 +201,7 @@ namespace taskt.UI.Forms
             this.btnOpen.TabIndex = 0;
             this.btnOpen.TabStop = false;
             this.btnOpen.Text = "Open";
+            this.myToolTip.SetToolTip(this.btnOpen, "Open Sample/Templete");
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // panel3
@@ -259,6 +263,7 @@ namespace taskt.UI.Forms
             this.picClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picClear.TabIndex = 19;
             this.picClear.TabStop = false;
+            this.myToolTip.SetToolTip(this.picClear, "Clear Filter");
             this.picClear.Click += new System.EventHandler(this.picClear_Click);
             // 
             // label2
@@ -283,6 +288,7 @@ namespace taskt.UI.Forms
             this.picSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picSearch.TabIndex = 1;
             this.picSearch.TabStop = false;
+            this.myToolTip.SetToolTip(this.picSearch, "Search");
             this.picSearch.Click += new System.EventHandler(this.picSearch_Click);
             // 
             // txtSearchBox
@@ -294,6 +300,7 @@ namespace taskt.UI.Forms
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.Size = new System.Drawing.Size(444, 29);
             this.txtSearchBox.TabIndex = 1;
+            this.myToolTip.SetToolTip(this.txtSearchBox, "Filter Keyword");
             this.txtSearchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearchBox_KeyDown);
             // 
             // tvContextMenuStrip
@@ -314,6 +321,7 @@ namespace taskt.UI.Forms
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.ToolTipText = "Open Templete/Sample";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
@@ -322,6 +330,7 @@ namespace taskt.UI.Forms
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.importToolStripMenuItem.Text = "&Import";
+            this.importToolStripMenuItem.ToolTipText = "Import Templete/Sample";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // newWindowToolStripMenuItem
@@ -330,6 +339,7 @@ namespace taskt.UI.Forms
             this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
             this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.newWindowToolStripMenuItem.Text = "&New Window";
+            this.newWindowToolStripMenuItem.ToolTipText = "Open Templete/Sample in New taskt";
             this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
             // 
             // tvContestSep1
@@ -443,5 +453,6 @@ namespace taskt.UI.Forms
         private System.Windows.Forms.ToolStripMenuItem clearFilterTvContextMenuStrip;
         private System.Windows.Forms.ToolStripSeparator rootContextSep1;
         private System.Windows.Forms.ToolStripMenuItem clearFilterRootContextMenuStrop;
+        private System.Windows.Forms.ToolTip myToolTip;
     }
 }
