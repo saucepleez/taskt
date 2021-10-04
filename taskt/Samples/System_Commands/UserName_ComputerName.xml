@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d3815a43-e18c-4e9f-9d36-38090127172a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get UserName, ComputerName" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d3815a43-e18c-4e9f-9d36-38090127172a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Environment Variable Command can get some information for your computer." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="EnvironmentVariableCommand" CommandID="462edecc-d31b-426b-b196-d42e8e2a121b" CommandName="EnvironmentVariableCommand" IsCommented="false" SelectionName="Environment Variable" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_EnvVariableName="USERNAME" v_applyToVariableName="vUserName" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="EnvironmentVariableCommand" CommandID="462edecc-d31b-426b-b196-d42e8e2a121b" CommandName="EnvironmentVariableCommand" IsCommented="false" SelectionName="Environment Variable" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_EnvVariableName="COMPUTERNAME" v_applyToVariableName="vComputerName" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="cb94e973-7511-4936-87e4-7ae64f049d58" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="User: ⦃vUserName⦄&#xD;&#xA;Computer: ⦃vComputerName⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.36</TasktVersion>
+    <Author />
+    <LastRunTime>2021-10-01T12:49:53.3080701+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vComputerName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vUserName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
