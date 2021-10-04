@@ -160,7 +160,6 @@ namespace taskt.UI.Forms
                 {
                     throw ex;
                 }
-
             }
         }
 
@@ -184,6 +183,11 @@ namespace taskt.UI.Forms
                 var trg = (TextBox)firstFocus;
                 trg.SelectionStart = trg.Text.Length;
                 trg.SelectionLength = 0;
+            }
+
+            if (this.creationMode == CreationMode.Edit)
+            {
+                this.Text = "Edit Command";
             }
         }
 
