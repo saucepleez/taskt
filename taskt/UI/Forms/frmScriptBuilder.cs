@@ -2514,6 +2514,8 @@ namespace taskt.UI.Forms
         }
         public void Notify(string notificationText)
         {
+            // DBG
+            //MessageBox.Show(notificationText);
             notificationList.Add(notificationText);
         }
         private void ShowNotification(string textToDisplay)

@@ -515,8 +515,19 @@ namespace taskt.Core.Automation.Commands
                                 }
                                 for (int j = 0; j < rows; j++)
                                 {
-                                    var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
-                                    trgDT.Rows[j][i] = v;
+                                    //var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
+                                    //string v = settings.convertToIntermediate(trgDT.Rows[j][i].ToString());
+                                    object newCellValue;
+                                    switch (methodOfConverting.Name)
+                                    {
+                                        case "convertToIntermediateVariableParser":
+                                            newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
+                                            break;
+                                        default:
+                                            newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
+                                            break;
+                                    }
+                                    trgDT.Rows[j][i] = newCellValue;
                                 }
                             }
                             prop.SetValue(this, trgDT);
