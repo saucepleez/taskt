@@ -117,7 +117,21 @@ namespace taskt.Core
         public string VariableStartMarker { get; set; }
         public string VariableEndMarker { get; set; }
         public System.Windows.Forms.Keys CancellationKey { get; set; }
-        public int DelayBetweenCommands { get; set; }
+        private int _delayBetweenCommands;
+        public int DelayBetweenCommands 
+        {
+            get
+            {
+                return this._delayBetweenCommands;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    _delayBetweenCommands = value;
+                }
+            }
+        }
         public bool OverrideExistingAppInstances { get; set; }
         public bool AutoCloseMessagesOnServerExecution { get; set; }
         public bool AutoCloseDebugWindowOnServerExecution { get; set; }
