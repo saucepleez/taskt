@@ -339,9 +339,9 @@ namespace taskt.UI.Forms
         private void btnHelpThisCommand_Click(object sender, EventArgs e)
         {
             var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
-            string page = userSelectedCommand.ShortName.ToLower().Replace(" ", "-") + "-command.md";
+            string page = userSelectedCommand.ShortName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
             //string parent = ((Core.Automation.Attributes.ClassAttributes.Group)userSelectedCommand.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-");
-            string parent = userSelectedCommand.DisplayGroup.ToLower().Replace(" ", "-");
+            string parent = userSelectedCommand.DisplayGroup.ToLower().Replace(" ", "-").Replace("/", "-");
             System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
         }
         #endregion
