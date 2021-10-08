@@ -94,7 +94,6 @@ namespace taskt.Core
         public bool BypassCertificateValidation { get; set; }
         public string ServerURL { get; set; }
         public string ServerPublicKey { get; set; }
-
         public string HTTPServerURL { get; set; }
         public Guid HTTPGuid { get; set; }
 

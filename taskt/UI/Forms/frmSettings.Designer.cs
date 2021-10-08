@@ -118,6 +118,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabEditorSettings = new System.Windows.Forms.TabPage();
+            this.txtDefaultNLGInstanceName = new System.Windows.Forms.TextBox();
+            this.lblDefaultNLGInstance = new System.Windows.Forms.Label();
             this.chkExportIntermediate = new System.Windows.Forms.CheckBox();
             this.lblIndentWidth = new System.Windows.Forms.Label();
             this.txtIndentWidth = new System.Windows.Forms.TextBox();
@@ -145,8 +147,6 @@
             this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.txtDefaultNLGInstanceName = new System.Windows.Forms.TextBox();
-            this.lblDefaultNLGInstance = new System.Windows.Forms.Label();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -461,9 +461,9 @@
             this.chkSlimActionBar.ForeColor = System.Drawing.Color.SteelBlue;
             this.chkSlimActionBar.Location = new System.Drawing.Point(10, 83);
             this.chkSlimActionBar.Name = "chkSlimActionBar";
-            this.chkSlimActionBar.Size = new System.Drawing.Size(154, 24);
+            this.chkSlimActionBar.Size = new System.Drawing.Size(271, 24);
             this.chkSlimActionBar.TabIndex = 5;
-            this.chkSlimActionBar.Text = "Use Slim Action Bar";
+            this.chkSlimActionBar.Text = "Use Slim Action Bar (Restart required)";
             this.chkSlimActionBar.UseVisualStyleBackColor = false;
             // 
             // chkPreloadCommands
@@ -824,7 +824,7 @@
             this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 350);
+            this.lblVariableDisplay.Location = new System.Drawing.Point(180, 350);
             this.lblVariableDisplay.Name = "lblVariableDisplay";
             this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
             this.lblVariableDisplay.TabIndex = 19;
@@ -834,7 +834,7 @@
             // 
             this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 364);
             this.txtVariableEndMarker.Name = "txtVariableEndMarker";
-            this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
+            this.txtVariableEndMarker.Size = new System.Drawing.Size(36, 29);
             this.txtVariableEndMarker.TabIndex = 18;
             this.txtVariableEndMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
             // 
@@ -842,7 +842,7 @@
             // 
             this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 333);
             this.txtVariableStartMarker.Name = "txtVariableStartMarker";
-            this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
+            this.txtVariableStartMarker.Size = new System.Drawing.Size(36, 29);
             this.txtVariableStartMarker.TabIndex = 16;
             this.txtVariableStartMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
             // 
@@ -1268,6 +1268,25 @@
             this.tabEditorSettings.Text = "Editor";
             this.tabEditorSettings.UseVisualStyleBackColor = true;
             // 
+            // txtDefaultNLGInstanceName
+            // 
+            this.txtDefaultNLGInstanceName.Location = new System.Drawing.Point(10, 531);
+            this.txtDefaultNLGInstanceName.Name = "txtDefaultNLGInstanceName";
+            this.txtDefaultNLGInstanceName.Size = new System.Drawing.Size(490, 29);
+            this.txtDefaultNLGInstanceName.TabIndex = 27;
+            // 
+            // lblDefaultNLGInstance
+            // 
+            this.lblDefaultNLGInstance.AutoSize = true;
+            this.lblDefaultNLGInstance.BackColor = System.Drawing.Color.Transparent;
+            this.lblDefaultNLGInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDefaultNLGInstance.ForeColor = System.Drawing.Color.SlateGray;
+            this.lblDefaultNLGInstance.Location = new System.Drawing.Point(7, 511);
+            this.lblDefaultNLGInstance.Name = "lblDefaultNLGInstance";
+            this.lblDefaultNLGInstance.Size = new System.Drawing.Size(163, 17);
+            this.lblDefaultNLGInstance.TabIndex = 26;
+            this.lblDefaultNLGInstance.Text = "Default NLG instance name";
+            // 
             // chkExportIntermediate
             // 
             this.chkExportIntermediate.AutoSize = true;
@@ -1322,9 +1341,9 @@
             this.chkGruopingBySubgruop.ForeColor = System.Drawing.Color.SteelBlue;
             this.chkGruopingBySubgruop.Location = new System.Drawing.Point(10, 161);
             this.chkGruopingBySubgruop.Name = "chkGruopingBySubgruop";
-            this.chkGruopingBySubgruop.Size = new System.Drawing.Size(176, 24);
+            this.chkGruopingBySubgruop.Size = new System.Drawing.Size(293, 24);
             this.chkGruopingBySubgruop.TabIndex = 21;
-            this.chkGruopingBySubgruop.Text = "Gruoping by subgroup";
+            this.chkGruopingBySubgruop.Text = "Gruoping by subgroup (Restart required)";
             this.chkGruopingBySubgruop.UseVisualStyleBackColor = false;
             // 
             // chkInsertCommentIfLoop
@@ -1572,25 +1591,6 @@
             // 
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
-            // 
-            // txtDefaultNLGInstanceName
-            // 
-            this.txtDefaultNLGInstanceName.Location = new System.Drawing.Point(10, 531);
-            this.txtDefaultNLGInstanceName.Name = "txtDefaultNLGInstanceName";
-            this.txtDefaultNLGInstanceName.Size = new System.Drawing.Size(490, 29);
-            this.txtDefaultNLGInstanceName.TabIndex = 27;
-            // 
-            // lblDefaultNLGInstance
-            // 
-            this.lblDefaultNLGInstance.AutoSize = true;
-            this.lblDefaultNLGInstance.BackColor = System.Drawing.Color.Transparent;
-            this.lblDefaultNLGInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDefaultNLGInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblDefaultNLGInstance.Location = new System.Drawing.Point(7, 511);
-            this.lblDefaultNLGInstance.Name = "lblDefaultNLGInstance";
-            this.lblDefaultNLGInstance.Size = new System.Drawing.Size(163, 17);
-            this.lblDefaultNLGInstance.TabIndex = 26;
-            this.lblDefaultNLGInstance.Text = "Default NLG instance name";
             // 
             // frmSettings
             // 
