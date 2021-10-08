@@ -418,6 +418,7 @@ namespace taskt.UI.Forms
         private void txtVariableStartMarker_TextChanged(object sender, EventArgs e)
         {
             lblVariableDisplay.Text = txtVariableStartMarker.Text + "myVariable" + txtVariableEndMarker.Text;
+            lblVariableMarkerAlert.Visible = (txtVariableEndMarker.Text == txtVariableStartMarker.Text);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

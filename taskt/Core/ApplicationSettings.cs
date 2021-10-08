@@ -244,14 +244,14 @@ namespace taskt.Core
 
         public string convertToIntermediate(string targetString)
         {
-            return targetString.Replace(this.VariableStartMarker, Convert.ToChar(10627).ToString())
-                    .Replace(this.VariableEndMarker, Convert.ToChar(10628).ToString());
+            return targetString.Replace(this.VariableStartMarker, "\u2983")
+                    .Replace(this.VariableEndMarker, "\u2984");
         }
 
         public string convertToRaw(string targetString)
         {
-            return targetString.Replace(Convert.ToChar(10627).ToString(), this.VariableStartMarker)
-                    .Replace(Convert.ToChar(10628).ToString(), this.VariableEndMarker);
+            return targetString.Replace("\u2983", this.VariableStartMarker)
+                    .Replace("\u2984", this.VariableEndMarker);
         }
 
         public string convertToIntermediateExcelSheet(string targetString)
@@ -328,7 +328,7 @@ namespace taskt.Core
 
         private static string wrapIntermediateKeyword(string kw)
         {
-            return Char.ConvertFromUtf32(120130).ToString() + kw + Char.ConvertFromUtf32(120142).ToString();
+            return "\U0001D542" + kw + "\U0001D54E";
         }
 
         public bool isValidVariableName(string vName)

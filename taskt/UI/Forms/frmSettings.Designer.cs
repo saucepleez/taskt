@@ -147,6 +147,7 @@
             this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.lblVariableMarkerAlert = new System.Windows.Forms.Label();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -655,6 +656,7 @@
             // 
             this.tabDebugSettings.AutoScroll = true;
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.lblVariableMarkerAlert);
             this.tabDebugSettings.Controls.Add(this.txtCurrentWindow);
             this.tabDebugSettings.Controls.Add(this.lblCurrentWindow);
             this.tabDebugSettings.Controls.Add(this.chkAutoCalcVariables);
@@ -1592,6 +1594,19 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // lblVariableMarkerAlert
+            // 
+            this.lblVariableMarkerAlert.BackColor = System.Drawing.Color.Transparent;
+            this.lblVariableMarkerAlert.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVariableMarkerAlert.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblVariableMarkerAlert.Location = new System.Drawing.Point(331, 331);
+            this.lblVariableMarkerAlert.Name = "lblVariableMarkerAlert";
+            this.lblVariableMarkerAlert.Size = new System.Drawing.Size(245, 65);
+            this.lblVariableMarkerAlert.TabIndex = 22;
+            this.lblVariableMarkerAlert.Text = "If Start Maker and End Marker are the same, the variable may not expand properly." +
+    "";
+            this.lblVariableMarkerAlert.Visible = false;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1744,5 +1759,6 @@
         private System.Windows.Forms.CheckBox chkUseNewParser;
         private System.Windows.Forms.TextBox txtDefaultNLGInstanceName;
         private System.Windows.Forms.Label lblDefaultNLGInstance;
+        private System.Windows.Forms.Label lblVariableMarkerAlert;
     }
 }
