@@ -36,8 +36,8 @@
             this.attededMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectFolderAttendedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectFileAttendedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeAttendedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.attendetMenuSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.closeAttendedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uiBtnMenu = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnRun = new taskt.UI.CustomControls.UIPictureButton();
             ((System.ComponentModel.ISupportInitialize)(this.attendedScriptWatcher)).BeginInit();
@@ -76,7 +76,7 @@
             this.attendetMenuSep1,
             this.closeAttendedMenuItem});
             this.attededMenuStrip.Name = "attededMenuStrip";
-            this.attededMenuStrip.Size = new System.Drawing.Size(214, 82);
+            this.attededMenuStrip.Size = new System.Drawing.Size(214, 104);
             // 
             // selectFolderAttendedMenuItem
             // 
@@ -84,6 +84,7 @@
             this.selectFolderAttendedMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.selectFolderAttendedMenuItem.Size = new System.Drawing.Size(213, 24);
             this.selectFolderAttendedMenuItem.Text = "Select &Folder";
+            this.selectFolderAttendedMenuItem.ToolTipText = "Change Script File Folder";
             this.selectFolderAttendedMenuItem.Click += new System.EventHandler(this.selectFolderAttendedMenuItem_Click);
             // 
             // selectFileAttendedMenuItem
@@ -92,7 +93,13 @@
             this.selectFileAttendedMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.selectFileAttendedMenuItem.Size = new System.Drawing.Size(213, 24);
             this.selectFileAttendedMenuItem.Text = "&Select File";
+            this.selectFileAttendedMenuItem.ToolTipText = "Select Script File";
             this.selectFileAttendedMenuItem.Click += new System.EventHandler(this.selectFileAttendedMenuItem_Click);
+            // 
+            // attendetMenuSep1
+            // 
+            this.attendetMenuSep1.Name = "attendetMenuSep1";
+            this.attendetMenuSep1.Size = new System.Drawing.Size(210, 6);
             // 
             // closeAttendedMenuItem
             // 
@@ -102,11 +109,6 @@
             this.closeAttendedMenuItem.Size = new System.Drawing.Size(213, 24);
             this.closeAttendedMenuItem.Text = "&Close";
             this.closeAttendedMenuItem.Click += new System.EventHandler(this.closeAttendedMenuItem_Click);
-            // 
-            // attendetMenuSep1
-            // 
-            this.attendetMenuSep1.Name = "attendetMenuSep1";
-            this.attendetMenuSep1.Size = new System.Drawing.Size(210, 6);
             // 
             // uiBtnMenu
             // 
