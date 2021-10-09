@@ -147,6 +147,7 @@ namespace taskt.Core
         public string PreviousWorksheetKeyword { get; set; }
         public bool ExportIntermediateXML { get; set; }
         public bool UseNewParser { get; set; }
+        public bool IgnoreFirstVariableMarkerInOutputParameter { get; set; }
         
         private static string InterStartVariableMaker = "{{{";
         private static string InterEndVariableMaker = "}}}";
@@ -217,6 +218,7 @@ namespace taskt.Core
             PreviousWorksheetKeyword = "Previous Sheet";
             ExportIntermediateXML = true;
             UseNewParser = true;
+            IgnoreFirstVariableMarkerInOutputParameter = true;
         }
 
         public string[] KeyNameList()
@@ -228,7 +230,6 @@ namespace taskt.Core
         {
             return m_DisallowVariableCharList;
         }
-
         public string replaceEngineKeyword(string targetString)
         {
             return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker)
