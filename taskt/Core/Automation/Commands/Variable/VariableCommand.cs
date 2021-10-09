@@ -52,6 +52,8 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
+            v_userVariableName = parseVariableName(v_userVariableName, engine);
+
             var requiredVariable = LookupVariable(engine);
 
             //if still not found and user has elected option, create variable at runtime
@@ -73,7 +75,6 @@ namespace taskt.Core.Automation.Commands
                     variableInput = v_Input;
                 }              
 
-
                 if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
                 {
                     var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
@@ -83,8 +84,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     requiredVariable.VariableValue = variableInput;
                 }
-
-    
             }
             else
             {
@@ -98,14 +97,32 @@ namespace taskt.Core.Automation.Commands
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
+            //if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            //{
+            //    //reformat and attempt
+            //    var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+            //    requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            //}
 
             return requiredVariable;
+        }
+
+        private string parseVariableName(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            var settings = engine.engineSettings;
+            if (variableName.StartsWith(settings.VariableStartMarker) && variableName.EndsWith(settings.VariableEndMarker))
+            {
+                if (engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
+                {
+                    variableName = variableName.Substring(settings.VariableStartMarker.Length, variableName.Length - settings.VariableStartMarker.Length - settings.VariableEndMarker.Length);
+                }
+            }
+            if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
+            {
+                variableName = variableName.ConvertToUserVariable(engine);
+            }
+
+            return variableName;
         }
 
         public override string GetDisplayValue()
