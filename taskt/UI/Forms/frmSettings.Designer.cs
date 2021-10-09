@@ -51,6 +51,7 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.chkIgnoreFirstVariableMarker = new System.Windows.Forms.CheckBox();
             this.chkUseNewParser = new System.Windows.Forms.CheckBox();
             this.chkSlimActionBar = new System.Windows.Forms.CheckBox();
             this.chkPreloadCommands = new System.Windows.Forms.CheckBox();
@@ -71,6 +72,7 @@
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
+            this.lblVariableMarkerAlert = new System.Windows.Forms.Label();
             this.txtCurrentWindow = new System.Windows.Forms.TextBox();
             this.lblCurrentWindow = new System.Windows.Forms.Label();
             this.chkAutoCalcVariables = new System.Windows.Forms.CheckBox();
@@ -147,7 +149,6 @@
             this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            this.lblVariableMarkerAlert = new System.Windows.Forms.Label();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -359,7 +360,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(12, 306);
+            this.btnUpdates.Location = new System.Drawing.Point(12, 350);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 25);
             this.btnUpdates.TabIndex = 15;
@@ -412,6 +413,7 @@
             // 
             this.tabAppSettings.AutoScroll = true;
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.chkIgnoreFirstVariableMarker);
             this.tabAppSettings.Controls.Add(this.chkUseNewParser);
             this.tabAppSettings.Controls.Add(this.chkSlimActionBar);
             this.tabAppSettings.Controls.Add(this.chkPreloadCommands);
@@ -440,6 +442,19 @@
             this.tabAppSettings.Size = new System.Drawing.Size(624, 424);
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
+            // 
+            // chkIgnoreFirstVariableMarker
+            // 
+            this.chkIgnoreFirstVariableMarker.AutoSize = true;
+            this.chkIgnoreFirstVariableMarker.BackColor = System.Drawing.Color.Transparent;
+            this.chkIgnoreFirstVariableMarker.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkIgnoreFirstVariableMarker.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkIgnoreFirstVariableMarker.Location = new System.Drawing.Point(10, 151);
+            this.chkIgnoreFirstVariableMarker.Name = "chkIgnoreFirstVariableMarker";
+            this.chkIgnoreFirstVariableMarker.Size = new System.Drawing.Size(566, 24);
+            this.chkIgnoreFirstVariableMarker.TabIndex = 31;
+            this.chkIgnoreFirstVariableMarker.Text = "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)";
+            this.chkIgnoreFirstVariableMarker.UseVisualStyleBackColor = true;
             // 
             // chkUseNewParser
             // 
@@ -484,7 +499,7 @@
             // btnLaunchDisplayManager
             // 
             this.btnLaunchDisplayManager.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchDisplayManager.Location = new System.Drawing.Point(225, 336);
+            this.btnLaunchDisplayManager.Location = new System.Drawing.Point(225, 380);
             this.btnLaunchDisplayManager.Name = "btnLaunchDisplayManager";
             this.btnLaunchDisplayManager.Size = new System.Drawing.Size(207, 25);
             this.btnLaunchDisplayManager.TabIndex = 18;
@@ -498,7 +513,7 @@
             this.lblStartupMode.BackColor = System.Drawing.Color.Transparent;
             this.lblStartupMode.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStartupMode.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStartupMode.Location = new System.Drawing.Point(10, 253);
+            this.lblStartupMode.Location = new System.Drawing.Point(10, 297);
             this.lblStartupMode.Name = "lblStartupMode";
             this.lblStartupMode.Size = new System.Drawing.Size(70, 17);
             this.lblStartupMode.TabIndex = 13;
@@ -511,14 +526,14 @@
             this.cboStartUpMode.Items.AddRange(new object[] {
             "Builder Mode",
             "Attended Task Mode"});
-            this.cboStartUpMode.Location = new System.Drawing.Point(13, 270);
+            this.cboStartUpMode.Location = new System.Drawing.Point(13, 314);
             this.cboStartUpMode.Name = "cboStartUpMode";
             this.cboStartUpMode.Size = new System.Drawing.Size(219, 29);
             this.cboStartUpMode.TabIndex = 14;
             // 
             // btnSelectAttendedTaskFolder
             // 
-            this.btnSelectAttendedTaskFolder.Location = new System.Drawing.Point(504, 222);
+            this.btnSelectAttendedTaskFolder.Location = new System.Drawing.Point(504, 266);
             this.btnSelectAttendedTaskFolder.Name = "btnSelectAttendedTaskFolder";
             this.btnSelectAttendedTaskFolder.Size = new System.Drawing.Size(42, 28);
             this.btnSelectAttendedTaskFolder.TabIndex = 12;
@@ -532,7 +547,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.SlateGray;
-            this.label6.Location = new System.Drawing.Point(9, 206);
+            this.label6.Location = new System.Drawing.Point(9, 250);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(130, 17);
             this.label6.TabIndex = 10;
@@ -540,7 +555,7 @@
             // 
             // txtAttendedTaskFolder
             // 
-            this.txtAttendedTaskFolder.Location = new System.Drawing.Point(12, 223);
+            this.txtAttendedTaskFolder.Location = new System.Drawing.Point(12, 267);
             this.txtAttendedTaskFolder.Name = "txtAttendedTaskFolder";
             this.txtAttendedTaskFolder.Size = new System.Drawing.Size(490, 29);
             this.txtAttendedTaskFolder.TabIndex = 11;
@@ -548,7 +563,7 @@
             // btnLaunchAttendedMode
             // 
             this.btnLaunchAttendedMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchAttendedMode.Location = new System.Drawing.Point(225, 306);
+            this.btnLaunchAttendedMode.Location = new System.Drawing.Point(225, 350);
             this.btnLaunchAttendedMode.Name = "btnLaunchAttendedMode";
             this.btnLaunchAttendedMode.Size = new System.Drawing.Size(207, 25);
             this.btnLaunchAttendedMode.TabIndex = 16;
@@ -572,7 +587,7 @@
             // btnGenerateWikiDocs
             // 
             this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 336);
+            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 380);
             this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
             this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 25);
             this.btnGenerateWikiDocs.TabIndex = 17;
@@ -583,7 +598,7 @@
             // btnClearMetrics
             // 
             this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(11, 509);
+            this.btnClearMetrics.Location = new System.Drawing.Point(11, 553);
             this.btnClearMetrics.Name = "btnClearMetrics";
             this.btnClearMetrics.Size = new System.Drawing.Size(108, 23);
             this.btnClearMetrics.TabIndex = 29;
@@ -598,7 +613,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
-            this.label5.Location = new System.Drawing.Point(13, 370);
+            this.label5.Location = new System.Drawing.Point(13, 414);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(248, 17);
             this.label5.TabIndex = 19;
@@ -609,7 +624,7 @@
             this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
             this.lblMetrics.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMetrics.Location = new System.Drawing.Point(12, 388);
+            this.lblMetrics.Location = new System.Drawing.Point(12, 432);
             this.lblMetrics.Name = "lblMetrics";
             this.lblMetrics.Size = new System.Drawing.Size(534, 117);
             this.lblMetrics.TabIndex = 20;
@@ -617,7 +632,7 @@
             // 
             // tvExecutionTimes
             // 
-            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 388);
+            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 431);
             this.tvExecutionTimes.Name = "tvExecutionTimes";
             this.tvExecutionTimes.Size = new System.Drawing.Size(534, 118);
             this.tvExecutionTimes.TabIndex = 26;
@@ -625,7 +640,7 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(504, 175);
+            this.btnSelectFolder.Location = new System.Drawing.Point(504, 219);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(42, 28);
             this.btnSelectFolder.TabIndex = 9;
@@ -639,7 +654,7 @@
             this.lblRootFolder.BackColor = System.Drawing.Color.Transparent;
             this.lblRootFolder.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRootFolder.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblRootFolder.Location = new System.Drawing.Point(9, 158);
+            this.lblRootFolder.Location = new System.Drawing.Point(9, 202);
             this.lblRootFolder.Name = "lblRootFolder";
             this.lblRootFolder.Size = new System.Drawing.Size(101, 17);
             this.lblRootFolder.TabIndex = 7;
@@ -647,7 +662,7 @@
             // 
             // txtAppFolderPath
             // 
-            this.txtAppFolderPath.Location = new System.Drawing.Point(12, 175);
+            this.txtAppFolderPath.Location = new System.Drawing.Point(12, 219);
             this.txtAppFolderPath.Name = "txtAppFolderPath";
             this.txtAppFolderPath.Size = new System.Drawing.Size(490, 29);
             this.txtAppFolderPath.TabIndex = 8;
@@ -685,6 +700,19 @@
             this.tabDebugSettings.Size = new System.Drawing.Size(624, 424);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
+            // 
+            // lblVariableMarkerAlert
+            // 
+            this.lblVariableMarkerAlert.BackColor = System.Drawing.Color.Transparent;
+            this.lblVariableMarkerAlert.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVariableMarkerAlert.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblVariableMarkerAlert.Location = new System.Drawing.Point(331, 331);
+            this.lblVariableMarkerAlert.Name = "lblVariableMarkerAlert";
+            this.lblVariableMarkerAlert.Size = new System.Drawing.Size(245, 65);
+            this.lblVariableMarkerAlert.TabIndex = 22;
+            this.lblVariableMarkerAlert.Text = "If Start Maker and End Marker are the same, the variable may not expand properly." +
+    "";
+            this.lblVariableMarkerAlert.Visible = false;
             // 
             // txtCurrentWindow
             // 
@@ -1594,19 +1622,6 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
-            // lblVariableMarkerAlert
-            // 
-            this.lblVariableMarkerAlert.BackColor = System.Drawing.Color.Transparent;
-            this.lblVariableMarkerAlert.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVariableMarkerAlert.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableMarkerAlert.Location = new System.Drawing.Point(331, 331);
-            this.lblVariableMarkerAlert.Name = "lblVariableMarkerAlert";
-            this.lblVariableMarkerAlert.Size = new System.Drawing.Size(245, 65);
-            this.lblVariableMarkerAlert.TabIndex = 22;
-            this.lblVariableMarkerAlert.Text = "If Start Maker and End Marker are the same, the variable may not expand properly." +
-    "";
-            this.lblVariableMarkerAlert.Visible = false;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1760,5 +1775,6 @@
         private System.Windows.Forms.TextBox txtDefaultNLGInstanceName;
         private System.Windows.Forms.Label lblDefaultNLGInstance;
         private System.Windows.Forms.Label lblVariableMarkerAlert;
+        private System.Windows.Forms.CheckBox chkIgnoreFirstVariableMarker;
     }
 }

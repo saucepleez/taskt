@@ -68,6 +68,7 @@ namespace taskt.UI.Forms
             chkAutoCalcVariables.DataBindings.Add("Checked", engineSettings, "AutoCalcVariables", false, DataSourceUpdateMode.OnPropertyChanged);
             txtCurrentWindow.DataBindings.Add("Text", engineSettings, "CurrentWindowKeyword", false, DataSourceUpdateMode.OnPropertyChanged);
             chkUseNewParser.DataBindings.Add("Checked", engineSettings, "UseNewParser", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkIgnoreFirstVariableMarker.DataBindings.Add("Checked", engineSettings, "IgnoreFirstVariableMarkerInOutputParameter", false, DataSourceUpdateMode.OnPropertyChanged);
 
             cboCancellationKey.DataSource = Enum.GetValues(typeof(Keys));
             cboCancellationKey.DataBindings.Add("Text", engineSettings, "CancellationKey", false, DataSourceUpdateMode.OnPropertyChanged);
