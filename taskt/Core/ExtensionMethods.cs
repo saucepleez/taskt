@@ -872,7 +872,7 @@ namespace taskt.Core
             //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
             //return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
-            return engine.engineSettings.VariableStartMarker + str + engine.engineSettings.VariableEndMarker;
+            return engine.engineSettings.wrapVariableMarker(str);
         }
 
 
