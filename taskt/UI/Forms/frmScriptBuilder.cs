@@ -3823,6 +3823,15 @@ namespace taskt.UI.Forms
             showSettingForm();
         }
 
+        private void showScriptFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowScriptFolderProcess();
+        }
+
+        private void showLogFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowLogFolderProcess();
+        }
         private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //set to empty
@@ -4110,6 +4119,17 @@ namespace taskt.UI.Forms
         }
         #endregion
 
+        #region show folders
+        private void ShowScriptFolderProcess()
+        {
+            System.Diagnostics.Process.Start(appSettings.ClientSettings.RootFolder + "\\My Scripts");
+        }
+
+        private void ShowLogFolderProcess()
+        {
+            System.Diagnostics.Process.Start(appSettings.ClientSettings.RootFolder + "\\Logs");
+        }
+        #endregion
 
     }
 
