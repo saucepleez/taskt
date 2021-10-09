@@ -65,13 +65,13 @@ namespace taskt.Core.Automation.Commands
             //user may potentially include brackets []
             if (listVariable == null)
             {
-                listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting() == v_ListName).FirstOrDefault();
+                listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == v_ListName).FirstOrDefault();
             }
 
             //if still null then throw exception
             if (listVariable == null)
             {
-                throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting() + "' not found. Ensure the variable exists before attempting to modify it.");
+                throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
             dynamic listToIndex;

@@ -867,11 +867,12 @@ namespace taskt.Core
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
         /// <param name="str">The string to be wrapped as a variable</param>
-        public static string ApplyVariableFormatting(this String str)
+        public static string ApplyVariableFormatting(this String str, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
-            return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
+            //return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
+            return engine.engineSettings.VariableStartMarker + str + engine.engineSettings.VariableEndMarker;
         }
 
 
@@ -910,11 +911,7 @@ namespace taskt.Core
                 decodedText = null;
                 return false;
             }
-        }
-
-       
+        }  
     }
-
-
 }
 

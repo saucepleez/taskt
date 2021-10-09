@@ -54,13 +54,13 @@ namespace taskt.Core.Automation.Commands
             //user may potentially include brackets []
             if (complexVariable == null)
             {
-                complexVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting() == v_LoopParameter).FirstOrDefault();
+                complexVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == v_LoopParameter).FirstOrDefault();
             }
 
             //if still null then throw exception
             if (complexVariable == null)
             {
-                throw new System.Exception("Complex Variable '" + v_LoopParameter + "' or '" + v_LoopParameter.ApplyVariableFormatting() + "' not found. Ensure the variable exists before attempting to modify it.");
+                throw new System.Exception("Complex Variable '" + v_LoopParameter + "' or '" + v_LoopParameter.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
             dynamic listToLoop;
