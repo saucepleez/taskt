@@ -31,11 +31,13 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
         public string v_Input { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Convert Variables in Input Text Above")]
+        [Attributes.PropertyAttributes.PropertyDescription("Convert Variables in Input Text Above (Default is Yes)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary option.")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.Remarks("If {{{vNum}}} has '1' and you select 'Yes', variable will be assigned '1'. If you select 'No', variable will be assigned '{{{vNum}}}'.")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ReplaceInputVariables { get; set; }
 
         public VariableCommand()
@@ -61,6 +63,11 @@ namespace taskt.Core.Automation.Commands
             {
                 engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
                 requiredVariable = LookupVariable(engine);
+            }
+
+            if (String.IsNullOrEmpty(v_ReplaceInputVariables))
+            {
+                v_ReplaceInputVariables = "YES";
             }
 
             if (requiredVariable != null)
