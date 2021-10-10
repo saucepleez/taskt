@@ -54,48 +54,67 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            v_userVariableName = parseVariableName(v_userVariableName, engine);
+            v_userVariableName = v_userVariableName.ConvertToUserVariable(engine);
+            //v_userVariableName = parseVariableName(v_userVariableName, engine);
 
-            var requiredVariable = LookupVariable(engine);
+            //var requiredVariable = LookupVariable(engine);
 
-            //if still not found and user has elected option, create variable at runtime
-            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-                requiredVariable = LookupVariable(engine);
-            }
+            ////if still not found and user has elected option, create variable at runtime
+            //if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
+            //    requiredVariable = LookupVariable(engine);
+            //}
 
             if (String.IsNullOrEmpty(v_ReplaceInputVariables))
             {
                 v_ReplaceInputVariables = "YES";
             }
-
-            if (requiredVariable != null)
+            string variableInput;
+            if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
             {
-                string variableInput;
-                if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
-                {
-                    variableInput = v_Input.ConvertToUserVariable(sender);
-                }
-                else
-                {
-                    variableInput = v_Input;
-                }              
-
-                if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
-                {
-                    var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
-                    requiredVariable.VariableValue = itemList;
-                }
-                else
-                {
-                    requiredVariable.VariableValue = variableInput;
-                }
+                variableInput = v_Input.ConvertToUserVariable(sender);
             }
             else
             {
-                throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
+                variableInput = v_Input;
             }
+            if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
+            {
+                var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
+                itemList.StoreInUserVariable(engine, v_userVariableName);
+            }
+            else
+            {
+                variableInput.StoreInUserVariable(engine, v_userVariableName);
+            }
+
+            //if (requiredVariable != null)
+            //{
+            //    string variableInput;
+            //    if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
+            //    {
+            //        variableInput = v_Input.ConvertToUserVariable(sender);
+            //    }
+            //    else
+            //    {
+            //        variableInput = v_Input;
+            //    }              
+
+            //    if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
+            //    {
+            //        var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
+            //        requiredVariable.VariableValue = itemList;
+            //    }
+            //    else
+            //    {
+            //        requiredVariable.VariableValue = variableInput;
+            //    }
+            //}
+            //else
+            //{
+            //    throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
+            //}
         }
 
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)

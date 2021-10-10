@@ -840,12 +840,13 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreInUserVariable(this String str, object sender, string targetVariable)
         {
-            Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
-            {
-                v_userVariableName = targetVariable,
-                v_Input = str
-            };
-            newVariableCommand.RunCommand(sender);
+            //Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
+            //{
+            //    v_userVariableName = targetVariable,
+            //    v_Input = str
+            //};
+            //newVariableCommand.RunCommand(sender);
+            StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, true);
         }
 
         /// <summary>
@@ -855,14 +856,21 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreRawDataInUserVariable(this String str, object sender, string targetVariable)
         {
-            Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
-            {
-                v_userVariableName = targetVariable,
-                v_Input = str,
-                v_ReplaceInputVariables = "No"            
-            };
-            newVariableCommand.RunCommand(sender);
+            //Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
+            //{
+            //    v_userVariableName = targetVariable,
+            //    v_Input = str,
+            //    v_ReplaceInputVariables = "No"            
+            //};
+            //newVariableCommand.RunCommand(sender);
+            StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
         }
+
+        public static void StoreInUserVariable<Type>(this List<Type> value, object sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
+        }
+
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
@@ -875,6 +883,61 @@ namespace taskt.Core
             return engine.engineSettings.wrapVariableMarker(str);
         }
 
+        private static void StoreInUserVariable(string userVariable, object variableValue, Core.Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
+        {
+            userVariable = parseVariableName(userVariable, engine);
+
+            var requiredVariable = lookupVariable(userVariable, engine);
+
+            //if still not found and user has elected option, create variable at runtime
+            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            {
+                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = userVariable });
+                requiredVariable = lookupVariable(userVariable, engine);
+            }
+
+            if (requiredVariable == null)
+            {
+                throw new Exception("Variable Name " + userVariable + " does not exits.");
+            }
+            else
+            {
+                if (parseValue && (variableValue is string))
+                {
+                    requiredVariable.VariableValue = ((string)variableValue).ConvertToUserVariable(engine);
+                }
+                else
+                {
+                    requiredVariable.VariableValue = variableValue;
+                }
+            }
+        }
+
+        private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            //search for the variable
+            var requiredVariable = engine.VariableList.Where(var => var.VariableName == variableName).FirstOrDefault();
+
+            return requiredVariable;
+        }
+
+        public static string parseVariableName(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            var settings = engine.engineSettings;
+            if (variableName.StartsWith(settings.VariableStartMarker) && variableName.EndsWith(settings.VariableEndMarker))
+            {
+                if (engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
+                {
+                    variableName = variableName.Substring(settings.VariableStartMarker.Length, variableName.Length - settings.VariableStartMarker.Length - settings.VariableEndMarker.Length);
+                }
+            }
+            if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
+            {
+                variableName = variableName.ConvertToUserVariable(engine);
+            }
+
+            return variableName;
+        }
 
         public static string ToBase64(this string text)
         {
