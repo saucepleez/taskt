@@ -866,9 +866,19 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
         }
 
-        public static void StoreInUserVariable<Type>(this List<Type> value, object sender, string targetVariable)
+        public static void StoreInUserVariable<Type>(this List<Type> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
-            StoreInUserVariable(targetVariable, value, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
+            StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
+        public static void StoreInUserVariable(this Dictionary<string, string> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
+        public static void StoreInUserVariable(this DataTable value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value, sender, false);
         }
 
         /// <summary>
