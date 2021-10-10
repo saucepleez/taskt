@@ -73,18 +73,20 @@ namespace taskt.Core.Automation.Commands
             }
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            
-            var v_receivingVariable = v_applyConvertToUserVariableName.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
-            //get complex variable from engine and assign
-            var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
 
-            if (requiredComplexVariable == null)
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_receivingVariable, CurrentPosition = 0 });
-                requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
-            }
+            //var v_receivingVariable = v_applyConvertToUserVariableName.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+            ////get complex variable from engine and assign
+            //var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
 
-            requiredComplexVariable.VariableValue = splitString;
+            //if (requiredComplexVariable == null)
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_receivingVariable, CurrentPosition = 0 });
+            //    requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_receivingVariable).FirstOrDefault();
+            //}
+
+            //requiredComplexVariable.VariableValue = splitString;
+
+            splitString.StoreInUserVariable(engine, v_userVariableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
