@@ -923,6 +923,21 @@ namespace taskt.Core
             }
         }
 
+        public static Script.ScriptVariable GetRawVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            string newName = parseVariableName(variableName, engine);
+            newName = newName.ConvertToUserVariable(engine);
+            Script.ScriptVariable searchedVaiable = lookupVariable(newName, engine);
+            if (searchedVaiable == null)
+            {
+                throw new Exception("Variable " + variableName + " does not exists.");
+            }
+            else
+            {
+                return searchedVaiable;
+            }
+        }
+
         private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             //search for the variable
