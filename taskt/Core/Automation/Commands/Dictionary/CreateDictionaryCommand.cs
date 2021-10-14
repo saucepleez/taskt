@@ -18,11 +18,14 @@ namespace taskt.Core.Automation.Commands
     public class CreateDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Dictionary Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Dictionary Variable Name")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
-        [Attributes.PropertyAttributes.SampleUsage("vMyDictionary")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.SampleUsage("**vMyDictionary** or **{{{vMyDictionary}}}**")]
+        [Attributes.PropertyAttributes.Remarks("Create Dictionary<string, string>")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
         public string v_DictionaryName { get; set; }
 
@@ -44,24 +47,12 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Create Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            //initialize Datatable
-            this.v_ColumnNameDataTable = new System.Data.DataTable
-            {
-                TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            };
-
-            this.v_ColumnNameDataTable.Columns.Add("Keys");
-            this.v_ColumnNameDataTable.Columns.Add("Values");
-
-
-
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
+            //var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
 
             Dictionary<string, string> outputDictionary = new Dictionary<string, string>();
 
@@ -70,35 +61,40 @@ namespace taskt.Core.Automation.Commands
                 outputDictionary.Add(rwColumnName.Field<string>("Keys"), rwColumnName.Field<string>("Values"));
             }
 
-
-            
-
             //add or override existing variable
-            if (engine.VariableList.Any(f => f.VariableName == dictionaryName))
-            {
-                var selectedVariable = engine.VariableList.Where(f => f.VariableName == dictionaryName).FirstOrDefault();
-                selectedVariable.VariableValue = outputDictionary;
-            }
-            else
-            {
-                Script.ScriptVariable newDictionary = new Script.ScriptVariable
-                {
-                    VariableName = dictionaryName,
-                    VariableValue = outputDictionary
-                };
+            //if (engine.VariableList.Any(f => f.VariableName == dictionaryName))
+            //{
+            //    var selectedVariable = engine.VariableList.Where(f => f.VariableName == dictionaryName).FirstOrDefault();
+            //    selectedVariable.VariableValue = outputDictionary;
+            //}
+            //else
+            //{
+            //    Script.ScriptVariable newDictionary = new Script.ScriptVariable
+            //    {
+            //        VariableName = dictionaryName,
+            //        VariableValue = outputDictionary
+            //    };
 
-                engine.VariableList.Add(newDictionary);
-            }
-
-
-     
+            //    engine.VariableList.Add(newDictionary);
+            //}
+            outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
+            //initialize Datatable
+            this.v_ColumnNameDataTable = new System.Data.DataTable
+            {
+                TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
+            };
+            this.v_ColumnNameDataTable.Columns.Add("Keys");
+            this.v_ColumnNameDataTable.Columns.Add("Values");
+
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor));
+            
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
 
             ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];

@@ -20,8 +20,10 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Dictionary Name")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate a Dictionary to add to")]
-        [Attributes.PropertyAttributes.SampleUsage("vMyDictionary")]
+        [Attributes.PropertyAttributes.SampleUsage("**vMyDictionary** or **{{{vDictionary}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
         public string v_DictionaryName { get; set; }
@@ -53,18 +55,16 @@ namespace taskt.Core.Automation.Commands
 
             this.v_ColumnNameDataTable.Columns.Add("Keys");
             this.v_ColumnNameDataTable.Columns.Add("Values");
-
-
-
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
-            var dataSetVariable = LookupVariable(engine);
+            //var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
+            //var dataSetVariable = LookupVariable(engine);
 
-
+            var dataSetVariable = v_DictionaryName.GetRawVariable(engine);
+            
             Dictionary<string, string> outputDictionary = (Dictionary<string, string>)dataSetVariable.VariableValue;
 
             foreach (DataRow rwColumnName in v_ColumnNameDataTable.Rows)
@@ -72,30 +72,30 @@ namespace taskt.Core.Automation.Commands
                 outputDictionary.Add(rwColumnName.Field<string>("Keys"), rwColumnName.Field<string>("Values"));
             }
             dataSetVariable.VariableValue = outputDictionary;
-
-
         }
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
+        //private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        //{
+        //    //search for the variable
+        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
 
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_DictionaryName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DictionaryName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_DictionaryName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
+        //    //if variable was not found but it starts with variable naming pattern
+        //    if ((requiredVariable == null) && (v_DictionaryName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DictionaryName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+        //    {
+        //        //reformat and attempt
+        //        var reformattedVariable = v_DictionaryName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+        //        requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+        //    }
 
-            return requiredVariable;
-        }
+        //    return requiredVariable;
+        //}
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor));
+
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
 
             ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];

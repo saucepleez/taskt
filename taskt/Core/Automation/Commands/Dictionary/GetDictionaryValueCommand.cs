@@ -17,28 +17,37 @@ namespace taskt.Core.Automation.Commands
     public class GetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the output variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the variable to apply result")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
+        [Attributes.PropertyAttributes.SampleUsage("**vMyData** or **{{{myData}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_OutputVariable { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input The Dictionary")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please input The Dictionary Variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("myData")]
+        [Attributes.PropertyAttributes.SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InputData { get; set; }
 
 
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key for the Dictionary")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("key1")]
+        [Attributes.PropertyAttributes.SampleUsage("**key1** or **{{{vKeyName}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_Key { get; set; }
 
         public GetDictionaryValueCommand()
@@ -54,24 +63,27 @@ namespace taskt.Core.Automation.Commands
             //Retrieve Dictionary by name
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vKey = v_Key.ConvertToUserVariable(sender);
-            var dataSetVariable = LookupVariable(engine);
+            //var dataSetVariable = LookupVariable(engine);
 
-            //Declare local dictionary and assign output
-            Dictionary<string,string> dict = (Dictionary<string,string>)dataSetVariable.VariableValue;
-            Script.ScriptVariable Output = new Script.ScriptVariable
-            {
-                VariableName = v_OutputVariable,
-                VariableValue = dict[vKey]
-            };
+            ////Declare local dictionary and assign output
+            //Dictionary<string,string> dict = (Dictionary<string,string>)dataSetVariable.VariableValue;
+            //Script.ScriptVariable Output = new Script.ScriptVariable
+            //{
+            //    VariableName = v_OutputVariable,
+            //    VariableValue = dict[vKey]
+            //};
 
-            //Overwrites variable if it already exists
-            if (engine.VariableList.Exists(x => x.VariableName == Output.VariableName))
-            {
-                Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == Output.VariableName).FirstOrDefault();
-                engine.VariableList.Remove(temp);
-            }
-            //Add to variable list
-            engine.VariableList.Add(Output);
+            ////Overwrites variable if it already exists
+            //if (engine.VariableList.Exists(x => x.VariableName == Output.VariableName))
+            //{
+            //    Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == Output.VariableName).FirstOrDefault();
+            //    engine.VariableList.Remove(temp);
+            //}
+            ////Add to variable list
+            //engine.VariableList.Add(Output);
+
+            Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
+            dic[vKey].StoreInUserVariable(engine, v_OutputVariable);
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {
@@ -92,11 +104,12 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputVariable", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Key", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputVariable", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Key", this, editor));
 
-
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
         }
