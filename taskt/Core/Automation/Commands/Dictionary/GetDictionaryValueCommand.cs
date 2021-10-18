@@ -37,8 +37,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InputData { get; set; }
 
-
-
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key for the Dictionary")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
