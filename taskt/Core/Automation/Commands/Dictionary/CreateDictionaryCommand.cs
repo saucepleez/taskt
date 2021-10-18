@@ -139,5 +139,16 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            if (String.IsNullOrEmpty(v_DictionaryName))
+            {
+                this.IsValid = false;
+                this.validationResult += "Dictionary Variable Name is empty.\n";
+            }
+
+            return this.IsValid;
+        }
     }
 }

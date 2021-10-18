@@ -116,5 +116,26 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + $" [From: {v_InputData}, Get: {v_Key}, Store In: {v_OutputVariable}]";
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            if (String.IsNullOrEmpty(v_OutputVariable))
+            {
+                this.IsValid = false;
+                this.validationResult += "Variable is empty.\n";
+            }
+            if (String.IsNullOrEmpty(v_InputData))
+            {
+                this.IsValid = false;
+                this.validationResult += "Dictionary Variable Name is empty.\n";
+            }
+            if (String.IsNullOrEmpty(v_Key))
+            {
+                this.IsValid = false;
+                this.validationResult += "Key is empty.\n";
+            }
+
+            return this.IsValid;
+        }
     }
 }

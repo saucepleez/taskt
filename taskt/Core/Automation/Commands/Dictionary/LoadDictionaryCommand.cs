@@ -199,5 +199,36 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Load Dictionary from '" + v_FilePath + "' and store in: '" +v_DictionaryName+ "']";
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            if (String.IsNullOrEmpty(v_DictionaryName))
+            {
+                this.IsValid = false;
+                this.validationResult += "Dictionary Variable Name is empty.\n";
+            }
+            if (String.IsNullOrEmpty(v_FilePath))
+            {
+                this.IsValid = false;
+                this.validationResult += "Workbook file path is empty.\n";
+            }
+            if (String.IsNullOrEmpty(v_SheetName))
+            {
+                this.IsValid = false;
+                this.validationResult += "Sheet name is empty.\n";
+            }
+            if (String.IsNullOrEmpty(v_KeyColumn))
+            {
+                this.IsValid = false;
+                this.validationResult += "Key column is empty.\n";
+            }
+            if (String.IsNullOrEmpty(v_ValueColumn))
+            {
+                this.IsValid = false;
+                this.validationResult += "Value column is empty.\n";
+            }
+
+            return this.IsValid;
+        }
     }
 }

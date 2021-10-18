@@ -110,6 +110,7 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
         }
+
         private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex >= 0)
@@ -138,6 +139,17 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
             }
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            if (String.IsNullOrEmpty(v_DictionaryName))
+            {
+                this.IsValid = false;
+                this.validationResult += "Dictionary Variable Name is empty.\n";
+            }
+
+            return this.IsValid;
         }
     }
 }
