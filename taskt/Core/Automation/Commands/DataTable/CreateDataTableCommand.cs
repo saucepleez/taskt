@@ -18,12 +18,14 @@ namespace taskt.Core.Automation.Commands
     public class CreateDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate DataTable Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate DataTable Variable Name")]
         [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
-        [Attributes.PropertyAttributes.SampleUsage("vMyDatatable")]
+        [Attributes.PropertyAttributes.SampleUsage("**vMyDatatable** or **{{{vMyDatatable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_DataTableName { get; set; }
 
         [XmlElement]
@@ -32,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -52,8 +55,6 @@ namespace taskt.Core.Automation.Commands
             };
 
             this.v_ColumnNameDataTable.Columns.Add("Column Name");
-
-
         }
 
         public override void RunCommand(object sender)
@@ -68,43 +69,44 @@ namespace taskt.Core.Automation.Commands
                 Dt.Columns.Add(rwColumnName.Field<string>("Column Name"));
             }
 
-
-            
-
             //add or override existing variable
-            if (engine.VariableList.Any(f => f.VariableName == dataTableName))
-            {
-                var selectedVariable = engine.VariableList.Where(f => f.VariableName == dataTableName).FirstOrDefault();
-                selectedVariable.VariableValue = Dt;
-            }
-            else
-            {
-                Script.ScriptVariable newDataTable = new Script.ScriptVariable
-                {
-                    VariableName = dataTableName,
-                    VariableValue = Dt
-                };
+            //if (engine.VariableList.Any(f => f.VariableName == dataTableName))
+            //{
+            //    var selectedVariable = engine.VariableList.Where(f => f.VariableName == dataTableName).FirstOrDefault();
+            //    selectedVariable.VariableValue = Dt;
+            //}
+            //else
+            //{
+            //    Script.ScriptVariable newDataTable = new Script.ScriptVariable
+            //    {
+            //        VariableName = dataTableName,
+            //        VariableValue = Dt
+            //    };
 
-                engine.VariableList.Add(newDataTable);
-            }
-
-
-     
+            //    engine.VariableList.Add(newDataTable);
+            //}
+            Dt.StoreInUserVariable(engine, v_DataTableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
 
-            ColumnNamesGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            //ColumnNamesGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            //ColumnNamesGridViewHelper.Tag = "column-a-editable";
+            //ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            ColumnNamesGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
             ColumnNamesGridViewHelper.Tag = "column-a-editable";
             ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
