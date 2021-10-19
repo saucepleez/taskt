@@ -24,8 +24,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
@@ -94,7 +94,8 @@ namespace taskt.Core.Automation.Commands
 
             //create standard group controls
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor));
+            var ctrl = CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor);
+            RenderedControls.AddRange(ctrl);
 
             RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
 

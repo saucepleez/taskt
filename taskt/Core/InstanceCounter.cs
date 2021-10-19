@@ -145,6 +145,14 @@ namespace taskt.Core
             {
                 this.addInstance(((Core.Automation.Commands.WordCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word);
             }
+            else if (command is Core.Automation.Commands.CreateDictionaryCommand)
+            {
+                this.addInstance(((Core.Automation.Commands.CreateDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
+            }
+            else if (command is Core.Automation.Commands.LoadDictionaryCommand)
+            {
+                this.addInstance(((Core.Automation.Commands.LoadDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
+            }
         }
 
         public void removeInstance(Core.Automation.Commands.ScriptCommand command)
@@ -177,6 +185,14 @@ namespace taskt.Core
             {
                 this.removeInstance(((Core.Automation.Commands.WordCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word);
             }
+            else if (command is Core.Automation.Commands.CreateDictionaryCommand)
+            {
+                this.removeInstance(((Core.Automation.Commands.CreateDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
+            }
+            else if (command is Core.Automation.Commands.LoadDictionaryCommand)
+            {
+                this.removeInstance(((Core.Automation.Commands.LoadDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
+            }
         }
 
         public InstanceNameType getInstanceNameType(Core.Automation.Commands.ScriptCommand command)
@@ -208,6 +224,14 @@ namespace taskt.Core
             else if (command is Core.Automation.Commands.WordCreateApplicationCommand)
             {
                 return new InstanceNameType(((Core.Automation.Commands.WordCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word);
+            }
+            else if (command is Core.Automation.Commands.CreateDictionaryCommand)
+            {
+                return new InstanceNameType(((Core.Automation.Commands.CreateDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
+            }
+            else if (command is Core.Automation.Commands.LoadDictionaryCommand)
+            {
+                return new InstanceNameType(((Core.Automation.Commands.LoadDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
             }
             else
             {
