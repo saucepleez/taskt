@@ -17,35 +17,42 @@ namespace taskt.Core.Automation.Commands
     public class GetDataRowValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataRow Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataRow Variable Name")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataRow to get Values from.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myDataRow** or **{{{vMyDataRow}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_DataRowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select value by Index or Column Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select value by Index or Column Name (Default is Index)")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
         [Attributes.PropertyAttributes.InputSpecification("Select whether the DataRow value should be found by index or column name")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Index** or **Column Name**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_Option { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the DataRow Value")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("0 or {vIndex}")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **ColName** or **{{{vIndex}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_DataValueIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable to Assign the Value")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_UserVariableName { get; set; }
 
         public GetDataRowValueCommand()
@@ -54,33 +61,41 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get DataRow Value";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            v_Option = "Index";
-
+            
+            this.v_Option = "Index";
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dataRowVariable = LookupVariable(engine);
-            var variableList = engine.VariableList;
-            DataRow dataRow;
-            //check if currently looping through datatable using BeginListLoopCommand
-            if (dataRowVariable.VariableValue is DataTable && engine.VariableList.Exists(x => x.VariableName == "Loop.CurrentIndex"))
-            {
-                var loopIndexVariable = engine.VariableList.Where(x => x.VariableName == "Loop.CurrentIndex").FirstOrDefault();
-                int loopIndex = int.Parse(loopIndexVariable.VariableValue.ToString());
-                dataRow = ((DataTable)dataRowVariable.VariableValue).Rows[loopIndex-1];
-            }
+            //var dataRowVariable = LookupVariable(engine);
+            //var variableList = engine.VariableList;
+            //DataRow dataRow;
+            ////check if currently looping through datatable using BeginListLoopCommand
+            //if (dataRowVariable.VariableValue is DataTable && engine.VariableList.Exists(x => x.VariableName == "Loop.CurrentIndex"))
+            //{
+            //    var loopIndexVariable = engine.VariableList.Where(x => x.VariableName == "Loop.CurrentIndex").FirstOrDefault();
+            //    int loopIndex = int.Parse(loopIndexVariable.VariableValue.ToString());
+            //    dataRow = ((DataTable)dataRowVariable.VariableValue).Rows[loopIndex-1];
+            //}
 
-            else dataRow = (DataRow)dataRowVariable.VariableValue;
+            //else dataRow = (DataRow)dataRowVariable.VariableValue;
+
+            DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;
+
 
             var valueIndex = v_DataValueIndex.ConvertToUserVariable(sender);
+
+            if (String.IsNullOrEmpty(v_Option))
+            {
+                v_Option = "Index";
+            }
+
             string value = "";
             if (v_Option == "Index")
             {
                 int index = int.Parse(valueIndex);
                 value = dataRow[index].ToString();
-
             }
             else if (v_Option == "Column Name")
             {
@@ -110,13 +125,16 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataRowName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Option", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataValueIndex", this, editor));
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataRowName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Option", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataValueIndex", this, editor));
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
         }
