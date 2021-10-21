@@ -881,6 +881,11 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value, sender, false);
         }
 
+        public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
