@@ -17,12 +17,15 @@ namespace taskt.Core.Automation.Commands
     public class AddDataRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Name")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to add rows to.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_DataTableName { get; set; }
 
         [XmlElement]
@@ -31,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         public DataTable v_AddDataDataTable { get; set; }
 
 
@@ -57,16 +61,16 @@ namespace taskt.Core.Automation.Commands
 
             this.v_AddDataDataTable.Columns.Add("Column Name");
             this.v_AddDataDataTable.Columns.Add("Data");
-
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dataSetVariable = LookupVariable(engine);
+            //var dataSetVariable = LookupVariable(engine);
+            //DataTable Dt = (DataTable)dataSetVariable.VariableValue;
+            DataTable dataTable = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
 
-            DataTable Dt = (DataTable)dataSetVariable.VariableValue;
-            var newRow = Dt.NewRow();
+            var newRow = dataTable.NewRow();
 
             foreach (DataRow rw in v_AddDataDataTable.Rows)
             {
@@ -75,9 +79,9 @@ namespace taskt.Core.Automation.Commands
                 newRow.SetField(columnName, data); 
             }
 
-            Dt.Rows.Add(newRow);
+            dataTable.Rows.Add(newRow);
         
-            dataSetVariable.VariableValue = Dt;
+            //dataSetVariable.VariableValue = Dt;
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {
@@ -98,10 +102,17 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
 
-            RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_AddDataDataTable", this, editor));
-            AddDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            //RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_AddDataDataTable", this, editor));
+            //AddDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            //AddDataGridViewHelper.Tag = "column-a-editable";
+            //AddDataGridViewHelper.CellClick += AddDataGridViewHelper_CellClick;
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            AddDataGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, (t => t.Name == "v_AddDataDataTable")).FirstOrDefault();
             AddDataGridViewHelper.Tag = "column-a-editable";
             AddDataGridViewHelper.CellClick += AddDataGridViewHelper_CellClick;
 
