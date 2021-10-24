@@ -153,6 +153,15 @@ namespace taskt.Core
             {
                 this.addInstance(((Core.Automation.Commands.LoadDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
             }
+            else if (command is Core.Automation.Commands.CreateDataTableCommand)
+            {
+                this.addInstance(((Core.Automation.Commands.CreateDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
+            else if (command is Core.Automation.Commands.FilterDataTableCommand)
+            {
+                this.addInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+                this.addInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_OutputDTName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
         }
 
         public void removeInstance(Core.Automation.Commands.ScriptCommand command)
@@ -193,6 +202,15 @@ namespace taskt.Core
             {
                 this.removeInstance(((Core.Automation.Commands.LoadDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
             }
+            else if (command is Core.Automation.Commands.CreateDataTableCommand)
+            {
+                this.removeInstance(((Core.Automation.Commands.CreateDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
+            else if (command is Core.Automation.Commands.FilterDataTableCommand)
+            {
+                this.removeInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+                this.removeInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_OutputDTName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
         }
 
         public InstanceNameType getInstanceNameType(Core.Automation.Commands.ScriptCommand command)
@@ -232,6 +250,14 @@ namespace taskt.Core
             else if (command is Core.Automation.Commands.LoadDictionaryCommand)
             {
                 return new InstanceNameType(((Core.Automation.Commands.LoadDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
+            }
+            else if (command is Core.Automation.Commands.CreateDataTableCommand)
+            {
+                return new InstanceNameType(((Core.Automation.Commands.CreateDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
+            else if (command is Core.Automation.Commands.FilterDataTableCommand)
+            {
+                return new InstanceNameType(((Core.Automation.Commands.CreateDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
             }
             else
             {
