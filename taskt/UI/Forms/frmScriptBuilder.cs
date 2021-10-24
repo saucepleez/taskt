@@ -1706,12 +1706,7 @@ namespace taskt.UI.Forms
 
 
             undoIndex = itemList.Count - 1;
-
-
-
         }
-
-        
         #endregion
 
         #region Editor Mode
@@ -1900,8 +1895,8 @@ namespace taskt.UI.Forms
                 {
                     rowItem.IndentCount = indent;
                 }
-
             }
+            AutoSizeLineNumberColumn();
         }
         private void AutoSizeLineNumberColumn()
         {
@@ -1917,18 +1912,18 @@ namespace taskt.UI.Forms
             //IndentListViewItems();
 
             //auto size line numbers based on command count
-            AutoSizeLineNumberColumn();
+            //AutoSizeLineNumberColumn();
 
 
             //get listviewitem
-            ListViewItem item = e.Item;
+            //ListViewItem item = e.Item;
 
             //get script command reference
-            var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
+            //var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
 
 
             //create modified bounds
-            var modifiedBounds = e.Bounds;
+            //var modifiedBounds = e.Bounds;
             //modifiedBounds.Y += 2;
 
             //switch between column index
@@ -1936,18 +1931,19 @@ namespace taskt.UI.Forms
             {
                 case 0:
                     //draw row number
-                    e.Graphics.DrawString((e.ItemIndex + 1).ToString(),
-                        lstScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
+                    //e.Graphics.DrawString((e.ItemIndex + 1).ToString(),
+                    //    lstScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
+                    drawLineNumber(e);
                     break;
                 case 1:
                     //draw command icon
                     //var img = uiImages.Images[command.GetType().Name];
-                    var img = taskt.UI.Images.GetUIImage(command.GetType().Name);
-                    if (img != null)
-                    {
-                        e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
-                    }
-
+                    //var img = taskt.UI.Images.GetUIImage(command.GetType().Name);
+                    //if (img != null)
+                    //{
+                    //    e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
+                    //}
+                    drawCommandIcon(e);
                     break;
 
                 case 2:
@@ -2116,6 +2112,24 @@ namespace taskt.UI.Forms
                     drawCommandText(e);
 
                     break;
+            }
+        }
+
+        private void drawLineNumber(DrawListViewSubItemEventArgs e)
+        {
+            //AutoSizeLineNumberColumn();
+            var command = (Core.Automation.Commands.ScriptCommand)e.Item.Tag;
+            e.Graphics.DrawString((e.ItemIndex + 1).ToString(), lstScriptActions.Font, Brushes.LightSlateGray, e.Bounds);
+        }
+
+        private void drawCommandIcon(DrawListViewSubItemEventArgs e)
+        {
+            var command = (Core.Automation.Commands.ScriptCommand)e.Item.Tag;
+            var modifiedBounds = e.Bounds;
+            var img = taskt.UI.Images.GetUIImage(command.GetType().Name);
+            if (img != null)
+            {
+                e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
             }
         }
 
@@ -4130,7 +4144,6 @@ namespace taskt.UI.Forms
             System.Diagnostics.Process.Start(appSettings.ClientSettings.RootFolder + "\\Logs");
         }
         #endregion
-
     }
 
 }
