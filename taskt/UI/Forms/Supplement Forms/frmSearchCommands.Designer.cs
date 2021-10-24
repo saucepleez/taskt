@@ -260,6 +260,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.cmbSearchInstance.FormattingEnabled = true;
             this.cmbSearchInstance.Items.AddRange(new object[] {
             "DataBase",
+            "DataTable",
+            "Dictionary",
             "Excel",
             "IE",
             "NLG",
@@ -462,6 +464,8 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.cmbReplaceInstance.FormattingEnabled = true;
             this.cmbReplaceInstance.Items.AddRange(new object[] {
             "DataBase",
+            "DataTable",
+            "Dictionary",
             "Excel",
             "IE",
             "NLG",
