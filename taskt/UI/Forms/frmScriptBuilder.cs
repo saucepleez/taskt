@@ -713,6 +713,11 @@ namespace taskt.UI.Forms
                         itemIndex = dragIndex + i;
                     //Insert the item at the mouse pointer.
                     ListViewItem insertItem = (ListViewItem)dragItem.Clone();
+
+                    var command = (Core.Automation.Commands.ScriptCommand)insertItem.Tag;
+                    command.IsDontSavedCommand = true;
+                    command.IsNewInsertedCommand = true;
+
                     lstScriptActions.Items.Insert(itemIndex, insertItem);
                     //Removes the item from the initial location while
                     //the item is moved to the new location.
@@ -2793,7 +2798,7 @@ namespace taskt.UI.Forms
                 //comment
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
                 //import
-                PopulateExecutionCommands(deserializedScript.Commands);
+                PopulateExecutionCommands(deserializedScript.Commands, false);
                 foreach (Core.Script.ScriptVariable var in deserializedScript.Variables)
                 {
                     if (scriptVariables.Find(alreadyExists => alreadyExists.VariableName == var.VariableName) == null)
@@ -2831,12 +2836,15 @@ namespace taskt.UI.Forms
             }
         }
 
-        public void PopulateExecutionCommands(List<Core.Script.ScriptAction> commandDetails)
+        public void PopulateExecutionCommands(List<Core.Script.ScriptAction> commandDetails, bool isOpen = true)
         {
             foreach (Core.Script.ScriptAction item in commandDetails)
             {
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand, true));
-                if (item.AdditionalScriptCommands.Count > 0) PopulateExecutionCommands(item.AdditionalScriptCommands);
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand, isOpen));
+                if (item.AdditionalScriptCommands.Count > 0)
+                {
+                    PopulateExecutionCommands(item.AdditionalScriptCommands);
+                }
             }
 
             if (pnlCommandHelper.Visible)
