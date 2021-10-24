@@ -777,7 +777,7 @@ namespace taskt.Core.Automation.Commands
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
                     break;
                 case "datatable":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
                     break;
                 case "dictionary":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
