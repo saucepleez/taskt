@@ -100,7 +100,7 @@ namespace taskt.Core
             }
         }
 
-        // script charactore
+        // script charactor
         public static Dictionary<string, UIFont> scriptTexts = new Dictionary<string, UIFont>() {
             { "normal", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.SteelBlue, Color.WhiteSmoke)},
             { "invalid", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Crimson, Color.WhiteSmoke)},
@@ -113,6 +113,10 @@ namespace taskt.Core
             { "selected-invalid", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Crimson, Color.DodgerBlue)},
             { "selected-comment", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.LightGreen, Color.DodgerBlue)},
             { "selected-pause", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Plum, Color.DodgerBlue)},
+
+            { "number-normal", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.LightSlateGray, Color.Transparent)},
+            { "number-dontsaved", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.LightSlateGray, Color.Yellow)},
+            { "number-newline", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.White, Color.LimeGreen)},
         };
 
         public class UIFont

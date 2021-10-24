@@ -75,7 +75,10 @@ namespace taskt.Core.Script
 
             foreach (ListViewItem commandItem in scriptCommands)
             {
-                var command = ((Core.Automation.Commands.ScriptCommand)commandItem.Tag).Clone();
+                var srcCommand = (Core.Automation.Commands.ScriptCommand)commandItem.Tag;
+                srcCommand.IsDontSavedCommand = false;
+
+                var command = srcCommand.Clone();
                 command.LineNumber = lineNumber;
 
                 if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginMultiIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (command is Core.Automation.Commands.TryCommand) || (command is Core.Automation.Commands.BeginLoopCommand) || (command is Core.Automation.Commands.BeginMultiLoopCommand))

@@ -1311,6 +1311,7 @@ namespace taskt.UI.Forms
 
                         //apply new list to existing sequence
                         sequence.v_scriptActions = updatedList;
+                        sequence.IsDontSavedCommand = true;
 
                         //update label
                         selectedCommandItem.Text = sequence.GetDisplayValue();
@@ -1351,6 +1352,8 @@ namespace taskt.UI.Forms
                         selectedCommandItem.Tag = editCommand.selectedCommand;
                         selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
                         selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
+
+                        currentCommand.IsDontSavedCommand = true;
 
                         instanceList.addInstance(editCommand.selectedCommand);
                     }
@@ -1738,16 +1741,32 @@ namespace taskt.UI.Forms
 
         #region ListView Create Item
 
-        private ListViewItem CreateScriptCommandListViewItem(Core.Automation.Commands.ScriptCommand cmdDetails)
+        private ListViewItem CreateScriptCommandListViewItem(Core.Automation.Commands.ScriptCommand cmdDetails, bool isOpenFile = false)
         {
+            //cmdDetails.IsDontSavedCommand = true;
+            //cmdDetails.IsNewInsertedCommand = true;
+
             ListViewItem newCommand = new ListViewItem();
-            newCommand.Text = cmdDetails.GetDisplayValue();
-            newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-            newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-            //cmdDetails.RenderedControls = null;
+
+            string dispValue = cmdDetails.GetDisplayValue();
+
+            if (!isOpenFile)
+            {
+                cmdDetails.IsDontSavedCommand = true;
+                cmdDetails.IsNewInsertedCommand = true;
+            }
+
+            //newCommand.Text = cmdDetails.GetDisplayValue();
+            //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
+            //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
+
+            newCommand.Text = dispValue;
+            newCommand.SubItems.AddRange(new string[] { "", "" });
+
+            cmdDetails.RenderedControls = null;
             newCommand.Tag = cmdDetails;
-            newCommand.ForeColor = cmdDetails.DisplayForeColor;
-            newCommand.BackColor = Color.DimGray;
+            //newCommand.ForeColor = cmdDetails.DisplayForeColor;
+            //newCommand.BackColor = Color.DimGray;
             //newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
             newCommand.ImageIndex = taskt.UI.Images.GetUIImageList(cmdDetails.GetType().Name);
             return newCommand;
@@ -2119,7 +2138,12 @@ namespace taskt.UI.Forms
         {
             //AutoSizeLineNumberColumn();
             var command = (Core.Automation.Commands.ScriptCommand)e.Item.Tag;
-            e.Graphics.DrawString((e.ItemIndex + 1).ToString(), lstScriptActions.Font, Brushes.LightSlateGray, e.Bounds);
+
+            taskt.Core.Theme.UIFont trg = taskt.Core.Theme.scriptTexts[decideLineNumberText(command)];
+
+            //e.Graphics.DrawString((e.ItemIndex + 1).ToString(), lstScriptActions.Font, Brushes.LightSlateGray, e.Bounds);
+            e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), e.Bounds);
+            e.Graphics.DrawString((e.ItemIndex + 1).ToString(), new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), e.Bounds);
         }
 
         private void drawCommandIcon(DrawListViewSubItemEventArgs e)
@@ -2256,7 +2280,24 @@ namespace taskt.UI.Forms
 
             return ret;
         }
-        
+        private string decideLineNumberText(Core.Automation.Commands.ScriptCommand command)
+        {
+            string ret;
+
+            if (command.IsDontSavedCommand)
+            {
+                ret = "dontsaved";
+            }
+            else if (command.IsNewInsertedCommand)
+            {
+                ret = "newline";
+            }
+            else
+            {
+                ret = "normal";
+            }
+            return "number-" + ret;
+        }
 
         private int debugLine;
         public int DebugLine
@@ -2794,7 +2835,7 @@ namespace taskt.UI.Forms
         {
             foreach (Core.Script.ScriptAction item in commandDetails)
             {
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand));
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand, true));
                 if (item.AdditionalScriptCommands.Count > 0) PopulateExecutionCommands(item.AdditionalScriptCommands);
             }
 
@@ -3149,7 +3190,10 @@ namespace taskt.UI.Forms
                     ChangeSaveState(true);
 
                     //add to listview
-                    AddCommandToListView(newCommandForm.selectedCommand);
+                    var selectedComamnd = (Core.Automation.Commands.ScriptCommand)newCommandForm.selectedCommand;
+                    selectedComamnd.IsDontSavedCommand = true;
+                    selectedComamnd.IsNewInsertedCommand = true;
+                    AddCommandToListView(selectedComamnd);
                 }
             }
         }
