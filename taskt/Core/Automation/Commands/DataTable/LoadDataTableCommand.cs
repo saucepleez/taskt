@@ -9,12 +9,11 @@ using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Dataset")]
+    [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.Description("This command gets a range of cells and applies them against a dataset")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to quickly iterate over Excel as a dataset.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'OLEDB' to achieve automation.")]
-    public class ExcelCreateDataSetCommand : ScriptCommand
+    public class LoadDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please create a DataTable Variable Name")]
@@ -59,13 +58,13 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ContainsHeaderRow { get; set; }
 
-        public ExcelCreateDataSetCommand()
+        public LoadDataTableCommand()
         {
-            this.CommandName = "ExcelCreateDatasetCommand";
-            this.SelectionName = "Create Dataset";
+            this.CommandName = "LoadDataTableCommand";
+            this.SelectionName = "Load DataTable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_ContainsHeaderRow = "Yes";
+            v_ContainsHeaderRow = "Yes";
         }
 
         public override void RunCommand(object sender)

@@ -51,6 +51,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetDataRowValueCommand))]
     [XmlInclude(typeof(RemoveDataRowCommand))]
     [XmlInclude(typeof(WriteDataRowValueCommand))]
+    [XmlInclude(typeof(LoadDataTableCommand))]
 
     // Dictionary
     [XmlInclude(typeof(AddDictionaryCommand))]
@@ -86,8 +87,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelCheckWorksheetExistsCommand))]
     [XmlInclude(typeof(ExcelCloseApplicationCommand))]
     [XmlInclude(typeof(ExcelCopyWorksheetCommand))]
-    [XmlInclude(typeof(ExcelCreateDataSetCommand))]
     [XmlInclude(typeof(ExcelCreateApplicationCommand))]
+    [XmlInclude(typeof(ExcelCreateDataSetCommand))]
     [XmlInclude(typeof(ExcelDeleteCellCommand))]
     [XmlInclude(typeof(ExcelDeleteRowCommand))]
     [XmlInclude(typeof(ExcelDeleteWorksheetCommand))]

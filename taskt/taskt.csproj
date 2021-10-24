@@ -197,6 +197,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCopyWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelRenameWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardClearTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
@@ -341,7 +342,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorkbookCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCloseApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\LoadDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCellCommand.cs" />

@@ -467,6 +467,7 @@ namespace taskt.UI
             {"GetDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataRowCountCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"LoadDataTableCommand", "taskt.Properties.Resources.command_spreadsheet" },
             {"RemoveDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"WriteDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
 
