@@ -162,6 +162,10 @@ namespace taskt.Core
                 this.addInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
                 this.addInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_OutputDTName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
             }
+            else if (command is Core.Automation.Commands.LoadDataTableCommand)
+            {
+                this.addInstance(((Core.Automation.Commands.LoadDataTableCommand)command).v_DataSetName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
         }
 
         public void removeInstance(Core.Automation.Commands.ScriptCommand command)
@@ -211,6 +215,10 @@ namespace taskt.Core
                 this.removeInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
                 this.removeInstance(((Core.Automation.Commands.FilterDataTableCommand)command).v_OutputDTName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
             }
+            else if (command is Core.Automation.Commands.LoadDataTableCommand)
+            {
+                this.removeInstance(((Core.Automation.Commands.LoadDataTableCommand)command).v_DataSetName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
         }
 
         public InstanceNameType getInstanceNameType(Core.Automation.Commands.ScriptCommand command)
@@ -258,6 +266,10 @@ namespace taskt.Core
             else if (command is Core.Automation.Commands.FilterDataTableCommand)
             {
                 return new InstanceNameType(((Core.Automation.Commands.CreateDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
+            }
+            else if (command is Core.Automation.Commands.LoadDataTableCommand)
+            {
+                return new InstanceNameType(((Core.Automation.Commands.LoadDataTableCommand)command).v_DataSetName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
             }
             else
             {
