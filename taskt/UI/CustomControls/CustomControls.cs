@@ -505,7 +505,7 @@ namespace taskt.UI
             {"ExcelCheckWorksheetExistsCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCloseApplicationCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCopyWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
-            {"ExcelCreateDatasetCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelCreateDataSetCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCreateApplicationCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelDeleteCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelDeleteRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
