@@ -55,6 +55,8 @@ namespace taskt.UI.Forms
         private bool dontSaveFlag = false;
 
         private Core.InstanceCounter instanceList = null;
+        private int[,] miniMap = null;
+        private Bitmap miniMapImg = null;
 
         public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
         public CommandEditAction currentEditAction = CommandEditAction.Normal;
@@ -99,6 +101,17 @@ namespace taskt.UI.Forms
         {
             Normal,
             Move
+        }
+        private enum MiniMapState
+        {
+            Normal,
+            Cursor,
+            Matched,
+            Comment,
+            Error,
+            Warning,
+            DontSave,
+            NewInserted
         }
         #endregion  
 
@@ -324,6 +337,9 @@ namespace taskt.UI.Forms
 
             // instance count
             instanceList = new Core.InstanceCounter();
+
+            // miniMap
+            miniMapImg = new Bitmap(8, lstScriptActions.Height);
 
             // release
             GC.Collect();
@@ -1766,6 +1782,7 @@ namespace taskt.UI.Forms
             //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
 
             newCommand.Text = dispValue;
+            //newCommand.SubItems.AddRange(new string[] { "", "" });
             newCommand.SubItems.AddRange(new string[] { "", "" });
 
             cmdDetails.RenderedControls = null;
@@ -1877,7 +1894,6 @@ namespace taskt.UI.Forms
             lstScriptActions.Invalidate();
 
             //AutoSizeLineNumberColumn();
-
         }
 
         #endregion
@@ -1921,12 +1937,210 @@ namespace taskt.UI.Forms
                 }
             }
             AutoSizeLineNumberColumn();
+
+            CreateMiniMap();
         }
+
         private void AutoSizeLineNumberColumn()
         {
             //auto adjust column width based on # of commands
             int columnWidth = (14 * lstScriptActions.Items.Count.ToString().Length);
             lstScriptActions.Columns[0].Width = columnWidth;
+        }
+
+        private void CreateMiniMap()
+        {
+            // DBG
+            //Console.WriteLine("cols " + lstScriptActions.Columns.Count);
+            //int h = lstScriptActions.Height;
+            //int ta = lstScriptActions.Items[0].Bounds.Height;
+            //Console.WriteLine(h + ", " + ta + " => " +  (h / ta));
+            //
+            // height / 2 = H :=> lines
+            // H / items.count = cm :=> 1 command height
+            // items.count / H = cc :=> 1 line contain commands
+            //
+            // Bounds.Height = bh :=> 1 lstView line height
+            // index :=> current item index
+            // bh * index / 2 :=> first lines
+            //
+            // index * bh / cm :=> line starts
+            //
+
+            int lvItemHeight = lstScriptActions.Items[0].Bounds.Height;
+            int lvCommandsNum = lstScriptActions.Items.Count;
+            int lvShowLines = lstScriptActions.Height / lvItemHeight;
+
+            int maxMapHeight = lvItemHeight * lvShowLines;
+            int mapItemHeight = maxMapHeight / lvCommandsNum;
+            if (mapItemHeight < 2)
+            {
+                mapItemHeight = 2;
+            }
+            else if (mapItemHeight > lvItemHeight)
+            {
+                mapItemHeight = lvItemHeight;
+            }
+
+            int maxMapItems = maxMapHeight / mapItemHeight;
+            if (maxMapItems > lvCommandsNum)
+            {
+                maxMapItems = lvCommandsNum;
+            }
+            if ((miniMap == null) || (miniMap.GetLength(0) != maxMapItems))
+            {
+                miniMap = null;
+                miniMap = new int[maxMapItems, 2];
+            }
+
+            double oneItemRatio = (double)maxMapItems / lvCommandsNum;
+
+            if (oneItemRatio < 1.0)
+            {
+                double invRatio = 1.0 / oneItemRatio;
+                for (int i = 0; i < maxMapItems; i++)
+                {
+                    int startIndex = (int)(i * invRatio);
+                    int lastIndex = (int)((i + 1) * invRatio);
+
+                    miniMap[i, 0] = (int)MiniMapState.Normal;
+                    miniMap[i, 1] = (int)MiniMapState.Normal;
+                    for (int j = startIndex; j < lastIndex; j++)
+                    {
+                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag;
+                        if (command.IsDontSavedCommand)
+                        {
+                            miniMap[i, 0] = (int)MiniMapState.DontSave;
+                            break;
+                        }
+                        else if (command.IsNewInsertedCommand)
+                        {
+                            miniMap[i, 0] = (int)MiniMapState.NewInserted;
+                            break;
+                        }
+                    }
+                    for (int j = startIndex; j < lastIndex; j++)
+                    {
+                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag;
+                        if (lstScriptActions.Items[i].Selected)
+                        {
+                            miniMap[i, 1] = (int)MiniMapState.Cursor;
+                            break;
+                        }
+                        else if (command.IsMatched)
+                        {
+                            miniMap[i, 1] = (int)MiniMapState.Matched;
+                            break;
+                        }
+                        else if (!command.IsValid)
+                        {
+                            miniMap[i, 1] = (int)MiniMapState.Error;
+                            break;
+                        }
+                        else if (command.IsCommented)
+                        {
+                            miniMap[i, 1] = (int)MiniMapState.Comment;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < lvCommandsNum; i++)
+                {
+                    var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag;
+                    if (command.IsDontSavedCommand)
+                    {
+                        miniMap[i, 0] = (int)MiniMapState.DontSave;
+                    }
+                    else if (command.IsNewInsertedCommand)
+                    {
+                        miniMap[i, 0] = (int)MiniMapState.NewInserted;
+                    }
+                    else
+                    {
+                        miniMap[i, 0] = (int)MiniMapState.Normal;
+                    }
+
+                    if ((lstScriptActions.Items[i].Selected) && (lstScriptActions.Items[i].Focused))
+                    {
+                        miniMap[i, 1] = (int)MiniMapState.Cursor;
+                    }
+                    else if (command.IsMatched)
+                    {
+                        miniMap[i, 1] = (int)MiniMapState.Matched;
+                    }
+                    else if (!command.IsValid)
+                    {
+                        miniMap[i, 1] = (int)MiniMapState.Error;
+                    }
+                    else if (command.IsCommented || (command is Core.Automation.Commands.CommentCommand))
+                    {
+                        miniMap[i, 1] = (int)MiniMapState.Comment;
+                    }
+                    else
+                    {
+                        miniMap[i, 1] = (int)MiniMapState.Normal;
+                    }
+                }
+            }
+
+            if ((miniMapImg == null) || (miniMapImg.Height != lstScriptActions.Height))
+            {
+                miniMapImg = new Bitmap(8, lstScriptActions.Height);
+            }
+            using (Graphics g = Graphics.FromImage(miniMapImg))
+            {
+                g.DrawLine(new Pen(Color.White), 0, 0, 0, miniMapImg.Height);
+                g.DrawLine(new Pen(Color.White), 4, 0, 4, miniMapImg.Height);
+                for (int i = 0; i < maxMapItems; i++)
+                {
+                    SolidBrush co;
+                    switch ((MiniMapState)miniMap[i, 0])
+                    {
+                        case MiniMapState.DontSave:
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-dontsaved"].BackColor);
+                            break;
+                        case MiniMapState.NewInserted:
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-newline"].BackColor);
+                            break;
+                        default:
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["normal"].BackColor);
+                            break;
+                    }
+                    g.FillRectangle(co, 1, mapItemHeight * i, 3, mapItemHeight);
+
+                    switch ((MiniMapState)miniMap[i, 1])
+                    {
+                        //case MiniMapState.Cursor:
+                        //    co = new SolidBrush(taskt.Core.Theme.scriptTexts["selected-normal"].BackColor);
+                        //    break;
+                        case MiniMapState.Matched:
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["match"].FontColor);
+                            break;
+                        case MiniMapState.Error:
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["invalid"].FontColor);
+                            break;
+                        case MiniMapState.Comment:
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["comment"].FontColor);
+                            break;
+                        default:
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["normal"].BackColor);
+                            break;
+                    }
+                    g.FillRectangle(co, 5, mapItemHeight * i, 3, mapItemHeight);
+
+                    if ((MiniMapState)miniMap[i, 1] == MiniMapState.Cursor)
+                    {
+                        g.FillRectangle(new SolidBrush(Color.Navy), 0, mapItemHeight * i, 9, mapItemHeight);
+                    }
+                }
+                // DBG
+                //miniMapImg.Save(System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\minimap.png");
+            }
+
+            //Console.WriteLine("cmdLines: " + lvCommandsNum +  ", 1itemHe: " + mapItemHeight + ", maxLines: " + maxMapItems + ", 1lineCmds: " + oneItemRatio);
         }
 
         private void lstScriptActions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
@@ -2256,6 +2470,70 @@ namespace taskt.UI.Forms
                 int baseX = modifiedBounds.X - (item.IndentCount * indentWidth) + 2;
                 e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
             }
+
+            //if (miniMap == null)
+            //{
+            //    return;
+            //}
+
+            //int maxMapItems = miniMap.GetLength(0);
+            //int commmandItems = lstScriptActions.Items.Count;
+            //double itemRatio = maxMapItems / commmandItems;
+
+            //modifiedBounds.X -= indentPixels;
+            //int mapX = modifiedBounds.Width - 8;
+
+            //if (itemRatio < 1.0)
+            //{
+            //    // mada
+            //}
+            //else
+            //{
+            //    SolidBrush co;
+            //    switch ((MiniMapState)miniMap[e.ItemIndex, 0])
+            //    {
+            //        case MiniMapState.DontSave:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-dontsaved"].BackColor);
+            //            break;
+            //        case MiniMapState.NewInserted:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-newline"].BackColor);
+            //            break;
+            //        default:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-normal"].BackColor);
+            //            break;
+            //    }
+            //    int baseX = modifiedBounds.X + mapX;
+            //    e.Graphics.DrawLine(new Pen(Color.White), baseX, modifiedBounds.Y, baseX, modifiedBounds.Y + modifiedBounds.Height);
+            //    baseX += 1;
+            //    e.Graphics.FillRectangle(co, baseX, modifiedBounds.Y, 3, modifiedBounds.Height);
+
+            //    switch ((MiniMapState)miniMap[e.ItemIndex, 1])
+            //    {
+            //        case MiniMapState.Cursor:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["selected-normal"].BackColor);
+            //            break;
+            //        case MiniMapState.Matched:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["match"].FontColor);
+            //            break;
+            //        case MiniMapState.Error:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["invalid"].FontColor);
+            //            break;
+            //        case MiniMapState.Comment:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["comment"].FontColor);
+            //            break;
+            //        default:
+            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["normal"].BackColor);
+            //            break;
+            //    }
+            //    baseX += 3;
+            //    e.Graphics.DrawLine(new Pen(Color.White), baseX, modifiedBounds.Y, baseX, modifiedBounds.Y + modifiedBounds.Height);
+            //    baseX += 1;
+            //    e.Graphics.FillRectangle(co, baseX, modifiedBounds.Y, 3, modifiedBounds.Height);
+            //}
+            modifiedBounds.X -= indentPixels;
+            int baseX2 = modifiedBounds.Width - 8;
+            e.Graphics.DrawImage(miniMapImg, new Rectangle(modifiedBounds.X + baseX2, modifiedBounds.Y, 8, modifiedBounds.Height),
+                                                new Rectangle(0, modifiedBounds.Y, 8, modifiedBounds.Height), GraphicsUnit.Pixel);
         }
         private string decideNormalCommandText(DrawListViewSubItemEventArgs e, Core.Automation.Commands.ScriptCommand command)
         {
@@ -2351,6 +2629,7 @@ namespace taskt.UI.Forms
                 //nothing is selected
                 selectedIndex = -1;
             }
+            CreateMiniMap();
         }
         private void lstScriptActions_KeyDown(object sender, KeyEventArgs e)
         {
