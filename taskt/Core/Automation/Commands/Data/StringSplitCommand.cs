@@ -86,7 +86,7 @@ namespace taskt.Core.Automation.Commands
 
             //requiredComplexVariable.VariableValue = splitString;
 
-            splitString.StoreInUserVariable(engine, v_userVariableName);
+            splitString.StoreInUserVariable(engine, v_applyConvertToUserVariableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
