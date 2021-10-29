@@ -58,6 +58,8 @@ namespace taskt.UI.Forms
         private int[,] miniMap = null;
         private Bitmap miniMapImg = null;
 
+        //private Timer miniMapLoadingDelayTimer = new Timer() { Interval = 100 };
+
         public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
         public CommandEditAction currentEditAction = CommandEditAction.Normal;
 
@@ -224,7 +226,9 @@ namespace taskt.UI.Forms
 
             //set image list
             lstScriptActions.SmallImageList = uiImages;
-
+            lstScriptActions.Columns[0].Width = 14; // 1digit width
+            lstScriptActions.Columns[1].Width = 16; // icon size
+            lstScriptActions.Columns[2].Width = lstScriptActions.ClientSize.Width - 30;
 
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
@@ -1391,12 +1395,19 @@ namespace taskt.UI.Forms
 
         private void SelectAllRows()
         {
+            // temp remove handle
+            //lstScriptActions.SelectedIndexChanged -= lstScriptActions_SelectedIndexChanged;
+
             lstScriptActions.BeginUpdate();
             foreach (ListViewItem itm in lstScriptActions.Items)
             {
                 itm.Selected = true;
             }
             lstScriptActions.EndUpdate();
+
+            // attach handle
+            //lstScriptActions.SelectedIndexChanged += lstScriptActions_SelectedIndexChanged;
+            //lstScriptActions_SelectedIndexChanged(null, null);
         }
 
         private void DeleteRows()
@@ -1938,41 +1949,40 @@ namespace taskt.UI.Forms
             }
             AutoSizeLineNumberColumn();
 
-            CreateMiniMap();
+            if (appSettings.ClientSettings.ShowScriptMiniMap)
+            {
+                CreateMiniMap();
+            }
         }
 
         private void AutoSizeLineNumberColumn()
         {
             //auto adjust column width based on # of commands
             int columnWidth = (14 * lstScriptActions.Items.Count.ToString().Length);
+            int difWidth = columnWidth - lstScriptActions.Columns[0].Width;
+
             lstScriptActions.Columns[0].Width = columnWidth;
+            lstScriptActions.Columns[2].Width = lstScriptActions.ClientSize.Width - columnWidth - lstScriptActions.Columns[1].Width;
         }
 
         private void CreateMiniMap()
         {
-            // DBG
-            //Console.WriteLine("cols " + lstScriptActions.Columns.Count);
-            //int h = lstScriptActions.Height;
-            //int ta = lstScriptActions.Items[0].Bounds.Height;
-            //Console.WriteLine(h + ", " + ta + " => " +  (h / ta));
-            //
-            // height / 2 = H :=> lines
-            // H / items.count = cm :=> 1 command height
-            // items.count / H = cc :=> 1 line contain commands
-            //
-            // Bounds.Height = bh :=> 1 lstView line height
-            // index :=> current item index
-            // bh * index / 2 :=> first lines
-            //
-            // index * bh / cm :=> line starts
-            //
+            if (lstScriptActions.Items.Count == 0)
+            {
+                return;
+            }
 
             int lvItemHeight = lstScriptActions.Items[0].Bounds.Height;
-            int lvCommandsNum = lstScriptActions.Items.Count;
-            int lvShowLines = lstScriptActions.Height / lvItemHeight;
+            if (lvItemHeight < 1)
+            {
+                return;
+            }
 
-            int maxMapHeight = lvItemHeight * lvShowLines;
-            int mapItemHeight = maxMapHeight / lvCommandsNum;
+            int commandsNum = lstScriptActions.Items.Count;
+            int lvShowLines = lstScriptActions.ClientRectangle.Height / lvItemHeight;
+
+            int miniMapHeight = lvItemHeight * lvShowLines;
+            int mapItemHeight = miniMapHeight / commandsNum;
             if (mapItemHeight < 2)
             {
                 mapItemHeight = 2;
@@ -1982,32 +1992,48 @@ namespace taskt.UI.Forms
                 mapItemHeight = lvItemHeight;
             }
 
-            int maxMapItems = maxMapHeight / mapItemHeight;
-            if (maxMapItems > lvCommandsNum)
+            int miniMapItems = miniMapHeight / mapItemHeight;
+            if (miniMapItems > commandsNum)
             {
-                maxMapItems = lvCommandsNum;
-            }
-            if ((miniMap == null) || (miniMap.GetLength(0) != maxMapItems))
-            {
-                miniMap = null;
-                miniMap = new int[maxMapItems, 2];
+                miniMapItems = commandsNum;
             }
 
-            double oneItemRatio = (double)maxMapItems / lvCommandsNum;
+            double oneItemRatio = (double)miniMapItems / commandsNum;
+            int steps = 1;
+            if (oneItemRatio< 1.0)
+            {
+                double invRatio = 1.0 / oneItemRatio;
+                steps = (int)invRatio;
+                if (invRatio - steps != 0.0)
+                {
+                    steps++;
+                }
+
+                miniMapItems = (commandsNum / steps) + (commandsNum % steps == 0 ? 0 : 1);
+            }
+
+            if ((miniMap == null) || (miniMap.GetLength(0) != miniMapItems))
+            {
+                miniMap = null;
+                miniMap = new int[miniMapItems, 2];
+            }
 
             if (oneItemRatio < 1.0)
             {
-                double invRatio = 1.0 / oneItemRatio;
-                for (int i = 0; i < maxMapItems; i++)
+                for (int i = 0; i < miniMapItems; i++)
                 {
-                    int startIndex = (int)(i * invRatio);
-                    int lastIndex = (int)((i + 1) * invRatio);
+                    int startIndex = i * steps;
+                    int lastIndex = startIndex + steps;
+                    if (lastIndex > commandsNum)
+                    {
+                        lastIndex = commandsNum;
+                    }
 
                     miniMap[i, 0] = (int)MiniMapState.Normal;
                     miniMap[i, 1] = (int)MiniMapState.Normal;
                     for (int j = startIndex; j < lastIndex; j++)
                     {
-                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag;
+                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[j].Tag;
                         if (command.IsDontSavedCommand)
                         {
                             miniMap[i, 0] = (int)MiniMapState.DontSave;
@@ -2021,8 +2047,9 @@ namespace taskt.UI.Forms
                     }
                     for (int j = startIndex; j < lastIndex; j++)
                     {
-                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag;
-                        if (lstScriptActions.Items[i].Selected)
+                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[j].Tag;
+                        //if ((lstScriptActions.Items[j].Selected) && (lstScriptActions.Items[j].Focused))
+                        if (j == selectedIndex)
                         {
                             miniMap[i, 1] = (int)MiniMapState.Cursor;
                             break;
@@ -2037,7 +2064,7 @@ namespace taskt.UI.Forms
                             miniMap[i, 1] = (int)MiniMapState.Error;
                             break;
                         }
-                        else if (command.IsCommented)
+                        else if (command.IsCommented || (command is Core.Automation.Commands.CommentCommand))
                         {
                             miniMap[i, 1] = (int)MiniMapState.Comment;
                             break;
@@ -2047,7 +2074,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                for (int i = 0; i < lvCommandsNum; i++)
+                for (int i = 0; i < commandsNum; i++)
                 {
                     var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag;
                     if (command.IsDontSavedCommand)
@@ -2063,7 +2090,9 @@ namespace taskt.UI.Forms
                         miniMap[i, 0] = (int)MiniMapState.Normal;
                     }
 
-                    if ((lstScriptActions.Items[i].Selected) && (lstScriptActions.Items[i].Focused))
+                    //if ((lstScriptActions.Items[i].Selected) && (lstScriptActions.Items[i].Focused))
+                    //if (lstScriptActions.Items[i].Selected)
+                    if (i == selectedIndex)
                     {
                         miniMap[i, 1] = (int)MiniMapState.Cursor;
                     }
@@ -2092,9 +2121,10 @@ namespace taskt.UI.Forms
             }
             using (Graphics g = Graphics.FromImage(miniMapImg))
             {
+                //g.FillRectangle(new SolidBrush(Color.Black), 0, 0, 8, lstScriptActions.Height);
                 g.DrawLine(new Pen(Color.White), 0, 0, 0, miniMapImg.Height);
                 g.DrawLine(new Pen(Color.White), 4, 0, 4, miniMapImg.Height);
-                for (int i = 0; i < maxMapItems; i++)
+                for (int i = 0; i < miniMapItems; i++)
                 {
                     SolidBrush co;
                     switch ((MiniMapState)miniMap[i, 0])
@@ -2133,9 +2163,10 @@ namespace taskt.UI.Forms
 
                     if ((MiniMapState)miniMap[i, 1] == MiniMapState.Cursor)
                     {
-                        g.FillRectangle(new SolidBrush(Color.Navy), 0, mapItemHeight * i, 9, mapItemHeight);
+                        g.FillRectangle(new SolidBrush(Color.Navy), 0, mapItemHeight * i, 8, mapItemHeight);
                     }
                 }
+                g.FillRectangle(new SolidBrush(Color.DarkGray), 0, mapItemHeight * miniMapItems, 8, lstScriptActions.Height - (mapItemHeight * miniMapItems));
                 // DBG
                 //miniMapImg.Save(System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\minimap.png");
             }
@@ -2530,10 +2561,14 @@ namespace taskt.UI.Forms
             //    baseX += 1;
             //    e.Graphics.FillRectangle(co, baseX, modifiedBounds.Y, 3, modifiedBounds.Height);
             //}
-            modifiedBounds.X -= indentPixels;
-            int baseX2 = modifiedBounds.Width - 8;
-            e.Graphics.DrawImage(miniMapImg, new Rectangle(modifiedBounds.X + baseX2, modifiedBounds.Y, 8, modifiedBounds.Height),
-                                                new Rectangle(0, modifiedBounds.Y, 8, modifiedBounds.Height), GraphicsUnit.Pixel);
+
+            if (appSettings.ClientSettings.ShowScriptMiniMap)
+            {
+                modifiedBounds.X -= indentPixels;
+                int baseX2 = modifiedBounds.Width - 8;
+                e.Graphics.DrawImage(miniMapImg, new Rectangle(modifiedBounds.X + baseX2, modifiedBounds.Y, 8, modifiedBounds.Height),
+                                                    new Rectangle(0, modifiedBounds.Y, 8, modifiedBounds.Height), GraphicsUnit.Pixel);
+            }
         }
         private string decideNormalCommandText(DrawListViewSubItemEventArgs e, Core.Automation.Commands.ScriptCommand command)
         {
@@ -2615,6 +2650,18 @@ namespace taskt.UI.Forms
         #region lstScriptActions event
         private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
         {
+            miniMapLoadingDelayTimer.Stop();
+            miniMapLoadingDelayTimer.Start();
+        }
+
+        private void miniMapLoadingDelayTimer_Tick(object sender, EventArgs e)
+        {
+            miniMapLoadingDelayTimer.Stop();
+            lstScriptActions_SelectedIndexChangedProcess();
+        }
+
+        private void lstScriptActions_SelectedIndexChangedProcess()
+        {
             if (!appSettings.ClientSettings.InsertCommandsInline)
                 return;
 
@@ -2629,8 +2676,13 @@ namespace taskt.UI.Forms
                 //nothing is selected
                 selectedIndex = -1;
             }
-            CreateMiniMap();
+
+            if (appSettings.ClientSettings.ShowScriptMiniMap)
+            {
+                CreateMiniMap();
+            }
         }
+
         private void lstScriptActions_KeyDown(object sender, KeyEventArgs e)
         {
             //delete from listview if required

@@ -182,6 +182,7 @@
             this.cmdTVCommandMenuSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1922,6 +1923,10 @@
             this.clearCmdTVCommandMenuStrip.Text = "Clear Filter (&L)";
             this.clearCmdTVCommandMenuStrip.Click += new System.EventHandler(this.clearCmdTVCommandMenuStrip_Click);
             // 
+            // miniMapLoadingDelayTimer
+            // 
+            this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2142,6 +2147,7 @@
         private System.Windows.Forms.ToolStripMenuItem showScriptFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showLogFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator optionToolStripSep2;
+        private System.Windows.Forms.Timer miniMapLoadingDelayTimer;
     }
 }
 
