@@ -373,6 +373,7 @@ namespace taskt.Core
         public bool DontShowValidationMessage { get; set; }
         public bool ShowSampleUsageInDescription { get; set; }
         public bool ShowIndentLine { get; set; }
+        public bool ShowScriptMiniMap { get; set; }
         private int _IndentWidth = 16;
         public int IndentWidth 
         {
@@ -412,6 +413,7 @@ namespace taskt.Core
             DontShowValidationMessage = false;
             ShowSampleUsageInDescription = true;
             ShowIndentLine = true;
+            ShowScriptMiniMap = false;
             DefaultBrowserInstanceName = "RPABrowser";
             DefaultStopWatchInstanceName = "RPAStopwatch";
             DefaultExcelInstanceName = "RPAExcel";
