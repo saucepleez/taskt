@@ -120,6 +120,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabEditorSettings = new System.Windows.Forms.TabPage();
+            this.chkShowScriptMiniMap = new System.Windows.Forms.CheckBox();
             this.txtDefaultNLGInstanceName = new System.Windows.Forms.TextBox();
             this.lblDefaultNLGInstance = new System.Windows.Forms.Label();
             this.chkExportIntermediate = new System.Windows.Forms.CheckBox();
@@ -1268,6 +1269,7 @@
             // tabEditorSettings
             // 
             this.tabEditorSettings.AutoScroll = true;
+            this.tabEditorSettings.Controls.Add(this.chkShowScriptMiniMap);
             this.tabEditorSettings.Controls.Add(this.txtDefaultNLGInstanceName);
             this.tabEditorSettings.Controls.Add(this.lblDefaultNLGInstance);
             this.tabEditorSettings.Controls.Add(this.chkExportIntermediate);
@@ -1298,9 +1300,22 @@
             this.tabEditorSettings.Text = "Editor";
             this.tabEditorSettings.UseVisualStyleBackColor = true;
             // 
+            // chkShowScriptMiniMap
+            // 
+            this.chkShowScriptMiniMap.AutoSize = true;
+            this.chkShowScriptMiniMap.BackColor = System.Drawing.Color.Transparent;
+            this.chkShowScriptMiniMap.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkShowScriptMiniMap.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkShowScriptMiniMap.Location = new System.Drawing.Point(10, 258);
+            this.chkShowScriptMiniMap.Name = "chkShowScriptMiniMap";
+            this.chkShowScriptMiniMap.Size = new System.Drawing.Size(211, 24);
+            this.chkShowScriptMiniMap.TabIndex = 28;
+            this.chkShowScriptMiniMap.Text = "Show Script Mini Map (beta)";
+            this.chkShowScriptMiniMap.UseVisualStyleBackColor = false;
+            // 
             // txtDefaultNLGInstanceName
             // 
-            this.txtDefaultNLGInstanceName.Location = new System.Drawing.Point(10, 531);
+            this.txtDefaultNLGInstanceName.Location = new System.Drawing.Point(10, 567);
             this.txtDefaultNLGInstanceName.Name = "txtDefaultNLGInstanceName";
             this.txtDefaultNLGInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultNLGInstanceName.TabIndex = 27;
@@ -1311,7 +1326,7 @@
             this.lblDefaultNLGInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblDefaultNLGInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDefaultNLGInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblDefaultNLGInstance.Location = new System.Drawing.Point(7, 511);
+            this.lblDefaultNLGInstance.Location = new System.Drawing.Point(7, 547);
             this.lblDefaultNLGInstance.Name = "lblDefaultNLGInstance";
             this.lblDefaultNLGInstance.Size = new System.Drawing.Size(163, 17);
             this.lblDefaultNLGInstance.TabIndex = 26;
@@ -1323,7 +1338,7 @@
             this.chkExportIntermediate.BackColor = System.Drawing.Color.Transparent;
             this.chkExportIntermediate.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkExportIntermediate.ForeColor = System.Drawing.Color.SteelBlue;
-            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 577);
+            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 613);
             this.chkExportIntermediate.Name = "chkExportIntermediate";
             this.chkExportIntermediate.Size = new System.Drawing.Size(225, 24);
             this.chkExportIntermediate.TabIndex = 25;
@@ -1391,7 +1406,7 @@
             // 
             // txtDefaultDBInstanceName
             // 
-            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 475);
+            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 511);
             this.txtDefaultDBInstanceName.Name = "txtDefaultDBInstanceName";
             this.txtDefaultDBInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultDBInstanceName.TabIndex = 19;
@@ -1402,7 +1417,7 @@
             this.lblDBInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblDBInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDBInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblDBInstance.Location = new System.Drawing.Point(7, 455);
+            this.lblDBInstance.Location = new System.Drawing.Point(7, 491);
             this.lblDBInstance.Name = "lblDBInstance";
             this.lblDBInstance.Size = new System.Drawing.Size(192, 17);
             this.lblDBInstance.TabIndex = 18;
@@ -1436,7 +1451,7 @@
             // 
             // txtDefaultWordInstanceName
             // 
-            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 424);
+            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 460);
             this.txtDefaultWordInstanceName.Name = "txtDefaultWordInstanceName";
             this.txtDefaultWordInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultWordInstanceName.TabIndex = 15;
@@ -1447,7 +1462,7 @@
             this.lblWordInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblWordInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWordInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblWordInstance.Location = new System.Drawing.Point(7, 404);
+            this.lblWordInstance.Location = new System.Drawing.Point(7, 440);
             this.lblWordInstance.Name = "lblWordInstance";
             this.lblWordInstance.Size = new System.Drawing.Size(169, 17);
             this.lblWordInstance.TabIndex = 14;
@@ -1455,7 +1470,7 @@
             // 
             // txtDefaultExcelInstanceName
             // 
-            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 374);
+            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 410);
             this.txtDefaultExcelInstanceName.Name = "txtDefaultExcelInstanceName";
             this.txtDefaultExcelInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultExcelInstanceName.TabIndex = 13;
@@ -1466,7 +1481,7 @@
             this.lblExcelInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblExcelInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExcelInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblExcelInstance.Location = new System.Drawing.Point(7, 354);
+            this.lblExcelInstance.Location = new System.Drawing.Point(7, 390);
             this.lblExcelInstance.Name = "lblExcelInstance";
             this.lblExcelInstance.Size = new System.Drawing.Size(168, 17);
             this.lblExcelInstance.TabIndex = 12;
@@ -1474,7 +1489,7 @@
             // 
             // txtDefaultStopwatchInstanceName
             // 
-            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 321);
+            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 357);
             this.txtDefaultStopwatchInstanceName.Name = "txtDefaultStopwatchInstanceName";
             this.txtDefaultStopwatchInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultStopwatchInstanceName.TabIndex = 11;
@@ -1485,7 +1500,7 @@
             this.lblStopwatchInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblStopwatchInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStopwatchInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 301);
+            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 337);
             this.lblStopwatchInstance.Name = "lblStopwatchInstance";
             this.lblStopwatchInstance.Size = new System.Drawing.Size(193, 17);
             this.lblStopwatchInstance.TabIndex = 10;
@@ -1493,7 +1508,7 @@
             // 
             // txtDefaultBrowserInstanceName
             // 
-            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 269);
+            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 305);
             this.txtDefaultBrowserInstanceName.Name = "txtDefaultBrowserInstanceName";
             this.txtDefaultBrowserInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultBrowserInstanceName.TabIndex = 9;
@@ -1504,7 +1519,7 @@
             this.lblBrowserInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblBrowserInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBrowserInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 249);
+            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 285);
             this.lblBrowserInstance.Name = "lblBrowserInstance";
             this.lblBrowserInstance.Size = new System.Drawing.Size(182, 17);
             this.lblBrowserInstance.TabIndex = 8;
@@ -1776,5 +1791,6 @@
         private System.Windows.Forms.Label lblDefaultNLGInstance;
         private System.Windows.Forms.Label lblVariableMarkerAlert;
         private System.Windows.Forms.CheckBox chkIgnoreFirstVariableMarker;
+        private System.Windows.Forms.CheckBox chkShowScriptMiniMap;
     }
 }
