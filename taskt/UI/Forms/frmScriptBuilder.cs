@@ -1378,7 +1378,7 @@ namespace taskt.UI.Forms
                         selectedCommandItem.Text = editCommand.selectedCommand.GetDisplayValue(); //+ "(" + cmdDetails.SelectedVariables() + ")";
                         selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
 
-                        currentCommand.IsDontSavedCommand = true;
+                        editCommand.selectedCommand.IsDontSavedCommand = true;
 
                         instanceList.addInstance(editCommand.selectedCommand);
                     }
