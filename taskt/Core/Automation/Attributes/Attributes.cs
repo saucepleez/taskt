@@ -249,6 +249,29 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.headerRowHeight = headerRowHeight;
         }
     }
+    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyDataGridViewColumnSettings : System.Attribute
+    {
+        public string columnName = "";
+        public string headerText = "";
+        public bool readOnly = false;
+        public DataGridViewColumnType type = DataGridViewColumnType.TextBox;
+        public string comboBoxItems = "";
+        public PropertyDataGridViewColumnSettings(string columnName, string headerText, bool readOnly = false, DataGridViewColumnType type = DataGridViewColumnType.TextBox, string comboBoxItems = "")
+        {
+            this.columnName = columnName;
+            this.headerText = headerText;
+            this.readOnly = readOnly;
+            this.type = type;
+            this.comboBoxItems = comboBoxItems;
+        }
+        public enum DataGridViewColumnType
+        {
+            TextBox,
+            ComboBox,
+            CheckBox
+        }
+    }
     [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertySecondaryLabel : System.Attribute
     {

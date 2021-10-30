@@ -35,6 +35,10 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Keys", "Keys", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Values", "Values", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -84,25 +88,30 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //initialize Datatable
-            this.v_ColumnNameDataTable = new System.Data.DataTable
-            {
-                TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            };
-            this.v_ColumnNameDataTable.Columns.Add("Keys");
-            this.v_ColumnNameDataTable.Columns.Add("Values");
+            //this.v_ColumnNameDataTable = new System.Data.DataTable
+            //{
+            //    TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
+            //};
+            //this.v_ColumnNameDataTable.Columns.Add("Keys");
+            //this.v_ColumnNameDataTable.Columns.Add("Values");
 
             //create standard group controls
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor));
-            
-            RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor));
 
-            ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
-            ColumnNameDataGridViewHelper.Tag = "column-a-editable";
+            //RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
+
+            //ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            //ColumnNameDataGridViewHelper.Tag = "column-a-editable";
+            //ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            ColumnNameDataGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
             ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()

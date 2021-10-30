@@ -650,14 +650,52 @@ namespace taskt.UI.CustomControls
         public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, PropertyInfo prop)
         {
             var dgvProp = (Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting));
+            DataGridView createdDGV;
             if (dgvProp == null)
             {
-                return CreateDataGridView(sourceCommand, dataSourceName);
+                createdDGV = CreateDataGridView(sourceCommand, dataSourceName);
             }
             else
             {
-                return CreateDataGridView(sourceCommand, dataSourceName, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
+                createdDGV = CreateDataGridView(sourceCommand, dataSourceName, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
             }
+
+            var columnProp = (Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings));
+            if (columnProp.Length > 0)
+            {
+                var command = (Core.Automation.Commands.ScriptCommand)sourceCommand;
+                DataTable targetDT = new System.Data.DataTable
+                {
+                    TableName = dataSourceName.Replace("v_", "") + DateTime.Now.ToString("MMddyy.hhmmss")
+                };
+                prop.SetValue(command, targetDT);
+                foreach (var colSetting in columnProp)
+                {
+                    targetDT.Columns.Add(colSetting.columnName);
+
+                    DataGridViewColumn newDGVColumn = null;
+                    switch (colSetting.type)
+                    {
+                        case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox:
+                            newDGVColumn = new DataGridViewTextBoxColumn();
+                            break;
+                        case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox:
+                            newDGVColumn = new DataGridViewComboBoxColumn();
+                            ((DataGridViewComboBoxColumn)newDGVColumn).Items.AddRange(colSetting.comboBoxItems.Split('\n'));
+                            break;
+                        case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox:
+                            newDGVColumn = new DataGridViewCheckBoxColumn();
+                            break;
+                    }
+                    newDGVColumn.HeaderText = colSetting.headerText;
+                    newDGVColumn.DataPropertyName = colSetting.columnName;
+                    newDGVColumn.ReadOnly = colSetting.readOnly;
+                    createdDGV.Columns.Add(newDGVColumn);
+                }
+                var newRow = targetDT.NewRow();
+                createdDGV.Rows.Add(newRow);
+            }
+            return createdDGV;
         }
 
         public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
