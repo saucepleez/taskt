@@ -240,6 +240,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SeleniumBrowserNavigateForwardCommand))]
     [XmlInclude(typeof(SeleniumBrowserNavigateURLCommand))]
     [XmlInclude(typeof(SeleniumBrowserRefreshCommand))]
+    [XmlInclude(typeof(SeleniumBrowserResizeBrowser))]
     [XmlInclude(typeof(SeleniumBrowserSwitchFrameCommand))]
     [XmlInclude(typeof(SeleniumBrowserSwitchWindowCommand))]
     [XmlInclude(typeof(SeleniumBrowserTakeScreenshotCommand))]

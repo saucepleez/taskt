@@ -99,7 +99,6 @@ namespace taskt.Core.Automation.Commands
             }
 
             string script;
-            
             if (v_CodeType.ToLower() == "code")
             {
                 script = v_ScriptCode.ConvertToUserVariable(sender);

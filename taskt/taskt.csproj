@@ -201,6 +201,7 @@
     <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardClearTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordCheckWordInstanceExistsCommand.cs" />
