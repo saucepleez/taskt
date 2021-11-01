@@ -56,6 +56,10 @@ namespace taskt.Core
         {
             Dictionary<string, int> targetDic = decideDictionary(instanceType);
 
+            if (String.IsNullOrEmpty(instanceName))
+            {
+                instanceName = "";
+            }
             instanceName = instanceName.Trim();
             if (instanceName.Length == 0)
             {
