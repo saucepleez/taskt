@@ -34,6 +34,10 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Keys", "Keys", false, Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Values", "Values", false, Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -47,14 +51,14 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            //initialize Datatable
-            this.v_ColumnNameDataTable = new System.Data.DataTable
-            {
-                TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            };
+            ////initialize Datatable
+            //this.v_ColumnNameDataTable = new System.Data.DataTable
+            //{
+            //    TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
+            //};
 
-            this.v_ColumnNameDataTable.Columns.Add("Keys");
-            this.v_ColumnNameDataTable.Columns.Add("Values");
+            //this.v_ColumnNameDataTable.Columns.Add("Keys");
+            //this.v_ColumnNameDataTable.Columns.Add("Values");
         }
 
         public override void RunCommand(object sender)
@@ -94,13 +98,19 @@ namespace taskt.Core.Automation.Commands
 
             //create standard group controls
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
-            var ctrl = CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor);
-            RenderedControls.AddRange(ctrl);
+            //var ctrl = CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor);
+            //RenderedControls.AddRange(ctrl);
 
-            RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
 
-            ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
-            ColumnNameDataGridViewHelper.Tag = "column-a-editable";
+            //ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
+            //ColumnNameDataGridViewHelper.Tag = "column-a-editable";
+            //ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            ColumnNameDataGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
             ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
 
             return RenderedControls;
