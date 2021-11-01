@@ -275,7 +275,8 @@ namespace taskt.UI.CustomControls
             //return controlList;
 
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            return CreateDefaultControlGroupFor(CreateDataGridView(parameterName, parent, variableProperties), parameterName, parent, editor, variableProperties, additionalLinks);
+            var ctrls = CreateDefaultControlGroupFor(CreateDataGridView(parameterName, parent, variableProperties), parameterName, parent, editor, variableProperties, additionalLinks);
+            return ctrls;
         }
 
         public static Label CreateSimpleLabel()
@@ -1153,6 +1154,24 @@ namespace taskt.UI.CustomControls
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
         }
+
+        //private static void CreateDataGridViewContextMenuStrip(List<Control> ctrls, string parameterName, PropertyInfo pInfo)
+        //{
+        //    ContextMenuStrip cont = new ContextMenuStrip();
+        //    cont.Name = "contextmenu_" + parameterName;
+        //    cont.Items.Add("&Add New");
+        //    cont.Items.Add("&Delete");
+        //    ctrls.Add(cont);
+
+        //    DataGridView dgv = (DataGridView)ctrls.Where(t => (t is DataGridView)).FirstOrDefault();
+        //    dgv.ContextMenuStrip = cont;
+        //    dgv.RowHeaderMouseClick += (sender, e) => DataGridViewRowHeaderClick(sender, e);
+        //}
+
+        //private static void DataGridViewRowHeaderClick(object sender, DataGridViewCellMouseEventArgs e)
+        //{
+        //    ((DataGridView)sender).ContextMenuStrip.Show();
+        //}
 
         private static void AddInputParameter(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
         {
