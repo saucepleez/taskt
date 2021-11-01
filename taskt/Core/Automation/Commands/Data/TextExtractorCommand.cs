@@ -55,6 +55,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tSkip Past Occurences", "")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
@@ -91,13 +93,13 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             //define parameter table
-            this.v_TextExtractionTable = new System.Data.DataTable
-            {
-                TableName = DateTime.Now.ToString("TextExtractorParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
-            };
+            //this.v_TextExtractionTable = new System.Data.DataTable
+            //{
+            //    TableName = DateTime.Now.ToString("TextExtractorParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
+            //};
 
-            this.v_TextExtractionTable.Columns.Add("Parameter Name");
-            this.v_TextExtractionTable.Columns.Add("Parameter Value");
+            //this.v_TextExtractionTable.Columns.Add("Parameter Name");
+            //this.v_TextExtractionTable.Columns.Add("Parameter Value");
 
             var variableProperties = this.GetType().GetProperties().Where(f => f.Name == "v_TextExtractionTable").FirstOrDefault();
             DGVInfo = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
@@ -243,6 +245,10 @@ namespace taskt.Core.Automation.Commands
         private void ParameterGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // click colmum b, change edit mode
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
             if (e.ColumnIndex == 1)
             {
                 ParametersGridViewHelper.BeginEdit(false);
