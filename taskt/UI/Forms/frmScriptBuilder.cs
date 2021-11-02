@@ -2147,7 +2147,7 @@ namespace taskt.UI.Forms
                         //    co = new SolidBrush(taskt.Core.Theme.scriptTexts["selected-normal"].BackColor);
                         //    break;
                         case MiniMapState.Matched:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["match"].FontColor);
+                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["current-match"].BackColor);
                             break;
                         case MiniMapState.Error:
                             co = new SolidBrush(taskt.Core.Theme.scriptTexts["invalid"].FontColor);
