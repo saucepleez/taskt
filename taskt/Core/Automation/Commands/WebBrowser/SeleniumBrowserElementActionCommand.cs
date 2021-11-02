@@ -598,12 +598,13 @@ namespace taskt.Core.Automation.Commands
             ElementActionDropdown = (ComboBox)ctrls.Where(t => (t.Name == "v_SeleniumElementAction")).FirstOrDefault();
             ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
 
-            int idx = ctrls.FindIndex(t => (t.Name == "lbl_v_WebActionParameterTable"));
-            ElementParameterControls = new List<Control>();
-            for (int i = idx; i < ctrls.Count; i++)
-            {
-                ElementParameterControls.Add(ctrls[i]);
-            }
+            //int idx = ctrls.FindIndex(t => (t.Name == "lbl_v_WebActionParameterTable"));
+            //ElementParameterControls = new List<Control>();
+            //for (int i = idx; i < ctrls.Count; i++)
+            //{
+            //    ElementParameterControls.Add(ctrls[i]);
+            //}
+            ElementParameterControls = CommandControls.GetControlGroup(ctrls, "v_WebActionParameterTable");
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

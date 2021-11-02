@@ -482,6 +482,21 @@ namespace taskt.UI.CustomControls
 
         }
 
+        public static List<Control> GetControlGroup(List<Control> ctrls, string parameterName, string nextParameterName = "")
+        {
+            List<Control> ret = new List<Control>();
+
+            int index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
+            int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
+
+            for (int i = index; i < last; i++)
+            {
+                ret.Add(ctrls[i]);
+            }
+
+            return ret;
+        }
+
         public static CommandItemControl CreateUIHelper()
         {
             taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
