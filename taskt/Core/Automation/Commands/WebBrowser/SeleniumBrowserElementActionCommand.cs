@@ -23,13 +23,14 @@ namespace taskt.Core.Automation.Commands
     public class SeleniumBrowserElementActionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Method")]
@@ -50,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_SeleniumSearchType { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Parameter")]
@@ -78,6 +80,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**, **Get Count**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_SeleniumElementAction { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
@@ -85,6 +88,10 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("Additional Parameters range from adding offset coordinates to specifying a variable to apply element text to.")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
         public System.Data.DataTable v_WebActionParameterTable { get; set; }
 
 
@@ -108,12 +115,12 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_WebActionParameterTable = new System.Data.DataTable
-            {
-                TableName = "WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            };
-            this.v_WebActionParameterTable.Columns.Add("Parameter Name");
-            this.v_WebActionParameterTable.Columns.Add("Parameter Value");
+            //this.v_WebActionParameterTable = new System.Data.DataTable
+            //{
+            //    TableName = "WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss")
+            //};
+            //this.v_WebActionParameterTable.Columns.Add("Parameter Name");
+            //this.v_WebActionParameterTable.Columns.Add("Parameter Value");
         }
 
         //private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
@@ -555,31 +562,48 @@ namespace taskt.Core.Automation.Commands
             //ElementsGridViewHelper.AllowUserToAddRows = false;
             //ElementsGridViewHelper.AllowUserToDeleteRows = false;
             //ElementsGridViewHelper.AllowUserToResizeRows = false;
-            ElementsGridViewHelper = CommandControls.CreateDataGridView(this, "v_WebActionParameterTable", false, false);
+            //ElementsGridViewHelper = CommandControls.CreateDataGridView(this, "v_WebActionParameterTable", false, false);
+            //ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
+            //ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
+
+            //var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            //UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
+            //RenderedControls.AddRange(instanceCtrls);
+            ////RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SeleniumSearchType", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumSearchParameter", this, editor));
+
+
+            //ElementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_SeleniumElementAction", this);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumElementAction", this));
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_SeleniumElementAction", this, new Control[] { ElementActionDropdown }, editor));
+            //ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
+
+            //RenderedControls.Add(ElementActionDropdown);
+
+            //ElementParameterControls = new List<Control>();
+            //ElementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebActionParameterTable", this));
+            //ElementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { ElementsGridViewHelper }, editor));
+            //ElementParameterControls.Add(ElementsGridViewHelper);
+
+            //RenderedControls.AddRange(ElementParameterControls);
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            ElementsGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_WebActionParameterTable")).FirstOrDefault();
             ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
             ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
 
-            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
-            RenderedControls.AddRange(instanceCtrls);
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SeleniumSearchType", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SeleniumSearchParameter", this, editor));
-
-
-            ElementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_SeleniumElementAction", this);
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_SeleniumElementAction", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_SeleniumElementAction", this, new Control[] { ElementActionDropdown }, editor));
+            ElementActionDropdown = (ComboBox)ctrls.Where(t => (t.Name == "v_SeleniumElementAction")).FirstOrDefault();
             ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
 
-            RenderedControls.Add(ElementActionDropdown);
-
+            int idx = ctrls.FindIndex(t => (t.Name == "lbl_v_WebActionParameterTable"));
             ElementParameterControls = new List<Control>();
-            ElementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebActionParameterTable", this));
-            ElementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { ElementsGridViewHelper }, editor));
-            ElementParameterControls.Add(ElementsGridViewHelper);
-
-            RenderedControls.AddRange(ElementParameterControls);
+            for (int i = idx; i < ctrls.Count; i++)
+            {
+                ElementParameterControls.Add(ctrls[i]);
+            }
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
