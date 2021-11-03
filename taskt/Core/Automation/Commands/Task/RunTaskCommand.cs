@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -18,32 +17,44 @@ namespace taskt.Core.Automation.Commands
     public class RunTaskCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select a Task to run (ex. c:\\temp\\mytask.xml, {{{vPath}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select a Task to run")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the valid path to the file.")]
         [Attributes.PropertyAttributes.SampleUsage("**c:\\temp\\mytask.xml** or **{{{vScriptPath}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_taskPath { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("I want to assign variables on startup")]
+        [Attributes.PropertyAttributes.InputSpecification("User Preference for assigning variables")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox)]
+        public bool v_AssignVariables { get; set; }
 
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Assign Variables")]
         [Attributes.PropertyAttributes.InputSpecification("Input required assignments.")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("VariableName", "Variable Name", true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("VariableValue", "Variable Value", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("VariableReturn", "Variable Return", false, Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox, "Yes\nNo")]
         public DataTable v_VariableAssignments { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign Variables")]
-        [Attributes.PropertyAttributes.InputSpecification("User Preference for assigning variables")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public bool v_AssignVariables { get; set; }
-
 
         [XmlIgnore]
         [NonSerialized]
         private DataGridView AssignmentsGridViewHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<Control> AssignmentsGroup;
 
         [XmlIgnore]
         [NonSerialized]
@@ -56,19 +67,19 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            v_VariableAssignments = new DataTable();
-            v_VariableAssignments.Columns.Add("VariableName"); 
-            v_VariableAssignments.Columns.Add("VariableValue");
-            v_VariableAssignments.Columns.Add("VariableReturn");
-            v_VariableAssignments.TableName = "RunTaskCommandInputParameters" + DateTime.Now.ToString("MMddyyhhmmss");
+            //v_VariableAssignments = new DataTable();
+            //v_VariableAssignments.Columns.Add("VariableName"); 
+            //v_VariableAssignments.Columns.Add("VariableValue");
+            //v_VariableAssignments.Columns.Add("VariableReturn");
+            //v_VariableAssignments.TableName = "RunTaskCommandInputParameters" + DateTime.Now.ToString("MMddyyhhmmss");
 
-            AssignmentsGridViewHelper = new DataGridView();
-            AssignmentsGridViewHelper.AllowUserToAddRows = true;
-            AssignmentsGridViewHelper.AllowUserToDeleteRows = true;
-            AssignmentsGridViewHelper.Size = new Size(400, 250);
-            AssignmentsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
-            AssignmentsGridViewHelper.Hide();
+            //AssignmentsGridViewHelper = new DataGridView();
+            //AssignmentsGridViewHelper.AllowUserToAddRows = true;
+            //AssignmentsGridViewHelper.AllowUserToDeleteRows = true;
+            //AssignmentsGridViewHelper.Size = new Size(400, 250);
+            //AssignmentsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
+            //AssignmentsGridViewHelper.Hide();
         }
 
         public override void RunCommand(object sender)
@@ -166,26 +177,40 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            //create file path and helpers
-            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_taskPath", this));
-            var taskPathControl = UI.CustomControls.CommandControls.CreateDefaultInputFor("v_taskPath", this);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_taskPath", this, new Control[] { taskPathControl }, editor));
-            RenderedControls.Add(taskPathControl);
+            ////create file path and helpers
+            //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_taskPath", this));
+            //var taskPathControl = UI.CustomControls.CommandControls.CreateDefaultInputFor("v_taskPath", this);
+            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_taskPath", this, new Control[] { taskPathControl }, editor));
+            //RenderedControls.Add(taskPathControl);
 
-            taskPathControl.TextChanged += TaskPathControl_TextChanged;
+            //taskPathControl.TextChanged += TaskPathControl_TextChanged;
 
-            //
-            PassParameters = new CheckBox();
-            PassParameters.AutoSize = true;
-            PassParameters.Text = "I want to assign variables on startup";
-            PassParameters.Font = new Font("Segoe UI Light", 12);
-            PassParameters.ForeColor = Color.White;
-   
-            PassParameters.DataBindings.Add("Checked", this, "v_AssignVariables", false, DataSourceUpdateMode.OnPropertyChanged);
+            ////
+            //PassParameters = new CheckBox();
+            //PassParameters.AutoSize = true;
+            //PassParameters.Text = "I want to assign variables on startup";
+            //PassParameters.Font = new Font("Segoe UI Light", 12);
+            //PassParameters.ForeColor = Color.White;
+
+            //PassParameters.DataBindings.Add("Checked", this, "v_AssignVariables", false, DataSourceUpdateMode.OnPropertyChanged);
+            //PassParameters.CheckedChanged += PassParametersCheckbox_CheckedChanged;
+            //RenderedControls.Add(PassParameters);
+
+            //RenderedControls.Add(AssignmentsGridViewHelper);
+
+            var ctrls = UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            TextBox txt = (TextBox)ctrls.Where(t => (t.Name == "v_taskPath")).FirstOrDefault();
+            txt.TextChanged += TaskPathControl_TextChanged;
+
+            PassParameters = (CheckBox)ctrls.Where(t => (t.Name == "v_AssignVariables")).FirstOrDefault();
             PassParameters.CheckedChanged += PassParametersCheckbox_CheckedChanged;
-            RenderedControls.Add(PassParameters);
 
-            RenderedControls.Add(AssignmentsGridViewHelper);
+            AssignmentsGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_VariableAssignments")).FirstOrDefault();
+            AssignmentsGridViewHelper.Hide();
+
+            AssignmentsGroup = UI.CustomControls.CommandControls.GetControlGroup(ctrls, "v_VariableAssignments");
 
             return RenderedControls;
         }
@@ -200,13 +225,18 @@ namespace taskt.Core.Automation.Commands
             Engine.AutomationEngineInstance currentScriptEngine = new Engine.AutomationEngineInstance();
             var startFile = v_taskPath.ConvertToUserVariable(currentScriptEngine);
 
-            var Sender = (CheckBox)sender;
-            var engineSettings = ((UI.Forms.frmCommandEditor)Sender.FindForm()).appSettings.EngineSettings;
+            var chk = (CheckBox)sender;
+            var engineSettings = ((UI.Forms.frmCommandEditor)chk.FindForm()).appSettings.EngineSettings;
             
-            AssignmentsGridViewHelper.Visible = Sender.Checked;
+            //AssignmentsGridViewHelper.Visible = chk.Checked;
+            bool visible = chk.Checked;
+            foreach(Control ctl in AssignmentsGroup)
+            {
+                ctl.Visible = visible;
+            }
 
             //load variables if selected and file exists
-            if ((Sender.Checked) && (System.IO.File.Exists(startFile)))
+            if ((chk.Checked) && (System.IO.File.Exists(startFile)))
             {
               
                 Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile, engineSettings);
@@ -232,8 +262,6 @@ namespace taskt.Core.Automation.Commands
                     AssignmentsGridViewHelper.Rows[i].Cells[2] = returnComboBox;
                 }
             }
-
-
         }
 
         public override string GetDisplayValue()
