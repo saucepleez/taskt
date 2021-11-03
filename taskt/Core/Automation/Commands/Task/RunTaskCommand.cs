@@ -208,8 +208,6 @@ namespace taskt.Core.Automation.Commands
             PassParameters.CheckedChanged += PassParametersCheckbox_CheckedChanged;
 
             AssignmentsGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_VariableAssignments")).FirstOrDefault();
-            AssignmentsGridViewHelper.Hide();
-
             AssignmentsGroup = UI.CustomControls.CommandControls.GetControlGroup(ctrls, "v_VariableAssignments");
 
             return RenderedControls;
@@ -238,7 +236,6 @@ namespace taskt.Core.Automation.Commands
             //load variables if selected and file exists
             if ((chk.Checked) && (System.IO.File.Exists(startFile)))
             {
-              
                 Script.Script deserializedScript = Core.Script.Script.DeserializeFile(startFile, engineSettings);
                 
                 foreach (var variable in deserializedScript.Variables)
@@ -251,9 +248,8 @@ namespace taskt.Core.Automation.Commands
                     }                  
                 }
 
-                AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
+                //AssignmentsGridViewHelper.DataSource = v_VariableAssignments;
 
-                
                 for (int i = 0; i<AssignmentsGridViewHelper.Rows.Count-1; i++)
                 {
                     DataGridViewComboBoxCell returnComboBox = new DataGridViewComboBoxCell();
