@@ -80,6 +80,16 @@ namespace taskt.Core
             }
         }
 
+        // checkbox
+        private UIFont _checkbox = new UIFont();
+        public UIFont Checkbox
+        {
+            get
+            {
+                return _checkbox;
+            }
+        }
+
         // uiHelper
         private UIFont _uihelper = new UIFont("Segoe UI Semilight", 10, FontStyle.Regular, Color.AliceBlue, Color.Transparent);
         public UIFont UIHelper

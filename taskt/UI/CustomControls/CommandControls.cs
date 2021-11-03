@@ -85,6 +85,9 @@ namespace taskt.UI.CustomControls
                     case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
                         createdInput = CreateDefaultInputFor(parameterName, parent, variableProperties);
                         break;
+                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox:
+                        createdInput = CreateDefaultCheckBoxFor(parameterName, parent, variableProperties);
+                        break;
                     default:
                         createdInput = CreateDefaultInputFor(parameterName, parent, variableProperties);
                         break;
@@ -424,7 +427,22 @@ namespace taskt.UI.CustomControls
 
             inputBox.Name = parameterName;
             return inputBox;
+        }
+        public static Control CreateDefaultCheckBoxFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo)
+        {
+            var checkBox = new CheckBox();
+            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            var theme = CurrentEditor.Theme.Checkbox;
+            checkBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            checkBox.ForeColor = theme.FontColor;
+            checkBox.BackColor = theme.BackColor;
+            checkBox.DataBindings.Add("Checked", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
 
+            var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)pInfo.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
+            checkBox.Text = desc.propertyDescription;
+
+            checkBox.Name = parameterName;
+            return checkBox;
         }
         public static Control CreateDropdownFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
         {
@@ -479,7 +497,6 @@ namespace taskt.UI.CustomControls
             inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
 
             return inputBox;
-
         }
 
         public static List<Control> GetControlGroup(List<Control> ctrls, string parameterName, string nextParameterName = "")
