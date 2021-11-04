@@ -755,8 +755,6 @@ namespace taskt.UI.CustomControls
                             newDGVColumn = new DataGridViewComboBoxColumn();
                             var so = colSetting.comboBoxItems.Split('\n');
                             ((DataGridViewComboBoxColumn)newDGVColumn).Items.AddRange(so);
-                            //((DataGridViewComboBoxColumn)newDGVColumn).DataSource = so;
-                            //newDGVColumn.ValueType = typeof(object);
                             break;
                         case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox:
                             newDGVColumn = new DataGridViewCheckBoxColumn();
