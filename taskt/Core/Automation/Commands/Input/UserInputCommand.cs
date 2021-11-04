@@ -4,6 +4,7 @@ using System.Data;
 using taskt.UI.Forms;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
 using taskt.UI.CustomControls;
 using System.Drawing;
 
@@ -39,15 +40,23 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, true, true, 400, 250, true, 2)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Type", "Input Type", false, Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox, "TextBox\nComboBox\nCheckBox", "TextBox")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Label", "Input Label", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Size", "Input Size (X,Y)", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("DefaultValue", "Default Value", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("UserInput", "User Input", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("ApplyToVariable", "Apply To Variable", false)]
+        [Attributes.PropertyAttributes.PropertyCustomUIHelper("Add Input Parameter", "AddInputParameterRow", "addrow")]
         public DataTable v_UserInputConfig { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
         private DataGridView UserInputGridViewHelper;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private CommandItemControl AddRowControl;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private CommandItemControl AddRowControl;
 
         public UserInputCommand()
         {
@@ -56,17 +65,17 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            v_UserInputConfig = new DataTable();
-            v_UserInputConfig.TableName = DateTime.Now.ToString("UserInputParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-            v_UserInputConfig.Columns.Add("Type");
-            v_UserInputConfig.Columns.Add("Label");
-            v_UserInputConfig.Columns.Add("Size");
-            v_UserInputConfig.Columns.Add("DefaultValue");
-            v_UserInputConfig.Columns.Add("UserInput");
-            v_UserInputConfig.Columns.Add("ApplyToVariable");
+            //v_UserInputConfig = new DataTable();
+            //v_UserInputConfig.TableName = DateTime.Now.ToString("UserInputParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+            //v_UserInputConfig.Columns.Add("Type");
+            //v_UserInputConfig.Columns.Add("Label");
+            //v_UserInputConfig.Columns.Add("Size");
+            //v_UserInputConfig.Columns.Add("DefaultValue");
+            //v_UserInputConfig.Columns.Add("UserInput");
+            //v_UserInputConfig.Columns.Add("ApplyToVariable");
 
-            v_InputHeader = "Please Provide Input";
-            v_InputDirections = "Directions: Please fill in the following fields";
+            this.v_InputHeader = "Please Provide Input";
+            this.v_InputDirections = "Directions: Please fill in the following fields";
         }
 
         public override void RunCommand(object sender)
@@ -160,64 +169,77 @@ namespace taskt.Core.Automation.Commands
 
             //UserInputGridViewHelper = new DataGridView();
             //UserInputGridViewHelper.DataBindings.Add("DataSource", this, "v_UserInputConfig", false, DataSourceUpdateMode.OnPropertyChanged);
-            UserInputGridViewHelper = CommandControls.CreateDataGridView(this, "v_UserInputConfig", true, true, false, 400, 250, true, 2);
+            //UserInputGridViewHelper = CommandControls.CreateDataGridView(this, "v_UserInputConfig", true, true, false, 400, 250, true, 2);
+            //UserInputGridViewHelper.CellClick += UserInputGridViewHelper_CellClick;
+
+            //var typefield = new DataGridViewComboBoxColumn();
+            //typefield.Items.Add("TextBox");
+            //typefield.Items.Add("CheckBox");
+            //typefield.Items.Add("ComboBox");
+            //typefield.HeaderText = "Input Type";
+            //typefield.DataPropertyName = "Type";
+            //UserInputGridViewHelper.Columns.Add(typefield);
+
+            //var field = new DataGridViewTextBoxColumn();
+            //field.HeaderText = "Input Label";
+            //field.DataPropertyName = "Label";
+            //UserInputGridViewHelper.Columns.Add(field);
+
+
+            //field = new DataGridViewTextBoxColumn();
+            //field.HeaderText = "Input Size (X,Y)";
+            //field.DataPropertyName = "Size";
+            //UserInputGridViewHelper.Columns.Add(field);
+
+            //field = new DataGridViewTextBoxColumn();
+            //field.HeaderText = "Default Value";
+            //field.DataPropertyName = "DefaultValue";
+            //UserInputGridViewHelper.Columns.Add(field);
+
+            //field = new DataGridViewTextBoxColumn();
+            //field.HeaderText = "Assigned Variable";
+            //field.DataPropertyName = "ApplyToVariable";
+            //UserInputGridViewHelper.Columns.Add(field);
+
+
+            //UserInputGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            //UserInputGridViewHelper.AllowUserToAddRows = false;
+            //UserInputGridViewHelper.AllowUserToDeleteRows = false;
+
+
+            //AddRowControl = new CommandItemControl();
+            //AddRowControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            //AddRowControl.ForeColor = Color.AliceBlue;
+            //AddRowControl.Font = new Font("Segoe UI Semilight", 10);
+            //AddRowControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
+            //AddRowControl.CommandDisplay = "Add Input Parameter";
+            //AddRowControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
+
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputHeader", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputDirections", this, editor));
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserInputConfig", this));
+            //RenderedControls.Add(AddRowControl);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserInputConfig", this, new Control[] { UserInputGridViewHelper }, editor));
+            //RenderedControls.Add(UserInputGridViewHelper);
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            UserInputGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_UserInputConfig")).FirstOrDefault();
             UserInputGridViewHelper.CellClick += UserInputGridViewHelper_CellClick;
-
-            var typefield = new DataGridViewComboBoxColumn();
-            typefield.Items.Add("TextBox");
-            typefield.Items.Add("CheckBox");
-            typefield.Items.Add("ComboBox");
-            typefield.HeaderText = "Input Type";
-            typefield.DataPropertyName = "Type";
-            UserInputGridViewHelper.Columns.Add(typefield);
-
-            var field = new DataGridViewTextBoxColumn();
-            field.HeaderText = "Input Label";
-            field.DataPropertyName = "Label";
-            UserInputGridViewHelper.Columns.Add(field);
-
-
-            field = new DataGridViewTextBoxColumn();
-            field.HeaderText = "Input Size (X,Y)";
-            field.DataPropertyName = "Size";
-            UserInputGridViewHelper.Columns.Add(field);
-
-            field = new DataGridViewTextBoxColumn();
-            field.HeaderText = "Default Value";
-            field.DataPropertyName = "DefaultValue";
-            UserInputGridViewHelper.Columns.Add(field);
-
-            field = new DataGridViewTextBoxColumn();
-            field.HeaderText = "Assigned Variable";
-            field.DataPropertyName = "ApplyToVariable";
-            UserInputGridViewHelper.Columns.Add(field);
-
-
-            UserInputGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            UserInputGridViewHelper.AllowUserToAddRows = false;
-            UserInputGridViewHelper.AllowUserToDeleteRows = false;
-
-
-            AddRowControl = new CommandItemControl();
-            AddRowControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            AddRowControl.ForeColor = Color.AliceBlue;
-            AddRowControl.Font = new Font("Segoe UI Semilight", 10);
-            AddRowControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
-            AddRowControl.CommandDisplay = "Add Input Parameter";
-            AddRowControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputHeader", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputDirections", this, editor));
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserInputConfig", this));
-            RenderedControls.Add(AddRowControl);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserInputConfig", this, new Control[] { UserInputGridViewHelper }, editor));
-            RenderedControls.Add(UserInputGridViewHelper);
 
             return RenderedControls;
 
         }
 
-        private void AddInputParameter(object sender, EventArgs e, frmCommandEditor editor)
+        //private void AddInputParameter(object sender, EventArgs e, frmCommandEditor editor)
+        //{
+        //    var newRow = v_UserInputConfig.NewRow();
+        //    newRow["Size"] = "500,100";
+        //    v_UserInputConfig.Rows.Add(newRow);
+        //}
+
+        private void AddInputParameterRow(object sender, EventArgs e)
         {
             var newRow = v_UserInputConfig.NewRow();
             newRow["Size"] = "500,100";
