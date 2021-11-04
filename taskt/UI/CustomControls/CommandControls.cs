@@ -771,7 +771,6 @@ namespace taskt.UI.CustomControls
                 if (createdDGV.AllowUserToAddRows)
                 {
                     var newRow = targetDT.NewRow();
-                    //createdDGV.DataError;
                     createdDGV.Rows.Add(newRow);
                 }
             }
