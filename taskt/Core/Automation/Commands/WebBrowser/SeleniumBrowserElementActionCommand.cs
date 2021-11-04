@@ -810,6 +810,10 @@ namespace taskt.Core.Automation.Commands
 
         private void ElementsGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (ElementsGridViewHelper.Rows.Count == 0)
+            {
+                return;
+            }
             if (e.ColumnIndex >= 0)
             {
                 if (e.ColumnIndex == 1)
