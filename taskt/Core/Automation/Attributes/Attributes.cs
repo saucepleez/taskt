@@ -130,6 +130,19 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyCustomUIHelper : System.Attribute
+    {
+        public string labelText;
+        public string methodName;
+        public string nameKey;
+        public PropertyCustomUIHelper(string labelText, string methodName, string nameKey = "")
+        {
+            this.labelText = labelText;
+            this.methodName = methodName;
+            this.nameKey = nameKey;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyUISelectionOption : System.Attribute
     {
         public string uiOption;
@@ -257,13 +270,15 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public bool readOnly = false;
         public DataGridViewColumnType type = DataGridViewColumnType.TextBox;
         public string comboBoxItems = "";
-        public PropertyDataGridViewColumnSettings(string columnName, string headerText, bool readOnly = false, DataGridViewColumnType type = DataGridViewColumnType.TextBox, string comboBoxItems = "")
+        public string defaultValue = "";
+        public PropertyDataGridViewColumnSettings(string columnName, string headerText, bool readOnly = false, DataGridViewColumnType type = DataGridViewColumnType.TextBox, string comboBoxItems = "", string defaultValue = null)
         {
             this.columnName = columnName;
             this.headerText = headerText;
             this.readOnly = readOnly;
             this.type = type;
             this.comboBoxItems = comboBoxItems;
+            this.defaultValue = defaultValue;
         }
         public enum DataGridViewColumnType
         {

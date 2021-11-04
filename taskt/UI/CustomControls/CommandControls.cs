@@ -160,8 +160,6 @@ namespace taskt.UI.CustomControls
             var controlList = new List<Control>();
 
             var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { createdInput }, editor, variableProperties);
-
             controlList.Add(label);
 
             var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
@@ -172,11 +170,19 @@ namespace taskt.UI.CustomControls
                 controlList.Add(label2);
             }
 
+            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { createdInput }, editor, variableProperties);
             controlList.AddRange(helpers);
             if (additionalLinks != null)
             {
                 controlList.AddRange(additionalLinks);
             }
+            
+            var cumstomHelpers = CreateCustomUIHelperFor(parameterName, parent, new Control[] { createdInput }, editor, variableProperties);
+            if (cumstomHelpers.Count > 0)
+            {
+                controlList.AddRange(cumstomHelpers);
+            }
+
             controlList.Add(createdInput);
 
             return controlList;
@@ -557,7 +563,7 @@ namespace taskt.UI.CustomControls
                 helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
                 helperControl.ForeColor = theme.FontColor;
                 helperControl.BackColor = theme.BackColor;
-                helperControl.Name = parameterName + "_helper_" + count.ToString(); ;
+                helperControl.Name = parameterName + "_helper_" + count.ToString();
                 helperControl.Tag = targetControls.FirstOrDefault();
                 helperControl.HelperType = attrib.additionalHelper;
 
@@ -672,6 +678,38 @@ namespace taskt.UI.CustomControls
             return controlList;
 
         }
+
+        public static List<Control> CreateCustomUIHelperFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, UI.Forms.frmCommandEditor editor, PropertyInfo pInfo)
+        {
+            List<Control> ctrls = new List<Control>();
+
+            var attrs = (Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelper[])pInfo.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelper));
+
+            if (attrs.Length > 0)
+            {
+                int counter = 0;
+                Type parentType = parent.GetType();
+                foreach (var attr in attrs)
+                {
+                    var link = CreateUIHelper();
+                    link.CommandDisplay = attr.labelText;
+                    link.Name = parameterName + "_customhelper_" + ((attr.nameKey == "") ? counter.ToString() : attr.nameKey);
+                    link.Tag = targetControls.FirstOrDefault();
+
+                    var trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+                    
+                    EventHandler dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
+
+                    link.Click += dMethod;
+
+                    ctrls.Add(link);
+
+                    counter++;
+                }
+            }
+            return ctrls;
+        }
+
         /// <summary>
         /// This method call & wrap CreateDataGridView(object, string, PropertyInfo)
         /// </summary>
@@ -705,6 +743,7 @@ namespace taskt.UI.CustomControls
                 foreach (var colSetting in columnProp)
                 {
                     targetDT.Columns.Add(colSetting.columnName);
+                    targetDT.Columns[targetDT.Columns.Count - 1].DefaultValue = colSetting.defaultValue;
 
                     DataGridViewColumn newDGVColumn = null;
                     switch (colSetting.type)
@@ -714,7 +753,10 @@ namespace taskt.UI.CustomControls
                             break;
                         case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox:
                             newDGVColumn = new DataGridViewComboBoxColumn();
-                            ((DataGridViewComboBoxColumn)newDGVColumn).Items.AddRange(colSetting.comboBoxItems.Split('\n'));
+                            var so = colSetting.comboBoxItems.Split('\n');
+                            ((DataGridViewComboBoxColumn)newDGVColumn).Items.AddRange(so);
+                            //((DataGridViewComboBoxColumn)newDGVColumn).DataSource = so;
+                            //newDGVColumn.ValueType = typeof(object);
                             break;
                         case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox:
                             newDGVColumn = new DataGridViewCheckBoxColumn();
@@ -725,8 +767,13 @@ namespace taskt.UI.CustomControls
                     newDGVColumn.ReadOnly = colSetting.readOnly;
                     createdDGV.Columns.Add(newDGVColumn);
                 }
-                var newRow = targetDT.NewRow();
-                createdDGV.Rows.Add(newRow);
+
+                if (createdDGV.AllowUserToAddRows)
+                {
+                    var newRow = targetDT.NewRow();
+                    //createdDGV.DataError;
+                    createdDGV.Rows.Add(newRow);
+                }
             }
             return createdDGV;
         }
