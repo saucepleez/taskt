@@ -151,15 +151,25 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.uiOption = description;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    //[System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    //public sealed class PropertySelectionChangeEvent : System.Attribute
+    //{
+    //    public string uiOption;
+    //    public PropertySelectionChangeEvent(string description)
+    //    {
+    //        this.uiOption = description;
+    //    }
+    //}
+    [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertySelectionChangeEvent : System.Attribute
     {
-        public string uiOption;
-        public PropertySelectionChangeEvent(string description)
+        public string methodName;
+        public PropertySelectionChangeEvent(string methodName)
         {
-            this.uiOption = description;
+            this.methodName = methodName;
         }
     }
+
     [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyIsOptional : System.Attribute
     {
@@ -285,6 +295,22 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             TextBox,
             ComboBox,
             CheckBox
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyDataGridViewCellEditEvent : System.Attribute
+    {
+        public string methodName;
+        public DataGridViewCellEvent eventRaise;
+        public PropertyDataGridViewCellEditEvent(string methodName, DataGridViewCellEvent eventRaise)
+        {
+            this.methodName = methodName;
+            this.eventRaise = eventRaise;
+        }
+        public enum DataGridViewCellEvent
+        {
+            CellClick,
+            CellBeginEdit
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]

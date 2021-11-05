@@ -17,6 +17,15 @@ namespace taskt.UI.CustomControls
     {
         public static UI.Forms.frmCommandEditor CurrentEditor { get; set; }
 
+        public enum CommandControlType
+        {
+            Body,
+            Label,
+            Helpers,
+            CunstomHelpers,
+            SecondLabel
+        }
+
         public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
         {
             var controlList = new List<string>();
@@ -473,8 +482,8 @@ namespace taskt.UI.CustomControls
                 variableProperties = pInfo;
             }
 
+            // add Items
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption), true);
-
             foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption option in propertyAttributesAssigned)
             {
                 inputBox.Items.Add(option.uiOption);
@@ -483,8 +492,18 @@ namespace taskt.UI.CustomControls
             inputBox.KeyUp += (sender, e) => ComboBoxKeyUp(sender, e);
             inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
 
-            return inputBox;
+            // set selection change event
+            var changeEvent = (Core.Automation.Attributes.PropertyAttributes.PropertySelectionChangeEvent)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySelectionChangeEvent));
+            if (changeEvent != null)
+            {
+                var trgMethod = parent.GetType().GetMethod(changeEvent.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
+                EventHandler dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
+
+                inputBox.SelectedValueChanged += dMethod;
+            }
+
+            return inputBox;
         }
         public static ComboBox CreateStandardComboboxFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
         {
@@ -505,7 +524,37 @@ namespace taskt.UI.CustomControls
             return inputBox;
         }
 
-        public static List<Control> GetControlGroup(List<Control> ctrls, string parameterName, string nextParameterName = "")
+        public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
+        {
+            List<Control> ret = new List<Control>();
+
+            switch (t)
+            {
+                case CommandControlType.Body:
+                    ret.Add(ctrls.Where(c => (c.Name == parameterName)).FirstOrDefault());
+                    break;
+
+                case CommandControlType.Label:
+                    ret.Add(ctrls.Where(c => (c.Name == "lbl_" + parameterName)).FirstOrDefault());
+                    break;
+
+                case CommandControlType.SecondLabel:
+                    ret.Add(ctrls.Where(c => (c.Name == "lbl2_" + parameterName)).FirstOrDefault());
+                    break;
+
+                case CommandControlType.Helpers:
+                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_helper_"))).ToArray());
+                    break;
+
+                case CommandControlType.CunstomHelpers:
+                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_customhelper_"))).ToArray());
+                    break;
+            }
+
+            return ret;
+        }
+
+        public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
         {
             List<Control> ret = new List<Control>();
 
@@ -696,7 +745,7 @@ namespace taskt.UI.CustomControls
                     link.Name = parameterName + "_customhelper_" + ((attr.nameKey == "") ? counter.ToString() : attr.nameKey);
                     link.Tag = targetControls.FirstOrDefault();
 
-                    var trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+                    var trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                     
                     EventHandler dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
 
@@ -770,6 +819,29 @@ namespace taskt.UI.CustomControls
                 {
                     var newRow = targetDT.NewRow();
                     createdDGV.Rows.Add(newRow);
+                }
+            }
+
+            var cellEvents = (Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent));
+            if (cellEvents.Length > 0)
+            {
+                var command = (Core.Automation.Commands.ScriptCommand)sourceCommand;
+                Type parentType = command.GetType();
+                foreach (var ev in cellEvents)
+                {
+                    var trgMethod = parentType.GetMethod(ev.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+                    switch (ev.eventRaise)
+                    {
+                        case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick:
+                            DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
+                            createdDGV.CellClick += clickMethod;
+                            break;
+                        case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit:
+                            DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
+                            createdDGV.CellBeginEdit += beginEditMethod;
+                            break;
+                    }
                 }
             }
             return createdDGV;
