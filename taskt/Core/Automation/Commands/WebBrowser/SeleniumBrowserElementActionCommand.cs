@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, true)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
         [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ElementsGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
@@ -598,10 +598,13 @@ namespace taskt.Core.Automation.Commands
             //ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
             //ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
             ElementsGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_WebActionParameterTable")[0];
+            
 
             //ElementActionDropdown = (ComboBox)ctrls.Where(t => (t.Name == "v_SeleniumElementAction")).FirstOrDefault();
             //ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
             ElementActionDropdown = (ComboBox)ctrls.GetControlsByName("v_SeleniumElementAction")[0];
+
+            //seleniumAction_SelectionChangeCommitted(null, null);
 
             //int idx = ctrls.FindIndex(t => (t.Name == "lbl_v_WebActionParameterTable"));
             //ElementParameterControls = new List<Control>();
@@ -616,8 +619,6 @@ namespace taskt.Core.Automation.Commands
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
             }
 
-            seleniumAction_SelectionChangeCommitted(null, null);
-
             return RenderedControls;
         }
 
@@ -630,9 +631,10 @@ namespace taskt.Core.Automation.Commands
 
         public void seleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            //Core.Automation.Commands.SeleniumBrowserElementActionCommand cmd = (Core.Automation.Commands.SeleniumBrowserElementActionCommand)this;
+            //DataTable actionParameters = cmd.v_WebActionParameterTable;
 
-            Core.Automation.Commands.SeleniumBrowserElementActionCommand cmd = (Core.Automation.Commands.SeleniumBrowserElementActionCommand)this;
-            DataTable actionParameters = cmd.v_WebActionParameterTable;
+            DataTable actionParameters = this.v_WebActionParameterTable;
 
             if (sender != null)
             {

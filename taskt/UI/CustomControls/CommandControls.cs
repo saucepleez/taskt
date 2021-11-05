@@ -500,7 +500,7 @@ namespace taskt.UI.CustomControls
 
                 EventHandler dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
 
-                inputBox.SelectedValueChanged += dMethod;
+                inputBox.SelectionChangeCommitted += dMethod;
             }
 
             return inputBox;
