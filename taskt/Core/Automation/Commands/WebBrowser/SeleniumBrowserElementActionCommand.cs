@@ -81,6 +81,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**, **Get Count**")]
         [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertySelectionChangeEvent("seleniumAction_SelectionChangeCommitted")]
         public string v_SeleniumElementAction { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
@@ -92,6 +93,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, false)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ElementsGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ElementsGridViewHelper_CellBeginEdit", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         public System.Data.DataTable v_WebActionParameterTable { get; set; }
 
 
@@ -591,12 +594,14 @@ namespace taskt.Core.Automation.Commands
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
 
-            ElementsGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_WebActionParameterTable")).FirstOrDefault();
-            ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
-            ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
+            //ElementsGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_WebActionParameterTable")).FirstOrDefault();
+            //ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
+            //ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
+            ElementsGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_WebActionParameterTable")[0];
 
-            ElementActionDropdown = (ComboBox)ctrls.Where(t => (t.Name == "v_SeleniumElementAction")).FirstOrDefault();
-            ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
+            //ElementActionDropdown = (ComboBox)ctrls.Where(t => (t.Name == "v_SeleniumElementAction")).FirstOrDefault();
+            //ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
+            ElementActionDropdown = (ComboBox)ctrls.GetControlsByName("v_SeleniumElementAction")[0];
 
             //int idx = ctrls.FindIndex(t => (t.Name == "lbl_v_WebActionParameterTable"));
             //ElementParameterControls = new List<Control>();
@@ -604,7 +609,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    ElementParameterControls.Add(ctrls[i]);
             //}
-            ElementParameterControls = CommandControls.GetControlGroup(ctrls, "v_WebActionParameterTable");
+            ElementParameterControls = ctrls.GetControlGroup("v_WebActionParameterTable");
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
@@ -810,7 +815,7 @@ namespace taskt.Core.Automation.Commands
 
         private void ElementsGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (ElementsGridViewHelper.Rows.Count == 0)
+            if ((ElementsGridViewHelper.Rows.Count == 0) || (e.RowIndex == -1))
             {
                 return;
             }
