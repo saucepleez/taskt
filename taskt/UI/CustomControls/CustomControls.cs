@@ -474,8 +474,11 @@ namespace taskt.UI
             // Dictionary
             {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"CreateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"GetDictionaryKeysListCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
             {"LoadDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"RemoveDictionaryItemCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"SetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
 
             // Engine
             {"ErrorHandlingCommand", "taskt.Properties.Resources.command_error"},

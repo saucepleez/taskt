@@ -185,6 +185,10 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeysListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\RemoveDictionaryItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\CheckDictionaryKeyExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\SetDictionaryValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsCommand.cs" />
