@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Keys", "Keys", false, Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Values", "Values", false, Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ColumnNameDataGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -110,8 +111,9 @@ namespace taskt.Core.Automation.Commands
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
 
-            ColumnNameDataGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
-            ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
+            //ColumnNameDataGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
+            //ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
+            ColumnNameDataGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
 
             return RenderedControls;
 
