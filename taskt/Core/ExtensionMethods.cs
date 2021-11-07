@@ -866,6 +866,11 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
         }
 
+        public static void StoreInUserVariable(this bool value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", sender, false);
+        }
+
         public static void StoreInUserVariable<Type>(this List<Type> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
             StoreInUserVariable(targetVariable, value, sender, false);

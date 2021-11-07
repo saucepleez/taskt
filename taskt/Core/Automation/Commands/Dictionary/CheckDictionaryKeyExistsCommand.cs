@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
             var vKey = v_Key.ConvertToUserVariable(sender);
 
             Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
-            (dic.ContainsKey(vKey) ? "TRUE" : "FALSE").StoreInUserVariable(engine, v_applyToVariable);
+            dic.ContainsKey(vKey).StoreInUserVariable(engine, v_applyToVariable);
         }
         
         public override List<Control> Render(frmCommandEditor editor)
