@@ -218,7 +218,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //find window
-            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
+            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
 
             //if window was not found
             if (windowElement == null)
@@ -249,14 +249,18 @@ namespace taskt.Core.Automation.Commands
                 {
                     searchMethod = "Contains";
                 }
-                ActivateWindowCommand activateWindow = new ActivateWindowCommand
+
+                if (searchMethod != "Exact match")
                 {
-                    v_WindowName = variableWindowName,
-                    v_SearchMethod = searchMethod
-                };
-                activateWindow.RunCommand(sender);
-                System.Threading.Thread.Sleep(500); // wait a bit
-                variableWindowName = User32Functions.GetActiveWindowTitle();
+                    ActivateWindowCommand activateWindow = new ActivateWindowCommand
+                    {
+                        v_WindowName = variableWindowName,
+                        v_SearchMethod = searchMethod
+                    };
+                    activateWindow.RunCommand(sender);
+                    System.Threading.Thread.Sleep(500); // wait a bit
+                    variableWindowName = User32Functions.GetActiveWindowTitle();
+                }
             }
 
             var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
