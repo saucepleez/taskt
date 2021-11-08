@@ -311,7 +311,7 @@ namespace taskt.Core
 
         public string convertToIntermediateVariableParser(string targetString, List<Core.Script.ScriptVariable> variables)
         {
-            Core.Automation.Engine.AutomationEngineInstance engine = new Automation.Engine.AutomationEngineInstance();
+            Core.Automation.Engine.AutomationEngineInstance engine = new Automation.Engine.AutomationEngineInstance(false);
             engine.engineSettings = this;
             engine.VariableList = variables;
             return Core.ExtensionMethods.ConvertToUserVariable_Intermediate(targetString, engine);

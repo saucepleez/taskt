@@ -42,13 +42,16 @@ namespace taskt.Core.Automation.Engine
         public bool AutoCalculateVariables { get; set; }
         public string TasktResult { get; set; } = "";
 
-        public Serilog.Core.Logger engineLogger;
+        private Serilog.Core.Logger engineLogger = null;
 
-        public AutomationEngineInstance()
+        public AutomationEngineInstance(bool enableLog = true)
         {
             //initialize logger
-            engineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
-            engineLogger.Information("Engine Class has been initialized");
+            if (enableLog)
+            {
+                engineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
+                WriteLog("Engine Class has been initialized");
+            }
 
             //initialize error tracking list
             ErrorsOccured = new List<ScriptError>();
@@ -74,12 +77,11 @@ namespace taskt.Core.Automation.Engine
 
             //this value can be later overriden by script
             AutoCalculateVariables = engineSettings.AutoCalcVariables;
-
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null, Dictionary<string, Core.Script.Script> preloadedTasks = null)
         {
-            engineLogger.Information("Client requesting to execute script using frmEngine");
+            WriteLog("Client requesting to execute script using frmEngine");
 
             tasktEngineUI = scriptEngine;
 
@@ -101,7 +103,7 @@ namespace taskt.Core.Automation.Engine
         }
         public void ExecuteScriptAsync(string filePath)
         {
-            engineLogger.Information("Client requesting to execute script independently");
+            WriteLog("Client requesting to execute script independently");
 
             new Thread(() =>
             {
@@ -111,7 +113,7 @@ namespace taskt.Core.Automation.Engine
         }
         public void ExecuteScriptXML(string xmlData)
         {
-            engineLogger.Information("Client requesting to execute script independently");
+            WriteLog("Client requesting to execute script independently");
 
             new Thread(() =>
             {
@@ -123,7 +125,6 @@ namespace taskt.Core.Automation.Engine
         public void ExecuteScript(string data, bool dataIsFile)
         {
             Core.Client.EngineBusy = true;
-
 
             try
             {
@@ -144,21 +145,19 @@ namespace taskt.Core.Automation.Engine
                     preLoadedTask = PreloadedTasks.Any(f => f.Key == data);
                 }
       
-
-              
                 //get automation script
                 Core.Script.Script automationScript;
                 if (dataIsFile && (!preLoadedTask))
                 {
                     ReportProgress("Deserializing File");
-                    engineLogger.Information("Script Path: " + data);
+                    WriteLog("Script Path: " + data);
                     FileName = data;              
                     automationScript = Core.Script.Script.DeserializeFile(data, engineSettings);
                 }
                 else if (dataIsFile && preLoadedTask)
                 {
                     ReportProgress("Using Preloaded Task");
-                    engineLogger.Information("Preloaded Script Path: " + data);
+                    WriteLog("Preloaded Script Path: " + data);
                     FileName = data;
                     automationScript = PreloadedTasks[data];
                 }
@@ -208,7 +207,6 @@ namespace taskt.Core.Automation.Engine
                     this.AppInstances.Add(instance.Key, instance.Value);
                 }
               
-              
                 //execute commands
                 foreach (var executionCommand in automationScript.Commands)
                 {
@@ -232,17 +230,11 @@ namespace taskt.Core.Automation.Engine
                     //mark finished
                     ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Successful);
                 }
-
-
             }
             catch (Exception ex)
             {
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
-
-         
-
-
         }
         public void ExecuteCommand(Core.Script.ScriptAction command)
         {
@@ -494,12 +486,9 @@ namespace taskt.Core.Automation.Engine
         {
             IsScriptPaused = false;
         }
-
-        
-
         public virtual void ReportProgress(string progress)
         {
-            engineLogger.Information(progress);
+            WriteLog(progress);
             ReportProgressEventArgs args = new ReportProgressEventArgs();
             args.ProgressUpdate = progress;
             //send log to server
@@ -510,7 +499,7 @@ namespace taskt.Core.Automation.Engine
         }
         public virtual void ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult result, string error = null)
         {
-            engineLogger.Information("Result Code: " + result.ToString());
+            WriteLog("Result Code: " + result.ToString());
 
             //add result variable if missing
             var resultVar = VariableList.Where(f => f.VariableName == "taskt.Result").FirstOrDefault();
@@ -527,7 +516,7 @@ namespace taskt.Core.Automation.Engine
 
             if (error == null)
             {
-                engineLogger.Information("Error: None");
+                WriteLog("Error: None");
 
                 if (taskModel != null && serverSettings.ServerConnectionEnabled)
                 {
@@ -547,7 +536,7 @@ namespace taskt.Core.Automation.Engine
                
             else
             {
-                engineLogger.Information("Error: " + error);
+                WriteLog("Error: " + error);
 
                 if (taskModel != null)
                 {
@@ -605,7 +594,7 @@ namespace taskt.Core.Automation.Engine
             LineNumberChangedEvent?.Invoke(this, args);
         }
 
-       public enum EngineStatus
+        public enum EngineStatus
         {
             Loaded, Running, Paused, Finished
         }
@@ -621,6 +610,14 @@ namespace taskt.Core.Automation.Engine
             settings.Formatting = Formatting.Indented;
 
             return  JsonConvert.SerializeObject(this, settings);
+        }
+
+        public void WriteLog(string logText)
+        {
+            if (engineLogger != null)
+            {
+                engineLogger.Information(logText);
+            }
         }
 
     }
