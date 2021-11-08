@@ -64,7 +64,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Load DataTable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            v_ContainsHeaderRow = "Yes";
+
+            this.v_ContainsHeaderRow = "Yes";
         }
 
         public override void RunCommand(object sender)
