@@ -34,6 +34,11 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Data", "Data", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("AddDataGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [Attributes.PropertyAttributes.PropertyCustomUIHelper("Load Column Names From Existing Table", "LoadSchemaControl_Click", "load_column")]
         public DataTable v_AddDataDataTable { get; set; }
 
 
@@ -53,13 +58,13 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             //initialize data table
-            this.v_AddDataDataTable = new System.Data.DataTable
-            {
-                TableName = "AddDataDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            };
+            //this.v_AddDataDataTable = new System.Data.DataTable
+            //{
+            //    TableName = "AddDataDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
+            //};
 
-            this.v_AddDataDataTable.Columns.Add("Column Name");
-            this.v_AddDataDataTable.Columns.Add("Data");
+            //this.v_AddDataDataTable.Columns.Add("Column Name");
+            //this.v_AddDataDataTable.Columns.Add("Data");
         }
 
         public override void RunCommand(object sender)
@@ -111,15 +116,17 @@ namespace taskt.Core.Automation.Commands
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
 
-            AddDataGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, (t => t.Name == "v_AddDataDataTable")).FirstOrDefault();
-            AddDataGridViewHelper.Tag = "column-a-editable";
-            AddDataGridViewHelper.CellClick += AddDataGridViewHelper_CellClick;
+            //AddDataGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, (t => t.Name == "v_AddDataDataTable")).FirstOrDefault();
+            //AddDataGridViewHelper.Tag = "column-a-editable";
+            //AddDataGridViewHelper.CellClick += AddDataGridViewHelper_CellClick;
 
-            taskt.UI.CustomControls.CommandItemControl loadSchemaControl = new taskt.UI.CustomControls.CommandItemControl();
-            loadSchemaControl.ForeColor = System.Drawing.Color.White;
-            loadSchemaControl.CommandDisplay = "Load Column Names From Existing Table";
-            loadSchemaControl.Click += LoadSchemaControl_Click;
-            RenderedControls.Add(loadSchemaControl);
+            //taskt.UI.CustomControls.CommandItemControl loadSchemaControl = new taskt.UI.CustomControls.CommandItemControl();
+            //loadSchemaControl.ForeColor = System.Drawing.Color.White;
+            //loadSchemaControl.CommandDisplay = "Load Column Names From Existing Table";
+            //loadSchemaControl.Click += LoadSchemaControl_Click;
+            //RenderedControls.Add(loadSchemaControl);
+
+            AddDataGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_AddDataDataTable")[0];
 
             DataTableCreationCommands = editor.configuredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
 
@@ -141,7 +148,7 @@ namespace taskt.Core.Automation.Commands
             //    selectionForm.lstVariables.Items.Add(item.v_DataTableName);
             //}
 
-           var result = selectionForm.ShowDialog();
+            var result = selectionForm.ShowDialog();
 
             if (result == DialogResult.OK)
             {

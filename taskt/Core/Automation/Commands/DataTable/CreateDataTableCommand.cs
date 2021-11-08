@@ -35,6 +35,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ColumnNamesGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -49,12 +52,12 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             //initialize data table
-            this.v_ColumnNameDataTable = new System.Data.DataTable
-            {
-                TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            };
+            //this.v_ColumnNameDataTable = new System.Data.DataTable
+            //{
+            //    TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
+            //};
 
-            this.v_ColumnNameDataTable.Columns.Add("Column Name");
+            //this.v_ColumnNameDataTable.Columns.Add("Column Name");
         }
 
         public override void RunCommand(object sender)
@@ -102,9 +105,10 @@ namespace taskt.Core.Automation.Commands
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
 
-            ColumnNamesGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
-            ColumnNamesGridViewHelper.Tag = "column-a-editable";
-            ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
+            //ColumnNamesGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
+            //ColumnNamesGridViewHelper.Tag = "column-a-editable";
+            //ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
+            ColumnNamesGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
 
             return RenderedControls;
         }
