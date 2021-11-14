@@ -270,7 +270,8 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_0_45(XDocument doc)
         {
-            IEnumerable<XElement> cmds = doc.Descendants("ScriptCommand").Where(el => (
+            // change "Start with" -> "Starts with", "End with" -> "Ends with"
+            IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
                     (string)el.Attribute("CommandName") == "ActivateWindowCommand" ||
                     (string)el.Attribute("CommandName") == "CheckWindowNameExistsCommand" ||
                     (string)el.Attribute("CommandName") == "CloseWindowCommand" ||
@@ -287,7 +288,7 @@ namespace taskt.Core.Script
                     (string)el.Attribute("CommandName") == "UIAutomationCommand"
                 )
             );
-            foreach(var cmd in cmds)
+            foreach(var cmd in cmdWindowNames)
             {
                 if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
                 {
@@ -298,6 +299,17 @@ namespace taskt.Core.Script
                     cmd.SetAttributeValue("v_SearchMethod", "Ends with");
                 }
             }
+
+            // ExcelCreateDataset -> LoadDataTable
+            IEnumerable<XElement> cmdExcels = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "ExcelCreateDatasetCommand"));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in cmdExcels)
+            {
+                cmd.SetAttributeValue("CommandName", "LoadDataTableCommand");
+                cmd.SetAttributeValue(ns + "type", "LoadDataTableCommand");
+            }
+
             return doc;
         }
     }
