@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 using System.Data;
 
 namespace taskt.Core.Script
@@ -160,25 +161,46 @@ namespace taskt.Core.Script
         /// </summary>
         public static Script DeserializeFile(string scriptFilePath, Core.EngineSettings engineSettings)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Script));
+            XDocument xmlScript = XDocument.Load(scriptFilePath);
 
-            //open file stream from file
-            using (System.IO.FileStream fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
+            // pre-convert
+            convertOldScript(xmlScript);
+
+            using (var reader = xmlScript.Root.CreateReader())
             {
-                //read and return data
-                XmlReader reader = XmlReader.Create(fs);
-                Script deserializedData = (Script)serializer.Deserialize(reader);
+                XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                Script des = (Script)serializer.Deserialize(reader);
 
                 // release
                 serializer = null;
 
-                foreach (var cmd in deserializedData.Commands)
+                foreach (var cmd in des.Commands)
                 {
                     cmd.ConvertToRaw(engineSettings);
                 }
 
-                return deserializedData;
+                xmlScript = null;
+
+                return des;
             }
+
+            //open file stream from file
+            //using (System.IO.FileStream fs = new System.IO.FileStream(scriptFilePath, System.IO.FileMode.Open))
+            //{
+            //    //read and return data
+            //    XmlReader reader = XmlReader.Create(fs);
+            //    Script deserializedData = (Script)serializer.Deserialize(reader);
+
+            //    // release
+            //    serializer = null;
+
+            //    foreach (var cmd in deserializedData.Commands)
+            //    {
+            //        cmd.ConvertToRaw(engineSettings);
+            //    }
+
+            //    return deserializedData;
+            //}
         }
         /// <summary>
         /// Deserializes an XML string into user-defined commands (server sends a string to the client)
@@ -225,6 +247,58 @@ namespace taskt.Core.Script
                 var ret = (Script)serializer.Deserialize(reader);
                 return ret;
             }
+        }
+
+        private static XDocument convertOldScript(XDocument doc)
+        {
+            //IEnumerable<XElement> cmds = from el in doc.Descendants("ScriptCommand")
+            //                             where (string)el.Attribute("CommandName") == "ActivateWindowCommand"
+            //                             select el;
+
+            //foreach (var cmd in cmds)
+            //{
+            //    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+            //    {
+            //        cmd.Attribute("v_SearchMethod").SetValue("Starts with");
+            //    }
+            //}
+
+            convertTo3_5_0_45(doc);
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_45(XDocument doc)
+        {
+            IEnumerable<XElement> cmds = doc.Descendants("ScriptCommand").Where(el => (
+                    (string)el.Attribute("CommandName") == "ActivateWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "CheckWindowNameExistsCommand" ||
+                    (string)el.Attribute("CommandName") == "CloseWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "GetWindowNamesCommand" ||
+                    (string)el.Attribute("CommandName") == "GetWindowPositionCommand" ||
+                    (string)el.Attribute("CommandName") == "GetWindowStateCommand" ||
+                    (string)el.Attribute("CommandName") == "MoveWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "ResizeWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "SetWindowStateCommand" ||
+                    (string)el.Attribute("CommandName") == "WaitForWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "SendAdvancedKeyStrokesCommand" ||
+                    (string)el.Attribute("CommandName") == "SendHotkeyCommand" ||
+                    (string)el.Attribute("CommandName") == "SendKeysCommand" ||
+                    (string)el.Attribute("CommandName") == "UIAutomationCommand"
+                )
+            );
+            foreach(var cmd in cmds)
+            {
+                if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+                {
+                    cmd.SetAttributeValue("v_SearchMethod", "Starts with");
+                }
+                if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
+                {
+                    cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+                }
+            }
+            return doc;
         }
     }
 
