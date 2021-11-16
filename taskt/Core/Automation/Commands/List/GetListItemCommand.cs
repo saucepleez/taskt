@@ -11,8 +11,7 @@ using Microsoft.Office.Interop.Outlook;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.SubGruop("List")]
+    [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to get an item from a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get an item from a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

@@ -206,6 +206,8 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\AddToVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\SetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardClearTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeBrowserCommand.cs" />
@@ -239,8 +241,8 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFilesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\GetFoldersCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\GetListCountCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\GetListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\MoveFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookDeleteEmailsCommand.cs" />
