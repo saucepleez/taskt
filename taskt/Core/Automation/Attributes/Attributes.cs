@@ -362,17 +362,18 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]
-    public sealed class PropertyParameterPorpose : System.Attribute
+    public sealed class PropertyParameterDirection : System.Attribute
     {
-        public ParameterPorpose porpose = ParameterPorpose.unknown;
-        public PropertyParameterPorpose(ParameterPorpose porpose)
+        public ParameterDirection porpose = ParameterDirection.Unknown;
+        public PropertyParameterDirection(ParameterDirection porpose)
         {
             this.porpose = porpose;
         }
-        public enum ParameterPorpose
+        public enum ParameterDirection
         {
-            unknown,
-            OutputVariableName
+            Unknown,
+            Input,
+            Output
         }
     }
 }
