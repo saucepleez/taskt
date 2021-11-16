@@ -52,8 +52,12 @@ namespace taskt.Core.Automation.Commands
             
             Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
 
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(dic);
-            json.StoreInUserVariable(engine, v_OutputVariable);
+            List<string> lst = new List<string>();
+            foreach(var itm in dic)
+            {
+                lst.Add(itm.Value);
+            }
+            lst.StoreInUserVariable(engine, v_OutputVariable);
         }
         
         public override List<Control> Render(frmCommandEditor editor)

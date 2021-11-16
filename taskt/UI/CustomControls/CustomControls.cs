@@ -475,6 +475,7 @@ namespace taskt.UI
             {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"CreateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToJSONCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"ConvertDictionaryToListCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryKeyFromValueCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryKeysListCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},

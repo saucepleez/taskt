@@ -185,6 +185,7 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeysListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\RemoveDictionaryItemCommand.cs" />

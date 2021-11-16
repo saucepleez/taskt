@@ -57,6 +57,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddDictionaryCommand))]
     [XmlInclude(typeof(CreateDictionaryCommand))]
     [XmlInclude(typeof(ConvertDictionaryToJSONCommand))]
+    [XmlInclude(typeof(ConvertDictionaryToListCommand))]
     [XmlInclude(typeof(GetDictionaryKeyFromValueCommand))]
     [XmlInclude(typeof(GetDictionaryKeysListCommand))]
     [XmlInclude(typeof(GetDictionaryValueCommand))]
