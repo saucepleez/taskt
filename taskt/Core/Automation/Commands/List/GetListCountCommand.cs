@@ -95,7 +95,14 @@ namespace taskt.Core.Automation.Commands
 
             var listVariable = v_ListName.GetRawVariable(engine);
             dynamic listToCount;
-            if (listVariable.VariableValue.GetType().GetGenericTypeDefinition() != typeof(List<>))
+
+            Type listType = listVariable.VariableValue.GetType();
+            if (listType.IsGenericType && (listType.GetGenericTypeDefinition() == typeof(List<>)))
+            {
+                // List<T>
+                listToCount = listVariable.VariableValue;
+            }
+            else
             {
                 if ((listVariable.VariableValue is string) &&
                         listVariable.VariableValue.ToString().StartsWith("[") && listVariable.VariableValue.ToString().EndsWith("]") && listVariable.VariableValue.ToString().Contains(","))
@@ -117,11 +124,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     throw new Exception(v_ListName + " is not List");
                 }
-            }
-            else
-            {
-                // List<T>
-                listToCount = listVariable.VariableValue;
             }
 
             string count = listToCount.Count.ToString();
