@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a existing List.")]
-        [Attributes.PropertyAttributes.SampleUsage("**{{{myData}}}** or **[1,2,3]**")]
+        [Attributes.PropertyAttributes.SampleUsage("**myList** or **{{{myList}}}** or **[1,2,3]**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_ListName { get; set; }
