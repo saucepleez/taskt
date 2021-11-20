@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using Microsoft.Office.Interop.Outlook;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -56,74 +55,137 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
-            int index = int.Parse(itemIndex);
-            //get variable by regular name
-            Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == v_ListName).FirstOrDefault();
+            //var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
+            //int index = int.Parse(itemIndex);
+            ////get variable by regular name
+            //Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == v_ListName).FirstOrDefault();
 
-            //user may potentially include brackets []
-            if (listVariable == null)
-            {
-                listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == v_ListName).FirstOrDefault();
-            }
+            ////user may potentially include brackets []
+            //if (listVariable == null)
+            //{
+            //    listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == v_ListName).FirstOrDefault();
+            //}
 
-            //if still null then throw exception
+            ////if still null then throw exception
+            //if (listVariable == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
+
+            //dynamic listToIndex;
+            //if (listVariable.VariableValue is List<string>)
+            //{
+            //    listToIndex = (List<string>)listVariable.VariableValue;
+            //}
+            //else if (listVariable.VariableValue is List<MailItem>)
+            //{
+            //    listToIndex = (List<MailItem>)listVariable.VariableValue;
+            //}
+            //else if (listVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
+            //{
+            //    listToIndex = (List<OpenQA.Selenium.IWebElement>)listVariable.VariableValue;
+            //}
+            //else if ((listVariable.VariableValue.ToString().StartsWith("[")) && (listVariable.VariableValue.ToString().EndsWith("]")) && (listVariable.VariableValue.ToString().Contains(",")))
+            //{
+            //    //automatically handle if user has given a json array
+            //    Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
+
+            //    var itemList = new List<string>();
+            //    foreach (var jsonItem in jsonArray)
+            //    {
+            //        var value = (Newtonsoft.Json.Linq.JValue)jsonItem;
+            //        itemList.Add(value.ToString());
+            //    }
+
+            //    listVariable.VariableValue = itemList;
+            //    listToIndex = itemList;
+            //}
+            //else
+            //{
+            //    throw new System.Exception("Complex Variable List Type<T> Not Supported");
+            //}
+
+            //var item = listToIndex[index];
+
+            //Script.ScriptVariable newListItem = new Script.ScriptVariable
+            //{
+            //    VariableName = v_UserVariableName,
+            //    VariableValue = item
+            //};
+
+            ////Overwrites variable if it already exists
+            //if (engine.VariableList.Exists(x => x.VariableName == newListItem.VariableName))
+            //{
+            //    Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newListItem.VariableName).FirstOrDefault();
+            //    engine.VariableList.Remove(temp);
+            //}
+            //engine.VariableList.Add(newListItem);
+
+            var listVariable = v_ListName.GetRawVariable(engine);
             if (listVariable == null)
             {
                 throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
             dynamic listToIndex;
+            var varType = listVariable.VariableValue.GetType();
             if (listVariable.VariableValue is List<string>)
             {
                 listToIndex = (List<string>)listVariable.VariableValue;
             }
-            else if (listVariable.VariableValue is List<MailItem>)
+            else if (varType.IsGenericType && (varType.GetGenericTypeDefinition() == typeof(List<>)))
             {
-                listToIndex = (List<MailItem>)listVariable.VariableValue;
-            }
-            else if (listVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
-            {
-                listToIndex = (List<OpenQA.Selenium.IWebElement>)listVariable.VariableValue;
-            }
-            else if ((listVariable.VariableValue.ToString().StartsWith("[")) && (listVariable.VariableValue.ToString().EndsWith("]")) && (listVariable.VariableValue.ToString().Contains(",")))
-            {
-                //automatically handle if user has given a json array
-                Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
-
-                var itemList = new List<string>();
-                foreach (var jsonItem in jsonArray)
-                {
-                    var value = (Newtonsoft.Json.Linq.JValue)jsonItem;
-                    itemList.Add(value.ToString());
-                }
-
-                listVariable.VariableValue = itemList;
-                listToIndex = itemList;
+                listToIndex = listVariable.VariableValue;
             }
             else
             {
-                throw new System.Exception("Complex Variable List Type<T> Not Supported");
+                var listValue = listVariable.VariableValue;
+                if ((listValue is string) &&
+                        (listValue.ToString().StartsWith("[") && listValue.ToString().EndsWith("]") && listValue.ToString().Contains(",")))
+                {
+                    Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
+
+                    var itemList = new List<string>();
+                    foreach (var jsonItem in jsonArray)
+                    {
+                        var value = (Newtonsoft.Json.Linq.JValue)jsonItem;
+                        itemList.Add(value.ToString());
+                    }
+                    listToIndex = itemList;
+                }
+                else
+                {
+                    throw new Exception(v_ListName + " is not List");
+                }
             }
 
-            var item = listToIndex[index];
-
-            Script.ScriptVariable newListItem = new Script.ScriptVariable
+            var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
+            int index = int.Parse(itemIndex);
+            if (index < 0)
             {
-                VariableName = v_UserVariableName,
-                VariableValue = item
-            };
-
-            //Overwrites variable if it already exists
-            if (engine.VariableList.Exists(x => x.VariableName == newListItem.VariableName))
-            {
-                Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newListItem.VariableName).FirstOrDefault();
-                engine.VariableList.Remove(temp);
+                index = listToIndex.Count + index;
             }
-            engine.VariableList.Add(newListItem);
 
+            if ((index >= 0) && (index < listToIndex.Count))
+            {
+                if (listToIndex is List<string>)
+                {
+                    ((string)listToIndex[index]).StoreInUserVariable(engine, v_UserVariableName);
+                }
+                else
+                {
+                    // set new variable
+                    "".StoreInUserVariable(engine, v_UserVariableName);
+                    var targetVariable = v_UserVariableName.GetRawVariable(engine);
+                    targetVariable.VariableValue = listToIndex[index];
+                }
+            }
+            else
+            {
+                throw new Exception("Strange index value : " + v_ItemIndex);
+            }
         }
-        
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -141,7 +203,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + $" [From '{v_ListName}', Store In: '{v_UserVariableName}']";
+            return base.GetDisplayValue() + $" [From '{v_ListName}', Index: '{v_ItemIndex}', Store In: '{v_UserVariableName}']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -158,18 +220,18 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Index of List item is empty.\n";
                 this.IsValid = false;
             }
-            else
-            {
-                int vIndex;
-                if (int.TryParse(this.v_ItemIndex, out vIndex))
-                {
-                    if (vIndex < 0)
-                    {
-                        this.validationResult += "Specify a value of 0 or more for index of List item.\n";
-                        this.IsValid = false;
-                    }
-                }
-            }
+            //else
+            //{
+            //    int vIndex;
+            //    if (int.TryParse(this.v_ItemIndex, out vIndex))
+            //    {
+            //        if (vIndex < 0)
+            //        {
+            //            this.validationResult += "Specify a value of 0 or more for index of List item.\n";
+            //            this.IsValid = false;
+            //        }
+            //    }
+            //}
             if (String.IsNullOrEmpty(this.v_UserVariableName))
             {
                 this.validationResult += "Variable is empty.\n";
