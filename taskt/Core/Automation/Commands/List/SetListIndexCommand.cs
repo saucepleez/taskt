@@ -12,23 +12,26 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
+    [Attributes.ClassAttributes.Description("This command allows you to modify List Index.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify List Index.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class SetListIndexCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select a List Variable to modify")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
+        [Attributes.PropertyAttributes.SampleUsage("**vList** or **{{{vList}}}**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_userVariableName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please set the current index of the variable (ex. 1, 2, {{{vNum}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please set the current Index of the List")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's index should be set to.")]
         [Attributes.PropertyAttributes.SampleUsage("**1** or **2** or **{{{vNum}}}**")]
         [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_Index { get; set; }
         public SetListIndexCommand()
         {
@@ -43,25 +46,34 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var requiredVariable = LookupVariable(engine);
+            //var requiredVariable = LookupVariable(engine);
 
-            //if still not found and user has elected option, create variable at runtime
-            if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            ////if still not found and user has elected option, create variable at runtime
+            //if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
+            //    requiredVariable = LookupVariable(engine);
+            //}
+
+            var requiredVariable = v_userVariableName.GetRawVariable(engine);
+
+            if (requiredVariable == null)
             {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-                requiredVariable = LookupVariable(engine);
+                throw new Exception("Attempted to update variable index, but variable was not found. Enclose variables within brackets, ex. {vVariable}");
+            }
+            if (requiredVariable.VariableValue.GetType().GetGenericTypeDefinition() != typeof(List<>))
+            {
+                throw new Exception(v_userVariableName + " is not List");
             }
 
-            if (requiredVariable != null)
+            var index = int.Parse(v_Index.ConvertToUserVariable(sender));
+            if (index >= 0)
             {
-
-                var index = int.Parse(v_Index.ConvertToUserVariable(sender));
-
                 requiredVariable.CurrentPosition = index;
             }
             else
             {
-                throw new Exception("Attempted to update variable index, but variable was not found. Enclose variables within brackets, ex. {vVariable}");
+                throw new Exception("Index is not >= 0");
             }
         }
 
@@ -91,14 +103,16 @@ namespace taskt.Core.Automation.Commands
             //custom rendering
             base.Render(editor);
 
-
             //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            //RenderedControls.Add(VariableNameControl);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Index", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Index", this, editor));
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
         }

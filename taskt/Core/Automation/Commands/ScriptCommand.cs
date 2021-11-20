@@ -19,8 +19,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ConvertListToJSONCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
-    [XmlInclude(typeof(GetListCountCommand))]
-    [XmlInclude(typeof(GetListItemCommand))]
     [XmlInclude(typeof(GetWordCountCommand))]
     [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(LogDataCommand))]
@@ -166,6 +164,12 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SendMouseClickCommand))]
     [XmlInclude(typeof(SendMouseMoveCommand))]
     [XmlInclude(typeof(UIAutomationCommand))]
+
+    // List
+    [XmlInclude(typeof(AddListItemCommand))]
+    [XmlInclude(typeof(GetListCountCommand))]
+    [XmlInclude(typeof(GetListItemCommand))]
+    [XmlInclude(typeof(SetListIndexCommand))]
 
     // Loop
     [XmlInclude(typeof(BeginLoopCommand))]
