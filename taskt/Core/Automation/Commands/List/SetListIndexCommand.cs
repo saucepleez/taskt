@@ -61,7 +61,8 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("Attempted to update variable index, but variable was not found. Enclose variables within brackets, ex. {vVariable}");
             }
-            if (requiredVariable.VariableValue.GetType().GetGenericTypeDefinition() != typeof(List<>))
+            Type varType = requiredVariable.VariableValue.GetType();
+            if (!varType.IsGenericType || (varType.GetGenericTypeDefinition() != typeof(List<>)))
             {
                 throw new Exception(v_userVariableName + " is not List");
             }
