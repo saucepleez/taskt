@@ -207,6 +207,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\AddListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\SetListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\SetListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardClearTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
@@ -226,7 +227,7 @@
     <Compile Include="Core\Automation\Commands\File\CheckFileExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\FolderDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\FileDialogCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ConvertListToJSONCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ConvertListToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\Task\UnloadTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PingCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CreateDictionaryCommand.cs" />

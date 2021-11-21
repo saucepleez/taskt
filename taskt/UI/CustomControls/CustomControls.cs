@@ -431,11 +431,8 @@ namespace taskt.UI
             {"HTTPQueryResultCommand", "taskt.Properties.Resources.command_search"},
 
             // Data
-            {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
             {"DateCalculationCommand", "taskt.Properties.Resources.command_function"},
             {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
-            {"GetListCountCommand", "taskt.Properties.Resources.command_function"},
-            {"GetListItemCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
             {"LogDataCommand", "taskt.Properties.Resources.command_files"},
@@ -583,6 +580,14 @@ namespace taskt.UI
             {"SendMouseMoveCommand", "taskt.Properties.Resources.command_input"},
             {"SendMouseClickCommand", "taskt.Properties.Resources.command_input"},
             {"UIAutomationCommand", "taskt.Properties.Resources.command_input"},
+
+            // List
+            {"AddListItemCommand", "taskt.Properties.Resources.command_function"},
+            {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
+            {"GetListCountCommand", "taskt.Properties.Resources.command_function"},
+            {"GetListItemCommand", "taskt.Properties.Resources.command_function"},
+            {"SetListIndexCommand", "taskt.Properties.Resources.command_function"},
+            {"SetListItemCommand", "taskt.Properties.Resources.command_function"},
 
             // Loop
             {"BeginLoopCommand", "taskt.Properties.Resources.command_startloop"},
