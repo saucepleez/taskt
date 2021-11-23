@@ -1345,7 +1345,8 @@ namespace taskt.UI.Forms
             }
             else
             {
-                Core.InstanceNameType nameType = instanceList.getInstanceNameType(currentCommand);
+                //Core.InstanceNameType nameType = instanceList.getInstanceNameType(currentCommand);
+                Core.Automation.Commands.ScriptCommand cloneCommand = currentCommand.Clone();
                 instanceList.removeInstance(currentCommand);
 
                 //create new command editor form
@@ -1384,10 +1385,11 @@ namespace taskt.UI.Forms
                     }
                     else
                     {
-                        if (nameType != null)
-                        {
-                            instanceList.addInstance(nameType);
-                        }
+                        //if (nameType != null)
+                        //{
+                        //    instanceList.addInstance(nameType);
+                        //}
+                        instanceList.addInstance(cloneCommand);
                     }
                 }
             }
