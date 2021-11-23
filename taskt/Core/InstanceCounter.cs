@@ -9,6 +9,7 @@ namespace taskt.Core
 {
     public class InstanceCounter
     {
+        // instance
         private Dictionary<string, int> databaseInstance = new Dictionary<string, int>();
         private Dictionary<string, int> excelInstance = new Dictionary<string, int>();
         private Dictionary<string, int> ieInstance = new Dictionary<string, int>();
@@ -16,8 +17,11 @@ namespace taskt.Core
         private Dictionary<string, int> stopWatchInstance = new Dictionary<string, int>();
         private Dictionary<string, int> wordInstance = new Dictionary<string, int>();
         private Dictionary<string, int> nlgInstance = new Dictionary<string, int>();
+        // variable type
         private Dictionary<string, int> dictionaryInstance = new Dictionary<string, int>();
         private Dictionary<string, int> dataTableInstance = new Dictionary<string, int>();
+        private Dictionary<string, int> jsonInstance = new Dictionary<string, int>();
+        private Dictionary<string, int> listInstance = new Dictionary<string, int>();
 
         public InstanceCounter()
         {
@@ -105,6 +109,12 @@ namespace taskt.Core
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE:
                     return ieInstance;
+                    break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON:
+                    return jsonInstance;
+                    break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List:
+                    return listInstance; ;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
                     return nlgInstance;
