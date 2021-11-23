@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
-        public string v_userVariableName { get; set; }
+        public string v_ListName { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be added to the variable (ex. Hello, {{{vNum}}})")]
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             //    requiredVariable = LookupVariable(engine);
             //}
 
-            var requiredVariable = v_userVariableName.GetRawVariable(engine);
+            var requiredVariable = v_ListName.GetRawVariable(engine);
 
             if (requiredVariable == null)
             {
@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             }
             if (!(requiredVariable.VariableValue is List<string>))
             {
-                throw new Exception(v_userVariableName + " is not List or not-supported List");
+                throw new Exception(v_ListName + " is not List or not-supported List");
             }
 
             var lst = (List<string>)requiredVariable.VariableValue;
@@ -93,13 +93,13 @@ namespace taskt.Core.Automation.Commands
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {
             //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
+            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_ListName).FirstOrDefault();
 
             //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            if ((requiredVariable == null) && (v_ListName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_ListName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
-                var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+                var reformattedVariable = v_ListName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
 
@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Add List Item List: '" + v_Input + "', Item: '" + v_userVariableName + "']";
+            return base.GetDisplayValue() + " [Add List Item List: '" + v_Input + "', Item: '" + v_ListName + "']";
         }
 
         public override List<Control> Render(UI.Forms.frmCommandEditor editor)
@@ -134,7 +134,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_userVariableName))
+            if (String.IsNullOrEmpty(this.v_ListName))
             {
                 this.validationResult += "List variable is empty.\n";
                 this.IsValid = false;

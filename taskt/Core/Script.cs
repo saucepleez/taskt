@@ -265,6 +265,7 @@ namespace taskt.Core.Script
 
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
+            convertTo3_5_0_47(doc);
 
             return doc;
         }
@@ -333,6 +334,37 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "SetListIndexCommand");
                 cmd.SetAttributeValue(ns + "type", "SetListIndexCommand");
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_47(XDocument doc)
+        {
+            // AddListItem.v_userVariableName -> *.v_ListName
+            IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "AddListItemCommand"));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in cmdAddList)
+            {
+                var listNameAttr = cmd.Attribute("v_userVariableName");
+                if (listNameAttr != null)
+                {
+                    cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
+                    listNameAttr.Remove();
+                }
+            }
+
+            // SetListIndex.v_userVariableName -> *.v_ListName
+            IEnumerable<XElement> cmdListIndex = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "SetListIndexCommand"));
+            foreach (var cmd in cmdListIndex)
+            {
+                var listNameAttr = cmd.Attribute("v_userVariableName");
+                if (listNameAttr != null)
+                {
+                    cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
+                    listNameAttr.Remove();
+                }
             }
 
             return doc;
