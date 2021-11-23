@@ -358,7 +358,9 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             Word,
             NLG,
             Dictionary,
-            DataTable
+            DataTable,
+            JSON,
+            List
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]

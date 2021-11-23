@@ -17,12 +17,14 @@ namespace taskt.Core.Automation.Commands
     public class GetListCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Name.")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Variable Name.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a existing List.")]
         [Attributes.PropertyAttributes.SampleUsage("**myList** or **{{{myList}}}** or **[1,2,3]**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
