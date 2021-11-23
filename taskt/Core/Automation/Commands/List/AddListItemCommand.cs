@@ -12,8 +12,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
+    [Attributes.ClassAttributes.Description("This command allows you to add list item.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add list item.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     public class AddListItemCommand : ScriptCommand
     {
@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be added to the variable (ex. Hello, {{{vNum}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be added to the variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
         [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vValue}}}**")]
