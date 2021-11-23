@@ -290,15 +290,18 @@ namespace taskt.Core.Script
                     (string)el.Attribute("CommandName") == "UIAutomationCommand"
                 )
             );
-            foreach(var cmd in cmdWindowNames)
+            foreach (var cmd in cmdWindowNames)
             {
-                if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+                if (cmd.Attribute("v_SearchMethod") != null)
                 {
-                    cmd.SetAttributeValue("v_SearchMethod", "Starts with");
-                }
-                if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
-                {
-                    cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Starts with");
+                    }
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+                    }
                 }
             }
 
@@ -340,24 +343,14 @@ namespace taskt.Core.Script
         }
         private static XDocument convertTo3_5_0_47(XDocument doc)
         {
-            // AddListItem.v_userVariableName -> *.v_ListName
-            IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "AddListItemCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in cmdAddList)
-            {
-                var listNameAttr = cmd.Attribute("v_userVariableName");
-                if (listNameAttr != null)
-                {
-                    cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
-                    listNameAttr.Remove();
-                }
-            }
-
-            // SetListIndex.v_userVariableName -> *.v_ListName
-            IEnumerable<XElement> cmdListIndex = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "SetListIndexCommand"));
-            foreach (var cmd in cmdListIndex)
+            // AddListItem.v_userVariableName, SetListIndex.v_userVariableName -> *.v_ListName
+            IEnumerable<XElement> cmdIndex = doc.Descendants("ScriptCommand")
+                .Where(el =>
+                    ((string)el.Attribute("CommandName") == "AddListItemCommand") ||
+                    ((string)el.Attribute("CommandName") == "SetListIndexCommand")
+            );
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in cmdIndex)
             {
                 var listNameAttr = cmd.Attribute("v_userVariableName");
                 if (listNameAttr != null)

@@ -3076,6 +3076,8 @@ namespace taskt.UI.Forms
             }
             catch (Exception ex)
             {
+                // DBG
+                //MessageBox.Show(ex.Message);
                 //signal an error has happened
                 Notify("An Error Occured: " + ex.Message);
             }
