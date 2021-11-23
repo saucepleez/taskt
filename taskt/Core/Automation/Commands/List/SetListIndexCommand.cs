@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Update Variable '" + v_userVariableName + "' index to '" + v_Index + "']";
+            return base.GetDisplayValue() + " [Set List Index List: '" + v_userVariableName + "', index: '" + v_Index + "']";
         }
 
         public override List<Control> Render(UI.Forms.frmCommandEditor editor)

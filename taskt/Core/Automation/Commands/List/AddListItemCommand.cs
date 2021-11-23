@@ -105,7 +105,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
+            return base.GetDisplayValue() + " [Add List Item List: '" + v_Input + "', Item: '" + v_userVariableName + "']";
         }
 
         public override List<Control> Render(UI.Forms.frmCommandEditor editor)
