@@ -167,11 +167,14 @@ namespace taskt.Core.Automation.Commands
     // List
     [XmlInclude(typeof(AddListItemCommand))]
     [XmlInclude(typeof(ConvertListToJSONCommand))]
+    [XmlInclude(typeof(CopyListCommand))]
     [XmlInclude(typeof(CreateListCommand))]
     [XmlInclude(typeof(GetListCountCommand))]
     [XmlInclude(typeof(GetListItemCommand))]
+    [XmlInclude(typeof(ReverseListCommand))]
     [XmlInclude(typeof(SetListIndexCommand))]
     [XmlInclude(typeof(SetListItemCommand))]
+    [XmlInclude(typeof(SortListCommand))]
 
     // Loop
     [XmlInclude(typeof(BeginLoopCommand))]

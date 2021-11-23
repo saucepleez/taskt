@@ -91,6 +91,24 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (ListValuesGridViewHelper.IsCurrentCellDirty || ListValuesGridViewHelper.IsCurrentRowDirty)
+            {
+                ListValuesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_ListValues.NewRow();
+                v_ListValues.Rows.Add(newRow);
+                for (var i = v_ListValues.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_ListValues.Rows[i][0].ToString() == "")
+                    {
+                        v_ListValues.Rows[i].Delete();
+                    }
+                }
+            }
+        }
+
         public override bool IsValidate(frmCommandEditor editor)
         {
             base.IsValidate(editor);
