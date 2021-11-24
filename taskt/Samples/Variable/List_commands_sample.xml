@@ -5,7 +5,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="List sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set list values" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set list values (It's Not Recommended method)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="AddToVariableCommand" CommandID="c0451107-7870-4c3a-815f-569fd3c7f6c9" CommandName="AddToVariableCommand" IsCommented="false" SelectionName="Add To Variable" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="a" />

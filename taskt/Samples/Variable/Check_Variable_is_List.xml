@@ -11,7 +11,7 @@
       <ScriptCommand xsi:type="VariableCommand" CommandID="2c9636d6-96a5-407e-a4c2-82cb5d698cfc" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vVar" v_Input="123" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="63204978-85dd-4ae3-abec-5704d44f9625" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Set list variable" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63204978-85dd-4ae3-abec-5704d44f9625" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Set list variable (It's Not Recommended method)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="VariableCommand" CommandID="14c6915c-351c-405c-8e20-aa3df1069cf0" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="⦃⦃1|2|3⦄⦄" v_ReplaceInputVariables="Yes" />

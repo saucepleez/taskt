@@ -2,7 +2,7 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="75e724a2-fe89-4a89-95cd-1bfe6ade2dc5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Using Variables as Lists" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="75e724a2-fe89-4a89-95cd-1bfe6ade2dc5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Using Variables as Lists (It's Not Recommended method)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="4d5a3b1c-3283-4c05-88e0-409d77bc89b4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set Variable command applies a list encased in double braces ⦃⦃ item1|item2|item3⦄⦄" CommandEnabled="true" />
