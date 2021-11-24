@@ -99,6 +99,7 @@
             this.commandListPanelD = new System.Windows.Forms.Panel();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
+            this.linkGitter = new System.Windows.Forms.LinkLabel();
             this.lnkStartEdit = new System.Windows.Forms.LinkLabel();
             this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
             this.lblFilesMissing = new System.Windows.Forms.Label();
@@ -183,6 +184,7 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
+            this.tasktGitterStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -732,6 +734,7 @@
             this.helpStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tasktProjectPageStripMenuItem,
             this.tasktWikiStripMenuItem,
+            this.tasktGitterStripMenuItem,
             this.helpToolStripSeparator1,
             this.releaseToolStripMenuItem,
             this.issueToolStripMenuItem,
@@ -749,7 +752,7 @@
             this.tasktProjectPageStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktProjectPageStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktProjectPageStripMenuItem.Name = "tasktProjectPageStripMenuItem";
-            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.tasktProjectPageStripMenuItem.Text = "taskt &Project Page";
             this.tasktProjectPageStripMenuItem.Click += new System.EventHandler(this.tasktProjectPageStripMenuItem_Click);
             // 
@@ -758,20 +761,20 @@
             this.tasktWikiStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktWikiStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktWikiStripMenuItem.Name = "tasktWikiStripMenuItem";
-            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.tasktWikiStripMenuItem.Text = "taskt &Wiki";
             this.tasktWikiStripMenuItem.Click += new System.EventHandler(this.tasktWikiStripMenuItem_Click);
             // 
             // helpToolStripSeparator1
             // 
             this.helpToolStripSeparator1.Name = "helpToolStripSeparator1";
-            this.helpToolStripSeparator1.Size = new System.Drawing.Size(165, 6);
+            this.helpToolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // releaseToolStripMenuItem
             // 
             this.releaseToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
-            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.releaseToolStripMenuItem.Text = "&Release";
             this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
             // 
@@ -779,21 +782,21 @@
             // 
             this.issueToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.issueToolStripMenuItem.Name = "issueToolStripMenuItem";
-            this.issueToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.issueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.issueToolStripMenuItem.Text = "&Issue";
             this.issueToolStripMenuItem.Click += new System.EventHandler(this.issueToolStripMenuItem_Click);
             // 
             // helpToolStripSeparator2
             // 
             this.helpToolStripSeparator2.Name = "helpToolStripSeparator2";
-            this.helpToolStripSeparator2.Size = new System.Drawing.Size(165, 6);
+            this.helpToolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // aboutStripMenuItem
             // 
             this.aboutStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.aboutStripMenuItem.Image = global::taskt.Properties.Resources.logo;
             this.aboutStripMenuItem.Name = "aboutStripMenuItem";
-            this.aboutStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.aboutStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutStripMenuItem.Text = "&About";
             this.aboutStripMenuItem.Click += new System.EventHandler(this.aboutStripMenuItem_Click);
             // 
@@ -935,6 +938,7 @@
             // 
             this.pnlCommandHelper.AllowDrop = true;
             this.pnlCommandHelper.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.pnlCommandHelper.Controls.Add(this.linkGitter);
             this.pnlCommandHelper.Controls.Add(this.lnkStartEdit);
             this.pnlCommandHelper.Controls.Add(this.flwRecentFiles);
             this.pnlCommandHelper.Controls.Add(this.lblFilesMissing);
@@ -956,6 +960,21 @@
             this.pnlCommandHelper.DragDrop += new System.Windows.Forms.DragEventHandler(this.pnlCommandHelper_DragDrop);
             this.pnlCommandHelper.DragEnter += new System.Windows.Forms.DragEventHandler(this.pnlCommandHelper_DragEnter);
             this.pnlCommandHelper.DragLeave += new System.EventHandler(this.pnlCommandHelper_DragLeave);
+            // 
+            // linkGitter
+            // 
+            this.linkGitter.AutoSize = true;
+            this.linkGitter.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkGitter.ForeColor = System.Drawing.Color.White;
+            this.linkGitter.LinkColor = System.Drawing.Color.AliceBlue;
+            this.linkGitter.Location = new System.Drawing.Point(316, 169);
+            this.linkGitter.Name = "linkGitter";
+            this.linkGitter.Size = new System.Drawing.Size(110, 20);
+            this.linkGitter.TabIndex = 18;
+            this.linkGitter.TabStop = true;
+            this.linkGitter.Text = "View Gitter/Chat";
+            this.linkGitter.VisitedLinkColor = System.Drawing.Color.LightSteelBlue;
+            this.linkGitter.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkGitter_LinkClicked);
             // 
             // lnkStartEdit
             // 
@@ -1927,6 +1946,14 @@
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
             // 
+            // tasktGitterStripMenuItem
+            // 
+            this.tasktGitterStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.tasktGitterStripMenuItem.Name = "tasktGitterStripMenuItem";
+            this.tasktGitterStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktGitterStripMenuItem.Text = "taskt Gitter &Chat";
+            this.tasktGitterStripMenuItem.Click += new System.EventHandler(this.tasktGitterStripMenuItem_Click);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2148,6 +2175,8 @@
         private System.Windows.Forms.ToolStripMenuItem showLogFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator optionToolStripSep2;
         private System.Windows.Forms.Timer miniMapLoadingDelayTimer;
+        private System.Windows.Forms.LinkLabel linkGitter;
+        private System.Windows.Forms.ToolStripMenuItem tasktGitterStripMenuItem;
     }
 }
 

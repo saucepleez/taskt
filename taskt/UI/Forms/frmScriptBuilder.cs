@@ -520,6 +520,10 @@ namespace taskt.UI.Forms
             //System.Diagnostics.Process.Start("https://wiki.taskt.net/");
             showWikiPage();
         }
+        private void linkGitter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            showGitterPage();
+        }
         private void NewFileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel senderLink = (LinkLabel)sender;
@@ -545,6 +549,10 @@ namespace taskt.UI.Forms
         private void showWikiPage()
         {
             System.Diagnostics.Process.Start(Core.MyURLs.WikiURL);
+        }
+        private void showGitterPage()
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.GitterURL);
         }
         private void showThisCommandHelp(Core.Automation.Commands.ScriptCommand command)
         {
@@ -4334,6 +4342,10 @@ namespace taskt.UI.Forms
         {
             showWikiPage();
         }
+        private void tasktGitterStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showGitterPage();
+        }
 
         private void releaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -4530,6 +4542,7 @@ namespace taskt.UI.Forms
         {
             System.Diagnostics.Process.Start(appSettings.ClientSettings.RootFolder + "\\Logs");
         }
+
         #endregion
     }
 

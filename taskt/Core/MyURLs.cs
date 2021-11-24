@@ -13,6 +13,7 @@ namespace taskt.Core
         public const string GitIssueURL = "https://github.com/saucepleez/taskt/issues/new";
         public const string WikiURL = "https://github.com/saucepleez/taskt-wiki/blob/master/home.md";
         public const string OfficialSiteURL = "http://www.taskt.net/";
+        public const string GitterURL = "https://gitter.im/taskt-rpa/Lobby";
         public const string WikiBaseURL = "https://github.com/saucepleez/taskt-wiki/blob/master/";
     }
 }
