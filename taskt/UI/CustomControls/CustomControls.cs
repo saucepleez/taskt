@@ -583,6 +583,7 @@ namespace taskt.UI
 
             // List
             {"AddListItemCommand", "taskt.Properties.Resources.command_function"},
+            {"ConcatenateListsCommand", "taskt.Properties.Resources.command_function"},
             {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
             {"CopyListCommand", "taskt.Properties.Resources.command_function"},
             {"CreateListCommand", "taskt.Properties.Resources.command_function"},

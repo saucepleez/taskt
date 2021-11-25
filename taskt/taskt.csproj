@@ -207,6 +207,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\AddListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ConcatenateListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\SortListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ReverseListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\CopyListCommand.cs" />
