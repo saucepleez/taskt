@@ -583,11 +583,13 @@ namespace taskt.UI
 
             // List
             {"AddListItemCommand", "taskt.Properties.Resources.command_function"},
+            {"CheckListItemExistsCommand", "taskt.Properties.Resources.command_function"},
             {"ConcatenateListsCommand", "taskt.Properties.Resources.command_function"},
             {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
             {"CopyListCommand", "taskt.Properties.Resources.command_function"},
             {"CreateListCommand", "taskt.Properties.Resources.command_function"},
             {"GetListCountCommand", "taskt.Properties.Resources.command_function"},
+            {"GetListIndexFromValue", "taskt.Properties.Resources.command_function"},
             {"GetListItemCommand", "taskt.Properties.Resources.command_function"},
             {"ReverseListCommand", "taskt.Properties.Resources.command_function"},
             {"SetListIndexCommand", "taskt.Properties.Resources.command_function"},

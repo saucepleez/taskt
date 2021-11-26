@@ -166,11 +166,13 @@ namespace taskt.Core.Automation.Commands
 
     // List
     [XmlInclude(typeof(AddListItemCommand))]
+    [XmlInclude(typeof(CheckListItemExistsCommand))]
     [XmlInclude(typeof(ConcatenateListsCommand))]
     [XmlInclude(typeof(ConvertListToJSONCommand))]
     [XmlInclude(typeof(CopyListCommand))]
     [XmlInclude(typeof(CreateListCommand))]
     [XmlInclude(typeof(GetListCountCommand))]
+    [XmlInclude(typeof(GetListIndexFromValueCommand))]
     [XmlInclude(typeof(GetListItemCommand))]
     [XmlInclude(typeof(ReverseListCommand))]
     [XmlInclude(typeof(SetListIndexCommand))]
