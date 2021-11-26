@@ -83,6 +83,7 @@
             this.helpStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tasktProjectPageStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tasktWikiStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tasktGitterStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.releaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.issueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,7 +185,6 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
-            this.tasktGitterStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -752,7 +752,7 @@
             this.tasktProjectPageStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktProjectPageStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktProjectPageStripMenuItem.Name = "tasktProjectPageStripMenuItem";
-            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.tasktProjectPageStripMenuItem.Text = "taskt &Project Page";
             this.tasktProjectPageStripMenuItem.Click += new System.EventHandler(this.tasktProjectPageStripMenuItem_Click);
             // 
@@ -761,20 +761,28 @@
             this.tasktWikiStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktWikiStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktWikiStripMenuItem.Name = "tasktWikiStripMenuItem";
-            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.tasktWikiStripMenuItem.Text = "taskt &Wiki";
             this.tasktWikiStripMenuItem.Click += new System.EventHandler(this.tasktWikiStripMenuItem_Click);
+            // 
+            // tasktGitterStripMenuItem
+            // 
+            this.tasktGitterStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.tasktGitterStripMenuItem.Name = "tasktGitterStripMenuItem";
+            this.tasktGitterStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.tasktGitterStripMenuItem.Text = "taskt Gitter &Chat";
+            this.tasktGitterStripMenuItem.Click += new System.EventHandler(this.tasktGitterStripMenuItem_Click);
             // 
             // helpToolStripSeparator1
             // 
             this.helpToolStripSeparator1.Name = "helpToolStripSeparator1";
-            this.helpToolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.helpToolStripSeparator1.Size = new System.Drawing.Size(165, 6);
             // 
             // releaseToolStripMenuItem
             // 
             this.releaseToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
-            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.releaseToolStripMenuItem.Text = "&Release";
             this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
             // 
@@ -782,21 +790,21 @@
             // 
             this.issueToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.issueToolStripMenuItem.Name = "issueToolStripMenuItem";
-            this.issueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.issueToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.issueToolStripMenuItem.Text = "&Issue";
             this.issueToolStripMenuItem.Click += new System.EventHandler(this.issueToolStripMenuItem_Click);
             // 
             // helpToolStripSeparator2
             // 
             this.helpToolStripSeparator2.Name = "helpToolStripSeparator2";
-            this.helpToolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.helpToolStripSeparator2.Size = new System.Drawing.Size(165, 6);
             // 
             // aboutStripMenuItem
             // 
             this.aboutStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.aboutStripMenuItem.Image = global::taskt.Properties.Resources.logo;
             this.aboutStripMenuItem.Name = "aboutStripMenuItem";
-            this.aboutStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.aboutStripMenuItem.Text = "&About";
             this.aboutStripMenuItem.Click += new System.EventHandler(this.aboutStripMenuItem_Click);
             // 
@@ -967,7 +975,7 @@
             this.linkGitter.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkGitter.ForeColor = System.Drawing.Color.White;
             this.linkGitter.LinkColor = System.Drawing.Color.AliceBlue;
-            this.linkGitter.Location = new System.Drawing.Point(316, 169);
+            this.linkGitter.Location = new System.Drawing.Point(116, 189);
             this.linkGitter.Name = "linkGitter";
             this.linkGitter.Size = new System.Drawing.Size(110, 20);
             this.linkGitter.TabIndex = 18;
@@ -996,7 +1004,7 @@
             this.flwRecentFiles.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flwRecentFiles.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flwRecentFiles.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.flwRecentFiles.Location = new System.Drawing.Point(116, 233);
+            this.flwRecentFiles.Location = new System.Drawing.Point(116, 242);
             this.flwRecentFiles.Name = "flwRecentFiles";
             this.flwRecentFiles.Size = new System.Drawing.Size(397, 144);
             this.flwRecentFiles.TabIndex = 12;
@@ -1007,7 +1015,7 @@
             // 
             this.lblFilesMissing.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFilesMissing.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblFilesMissing.Location = new System.Drawing.Point(115, 231);
+            this.lblFilesMissing.Location = new System.Drawing.Point(115, 240);
             this.lblFilesMissing.Name = "lblFilesMissing";
             this.lblFilesMissing.Size = new System.Drawing.Size(358, 64);
             this.lblFilesMissing.TabIndex = 16;
@@ -1017,7 +1025,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::taskt.Properties.Resources.recent_files;
-            this.pictureBox4.Location = new System.Drawing.Point(12, 210);
+            this.pictureBox4.Location = new System.Drawing.Point(12, 219);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(84, 84);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1049,7 +1057,7 @@
             this.lblRecentFiles.AutoSize = true;
             this.lblRecentFiles.Font = new System.Drawing.Font("Segoe UI Semilight", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRecentFiles.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblRecentFiles.Location = new System.Drawing.Point(110, 201);
+            this.lblRecentFiles.Location = new System.Drawing.Point(110, 210);
             this.lblRecentFiles.Name = "lblRecentFiles";
             this.lblRecentFiles.Size = new System.Drawing.Size(121, 30);
             this.lblRecentFiles.TabIndex = 8;
@@ -1945,14 +1953,6 @@
             // miniMapLoadingDelayTimer
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
-            // 
-            // tasktGitterStripMenuItem
-            // 
-            this.tasktGitterStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.tasktGitterStripMenuItem.Name = "tasktGitterStripMenuItem";
-            this.tasktGitterStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.tasktGitterStripMenuItem.Text = "taskt Gitter &Chat";
-            this.tasktGitterStripMenuItem.Click += new System.EventHandler(this.tasktGitterStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 
