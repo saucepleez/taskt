@@ -286,7 +286,7 @@
     <Compile Include="Core\Automation\Commands\Outlook\OutlookGetEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookMoveEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookReplyToEmailsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseJsonModelCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ParseJsonModelCommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableCommand.cs" />
@@ -309,7 +309,7 @@
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\MessageBoxCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseJSONArray.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ParseJSONArray.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGCreateInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\API\RESTCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
@@ -376,7 +376,7 @@
     <Compile Include="Core\Automation\Commands\Data\GetWordCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\GetWordLengthCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\LogDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseJsonCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ParseJsonCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\PDFTextExtractionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\RegExExtractorCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringReplaceCommand.cs" />

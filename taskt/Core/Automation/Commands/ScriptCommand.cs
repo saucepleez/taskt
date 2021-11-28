@@ -24,9 +24,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(MathCalculationCommand))]
     [XmlInclude(typeof(ModifyVariableCommand))]
     [XmlInclude(typeof(ParseDatasetRowCommand))]
-    [XmlInclude(typeof(ParseJSONArrayCommand))]
-    [XmlInclude(typeof(ParseJsonCommand))]
-    [XmlInclude(typeof(ParseJsonModelCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
     [XmlInclude(typeof(RegExExtractorCommand))]
     [XmlInclude(typeof(StringCheckTextCommand))]
@@ -163,6 +160,11 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SendMouseClickCommand))]
     [XmlInclude(typeof(SendMouseMoveCommand))]
     [XmlInclude(typeof(UIAutomationCommand))]
+
+    // JSON
+    [XmlInclude(typeof(ParseJSONArrayCommand))]
+    [XmlInclude(typeof(ParseJsonCommand))]
+    [XmlInclude(typeof(ParseJsonModelCommand))]
 
     // List
     [XmlInclude(typeof(AddListItemCommand))]

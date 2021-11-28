@@ -439,9 +439,6 @@ namespace taskt.UI
             {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},
             {"ModifyVariableCommand", "taskt.Properties.Resources.command_function"},
             {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
-            {"ParseJSONArrayCommand", "taskt.Properties.Resources.command_parse"},
-            {"ParseJsonCommand", "taskt.Properties.Resources.command_parse"},
-            {"ParseJsonModelCommand", "taskt.Properties.Resources.command_parse"},
             {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
             {"RegExExtractorCommand", "taskt.Properties.Resources.command_function"},
             {"StringCheckStringCommand", "taskt.Properties.Resources.command_string"},
@@ -580,6 +577,11 @@ namespace taskt.UI
             {"SendMouseMoveCommand", "taskt.Properties.Resources.command_input"},
             {"SendMouseClickCommand", "taskt.Properties.Resources.command_input"},
             {"UIAutomationCommand", "taskt.Properties.Resources.command_input"},
+            
+            // JSON
+            {"ParseJSONArrayCommand", "taskt.Properties.Resources.command_parse"},
+            {"ParseJsonCommand", "taskt.Properties.Resources.command_parse"},
+            {"ParseJsonModelCommand", "taskt.Properties.Resources.command_parse"},
 
             // List
             {"AddListItemCommand", "taskt.Properties.Resources.command_function"},

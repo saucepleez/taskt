@@ -11,8 +11,7 @@ using System.Drawing;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.SubGruop("JSON")]
+    [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -117,11 +116,6 @@ namespace taskt.Core.Automation.Commands
                 requiredComplexVariable.VariableValue = resultList;
 
             }
-
-
-
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
