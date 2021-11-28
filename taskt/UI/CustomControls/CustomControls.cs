@@ -584,6 +584,7 @@ namespace taskt.UI
             {"ParseJSONArrayCommand", "taskt.Properties.Resources.command_parse"},
             {"ParseJsonCommand", "taskt.Properties.Resources.command_parse"},
             {"ParseJsonModelCommand", "taskt.Properties.Resources.command_parse"},
+            {"ReadJSONFileCommand", "taskt.Properties.Resources.command_parse"},
 
             // List
             {"AddListItemCommand", "taskt.Properties.Resources.command_function"},
