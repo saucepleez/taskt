@@ -198,7 +198,10 @@ namespace taskt.Core
                             (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none) &&
                             (direction.porpose == Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output))
                     {
-                        this.addInstance(prop.GetValue(command).ToString(), insType.instanceType);
+                        if (prop.GetValue(command) != null)
+                        {
+                            this.addInstance(prop.GetValue(command).ToString(), insType.instanceType);
+                        }
                     }
                 }
             }
@@ -266,7 +269,10 @@ namespace taskt.Core
                             (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none) &&
                             (direction.porpose == Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output))
                     {
-                        this.removeInstance(prop.GetValue(command).ToString(), insType.instanceType);
+                        if (prop.GetValue(command) != null)
+                        {
+                            this.removeInstance(prop.GetValue(command).ToString(), insType.instanceType);
+                        }
                     }
                 }
             }
