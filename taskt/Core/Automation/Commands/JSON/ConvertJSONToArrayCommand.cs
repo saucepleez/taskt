@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Convert JSON Array " + this.v_InputValue + " To List " + this.v_applyToVariableName + "]";
+            return base.GetDisplayValue() + " [Convert JSON '" + this.v_InputValue + "' To List " + this.v_applyToVariableName + "]";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
