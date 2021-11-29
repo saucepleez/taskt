@@ -210,6 +210,7 @@
     <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToArrayCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ReadJSONFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\AddListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ConvertListToDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetListIndexFromValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ConcatenateListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\CheckListItemExistsCommand.cs" />

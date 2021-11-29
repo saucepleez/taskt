@@ -173,6 +173,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddListItemCommand))]
     [XmlInclude(typeof(CheckListItemExistsCommand))]
     [XmlInclude(typeof(ConcatenateListsCommand))]
+    [XmlInclude(typeof(ConvertListToDictionaryCommand))]
     [XmlInclude(typeof(ConvertListToJSONCommand))]
     [XmlInclude(typeof(CopyListCommand))]
     [XmlInclude(typeof(CreateListCommand))]
