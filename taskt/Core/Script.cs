@@ -266,6 +266,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
             convertTo3_5_0_47(doc);
+            convertTo3_5_0_50(doc);
 
             return doc;
         }
@@ -358,6 +359,20 @@ namespace taskt.Core.Script
                     cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
                     listNameAttr.Remove();
                 }
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_50(XDocument doc)
+        {
+            // ParseJSONArray -> ConvertJSONToList
+            IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "ParseJSONArrayCommand"));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in cmdAddList)
+            {
+                cmd.SetAttributeValue("CommandName", "ConvertJSONToListCommand");
+                cmd.SetAttributeValue(ns + "type", "ConvertJSONToListCommand");
             }
 
             return doc;
