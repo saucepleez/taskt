@@ -51,35 +51,65 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
+            ////get variablized input
+            //var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
+            //if (!variableInput.StartsWith("[") && !variableInput.EndsWith("]"))
+            //{
+            //    throw new Exception(v_InputValue + " is not JSON Array.");
+            //}
 
-            //get variablized input
+            ////create objects
+            //Newtonsoft.Json.Linq.JArray arr;
+            //List<string> resultList = new List<string>();
+
+            ////parse json
+            //try
+            //{
+            //    arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
+            //}
+
+            ////add results to result list since list<string> is supported
+            //foreach (var result in arr)
+            //{
+            //    resultList.Add(result.ToString());
+            //}
             var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
-            if (!variableInput.StartsWith("[") && !variableInput.EndsWith("]"))
+            if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
             {
-                throw new Exception(v_InputValue + " is not JSON Array.");
-            }
+                // JSON Array
+                List<string> resultList = new List<string>();
 
-            //create objects
-            Newtonsoft.Json.Linq.JArray arr;
-            List<string> resultList = new List<string>();
+                Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
 
-            //parse json
-            try
-            {
-                arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
-            }
- 
-            //add results to result list since list<string> is supported
-            foreach (var result in arr)
-            {
-                resultList.Add(result.ToString());
-            }
+                foreach(var result in arr)
+                {
+                    resultList.Add(result.ToString());
+                }
 
-            resultList.StoreInUserVariable(engine, v_applyToVariableName);
+                resultList.StoreInUserVariable(engine, v_applyToVariableName);
+            }
+            else if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
+            {
+                // Object
+                List<string> resultList = new List<string>();
+
+                Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
+
+                foreach(var result in obj)
+                {
+                    resultList.Add(result.Value.ToString());
+                }
+
+                resultList.StoreInUserVariable(engine, v_applyToVariableName);
+            }
+            else
+            {
+                throw new Exception("Strange JSON, can not convert List");
+            }
         }
 
         public override List<Control> Render(frmCommandEditor editor)
