@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
             }
             if (String.IsNullOrEmpty(this.v_applyToVariableName))
             {
-                this.validationResult += "Variable to recieve the list is empty.\n";
+                this.validationResult += "Variable to recieve the Dictionary is empty.\n";
                 this.IsValid = false;
             }
 
