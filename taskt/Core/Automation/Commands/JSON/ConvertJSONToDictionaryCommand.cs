@@ -52,35 +52,62 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            //get variablized input
+            ////get variablized input
+            //var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
+            //if (!variableInput.StartsWith("{") && !variableInput.EndsWith("}"))
+            //{
+            //    throw new Exception(v_InputValue + " is not supported JSON text.");
+            //}
+
+            ////create objects
+            //Newtonsoft.Json.Linq.JObject obj;
+            //Dictionary<string, string> resultDic = new Dictionary<string, string>();
+
+            ////parse json
+            //try
+            //{
+            //    obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
+            //}
+
+            ////add results to result list since list<string> is supported
+            //foreach (var result in obj)
+            //{
+            //    resultDic.Add(result.Key, result.Value.ToString());
+            //}
+
+            //resultDic.StoreInUserVariable(engine, v_applyToVariableName);
+
             var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
-            if (!variableInput.StartsWith("{") && !variableInput.EndsWith("}"))
+            if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
             {
-                throw new Exception(v_InputValue + " is not supported JSON text.");
+                Dictionary<string, string> resultDic = new Dictionary<string, string>();
+                Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
+
+                foreach(var result in obj)
+                {
+                    resultDic.Add(result.Key, result.Value.ToString());
+                }
+                resultDic.StoreInUserVariable(engine, v_applyToVariableName);
             }
-
-            //create objects
-            Newtonsoft.Json.Linq.JObject obj;
-            Dictionary<string, string> resultDic = new Dictionary<string, string>();
-
-            //parse json
-            try
+            else if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
             {
-                obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
-            }
- 
-            //add results to result list since list<string> is supported
-            foreach (var result in obj)
-            {
-                resultDic.Add(result.Key, result.Value.ToString());
-            }
+                Dictionary<string, string> resultDic = new Dictionary<string, string>();
+                Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
 
-            resultDic.StoreInUserVariable(engine, v_applyToVariableName);
-
+                for (int i = 0; i < arr.Count; i++)
+                {
+                    resultDic.Add("key" + i.ToString(), arr[i].ToString());
+                }
+                resultDic.StoreInUserVariable(engine, v_applyToVariableName);
+            }
+            else
+            {
+                throw new Exception("Strange JSON");
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
