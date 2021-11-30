@@ -590,6 +590,7 @@ namespace taskt.UI
             {"AddListItemCommand", "taskt.Properties.Resources.command_function"},
             {"CheckListItemExistsCommand", "taskt.Properties.Resources.command_function"},
             {"ConcatenateListsCommand", "taskt.Properties.Resources.command_function"},
+            {"ConvertListToDataTableCommand", "taskt.Properties.Resources.command_function"},
             {"ConvertListToDictionaryCommand", "taskt.Properties.Resources.command_function"},
             {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
             {"CopyListCommand", "taskt.Properties.Resources.command_function"},
