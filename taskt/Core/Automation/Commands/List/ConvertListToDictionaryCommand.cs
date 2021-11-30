@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.Description("This command convert a JSON array to a list.")]
+    [Attributes.ClassAttributes.Description("This command convert a List to Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ConvertListToDictionaryCommand : ScriptCommand
@@ -107,7 +107,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     myDic.Add("item" + i.ToString(), targetList[i]);
                 }
-                myDic.StoreInUserVariable(engine, v_applyToVariableName);
             }
             else
             {
