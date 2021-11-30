@@ -207,7 +207,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToDictionaryCommand.cs" />
-    <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToArrayCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ReadJSONFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\AddListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ConvertListToDataTableCommand.cs" />
