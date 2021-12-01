@@ -206,6 +206,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ReadJSONFileCommand.cs" />

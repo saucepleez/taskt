@@ -579,6 +579,7 @@ namespace taskt.UI
             {"UIAutomationCommand", "taskt.Properties.Resources.command_input"},
             
             // JSON
+            {"ConvertJSONToDataTableCommand", "taskt.Properties.Resources.command_parse"},
             {"ConvertJSONToDictionaryCommand", "taskt.Properties.Resources.command_parse"},
             {"ConvertJSONToListCommand", "taskt.Properties.Resources.command_parse"},
             {"ParseJSONArrayCommand", "taskt.Properties.Resources.command_parse"},

@@ -162,6 +162,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(UIAutomationCommand))]
 
     // JSON
+    [XmlInclude(typeof(ConvertJSONToDataTableCommand))]
     [XmlInclude(typeof(ConvertJSONToDictionaryCommand))]
     [XmlInclude(typeof(ConvertJSONToListCommand))]
     [XmlInclude(typeof(ParseJSONArrayCommand))]
