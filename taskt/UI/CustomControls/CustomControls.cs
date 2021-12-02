@@ -452,10 +452,11 @@ namespace taskt.UI
             {"DatabaseExecuteQueryCommand", "taskt.Properties.Resources.command_database"},
 
             // DataTable
-            {"LoadTaskCommand", "taskt.Properties.Resources.command_start_process"},
-            {"UnloadTaskCommand", "taskt.Properties.Resources.command_stop_process"},
-            {"ExcelAddWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ConvertDataTableRowToDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ConvertDataTableRowToDictionaryCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ConvertDataTableRowToJSONCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ConvertDataTableRowToListCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"CreateDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"FilterDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
@@ -468,6 +469,7 @@ namespace taskt.UI
             // Dictionary
             {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"CreateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"ConvertDictionaryToDataTableCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToJSONCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToListCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryKeyFromValueCommand", "taskt.Properties.Resources.command_dictionary"},
@@ -497,6 +499,7 @@ namespace taskt.UI
             // Excel
             {"ExcelActivateSheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelAddWorkbookCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelAddWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelAppendCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelAppendRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelCheckCellValueExistsCommand", "taskt.Properties.Resources.command_spreadsheet"},
@@ -658,6 +661,8 @@ namespace taskt.UI
             {"SystemActionCommand", "taskt.Properties.Resources.command_script"},
 
             // Task
+            {"LoadTaskCommand", "taskt.Properties.Resources.command_start_process"},
+            {"UnloadTaskCommand", "taskt.Properties.Resources.command_stop_process"},
             {"RunTaskCommand", "taskt.Properties.Resources.command_start_process"},
             {"StopTaskCommand", "taskt.Properties.Resources.command_stop_process"},
 

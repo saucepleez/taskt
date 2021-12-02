@@ -184,7 +184,12 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToJSONCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeysListCommand.cs" />

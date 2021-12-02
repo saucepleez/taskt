@@ -38,6 +38,10 @@ namespace taskt.Core.Automation.Commands
 
     // DataTable
     [XmlInclude(typeof(AddDataRowCommand))]
+    [XmlInclude(typeof(ConvertDataTableRowToDataTableCommand))]
+    [XmlInclude(typeof(ConvertDataTableRowToDictionaryCommand))]
+    [XmlInclude(typeof(ConvertDataTableRowToJSONCommand))]
+    [XmlInclude(typeof(ConvertDataTableRowToListCommand))]
     [XmlInclude(typeof(FilterDataTableCommand))]
     [XmlInclude(typeof(CreateDataTableCommand))]
     [XmlInclude(typeof(GetDataRowCommand))]
@@ -50,6 +54,7 @@ namespace taskt.Core.Automation.Commands
     // Dictionary
     [XmlInclude(typeof(AddDictionaryCommand))]
     [XmlInclude(typeof(CreateDictionaryCommand))]
+    [XmlInclude(typeof(ConvertDictionaryToDataTableCommand))]
     [XmlInclude(typeof(ConvertDictionaryToJSONCommand))]
     [XmlInclude(typeof(ConvertDictionaryToListCommand))]
     [XmlInclude(typeof(GetDictionaryKeyFromValueCommand))]
