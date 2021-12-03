@@ -11,10 +11,10 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to JSON")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to JSON.")]
+    [Attributes.ClassAttributes.Description("This command allows you to convert DataTable to JSON")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable to JSON.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class ConvertDataTableRowToJSONCommand : ScriptCommand
+    public class ConvertDataTableToJSONCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
@@ -28,16 +28,6 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the Row")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vRowIndex}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
-        public string v_DataRowIndex { get; set; }
-
-        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable Name To Assign The JSON")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
@@ -49,10 +39,10 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
         public string v_OutputVariableName { get; set; }
 
-        public ConvertDataTableRowToJSONCommand()
+        public ConvertDataTableToJSONCommand()
         {
-            this.CommandName = "ConvertDataTableRowToJSONCommand";
-            this.SelectionName = "Convert DataTable Row To JSON";
+            this.CommandName = "ConvertDataTableToJSONCommand";
+            this.SelectionName = "Convert DataTable To JSON";
             this.CommandEnabled = true;
             this.CustomRendering = true;         
         }
@@ -63,23 +53,17 @@ namespace taskt.Core.Automation.Commands
 
             DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
 
-            int index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
-            if (index < 0)
-            {
-                throw new Exception("Index of row is < 0");
-            }
-            else if (index > srcDT.Rows.Count)
-            {
-                throw new Exception("Index exceeds the number of rows");
-            }
-
-            Dictionary<string, string> tDic = new Dictionary<string, string>();
-            for(int i = 0; i < srcDT.Columns.Count; i++)
-            {
-                tDic.Add(srcDT.Columns[i].ColumnName, srcDT.Rows[index][i].ToString());
-            }
             List<Dictionary<string, string>> jsonList = new List<Dictionary<string, string>>();
-            jsonList.Add(tDic);
+            for (int j = 0; j < srcDT.Rows.Count; j++)
+            {
+                Dictionary<string, string> tDic = new Dictionary<string, string>();
+                for (int i = 0; i < srcDT.Columns.Count; i++)
+                {
+                    tDic.Add(srcDT.Columns[i].ColumnName, srcDT.Rows[j][i].ToString());
+                }
+
+                jsonList.Add(tDic);
+            }
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonList);
             json.StoreInUserVariable(engine, v_OutputVariableName);
@@ -97,7 +81,7 @@ namespace taskt.Core.Automation.Commands
         
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Row '" + v_DataRowIndex + "' to JSON '" + v_OutputVariableName + "']";
+            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' to JSON '" + v_OutputVariableName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -107,23 +91,6 @@ namespace taskt.Core.Automation.Commands
             {
                 this.validationResult += "DataTable is empty.\n";
                 this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_DataRowIndex))
-            {
-                this.validationResult += "Index is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                int index;
-                if (int.TryParse(this.v_DataRowIndex, out index))
-                {
-                    if (index < 0)
-                    {
-                        this.validationResult += "Index value is < 0.\n";
-                        this.IsValid = false;
-                    }
-                }
             }
             if (String.IsNullOrEmpty(this.v_OutputVariableName))
             {

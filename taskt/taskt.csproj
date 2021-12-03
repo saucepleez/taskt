@@ -185,6 +185,7 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDictionaryCommand.cs" />
