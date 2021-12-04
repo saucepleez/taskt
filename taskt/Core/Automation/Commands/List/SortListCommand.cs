@@ -40,6 +40,17 @@ namespace taskt.Core.Automation.Commands
         public string v_SortOrder { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select sort target value type (Default is Text)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Text** or **Number**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Text")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Number")]
+        public string v_TargetType { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select a List Variable Name of the Sorted List")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**vNewList** or **{{{vNewList}}}**")]
@@ -71,27 +82,70 @@ namespace taskt.Core.Automation.Commands
                 throw new System.Exception("Complex Variable '" + v_InputList + "' or '" + v_InputList.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
-            string sortOrder = v_SortOrder.ConvertToUserVariable(engine);
+            string sortOrder;
             if (String.IsNullOrEmpty(v_SortOrder))
             {
                 sortOrder = "Ascending";
             }
-
-            if (listVariable.VariableValue is List<string>)
+            else
             {
-                List<string> newList = new List<string>();
-                newList.AddRange((List<string>)listVariable.VariableValue);
+                sortOrder = v_SortOrder.ConvertToUserVariable(engine);
+            }
 
-                newList.Sort();
-                if (sortOrder.ToLower() == "descending")
-                {
-                    newList.Reverse();
-                }
-                newList.StoreInUserVariable(engine, v_OutputList);
+            string targetType;
+            if (String.IsNullOrEmpty(v_TargetType))
+            {
+                targetType = "Text";
             }
             else
             {
+                targetType = v_TargetType.ConvertToUserVariable(engine);
+            }
+
+            if (!(listVariable.VariableValue is List<string>))
+            {
                 throw new Exception(v_InputList + " is not List or not-supported List.");
+            }
+
+            switch (targetType.ToLower())
+            {
+                case "text":
+                    List<string> newList = new List<string>();
+                    newList.AddRange((List<string>)listVariable.VariableValue);
+
+                    newList.Sort();
+                    if (sortOrder.ToLower() == "descending")
+                    {
+                        newList.Reverse();
+                    }
+                    newList.StoreInUserVariable(engine, v_OutputList);
+                    break;
+
+                case "number":
+                    List<double> valueList = new List<double>();
+                    List<string> trgList = (List<string>)listVariable.VariableValue;
+                    foreach(var v in trgList)
+                    {
+                        valueList.Add(double.Parse(v));
+                    }
+                    valueList.Sort();
+                    if (sortOrder.ToLower() == "descending")
+                    {
+                        valueList.Reverse();
+                    }
+
+                    List<string> newList2 = new List<string>();
+                    foreach(var v in valueList)
+                    {
+                        newList2.Add(v.ToString());
+                    }
+                    newList2.StoreInUserVariable(engine, v_OutputList);
+
+                    break;
+
+                default:
+                    throw new Exception("Strange target value type " + v_TargetType);
+                    break;
             }
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -101,7 +155,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
