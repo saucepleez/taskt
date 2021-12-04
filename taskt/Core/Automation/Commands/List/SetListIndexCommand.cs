@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.SubGruop("List Item")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command allows you to modify List Index.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify List Index.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
