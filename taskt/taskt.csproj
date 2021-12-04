@@ -274,6 +274,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\CopyDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToJSONCommand.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Core\Automation\Commands\Dictionary\RemoveDictionaryItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CheckDictionaryKeyExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeyFromValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ConcatenateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\SetDictionaryValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />

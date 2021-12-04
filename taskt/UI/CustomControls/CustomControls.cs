@@ -473,10 +473,12 @@ namespace taskt.UI
 
             // Dictionary
             {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
-            {"CreateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"ConcatenateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToDataTableCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToJSONCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToListCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"CopyDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"CreateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryKeyFromValueCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryKeysListCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
