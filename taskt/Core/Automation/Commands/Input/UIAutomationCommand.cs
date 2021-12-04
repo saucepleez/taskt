@@ -198,10 +198,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     propCondition = CreatePropertyCondition(parameterName, parameterValue);
                 }
-
-
-
-               
                 conditionList.Add(propCondition);
             }
 
@@ -222,12 +218,14 @@ namespace taskt.Core.Automation.Commands
 
             //if window was not found
             if (windowElement == null)
+            {
                 throw new Exception("Window named '" + variableWindowName + "' was not found!");
+            }
 
             //find required handle based on specified conditions
-            var element = windowElement.FindFirst(TreeScope.Descendants, searchConditions);
+            var element = windowElement.FindFirst(TreeScope.Subtree, searchConditions);
+            // if element not found, don't throw exception here
             return element;
-
         }
         public override void RunCommand(object sender)
         {
@@ -264,7 +262,6 @@ namespace taskt.Core.Automation.Commands
             }
 
             var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
-
 
             //if element exists type
             if (v_AutomationType == "Check If Element Exists")
