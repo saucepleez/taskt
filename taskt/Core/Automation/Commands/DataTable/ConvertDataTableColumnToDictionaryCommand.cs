@@ -11,10 +11,10 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to Dictionary")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to Dictionary.")]
+    [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Column to Dictionary")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Column to Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class ConvertDataTableRowToDictionaryCommand : ScriptCommand
+    public class ConvertDataTableColumnToDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
@@ -28,14 +28,36 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the Row")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_ColumnType { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Name or Index of the Column")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vRowIndex}}}**")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a valid Column index value")]
+        [Attributes.PropertyAttributes.SampleUsage("**id** or **0** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
-        public string v_DataRowIndex { get; set; }
+        public string v_DataColumnIndex { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Dictionary Key prefix (Default is row)")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter Dictionary Key Prefix")]
+        [Attributes.PropertyAttributes.SampleUsage("**row** or **{{{vPrefix}}}**")]
+        [Attributes.PropertyAttributes.Remarks("If enter **row**, Dictionary key is row0, row1, ...")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        public string v_KeyPrefix { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable Name To Assign The Dictionary")]
@@ -49,10 +71,10 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
         public string v_OutputVariableName { get; set; }
 
-        public ConvertDataTableRowToDictionaryCommand()
+        public ConvertDataTableColumnToDictionaryCommand()
         {
-            this.CommandName = "ConvertDataTableRowToDictionaryCommand";
-            this.SelectionName = "Convert DataTable Row To Dictionary";
+            this.CommandName = "ConvertDataTableColumnToDictionaryCommand";
+            this.SelectionName = "Convert DataTable Column To Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;         
         }
@@ -63,29 +85,43 @@ namespace taskt.Core.Automation.Commands
 
             DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
 
-            int index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
-            if (index < 0)
+            if (String.IsNullOrEmpty(v_ColumnType))
             {
-                throw new Exception("Index of row is < 0");
+                v_ColumnType = "Column Name";
             }
-            else if (index > srcDT.Rows.Count)
+
+            string prefix;
+            if (String.IsNullOrEmpty(v_KeyPrefix))
             {
-                throw new Exception("Index exceeds the number of rows");
+                prefix = "row";
+            }
+            else
+            {
+                prefix = v_KeyPrefix.ConvertToUserVariable(engine);
             }
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
-
-            int cols = srcDT.Columns.Count;
-            for (int i = 0; i < cols; i++)
+            switch (v_ColumnType.ToLower())
             {
-                if (srcDT.Rows[index][i] != null)
-                {
-                    myDic.Add(srcDT.Columns[i].ColumnName, srcDT.Rows[index][i].ToString());
-                }
-                else
-                {
-                    myDic.Add(srcDT.Columns[i].ColumnName, "");
-                }
+                case "column name":
+                    var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
+                    for (int i = 0; i < srcDT.Rows.Count; i++)
+                    {
+                        myDic.Add(prefix + i.ToString(), (srcDT.Rows[i][colName] != null) ? srcDT.Rows[i][colName].ToString() : "");
+                    }
+                    break;
+
+                case "index":
+                    int colIdx = int.Parse(v_DataColumnIndex.ConvertToUserVariable(engine));
+                    for (int i = 0; i < srcDT.Rows.Count; i++)
+                    {
+                        myDic.Add(prefix + i.ToString(), (srcDT.Rows[i][colIdx] != null) ? srcDT.Rows[i][colIdx].ToString() : "");
+                    }
+                    break;
+
+                default:
+                    throw new Exception("Strange column type " + v_ColumnType);
+                    break;
             }
 
             myDic.StoreInUserVariable(engine, v_OutputVariableName);
@@ -103,7 +139,7 @@ namespace taskt.Core.Automation.Commands
         
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Row '" + v_DataRowIndex + "' to Dictionary '" + v_OutputVariableName + "']";
+            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Column '" + v_DataColumnIndex + "' to Dictionary '" + v_OutputVariableName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -114,22 +150,10 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "DataTable is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_DataRowIndex))
+            if (String.IsNullOrEmpty(this.v_DataColumnIndex))
             {
-                this.validationResult += "Index is empty.\n";
+                this.validationResult += "Column Name or Index is empty.\n";
                 this.IsValid = false;
-            }
-            else
-            {
-                int index;
-                if (int.TryParse(this.v_DataRowIndex, out index))
-                {
-                    if (index < 0)
-                    {
-                        this.validationResult += "Index value is < 0.\n";
-                        this.IsValid = false;
-                    }
-                }
             }
             if (String.IsNullOrEmpty(this.v_OutputVariableName))
             {

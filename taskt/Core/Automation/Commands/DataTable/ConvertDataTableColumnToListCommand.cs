@@ -11,10 +11,10 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to DataTable")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to DataTable.")]
+    [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Column to List")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Column to List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class ConvertDataTableRowToDataTableCommand : ScriptCommand
+    public class ConvertDataTableColumnToListCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
@@ -28,17 +28,28 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the Row")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_ColumnType { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Name or Index of the Column")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vRowIndex}}}**")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a valid Column index value")]
+        [Attributes.PropertyAttributes.SampleUsage("**id** or **0** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
-        public string v_DataRowIndex { get; set; }
+        public string v_DataColumnIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable Name To Assign The DataTable")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable Name To Assign The List")]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
         [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
@@ -46,13 +57,13 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
         public string v_OutputVariableName { get; set; }
 
-        public ConvertDataTableRowToDataTableCommand()
+        public ConvertDataTableColumnToListCommand()
         {
-            this.CommandName = "ConvertDataTableRowToDataTableCommand";
-            this.SelectionName = "Convert DataTable Row To DataTable";
+            this.CommandName = "ConvertDataTableColumnToListCommand";
+            this.SelectionName = "Convert DataTable Column To List";
             this.CommandEnabled = true;
             this.CustomRendering = true;         
         }
@@ -63,27 +74,36 @@ namespace taskt.Core.Automation.Commands
 
             DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
 
-            int index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
-            if (index < 0)
+            if (String.IsNullOrEmpty(v_ColumnType))
             {
-                throw new Exception("Index of row is < 0");
-            }
-            else if (index > srcDT.Rows.Count)
-            {
-                throw new Exception("Index exceeds the number of rows");
+                v_ColumnType = "Column Name";
             }
 
-            DataTable myDT = new DataTable();
-
-            int cols = srcDT.Columns.Count;
-            myDT.Rows.Add();
-            for (int i = 0; i < cols; i++)
+            List<string> myList = new List<string>();
+            switch (v_ColumnType.ToLower())
             {
-                myDT.Columns.Add(srcDT.Columns[i].ColumnName);
-                myDT.Rows[0][i] = srcDT.Rows[index][i];
+                case "column name":
+                    var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
+                    for (int i = 0; i < srcDT.Rows.Count; i++)
+                    {
+                        myList.Add((srcDT.Rows[i][colName] != null) ? srcDT.Rows[i][colName].ToString() : "");
+                    }
+                    break;
+
+                case "index":
+                    int colIdx = int.Parse(v_DataColumnIndex.ConvertToUserVariable(engine));
+                    for (int i = 0; i < srcDT.Rows.Count; i++)
+                    {
+                        myList.Add((srcDT.Rows[i][colIdx] != null) ? srcDT.Rows[i][colIdx].ToString() : "");
+                    }
+                    break;
+
+                default:
+                    throw new Exception("Strange column type " + v_ColumnType);
+                    break;
             }
 
-            myDT.StoreInUserVariable(engine, v_OutputVariableName);
+            myList.StoreInUserVariable(engine, v_OutputVariableName);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -98,7 +118,7 @@ namespace taskt.Core.Automation.Commands
         
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Row '" + v_DataRowIndex + "' to DataTable '" + v_OutputVariableName + "']";
+            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Column '" + v_DataColumnIndex + "' to List '" + v_OutputVariableName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -109,26 +129,14 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "DataTable is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_DataRowIndex))
+            if (String.IsNullOrEmpty(this.v_DataColumnIndex))
             {
-                this.validationResult += "Index is empty.\n";
+                this.validationResult += "Column Name or Index is empty.\n";
                 this.IsValid = false;
-            }
-            else
-            {
-                int index;
-                if (int.TryParse(this.v_DataRowIndex, out index))
-                {
-                    if (index < 0)
-                    {
-                        this.validationResult += "Index value is < 0.\n";
-                        this.IsValid = false;
-                    }
-                }
             }
             if (String.IsNullOrEmpty(this.v_OutputVariableName))
             {
-                this.validationResult += "Result DataTable is empty.\n";
+                this.validationResult += "Result List is empty.\n";
                 this.IsValid = false;
             }
 
