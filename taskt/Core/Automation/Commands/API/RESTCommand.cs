@@ -211,17 +211,23 @@ namespace taskt.Core.Automation.Commands
                 var paramType = rw.Field<string>("Parameter Type").ConvertToUserVariable(sender);
                 var contentType = rw.Field<string>("Content Type").ConvertToUserVariable(sender);
 
-                var param = new Parameter();
+                //var param = new Parameter();
 
-                if (!string.IsNullOrEmpty(contentType))
-                    param.ContentType = contentType;
+                //if (!string.IsNullOrEmpty(contentType))
+                //{
+                //    param.ContentType = contentType;
+                //}
 
-                if (!string.IsNullOrEmpty(paramType))
-                    param.Type = (ParameterType)System.Enum.Parse(typeof(ParameterType), paramType);
-                
-                   
-                param.Name = paramName;
-                param.Value = paramValue;
+
+                //if (!string.IsNullOrEmpty(paramType))
+                //{
+                //    param.Type = (ParameterType)System.Enum.Parse(typeof(ParameterType), paramType);
+                //}
+
+                //param.Name = paramName;
+                //param.Value = paramValue;
+
+                var param = new Parameter(paramName, paramValue, (ParameterType)System.Enum.Parse(typeof(ParameterType), paramType));
 
                 request.Parameters.Add(param);
             }
