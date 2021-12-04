@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
+    [Attributes.ClassAttributes.SubGruop("List Item")]
     [Attributes.ClassAttributes.Description("This command allows you to add list item.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add list item.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]

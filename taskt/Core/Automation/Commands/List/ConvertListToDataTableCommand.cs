@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
+    [Attributes.ClassAttributes.SubGruop("Convert")]
     [Attributes.ClassAttributes.Description("This command convert a List to a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

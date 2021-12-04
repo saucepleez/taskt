@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
+    [Attributes.ClassAttributes.SubGruop("List Actions")]
     [Attributes.ClassAttributes.Description("This command allows you to reverse list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reverse list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

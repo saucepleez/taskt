@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
+    [Attributes.ClassAttributes.SubGruop("List Item")]
     [Attributes.ClassAttributes.Description("This command allows you want to check list has a value you specify")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check list has a value you specify")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
