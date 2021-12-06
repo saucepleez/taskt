@@ -264,6 +264,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowByDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToDataTableCommand.cs" />

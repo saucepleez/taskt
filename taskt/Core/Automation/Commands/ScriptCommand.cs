@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
 
     // DataTable
     [XmlInclude(typeof(AddDataRowCommand))]
+    [XmlInclude(typeof(AddDataTableRowByDictionaryCommand))]
     [XmlInclude(typeof(ConvertDataTableColumnToDataTableCommand))]
     [XmlInclude(typeof(ConvertDataTableColumnToDictionaryCommand))]
     [XmlInclude(typeof(ConvertDataTableColumnToJSONCommand))]
