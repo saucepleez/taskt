@@ -72,10 +72,20 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         public DataTable v_UIAActionParameters { get; set; }
 
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Optional - UI Element Search Method (Default is Deep)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Shallow")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Deep")]
+        [Attributes.PropertyAttributes.SampleUsage("**Shallow** or **Deep**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        public string v_SearchDepth { get; set; }
+
         [XmlIgnore]
         [NonSerialized]
         private ComboBox AutomationTypeControl;
-
 
         [XmlIgnore]
         [NonSerialized]
@@ -107,7 +117,6 @@ namespace taskt.Core.Automation.Commands
             this.v_UIAActionParameters.Columns.Add("Parameter Name");
             this.v_UIAActionParameters.Columns.Add("Parameter Value");
             this.v_UIAActionParameters.TableName = DateTime.Now.ToString("UIAActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-
         }
 
         private void ActionParametersGridViewHelper_MouseEnter(object sender, EventArgs e)
@@ -164,16 +173,10 @@ namespace taskt.Core.Automation.Commands
                 default:
                     throw new NotImplementedException("Property Type '" + propertyName + "' not implemented");
             }
-
-
-
-
-
         }
 
         public AutomationElement SearchForGUIElement(object sender, string variableWindowName)
         {
-
             //create search params
             var searchParams = from rw in v_UIASearchParameters.AsEnumerable()
                                where rw.Field<string>("Enabled") == "True"
@@ -214,7 +217,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             //find window
-            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
+            TreeScope scope = (v_SearchDepth.ToLower() != "deep") ? TreeScope.Children : TreeScope.Subtree;
+            var windowElement = AutomationElement.RootElement.FindFirst(scope, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
 
             //if window was not found
             if (windowElement == null)
@@ -223,6 +227,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //find required handle based on specified conditions
+            scope = (v_SearchDepth.ToLower() != "deep") ? TreeScope.Descendants : TreeScope.Subtree;
             var element = windowElement.FindFirst(TreeScope.Subtree, searchConditions);
             // if element not found, don't throw exception here
             return element;
@@ -259,6 +264,15 @@ namespace taskt.Core.Automation.Commands
                     System.Threading.Thread.Sleep(500); // wait a bit
                     variableWindowName = User32Functions.GetActiveWindowTitle();
                 }
+            }
+
+            if (String.IsNullOrEmpty(v_SearchDepth))
+            {
+                v_SearchDepth = "Deep";
+            }
+            else
+            {
+                v_SearchDepth = v_SearchDepth.ConvertToUserVariable(sender);
             }
 
             var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
@@ -558,6 +572,9 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIAActionParameters", this, new Control[] { ActionParametersGridViewHelper }, editor));
             RenderedControls.Add(ActionParametersGridViewHelper);
 
+            // add SearchDepth
+            RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_SearchDepth", this, editor));
+
             return RenderedControls;
 
         }
@@ -757,9 +774,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-
             actionParameterView.Refresh();
-
         }
 
         private void EmptySearchParameterClicked(object sender, EventArgs e)
@@ -886,7 +901,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             
-
             return this.IsValid;
         }
 
