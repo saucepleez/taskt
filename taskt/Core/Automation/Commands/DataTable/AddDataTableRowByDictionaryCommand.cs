@@ -102,12 +102,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             // get columns list
-            List<string> colmuns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
+            List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
 
             DataRow row = myDT.NewRow();
             foreach(var item in myDic)
             {
-                if (colmuns.Contains(item.Key))
+                if (columns.Contains(item.Key))
                 {
                     row[item.Key] = item.Value;
                 }
