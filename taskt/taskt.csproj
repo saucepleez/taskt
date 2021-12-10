@@ -275,6 +275,9 @@
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CopyDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToDataTableCommand.cs" />
