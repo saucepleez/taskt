@@ -476,10 +476,12 @@ namespace taskt.UI
             {"GetDataTableColumnCountCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataTableColumnListCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataTableRowCountCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"GetDataTableValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"LoadDataTableCommand", "taskt.Properties.Resources.command_spreadsheet" },
             {"RemoveDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableRowValuesByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableRowValuesByDictionaryCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"SetDataTableValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"WriteDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
 
             // Dictionary
