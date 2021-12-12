@@ -264,6 +264,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDictionaryCommand.cs" />
