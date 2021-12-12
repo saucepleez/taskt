@@ -52,6 +52,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ConvertDataTableToJSONCommand))]
     [XmlInclude(typeof(CopyDataTableCommand))]
     [XmlInclude(typeof(CreateDataTableCommand))]
+    [XmlInclude(typeof(DeleteDataTableRowCommand))]
     [XmlInclude(typeof(FilterDataTableCommand))]
     [XmlInclude(typeof(GetDataRowCommand))]
     [XmlInclude(typeof(GetDataRowCountCommand))]
@@ -60,6 +61,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetDataTableColumnListCommand))]
     [XmlInclude(typeof(GetDataTableRowCountCommand))]
     [XmlInclude(typeof(RemoveDataRowCommand))]
+    [XmlInclude(typeof(SetDataTableRowValuesByDataTableCommand))]
+    [XmlInclude(typeof(SetDataTableRowValuesByDictionaryCommand))]
     [XmlInclude(typeof(WriteDataRowValueCommand))]
     [XmlInclude(typeof(LoadDataTableCommand))]
 

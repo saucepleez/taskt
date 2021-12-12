@@ -264,7 +264,10 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\DeleteDataTableRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowByDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToDictionaryCommand.cs" />
@@ -275,8 +278,10 @@
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\CheckDataTableColumnExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CopyDictionaryCommand.cs" />
