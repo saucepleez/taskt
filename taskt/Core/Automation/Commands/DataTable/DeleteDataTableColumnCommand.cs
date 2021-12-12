@@ -28,9 +28,20 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        public string v_ColumnType { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column Name to delete")]
         [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**newColumn** or **{{{vNewColumn}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **newColumn** or **{{{vNewColumn}}}** or **{{{vIndex}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
@@ -50,9 +61,49 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            string trgColumn = v_DeleteColumnName.ConvertToUserVariable(engine);
+            string colType = "Column Name";
+            if (!String.IsNullOrEmpty(v_ColumnType))
+            {
+                colType = v_ColumnType.ConvertToUserVariable(engine);
+            }
+            colType = colType.ToLower();
+            switch (colType)
+            {
+                case "column name":
+                case "index":
+                    break;
+                default:
+                    throw new Exception("Strange column type " + v_ColumnType);
+                    break;
+            }
 
-            myDT.Columns.Remove(trgColumn);
+            if (colType == "column name")
+            {
+                string trgColumn = v_DeleteColumnName.ConvertToUserVariable(engine);
+
+                for (int i = 0; i < myDT.Columns.Count; i++)
+                {
+                    if (myDT.Columns[i].ColumnName == trgColumn)
+                    {
+                        myDT.Columns.Remove(trgColumn);
+                        return;
+                    }
+                }
+                throw new Exception("Column " + v_DeleteColumnName + " does not exists");
+            }
+            else
+            {
+                string tCol = v_DeleteColumnName.ConvertToUserVariable(engine);
+                int colIndex = int.Parse(tCol);
+                if ((colIndex >= 0) && (colIndex < myDT.Columns.Count))
+                {
+                    myDT.Columns.RemoveAt(colIndex);
+                }
+                else
+                {
+                    throw new Exception("Column index " + v_DeleteColumnName + " does not exists");
+                }
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
