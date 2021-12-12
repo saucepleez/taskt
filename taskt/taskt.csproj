@@ -264,11 +264,14 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnsByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnByListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowsByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\DeleteDataTableRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowByDictionaryCommand.cs" />

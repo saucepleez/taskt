@@ -453,6 +453,9 @@ namespace taskt.UI
 
             // DataTable
             {"AddDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"AddDataTableColumnCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"AddDataTableColumnByListCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"AddDataTableColumnsByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataTableRowByDictionaryCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataTableRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataTableRowsByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},

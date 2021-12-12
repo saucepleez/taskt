@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to add a datarow to a DataTable")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a datarow to a DataTable.")]
+    [Attributes.ClassAttributes.Description("This command allows you to add a row to a DataTable")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a row to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class AddDataTableRowCommand : ScriptCommand
     {
