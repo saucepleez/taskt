@@ -28,9 +28,20 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_ColumnType { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column Name to set")]
         [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**newColumn** or **{{{vNewColumn}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **newColumn** or **{{{vNewColumn}}}** or **{{{vIndex}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
@@ -83,8 +94,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
-
-            string trgColName = v_SetColumnName.ConvertToUserVariable(engine);
 
             List<string> myList = v_SetListName.GetListVariable(engine);
 
@@ -139,13 +148,42 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("The number of List items is less than the rows");
             }
 
-            // column name check
-            bool isExistsCol = false;
-            for (int i = 0; i < myDT.Columns.Count; i++)
+            string colType = "Column Name";
+            if (!String.IsNullOrEmpty(v_ColumnType))
             {
-                if (trgColName == myDT.Columns[i].ColumnName)
+                colType = v_ColumnType.ConvertToUserVariable(engine);
+            }
+            colType = colType.ToLower();
+            switch (colType)
+            {
+                case "column name":
+                case "index":
+                    break;
+                default:
+                    throw new Exception("Strange column type " + v_ColumnType);
+                    break;
+            }
+
+            // column name check
+            string trgColName = v_SetColumnName.ConvertToUserVariable(engine);
+            bool isExistsCol = false;
+            if (colType == "column name")
+            {
+                for (int i = 0; i < myDT.Columns.Count; i++)
+                {
+                    if (trgColName == myDT.Columns[i].ColumnName)
+                    {
+                        isExistsCol = true;
+                    }
+                }
+            }
+            else
+            {
+                int colIndex = int.Parse(trgColName);
+                if ((colIndex >= 0) && (colIndex < myDT.Columns.Count))
                 {
                     isExistsCol = true;
+                    trgColName = myDT.Columns[colIndex].ColumnName;
                 }
             }
             if (!isExistsCol)
