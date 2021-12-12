@@ -267,6 +267,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_46(doc);
             convertTo3_5_0_47(doc);
             convertTo3_5_0_50(doc);
+            convertTo3_5_0_51(doc);
 
             return doc;
         }
@@ -373,6 +374,29 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "ConvertJSONToListCommand");
                 cmd.SetAttributeValue(ns + "type", "ConvertJSONToListCommand");
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_51(XDocument doc)
+        {
+            // GetDataCountRowCommand -> GetDataTableRowCountCommand
+            IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "GetDataRowCountCommand"));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in cmdAddList)
+            {
+                cmd.SetAttributeValue("CommandName", "GetDataTableRowCountCommand");
+                cmd.SetAttributeValue(ns + "type", "GetDataTableRowCountCommand");
+            }
+
+            // AddDataRow -> AddDataTableRow
+            IEnumerable<XElement> cmdAddDataRow = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "AddDataRowCommand"));
+            foreach (var cmd in cmdAddDataRow)
+            {
+                cmd.SetAttributeValue("CommandName", "AddDataTableRowCommand");
+                cmd.SetAttributeValue(ns + "type", "AddDataTableRowCommand");
             }
 
             return doc;
