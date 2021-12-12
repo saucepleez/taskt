@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add a DataTable Row to a DataTable by a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a DataTable Row to a DataTable by a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class AddDataTableRowByDataTableCommand : ScriptCommand
+    public class AddDataTableRowsByDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name to be added a row")]
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_NotExistsKey { get; set; }
 
-        public AddDataTableRowByDataTableCommand()
+        public AddDataTableRowsByDataTableCommand()
         {
             this.CommandName = "AddDataTableRowByDataTableCommand";
             this.SelectionName = "Add DataTable Row By DataTable";

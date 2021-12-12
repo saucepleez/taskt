@@ -38,9 +38,9 @@ namespace taskt.Core.Automation.Commands
 
     // DataTable
     [XmlInclude(typeof(AddDataRowCommand))]
-    [XmlInclude(typeof(AddDataTableRowByDataTableCommand))]
     [XmlInclude(typeof(AddDataTableRowByDictionaryCommand))]
     [XmlInclude(typeof(AddDataTableRowCommand))]
+    [XmlInclude(typeof(AddDataTableRowsByDataTableCommand))]
     [XmlInclude(typeof(CheckDataTableColumnExistsCommand))]
     [XmlInclude(typeof(ConvertDataTableColumnToDataTableCommand))]
     [XmlInclude(typeof(ConvertDataTableColumnToDictionaryCommand))]
