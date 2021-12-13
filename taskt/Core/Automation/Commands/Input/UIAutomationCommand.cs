@@ -72,17 +72,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         public DataTable v_UIAActionParameters { get; set; }
 
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - UI Element Search Method (Default is Deep)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Shallow")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Deep")]
-        [Attributes.PropertyAttributes.SampleUsage("**Shallow** or **Deep**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        public string v_SearchDepth { get; set; }
-
         [XmlIgnore]
         [NonSerialized]
         private ComboBox AutomationTypeControl;
@@ -217,8 +206,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             //find window
-            TreeScope scope = (v_SearchDepth.ToLower() != "deep") ? TreeScope.Children : TreeScope.Subtree;
-            var windowElement = AutomationElement.RootElement.FindFirst(scope, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
+            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
+            if (windowElement == null)
+            {
+                // more deep search
+                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
+            }
 
             //if window was not found
             if (windowElement == null)
@@ -227,8 +220,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             //find required handle based on specified conditions
-            scope = (v_SearchDepth.ToLower() != "deep") ? TreeScope.Descendants : TreeScope.Subtree;
-            var element = windowElement.FindFirst(TreeScope.Subtree, searchConditions);
+            var element = windowElement.FindFirst(TreeScope.Descendants, searchConditions);
+            if (element == null)
+            {
+                // more deep search
+                element = windowElement.FindFirst(TreeScope.Subtree, searchConditions);
+            }
             // if element not found, don't throw exception here
             return element;
         }
@@ -264,15 +261,6 @@ namespace taskt.Core.Automation.Commands
                     System.Threading.Thread.Sleep(500); // wait a bit
                     variableWindowName = User32Functions.GetActiveWindowTitle();
                 }
-            }
-
-            if (String.IsNullOrEmpty(v_SearchDepth))
-            {
-                v_SearchDepth = "Deep";
-            }
-            else
-            {
-                v_SearchDepth = v_SearchDepth.ConvertToUserVariable(sender);
             }
 
             var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
@@ -689,6 +677,7 @@ namespace taskt.Core.Automation.Commands
                     mouseClickBox.Items.Add("Left Up");
                     mouseClickBox.Items.Add("Middle Up");
                     mouseClickBox.Items.Add("Right Up");
+                    mouseClickBox.Items.Add("Double Left Click");
 
 
                     if (sender != null)
