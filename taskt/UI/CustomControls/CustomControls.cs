@@ -454,8 +454,8 @@ namespace taskt.UI
             // DataTable
             {"AddDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataTableColumnCommand", "taskt.Properties.Resources.command_spreadsheet"},
-            {"AddDataTableColumnAndFillValuesByListCommand", "taskt.Properties.Resources.command_spreadsheet"},
-            {"AddDataTableColumnsAndFillValuesByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            //{"AddDataTableColumnAndFillValuesByListCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            //{"AddDataTableColumnsAndFillValuesByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataTableRowByDictionaryCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataTableRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"AddDataTableRowsByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
@@ -483,6 +483,7 @@ namespace taskt.UI
             {"GetDataTableValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"LoadDataTableCommand", "taskt.Properties.Resources.command_spreadsheet" },
             {"RemoveDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"SetDataTableColumnValuesByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableColumnValuesByListCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableRowValuesByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableRowValuesByDictionaryCommand", "taskt.Properties.Resources.command_spreadsheet"},

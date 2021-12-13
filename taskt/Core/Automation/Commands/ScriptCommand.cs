@@ -39,8 +39,8 @@ namespace taskt.Core.Automation.Commands
     // DataTable
     [XmlInclude(typeof(AddDataRowCommand))]
     [XmlInclude(typeof(AddDataTableColumnCommand))]
-    [XmlInclude(typeof(AddDataTableColumnAndFillValuesByListCommand))]
-    [XmlInclude(typeof(AddDataTableColumnsAndFillValuesByDataTableCommand))]
+    //[XmlInclude(typeof(AddDataTableColumnAndFillValuesByListCommand))]
+    //[XmlInclude(typeof(AddDataTableColumnsAndFillValuesByDataTableCommand))]
     [XmlInclude(typeof(AddDataTableRowByDictionaryCommand))]
     [XmlInclude(typeof(AddDataTableRowCommand))]
     [XmlInclude(typeof(AddDataTableRowsByDataTableCommand))]
@@ -67,6 +67,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetDataTableRowCountCommand))]
     [XmlInclude(typeof(GetDataTableValueCommand))]
     [XmlInclude(typeof(RemoveDataRowCommand))]
+    [XmlInclude(typeof(SetDataTableColumnValuesByDataTableCommand))]
     [XmlInclude(typeof(SetDataTableColumnValuesByListCommand))]
     [XmlInclude(typeof(SetDataTableRowValuesByDataTableCommand))]
     [XmlInclude(typeof(SetDataTableRowValuesByDictionaryCommand))]

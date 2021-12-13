@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "AddDataTableColumnsAndFillValuesByDataTableCommand";
             this.SelectionName = "Add DataTable Columns And Fill Values By DataTable";
-            this.CommandEnabled = true;
+            this.CommandEnabled = false;
             this.CustomRendering = true;
         }
 

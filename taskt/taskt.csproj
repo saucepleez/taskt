@@ -264,6 +264,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\DeleteDataTableColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnsAndFillValuesByDataTableCommand.cs" />
