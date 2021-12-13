@@ -847,6 +847,12 @@ namespace taskt.Core.Automation.Commands
                 case "ie":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
                     break;
+                case "json":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
+                    break;
+                case "list":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
+                    break;
                 case "nlg":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG;
                     break;
@@ -975,11 +981,23 @@ namespace taskt.Core.Automation.Commands
                 case "database":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
                     break;
+                case "datatable":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
+                    break;
+                case "dictionary":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
+                    break;
                 case "excel":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
                     break;
                 case "ie":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
+                    break;
+                case "json":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
+                    break;
+                case "list":
+                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
                     break;
                 case "stopwatch":
                     comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
