@@ -560,9 +560,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIAActionParameters", this, new Control[] { ActionParametersGridViewHelper }, editor));
             RenderedControls.Add(ActionParametersGridViewHelper);
 
-            // add SearchDepth
-            RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_SearchDepth", this, editor));
-
             return RenderedControls;
 
         }
