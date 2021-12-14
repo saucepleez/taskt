@@ -1549,28 +1549,28 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        public static string GetAddtionalParameterInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
-        {
-            if (rowInfo == null)
-            {
-                return "";
-            }
+        //public static string GetAddtionalParameterInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
+        //{
+        //    if (rowInfo == null)
+        //    {
+        //        return "";
+        //    }
 
-            string ret = rowInfo.description.replaceEngineKeyword();
-            if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
-            {
-                if (!ret.Contains("(ex."))
-                {
-                    string smp = rowInfo.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
-                    if (smp.Length > 0)
-                    {
-                        ret += " (ex. " + smp + ")";
-                    }
-                }
-            }
+        //    string ret = rowInfo.description.replaceEngineKeyword();
+        //    if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+        //    {
+        //        if (!ret.Contains("(ex."))
+        //        {
+        //            string smp = rowInfo.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
+        //            if (smp.Length > 0)
+        //            {
+        //                ret += " (ex. " + smp + ")";
+        //            }
+        //        }
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
 
         private static string replaceEngineKeyword(this string targetString)
         {
