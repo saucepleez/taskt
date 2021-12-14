@@ -78,11 +78,11 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        private List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> resultInfo;
+        private Label variable2ndLabel;
 
         [XmlIgnore]
         [NonSerialized]
-        private Label variable2ndLabel;
+        private Label variableLabel;
 
         public StringCheckTextCommand()
         {
@@ -90,8 +90,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Check String";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            resultInfo = ScriptCommand.GetAdditionalParameterInfo(this.GetProperty("v_applyToVariableName"));
         }
         public override void RunCommand(object sender)
         {
@@ -180,6 +178,8 @@ namespace taskt.Core.Automation.Commands
 
             variable2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_applyToVariableName").FirstOrDefault();
 
+            variableLabel = (Label)ctls.GetControlsByName("v_applyToVariableName", CommandControls.CommandControlType.Label)[0];
+
             var chkCombobox = (ComboBox)ctls.Where(t => t.Name == "v_CheckMethod").FirstOrDefault();
             chkCombobox.SelectedIndexChanged += (sender, e) => CheckMethod_SelectedIndexChanged(sender, e);
 
@@ -189,8 +189,9 @@ namespace taskt.Core.Automation.Commands
         private void CheckMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
             string searchedKey = ((ComboBox)sender).Text;
-            var info = resultInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault();
-            variable2ndLabel.Text = (info != null) ? info.description : "";
+            //var info = resultInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault();
+            Dictionary<string, string> dic = (Dictionary<string, string>)variableLabel.Tag;
+            variable2ndLabel.Text = (dic.ContainsKey(searchedKey) ? dic[searchedKey] : "");
         }
 
         public override string GetDisplayValue()

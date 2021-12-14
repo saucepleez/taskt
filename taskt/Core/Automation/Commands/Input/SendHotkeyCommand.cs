@@ -97,7 +97,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        private List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> hotkeyInfo;
+        private Label hotkeyLabel;
 
         public SendHotkeyCommand()
         {
@@ -105,9 +105,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Send Hotkey";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            var variableProperties = this.GetType().GetProperties().Where(f => f.Name == "v_Hotkey").FirstOrDefault();
-            hotkeyInfo = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
         }
 
         public override void RunCommand(object sender)
@@ -234,7 +231,9 @@ namespace taskt.Core.Automation.Commands
 
             parameterHotkey = (ComboBox)ctrls.Where(t => t.Name == "v_Hotkey").FirstOrDefault();
             parameterHotkey.SelectedIndexChanged += (sender, e) => hotkeyCombobox_SelectedIndexChanged(sender, e);
+
             hotkey2ndLabel = (Label)ctrls.Where(t => t.Name == "lbl2_v_Hotkey").FirstOrDefault();
+            hotkeyLabel = (Label)ctrls.GetControlsByName("v_Hotkey", CommandControls.CommandControlType.Label)[0];
 
             return RenderedControls;
 
@@ -242,9 +241,11 @@ namespace taskt.Core.Automation.Commands
 
         private void hotkeyCombobox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            var seachedKey = parameterHotkey.Text;
-            var targetInfo = hotkeyInfo.Where(t => t.searchKey == seachedKey).FirstOrDefault();
-            hotkey2ndLabel.Text = (targetInfo != null) ? targetInfo.description : "";
+            var searchedKey = parameterHotkey.Text;
+
+            Dictionary<string, string> dic = (Dictionary<string, string>)hotkeyLabel.Tag;
+
+            hotkey2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
         }
 
         public override string GetDisplayValue()

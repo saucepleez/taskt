@@ -74,15 +74,15 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
+        private Label ParametersLabel;
+
+        [XmlIgnore]
+        [NonSerialized]
         private Label Parameters2ndLabel;
 
         [XmlIgnore]
         [NonSerialized]
         private ComboBox selectionControl;
-
-        [XmlIgnore]
-        [NonSerialized]
-        private List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> DGVInfo;
 
         public TextExtractorCommand()
         {
@@ -100,9 +100,6 @@ namespace taskt.Core.Automation.Commands
 
             //this.v_TextExtractionTable.Columns.Add("Parameter Name");
             //this.v_TextExtractionTable.Columns.Add("Parameter Value");
-
-            var variableProperties = this.GetType().GetProperties().Where(f => f.Name == "v_TextExtractionTable").FirstOrDefault();
-            DGVInfo = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
         }
 
         public override void RunCommand(object sender)
@@ -190,6 +187,7 @@ namespace taskt.Core.Automation.Commands
             ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
 
             Parameters2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_TextExtractionTable").FirstOrDefault();
+            ParametersLabel = (Label)ctls.GetControlsByName("v_TextExtractionTable", CommandControls.CommandControlType.Label)[0];
 
             selectionControl = (ComboBox)ctls.Where(t => t.Name == "v_TextExtractionType").FirstOrDefault();
             selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
@@ -255,7 +253,9 @@ namespace taskt.Core.Automation.Commands
             }
             string searchedKey = selectionControl.Text + "\t" + ParametersGridViewHelper.Rows[e.RowIndex].Cells[0].Value;
 
-            Parameters2ndLabel.Text = CommandControls.GetAddtionalParameterInfoText(DGVInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault());
+            Dictionary<string, string> dic = (Dictionary<string, string>)ParametersLabel.Tag;
+            Parameters2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
+            //Parameters2ndLabel.Text = CommandControls.GetAddtionalParameterInfoText(DGVInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault());
         }
         private string GetParameterValue(string parameterName)
         {

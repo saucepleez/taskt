@@ -1077,7 +1077,8 @@ namespace taskt.Core.Automation.Commands
                 };
             }
 
-            var commentProp = this.GetProperty("v_Comment");
+            //var commentProp = this.GetProperty("v_Comment");
+            var commentProp = this.GetType().GetProperty("v_Comment");
             var commentValue = commentProp.GetValue(this);
             if (commentValue != null)
             {

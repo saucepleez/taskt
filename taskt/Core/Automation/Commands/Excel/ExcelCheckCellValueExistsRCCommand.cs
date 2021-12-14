@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        private List<Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> valueTypeInfo;
+        private Label lblValueType;
 
         public ExcelCheckCellValueExistsRCCommand()
         {
@@ -89,8 +89,6 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             this.v_InstanceName = "";
-
-            valueTypeInfo = ScriptCommand.GetAdditionalParameterInfo(this.GetProperty("v_ValueType"));
         }
 
         public override void RunCommand(object sender)
@@ -149,7 +147,9 @@ namespace taskt.Core.Automation.Commands
 
             cmbValueType = (ComboBox)ctls.Where(t => t.Name == "v_ValueType").FirstOrDefault();
             cmbValueType.SelectedIndexChanged += (sender, e) => cmbValueType_SelectedIndexChanged(sender, e);
+            
             lbl2ndValueType = (Label)ctls.Where(t => t.Name == "lbl2_v_ValueType").FirstOrDefault();
+            lblValueType = (Label)ctls.GetControlsByName("v_ValueType", CommandControls.CommandControlType.Label)[0];
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
@@ -162,8 +162,9 @@ namespace taskt.Core.Automation.Commands
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e) 
         {
             string searchedKey = cmbValueType.SelectedItem.ToString();
-            var info = valueTypeInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault();
-            lbl2ndValueType.Text = (info == null) ? "" : info.description;
+            Dictionary<string, string> dic = (Dictionary<string, string>)lblValueType.Tag;
+
+            lbl2ndValueType.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
         }
 
         public override string GetDisplayValue()

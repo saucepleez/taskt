@@ -372,6 +372,33 @@ namespace taskt.UI.CustomControls
             //inputLabel.BackColor = theme.BackColor;
 
             inputLabel.Name = "lbl_" + parameterName;
+
+            // set addtional parameter info
+            var additionaoParams = (Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo[])variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo));
+            if (additionaoParams.Length > 0)
+            {
+                Dictionary<string, string> addParams = new Dictionary<string, string>();
+                foreach(var p in additionaoParams)
+                {
+                    if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+                    {
+                        if (p.sampleUsage != "")
+                        {
+                            addParams.Add(p.searchKey, p.description + " (ex." + p.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ") + ")");
+                        }
+                        else
+                        {
+                            addParams.Add(p.searchKey, p.description);
+                        }
+                    }
+                    else
+                    {
+                        addParams.Add(p.searchKey, p.description);
+                    }
+                }
+                inputLabel.Tag = addParams;
+            }
+
             return inputLabel;
         }
         public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
