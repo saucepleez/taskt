@@ -153,13 +153,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     }
 
     [System.AttributeUsage(AttributeTargets.Property)]
-    public sealed class PropertyUISelectionSettings : System.Attribute
+    public sealed class PropertyIsCaseSensitive : System.Attribute
     {
-        public string setBlankToValue = "";
         public bool caseSensitive = false;
-        public PropertyUISelectionSettings(string setBlankToValue, bool caseSensitive)
+        public PropertyIsCaseSensitive(bool caseSensitive)
         {
-            this.setBlankToValue = setBlankToValue;
             this.caseSensitive = caseSensitive;
         }
     }
@@ -178,9 +176,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyIsOptional : System.Attribute
     {
         public bool isOptional = false;
-        public PropertyIsOptional(bool opt)
+        public string setBlankToValue = "";
+        public PropertyIsOptional(bool opt, string setBlankToValue = "")
         {
             this.isOptional = opt;
+            this.setBlankToValue = setBlankToValue;
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]
