@@ -151,15 +151,19 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.uiOption = description;
         }
     }
-    //[System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    //public sealed class PropertySelectionChangeEvent : System.Attribute
-    //{
-    //    public string uiOption;
-    //    public PropertySelectionChangeEvent(string description)
-    //    {
-    //        this.uiOption = description;
-    //    }
-    //}
+
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyUISelectionSettings : System.Attribute
+    {
+        public string setBlankToValue = "";
+        public bool caseSensitive = false;
+        public PropertyUISelectionSettings(string setBlankToValue, bool caseSensitive)
+        {
+            this.setBlankToValue = setBlankToValue;
+            this.caseSensitive = caseSensitive;
+        }
+    }
+
     [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertySelectionChangeEvent : System.Attribute
     {
