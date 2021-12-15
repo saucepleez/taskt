@@ -354,6 +354,11 @@ namespace taskt.UI.CustomControls
                     {
                         labelText = "Optional - " + labelText;
                     }
+
+                    if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is")))
+                    {
+                        labelText += " (Default is " + attrIsOpt.setBlankToValue + ")";
+                    }
                 }
 
                 inputLabel.Text = labelText;

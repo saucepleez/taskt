@@ -28,13 +28,13 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ColumnType { get; set; }
 
