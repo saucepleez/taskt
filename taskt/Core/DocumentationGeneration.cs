@@ -99,6 +99,10 @@ namespace taskt.Core
                         {
                             commandLabel = "Optional - " + commandLabel;
                         }
+                        if ((isOpt.setBlankToValue != "") && (!commandLabel.Contains("Default is")))
+                        {
+                            commandLabel += " (Default is " + isOpt.setBlankToValue + ")";
+                        }
                     }
 
                     remarks = remarks.Replace("\n", "<br>");
