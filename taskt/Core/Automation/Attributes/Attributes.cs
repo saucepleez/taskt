@@ -384,16 +384,16 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     }
 
     [System.AttributeUsage(AttributeTargets.Property)]
-    public sealed class PropertyControlField : System.Attribute
+    public sealed class PropertyControlIntoCommandField : System.Attribute
     {
         public string labelName = "";
         public string bodyName = "";
         public string secondLabelName = "";
-        public PropertyControlField(string bodyName = "", string labelName = "", string secondLabelName = "")
+        public PropertyControlIntoCommandField(string bodyName = "", string labelName = "", string secondLabelName = "")
         {
             this.labelName = labelName;
-            this.bodyName = "";
-            this.secondLabelName = "";
+            this.bodyName = bodyName;
+            this.secondLabelName = secondLabelName;
         }
     }
 }
