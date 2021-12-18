@@ -155,7 +155,61 @@ namespace taskt.UI.CustomControls
             //controlList.Add(input);
 
             //return controlList;
-            return CreateDefaultControlGroupFor(createdInput, parameterName, parent, editor, variableProperties, additionalLinks);
+            var ctrls =  CreateDefaultControlGroupFor(createdInput, parameterName, parent, editor, variableProperties, additionalLinks);
+
+            // set Control Field automatically
+            var intoField = (Core.Automation.Attributes.PropertyAttributes.PropertyControlIntoCommandField)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyControlIntoCommandField));
+            if (intoField != null)
+            {
+                var myType = parent.GetType();
+                if (intoField.bodyName != "")
+                {
+                    var trgField = myType.GetField(intoField.bodyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    var trgControl = ctrls.Where(t => (t.Name == parameterName)).FirstOrDefault();
+                    if (rct != null)
+                    {
+                        switch (rct.recommendedControl)
+                        {
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
+                                trgField.SetValue(parent, (TextBox)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
+                                trgField.SetValue(parent, (ComboBox)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
+                                trgField.SetValue(parent, (DataGridView)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox:
+                                trgField.SetValue(parent, (CheckBox)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.Label:
+                                trgField.SetValue(parent, (Label)trgControl);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        trgField.SetValue(parent, (TextBox)trgControl);
+                    }
+                }
+
+                if (intoField.labelName != "")
+                {
+                    var trgField = myType.GetField(intoField.labelName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    var trgLabel = ctrls.Where(t => (t.Name == "lbl_" + parameterName)).FirstOrDefault();
+                    trgField.SetValue(parent, (Label)trgLabel);
+                }
+
+                if (intoField.secondLabelName != "")
+                {
+                    var trgField = myType.GetField(intoField.secondLabelName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    var trgLabel = ctrls.Where(t => (t.Name == "lbl2_" + parameterName)).FirstOrDefault();
+                    trgField.SetValue(parent, (Label)trgLabel);
+                }
+            }
+
+            return ctrls;
         }
 
         public static List<Control> CreateDefaultControlGroupFor(Func<string, Core.Automation.Commands.ScriptCommand, PropertyInfo, Control> createInput, string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)

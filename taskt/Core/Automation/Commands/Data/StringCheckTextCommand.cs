@@ -74,6 +74,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("End with", "Result is TRUE or FALSE")]
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Index of", "Result is a found position. If not found, the result is -1.")]
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Last Index of", "Result is the last position found. If not found, the result is -1.")]
+        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("", "", "variable2ndLabel")]
         public string v_applyToVariableName { get; set; }
 
         [XmlIgnore]
@@ -176,7 +177,7 @@ namespace taskt.Core.Automation.Commands
             var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctls);
 
-            variable2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_applyToVariableName").FirstOrDefault();
+            //variable2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_applyToVariableName").FirstOrDefault();
 
             variableLabel = (Label)ctls.GetControlsByName("v_applyToVariableName", CommandControls.CommandControlType.Label)[0];
 

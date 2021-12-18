@@ -37,6 +37,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Before Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Between Text")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("selectionControl")]
+        [Attributes.PropertyAttributes.PropertySelectionChangeEvent("textExtraction_SelectionChangeCommitted")]
         public string v_TextExtractionType { get; set; }
 
         [XmlElement]
@@ -57,6 +59,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tSkip Past Occurences", "")]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("ParametersGridViewHelper", "ParametersLabel", "Parameters2ndLabel")]
+        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ParameterGridViewHelper_OnCellBeginEdit", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ParameterGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
@@ -182,15 +187,15 @@ namespace taskt.Core.Automation.Commands
             var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctls);
 
-            ParametersGridViewHelper = (DataGridView)ctls.Where(t => t.Name == "v_TextExtractionTable").FirstOrDefault();
-            ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
-            ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
+            //ParametersGridViewHelper = (DataGridView)ctls.Where(t => t.Name == "v_TextExtractionTable").FirstOrDefault();
+            //ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
+            //ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
 
-            Parameters2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_TextExtractionTable").FirstOrDefault();
-            ParametersLabel = (Label)ctls.GetControlsByName("v_TextExtractionTable", CommandControls.CommandControlType.Label)[0];
+            //Parameters2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_TextExtractionTable").FirstOrDefault();
+            //ParametersLabel = (Label)ctls.GetControlsByName("v_TextExtractionTable", CommandControls.CommandControlType.Label)[0];
 
-            selectionControl = (ComboBox)ctls.Where(t => t.Name == "v_TextExtractionType").FirstOrDefault();
-            selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
+            //selectionControl = (ComboBox)ctls.Where(t => t.Name == "v_TextExtractionType").FirstOrDefault();
+            //selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
 
             return RenderedControls;
         }
