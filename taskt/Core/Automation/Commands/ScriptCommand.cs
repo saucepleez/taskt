@@ -464,15 +464,15 @@ namespace taskt.Core.Automation.Commands
             return true;
         }
 
-        public System.Reflection.PropertyInfo GetProperty(string propertyName)
-        {
-            return this.GetType().GetProperty(propertyName);
-        }
+        //public System.Reflection.PropertyInfo GetProperty(string propertyName)
+        //{
+        //    return this.GetType().GetProperty(propertyName);
+        //}
 
-        public static List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> GetAdditionalParameterInfo(System.Reflection.PropertyInfo prop)
-        {
-            return prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
-        }
+        //public static List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> GetAdditionalParameterInfo(System.Reflection.PropertyInfo prop)
+        //{
+        //    return prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
+        //}
 
         public virtual void convertToIntermediate(Core.EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
@@ -1077,7 +1077,8 @@ namespace taskt.Core.Automation.Commands
                 };
             }
 
-            var commentProp = this.GetProperty("v_Comment");
+            //var commentProp = this.GetProperty("v_Comment");
+            var commentProp = this.GetType().GetProperty("v_Comment");
             var commentValue = commentProp.GetValue(this);
             if (commentValue != null)
             {

@@ -155,7 +155,61 @@ namespace taskt.UI.CustomControls
             //controlList.Add(input);
 
             //return controlList;
-            return CreateDefaultControlGroupFor(createdInput, parameterName, parent, editor, variableProperties, additionalLinks);
+            var ctrls =  CreateDefaultControlGroupFor(createdInput, parameterName, parent, editor, variableProperties, additionalLinks);
+
+            // set Control Field automatically
+            var intoField = (Core.Automation.Attributes.PropertyAttributes.PropertyControlIntoCommandField)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyControlIntoCommandField));
+            if (intoField != null)
+            {
+                var myType = parent.GetType();
+                if (intoField.bodyName != "")
+                {
+                    var trgField = myType.GetField(intoField.bodyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    var trgControl = ctrls.Where(t => (t.Name == parameterName)).FirstOrDefault();
+                    if (rct != null)
+                    {
+                        switch (rct.recommendedControl)
+                        {
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
+                                trgField.SetValue(parent, (TextBox)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
+                                trgField.SetValue(parent, (ComboBox)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
+                                trgField.SetValue(parent, (DataGridView)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox:
+                                trgField.SetValue(parent, (CheckBox)trgControl);
+                                break;
+                            case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.Label:
+                                trgField.SetValue(parent, (Label)trgControl);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        trgField.SetValue(parent, (TextBox)trgControl);
+                    }
+                }
+
+                if (intoField.labelName != "")
+                {
+                    var trgField = myType.GetField(intoField.labelName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    var trgLabel = ctrls.Where(t => (t.Name == "lbl_" + parameterName)).FirstOrDefault();
+                    trgField.SetValue(parent, (Label)trgLabel);
+                }
+
+                if (intoField.secondLabelName != "")
+                {
+                    var trgField = myType.GetField(intoField.secondLabelName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    var trgLabel = ctrls.Where(t => (t.Name == "lbl2_" + parameterName)).FirstOrDefault();
+                    trgField.SetValue(parent, (Label)trgLabel);
+                }
+            }
+
+            return ctrls;
         }
 
         public static List<Control> CreateDefaultControlGroupFor(Func<string, Core.Automation.Commands.ScriptCommand, PropertyInfo, Control> createInput, string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
@@ -354,6 +408,11 @@ namespace taskt.UI.CustomControls
                     {
                         labelText = "Optional - " + labelText;
                     }
+
+                    if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is")))
+                    {
+                        labelText += " (Default is " + attrIsOpt.setBlankToValue + ")";
+                    }
                 }
 
                 inputLabel.Text = labelText;
@@ -372,6 +431,33 @@ namespace taskt.UI.CustomControls
             //inputLabel.BackColor = theme.BackColor;
 
             inputLabel.Name = "lbl_" + parameterName;
+
+            // set addtional parameter info
+            var additionaoParams = (Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo[])variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo));
+            if (additionaoParams.Length > 0)
+            {
+                Dictionary<string, string> addParams = new Dictionary<string, string>();
+                foreach(var p in additionaoParams)
+                {
+                    if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+                    {
+                        if (p.sampleUsage != "")
+                        {
+                            addParams.Add(p.searchKey, p.description + " (ex." + p.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ") + ")");
+                        }
+                        else
+                        {
+                            addParams.Add(p.searchKey, p.description);
+                        }
+                    }
+                    else
+                    {
+                        addParams.Add(p.searchKey, p.description);
+                    }
+                }
+                inputLabel.Tag = addParams;
+            }
+
             return inputLabel;
         }
         public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
@@ -1549,28 +1635,28 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        public static string GetAddtionalParameterInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
-        {
-            if (rowInfo == null)
-            {
-                return "";
-            }
+        //public static string GetAddtionalParameterInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
+        //{
+        //    if (rowInfo == null)
+        //    {
+        //        return "";
+        //    }
 
-            string ret = rowInfo.description.replaceEngineKeyword();
-            if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
-            {
-                if (!ret.Contains("(ex."))
-                {
-                    string smp = rowInfo.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
-                    if (smp.Length > 0)
-                    {
-                        ret += " (ex. " + smp + ")";
-                    }
-                }
-            }
+        //    string ret = rowInfo.description.replaceEngineKeyword();
+        //    if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+        //    {
+        //        if (!ret.Contains("(ex."))
+        //        {
+        //            string smp = rowInfo.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
+        //            if (smp.Length > 0)
+        //            {
+        //                ret += " (ex. " + smp + ")";
+        //            }
+        //        }
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
 
         private static string replaceEngineKeyword(this string targetString)
         {

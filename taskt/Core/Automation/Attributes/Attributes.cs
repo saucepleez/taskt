@@ -151,15 +151,17 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.uiOption = description;
         }
     }
-    //[System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    //public sealed class PropertySelectionChangeEvent : System.Attribute
-    //{
-    //    public string uiOption;
-    //    public PropertySelectionChangeEvent(string description)
-    //    {
-    //        this.uiOption = description;
-    //    }
-    //}
+
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyIsCaseSensitive : System.Attribute
+    {
+        public bool caseSensitive = false;
+        public PropertyIsCaseSensitive(bool caseSensitive)
+        {
+            this.caseSensitive = caseSensitive;
+        }
+    }
+
     [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertySelectionChangeEvent : System.Attribute
     {
@@ -174,9 +176,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyIsOptional : System.Attribute
     {
         public bool isOptional = false;
-        public PropertyIsOptional(bool opt)
+        public string setBlankToValue = "";
+        public PropertyIsOptional(bool opt, string setBlankToValue = "")
         {
             this.isOptional = opt;
+            this.setBlankToValue = setBlankToValue;
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]
@@ -376,6 +380,20 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             Unknown,
             Input,
             Output
+        }
+    }
+
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyControlIntoCommandField : System.Attribute
+    {
+        public string labelName = "";
+        public string bodyName = "";
+        public string secondLabelName = "";
+        public PropertyControlIntoCommandField(string bodyName = "", string labelName = "", string secondLabelName = "")
+        {
+            this.labelName = labelName;
+            this.bodyName = bodyName;
+            this.secondLabelName = secondLabelName;
         }
     }
 }

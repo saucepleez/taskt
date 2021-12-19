@@ -74,15 +74,16 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("End with", "Result is TRUE or FALSE")]
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Index of", "Result is a found position. If not found, the result is -1.")]
         [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Last Index of", "Result is the last position found. If not found, the result is -1.")]
+        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("", "", "variable2ndLabel")]
         public string v_applyToVariableName { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> resultInfo;
+        private Label variable2ndLabel;
 
         [XmlIgnore]
         [NonSerialized]
-        private Label variable2ndLabel;
+        private Label variableLabel;
 
         public StringCheckTextCommand()
         {
@@ -90,8 +91,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Check String";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            resultInfo = ScriptCommand.GetAdditionalParameterInfo(this.GetProperty("v_applyToVariableName"));
         }
         public override void RunCommand(object sender)
         {
@@ -178,7 +177,9 @@ namespace taskt.Core.Automation.Commands
             var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctls);
 
-            variable2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_applyToVariableName").FirstOrDefault();
+            //variable2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_applyToVariableName").FirstOrDefault();
+
+            variableLabel = (Label)ctls.GetControlsByName("v_applyToVariableName", CommandControls.CommandControlType.Label)[0];
 
             var chkCombobox = (ComboBox)ctls.Where(t => t.Name == "v_CheckMethod").FirstOrDefault();
             chkCombobox.SelectedIndexChanged += (sender, e) => CheckMethod_SelectedIndexChanged(sender, e);
@@ -189,8 +190,9 @@ namespace taskt.Core.Automation.Commands
         private void CheckMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
             string searchedKey = ((ComboBox)sender).Text;
-            var info = resultInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault();
-            variable2ndLabel.Text = (info != null) ? info.description : "";
+            //var info = resultInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault();
+            Dictionary<string, string> dic = (Dictionary<string, string>)variableLabel.Tag;
+            variable2ndLabel.Text = (dic.ContainsKey(searchedKey) ? dic[searchedKey] : "");
         }
 
         public override string GetDisplayValue()
