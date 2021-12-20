@@ -395,6 +395,28 @@ namespace taskt.Core
         public string DefaultWordInstanceName { get; set; }
         public string DefaultDBInstanceName { get; set; }
         public string DefaultNLGInstanceName { get; set; }
+        private string _InstanceNameOrder = "Creation Frequently"; 
+        public string InstanceNameOrder 
+        {
+            get
+            {
+                return this._InstanceNameOrder;
+            }
+            set
+            {
+                switch (value.ToLower())
+                {
+                    case "creation frequently":
+                    case "by name":
+                    case "no sorting":
+                        this._InstanceNameOrder = value;
+                        break;
+                    default:
+                        this._InstanceNameOrder = "Creation Frequently";
+                        break;
+                }
+            }
+        }
         public ClientSettings()
         {
             MinimizeToTray = false;
