@@ -56,6 +56,7 @@ namespace taskt.Core
             //custom variable markers
             var startVariableMarker = engine.engineSettings.VariableStartMarker;
 
+            int searchVariableCount = 0;
             string convertedStr = "";
             while (str.Length > 0)
             {
@@ -67,6 +68,8 @@ namespace taskt.Core
                     string[] varResult = SearchVariable(str, searchList, engine);
                     convertedStr += varResult[0];
                     str = varResult[1];
+
+                    searchVariableCount++;
                 }
                 else
                 {
@@ -74,6 +77,11 @@ namespace taskt.Core
                     str = "";
                 }
             }
+
+            //if ((searchVariableCount == 0) && (convertedStr == "") && (str != convertedStr))
+            //{
+            //    // not converted variable, result is empty string, but 'str' is not equals result
+            //}
 
             if (!engine.AutoCalculateVariables)
             {
