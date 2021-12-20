@@ -126,6 +126,11 @@ namespace taskt.Core.Automation.Commands
                 this.validationResult += "Delimiter is empty.\n";
                 this.IsValid = false;
             }
+            else if (this.v_splitCharacter.Trim().Length == 0)
+            {
+                this.validationResult += "Delimiter is white space only. It may not work correctry when 'Enable Automatic Caluculation'. Highly recommend 'Disable Automatic Calculation'.";
+                this.IsWarning = true;
+            }
             if (String.IsNullOrEmpty(this.v_applyConvertToUserVariableName))
             {
                 this.validationResult += "Variable is empty.\n";

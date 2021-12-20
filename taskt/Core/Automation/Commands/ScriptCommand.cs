@@ -370,6 +370,9 @@ namespace taskt.Core.Automation.Commands
         public bool IsValid { get; protected set; }
 
         [XmlIgnore]
+        public bool IsWarning { get; protected set; }
+
+        [XmlIgnore]
         public string validationResult { get; protected set; }
 
         [XmlIgnore]
@@ -397,6 +400,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = false;
             this.GenerateID();
             this.IsValid = true;
+            this.IsWarning = false;
             this.validationResult = "";
             this.IsMatched = false;
             this.IsDontSavedCommand = false;
