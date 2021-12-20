@@ -84,11 +84,18 @@ namespace taskt.Core
             }
         }
 
-        public string[] getInstances(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)
+        //public string[] getInstances(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)
+        //{
+        //    Dictionary<string, int> targetDic = decideDictionary(instanceType);
+
+        //    return targetDic.Keys.ToArray();
+        //}
+
+        public Dictionary<string, int> getInstanceClone(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)
         {
             Dictionary<string, int> targetDic = decideDictionary(instanceType);
 
-            return targetDic.Keys.ToArray();
+            return new Dictionary<string, int>(targetDic);
         }
 
         private Dictionary<string, int> decideDictionary(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)

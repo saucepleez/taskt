@@ -1593,40 +1593,95 @@ namespace taskt.UI.CustomControls
             cbo.BeginUpdate();
 
             cbo.Items.Clear();
+            //switch (tp)
+            //{
+            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
+            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultDBInstanceName);
+            //        break;
+            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel:
+            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultExcelInstanceName);
+            //        break;
+            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE:
+            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
+            //        break;
+            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
+            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultNLGInstanceName);
+            //        break;
+            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
+            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultStopWatchInstanceName);
+            //        break;
+            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser:
+            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
+            //        break;
+            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word:
+            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultWordInstanceName);
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            ////pull the main window title for each
+            //string[] instances = editor.instanceList.getInstances(tp);
+            //foreach (string ins in instances)
+            //{
+            //    if ((!String.IsNullOrEmpty(ins)) && (!cbo.Items.Contains(ins)))
+            //    {
+            //        cbo.Items.Add(ins);
+            //    }
+            //}
+
+            Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp);
+
+            string defInstanceName = "";
             switch (tp)
             {
                 case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
-                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultDBInstanceName);
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
                     break;
                 case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel:
-                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultExcelInstanceName);
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
                     break;
                 case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE:
-                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
                     break;
                 case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
-                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultNLGInstanceName);
-                    break;
-                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
-                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultStopWatchInstanceName);
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
                     break;
                 case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser:
-                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+                    break;
+                case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
                     break;
                 case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word:
-                    cbo.Items.Add(editor.appSettings.ClientSettings.DefaultWordInstanceName);
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
                     break;
+            }
+            if ((defInstanceName != "") && !instanceList.ContainsKey(defInstanceName))
+            {
+                instanceList.Add(defInstanceName, 0);
+            }
+
+            List<string> sortedInstance;
+            switch (editor.appSettings.ClientSettings.InstanceNameOrder.ToLower())
+            {
+                case "no sorting":
+                    sortedInstance = instanceList.Keys.ToList();
+                    break;
+                case "by name":
+                    sortedInstance = instanceList.OrderBy(t => t.Key).Select(v => v.Key).ToList();
+                    break;
+                case "creation frequently":
                 default:
+                    sortedInstance = instanceList.OrderByDescending(t => t.Value).Select(v => v.Key).ToList();
                     break;
             }
 
-            //pull the main window title for each
-            string[] instances = editor.instanceList.getInstances(tp);
-            foreach (string ins in instances)
+            foreach(var item in sortedInstance)
             {
-                if ((!String.IsNullOrEmpty(ins)) && (!cbo.Items.Contains(ins)))
+                if ((!String.IsNullOrEmpty(item)) && (!cbo.Items.Contains(item)))
                 {
-                    cbo.Items.Add(ins);
+                    cbo.Items.Add(item);
                 }
             }
 

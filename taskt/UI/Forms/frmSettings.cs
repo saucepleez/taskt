@@ -104,6 +104,7 @@ namespace taskt.UI.Forms
             chkShowIndentLine.DataBindings.Add("Checked", clientSettings, "ShowIndentLine", false, DataSourceUpdateMode.OnPropertyChanged);
             txtIndentWidth.DataBindings.Add("Text", clientSettings, "IndentWidth", false, DataSourceUpdateMode.OnPropertyChanged);
             chkShowScriptMiniMap.DataBindings.Add("Checked", clientSettings, "ShowScriptMiniMap", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbInstanceNameOrder.DataBindings.Add("Text", clientSettings, "InstanceNameOrder", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
