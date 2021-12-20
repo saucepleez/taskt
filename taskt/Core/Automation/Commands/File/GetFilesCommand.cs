@@ -37,8 +37,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDescription("Optional - Please indicate the file name search method (Default is Contains)")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
         [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -93,10 +93,10 @@ namespace taskt.Core.Automation.Commands
                     case "Contains":
                         filesList = filesList.Where(t => System.IO.Path.GetFileNameWithoutExtension(t).Contains(searchFile)).ToList();
                         break;
-                    case "Start with":
+                    case "Starts with":
                         filesList = filesList.Where(t => System.IO.Path.GetFileNameWithoutExtension(t).StartsWith(searchFile)).ToList();
                         break;
-                    case "End with":
+                    case "Ends with":
                         filesList = filesList.Where(t => System.IO.Path.GetFileNameWithoutExtension(t).EndsWith(searchFile)).ToList();
                         break;
                     case "Extract match":

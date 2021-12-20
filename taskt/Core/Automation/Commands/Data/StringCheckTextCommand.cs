@@ -33,8 +33,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Index of** or **Last Index of**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index of")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Last Index of")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
@@ -120,7 +120,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
 
-                case "Start with":
+                case "Starts with":
                     if (caseSensitive == "Yes")
                     {
                         resultValue = stringValue.StartsWith(searchedValue) ? "TRUE" : "FALSE";
@@ -131,7 +131,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
 
-                case "End with":
+                case "Ends with":
                     if (caseSensitive == "Yes")
                     {
                         resultValue = stringValue.EndsWith(searchedValue) ? "TRUE" : "FALSE";

@@ -268,6 +268,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_47(doc);
             convertTo3_5_0_50(doc);
             convertTo3_5_0_51(doc);
+            convertTo3_5_0_52(doc);
 
             return doc;
         }
@@ -399,6 +400,32 @@ namespace taskt.Core.Script
                 cmd.SetAttributeValue(ns + "type", "AddDataTableRowCommand");
             }
 
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_52(XDocument doc)
+        {
+            // change "Start with" -> "Starts with", "End with" -> "Ends with"
+            IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
+                    (string)el.Attribute("CommandName") == "GetFilesCommand" ||
+                    (string)el.Attribute("CommandName") == "GetFoldersCommand" ||
+                    (string)el.Attribute("CommandName") == "CheckStringCommand"
+                )
+            );
+            foreach (var cmd in cmdWindowNames)
+            {
+                if (cmd.Attribute("v_SearchMethod") != null)
+                {
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Starts with");
+                    }
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+                    }
+                }
+            }
             return doc;
         }
     }
