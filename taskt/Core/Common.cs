@@ -178,6 +178,7 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Cr", VariableValue = "\r" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Lf", VariableValue = "\n" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Tab", VariableValue = "\t" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Space", VariableValue = " " });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F0", VariableValue = "1" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F00", VariableValue = "01" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F000", VariableValue = "001" });
