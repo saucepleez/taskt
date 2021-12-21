@@ -48,6 +48,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
             string newColName = v_AddColumnName.ConvertToUserVariable(engine);
@@ -75,6 +76,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Add DataTable '" + v_DataTableName + "' Column '" + v_AddColumnName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_AddColumnName))
+            {
+                this.validationResult += "Column Name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

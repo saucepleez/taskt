@@ -72,12 +72,13 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
-            v_ColumnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
             DataTable myDT = new DataTable();
-            switch (v_ColumnType.ToLower())
+            switch (colType)
             {
                 case "column name":
                     var colName = v_DataColumnIndex.ConvertToUserVariable(engine);

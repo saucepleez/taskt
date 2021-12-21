@@ -38,14 +38,14 @@ namespace taskt.Core.Automation.Commands
         public string v_RowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the if Dictionary key does not exists (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify the if Dictionary key does not exists")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Ignore** or **Error**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         public string v_NotExistsKey { get; set; }
 
         public AddDataTableRowByDictionaryCommand()
@@ -60,46 +60,49 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            Script.ScriptVariable dtVar = v_DataTableName.GetRawVariable(engine);
-            DataTable myDT;
-            if (!(dtVar.VariableValue is DataTable))
-            {
-                throw new Exception(v_DataTableName + " is not DataTable");
-            }
-            else
-            {
-                myDT = (DataTable)dtVar.VariableValue;
-            }
+            //Script.ScriptVariable dtVar = v_DataTableName.GetRawVariable(engine);
+            //DataTable myDT;
+            //if (!(dtVar.VariableValue is DataTable))
+            //{
+            //    throw new Exception(v_DataTableName + " is not DataTable");
+            //}
+            //else
+            //{
+            //    myDT = (DataTable)dtVar.VariableValue;
+            //}
+            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            Script.ScriptVariable rowVar = v_RowName.GetRawVariable(engine);
-            Dictionary<string, string> myDic;
-            if (!(rowVar.VariableValue is Dictionary<string, string>))
-            {
-                throw new Exception(v_RowName + " is not supported Dictionary");
-            }
-            else
-            {
-                myDic = (Dictionary<string, string>)rowVar.VariableValue;
-            }
+            //Script.ScriptVariable rowVar = v_RowName.GetRawVariable(engine);
+            //Dictionary<string, string> myDic;
+            //if (!(rowVar.VariableValue is Dictionary<string, string>))
+            //{
+            //    throw new Exception(v_RowName + " is not supported Dictionary");
+            //}
+            //else
+            //{
+            //    myDic = (Dictionary<string, string>)rowVar.VariableValue;
+            //}
+            Dictionary<string, string> myDic = v_RowName.GetDictionaryVariable(engine);
 
-            string notExistsKey;
-            if (String.IsNullOrEmpty(v_NotExistsKey))
-            {
-                notExistsKey = "Ignore";
-            }
-            else
-            {
-                notExistsKey = v_NotExistsKey.ConvertToUserVariable(engine);
-            }
-            notExistsKey = notExistsKey.ToLower();
-            switch (notExistsKey)
-            {
-                case "ignore":
-                case "error":
-                    break;
-                default:
-                    throw new Exception("Strange value in if Dictionary key does not exists " + v_NotExistsKey);
-            }
+            //string notExistsKey;
+            //if (String.IsNullOrEmpty(v_NotExistsKey))
+            //{
+            //    notExistsKey = "Ignore";
+            //}
+            //else
+            //{
+            //    notExistsKey = v_NotExistsKey.ConvertToUserVariable(engine);
+            //}
+            //notExistsKey = notExistsKey.ToLower();
+            //switch (notExistsKey)
+            //{
+            //    case "ignore":
+            //    case "error":
+            //        break;
+            //    default:
+            //        throw new Exception("Strange value in if Dictionary key does not exists " + v_NotExistsKey);
+            //}
+            string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
 
             // get columns list
             List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
@@ -131,6 +134,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Add DataTable '" + v_DataTableName + "' Row By Dictionary '" + v_RowName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_RowName))
+            {
+                this.validationResult += "Dictionary Name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

@@ -154,5 +154,18 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
+        }
     }
 }

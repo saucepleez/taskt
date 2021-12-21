@@ -28,13 +28,13 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ColumnType { get; set; }
 
@@ -72,15 +72,17 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
-            if (String.IsNullOrEmpty(v_ColumnType))
-            {
-                v_ColumnType = "Column Name";
-            }
+            //if (String.IsNullOrEmpty(v_ColumnType))
+            //{
+            //    v_ColumnType = "Column Name";
+            //}
+            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
             List<string> myList = new List<string>();
-            switch (v_ColumnType.ToLower())
+            switch (colType)
             {
                 case "column name":
                     var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
@@ -96,10 +98,6 @@ namespace taskt.Core.Automation.Commands
                     {
                         myList.Add((srcDT.Rows[i][colIdx] != null) ? srcDT.Rows[i][colIdx].ToString() : "");
                     }
-                    break;
-
-                default:
-                    throw new Exception("Strange column type " + v_ColumnType);
                     break;
             }
 

@@ -51,7 +51,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
             List<Dictionary<string, string>> jsonList = new List<Dictionary<string, string>>();
             for (int j = 0; j < srcDT.Rows.Count; j++)

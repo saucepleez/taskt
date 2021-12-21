@@ -28,13 +28,13 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ColumnType { get; set; }
 
@@ -49,12 +49,12 @@ namespace taskt.Core.Automation.Commands
         public string v_DataColumnIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Dictionary Key prefix (Default is row)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Dictionary Key prefix")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter Dictionary Key Prefix")]
         [Attributes.PropertyAttributes.SampleUsage("**row** or **{{{vPrefix}}}**")]
         [Attributes.PropertyAttributes.Remarks("If enter **row**, Dictionary key is row0, row1, ...")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "row")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         public string v_KeyPrefix { get; set; }
@@ -83,12 +83,14 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
-            if (String.IsNullOrEmpty(v_ColumnType))
-            {
-                v_ColumnType = "Column Name";
-            }
+            //if (String.IsNullOrEmpty(v_ColumnType))
+            //{
+            //    v_ColumnType = "Column Name";
+            //}
+            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
             string prefix;
             if (String.IsNullOrEmpty(v_KeyPrefix))
@@ -101,7 +103,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
-            switch (v_ColumnType.ToLower())
+            switch (colType)
             {
                 case "column name":
                     var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
@@ -117,10 +119,6 @@ namespace taskt.Core.Automation.Commands
                     {
                         myDic.Add(prefix + i.ToString(), (srcDT.Rows[i][colIdx] != null) ? srcDT.Rows[i][colIdx].ToString() : "");
                     }
-                    break;
-
-                default:
-                    throw new Exception("Strange column type " + v_ColumnType);
                     break;
             }
 

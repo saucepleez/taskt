@@ -61,7 +61,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
             int index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
             if (index < 0)
