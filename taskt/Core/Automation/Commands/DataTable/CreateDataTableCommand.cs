@@ -39,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
         [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
         [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ColumnNamesGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("ColumnNamesGridViewHelper")]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -109,7 +110,7 @@ namespace taskt.Core.Automation.Commands
             //ColumnNamesGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
             //ColumnNamesGridViewHelper.Tag = "column-a-editable";
             //ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
-            ColumnNamesGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
+            //ColumnNamesGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
 
             return RenderedControls;
         }
@@ -147,6 +148,19 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
             }
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is emtpy.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

@@ -51,13 +51,14 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            Script.ScriptVariable trgVar = v_DataTableName.GetRawVariable(engine);
-            if (!(trgVar.VariableValue is DataTable))
-            {
-                throw new Exception(v_DataTableName + " is not DataTable");
-            }
+            //Script.ScriptVariable trgVar = v_DataTableName.GetRawVariable(engine);
+            //if (!(trgVar.VariableValue is DataTable))
+            //{
+            //    throw new Exception(v_DataTableName + " is not DataTable");
+            //}
 
-            DataTable myDT = (DataTable)trgVar.VariableValue;
+            //DataTable myDT = (DataTable)trgVar.VariableValue;
+            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
             DataTable newDT = new DataTable();
             foreach(DataColumn col in myDT.Columns)
@@ -91,6 +92,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [DataTable '" + v_DataTableName + "' Copy to '" + v_OutputVariableName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_OutputVariableName))
+            {
+                this.validationResult += "Copied DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

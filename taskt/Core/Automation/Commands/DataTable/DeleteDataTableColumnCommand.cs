@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -61,21 +61,23 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            string colType = "Column Name";
-            if (!String.IsNullOrEmpty(v_ColumnType))
-            {
-                colType = v_ColumnType.ConvertToUserVariable(engine);
-            }
-            colType = colType.ToLower();
-            switch (colType)
-            {
-                case "column name":
-                case "index":
-                    break;
-                default:
-                    throw new Exception("Strange column type " + v_ColumnType);
-                    break;
-            }
+            //string colType = "Column Name";
+            //if (!String.IsNullOrEmpty(v_ColumnType))
+            //{
+            //    colType = v_ColumnType.ConvertToUserVariable(engine);
+            //}
+            //colType = colType.ToLower();
+            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+
+            //switch (colType)
+            //{
+            //    case "column name":
+            //    case "index":
+            //        break;
+            //    default:
+            //        throw new Exception("Strange column type " + v_ColumnType);
+            //        break;
+            //}
 
             if (colType == "column name")
             {
@@ -118,6 +120,24 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Delete DataTable '" + v_DataTableName + "' Column '" + v_DeleteColumnName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_DeleteColumnName))
+            {
+                this.validationResult += "Column Name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }

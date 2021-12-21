@@ -48,16 +48,17 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            Script.ScriptVariable dtVar = v_DataTableName.GetRawVariable(engine);
-            DataTable myDT;
-            if (!(dtVar.VariableValue is DataTable))
-            {
-                throw new Exception(v_DataTableName + " is not DataTable");
-            }
-            else
-            {
-                myDT = (DataTable)dtVar.VariableValue;
-            }
+            //Script.ScriptVariable dtVar = v_DataTableName.GetRawVariable(engine);
+            //DataTable myDT;
+            //if (!(dtVar.VariableValue is DataTable))
+            //{
+            //    throw new Exception(v_DataTableName + " is not DataTable");
+            //}
+            //else
+            //{
+            //    myDT = (DataTable)dtVar.VariableValue;
+            //}
+            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
             var vIndex = v_RowIndex.ConvertToUserVariable(engine);
             int index = int.Parse(vIndex);
@@ -82,6 +83,36 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Delete DataTable '" + v_DataTableName + "' Row Index '" + v_RowIndex + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_RowIndex))
+            {
+                this.validationResult += "Row index is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int index;
+                if (int.TryParse(this.v_RowIndex, out index))
+                {
+                    if (index < 0)
+                    {
+                        this.validationResult += "Row index is less than 0.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+
+            return this.IsValid;
         }
     }
 }
