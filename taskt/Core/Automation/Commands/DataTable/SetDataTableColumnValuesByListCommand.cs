@@ -28,13 +28,13 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ColumnType { get; set; }
 
@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SetListName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("If the number of rows is less than the List (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("If the number of rows is less than the List")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Ignore** or **Add Rows** or **Error**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -68,18 +68,18 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Rows")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         public string v_IfRowNotEnough { set; get; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("If the number of List items is less than the rows (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("If the number of List items is less than the rows")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Ignore** or **Error**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         public string v_IfListNotEnough { set; get; }
 
         public SetDataTableColumnValuesByListCommand()
@@ -97,22 +97,23 @@ namespace taskt.Core.Automation.Commands
 
             List<string> myList = v_SetListName.GetListVariable(engine);
 
-            string ifRowNotEnough = "Ignore";
-            if (!String.IsNullOrEmpty(v_IfRowNotEnough))
-            {
-                ifRowNotEnough = v_IfRowNotEnough.ConvertToUserVariable(engine);
-            }
-            ifRowNotEnough = ifRowNotEnough.ToLower();
-            switch (ifRowNotEnough)
-            {
-                case "ignore":
-                case "add rows":
-                case "error":
-                    break;
-                default:
-                    throw new Exception("Strange value If the number of rows is less than the List " + v_IfRowNotEnough);
-                    break;
-            }
+            //string ifRowNotEnough = "Ignore";
+            //if (!String.IsNullOrEmpty(v_IfRowNotEnough))
+            //{
+            //    ifRowNotEnough = v_IfRowNotEnough.ConvertToUserVariable(engine);
+            //}
+            //ifRowNotEnough = ifRowNotEnough.ToLower();
+            //switch (ifRowNotEnough)
+            //{
+            //    case "ignore":
+            //    case "add rows":
+            //    case "error":
+            //        break;
+            //    default:
+            //        throw new Exception("Strange value If the number of rows is less than the List " + v_IfRowNotEnough);
+            //        break;
+            //}
+            string ifRowNotEnough = v_IfRowNotEnough.GetUISelectionValue("v_IfRowNotEnough", this, engine);
 
             // rows check
             if (myDT.Rows.Count < myList.Count)
@@ -128,41 +129,44 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            string ifListNotEnough = "Ignore";
-            if (!String.IsNullOrEmpty(v_IfListNotEnough))
-            {
-                ifListNotEnough = v_IfListNotEnough.ConvertToUserVariable(engine);
-            }
-            ifListNotEnough = ifListNotEnough.ToLower();
-            switch (ifListNotEnough)
-            {
-                case "ignore":
-                case "error":
-                    break;
-                default:
-                    throw new Exception("Strange value If the number of List items is less than the rows " + v_IfListNotEnough);
-                    break;
-            }
+            //string ifListNotEnough = "Ignore";
+            //if (!String.IsNullOrEmpty(v_IfListNotEnough))
+            //{
+            //    ifListNotEnough = v_IfListNotEnough.ConvertToUserVariable(engine);
+            //}
+            //ifListNotEnough = ifListNotEnough.ToLower();
+            //switch (ifListNotEnough)
+            //{
+            //    case "ignore":
+            //    case "error":
+            //        break;
+            //    default:
+            //        throw new Exception("Strange value If the number of List items is less than the rows " + v_IfListNotEnough);
+            //        break;
+            //}
+            string ifListNotEnough = v_IfListNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
+
             if ((myDT.Rows.Count > myList.Count) && (ifListNotEnough == "error"))
             {
                 throw new Exception("The number of List items is less than the rows");
             }
 
-            string colType = "Column Name";
-            if (!String.IsNullOrEmpty(v_ColumnType))
-            {
-                colType = v_ColumnType.ConvertToUserVariable(engine);
-            }
-            colType = colType.ToLower();
-            switch (colType)
-            {
-                case "column name":
-                case "index":
-                    break;
-                default:
-                    throw new Exception("Strange column type " + v_ColumnType);
-                    break;
-            }
+            //string colType = "Column Name";
+            //if (!String.IsNullOrEmpty(v_ColumnType))
+            //{
+            //    colType = v_ColumnType.ConvertToUserVariable(engine);
+            //}
+            //colType = colType.ToLower();
+            //switch (colType)
+            //{
+            //    case "column name":
+            //    case "index":
+            //        break;
+            //    default:
+            //        throw new Exception("Strange column type " + v_ColumnType);
+            //        break;
+            //}
+            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
             // column name check
             string trgColName = v_SetColumnName.ConvertToUserVariable(engine);
@@ -218,6 +222,29 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Column Name '" + v_SetColumnName + "' List '" + v_SetListName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SetListName))
+            {
+                this.validationResult += "List Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SetColumnName))
+            {
+                this.validationResult += "Column Name is empty.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }
