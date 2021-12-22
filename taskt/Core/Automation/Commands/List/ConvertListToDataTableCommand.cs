@@ -41,11 +41,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Columns { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of items in the List is greater than the number of Columns (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("When the number of items in the List is greater than the number of Columns")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
@@ -53,11 +53,11 @@ namespace taskt.Core.Automation.Commands
         public string v_ColumnsNotEnough { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of Columns is greater than the number of items in the List (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("When the number of Columns is greater than the number of items in the List")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
@@ -88,18 +88,17 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             //get variable by regular name
-            Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
-
-            if (listVariable == null)
-            {
-                throw new Exception(v_InputList + " does not exists.");
-            }
-            else if (!(listVariable.VariableValue is List<string>))
-            {
-                throw new Exception(v_InputList + " is not supported List");
-            }
-
-            List<string> targetList = (List<string>)listVariable.VariableValue;
+            //Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
+            //if (listVariable == null)
+            //{
+            //    throw new Exception(v_InputList + " does not exists.");
+            //}
+            //else if (!(listVariable.VariableValue is List<string>))
+            //{
+            //    throw new Exception(v_InputList + " is not supported List");
+            //}
+            //List<string> targetList = (List<string>)listVariable.VariableValue;
+            List<string> targetList = v_InputList.GetListVariable(engine);
 
             DataTable myDT = new DataTable();
             if (String.IsNullOrEmpty(v_Columns))
@@ -113,32 +112,34 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                Script.ScriptVariable keysVariable = v_Columns.GetRawVariable(engine);
-                if (keysVariable == null)
-                {
-                    throw new Exception(v_Columns + " does not exists.");
-                }
-                else if (!(keysVariable.VariableValue is List<string>))
-                {
-                    throw new Exception(v_Columns + " is not supported List.");
-                }
+                //Script.ScriptVariable keysVariable = v_Columns.GetRawVariable(engine);
+                //if (keysVariable == null)
+                //{
+                //    throw new Exception(v_Columns + " does not exists.");
+                //}
+                //else if (!(keysVariable.VariableValue is List<string>))
+                //{
+                //    throw new Exception(v_Columns + " is not supported List.");
+                //}
+                //List<string> targetColumns = (List<string>)keysVariable.VariableValue;
+                List<string> targetColumns = v_Columns.GetListVariable(engine);
 
-                List<string> targetColumns = (List<string>)keysVariable.VariableValue;
+                //if (String.IsNullOrEmpty(v_ColumnsNotEnough))
+                //{
+                //    v_ColumnsNotEnough = "Ignore";
+                //}
+                //if (String.IsNullOrEmpty(v_ListItemNotEnough))
+                //{
+                //    v_ListItemNotEnough = "Ignore";
+                //}
+                string columnsNotEnough = v_ColumnsNotEnough.GetUISelectionValue("v_ColumnsNotEnough", this, engine);
+                string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
 
-                if (String.IsNullOrEmpty(v_ColumnsNotEnough))
-                {
-                    v_ColumnsNotEnough = "Ignore";
-                }
-                if (String.IsNullOrEmpty(v_ListItemNotEnough))
-                {
-                    v_ListItemNotEnough = "Ignore";
-                }
-
-                if ((v_ColumnsNotEnough.ToLower() == "error") && (targetList.Count > targetColumns.Count))
+                if ((columnsNotEnough == "error") && (targetList.Count > targetColumns.Count))
                 {
                     throw new Exception("The number of keys in " + v_Columns + " is not enough");
                 }
-                if ((v_ListItemNotEnough.ToLower() == "error") && (targetColumns.Count > targetList.Count))
+                if ((listItemNotEnough == "error") && (targetColumns.Count > targetList.Count))
                 {
                     throw new Exception("The number of List items in " + v_InputList + " is not enough");
                 }
@@ -154,7 +155,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else if (targetList.Count > targetColumns.Count)
                 {
-                    switch (v_ColumnsNotEnough.ToLower())
+                    switch (columnsNotEnough)
                     {
                         case "ignore":
                             myDT.Rows.Add();
@@ -178,15 +179,11 @@ namespace taskt.Core.Automation.Commands
                                 myDT.Rows[0][i] = targetList[i];
                             }
                             break;
-
-                        default:
-                            throw new Exception("Strange value " + v_ColumnsNotEnough);
-                            break;
                     }
                 }
                 else
                 {
-                    switch (v_ListItemNotEnough.ToLower())
+                    switch (listItemNotEnough)
                     {
                         case "ignore":
                             myDT.Rows.Add();
@@ -209,10 +206,6 @@ namespace taskt.Core.Automation.Commands
                                 myDT.Columns.Add(targetColumns[i]);
                                 myDT.Rows[0][i] = "";
                             }
-                            break;
-
-                        default:
-                            throw new Exception("Strange value " + v_ColumnsNotEnough);
                             break;
                     }
                 }

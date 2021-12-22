@@ -51,26 +51,32 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            //get variable by regular name
-            Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
+            ////get variable by regular name
+            //Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
 
-            //if still null then throw exception
-            if (listVariable == null)
-            {
-                throw new System.Exception("Complex Variable '" + v_InputList + "' or '" + v_InputList.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            ////if still null then throw exception
+            //if (listVariable == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + v_InputList + "' or '" + v_InputList.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
 
-            if (listVariable.VariableValue is List<string>)
-            {
-                List<string> newList = new List<string>();
-                newList.AddRange((List<string>)listVariable.VariableValue);
-                newList.Reverse();
-                newList.StoreInUserVariable(engine, v_OutputList);
-            }
-            else
-            {
-                throw new Exception(v_InputList + " is not List or not-supported List.");
-            }
+            //if (listVariable.VariableValue is List<string>)
+            //{
+            //    List<string> newList = new List<string>();
+            //    newList.AddRange((List<string>)listVariable.VariableValue);
+            //    newList.Reverse();
+            //    newList.StoreInUserVariable(engine, v_OutputList);
+            //}
+            //else
+            //{
+            //    throw new Exception(v_InputList + " is not List or not-supported List.");
+            //}
+            List<string> targetList = v_InputList.GetListVariable(engine);
+
+            List<string> newList = new List<string>();
+            newList.AddRange(targetList);
+            newList.Reverse();
+            newList.StoreInUserVariable(engine, v_OutputList);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

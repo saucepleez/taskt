@@ -62,35 +62,43 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            //get variable by regular name
-            Script.ScriptVariable listVariable1 = v_InputListA.GetRawVariable(engine);
+            ////get variable by regular name
+            //Script.ScriptVariable listVariable1 = v_InputListA.GetRawVariable(engine);
 
-            //if still null then throw exception
-            if (listVariable1 == null)
-            {
-                throw new System.Exception("Complex Variable '" + v_InputListA + "' or '" + v_InputListA.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            ////if still null then throw exception
+            //if (listVariable1 == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + v_InputListA + "' or '" + v_InputListA.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
 
-            //get variable by regular name
-            Script.ScriptVariable listVariable2 = v_InputListB.GetRawVariable(engine);
+            ////get variable by regular name
+            //Script.ScriptVariable listVariable2 = v_InputListB.GetRawVariable(engine);
 
-            //if still null then throw exception
-            if (listVariable2 == null)
-            {
-                throw new System.Exception("Complex Variable '" + v_InputListB + "' or '" + v_InputListB.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            ////if still null then throw exception
+            //if (listVariable2 == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + v_InputListB + "' or '" + v_InputListB.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
 
-            if ((listVariable1.VariableValue is List<string>) && (listVariable2.VariableValue is List<string>))
-            {
-                List<string> newList = new List<string>();
-                newList.AddRange((List<string>)listVariable1.VariableValue);
-                newList.AddRange((List<string>)listVariable2.VariableValue);
-                newList.StoreInUserVariable(engine, v_OutputList);
-            }
-            else
-            {
-                throw new Exception(v_InputListA + " or " + v_InputListB + " is not List or not-supported List.");
-            }
+            //if ((listVariable1.VariableValue is List<string>) && (listVariable2.VariableValue is List<string>))
+            //{
+            //    List<string> newList = new List<string>();
+            //    newList.AddRange((List<string>)listVariable1.VariableValue);
+            //    newList.AddRange((List<string>)listVariable2.VariableValue);
+            //    newList.StoreInUserVariable(engine, v_OutputList);
+            //}
+            //else
+            //{
+            //    throw new Exception(v_InputListA + " or " + v_InputListB + " is not List or not-supported List.");
+            //}
+
+            List<string> listA = v_InputListA.GetListVariable(engine);
+            List<string> listB = v_InputListB.GetListVariable(engine);
+
+            List<string> newList = new List<string>();
+            newList.AddRange(listA);
+            newList.AddRange(listB);
+            newList.StoreInUserVariable(engine, v_OutputList);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

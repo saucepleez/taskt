@@ -29,22 +29,22 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select sort order (Default is Ascending)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select sort order")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Ascending** or **Descending**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ascending")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ascending")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Descending")]
         public string v_SortOrder { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select sort target value type (Default is Text)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please select sort target value type")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Text** or **Number**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Text")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Number")]
@@ -74,47 +74,49 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             //get variable by regular name
-            Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
+            //Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
+            ////if still null then throw exception
+            //if (listVariable == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + v_InputList + "' or '" + v_InputList.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
+            List<string> targetList = v_InputList.GetListVariable(engine);
 
-            //if still null then throw exception
-            if (listVariable == null)
-            {
-                throw new System.Exception("Complex Variable '" + v_InputList + "' or '" + v_InputList.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            //string sortOrder;
+            //if (String.IsNullOrEmpty(v_SortOrder))
+            //{
+            //    sortOrder = "Ascending";
+            //}
+            //else
+            //{
+            //    sortOrder = v_SortOrder.ConvertToUserVariable(engine);
+            //}
+            string sortOrder = v_SortOrder.GetUISelectionValue("v_SortOrder", this, engine);
 
-            string sortOrder;
-            if (String.IsNullOrEmpty(v_SortOrder))
-            {
-                sortOrder = "Ascending";
-            }
-            else
-            {
-                sortOrder = v_SortOrder.ConvertToUserVariable(engine);
-            }
+            //string targetType;
+            //if (String.IsNullOrEmpty(v_TargetType))
+            //{
+            //    targetType = "Text";
+            //}
+            //else
+            //{
+            //    targetType = v_TargetType.ConvertToUserVariable(engine);
+            //}
+            string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
 
-            string targetType;
-            if (String.IsNullOrEmpty(v_TargetType))
-            {
-                targetType = "Text";
-            }
-            else
-            {
-                targetType = v_TargetType.ConvertToUserVariable(engine);
-            }
+            //if (!(listVariable.VariableValue is List<string>))
+            //{
+            //    throw new Exception(v_InputList + " is not List or not-supported List.");
+            //}
 
-            if (!(listVariable.VariableValue is List<string>))
-            {
-                throw new Exception(v_InputList + " is not List or not-supported List.");
-            }
-
-            switch (targetType.ToLower())
+            switch (targetType)
             {
                 case "text":
                     List<string> newList = new List<string>();
-                    newList.AddRange((List<string>)listVariable.VariableValue);
+                    newList.AddRange(targetList);
 
                     newList.Sort();
-                    if (sortOrder.ToLower() == "descending")
+                    if (sortOrder == "descending")
                     {
                         newList.Reverse();
                     }
@@ -123,13 +125,12 @@ namespace taskt.Core.Automation.Commands
 
                 case "number":
                     List<double> valueList = new List<double>();
-                    List<string> trgList = (List<string>)listVariable.VariableValue;
-                    foreach(var v in trgList)
+                    foreach(var v in targetList)
                     {
                         valueList.Add(double.Parse(v));
                     }
                     valueList.Sort();
-                    if (sortOrder.ToLower() == "descending")
+                    if (sortOrder == "descending")
                     {
                         valueList.Reverse();
                     }
@@ -141,10 +142,6 @@ namespace taskt.Core.Automation.Commands
                     }
                     newList2.StoreInUserVariable(engine, v_OutputList);
 
-                    break;
-
-                default:
-                    throw new Exception("Strange target value type " + v_TargetType);
                     break;
             }
         }

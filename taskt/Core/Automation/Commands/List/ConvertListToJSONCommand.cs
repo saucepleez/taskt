@@ -50,35 +50,36 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var listName = v_InputList.ConvertToUserVariable(sender);
+            //var listName = v_InputList.ConvertToUserVariable(sender);
 
-            //get variable by regular name
-            Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == listName).FirstOrDefault();
+            ////get variable by regular name
+            //Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == listName).FirstOrDefault();
 
-            //user may potentially include brackets []
-            if (listVariable == null)
-            {
-                listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == listName).FirstOrDefault();
-            }
+            ////user may potentially include brackets []
+            //if (listVariable == null)
+            //{
+            //    listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == listName).FirstOrDefault();
+            //}
 
-            //if still null then throw exception
-            if (listVariable == null)
-            {
-                throw new System.Exception("Complex Variable '" + listName + "' or '" + listName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            ////if still null then throw exception
+            //if (listVariable == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + listName + "' or '" + listName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
+            List<string> targetList = v_InputList.GetListVariable(engine);
 
             // convert json
             string convertedList;
             try
             {
-                convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(listVariable.VariableValue);
+                //convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(listVariable.VariableValue);
+                convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(targetList);
+                convertedList.StoreInUserVariable(sender, v_applyToVariableName);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
             }
-
-            convertedList.StoreInUserVariable(sender, v_applyToVariableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

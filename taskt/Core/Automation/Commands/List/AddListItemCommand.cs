@@ -57,18 +57,20 @@ namespace taskt.Core.Automation.Commands
             //    requiredVariable = LookupVariable(engine);
             //}
 
-            var requiredVariable = v_ListName.GetRawVariable(engine);
+            //var requiredVariable = v_ListName.GetRawVariable(engine);
 
-            if (requiredVariable == null)
-            {
-                throw new Exception("Attempted to add data to a variable, but the variable was not found. Enclose variables within brackets, ex. {vVariable}");
-            }
-            if (!(requiredVariable.VariableValue is List<string>))
-            {
-                throw new Exception(v_ListName + " is not List or not-supported List");
-            }
+            //if (requiredVariable == null)
+            //{
+            //    throw new Exception("Attempted to add data to a variable, but the variable was not found. Enclose variables within brackets, ex. {vVariable}");
+            //}
+            //if (!(requiredVariable.VariableValue is List<string>))
+            //{
+            //    throw new Exception(v_ListName + " is not List or not-supported List");
+            //}
 
-            var lst = (List<string>)requiredVariable.VariableValue;
+            //var lst = (List<string>)requiredVariable.VariableValue;
+            List<string> lst = v_ListName.GetListVariable(engine);
+
             var variableInput = v_Input.ConvertToUserVariable(sender);
             lst.Add(variableInput);
 

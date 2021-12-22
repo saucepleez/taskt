@@ -38,14 +38,14 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchItem { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify search method. (Default is First Index)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify search method")]
         [Attributes.PropertyAttributes.InputSpecification("**First Index** or **Last Index**")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("First Index")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Last Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "First Index")]
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
@@ -71,40 +71,38 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var listVariable = v_ListName.GetRawVariable(engine);
-            if (listVariable == null)
-            {
-                throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
-
-            List<string> targetList;
-            if (listVariable.VariableValue is List<string>)
-            {
-                targetList = (List<string>)listVariable.VariableValue;
-            }
-            else
-            {
-                throw new Exception(v_ListName + " is not List");
-            }
+            //var listVariable = v_ListName.GetRawVariable(engine);
+            //if (listVariable == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
+            //List<string> targetList;
+            //if (listVariable.VariableValue is List<string>)
+            //{
+            //    targetList = (List<string>)listVariable.VariableValue;
+            //}
+            //else
+            //{
+            //    throw new Exception(v_ListName + " is not List");
+            //}
+            List<string> targetList = v_ListName.GetListVariable(engine);
 
             var searchedValue = v_SearchItem.ConvertToUserVariable(sender);
 
-            var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(searchMethod))
-            {
-                searchMethod = "First Index";
-            }
+            //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            //if (String.IsNullOrEmpty(searchMethod))
+            //{
+            //    searchMethod = "First Index";
+            //}
+            string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            switch (searchMethod.ToLower())
+            switch (searchMethod)
             {
                 case "first index":
                     targetList.IndexOf(searchedValue).ToString().StoreInUserVariable(engine, v_Result);
                     break;
                 case "last index":
                     targetList.LastIndexOf(searchedValue).ToString().StoreInUserVariable(engine, v_Result);
-                    break;
-                default:
-                    throw new Exception("Strange search method " + v_SearchMethod);
                     break;
             }
         }

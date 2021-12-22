@@ -60,21 +60,22 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var listVariable = v_ListName.GetRawVariable(engine);
-            if (listVariable == null)
-            {
-                throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            //var listVariable = v_ListName.GetRawVariable(engine);
+            //if (listVariable == null)
+            //{
+            //    throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
 
-            List<string> targetList;
-            if (listVariable.VariableValue is List<string>)
-            {
-                targetList = (List<string>)listVariable.VariableValue;
-            }
-            else
-            {
-                throw new Exception(v_ListName + " is not List");
-            }
+            //List<string> targetList;
+            //if (listVariable.VariableValue is List<string>)
+            //{
+            //    targetList = (List<string>)listVariable.VariableValue;
+            //}
+            //else
+            //{
+            //    throw new Exception(v_ListName + " is not List");
+            //}
+            List<string> targetList = v_ListName.GetListVariable(engine);
 
             var searchedValue = v_SearchItem.ConvertToUserVariable(sender);
 

@@ -41,11 +41,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Keys { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of items in the List is greater than the number of Keys (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("When the number of items in the List is greater than the number of Keys")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
@@ -53,11 +53,11 @@ namespace taskt.Core.Automation.Commands
         public string v_KeysNotEnough { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of Keys is greater than the number of items in the List (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("When the number of Keys is greater than the number of items in the List")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
@@ -88,18 +88,17 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             //get variable by regular name
-            Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
-
-            if (listVariable == null)
-            {
-                throw new Exception(v_InputList + " does not exists.");
-            }
-            else if (!(listVariable.VariableValue is List<string>))
-            {
-                throw new Exception(v_InputList + " is not supported List");
-            }
-
-            List<string> targetList = (List<string>)listVariable.VariableValue;
+            //Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
+            //if (listVariable == null)
+            //{
+            //    throw new Exception(v_InputList + " does not exists.");
+            //}
+            //else if (!(listVariable.VariableValue is List<string>))
+            //{
+            //    throw new Exception(v_InputList + " is not supported List");
+            //}
+            //List<string> targetList = (List<string>)listVariable.VariableValue;
+            List<string> targetList = v_InputList.GetListVariable(engine);
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
             if (String.IsNullOrEmpty(v_Keys))
@@ -111,32 +110,34 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                Script.ScriptVariable keysVariable = v_Keys.GetRawVariable(engine);
-                if (keysVariable == null)
-                {
-                    throw new Exception(v_Keys + " does not exists.");
-                }
-                else if (!(keysVariable.VariableValue is List<string>))
-                {
-                    throw new Exception(v_Keys + " is not supported List.");
-                }
+                //Script.ScriptVariable keysVariable = v_Keys.GetRawVariable(engine);
+                //if (keysVariable == null)
+                //{
+                //    throw new Exception(v_Keys + " does not exists.");
+                //}
+                //else if (!(keysVariable.VariableValue is List<string>))
+                //{
+                //    throw new Exception(v_Keys + " is not supported List.");
+                //}
+                //List<string> targetKeys = (List<string>)keysVariable.VariableValue;
+                List<string> targetKeys = v_Keys.GetListVariable(engine);
 
-                List<string> targetKeys = (List<string>)keysVariable.VariableValue;
+                //if (String.IsNullOrEmpty(v_KeysNotEnough))
+                //{
+                //    v_KeysNotEnough = "Ignore";
+                //}
+                //if (String.IsNullOrEmpty(v_ListItemNotEnough))
+                //{
+                //    v_ListItemNotEnough = "Ignore";
+                //}
+                string keysNotEnough = v_KeysNotEnough.GetUISelectionValue("v_KeysNotEnough", this, engine);
+                string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
 
-                if (String.IsNullOrEmpty(v_KeysNotEnough))
-                {
-                    v_KeysNotEnough = "Ignore";
-                }
-                if (String.IsNullOrEmpty(v_ListItemNotEnough))
-                {
-                    v_ListItemNotEnough = "Ignore";
-                }
-
-                if ((v_KeysNotEnough.ToLower() == "error") && (targetList.Count > targetKeys.Count))
+                if ((keysNotEnough == "error") && (targetList.Count > targetKeys.Count))
                 {
                     throw new Exception("The number of keys in " + v_Keys + " is not enough");
                 }
-                if ((v_ListItemNotEnough.ToLower() == "error") && (targetKeys.Count > targetList.Count))
+                if ((listItemNotEnough == "error") && (targetKeys.Count > targetList.Count))
                 {
                     throw new Exception("The number of List items in " + v_InputList + " is not enough");
                 }
@@ -150,7 +151,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else if (targetList.Count > targetKeys.Count)
                 {
-                    switch (v_KeysNotEnough.ToLower())
+                    switch (keysNotEnough)
                     {
                         case "ignore":
                             for (int i = 0; i < targetKeys.Count; i++)
@@ -169,15 +170,11 @@ namespace taskt.Core.Automation.Commands
                                 myDic.Add("item" + i.ToString(), targetList[i]);
                             }
                             break;
-
-                        default:
-                            throw new Exception("Strange value " + v_KeysNotEnough);
-                            break;
                     }
                 }
                 else
                 {
-                    switch (v_ListItemNotEnough.ToLower())
+                    switch (listItemNotEnough)
                     {
                         case "ignore":
                             for (int i = 0; i < targetList.Count; i++)
@@ -195,10 +192,6 @@ namespace taskt.Core.Automation.Commands
                             {
                                 myDic.Add(targetKeys[i], "");
                             }
-                            break;
-
-                        default:
-                            throw new Exception("Strange value " + v_KeysNotEnough);
                             break;
                     }
                 }
