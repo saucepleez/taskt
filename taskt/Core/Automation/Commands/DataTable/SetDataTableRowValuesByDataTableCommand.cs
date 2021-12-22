@@ -56,14 +56,14 @@ namespace taskt.Core.Automation.Commands
         public string v_SrcRowIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the if DataTable column does not exists (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify the if DataTable column does not exists")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Ignore** or **Error**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         public string v_NotExistsKey { get; set; }
 
         public SetDataTableRowValuesByDataTableCommand()
@@ -95,24 +95,25 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
             }
 
-            string notExistsKey;
-            if (String.IsNullOrEmpty(v_NotExistsKey))
-            {
-                notExistsKey = "Ignore";
-            }
-            else
-            {
-                notExistsKey = v_NotExistsKey.ConvertToUserVariable(engine);
-            }
-            notExistsKey = notExistsKey.ToLower();
-            switch (notExistsKey)
-            {
-                case "ignore":
-                case "error":
-                    break;
-                default:
-                    throw new Exception("Strange value in if Dictionary key does not exists " + v_NotExistsKey);
-            }
+            //string notExistsKey;
+            //if (String.IsNullOrEmpty(v_NotExistsKey))
+            //{
+            //    notExistsKey = "Ignore";
+            //}
+            //else
+            //{
+            //    notExistsKey = v_NotExistsKey.ConvertToUserVariable(engine);
+            //}
+            //notExistsKey = notExistsKey.ToLower();
+            //switch (notExistsKey)
+            //{
+            //    case "ignore":
+            //    case "error":
+            //        break;
+            //    default:
+            //        throw new Exception("Strange value in if Dictionary key does not exists " + v_NotExistsKey);
+            //}
+            string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
 
             // get columns list
             List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
@@ -147,6 +148,58 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Row '" + v_RowIndex + "' By DataTable '" + v_RowName + "' Row '" + v_SrcRowIndex + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name to setted is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_RowIndex))
+            {
+                this.validationResult += "Row index to setted is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int index;
+                if (int.TryParse(this.v_RowIndex, out index))
+                {
+                    if (index < 0)
+                    {
+                        this.validationResult += "Row index to setted is less than 0.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+            if (String.IsNullOrEmpty(this.v_RowName))
+            {
+                this.validationResult += "DataTable name to set is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_SrcRowIndex))
+            {
+                this.validationResult += "Row Index to set is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int index;
+                if (int.TryParse(this.v_SrcRowIndex, out index))
+                {
+                    if (index < 0)
+                    {
+                        this.validationResult += "Row index to setted is less than 0.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+
+            return this.IsValid;
         }
     }
 }

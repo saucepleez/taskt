@@ -28,14 +28,14 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column value type (Default is Column Name)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column value type")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Index** or **Column Name**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -77,21 +77,22 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
-            string columnType = "Column Name";
-            if (!String.IsNullOrEmpty(v_ColumnType))
-            {
-                columnType = v_ColumnType.ConvertToUserVariable(engine);
-            }
-            columnType = columnType.ToLower();
-            switch (columnType)
-            {
-                case "column name":
-                case "index":
-                    break;
-                default:
-                    throw new Exception("Strange column type " + v_ColumnType);
-                    break;
-            }
+            //string columnType = "Column Name";
+            //if (!String.IsNullOrEmpty(v_ColumnType))
+            //{
+            //    columnType = v_ColumnType.ConvertToUserVariable(engine);
+            //}
+            //columnType = columnType.ToLower();
+            //switch (columnType)
+            //{
+            //    case "column name":
+            //    case "index":
+            //        break;
+            //    default:
+            //        throw new Exception("Strange column type " + v_ColumnType);
+            //        break;
+            //}
+            string columnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
             string columnPosition = v_ColumnIndex.ConvertToUserVariable(engine);
 
@@ -128,6 +129,46 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [DataTable '" + v_DataTableName + "' Column '" + v_ColumnIndex+ "' Row '" + v_RowIndex + "', Set '" + v_NewValue + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if (String.IsNullOrEmpty(this.v_DataTableName))
+            {
+                this.validationResult += "DataTable Name is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_ColumnIndex))
+            {
+                this.validationResult += "Column Name or Index is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(this.v_RowIndex))
+            {
+                this.validationResult += "Row Index is empty.\n";
+                this.IsValid = false;
+            }
+            else
+            {
+                int index;
+                if (int.TryParse(v_RowIndex, out index))
+                {
+                    if (index < 0)
+                    {
+                        this.validationResult += "Row Index is less than 0.\n";
+                        this.IsValid = false;
+                    }
+                }
+            }
+            if (String.IsNullOrEmpty(this.v_NewValue))
+            {
+                this.validationResult += "Value to set is emtpy.\n";
+                this.IsValid = false;
+            }
+
+            return this.IsValid;
         }
     }
 }
