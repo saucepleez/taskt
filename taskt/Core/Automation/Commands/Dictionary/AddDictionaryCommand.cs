@@ -68,15 +68,16 @@ namespace taskt.Core.Automation.Commands
             //var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
             //var dataSetVariable = LookupVariable(engine);
 
-            var dataSetVariable = v_DictionaryName.GetRawVariable(engine);
-            
-            Dictionary<string, string> outputDictionary = (Dictionary<string, string>)dataSetVariable.VariableValue;
+            //var dataSetVariable = v_DictionaryName.GetRawVariable(engine);
+
+            //Dictionary<string, string> outputDictionary = (Dictionary<string, string>)dataSetVariable.VariableValue;
+            Dictionary<string, string> outputDictionary = v_DictionaryName.GetDictionaryVariable(engine);
 
             foreach (DataRow rwColumnName in v_ColumnNameDataTable.Rows)
             {
                 outputDictionary.Add(rwColumnName.Field<string>("Keys"), rwColumnName.Field<string>("Values"));
             }
-            dataSetVariable.VariableValue = outputDictionary;
+            //dataSetVariable.VariableValue = outputDictionary;
         }
         //private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         //{

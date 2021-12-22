@@ -51,8 +51,9 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            
-            Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
+
+            //Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
+            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
 
             DataTable DT = new DataTable();
             DT.Rows.Add();

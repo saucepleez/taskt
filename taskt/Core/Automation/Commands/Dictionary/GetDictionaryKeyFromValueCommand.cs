@@ -61,7 +61,8 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vValue = v_Value.ConvertToUserVariable(sender);
 
-            Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
+            //Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
+            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
             
             foreach(KeyValuePair<string, string> item in dic)
             {

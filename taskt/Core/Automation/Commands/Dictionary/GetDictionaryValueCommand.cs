@@ -81,8 +81,17 @@ namespace taskt.Core.Automation.Commands
             ////Add to variable list
             //engine.VariableList.Add(Output);
 
-            Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
-            dic[vKey].StoreInUserVariable(engine, v_OutputVariable);
+            //Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
+            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+
+            if (dic.ContainsKey(vKey))
+            {
+                dic[vKey].StoreInUserVariable(engine, v_OutputVariable);
+            }
+            else
+            {
+                throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+            }
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {

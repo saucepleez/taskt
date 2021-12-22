@@ -39,12 +39,12 @@ namespace taskt.Core.Automation.Commands
         public string v_InputDataB { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("If Key already exists (Default is Ignore)")]
+        [Attributes.PropertyAttributes.PropertyDescription("If Key already exists")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Ignore** or **Overwrite** or **Error**")]
         [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Overwrite")]
@@ -76,28 +76,30 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            Script.ScriptVariable varA = v_InputDataA.GetRawVariable(engine);
-            
-            if (varA == null)
-            {
-                throw new Exception("Dictionary 1 " + v_InputDataA + " does not exists.");
-            }
-            else if (!(varA.VariableValue is Dictionary<string, string>))
-            {
-                throw new Exception("Dictionary 1 " + v_InputDataA + " is not supported Dictionary.");
-            }
-            Dictionary<string, string> dicA = (Dictionary<string, string>)varA.VariableValue;
+            //Script.ScriptVariable varA = v_InputDataA.GetRawVariable(engine);
 
-            Script.ScriptVariable varB = v_InputDataB.GetRawVariable(engine);
-            if (varB == null)
-            {
-                throw new Exception("Dictionary 2 " + v_InputDataB + " does not exists.");
-            }
-            else if (!(varB.VariableValue is Dictionary<string, string>))
-            {
-                throw new Exception("Dictionary 2 " + v_InputDataB + " is not supported Dictionary.");
-            }
-            Dictionary<string, string> dicB = (Dictionary<string, string>)varB.VariableValue;
+            //if (varA == null)
+            //{
+            //    throw new Exception("Dictionary 1 " + v_InputDataA + " does not exists.");
+            //}
+            //else if (!(varA.VariableValue is Dictionary<string, string>))
+            //{
+            //    throw new Exception("Dictionary 1 " + v_InputDataA + " is not supported Dictionary.");
+            //}
+            //Dictionary<string, string> dicA = (Dictionary<string, string>)varA.VariableValue;
+            Dictionary<string, string> dicA = v_InputDataA.GetDictionaryVariable(engine);
+
+            //Script.ScriptVariable varB = v_InputDataB.GetRawVariable(engine);
+            //if (varB == null)
+            //{
+            //    throw new Exception("Dictionary 2 " + v_InputDataB + " does not exists.");
+            //}
+            //else if (!(varB.VariableValue is Dictionary<string, string>))
+            //{
+            //    throw new Exception("Dictionary 2 " + v_InputDataB + " is not supported Dictionary.");
+            //}
+            //Dictionary<string, string> dicB = (Dictionary<string, string>)varB.VariableValue;
+            Dictionary<string, string> dicB = v_InputDataB.GetDictionaryVariable(engine);
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
             foreach(var v in dicA)
@@ -105,17 +107,18 @@ namespace taskt.Core.Automation.Commands
                 myDic.Add(v.Key, v.Value);
             }
 
-            string keyExists;
-            if (String.IsNullOrEmpty(v_KeyExists))
-            {
-                 keyExists = "Ignore";
-            }
-            else
-            {
-                 keyExists = v_KeyExists.ConvertToUserVariable(engine);
-            }
+            //string keyExists;
+            //if (String.IsNullOrEmpty(v_KeyExists))
+            //{
+            //     keyExists = "Ignore";
+            //}
+            //else
+            //{
+            //     keyExists = v_KeyExists.ConvertToUserVariable(engine);
+            //}
+            string keyExists = v_KeyExists.GetUISelectionValue("v_KeyExists", this, engine);
 
-            switch (keyExists.ToLower())
+            switch (keyExists)
             {
                 case "ignore":
                     foreach(var v in dicB)
@@ -151,9 +154,6 @@ namespace taskt.Core.Automation.Commands
                             throw new Exception("Key " + v.Key + " is already exists.");
                         }
                     }
-                    break;
-                default:
-                    throw new Exception("Strange value if key exists " + keyExists);
                     break;
             }
             myDic.StoreInUserVariable(engine, v_OutputName);

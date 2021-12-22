@@ -61,8 +61,17 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vKey = v_Key.ConvertToUserVariable(sender);
 
-            Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
-            dic[vKey] = v_Value.ConvertToUserVariable(sender);
+            //Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
+            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+
+            if (dic.ContainsKey(vKey))
+            {
+                dic[vKey] = v_Value.ConvertToUserVariable(sender);
+            }
+            else
+            {
+                throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+            }
         }
         
         public override List<Control> Render(frmCommandEditor editor)

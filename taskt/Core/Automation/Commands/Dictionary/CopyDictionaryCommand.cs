@@ -52,24 +52,25 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            Script.ScriptVariable varA = v_InputData.GetRawVariable(engine);
-            
-            if (varA == null)
-            {
-                throw new Exception("Dictionary 1 " + v_InputData + " does not exists.");
-            }
-            else if (!(varA.VariableValue is Dictionary<string, string>))
-            {
-                throw new Exception("Dictionary 1 " + v_InputData + " is not supported Dictionary.");
-            }
-            Dictionary<string, string> srcDic = (Dictionary<string, string>)varA.VariableValue;
+            //Script.ScriptVariable varA = v_InputData.GetRawVariable(engine);
 
-            Dictionary<string, string> newDic = new Dictionary<string, string>();
+            //if (varA == null)
+            //{
+            //    throw new Exception("Dictionary 1 " + v_InputData + " does not exists.");
+            //}
+            //else if (!(varA.VariableValue is Dictionary<string, string>))
+            //{
+            //    throw new Exception("Dictionary 1 " + v_InputData + " is not supported Dictionary.");
+            //}
+            //Dictionary<string, string> srcDic = (Dictionary<string, string>)varA.VariableValue;
+            Dictionary<string, string> srcDic = v_InputData.GetDictionaryVariable(engine);
 
-            foreach(var v in srcDic)
-            {
-                newDic.Add(v.Key, v.Value);
-            }
+            Dictionary<string, string> newDic = new Dictionary<string, string>(srcDic);
+
+            //foreach(var v in srcDic)
+            //{
+            //    newDic.Add(v.Key, v.Value);
+            //}
 
             newDic.StoreInUserVariable(engine, v_OutputName);
         }
