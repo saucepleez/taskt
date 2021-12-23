@@ -3914,6 +3914,11 @@ namespace taskt.UI.Forms
 
         private void SearchSelectedCommand()
         {
+            if (lstScriptActions.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
             var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
             var tp = command.GetType();
             var group = (Core.Automation.Attributes.ClassAttributes.Group)tp.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group));
