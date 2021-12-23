@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("DataTable Action")]
     [Attributes.ClassAttributes.Description("This command allows you to copy a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command allows you remove specified data rows.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a specific row.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to delete a DataTable Row")]

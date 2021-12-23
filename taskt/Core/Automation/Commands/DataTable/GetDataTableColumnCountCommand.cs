@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("Column Action")]
     [Attributes.ClassAttributes.Description("This command allows you to get the column count of a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the column count of a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

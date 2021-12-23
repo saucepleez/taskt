@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("Convert Column")]
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Column to JSON")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Column to JSON.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

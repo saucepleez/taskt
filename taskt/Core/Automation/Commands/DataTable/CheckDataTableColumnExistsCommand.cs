@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("Column Action")]
     [Attributes.ClassAttributes.Description("This command allows you to check the column name existance")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check the column name existance.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
