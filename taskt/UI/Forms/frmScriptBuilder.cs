@@ -585,7 +585,7 @@ namespace taskt.UI.Forms
             {
                 Point cp = lstScriptActions.PointToClient(new Point(e.X, e.Y));
                 var dragToItem = lstScriptActions.HitTest(cp.X, cp.Y);
-                this.DnDIndex = (dragToItem == null) ? -1 : dragToItem.Item.Index;
+                this.DnDIndex = (dragToItem.Item == null) ? -1 : dragToItem.Item.Index;
             }
             lstScriptActions.Invalidate();
         }
@@ -2483,10 +2483,11 @@ namespace taskt.UI.Forms
             //Console.WriteLine("DRW " + this.currentEditAction + ", " + this.DnDIndex);
             if ((this.currentEditAction == CommandEditAction.Move) && (item.Index == this.DnDIndex))
             {
-                int y = modifiedBounds.Y + modifiedBounds.Height - 1;
+                int y = (lstScriptActions.SelectedItems[0].Index < this.DnDIndex) ? (modifiedBounds.Y + modifiedBounds.Height - 1) : (modifiedBounds.Y);
                 e.Graphics.DrawLine(new Pen(Color.DarkRed), modifiedBounds.X, y, modifiedBounds.X + modifiedBounds.Width, y);
             }
 
+            // indent tab line
             if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
             {
                 int offset;
