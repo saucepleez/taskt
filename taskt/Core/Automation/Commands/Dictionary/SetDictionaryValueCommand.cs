@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Item")]
     [Attributes.ClassAttributes.Description("This command allows you to set value in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set value in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

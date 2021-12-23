@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
     [Attributes.ClassAttributes.Description("This command Reads a Config file and stores it into a Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load a config file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop and OLEDB to achieve automation.")]

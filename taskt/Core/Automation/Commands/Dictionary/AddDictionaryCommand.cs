@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Item")]
     [Attributes.ClassAttributes.Description("This command Adds a key and value to a existing Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add to a dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

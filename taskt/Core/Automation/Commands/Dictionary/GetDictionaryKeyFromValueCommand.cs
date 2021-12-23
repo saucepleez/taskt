@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Key")]
     [Attributes.ClassAttributes.Description("This command allows you to get Dictionary key Name from Value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Dictionary key Name from Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
