@@ -3657,6 +3657,7 @@ namespace taskt.UI.Forms
                         }
 
                         TreeNode subNode = new TreeNode(cmd.ShortName);
+                        subNode.ToolTipText = cmd.ShortName;
                         if (!cmd.Command.CustomRendering)
                         {
                             subNode.ForeColor = Color.Red;
@@ -3688,6 +3689,7 @@ namespace taskt.UI.Forms
                     foreach (var subcmd in cmd)
                     {
                         TreeNode subNode = new TreeNode(subcmd.ShortName);
+                        subNode.ToolTipText = subcmd.ShortName;
 
                         if (!subcmd.Command.CustomRendering)
                         {
