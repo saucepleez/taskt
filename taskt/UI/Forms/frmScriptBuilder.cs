@@ -758,6 +758,8 @@ namespace taskt.UI.Forms
 
             IndentListViewItems();  // update indent
 
+            ChangeSaveState(true);
+
             lstScriptActions.EndUpdate();
             lstScriptActions.Invalidate();
         }
