@@ -2483,7 +2483,7 @@ namespace taskt.UI.Forms
             //Console.WriteLine("DRW " + this.currentEditAction + ", " + this.DnDIndex);
             if ((this.currentEditAction == CommandEditAction.Move) && (item.Index == this.DnDIndex))
             {
-                int y = (lstScriptActions.SelectedItems[0].Index < this.DnDIndex) ? (modifiedBounds.Y + modifiedBounds.Height - 1) : (modifiedBounds.Y);
+                int y = (lstScriptActions.SelectedItems[0].Index <= this.DnDIndex) ? (modifiedBounds.Y + modifiedBounds.Height - 1) : (modifiedBounds.Y);
                 e.Graphics.DrawLine(new Pen(Color.DarkRed), modifiedBounds.X, y, modifiedBounds.X + modifiedBounds.Width, y);
             }
 
