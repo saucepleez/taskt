@@ -2838,6 +2838,11 @@ namespace taskt.UI.Forms
         {
             lstScriptActions_DoubleClick(null, null);
         }
+
+        private void whereThisCommandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSelectedCommand();
+        }
         private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -3906,6 +3911,53 @@ namespace taskt.UI.Forms
             clearCmdTVCommandMenuStrip.Enabled = false;
             clearRootTVCommandMenuStrip.Enabled = false;
         }
+
+        private void SearchSelectedCommand()
+        {
+            var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
+            var tp = command.GetType();
+            var group = (Core.Automation.Attributes.ClassAttributes.Group)tp.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group));
+
+            TreeNode parentNode = null;
+            foreach (TreeNode node in tvCommands.Nodes)
+            {
+                if (node.Text == group.groupName)
+                {
+                    parentNode = node;
+                    break;
+                }
+            }
+            if (parentNode != null)
+            {
+                parentNode.Expand();
+                foreach (TreeNode node in parentNode.Nodes)
+                {
+                    if (node.Nodes.Count > 0)
+                    {
+                        foreach (TreeNode no in node.Nodes)
+                        {
+                            if (no.Text == command.SelectionName)
+                            {
+                                node.Expand();
+                                tvCommands.SelectedNode = no;
+                                tvCommands.Focus();
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (node.Text == command.SelectionName)
+                        {
+                            tvCommands.SelectedNode = node;
+                            tvCommands.Focus();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         #endregion
 
 
@@ -4136,6 +4188,11 @@ namespace taskt.UI.Forms
         private void helpThisCommandStripMenuItem_Click(object sender, EventArgs e)
         {
             BeginShowThisCommandHelpProcess();
+        }
+
+        private void whereThisCommandToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SearchSelectedCommand();
         }
 
         private void enableSelectedActionsStripMenuItem_Click(object sender, EventArgs e)
@@ -4549,6 +4606,7 @@ namespace taskt.UI.Forms
         }
 
         #endregion
+
     }
 
 }

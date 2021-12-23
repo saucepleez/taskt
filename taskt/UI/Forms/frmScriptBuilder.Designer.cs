@@ -185,6 +185,8 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
+            this.whereThisCommandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.whereThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -397,6 +399,7 @@
             this.editStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editThisActionStripMenuItem,
             this.helpThisCommandStripMenuItem,
+            this.whereThisCommandToolStripMenuItem1,
             this.editSplitMenuSeparator1,
             this.enableSelectedActionsStripMenuItem,
             this.disableSelectedActionsStripMenuItem,
@@ -1666,6 +1669,7 @@
             this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editThisCodeToolStripMenuItem,
             this.helpThisCommandToolStripMenuItem1,
+            this.whereThisCommandToolStripMenuItem,
             this.lstContextStripSep1,
             this.enableSelectedCodeToolStripMenuItem,
             this.disableSelectedCodeToolStripMenuItem,
@@ -1686,7 +1690,7 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 418);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 442);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -1956,6 +1960,23 @@
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
             // 
+            // whereThisCommandToolStripMenuItem
+            // 
+            this.whereThisCommandToolStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
+            this.whereThisCommandToolStripMenuItem.Name = "whereThisCommandToolStripMenuItem";
+            this.whereThisCommandToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.whereThisCommandToolStripMenuItem.Text = "Where This Command";
+            this.whereThisCommandToolStripMenuItem.Click += new System.EventHandler(this.whereThisCommandToolStripMenuItem_Click);
+            // 
+            // whereThisCommandToolStripMenuItem1
+            // 
+            this.whereThisCommandToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.whereThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.command_search;
+            this.whereThisCommandToolStripMenuItem1.Name = "whereThisCommandToolStripMenuItem1";
+            this.whereThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(276, 22);
+            this.whereThisCommandToolStripMenuItem1.Text = "Where This Command";
+            this.whereThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.whereThisCommandToolStripMenuItem1_Click);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2179,6 +2200,8 @@
         private System.Windows.Forms.Timer miniMapLoadingDelayTimer;
         private System.Windows.Forms.LinkLabel linkGitter;
         private System.Windows.Forms.ToolStripMenuItem tasktGitterStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem whereThisCommandToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem whereThisCommandToolStripMenuItem1;
     }
 }
 
