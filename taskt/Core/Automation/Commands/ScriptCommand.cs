@@ -464,8 +464,154 @@ namespace taskt.Core.Automation.Commands
         public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
             this.IsValid = true;
+            this.IsWarning = false;
             this.validationResult = "";
-            return true;
+
+            var props = this.GetType().GetProperties();
+            foreach(var prop in props)
+            {
+                if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+                {
+                    Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule vr = (Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule));
+                    if (vr != null)
+                    {
+                        object va = prop.GetValue(this);
+                        string propertyValue = (va == null) ? "" : va.ToString();
+                        this.IsValid = checkValidateByFlags(vr.parameterName, propertyValue, vr.errorRule, prop.Name, prop);
+                        this.IsWarning = !checkValidateByFlags(vr.parameterName, propertyValue, vr.warningRule, prop.Name, prop);
+                    }
+                }
+            }
+
+            return this.IsValid;
+        }
+
+        private bool checkValidateByFlags(string paramShortName, string value, Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags flags, string propertyName, PropertyInfo prop)
+        {
+            if (flags == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.None)
+            {
+                return true;
+            }
+
+            bool result = true;
+
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty)
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.validationResult += paramShortName + " is empty.\n";
+                    result = false;
+                }
+            }
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero)
+            {
+                double v;
+                if (double.TryParse(value, out v))
+                {
+                    if (v < 0.0)
+                    {
+                        this.validationResult += paramShortName + " is less than zero.\n";
+                        result = false;
+                    }
+                }
+            }
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.GreaterThanZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.GreaterThanZero)
+            {
+                double v;
+                if (double.TryParse(value, out v))
+                {
+                    if (v > 0.0)
+                    {
+                        this.validationResult += paramShortName + " is greater than zero.\n";
+                        result = false;
+                    }
+                }
+            }
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.EqualsZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.EqualsZero)
+            {
+                double v;
+                if (double.TryParse(value, out v))
+                {
+                    if (v == 0.0)
+                    {
+                        this.validationResult += paramShortName + " is equals zero.\n";
+                        result = false;
+                    }
+                }
+            }
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotEqualsZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotEqualsZero)
+            {
+                double v;
+                if (double.TryParse(value, out v))
+                {
+                    if (v != 0.0)
+                    {
+                        this.validationResult += paramShortName + " is not equals zero.\n";
+                        result = false;
+                    }
+                }
+            }
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotSelectionOption) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotSelectionOption)
+            {
+                if (!IsUISelectionValue(propertyName, value, prop))
+                {
+                    this.validationResult += paramShortName + " is strange value '" + value + "'";
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
+        public bool IsUISelectionValue(string propertyName, string value, PropertyInfo prop)
+        {
+            var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
+            if (options.Length == 0)
+            {
+                return true;
+            }
+
+            var sensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive));
+
+            Func<string, string> cnvFunc;
+            if (sensitive.caseSensitive && sensitive.whiteSpaceSensitive)
+            {
+                cnvFunc = (v) =>
+                {
+                    return v;
+                };
+            }
+            else if (sensitive.caseSensitive && !sensitive.whiteSpaceSensitive)
+            {
+                cnvFunc = (v) =>
+                {
+                    return v.Trim().Replace(" ", "").Replace("\t", "");
+                };
+            }
+            else if (!sensitive.caseSensitive && sensitive.whiteSpaceSensitive)
+            {
+                cnvFunc = (v) =>
+                {
+                    return v.ToLower();
+                };
+            }
+            else
+            {
+                cnvFunc = (v) =>
+                {
+                    return v.ToLower().Trim().Replace(" ", "").Replace("\t", "");
+                };
+            }
+
+            value = cnvFunc(value);
+            foreach (var option in options)
+            {
+                if (value == cnvFunc(option.uiOption))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //public System.Reflection.PropertyInfo GetProperty(string propertyName)

@@ -398,4 +398,29 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.secondLabelName = secondLabelName;
         }
     }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyValidationRule : System.Attribute
+    {
+        public string parameterName = "";
+        public ValidationRuleFlags errorRule = 0;
+        public ValidationRuleFlags warningRule = 0;
+        public PropertyValidationRule(string parameterName, ValidationRuleFlags errorRule = 0, ValidationRuleFlags warningRule = 0)
+        {
+            this.parameterName = parameterName;
+            this.errorRule= errorRule;
+            this.warningRule = warningRule;
+        }
+
+        [Flags]
+        public enum ValidationRuleFlags
+        {
+            None = 0,
+            Empty = 1,
+            LessThanZero = 2,
+            GreaterThanZero = 4,
+            EqualsZero = 8,
+            NotEqualsZero = 16,
+            NotSelectionOption = 32
+        }
+    }
 }
