@@ -153,12 +153,14 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     }
 
     [System.AttributeUsage(AttributeTargets.Property)]
-    public sealed class PropertyIsCaseSensitive : System.Attribute
+    public sealed class PropertyValueSensitive : System.Attribute
     {
         public bool caseSensitive = false;
-        public PropertyIsCaseSensitive(bool caseSensitive)
+        public bool whiteSpaceSensitive = true;
+        public PropertyValueSensitive(bool caseSensitive, bool whiteSpaceSensitive = true)
         {
             this.caseSensitive = caseSensitive;
+            this.whiteSpaceSensitive = whiteSpaceSensitive;
         }
     }
 
