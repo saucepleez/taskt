@@ -996,6 +996,22 @@ namespace taskt.Core
             }
         }
 
+        public static Dictionary<string, string> GetParameterNameValue(this DataTable dt, string parameterColumn = "Parameter Name", string valueColumn = "Parameter Value")
+        {
+            Dictionary<string, string> pm = new Dictionary<string, string>();
+
+            foreach(DataRow row in dt.Rows)
+            {
+                string name = row.Field<string>(parameterColumn);
+                string value = row.Field<string>(valueColumn);
+                if (name != null)
+                {
+                    pm.Add(name, value);
+                }
+            }
+            return pm;
+        }
+
         private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             //search for the variable
@@ -1073,7 +1089,7 @@ namespace taskt.Core
             var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
             if (options.Length > 0)
             {
-                var propCaseSensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyIsCaseSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsCaseSensitive));
+                var propCaseSensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive));
                 bool isCaseSensitive = (propCaseSensitive == null) ? false : propCaseSensitive.caseSensitive;
 
                 if (isCaseSensitive)
