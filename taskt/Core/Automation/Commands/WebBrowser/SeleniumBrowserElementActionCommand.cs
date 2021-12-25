@@ -32,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Method")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By XPath")]
@@ -53,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_SeleniumSearchType { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Element Search Parameter")]
         [Attributes.PropertyAttributes.InputSpecification("Specifies the parameter text that matches to the element based on the previously selected search type.")]
@@ -60,6 +62,15 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SeleniumSearchParameter { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Target Element Index (Only Use Fined Elements ***)")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        [Attributes.PropertyAttributes.Remarks("If parameter is $x('//div') and index is 5, it's means target is $x('//div')[5].")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_SeleniumElementIndex { get; set; }
+
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Element Action")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Invoke Click")]
@@ -83,6 +94,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertySelectionChangeEvent("seleniumAction_SelectionChangeCommitted")]
         public string v_SeleniumElementAction { get; set; }
+
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
         [Attributes.PropertyAttributes.InputSpecification("Additioal Parameters will be required based on the action settings selected.")]
@@ -96,7 +108,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ElementsGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ElementsGridViewHelper_CellBeginEdit", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         public System.Data.DataTable v_WebActionParameterTable { get; set; }
-
 
         [XmlIgnore]
         [NonSerialized]
@@ -185,8 +196,26 @@ namespace taskt.Core.Automation.Commands
                 element = FindElement(seleniumInstance, seleniumSearchParam);
             }
 
-
-
+            // set index
+            if ((v_SeleniumSearchType.ToLower().StartsWith("find elements ")) && !String.IsNullOrEmpty(v_SeleniumElementIndex))
+            {
+                switch (v_SeleniumElementAction.ToLower())
+                {
+                    case "invoke click":
+                    case "left click":
+                    case "right click":
+                    case "middle click":
+                    case "double left click":
+                    case "clear element":
+                    case "set text":
+                    case "get text":
+                    case "get attribute":
+                    case "select option":
+                        int idx = int.Parse(v_SeleniumElementIndex);
+                        element = ((ReadOnlyCollection<IWebElement>)element)[idx];
+                        break;
+                }
+            }
 
             switch (v_SeleniumElementAction)
             {
