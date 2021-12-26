@@ -285,6 +285,47 @@ namespace taskt.Core
             }
         }
 
+        public static Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType GetInstanceType(string instanceType)
+        {
+            switch (instanceType.ToLower())
+            {
+                case "database":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
+                    break;
+                case "datatable":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
+                    break;
+                case "dictionary":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
+                    break;
+                case "excel":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
+                    break;
+                case "ie":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
+                    break;
+                case "json":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
+                    break;
+                case "list":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
+                    break;
+                case "stopwatch":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
+                    break;
+                case "web browser":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
+                    break;
+                case "word":
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
+                    break;
+                case "none":
+                default:
+                    return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none;
+                    break;
+            }
+        }
+
         //public InstanceNameType getInstanceNameType(Core.Automation.Commands.ScriptCommand command)
         //{
         //    if (command is Core.Automation.Commands.DatabaseDefineConnectionCommand)

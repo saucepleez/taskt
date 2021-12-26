@@ -979,49 +979,50 @@ namespace taskt.Core.Automation.Commands
 
         public bool checkInstanceMatched(string keyword, string instanceType, bool caseSensitive)
         {
-            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
-            switch (instanceType.ToLower())
-            {
-                case "database":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
-                    break;
-                case "datatable":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
-                    break;
-                case "dictionary":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
-                    break;
-                case "excel":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
-                    break;
-                case "ie":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
-                    break;
-                case "json":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
-                    break;
-                case "list":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
-                    break;
-                case "nlg":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG;
-                    break;
-                case "stopwatch":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
-                    break;
-                case "web browser":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
-                    break;
-                case "word":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
-                    break;
-                case "none":
-                    return false;
-                    break;
-                default:
-                    return false;
-                    break;
-            }
+            //Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
+            //switch (instanceType.ToLower())
+            //{
+            //    case "database":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
+            //        break;
+            //    case "datatable":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
+            //        break;
+            //    case "dictionary":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
+            //        break;
+            //    case "excel":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
+            //        break;
+            //    case "ie":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
+            //        break;
+            //    case "json":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
+            //        break;
+            //    case "list":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
+            //        break;
+            //    case "nlg":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG;
+            //        break;
+            //    case "stopwatch":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
+            //        break;
+            //    case "web browser":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
+            //        break;
+            //    case "word":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
+            //        break;
+            //    case "none":
+            //        return false;
+            //        break;
+            //    default:
+            //        return false;
+            //        break;
+            //}
+            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
             Func<string, string> convFunc;
             if (caseSensitive)
@@ -1125,46 +1126,48 @@ namespace taskt.Core.Automation.Commands
 
         public bool ReplaceInstance(string keyword, string replacedText, string instanceType, bool caseSensitive)
         {
-            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
-            switch (instanceType.ToLower())
-            {
-                case "database":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
-                    break;
-                case "datatable":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
-                    break;
-                case "dictionary":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
-                    break;
-                case "excel":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
-                    break;
-                case "ie":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
-                    break;
-                case "json":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
-                    break;
-                case "list":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
-                    break;
-                case "stopwatch":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
-                    break;
-                case "web browser":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
-                    break;
-                case "word":
-                    comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
-                    break;
-                case "none":
-                    return false;
-                    break;
-                default:
-                    return false;
-                    break;
-            }
+            //Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
+            //switch (instanceType.ToLower())
+            //{
+            //    case "database":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
+            //        break;
+            //    case "datatable":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
+            //        break;
+            //    case "dictionary":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
+            //        break;
+            //    case "excel":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
+            //        break;
+            //    case "ie":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
+            //        break;
+            //    case "json":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
+            //        break;
+            //    case "list":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
+            //        break;
+            //    case "stopwatch":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
+            //        break;
+            //    case "web browser":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
+            //        break;
+            //    case "word":
+            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
+            //        break;
+            //    case "none":
+            //        return false;
+            //        break;
+            //    default:
+            //        return false;
+            //        break;
+            //}
+
+            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
             Func<string, string> convFunc;
             if (caseSensitive)
