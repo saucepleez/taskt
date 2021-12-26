@@ -413,7 +413,7 @@ namespace taskt.Core
                         this._InstanceNameOrder = value;
                         break;
                     default:
-                        this._InstanceNameOrder = "Creation Frequently";
+                        this._InstanceNameOrder = "Frequency of use";
                         break;
                 }
             }
