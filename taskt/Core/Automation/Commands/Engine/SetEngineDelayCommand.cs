@@ -15,11 +15,14 @@ namespace taskt.Core.Automation.Commands
     public class SetEngineDelayCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Set Delay between commands (in milliseconds). (ex. 2500, {{{vWait}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Set Delay between commands (in milliseconds).")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a specific amount of time in milliseconds (ex. to specify 8 seconds, one would enter 8000) or specify a variable containing a value.")]
         [Attributes.PropertyAttributes.SampleUsage("**250** or **{{{vVariableSpeed}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyValidationRule("Delay", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty | Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_EngineSpeed { get; set; }
 
         public SetEngineDelayCommand()
@@ -45,31 +48,31 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            this.IsValid = true;
-            this.validationResult = "";
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    this.IsValid = true;
+        //    this.validationResult = "";
 
-            int speedValue;
+        //    int speedValue;
 
-            if (String.IsNullOrEmpty(v_EngineSpeed))
-            {
-                this.validationResult += "Delay is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                if (int.TryParse(v_EngineSpeed, out speedValue))
-                {
-                    if (speedValue < 0)
-                    {
-                        this.validationResult += "Specify a value of 0 or more for Delay.\n";
-                        this.IsValid = false;
-                    }
-                }
-            }
+        //    if (String.IsNullOrEmpty(v_EngineSpeed))
+        //    {
+        //        this.validationResult += "Delay is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        if (int.TryParse(v_EngineSpeed, out speedValue))
+        //        {
+        //            if (speedValue < 0)
+        //            {
+        //                this.validationResult += "Specify a value of 0 or more for Delay.\n";
+        //                this.IsValid = false;
+        //            }
+        //        }
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
