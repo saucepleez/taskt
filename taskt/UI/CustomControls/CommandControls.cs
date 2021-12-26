@@ -1630,7 +1630,9 @@ namespace taskt.UI.CustomControls
             //    }
             //}
 
-            Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp);
+            string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
+
+            Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp, (sortOrder == "frequency of use"));
 
             string defInstanceName = "";
             switch (tp)
@@ -1672,6 +1674,7 @@ namespace taskt.UI.CustomControls
                     sortedInstance = instanceList.OrderBy(t => t.Key).Select(v => v.Key).ToList();
                     break;
                 case "creation frequently":
+                case "frequency of use":
                 default:
                     sortedInstance = instanceList.OrderByDescending(t => t.Value).Select(v => v.Key).ToList();
                     break;

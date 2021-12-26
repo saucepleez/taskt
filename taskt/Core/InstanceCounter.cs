@@ -10,27 +10,71 @@ namespace taskt.Core
     public class InstanceCounter
     {
         // instance
-        private Dictionary<string, int> databaseInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> excelInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> ieInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> webBrowserInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> stopWatchInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> wordInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> nlgInstance = new Dictionary<string, int>();
+        private Dictionary<string, Dictionary<string, int>> databaseInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> excelInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> ieInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> webBrowserInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> stopWatchInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> wordInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> nlgInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
         // variable type
-        private Dictionary<string, int> dictionaryInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> dataTableInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> jsonInstance = new Dictionary<string, int>();
-        private Dictionary<string, int> listInstance = new Dictionary<string, int>();
+        private Dictionary<string, Dictionary<string, int>> dictionaryInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> dataTableInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> jsonInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> listInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
 
         public InstanceCounter()
         {
 
         }
 
-        private void addInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)
+        private void addInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
         {
-            Dictionary<string, int> targetDic = decideDictionary(instanceType);
+            Dictionary<string, int> targetDic = decideDictionary(instanceType, isUsed);
 
             if (String.IsNullOrEmpty(instanceName))
             {
@@ -57,9 +101,9 @@ namespace taskt.Core
         //    this.addInstance(nameType.Name, nameType.InstanceType);
         //}
 
-        private void removeInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)
+        private void removeInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
         {
-            Dictionary<string, int> targetDic = decideDictionary(instanceType);
+            Dictionary<string, int> targetDic = decideDictionary(instanceType, isUsed);
 
             if (String.IsNullOrEmpty(instanceName))
             {
@@ -91,54 +135,56 @@ namespace taskt.Core
         //    return targetDic.Keys.ToArray();
         //}
 
-        public Dictionary<string, int> getInstanceClone(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)
+        public Dictionary<string, int> getInstanceClone(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
         {
-            Dictionary<string, int> targetDic = decideDictionary(instanceType);
+            Dictionary<string, int> targetDic = decideDictionary(instanceType, isUsed);
 
             return new Dictionary<string, int>(targetDic);
         }
 
-        private Dictionary<string, int> decideDictionary(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType)
+        private Dictionary<string, int> decideDictionary(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
         {
+            Dictionary<string, Dictionary<string, int>> targetDic;
             switch (instanceType)
             {
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
-                    return databaseInstance;
+                    targetDic = databaseInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable:
-                    return dataTableInstance;
+                    targetDic = dataTableInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary:
-                    return dictionaryInstance;
+                    targetDic = dictionaryInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel:
-                    return excelInstance;
+                    targetDic = excelInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE:
-                    return ieInstance;
+                    targetDic = ieInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON:
-                    return jsonInstance;
+                    targetDic = jsonInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List:
-                    return listInstance; ;
+                    targetDic = listInstance; ;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
-                    return nlgInstance;
+                    targetDic = nlgInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
-                    return stopWatchInstance;
+                    targetDic = stopWatchInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser:
-                    return webBrowserInstance;
+                    targetDic = webBrowserInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word:
-                    return wordInstance;
+                    targetDic = wordInstance;
                     break;
                 default:
                     return null;
                     break;
             }
+            return (isUsed) ? targetDic["used"] : targetDic["created"];
         }
 
         public void addInstance(Core.Automation.Commands.ScriptCommand command)
@@ -199,15 +245,20 @@ namespace taskt.Core
             {
                 if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
                 {
-                    var insType = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
-                    var direction = (Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection));
-                    if ((insType != null) && (direction != null) && 
-                            (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none) &&
-                            (direction.porpose == Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output))
+                    if (prop.GetValue(command) != null)
                     {
-                        if (prop.GetValue(command) != null)
+                        string insValue = prop.GetValue(command).ToString();
+                        var insType = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
+                        var direction = (Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection));
+                        if ((insType != null) && (direction != null) &&
+                                (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            this.addInstance(prop.GetValue(command).ToString(), insType.instanceType);
+                            this.addInstance(insValue, insType.instanceType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
+                            this.addInstance(insValue, insType.instanceType, true);
+                        }
+                        else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
+                        {
+                            this.addInstance(insValue, insType.instanceType, true);
                         }
                     }
                 }
@@ -270,15 +321,20 @@ namespace taskt.Core
             {
                 if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
                 {
-                    var insType = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
-                    var direction = (Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection));
-                    if ((insType != null) && (direction != null) &&
-                            (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none) &&
-                            (direction.porpose == Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output))
+                    if (prop.GetValue(command) != null)
                     {
-                        if (prop.GetValue(command) != null)
+                        string insValue = prop.GetValue(command).ToString();
+                        var insType = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
+                        var direction = (Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection));
+                        if ((insType != null) && (direction != null) &&
+                                (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            this.removeInstance(prop.GetValue(command).ToString(), insType.instanceType);
+                            this.removeInstance(insValue, insType.instanceType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
+                            this.removeInstance(insValue, insType.instanceType, true);
+                        }
+                        else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
+                        {
+                            this.removeInstance(insValue, insType.instanceType, true);
                         }
                     }
                 }

@@ -1311,6 +1311,7 @@
             this.cmbInstanceNameOrder.Items.AddRange(new object[] {
             "Creation Frequently",
             "By Name",
+            "Frequency Of Use",
             "No Sorting"});
             this.cmbInstanceNameOrder.Location = new System.Drawing.Point(226, 285);
             this.cmbInstanceNameOrder.Name = "cmbInstanceNameOrder";

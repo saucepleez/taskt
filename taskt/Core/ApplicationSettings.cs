@@ -408,6 +408,7 @@ namespace taskt.Core
                 {
                     case "creation frequently":
                     case "by name":
+                    case "frequency of use":
                     case "no sorting":
                         this._InstanceNameOrder = value;
                         break;
