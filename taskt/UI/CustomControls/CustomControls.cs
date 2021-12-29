@@ -492,6 +492,7 @@ namespace taskt.UI
 
             // Dictionary
             {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"CheckDictionaryKeyExistsCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConcatenateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToDataTableCommand", "taskt.Properties.Resources.command_dictionary"},
             {"ConvertDictionaryToJSONCommand", "taskt.Properties.Resources.command_dictionary"},

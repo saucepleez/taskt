@@ -77,6 +77,7 @@ namespace taskt.Core.Automation.Commands
 
     // Dictionary
     [XmlInclude(typeof(AddDictionaryCommand))]
+    [XmlInclude(typeof(CheckDictionaryKeyExistsCommand))]
     [XmlInclude(typeof(CreateDictionaryCommand))]
     [XmlInclude(typeof(ConcatenateDictionaryCommand))]
     [XmlInclude(typeof(ConvertDictionaryToDataTableCommand))]
