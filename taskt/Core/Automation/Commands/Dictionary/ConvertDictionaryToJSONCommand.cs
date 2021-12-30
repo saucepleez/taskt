@@ -77,6 +77,8 @@ namespace taskt.Core.Automation.Commands
 
         public override bool IsValidate(frmCommandEditor editor)
         {
+            base.IsValidate(editor);
+
             if (String.IsNullOrEmpty(v_InputData))
             {
                 this.IsValid = false;
