@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Check Dictionary Key Exists sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create Dictionary ⦃ &quot;name&quot;: &quot;tom&quot;, &quot;age&quot;: 25, &quot;contry&quot;: &quot;USA&quot; ⦄ (JSON like)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDictionaryCommand" CommandID="54ad6f81-4597-4363-a0c3-6d003fa2ff2b" CommandName="CreateDictionaryCommand" IsCommented="false" SelectionName="Create Dictionary" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="myDic">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ColumnNameDataTable122121.115710">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                  <xs:element name="Values" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNameDataTable122121.115710" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ColumnNameDataTable122121.115710" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157101" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Keys>name</Keys>
+                <Values>tom</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157102" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Keys>age</Keys>
+                <Values>25</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157103" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Keys>contry</Keys>
+                <Values>USA</Values>
+              </ColumnNameDataTable122121.115710>
+            </DocumentElement>
+            <diffgr:before>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157101" msdata:rowOrder="0">
+                <Keys>name</Keys>
+                <Values>tom</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157102" msdata:rowOrder="1">
+                <Keys>age</Keys>
+                <Values>25</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157103" msdata:rowOrder="2">
+                <Keys>contry</Keys>
+                <Values>USA</Values>
+              </ColumnNameDataTable122121.115710>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Check Key &quot;age&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CheckDictionaryKeyExistsCommand" CommandID="72b8e2b5-a3de-477e-8072-2de8bf466583" CommandName="CheckDictionaryKeyExistsCommand" IsCommented="false" SelectionName="Check Dictionary Key Exists" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InputData="myDic" v_Key="age" v_applyToVariable="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="a8161516-6890-42e0-837a-984546a435bf" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Boolean">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I4Ac午ionPara43Table122921.054312" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="I4Ac午ionPara43Table122921.054312">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543121" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vResult⦄</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543122" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value Is</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+            </DocumentElement>
+            <diffgr:before>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543121" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vResult}</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543122" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Value Is</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3c7ada41-4cfe-4c7c-949c-8b33ba9c07e0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key &quot;age&quot; is exists" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="755c5908-6570-44ec-a1f9-7ee5c66c3269" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3c7ada41-4cfe-4c7c-949c-8b33ba9c07e0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key &quot;age&quot; is not exists" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="e4130f6f-0ac1-4b2c-8d10-4d0d311a0007" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Check Key &quot;year&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CheckDictionaryKeyExistsCommand" CommandID="72b8e2b5-a3de-477e-8072-2de8bf466583" CommandName="CheckDictionaryKeyExistsCommand" IsCommented="false" SelectionName="Check Dictionary Key Exists" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InputData="myDic" v_Key="year" v_applyToVariable="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="a8161516-6890-42e0-837a-984546a435bf" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Boolean">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I4Ac午ionPara43Table122921.054312" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="I4Ac午ionPara43Table122921.054312">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543121" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vResult⦄</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543122" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value Is</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+            </DocumentElement>
+            <diffgr:before>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543121" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vResult}</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+              <I4Ac午ionPara43Table122921.054312 diffgr:id="I4Ac午ionPara43Table122921.0543122" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Value Is</Parameter_x0020_Name>
+                <Parameter_x0020_Value>True</Parameter_x0020_Value>
+              </I4Ac午ionPara43Table122921.054312>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3c7ada41-4cfe-4c7c-949c-8b33ba9c07e0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key &quot;year&quot; is exists" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="755c5908-6570-44ec-a1f9-7ee5c66c3269" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3c7ada41-4cfe-4c7c-949c-8b33ba9c07e0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Key &quot;year&quot; is not exists" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="e4130f6f-0ac1-4b2c-8d10-4d0d311a0007" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.6.0.0</TasktVersion>
+    <Author />
+    <LastRunTime>2021-12-29T17:44:35.7329129+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>myDic</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
