@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Row index to set values")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Row index to setted values")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
