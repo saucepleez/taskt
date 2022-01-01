@@ -80,10 +80,8 @@ namespace taskt.Core.Automation.Commands
             {
                 tDic.Add(srcDT.Columns[i].ColumnName, srcDT.Rows[index][i].ToString());
             }
-            List<Dictionary<string, string>> jsonList = new List<Dictionary<string, string>>();
-            jsonList.Add(tDic);
 
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonList);
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(tDic);
             json.StoreInUserVariable(engine, v_OutputVariableName);
         }
 
