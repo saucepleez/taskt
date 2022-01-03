@@ -556,9 +556,11 @@ namespace taskt.UI.Forms
         }
         private void showThisCommandHelp(Core.Automation.Commands.ScriptCommand command)
         {
-            string page = command.SelectionName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
-            string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-").Replace("/", "-");
-            System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
+            //string page = command.SelectionName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
+            //string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-").Replace("/", "-");
+            //System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
+            string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName;
+            System.Diagnostics.Process.Start(Core.MyURLs.GetWikiURL(command.SelectionName, parent));
         }
         private void BeginShowThisCommandHelpProcess()
         {
