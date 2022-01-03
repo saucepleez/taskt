@@ -423,4 +423,12 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             NotSelectionOption = 32
         }
     }
+    public sealed class PropertyFirstValue : System.Attribute
+    {
+        public string firstValue = "";
+        public PropertyFirstValue(string firstValue)
+        {
+            this.firstValue = firstValue;
+        }
+    }
 }
