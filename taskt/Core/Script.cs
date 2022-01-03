@@ -317,6 +317,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "LoadDataTableCommand");
                 cmd.SetAttributeValue(ns + "type", "LoadDataTableCommand");
+                cmd.SetAttributeValue("SelectionName", "Load DataTable");
             }
 
             return doc;
@@ -332,6 +333,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "AddListItemCommand");
                 cmd.SetAttributeValue(ns + "type", "AddListItemCommand");
+                cmd.SetAttributeValue("SelectionName", "Add List Item");
             }
 
             // SetVariableIndex -> SetListIndex
@@ -341,6 +343,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "SetListIndexCommand");
                 cmd.SetAttributeValue(ns + "type", "SetListIndexCommand");
+                cmd.SetAttributeValue("SelectionName", "Set List Index");
             }
 
             return doc;
@@ -376,6 +379,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "ConvertJSONToListCommand");
                 cmd.SetAttributeValue(ns + "type", "ConvertJSONToListCommand");
+                cmd.SetAttributeValue("SelectionName", "Convert JSON To List");
             }
 
             return doc;
@@ -390,6 +394,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "GetDataTableRowCountCommand");
                 cmd.SetAttributeValue(ns + "type", "GetDataTableRowCountCommand");
+                cmd.SetAttributeValue("SelectionName", "Get DataTable Row Count");
             }
 
             // AddDataRow -> AddDataTableRow
@@ -399,6 +404,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "AddDataTableRowCommand");
                 cmd.SetAttributeValue(ns + "type", "AddDataTableRowCommand");
+                cmd.SetAttributeValue("SelectionName", "Add DataTable Row");
             }
 
             return doc;
@@ -438,6 +444,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "CheckTextCommand");
                 cmd.SetAttributeValue(ns + "type", "CheckTextCommand");
+                cmd.SetAttributeValue("SelectionName", "Check Text");
             }
 
             // ModifyVariableCommand -> ModifyTextCommand
@@ -450,6 +457,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "ModifyTextCommand");
                 cmd.SetAttributeValue(ns + "type", "ModifyTextCommand");
+                cmd.SetAttributeValue("SelectionName", "Modify Text");
             }
 
             // RegExExtractorCommand -> RegExExtractionText
@@ -459,6 +467,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "RegExExtractionTextCommand");
                 cmd.SetAttributeValue(ns + "type", "RegExExtractionTextCommand");
+                cmd.SetAttributeValue("SelectionName", "RegEx Extraction Text");
             }
 
             // StringReplaceCommand -> ReplaceTextCommand
@@ -468,6 +477,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "ReplaceTextCommand");
                 cmd.SetAttributeValue(ns + "type", "ReplaceTextCommand");
+                cmd.SetAttributeValue("SelectionName", "Replace Text");
             }
 
             // StringSplitCommand -> SplitTextCommand
@@ -477,6 +487,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "SplitTextCommand");
                 cmd.SetAttributeValue(ns + "type", "SplitTextCommand");
+                cmd.SetAttributeValue("SelectionName", "Split Text");
             }
 
             // StringSubstringCommand -> SubstringTextCommand
@@ -486,6 +497,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "SubstringTextCommand");
                 cmd.SetAttributeValue(ns + "type", "SubstringTextCommand");
+                cmd.SetAttributeValue("SelectionName", "Substring Text");
             }
 
             // TextExtractorCommand -> ExtractionTextCommand
@@ -495,6 +507,7 @@ namespace taskt.Core.Script
             {
                 cmd.SetAttributeValue("CommandName", "ExtractionTextCommand");
                 cmd.SetAttributeValue(ns + "type", "ExtractionTextCommand");
+                cmd.SetAttributeValue("SelectionName", "Extraction Text");
             }
 
             return doc;
