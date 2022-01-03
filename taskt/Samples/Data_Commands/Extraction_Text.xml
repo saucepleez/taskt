@@ -2,13 +2,13 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="7fada3c3-a43c-4553-8c2f-c48abbabe872" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Text Extraction sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7fada3c3-a43c-4553-8c2f-c48abbabe872" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Extraction Text sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="7fada3c3-a43c-4553-8c2f-c48abbabe872" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get After &quot;years old.&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="TextExtractorCommand" CommandID="1c4aa326-6250-4caa-8b99-bcfa9fefb293" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="Hello everyone.My name is tom. 25 years old. I'm from USA." v_TextExtractionType="Extract All After Text" v_applyToVariableName="vResult">
+      <ScriptCommand xsi:type="ExtractionTextCommand" CommandID="1c4aa326-6250-4caa-8b99-bcfa9fefb293" CommandName="ExtractionTextCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="Hello everyone.My name is tom. 25 years old. I'm from USA." v_TextExtractionType="Extract All After Text" v_applyToVariableName="vResult">
         <v_TextExtractionTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="TextExtractionTable010222.122857" msdata:UseCurrentLocale="true">
@@ -58,7 +58,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="7fada3c3-a43c-4553-8c2f-c48abbabe872" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Get Before &quot;25 years&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="TextExtractorCommand" CommandID="1c4aa326-6250-4caa-8b99-bcfa9fefb293" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="Hello everyone.My name is tom. 25 years old. I'm from USA." v_TextExtractionType="Extract All Before Text" v_applyToVariableName="vResult">
+      <ScriptCommand xsi:type="ExtractionTextCommand" CommandID="1c4aa326-6250-4caa-8b99-bcfa9fefb293" CommandName="ExtractionTextCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="Hello everyone.My name is tom. 25 years old. I'm from USA." v_TextExtractionType="Extract All Before Text" v_applyToVariableName="vResult">
         <v_TextExtractionTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="TextExtractionTable010222.122857">
@@ -109,7 +109,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="7fada3c3-a43c-4553-8c2f-c48abbabe872" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Get Between &quot;everyone.&quot; to &quot;25&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="TextExtractorCommand" CommandID="1c4aa326-6250-4caa-8b99-bcfa9fefb293" CommandName="TextExtractorCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="Hello everyone.My name is tom. 25 years old. I'm from USA." v_TextExtractionType="Extract All Between Text" v_applyToVariableName="vResult">
+      <ScriptCommand xsi:type="ExtractionTextCommand" CommandID="1c4aa326-6250-4caa-8b99-bcfa9fefb293" CommandName="ExtractionTextCommand" IsCommented="false" SelectionName="Text Extraction" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="Hello everyone.My name is tom. 25 years old. I'm from USA." v_TextExtractionType="Extract All Between Text" v_applyToVariableName="vResult">
         <v_TextExtractionTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="TextExtractionTable010222.122857">
@@ -166,7 +166,7 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.0.56</TasktVersion>
+    <TasktVersion>3.6.0.0</TasktVersion>
     <Author />
     <LastRunTime>2022-01-02T12:31:48.6438548+09:00</LastRunTime>
     <RunTimes>1</RunTimes>

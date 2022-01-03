@@ -16,20 +16,25 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(HTTPQueryResultCommand))]
 
     // Data
+    [XmlInclude(typeof(CheckTextCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]
+    [XmlInclude(typeof(ExtractionTextCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
     [XmlInclude(typeof(GetWordCountCommand))]
     [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(LogDataCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
+    [XmlInclude(typeof(ModifyTextCommand))]
     [XmlInclude(typeof(ModifyVariableCommand))]
     [XmlInclude(typeof(ParseDatasetRowCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
+    [XmlInclude(typeof(RegExExtractionTextCommand))]
     [XmlInclude(typeof(RegExExtractorCommand))]
     [XmlInclude(typeof(StringCheckTextCommand))]
-    [XmlInclude(typeof(StringReplaceCommand))]
+    [XmlInclude(typeof(ReplaceTextCommand))]
     [XmlInclude(typeof(StringSubstringCommand))]
-    [XmlInclude(typeof(StringSplitCommand))]
+    [XmlInclude(typeof(SplitTextCommand))]
+    [XmlInclude(typeof(SubstringTextCommand))]
     [XmlInclude(typeof(TextExtractorCommand))]
 
     // Database

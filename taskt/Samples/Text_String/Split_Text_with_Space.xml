@@ -14,7 +14,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="c623b3ba-0521-4e8d-8693-3b2aff73a70b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Split text &quot;Hello world and everyone&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StringSplitCommand" CommandID="3efe3057-fc06-4543-a33c-38daee9b84a9" CommandName="StringSplitCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="Hello world and everyone" v_splitCharacter=" " v_applyConvertToUserVariableName="vSplit" />
+      <ScriptCommand xsi:type="SplitTextCommand" CommandID="3efe3057-fc06-4543-a33c-38daee9b84a9" CommandName="SplitTextCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="Hello world and everyone" v_splitCharacter=" " v_applyConvertToUserVariableName="vSplit" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="c623b3ba-0521-4e8d-8693-3b2aff73a70b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Show results" CommandEnabled="true" />
@@ -30,7 +30,7 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.0.53</TasktVersion>
+    <TasktVersion>3.6.0.0</TasktVersion>
     <Author />
     <LastRunTime>2021-12-21T11:52:25.2489996+09:00</LastRunTime>
     <RunTimes>3</RunTimes>

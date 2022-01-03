@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to split a string")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to split a single text or variable into multiple items")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Split method to achieve automation.")]
-    public class StringSplitCommand : ScriptCommand
+    public class SplitTextCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select variable or text to split")]
@@ -42,9 +42,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
         public string v_applyConvertToUserVariableName { get; set; }
-        public StringSplitCommand()
+        public SplitTextCommand()
         {
-            this.CommandName = "StringSplitCommand";
+            this.CommandName = "SplitTextCommand";
             this.SelectionName = "Split Text";
             this.CommandEnabled = true;
             this.CustomRendering = true;

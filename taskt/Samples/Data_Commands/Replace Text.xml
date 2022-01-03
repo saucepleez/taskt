@@ -17,14 +17,14 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="90994d3b-e379-4b0e-b4da-ace1c26077ef" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Replace &quot;world&quot; to &quot;everyone&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StringReplaceCommand" CommandID="29147e5d-f73f-4350-af17-bfc3fb20e78e" CommandName="StringReplaceCommand" IsCommented="false" SelectionName="Replace Text" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_replacementText="world" v_replacementValue="everyone" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="ReplaceTextCommand" CommandID="29147e5d-f73f-4350-af17-bfc3fb20e78e" CommandName="ReplaceTextCommand" IsCommented="false" SelectionName="Replace Text" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_replacementText="world" v_replacementValue="everyone" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4f8158af-020b-4fe7-9483-89bd7c6d57f8" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.0.56</TasktVersion>
+    <TasktVersion>3.6.0.0</TasktVersion>
     <Author />
     <LastRunTime>2022-01-02T12:03:27.2537172+09:00</LastRunTime>
     <RunTimes>3</RunTimes>

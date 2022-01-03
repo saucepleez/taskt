@@ -431,20 +431,25 @@ namespace taskt.UI
             {"HTTPQueryResultCommand", "taskt.Properties.Resources.command_search"},
 
             // Data
+            {"CheckTextCommand", "taskt.Properties.Resources.command_function"},
             {"DateCalculationCommand", "taskt.Properties.Resources.command_function"},
+            {"ExtractionTextCommand", "taskt.Properties.Resources.command_function"},
             {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
             {"LogDataCommand", "taskt.Properties.Resources.command_files"},
             {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},
+            {"ModifyTextCommand", "taskt.Properties.Resources.command_function"},
             {"ModifyVariableCommand", "taskt.Properties.Resources.command_function"},
             {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
             {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
+            {"RegExExtractionTextCommand", "taskt.Properties.Resources.command_function"},
             {"RegExExtractorCommand", "taskt.Properties.Resources.command_function"},
             {"StringCheckStringCommand", "taskt.Properties.Resources.command_string"},
-            {"StringReplaceCommand", "taskt.Properties.Resources.command_string"},
-            {"StringSplitCommand", "taskt.Properties.Resources.command_string"},
+            {"ReplaceTextCommand", "taskt.Properties.Resources.command_string"},
+            {"SplitTextCommand", "taskt.Properties.Resources.command_string"},
             {"StringSubstringCommand", "taskt.Properties.Resources.command_string"},
+            {"SubstringTextCommand", "taskt.Properties.Resources.command_string"},
             {"TextExtractorCommand", "taskt.Properties.Resources.command_function"},
 
             // Database

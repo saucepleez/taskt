@@ -8,7 +8,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="90994d3b-e379-4b0e-b4da-ace1c26077ef" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Split Text by ," CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StringSplitCommand" CommandID="547f60cf-b4cd-49fc-8f72-d75ad3c06a21" CommandName="StringSplitCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="tom,25,USA" v_splitCharacter="," v_applyConvertToUserVariableName="vList" />
+      <ScriptCommand xsi:type="SplitTextCommand" CommandID="547f60cf-b4cd-49fc-8f72-d75ad3c06a21" CommandName="SplitTextCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="tom,25,USA" v_splitCharacter="," v_applyConvertToUserVariableName="vList" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="90994d3b-e379-4b0e-b4da-ace1c26077ef" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Show vList as JSON" CommandEnabled="true" />
@@ -21,7 +21,7 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.0.56</TasktVersion>
+    <TasktVersion>3.6.0.0</TasktVersion>
     <Author />
     <LastRunTime>2022-01-02T12:15:39.6224497+09:00</LastRunTime>
     <RunTimes>5</RunTimes>

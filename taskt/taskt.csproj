@@ -292,7 +292,12 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\CheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\ModifyTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\RegExExtractionTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\SubstringTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\ExtractionTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CopyDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToListCommand.cs" />
@@ -496,8 +501,8 @@
     <Compile Include="Core\Automation\Commands\JSON\ParseJsonCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\PDFTextExtractionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\RegExExtractorCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\StringReplaceCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\StringSplitCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\ReplaceTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\SplitTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\StringSubstringCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\TextExtractorCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\DeleteFileCommand.cs" />

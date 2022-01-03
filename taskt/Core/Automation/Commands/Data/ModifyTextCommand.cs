@@ -10,13 +10,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.SubGruop("Text")]
-    [Attributes.ClassAttributes.Description("This command allows you to replace text")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to replace existing text within text or a variable with new text")]
+    [Attributes.ClassAttributes.Description("This command allows you to trim a string")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
-    public class StringReplaceCommand : ScriptCommand
+    public class ModifyTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select text or variable to modify")]
+        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable to modify")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
         [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
@@ -25,23 +25,20 @@ namespace taskt.Core.Automation.Commands
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the text to be replaced (ex. H, {{{vTextA}}})")]
+        [Attributes.PropertyAttributes.PropertyDescription("Select the case type")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the old value of the text that will be replaced")]
-        [Attributes.PropertyAttributes.SampleUsage("**H** or **{{{vTextA}}}**")]
-        [Attributes.PropertyAttributes.Remarks("H in Hello would be targeted for replacement")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        public string v_replacementText { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the replacement value")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the new value after replacement")]
-        [Attributes.PropertyAttributes.SampleUsage("**J**, **{{{vTextB}}}**")]
-        [Attributes.PropertyAttributes.Remarks("H would be replaced with J to create 'Jello'")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        public string v_replacementValue { get; set; }
+        [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
+        [Attributes.PropertyAttributes.SampleUsage("")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Upper Case")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Lower Case")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Base64 String")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("From Base64 String")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim Start")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim End")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_ConvertType { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
@@ -51,28 +48,51 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_applyToVariableName { get; set; }
-        public StringReplaceCommand()
+        public ModifyTextCommand()
         {
-            this.CommandName = "StringReplaceCommand";
-            this.SelectionName = "Replace Text";
+            this.CommandName = "ModifyTextCommand";
+            this.SelectionName = "Modify Text";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+;
         }
         public override void RunCommand(object sender)
         {
-            //get full text
-            string replacementVariable = v_userVariableName.ConvertToUserVariable(sender);
+            var stringValue = v_userVariableName.ConvertToUserVariable(sender);
 
-            //get replacement text and value
-            string replacementText = v_replacementText.ConvertToUserVariable(sender);
-            string replacementValue = v_replacementValue.ConvertToUserVariable(sender);
+            var caseType = v_ConvertType.ConvertToUserVariable(sender);
 
-            //perform replacement
-            replacementVariable = replacementVariable.Replace(replacementText, replacementValue);
+            switch (caseType)
+            {
+                case "To Upper Case":
+                    stringValue = stringValue.ToUpper();
+                    break;
+                case "To Lower Case":
+                    stringValue = stringValue.ToLower();
+                    break;
+                case "To Base64 String":
+                    byte[] textAsBytes = System.Text.Encoding.ASCII.GetBytes(stringValue);
+                    stringValue = Convert.ToBase64String(textAsBytes);
+                    break;
+                case "From Base64 String":
+                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(stringValue);
+                    stringValue = System.Text.ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
+                    break;
+                case "Trim":
+                    stringValue = stringValue.Trim();
+                    break;
+                case "Trim Start":
+                    stringValue = stringValue.TrimStart();
+                    break;
+                case "Trim End":
+                    stringValue = stringValue.TrimEnd();
+                    break;
 
-            //store in variable
-            replacementVariable.StoreInUserVariable(sender, v_applyToVariableName);
+                default:
+                    throw new NotImplementedException("Conversion Type '" + caseType + "' not implemented!");
+            }
 
+            stringValue.StoreInUserVariable(sender, v_applyToVariableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -81,9 +101,8 @@ namespace taskt.Core.Automation.Commands
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
 
             ////create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_replacementText", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ConvertType", this, editor));
 
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_replacementValue", this, editor));
 
             //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
@@ -95,10 +114,9 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
 
         }
-
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Replace '" + v_replacementText + "' with '" + v_replacementValue + "', apply to '" + v_userVariableName + "']";
+            return base.GetDisplayValue() + " [Convert '" + v_userVariableName + "' " + v_ConvertType + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
@@ -107,12 +125,12 @@ namespace taskt.Core.Automation.Commands
 
             if (String.IsNullOrEmpty(this.v_userVariableName))
             {
-                this.validationResult += "Text is empty.\n";
+                this.validationResult += "Text to modify is empty.\n";
                 this.IsValid = false;
             }
-            if (String.IsNullOrEmpty(this.v_replacementText))
+            if (String.IsNullOrEmpty(this.v_ConvertType))
             {
-                this.validationResult += "Text tobe replaced is empty.\n";
+                this.validationResult += "Case type is empty.\n";
                 this.IsValid = false;
             }
             if (String.IsNullOrEmpty(this.v_applyToVariableName))

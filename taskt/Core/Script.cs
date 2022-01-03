@@ -269,6 +269,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_50(doc);
             convertTo3_5_0_51(doc);
             convertTo3_5_0_52(doc);
+            convertTo3_5_0_57(doc);
 
             return doc;
         }
@@ -402,7 +403,6 @@ namespace taskt.Core.Script
 
             return doc;
         }
-
         private static XDocument convertTo3_5_0_52(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
@@ -426,6 +426,77 @@ namespace taskt.Core.Script
                     }
                 }
             }
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_57(XDocument doc)
+        {
+            // StringCheckTextCommand -> CheckTextCommand
+            IEnumerable<XElement> chkTextList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "CheckStringCommand"));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in chkTextList)
+            {
+                cmd.SetAttributeValue("CommandName", "CheckTextCommand");
+                cmd.SetAttributeValue(ns + "type", "CheckTextCommand");
+            }
+
+            // ModifyVariableCommand -> ModifyTextCommand
+            IEnumerable<XElement> modifyTextList = doc.Descendants("ScriptCommand")
+                .Where(el => (
+                    ((string)el.Attribute("CommandName") == "ModifyVariableCommand") ||
+                    ((string)el.Attribute("CommandName") == "StringCaseCommand"))
+                );
+            foreach (var cmd in modifyTextList)
+            {
+                cmd.SetAttributeValue("CommandName", "ModifyTextCommand");
+                cmd.SetAttributeValue(ns + "type", "ModifyTextCommand");
+            }
+
+            // RegExExtractorCommand -> RegExExtractionText
+            IEnumerable<XElement> regExList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "RegExExtractorCommand"));
+            foreach (var cmd in regExList)
+            {
+                cmd.SetAttributeValue("CommandName", "RegExExtractionTextCommand");
+                cmd.SetAttributeValue(ns + "type", "RegExExtractionTextCommand");
+            }
+
+            // StringReplaceCommand -> ReplaceTextCommand
+            IEnumerable<XElement> replaceList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "StringReplaceCommand"));
+            foreach (var cmd in replaceList)
+            {
+                cmd.SetAttributeValue("CommandName", "ReplaceTextCommand");
+                cmd.SetAttributeValue(ns + "type", "ReplaceTextCommand");
+            }
+
+            // StringSplitCommand -> SplitTextCommand
+            IEnumerable<XElement> splitList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "StringSplitCommand"));
+            foreach (var cmd in splitList)
+            {
+                cmd.SetAttributeValue("CommandName", "SplitTextCommand");
+                cmd.SetAttributeValue(ns + "type", "SplitTextCommand");
+            }
+
+            // StringSubstringCommand -> SubstringTextCommand
+            IEnumerable<XElement> substrList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "StringSubstringCommand"));
+            foreach (var cmd in substrList)
+            {
+                cmd.SetAttributeValue("CommandName", "SubstringTextCommand");
+                cmd.SetAttributeValue(ns + "type", "SubstringTextCommand");
+            }
+
+            // TextExtractorCommand -> ExtractionTextCommand
+            IEnumerable<XElement> extList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "TextExtractorCommand"));
+            foreach (var cmd in extList)
+            {
+                cmd.SetAttributeValue("CommandName", "ExtractionTextCommand");
+                cmd.SetAttributeValue(ns + "type", "ExtractionTextCommand");
+            }
+
             return doc;
         }
     }
