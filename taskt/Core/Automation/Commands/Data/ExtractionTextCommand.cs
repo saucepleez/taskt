@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
         {
 
             this.CommandName = "ExtractionTextCommand";
-            this.SelectionName = "ExtractionText";
+            this.SelectionName = "Extraction Text";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
