@@ -315,11 +315,6 @@ namespace taskt.UI.Forms
         }
 
         #region footer buttons event
-        public string ReplaceVariableMaker(string v)
-        {
-            var s = appSettings.EngineSettings;
-            return v.Replace("{{{", s.VariableStartMarker).Replace("}}}", s.VariableEndMarker);
-        }
 
         private void uiButtonVariable_Click(object sender, EventArgs e)
         {

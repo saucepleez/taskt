@@ -1716,7 +1716,7 @@ namespace taskt.UI.CustomControls
         //    return ret;
         //}
 
-        private static string replaceEngineKeyword(this string targetString)
+        public static string replaceEngineKeyword(this string targetString)
         {
             var settings = CurrentEditor.appSettings.EngineSettings;
             return settings.replaceEngineKeyword(targetString);
