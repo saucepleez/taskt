@@ -24,7 +24,6 @@ namespace taskt.Core
 
         }
 
-
         public void Save(ApplicationSettings appSettings)
         {
             //create settings directory
@@ -80,6 +79,11 @@ namespace taskt.Core
             }
 
             return appSettings;
+        }
+
+        public string replaceApplicationKeyword(string targetString)
+        {
+            return this.ClientSettings.replaceClientKeyword(this.EngineSettings.replaceEngineKeyword(targetString));
         }
     }
     /// <summary>
@@ -418,6 +422,14 @@ namespace taskt.Core
                 }
             }
         }
+
+        private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
+        private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
+        private static string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
+        private static string InterDefaultWordInstanceNameKeyword = "%kwd_default_word_instance%";
+        private static string InterDefaultDBInstanceNameKeyword = "%kwd_default_db_instance%";
+        private static string InterDefaultNLGInstanceNameKeyword = "%kwd_default_nlg_instance%";
+
         public ClientSettings()
         {
             MinimizeToTray = false;
@@ -443,6 +455,16 @@ namespace taskt.Core
             DefaultWordInstanceName = "RPAWord";
             DefaultDBInstanceName = "RPADB";
             DefaultNLGInstanceName = "nlgDefaultInstance";
+        }
+
+        public string replaceClientKeyword(string targetString)
+        {
+            return targetString.Replace(InterDefaultBrowserInstanceNameKeyword, this.DefaultBrowserInstanceName)
+                    .Replace(InterDefaultStopWatchInstanceNameKeyword, this.DefaultStopWatchInstanceName)
+                    .Replace(InterDefaultExcelInstanceNameKeyword, this.DefaultExcelInstanceName)
+                    .Replace(InterDefaultWordInstanceNameKeyword, this.DefaultWordInstanceName)
+                    .Replace(InterDefaultDBInstanceNameKeyword, this.DefaultDBInstanceName)
+                    .Replace(InterDefaultNLGInstanceNameKeyword, this.DefaultNLGInstanceName);
         }
     }
     /// <summary>
