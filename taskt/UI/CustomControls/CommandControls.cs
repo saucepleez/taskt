@@ -382,7 +382,7 @@ namespace taskt.UI.CustomControls
             if (propertyAttributesAssigned.Length > 0)
             {
                 var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
-                var labelText = desc.propertyDescription.replaceEngineKeyword();
+                var labelText = desc.propertyDescription.replaceApplicationKeyword();
 
                 if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
                 {
@@ -392,7 +392,7 @@ namespace taskt.UI.CustomControls
                         if (!labelText.Contains("(ex."))
                         {
                             var sampleAttr = (Core.Automation.Attributes.PropertyAttributes.SampleUsage)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage));
-                            var sampleText = (sampleAttr == null) ? "" : sampleAttr.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
+                            var sampleText = (sampleAttr == null) ? "" : sampleAttr.sampleUsage.getTextMDFormat().replaceApplicationKeyword().Replace(" or ", ", ");
                             if (sampleText.Length > 0)
                             {
                                 labelText += " (ex. " + sampleText + ")";
@@ -443,7 +443,7 @@ namespace taskt.UI.CustomControls
                     {
                         if (p.sampleUsage != "")
                         {
-                            addParams.Add(p.searchKey, p.description + " (ex." + p.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ") + ")");
+                            addParams.Add(p.searchKey, p.description + " (ex." + p.sampleUsage.getTextMDFormat().replaceApplicationKeyword().Replace(" or ", ", ") + ")");
                         }
                         else
                         {
@@ -1716,10 +1716,12 @@ namespace taskt.UI.CustomControls
         //    return ret;
         //}
 
-        public static string replaceEngineKeyword(this string targetString)
+        public static string replaceApplicationKeyword(this string targetString)
         {
-            var settings = CurrentEditor.appSettings.EngineSettings;
-            return settings.replaceEngineKeyword(targetString);
+            //var settings = CurrentEditor.appSettings.EngineSettings;
+            //return settings.replaceEngineKeyword(targetString);
+            var settings = CurrentEditor.appSettings;
+            return settings.replaceApplicationKeyword(targetString);
         }
 
         private static string getTextMDFormat(this string targetString)

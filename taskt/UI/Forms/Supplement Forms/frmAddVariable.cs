@@ -45,7 +45,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             //lblDefineNameDescription.Text = lblDefineNameDescription.Tag.ToString().Replace("{{{", appSettings.EngineSettings.VariableStartMarker)
             //        .Replace("}}}", appSettings.EngineSettings.VariableEndMarker);
-            lblDefineNameDescription.Text = appSettings.EngineSettings.replaceEngineKeyword(lblDefineNameDescription.Tag.ToString());
+            lblDefineNameDescription.Text = appSettings.replaceApplicationKeyword(lblDefineNameDescription.Tag.ToString());
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)

@@ -173,7 +173,7 @@ namespace taskt.Core.Automation.Commands
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
-                this.v_InputValue = CommandControls.replaceEngineKeyword("{{{DateTime.Now}}}");
+                this.v_InputValue = CommandControls.replaceApplicationKeyword("{{{DateTime.Now}}}");
             }
 
             return RenderedControls;
