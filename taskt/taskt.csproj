@@ -421,7 +421,7 @@
     <Compile Include="Core\Automation\Commands\Engine\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\ThrowExceptionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\TryCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseDatasetRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\ShowEngineContextCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGGeneratePhraseCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGSetParameterCommand.cs" />

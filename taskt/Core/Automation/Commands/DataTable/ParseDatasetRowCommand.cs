@@ -10,7 +10,7 @@ using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
+    [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command allows you to parse a dataset row column into a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a dataset variable")]
