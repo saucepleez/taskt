@@ -135,6 +135,18 @@ namespace taskt.UI.CustomControls
                 }
             }
 
+            // firstvalue
+            if (((createdInput is TextBox) || (createdInput is ComboBox))
+                    && (editor.creationMode == Forms.frmCommandEditor.CreationMode.Add))
+            {
+                var firstValue = (Core.Automation.Attributes.PropertyAttributes.PropertyFirstValue)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyFirstValue));
+                if (firstValue != null)
+                {
+                    var settings = editor.appSettings;
+                    variableProperties.SetValue(parent, settings.replaceApplicationKeyword(firstValue.firstValue));
+                }
+            }
+
             //var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
 
             //controlList.Add(label);
@@ -479,15 +491,17 @@ namespace taskt.UI.CustomControls
 
             var setting = (Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting));
             var rcmCtl = (Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl));
+
+            TextBox newTextBox;
             if (setting == null)
             {
                 if (rcmCtl == null || rcmCtl.recommendedControl != Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)
                 {
-                    return CreateDefaultInputFor(parameterName, parent, 30, 300, true);
+                    newTextBox = (TextBox)CreateDefaultInputFor(parameterName, parent, 30, 300, true);
                 }
                 else
                 {
-                    return CreateDefaultInputFor(parameterName, parent, 90, 300, true);
+                    newTextBox = (TextBox)CreateDefaultInputFor(parameterName, parent, 90, 300, true);
                 }
             }
             else
@@ -495,13 +509,15 @@ namespace taskt.UI.CustomControls
                 if (rcmCtl != null && rcmCtl.recommendedControl == Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)
                 {
                     int height = (setting.height < 2) ? 3 : setting.height;
-                    return CreateDefaultInputFor(parameterName, parent, height * 30, 300, setting.allowNewLine);
+                    newTextBox = (TextBox)CreateDefaultInputFor(parameterName, parent, height * 30, 300, setting.allowNewLine);
                 }
                 else
                 {
-                    return CreateDefaultInputFor(parameterName, parent, setting.height * 30, 300, setting.allowNewLine);
+                    newTextBox = (TextBox)CreateDefaultInputFor(parameterName, parent, setting.height * 30, 300, setting.allowNewLine);
                 }
             }
+
+            return newTextBox;
         }
         public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300, bool allowNewLine = true)
         {
