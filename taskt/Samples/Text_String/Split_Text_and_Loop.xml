@@ -11,7 +11,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="ea26984b-24c0-4bc2-870f-dd1dd954591d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Perform split and apply to variable" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SplitTextCommand" CommandID="4d806754-3eda-45fd-9007-60309bc38428" CommandName="SplitTextCommand" IsCommented="false" SelectionName="Split" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vPlacesToVisit⦄" v_splitCharacter="," v_applyConvertToUserVariableName="vParsedList" />
+      <ScriptCommand xsi:type="SplitTextCommand" CommandID="4d806754-3eda-45fd-9007-60309bc38428" CommandName="SplitTextCommand" IsCommented="false" SelectionName="Split Text" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vPlacesToVisit⦄" v_splitCharacter="," v_applyConvertToUserVariableName="vParsedList" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="8f6900cb-e818-430e-bbad-50c3f9dba92f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="loop each item that was split 'New York' -&gt; 'Florida' -&gt; 'California'" CommandEnabled="true" />
