@@ -311,6 +311,10 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetRowValuesFormListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetWorksheetInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetExcelInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCurrentWorksheetCommand.cs" />
