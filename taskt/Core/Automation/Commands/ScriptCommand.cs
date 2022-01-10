@@ -131,6 +131,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelDeleteWorksheetCommand))]
     [XmlInclude(typeof(ExcelGetCellCommand))]
     [XmlInclude(typeof(ExcelGetCellRCCommand))]
+    [XmlInclude(typeof(ExcelGetColumnValuesAsDictionaryCommand))]
     [XmlInclude(typeof(ExcelGetColumnValuesAsListCommand))]
     [XmlInclude(typeof(ExcelGetCurrentWorksheetCommand))]
     [XmlInclude(typeof(ExcelGetExcelInfoCommand))]

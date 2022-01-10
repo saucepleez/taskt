@@ -115,11 +115,9 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("Row index is less than 1");
             }
-            string columnStart = v_ColumnStart.ConvertToUserVariable(engine);
-            string columnEnd = v_ColumnEnd.ConvertToUserVariable(engine);
 
-            int columnStartIndex = ((Microsoft.Office.Interop.Excel.Range)excelSheet.Columns[columnStart]).Column;
-            int columnEndIndex = ((Microsoft.Office.Interop.Excel.Range)excelSheet.Columns[columnEnd]).Column;
+            int columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+            int columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
             if (columnStartIndex > columnEndIndex)
             {
                 int t = columnStartIndex;
@@ -145,41 +143,7 @@ namespace taskt.Core.Automation.Commands
                 max = myList.Count;
             }
 
-            string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = null;
-            switch (valueType)
-            {
-                case "cell":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Value = value;
-                    };
-                    break;
-                case "formula":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Formula = value;
-                    };
-                    break;
-                case "format":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).NumberFormatLocal = value;
-                    };
-                    break;
-                case "fore color":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Font.Color = long.Parse(value);
-                    };
-                    break;
-                case "back color":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Interior.Color = long.Parse(value);
-                    };
-                    break;
-            }
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.setCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

@@ -107,5 +107,94 @@ namespace taskt.Core
                 return null;
             }
         }
+
+        public static Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getCellValueFunction(string valueType)
+        {
+            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = null;
+            switch (valueType)
+            {
+                case "cell":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return (string)((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Text;
+                    };
+                    break;
+                case "formula":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return (string)((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Formula;
+                    };
+                    break;
+                case "format":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return (string)((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).NumberFormatLocal;
+                    };
+                    break;
+                case "fore color":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return ((long)((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Font.Color).ToString();
+                    };
+                    break;
+                case "back color":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return ((long)((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Interior.Color).ToString();
+                    };
+                    break;
+            }
+            return getFunc;
+        }
+
+        public static Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setCellValueFunction(string valueType)
+        {
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = null;
+            switch (valueType)
+            {
+                case "cell":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Value = value;
+                    };
+                    break;
+                case "formula":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Formula = value;
+                    };
+                    break;
+                case "format":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).NumberFormatLocal = value;
+                    };
+                    break;
+                case "fore color":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Font.Color = long.Parse(value);
+                    };
+                    break;
+                case "back color":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Interior.Color = long.Parse(value);
+                    };
+                    break;
+            }
+
+            return setFunc;
+        }
+        
+        public static int getColumnIndex(Microsoft.Office.Interop.Excel.Worksheet sheet, string columnName)
+        {
+            return ((Microsoft.Office.Interop.Excel.Range)sheet.Columns[columnName]).Column;
+        }
+
+        public static string getAddress(Microsoft.Office.Interop.Excel.Worksheet sheet, int row, int column)
+        {
+            return ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Address.Replace("$", "");
+        }
     }
 }

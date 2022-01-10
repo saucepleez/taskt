@@ -124,8 +124,7 @@ namespace taskt.Core.Automation.Commands
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
-                    string colName = v_ColumnIndex.ConvertToUserVariable(engine);
-                    columnIndex = ((Microsoft.Office.Interop.Excel.Range)excelSheet.Columns[colName]).Column;
+                    columnIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
                     break;
                 case "rc":
                     columnIndex = int.Parse(v_ColumnIndex.ConvertToUserVariable(engine));
@@ -165,41 +164,7 @@ namespace taskt.Core.Automation.Commands
                 max = myList.Count;
             }
 
-            string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = null;
-            switch (valueType)
-            {
-                case "cell":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Value = value;
-                    };
-                    break;
-                case "formula":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Formula = value;
-                    };
-                    break;
-                case "format":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).NumberFormatLocal = value;
-                    };
-                    break;
-                case "fore color":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Font.Color = long.Parse(value);
-                    };
-                    break;
-                case "back color":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Interior.Color = long.Parse(value);
-                    };
-                    break;
-            }
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.setCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

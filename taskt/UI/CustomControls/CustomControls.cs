@@ -547,6 +547,7 @@ namespace taskt.UI
             {"ExcelDeleteWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetCellRCCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGetColumnValuesAsDictionary", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetColumnValuesAsList", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetCurrentWorksheetCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetExcelInfoCommand", "taskt.Properties.Resources.command_spreadsheet"},
