@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
-        [Attributes.PropertyAttributes.PropertyValidationRule("List", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [Attributes.PropertyAttributes.PropertyValidationRule("Dictionary", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]

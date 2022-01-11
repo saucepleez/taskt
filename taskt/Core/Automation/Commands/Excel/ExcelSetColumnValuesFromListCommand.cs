@@ -10,8 +10,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Column")]
-    [Attributes.ClassAttributes.Description("This command set Column values as List.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set Column values as List.")]
+    [Attributes.ClassAttributes.Description("This command set Column values from List.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set Column values from List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ExcelSetColumnValuesFromListCommand : ScriptCommand
     {
@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetColumnValuesFromListCommand()
         {
-            this.CommandName = "ExcelSetColumnValuesAsListCommand";
+            this.CommandName = "ExcelSetColumnValuesFromListCommand";
             this.SelectionName = "Set Column Values From List";
             this.CommandEnabled = true;
             this.CustomRendering = true;
@@ -183,7 +183,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Set " + v_ValueType + " Values From '" + v_RowStart + "' to '" + v_RowEnd + "' Column '" + v_ColumnIndex + "' as List '" + v_ListVariable + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Set " + v_ValueType + " Values From '" + v_RowStart + "' to '" + v_RowEnd + "' Column '" + v_ColumnIndex + "' from List '" + v_ListVariable + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

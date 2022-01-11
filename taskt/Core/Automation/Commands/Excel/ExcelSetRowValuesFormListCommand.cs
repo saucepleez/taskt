@@ -10,8 +10,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
-    [Attributes.ClassAttributes.Description("This command set Row values as List.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a Row values as List.")]
+    [Attributes.ClassAttributes.Description("This command set Row values from List.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a Row values from List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ExcelSetRowValuesFromListCommand : ScriptCommand
     {
@@ -162,7 +162,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Set " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowIndex + "' as List '" + v_ListVariable + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Set " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowIndex + "' from List '" + v_ListVariable + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
 }
