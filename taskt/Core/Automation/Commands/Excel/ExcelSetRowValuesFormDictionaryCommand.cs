@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
         [Attributes.PropertyAttributes.PropertyValueSensitive(false)]
-        public string v_IfListNotEnough { get; set; }
+        public string v_IfDictionaryNotEnough { get; set; }
 
         public ExcelSetRowValuesFromDictionaryCommand()
         {
@@ -127,7 +127,7 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> myDic = v_DictionaryVariable.GetDictionaryVariable(engine);
 
-            string ifListNotEnough = v_IfListNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
+            string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifListNotEnough == "error")
             {
