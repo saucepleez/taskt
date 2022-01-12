@@ -192,6 +192,18 @@ namespace taskt.Core
             return ((Microsoft.Office.Interop.Excel.Range)sheet.Columns[columnName]).Column;
         }
 
+        public static string getColumnName(Microsoft.Office.Interop.Excel.Worksheet sheet, int columnIndex)
+        {
+            if (columnIndex < 1)
+            {
+                return "";
+            }
+            else
+            {
+                return ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[1, columnIndex]).Address.Split('$')[1];
+            }
+        }
+
         public static string getAddress(Microsoft.Office.Interop.Excel.Worksheet sheet, int row, int column)
         {
             return ((Microsoft.Office.Interop.Excel.Range)sheet.Cells[row, column]).Address.Replace("$", "");
