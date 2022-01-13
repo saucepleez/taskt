@@ -154,6 +154,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelSetCellRCCommand))]
     [XmlInclude(typeof(ExcelSetColumnValuesFromDictionaryCommand))]
     [XmlInclude(typeof(ExcelSetColumnValuesFromListCommand))]
+    [XmlInclude(typeof(ExcelSetRowValuesFromDataTableCommand))]
     [XmlInclude(typeof(ExcelSetRowValuesFromDictionaryCommand))]
     [XmlInclude(typeof(ExcelSetRowValuesFromListCommand))]
     [XmlInclude(typeof(ExcelSplitRangeByColumnCommand))]
