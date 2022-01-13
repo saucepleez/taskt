@@ -127,13 +127,13 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> myDic = v_DictionaryVariable.GetDictionaryVariable(engine);
 
-            string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
+            string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifListNotEnough == "error")
             {
                 if (range > myDic.Count)
                 {
-                    throw new Exception("List Items not enough");
+                    throw new Exception("Dictionary Items not enough");
                 }
             }
 
