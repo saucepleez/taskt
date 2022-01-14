@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Xml.Serialization;
-using System.IO;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
@@ -147,6 +149,7 @@ namespace taskt.Core.Automation.Commands
 
             //handle if formatter is required     
             var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
+            formatting = Regex.Replace(formatting, @"[.,:;\/\\]", x => $"'{x}'");
             var stringDateFormatted = requiredDateTime.ToString(formatting);
 
 
