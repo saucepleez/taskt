@@ -139,6 +139,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelGetLastRowCommand))]
     [XmlInclude(typeof(ExcelGetRangeCommand))]
     [XmlInclude(typeof(ExcelGetRangeCommandAsDT))]
+    [XmlInclude(typeof(ExcelGetRangeValuesAsDataTableCommand))]
     [XmlInclude(typeof(ExcelGetRowValuesAsDataTableCommand))]
     [XmlInclude(typeof(ExcelGetRowValuesAsDictionaryCommand))]
     [XmlInclude(typeof(ExcelGetRowValuesAsListCommand))]

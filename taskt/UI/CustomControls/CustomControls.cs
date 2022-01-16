@@ -555,6 +555,7 @@ namespace taskt.UI
             {"ExcelGetLastRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetRangeCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetRangeCommandAsDT", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelGetRangeValuesAsDataTable", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetRowValuesAsDataTable", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetRowValuesAsDictionary", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelGetRowValuesAsList", "taskt.Properties.Resources.command_spreadsheet"},

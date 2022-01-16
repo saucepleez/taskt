@@ -313,6 +313,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetRangeValuesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromDataTableCommand.cs" />
