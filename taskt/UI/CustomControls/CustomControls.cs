@@ -567,6 +567,7 @@ namespace taskt.UI
             {"ExcelSaveAsCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelSetCellCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelSetCellRCCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"ExcelSetColumnValuesFromDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelSetColumnValuesFromDictionaryCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelSetColumnValuesFromListCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"ExcelSetRowValuesFromDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},

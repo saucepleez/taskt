@@ -315,6 +315,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsListCommand.cs" />
