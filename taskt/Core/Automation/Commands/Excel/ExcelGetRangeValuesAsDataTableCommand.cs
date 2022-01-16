@@ -194,7 +194,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowStart + "' as DataTable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowStart + "' to '" + v_RowEnd + "' as DataTable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
 }
