@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
         public string v_ValueType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify If List Items not enough")]
+        [Attributes.PropertyAttributes.PropertyDescription("Please specify If Dictionary Items not enough")]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("**Ignore** or **Error**")]
         [Attributes.PropertyAttributes.Remarks("")]
