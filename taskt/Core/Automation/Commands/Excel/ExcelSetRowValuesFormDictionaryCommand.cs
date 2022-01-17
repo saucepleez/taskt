@@ -38,24 +38,35 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyValidationRule("Row Index", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty | Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero | Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         public string v_RowIndex { get; set; }
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Specify Column Type")]
+        [Attributes.PropertyAttributes.InputSpecification("")]
+        [Attributes.PropertyAttributes.SampleUsage("**Range** or **RC**")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Range")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Range")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("RC")]
+        [Attributes.PropertyAttributes.PropertyValueSensitive(false)]
+        public string v_ColumnType { get; set; }
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Start Column Location")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**A** or **B** or **{{{vColumn}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyValidationRule("Start Column", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [Attributes.PropertyAttributes.PropertyValidationRule("Start Column", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty | Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero | Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         public string v_ColumnStart { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the End Column Location")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**A** or **B** or **{{{vColumn}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyValidationRule("End Column", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [Attributes.PropertyAttributes.PropertyValidationRule("End Column", Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Empty | Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero | Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         public string v_ColumnEnd { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please specify the Dictionary Variable Name to set")]
@@ -116,8 +127,23 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Row index is less than 1");
             }
 
-            int columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
-            int columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+            int columnStartIndex = 0;
+            int columnEndIndex = 0;
+            switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
+            {
+                case "range":
+                    columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                    break;
+                case "rc":
+                    columnStartIndex = int.Parse(v_ColumnStart.ConvertToUserVariable(engine));
+                    columnEndIndex = int.Parse(v_ColumnEnd.ConvertToUserVariable(engine));
+                    if ((columnStartIndex < 0) || (columnEndIndex < 0))
+                    {
+                        throw new Exception("Column is less than 0");
+                    }
+                    break;
+            }
             if (columnStartIndex > columnEndIndex)
             {
                 int t = columnStartIndex;
