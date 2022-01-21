@@ -86,11 +86,11 @@ namespace taskt.Core.Automation.Commands
                 Func<string, bool> searchFunc;
                 switch(searchMethod)
                 {
-                    case "Start with":
+                    case "Starts with":
                         searchFunc = (s) => s.StartsWith(windowName);
                         break;
 
-                    case "End with":
+                    case "Ends with":
                         searchFunc = (s) => s.EndsWith(windowName);
                         break;
 
