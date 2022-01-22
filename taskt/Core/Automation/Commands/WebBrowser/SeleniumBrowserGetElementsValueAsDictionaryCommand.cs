@@ -16,10 +16,10 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
-    [Attributes.ClassAttributes.Description("This command allows you to get a Attribute value for Elements As List.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Attribute value for Elements As List.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get a Attribute value for Elements As Dictionary.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Attribute value for Elements As Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class SeleniumBrowserGetElementsValueAsListCommand : ScriptCommand
+    public class SeleniumBrowserGetElementsValueAsDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please Enter the instance name")]
@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SeleniumSearchParameter { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify Attribute Name to Get")]
+        [PropertyDescription("Please specify Attribute Name to Get")]
         [InputSpecification("")]
         [SampleUsage("**id** or **Text** or **textContent** or **{{{vAttribute}}}**")]
         [Remarks("")]
@@ -79,20 +79,20 @@ namespace taskt.Core.Automation.Commands
         public string v_AttributeName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify List Variable Name to store result")]
+        [PropertyDescription("Please Specify Dictionary Variable Name to store result")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_ListVariableName { get; set; }
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyValidationRule("Dictionary Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_DictionaryVariableName { get; set; }
 
-        public SeleniumBrowserGetElementsValueAsListCommand()
+        public SeleniumBrowserGetElementsValueAsDictionaryCommand()
         {
-            this.CommandName = "SeleniumBrowserGetElementsValueAsListCommand";
-            this.SelectionName = "Get Elements Value As List";
+            this.CommandName = "SeleniumBrowserGetElementsValueAsDictionaryCommand";
+            this.SelectionName = "Get Elements Value As Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -108,20 +108,23 @@ namespace taskt.Core.Automation.Commands
             var elements = SeleniumControls.findElement(seleniumInstance, seleniumSearchParam, searchMethod);
 
             string attributeName = v_AttributeName.ConvertToUserVariable(engine);
-            List<string> newList = new List<string>();
+            Dictionary<string, string> newDic = new Dictionary<string, string>();
+
             if (elements is IWebElement)
             {
-                newList.Add(SeleniumControls.getAttribute((IWebElement)elements, attributeName));
+                newDic.Add("element_0", SeleniumControls.getAttribute((IWebElement)elements, attributeName));
             }
             else if (elements is ReadOnlyCollection<IWebElement>)
             {
+                int i = 0;
                 var elems = (ReadOnlyCollection<IWebElement>)elements;
                 foreach(IWebElement elem in elems)
                 {
-                    newList.Add(SeleniumControls.getAttribute(elem, attributeName));
+                    newDic.Add("element_" + i.ToString(), SeleniumControls.getAttribute(elem, attributeName));
+                    i++;
                 }
             }
-            newList.StoreInUserVariable(engine, v_ListVariableName);
+            newDic.StoreInUserVariable(engine, v_DictionaryVariableName);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -136,7 +139,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get " + v_SeleniumSearchType + " elements Attribute " + v_AttributeName + " to store " + v_ListVariableName + ", Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get " + v_SeleniumSearchType + " elements Attribute " + v_AttributeName + " to store " + v_DictionaryVariableName + ", Instance Name: '" + v_InstanceName + "']";
         }
     }
 }
