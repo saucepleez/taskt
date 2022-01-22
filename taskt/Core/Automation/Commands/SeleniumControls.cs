@@ -91,18 +91,44 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Attribute Name is empty.");
             }
 
-            switch (attributeName)
+            switch (attributeName.ToLower())
             {
-                case "Text":
+                case "enabled":
+                    return element.Enabled.ToString();
+                    break;
+
+                case "displayed":
+                    return element.Displayed.ToString();
+                    break;
+
+                case "selected":
+                    return element.Selected.ToString();
+                    break;
+
                 case "text":
                     return element.Text;
+                    break;
+
+                case "tag":
+                case "tag name":
+                case "tagname":
+                    return element.TagName;
+                    break;
+
+                case "location":
+                    System.Drawing.Point lc = element.Location;
+                    return lc.X.ToString() + "," + lc.Y.ToString();
+                    break;
+
+                case "size":
+                    System.Drawing.Size sz = element.Size;
+                    return sz.Width.ToString() + "," + sz.Height.ToString();
                     break;
 
                 default:
                     return element.GetAttribute(attributeName);
                     break;
             }
-
         }
     }
 }
