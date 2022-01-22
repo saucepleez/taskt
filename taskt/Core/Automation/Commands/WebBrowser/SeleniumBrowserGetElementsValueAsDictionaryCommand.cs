@@ -74,7 +74,6 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AttributeName { get; set; }
 
