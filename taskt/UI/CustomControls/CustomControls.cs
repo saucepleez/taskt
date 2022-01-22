@@ -727,6 +727,7 @@ namespace taskt.UI
             {"SeleniumBrowserCreateCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserElementActionCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserExecuteScriptCommand", "taskt.Properties.Resources.command_script"},
+            {"SeleniumBrowserGetAElementValuesAsDictionaryCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserGetElementsValueAsDataTableCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserGetElementsValueAsDictionaryCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserGetElementsValueAsListCommand", "taskt.Properties.Resources.command_web"},

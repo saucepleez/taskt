@@ -355,6 +355,7 @@
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValueAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAElementValuesAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValueAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValueAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeBrowserCommand.cs" />
