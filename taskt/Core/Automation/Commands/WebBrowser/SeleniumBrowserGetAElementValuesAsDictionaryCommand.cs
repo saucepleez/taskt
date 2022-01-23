@@ -54,6 +54,8 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertySelectionChangeEvent("SearchMethodComboBox_SelectionChangeCommitted")]
+        [PropertyControlIntoCommandField("SearchMethodComboBox")]
         [PropertyValidationRule("Search Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_SeleniumSearchType { get; set; }
 
@@ -73,7 +75,6 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyValidationRule("Element Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyTextBoxSetting(1, false)]
         public string v_ElementIndex { get; set; }
 
@@ -88,6 +89,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("AttributeName", "Attribute Name")]
+        [PropertyDataGridViewCellEditEvent("AttributesNameGridHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyControlIntoCommandField("AttributesNameGridHelper")]
         public DataTable v_AttributesName { get; set; }
 
         [XmlAttribute]
@@ -100,6 +103,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DictionaryVariableName { get; set; }
+
+        [XmlIgnore]
+        [NonSerialized]
+        private ComboBox SearchMethodComboBox;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView AttributesNameGridHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private List<Control> ElementIndexControls;
 
         public SeleniumBrowserGetAElementValuesAsDictionaryCommand()
         {
@@ -157,6 +172,50 @@ namespace taskt.Core.Automation.Commands
             newDic.StoreInUserVariable(engine, v_DictionaryVariableName);
         }
 
+        private void SearchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            string item = SearchMethodComboBox.SelectedItem.ToString();
+            if (item.ToLower().StartsWith("find elements"))
+            {
+                foreach(Control ctl in ElementIndexControls)
+                {
+                    ctl.Visible = true;
+                }
+            }
+            else
+            {
+                foreach (Control ctl in ElementIndexControls)
+                {
+                    ctl.Visible = false;
+                }
+            }
+        }
+
+        private void AttributesNameGridHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                AttributesNameGridHelper.BeginEdit(false);
+            }
+        }
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+            if (AttributesNameGridHelper.IsCurrentCellDirty || AttributesNameGridHelper.IsCurrentRowDirty)
+            {
+                AttributesNameGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_AttributesName.NewRow();
+                v_AttributesName.Rows.Add(newRow);
+                for (var i = v_AttributesName.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_AttributesName.Rows[i][0].ToString() == "")
+                    {
+                        v_AttributesName.Rows[i].Delete();
+                    }
+                }
+            }
+        }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -164,12 +223,44 @@ namespace taskt.Core.Automation.Commands
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
 
+            ElementIndexControls = ctrls.Where(t => (t.Name.Contains("v_ElementIndex"))).ToList();
+
             return RenderedControls;
         }
 
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Get " + v_SeleniumSearchType + " element " + v_AttributesName.Rows.Count + " Attributes to store " + v_DictionaryVariableName + ", Instance Name: '" + v_InstanceName + "']";
+        }
+
+        public override bool IsValidate(frmCommandEditor editor)
+        {
+            base.IsValidate(editor);
+
+            if ((!String.IsNullOrEmpty(this.v_SeleniumSearchType))
+                    && (this.v_SeleniumSearchType.ToLower().StartsWith("find elements")))
+            {
+
+                if (String.IsNullOrEmpty(this.v_ElementIndex))
+                {
+                    this.IsValid = false;
+                    this.validationResult += "Element Index is empty.\n";
+                }
+                else
+                {
+                    int idx = 0;
+                    if (int.TryParse(this.v_ElementIndex, out idx))
+                    {
+                        if (idx < 0)
+                        {
+                            this.IsValid = false;
+                            this.validationResult += "Element Index is less than 0";
+                        }
+                    }
+                }
+            }
+
+            return this.IsValid;
         }
     }
 }
