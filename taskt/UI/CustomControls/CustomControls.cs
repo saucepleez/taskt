@@ -734,6 +734,7 @@ namespace taskt.UI
             {"SeleniumBrowserGetElementsValueAsDictionaryCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserGetElementsValueAsListCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserGetElementsValuesAsDataTableCommand", "taskt.Properties.Resources.command_web"},
+            {"SeleniumBrowserGetTableValueAsDataTableCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserInfoCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserNavigateBackCommand", "taskt.Properties.Resources.command_web"},
             {"SeleniumBrowserNavigateForwardCommand", "taskt.Properties.Resources.command_web"},

@@ -318,6 +318,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SeleniumBrowserGetElementsValueAsDictionaryCommand))]
     [XmlInclude(typeof(SeleniumBrowserGetElementsValueAsListCommand))]
     [XmlInclude(typeof(SeleniumBrowserGetElementsValuesAsDataTableCommand))]
+    [XmlInclude(typeof(SeleniumBrowserGetTableValueAsDataTableCommand))]
     [XmlInclude(typeof(SeleniumBrowserInfoCommand))]
     [XmlInclude(typeof(SeleniumBrowserNavigateBackCommand))]
     [XmlInclude(typeof(SeleniumBrowserNavigateForwardCommand))]
