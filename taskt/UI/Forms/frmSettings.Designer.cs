@@ -152,6 +152,11 @@
             this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
+            this.label22 = new System.Windows.Forms.Label();
+            this.chkGreedlySubGroupName = new System.Windows.Forms.CheckBox();
+            this.chkSubGroupNameSearchTarget = new System.Windows.Forms.CheckBox();
+            this.chkGreedlyGroupName = new System.Windows.Forms.CheckBox();
+            this.chkGroupNameSearchTarget = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -1271,6 +1276,11 @@
             // tabEditorSettings
             // 
             this.tabEditorSettings.AutoScroll = true;
+            this.tabEditorSettings.Controls.Add(this.chkGreedlySubGroupName);
+            this.tabEditorSettings.Controls.Add(this.chkSubGroupNameSearchTarget);
+            this.tabEditorSettings.Controls.Add(this.chkGreedlyGroupName);
+            this.tabEditorSettings.Controls.Add(this.chkGroupNameSearchTarget);
+            this.tabEditorSettings.Controls.Add(this.label22);
             this.tabEditorSettings.Controls.Add(this.cmbInstanceNameOrder);
             this.tabEditorSettings.Controls.Add(this.label21);
             this.tabEditorSettings.Controls.Add(this.chkShowScriptMiniMap);
@@ -1667,6 +1677,70 @@
             this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
             this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.Transparent;
+            this.label22.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label22.Location = new System.Drawing.Point(11, 689);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(212, 21);
+            this.label22.TabIndex = 31;
+            this.label22.Text = "Command Search Settings";
+            // 
+            // chkGreedlySubGroupName
+            // 
+            this.chkGreedlySubGroupName.AutoSize = true;
+            this.chkGreedlySubGroupName.BackColor = System.Drawing.Color.Transparent;
+            this.chkGreedlySubGroupName.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGreedlySubGroupName.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGreedlySubGroupName.Location = new System.Drawing.Point(10, 803);
+            this.chkGreedlySubGroupName.Name = "chkGreedlySubGroupName";
+            this.chkGreedlySubGroupName.Size = new System.Drawing.Size(346, 24);
+            this.chkGreedlySubGroupName.TabIndex = 35;
+            this.chkGreedlySubGroupName.Text = "Show All Commands if SubGroup Name Matches";
+            this.chkGreedlySubGroupName.UseVisualStyleBackColor = false;
+            // 
+            // chkSubGroupNameSearchTarget
+            // 
+            this.chkSubGroupNameSearchTarget.AutoSize = true;
+            this.chkSubGroupNameSearchTarget.BackColor = System.Drawing.Color.Transparent;
+            this.chkSubGroupNameSearchTarget.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkSubGroupNameSearchTarget.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkSubGroupNameSearchTarget.Location = new System.Drawing.Point(10, 773);
+            this.chkSubGroupNameSearchTarget.Name = "chkSubGroupNameSearchTarget";
+            this.chkSubGroupNameSearchTarget.Size = new System.Drawing.Size(283, 24);
+            this.chkSubGroupNameSearchTarget.TabIndex = 34;
+            this.chkSubGroupNameSearchTarget.Text = "Make SubGroup Name a Search Target";
+            this.chkSubGroupNameSearchTarget.UseVisualStyleBackColor = false;
+            // 
+            // chkGreedlyGroupName
+            // 
+            this.chkGreedlyGroupName.AutoSize = true;
+            this.chkGreedlyGroupName.BackColor = System.Drawing.Color.Transparent;
+            this.chkGreedlyGroupName.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGreedlyGroupName.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGreedlyGroupName.Location = new System.Drawing.Point(10, 743);
+            this.chkGreedlyGroupName.Name = "chkGreedlyGroupName";
+            this.chkGreedlyGroupName.Size = new System.Drawing.Size(321, 24);
+            this.chkGreedlyGroupName.TabIndex = 33;
+            this.chkGreedlyGroupName.Text = "Show All Commands if Group Name Matches";
+            this.chkGreedlyGroupName.UseVisualStyleBackColor = false;
+            // 
+            // chkGroupNameSearchTarget
+            // 
+            this.chkGroupNameSearchTarget.AutoSize = true;
+            this.chkGroupNameSearchTarget.BackColor = System.Drawing.Color.Transparent;
+            this.chkGroupNameSearchTarget.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGroupNameSearchTarget.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGroupNameSearchTarget.Location = new System.Drawing.Point(10, 713);
+            this.chkGroupNameSearchTarget.Name = "chkGroupNameSearchTarget";
+            this.chkGroupNameSearchTarget.Size = new System.Drawing.Size(258, 24);
+            this.chkGroupNameSearchTarget.TabIndex = 32;
+            this.chkGroupNameSearchTarget.Text = "Make Group Name a Search Target";
+            this.chkGroupNameSearchTarget.UseVisualStyleBackColor = false;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1824,5 +1898,10 @@
         private System.Windows.Forms.CheckBox chkShowScriptMiniMap;
         private System.Windows.Forms.ComboBox cmbInstanceNameOrder;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.CheckBox chkGreedlySubGroupName;
+        private System.Windows.Forms.CheckBox chkSubGroupNameSearchTarget;
+        private System.Windows.Forms.CheckBox chkGreedlyGroupName;
+        private System.Windows.Forms.CheckBox chkGroupNameSearchTarget;
+        private System.Windows.Forms.Label label22;
     }
 }

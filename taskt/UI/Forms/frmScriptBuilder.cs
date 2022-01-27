@@ -3599,6 +3599,10 @@ namespace taskt.UI.Forms
                     {
                         return "";
                     }
+                    else if (tvCommands.SelectedNode.ImageIndex == 1)
+                    {
+                        return "";
+                    }
                     else
                     {
                         return tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text;
@@ -3845,39 +3849,128 @@ namespace taskt.UI.Forms
         {
             List<TreeNode> tvcmd = new List<TreeNode>();
 
-            foreach (TreeNode parentGroup in bufferedCommandList)
+            var settings = appSettings.ClientSettings;
+
+            foreach(TreeNode parentGroup in bufferedCommandList)
             {
                 TreeNode pGroup = new TreeNode(parentGroup.Text, 1, 1);
-                foreach (TreeNode item in parentGroup.Nodes)
+
+                bool parentMatched = false;
+
+                // check match parent group
+                if (settings.SearchTargetGroupName)
                 {
-                    if (item.Nodes.Count > 0)
+                    if (parentGroup.Text.ToLower().Contains(keyword))
                     {
-                        TreeNode sGroup = new TreeNode(item.Text, 1, 1);
-                        foreach (TreeNode n in item.Nodes)
+                        // greedly
+                        if (settings.SearchGreedlyGroupName)
                         {
-                            if (n.Text.ToLower().Contains(keyword))
+                            foreach (TreeNode item in parentGroup.Nodes)
                             {
-                                sGroup.Nodes.Add(n.Text);
+                                pGroup.Nodes.Add(item.Text);
                             }
                         }
-                        if (sGroup.Nodes.Count > 0)
+                        else
                         {
-                            pGroup.Nodes.Add(sGroup);
-                        }
-                    }
-                    else
-                    {
-                        if (item.Text.ToLower().Contains(keyword))
-                        {
-                            pGroup.Nodes.Add(item.Text);
+                            parentMatched = true;
                         }
                     }
                 }
-                if (pGroup.Nodes.Count > 0)
+
+                // not greedly
+                if (pGroup.Nodes.Count == 0)
+                {
+                    foreach (TreeNode item in parentGroup.Nodes)
+                    {
+                        if (item.Nodes.Count > 0)
+                        {
+                            TreeNode sGroup = new TreeNode(item.Text, 1, 1);
+
+                            bool subMatched = false;
+
+                            if (settings.SearchTargetSubGroupName)
+                            {
+                                if (item.Text.ToLower().Contains(keyword))
+                                {
+                                    if (settings.SearchGreedlySubGroupName)
+                                    {
+                                        foreach(TreeNode itm in item.Nodes)
+                                        {
+                                            sGroup.Nodes.Add(itm.Text);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        subMatched = true;
+                                    }
+                                }
+                            }
+
+                            if (sGroup.Nodes.Count == 0)
+                            {
+                                foreach(TreeNode itm in item.Nodes)
+                                {
+                                    if (itm.Text.ToLower().Contains(keyword))
+                                    {
+                                        sGroup.Nodes.Add(itm.Text);
+                                    }
+                                }
+                            }
+
+                            if ((sGroup.Nodes.Count > 0) || subMatched)
+                            {
+                                pGroup.Nodes.Add(sGroup);
+                            }
+                        }
+                        else
+                        {
+                            if (item.Text.ToLower().Contains(keyword))
+                            {
+                                pGroup.Nodes.Add(item.Text);
+                            }
+                        }
+                    }
+                }
+
+                if ((pGroup.Nodes.Count > 0) || parentMatched)
                 {
                     tvcmd.Add(pGroup);
                 }
             }
+
+            //foreach (TreeNode parentGroup in bufferedCommandList)
+            //{
+            //    TreeNode pGroup = new TreeNode(parentGroup.Text, 1, 1);
+            //    foreach (TreeNode item in parentGroup.Nodes)
+            //    {
+            //        if (item.Nodes.Count > 0)
+            //        {
+            //            TreeNode sGroup = new TreeNode(item.Text, 1, 1);
+            //            foreach (TreeNode n in item.Nodes)
+            //            {
+            //                if (n.Text.ToLower().Contains(keyword))
+            //                {
+            //                    sGroup.Nodes.Add(n.Text);
+            //                }
+            //            }
+            //            if (sGroup.Nodes.Count > 0)
+            //            {
+            //                pGroup.Nodes.Add(sGroup);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (item.Text.ToLower().Contains(keyword))
+            //            {
+            //                pGroup.Nodes.Add(item.Text);
+            //            }
+            //        }
+            //    }
+            //    if (pGroup.Nodes.Count > 0)
+            //    {
+            //        tvcmd.Add(pGroup);
+            //    }
+            //}
 
             if (tvcmd.Count == 0)
             {
