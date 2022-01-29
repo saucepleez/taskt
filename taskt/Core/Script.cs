@@ -603,85 +603,215 @@ namespace taskt.Core.Script
             else if (VariableValue is DataTable)
             {
                 DataTable dataTable = (DataTable)VariableValue;
-                switch (requiredProperty)
-                {
-                    case "rows":
-                    case "Rows":
-                    case "ROWS":
-                        return dataTable.Rows.ToString();
-                    case "cols":
-                    case "Cols":
-                    case "COLS":
-                    case "columns":
-                    case "Columns":
-                    case "COLUMNS":
-                        return dataTable.Columns.ToString();
-                    case "type":
-                    case "Type":
-                    case "TYPE":
-                        return "DATATABLE";
-                    default:
-                        var dataRow = dataTable.Rows[CurrentPosition];
-                        return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
-                }
+                //switch (requiredProperty)
+                //{
+                //    case "rows":
+                //    case "Rows":
+                //    case "ROWS":
+                //        return dataTable.Rows.ToString();
+                //    case "cols":
+                //    case "Cols":
+                //    case "COLS":
+                //    case "columns":
+                //    case "Columns":
+                //    case "COLUMNS":
+                //        return dataTable.Columns.ToString();
+                //    case "type":
+                //    case "Type":
+                //    case "TYPE":
+                //        return "DATATABLE";
+                //    case "index":
+                //    case "Index":
+                //    case "INDEX":
+                //        return CurrentPosition.ToString();
+                //    default:
+                //        var dataRow = dataTable.Rows[CurrentPosition];
+                //        return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
+                //}
+                return GetDisplayValue(dataTable, requiredProperty);
             }
             else if (VariableValue is Dictionary<string, string>)
             {
                 Dictionary<string, string> trgDic = (Dictionary<string, string>)VariableValue;
-                switch (requiredProperty)
-                {
-                    case "count":
-                    case "Count":
-                    case "COUNT":
-                        return trgDic.Values.Count.ToString();
-                    case "type":
-                    case "Type":
-                    case "TYPE":
-                        return "DICTIONARY";
-                    default:
-                        return (trgDic.Values.ToArray())[CurrentPosition];
-                }
+                //switch (requiredProperty)
+                //{
+                //    case "count":
+                //    case "Count":
+                //    case "COUNT":
+                //        return trgDic.Values.Count.ToString();
+                //    case "type":
+                //    case "Type":
+                //    case "TYPE":
+                //        return "DICTIONARY";
+                //    case "index":
+                //    case "Index":
+                //    case "INDEX":
+                //        return CurrentPosition.ToString();
+                //    default:
+                //        return (trgDic.Values.ToArray())[CurrentPosition];
+                //}
+                return GetDisplayValue(trgDic, requiredProperty);
             }
             else
             {
                 List<string> requiredValue = (List<string>)VariableValue;
-                switch (requiredProperty)
-                {
-                    case "count":
-                    case "Count":
-                    case "COUNT":
-                        return requiredValue.Count.ToString();
-                    case "index":
-                    case "Index":
-                    case "INDEX":
-                        return CurrentPosition.ToString();
-                    case "tojson":
-                    case "ToJson":
-                    case "toJson":
-                    case "TOJSON":
-                        return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
-                    case "topipe":
-                    case "ToPipe":
-                    case "toPipe":
-                    case "TOPIPE":
-                        return String.Join("|", requiredValue);
-                    case "first":
-                    case "First":
-                    case "FIRST":
-                        return requiredValue.FirstOrDefault();
-                    case "last":
-                    case "Last":
-                    case "LAST":
-                        return requiredValue.Last();
-                    case "type":
-                    case "Type":
-                    case "TYPE":
-                        return "LIST";
-                    default:
-                        return requiredValue[CurrentPosition];
-                }
+                //switch (requiredProperty)
+                //{
+                //    case "count":
+                //    case "Count":
+                //    case "COUNT":
+                //        return requiredValue.Count.ToString();
+                //    case "index":
+                //    case "Index":
+                //    case "INDEX":
+                //        return CurrentPosition.ToString();
+                //    case "tojson":
+                //    case "ToJson":
+                //    case "toJson":
+                //    case "TOJSON":
+                //        return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
+                //    case "topipe":
+                //    case "ToPipe":
+                //    case "toPipe":
+                //    case "TOPIPE":
+                //        return String.Join("|", requiredValue);
+                //    case "first":
+                //    case "First":
+                //    case "FIRST":
+                //        return requiredValue.FirstOrDefault();
+                //    case "last":
+                //    case "Last":
+                //    case "LAST":
+                //        return requiredValue.Last();
+                //    case "type":
+                //    case "Type":
+                //    case "TYPE":
+                //        return "LIST";
+                //    default:
+                //        return requiredValue[CurrentPosition];
+                //}
+                return GetDisplayValue(requiredValue, requiredProperty);
             }
+        }
+        private string GetDisplayValue(DataTable myDT, string requiredProperty = "")
+        {
+            switch (requiredProperty)
+            {
+                case "rows":
+                case "Rows":
+                case "ROWS":
+                    return myDT.Rows.ToString();
+                case "cols":
+                case "Cols":
+                case "COLS":
+                case "columns":
+                case "Columns":
+                case "COLUMNS":
+                    return myDT.Columns.ToString();
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "DATATABLE";
+                case "index":
+                case "Index":
+                case "INDEX":
+                    return CurrentPosition.ToString();
+                default:
+                    if (requiredProperty == "")
+                    {
+                        var dataRow = myDT.Rows[CurrentPosition];
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
+                    }
+                    else
+                    {
+                        int idx = 0;
+                        if (int.TryParse(requiredProperty, out idx))
+                        {
+                            return myDT.Rows[CurrentPosition][idx].ToString();
 
+                        }
+                        else
+                        {
+                            return myDT.Rows[CurrentPosition][requiredProperty].ToString();
+                        }
+                    }
+            }
+        }
+
+        private string GetDisplayValue(Dictionary<string, string> myDic, string requiredProperty)
+        {
+            Dictionary<string, string> trgDic = (Dictionary<string, string>)VariableValue;
+            switch (requiredProperty)
+            {
+                case "count":
+                case "Count":
+                case "COUNT":
+                    return trgDic.Values.Count.ToString();
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "DICTIONARY";
+                case "index":
+                case "Index":
+                case "INDEX":
+                    return CurrentPosition.ToString();
+                default:
+                    if (requiredProperty == "")
+                    {
+                        return (trgDic.Values.ToArray())[CurrentPosition];
+                    }
+                    else
+                    {
+                        int idx;
+                        if (int.TryParse(requiredProperty, out idx))
+                        {
+                            return (trgDic.Values.ToArray())[idx];
+                        }
+                        else
+                        {
+                            return trgDic[requiredProperty];
+                        }
+                    }
+            }
+        }
+
+        private string GetDisplayValue(List<string> myList, string requiredProperty)
+        {
+            switch (requiredProperty)
+            {
+                case "count":
+                case "Count":
+                case "COUNT":
+                    return myList.Count.ToString();
+                case "index":
+                case "Index":
+                case "INDEX":
+                    return CurrentPosition.ToString();
+                case "tojson":
+                case "ToJson":
+                case "toJson":
+                case "TOJSON":
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(myList);
+                case "topipe":
+                case "ToPipe":
+                case "toPipe":
+                case "TOPIPE":
+                    return String.Join("|", myList);
+                case "first":
+                case "First":
+                case "FIRST":
+                    return myList.FirstOrDefault();
+                case "last":
+                case "Last":
+                case "LAST":
+                    return myList.Last();
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "LIST";
+                default:
+                    return myList[CurrentPosition];
+            }
         }
     }
 
