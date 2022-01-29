@@ -493,8 +493,6 @@ namespace taskt.UI.Forms
         private void btnGetBotGUID_Click(object sender, EventArgs e)
         {
             var newGUID =  Core.Server.HttpServerClient.GetGuid();
-
-
         }
 
         private void btnTaskPublish_Click(object sender, EventArgs e)

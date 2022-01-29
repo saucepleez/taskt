@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme2 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -48,6 +48,7 @@
             this.editStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editThisActionStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpThisCommandStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.whereThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editSplitMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.enableSelectedActionsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableSelectedActionsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -151,6 +152,7 @@
             this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editThisCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.whereThisCommandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -185,8 +187,7 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
-            this.whereThisCommandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.whereThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.newSettigsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -442,6 +443,15 @@
             this.helpThisCommandStripMenuItem.Text = "Help This Command (&Web)";
             this.helpThisCommandStripMenuItem.Click += new System.EventHandler(this.helpThisCommandStripMenuItem_Click);
             // 
+            // whereThisCommandToolStripMenuItem1
+            // 
+            this.whereThisCommandToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.whereThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.command_search;
+            this.whereThisCommandToolStripMenuItem1.Name = "whereThisCommandToolStripMenuItem1";
+            this.whereThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(276, 22);
+            this.whereThisCommandToolStripMenuItem1.Text = "Where This Command";
+            this.whereThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.whereThisCommandToolStripMenuItem1_Click);
+            // 
             // editSplitMenuSeparator1
             // 
             this.editSplitMenuSeparator1.Name = "editSplitMenuSeparator1";
@@ -578,6 +588,7 @@
             this.scriptInformationsToolStripMenuItem,
             this.optionToolStripSep1,
             this.settingsToolStripMenuItem,
+            this.newSettigsToolStripMenuItem,
             this.showScriptFolderToolStripMenuItem,
             this.showLogFolderToolStripMenuItem,
             this.optionToolStripSep2,
@@ -1215,9 +1226,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme2;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1711,6 +1722,14 @@
             this.helpThisCommandToolStripMenuItem1.Text = "Help This Command (&Web)";
             this.helpThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.helpThisCommandToolStripMenuItem1_Click);
             // 
+            // whereThisCommandToolStripMenuItem
+            // 
+            this.whereThisCommandToolStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
+            this.whereThisCommandToolStripMenuItem.Name = "whereThisCommandToolStripMenuItem";
+            this.whereThisCommandToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.whereThisCommandToolStripMenuItem.Text = "Where This Command";
+            this.whereThisCommandToolStripMenuItem.Click += new System.EventHandler(this.whereThisCommandToolStripMenuItem_Click);
+            // 
             // lstContextStripSep1
             // 
             this.lstContextStripSep1.Name = "lstContextStripSep1";
@@ -1960,22 +1979,12 @@
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
             // 
-            // whereThisCommandToolStripMenuItem
+            // newSettigsToolStripMenuItem
             // 
-            this.whereThisCommandToolStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
-            this.whereThisCommandToolStripMenuItem.Name = "whereThisCommandToolStripMenuItem";
-            this.whereThisCommandToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
-            this.whereThisCommandToolStripMenuItem.Text = "Where This Command";
-            this.whereThisCommandToolStripMenuItem.Click += new System.EventHandler(this.whereThisCommandToolStripMenuItem_Click);
-            // 
-            // whereThisCommandToolStripMenuItem1
-            // 
-            this.whereThisCommandToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
-            this.whereThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.command_search;
-            this.whereThisCommandToolStripMenuItem1.Name = "whereThisCommandToolStripMenuItem1";
-            this.whereThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(276, 22);
-            this.whereThisCommandToolStripMenuItem1.Text = "Where This Command";
-            this.whereThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.whereThisCommandToolStripMenuItem1_Click);
+            this.newSettigsToolStripMenuItem.Name = "newSettigsToolStripMenuItem";
+            this.newSettigsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.newSettigsToolStripMenuItem.Text = "Settings (beta)";
+            this.newSettigsToolStripMenuItem.Click += new System.EventHandler(this.newSettigsToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 
@@ -2202,6 +2211,7 @@
         private System.Windows.Forms.ToolStripMenuItem tasktGitterStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem whereThisCommandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem whereThisCommandToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem newSettigsToolStripMenuItem;
     }
 }
 

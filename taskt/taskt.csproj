@@ -612,6 +612,12 @@
     <Compile Include="UI\Forms\frmAttendedMode.Designer.cs">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\frmNewSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmNewSettings.Designer.cs">
+      <DependentUpon>frmNewSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\frmSample.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -808,6 +814,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmAttendedMode.resx">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmNewSettings.resx">
+      <DependentUpon>frmNewSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmSample.resx">
       <DependentUpon>frmSample.cs</DependentUpon>

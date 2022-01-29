@@ -4707,6 +4707,11 @@ namespace taskt.UI.Forms
 
         #endregion
 
+        private void newSettigsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmNewSettings fm = new frmNewSettings(this);
+            fm.Show();
+        }
     }
 
 }
