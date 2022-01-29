@@ -113,6 +113,12 @@ namespace taskt.UI.Forms
             txtDefaultNLGInstanceName.DataBindings.Add("Text", clientSettings, "DefaultNLGInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             chkExportIntermediate.DataBindings.Add("Checked", engineSettings, "ExportIntermediateXML", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            // command search
+            chkGroupNameSearchTarget.DataBindings.Add("Checked", clientSettings, "SearchTargetGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkGreedlyGroupName.DataBindings.Add("Checked", clientSettings, "SearchGreedlyGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkSubGroupNameSearchTarget.DataBindings.Add("Checked", clientSettings, "SearchTargetSubGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkGreedlySubGroupName.DataBindings.Add("Checked", clientSettings, "SearchGreedlySubGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
+
             //get metrics
             bgwMetrics.RunWorkerAsync();
 
