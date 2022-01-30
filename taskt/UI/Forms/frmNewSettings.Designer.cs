@@ -28,11 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Start Up");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Debug");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Folder");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Application", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Start Up");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Application", new System.Windows.Forms.TreeNode[] {
             treeNode1,
-            treeNode2});
+            treeNode2,
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Keyword");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Parser");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Automation Engine", new System.Windows.Forms.TreeNode[] {
+            treeNode5,
+            treeNode6});
             this.tableLayoutBase = new System.Windows.Forms.TableLayoutPanel();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -171,14 +178,23 @@
             this.tvSettingsMenu.LineColor = System.Drawing.Color.White;
             this.tvSettingsMenu.Location = new System.Drawing.Point(3, 3);
             this.tvSettingsMenu.Name = "tvSettingsMenu";
-            treeNode1.Name = "nodeStartUp";
-            treeNode1.Text = "Start Up";
+            treeNode1.Name = "nodeDebug";
+            treeNode1.Text = "Debug";
             treeNode2.Name = "nodeFolder";
             treeNode2.Text = "Folder";
-            treeNode3.Name = "nodeApplication";
-            treeNode3.Text = "Application";
+            treeNode3.Name = "nodeStartUp";
+            treeNode3.Text = "Start Up";
+            treeNode4.Name = "nodeApplication";
+            treeNode4.Text = "Application";
+            treeNode5.Name = "nodeKeyword";
+            treeNode5.Text = "Keyword";
+            treeNode6.Name = "nodeParser";
+            treeNode6.Text = "Parser";
+            treeNode7.Name = "nodeAutomationEngine";
+            treeNode7.Text = "Automation Engine";
             this.tvSettingsMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode4,
+            treeNode7});
             this.tvSettingsMenu.Size = new System.Drawing.Size(194, 308);
             this.tvSettingsMenu.TabIndex = 0;
             this.tvSettingsMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSettingsMenu_AfterSelect);
@@ -190,6 +206,7 @@
             this.flowLayoutSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutSettings.Location = new System.Drawing.Point(203, 3);
             this.flowLayoutSettings.Name = "flowLayoutSettings";
+            this.flowLayoutSettings.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.flowLayoutSettings.Size = new System.Drawing.Size(531, 308);
             this.flowLayoutSettings.TabIndex = 1;
             // 

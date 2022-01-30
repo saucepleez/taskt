@@ -21,6 +21,8 @@ namespace taskt.UI.Forms
             Normal,
             Large
         }
+
+        #region form events
         public frmNewSettings(frmScriptBuilder fm)
         {
             InitializeComponent();
@@ -34,7 +36,9 @@ namespace taskt.UI.Forms
 
             tvSettingsMenu.ExpandAll();
         }
+        #endregion
 
+        #region tvSettingMenu
         private void tvSettingsMenu_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode rootNode = tvSettingsMenu.SelectedNode;
@@ -47,11 +51,21 @@ namespace taskt.UI.Forms
 
             switch (rootNode.Text + " - " + tvSettingsMenu.SelectedNode.Text)
             {
-                case "Application - Start Up":
-                    showApplicationStartUpSetting();
+                case "Application - Debug":
+                    showApplicationDebugSettings();
                     break;
                 case "Application - Folder":
                     showApplicationFolderSettings();
+                    break;
+                case "Application - Start Up":
+                    showApplicationStartUpSetting();
+                    break;
+
+                case "Automation Engine - Keyword":
+                    showAutomationEngineKeywordSettings();
+                    break;
+                case "Automation Engine - Parser":
+                    showAutomationEngineParserSettings();
                     break;
                 default:
                     break;
@@ -59,12 +73,9 @@ namespace taskt.UI.Forms
 
             flowLayoutSettings.ResumeLayout();
         }
+        #endregion
 
-        private void removeSettingControls()
-        {
-            flowLayoutSettings.Controls.Clear();
-        }
-
+        #region Application
         private void showApplicationStartUpSetting()
         {
             removeSettingControls();
@@ -75,6 +86,9 @@ namespace taskt.UI.Forms
             chkPre.Visible = false;
             createLabel("lblStartMode", "Start Mode:", FontSize.Normal, false);
             createComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, "StartupMode", true);
+
+            Button btnAttended = createButton("btnLunchAttended", "Launch Attended Mode", 120, true);
+            btnAttended.Click += (sender, e) => btnLaunchAttendedMode_Click(sender, e);
         }
 
         private void showApplicationFolderSettings()
@@ -82,11 +96,76 @@ namespace taskt.UI.Forms
             removeSettingControls();
 
             createLabel("lblTitle", "Folder", FontSize.Large, true);
+            
             createLabel("lblRootFolder", "taskt Root Folder", FontSize.Small, true);
-            createTextBox("txtAppFolderPath", 440, newAppSettings.ClientSettings, "RootFolder", false);
-            createButton("btnSelectFolder", "...", 42, true);
-        }
+            TextBox txtAppFolder = createTextBox("txtAppFolderPath", 440, newAppSettings.ClientSettings, "RootFolder", false);
+            Button rootButton = createButton("btnSelectRootFolder", "...", 42, true);
+            rootButton.Click += (sender, e) => btnSelectRootFolder_Click(sender, e, txtAppFolder);
 
+            createLabel("lblTaskFolder", "Attended Tasks Folder (Default Folder for saving Script Files)", FontSize.Small, true);
+            TextBox txtTasksFolder = createTextBox("txtAttendedTasksFolder", 440, newAppSettings.ClientSettings, "AttendedTasksFolder", false);
+            Button tasksFolder = createButton("btnSelectTasksFolder", "...", 42, true);
+            tasksFolder.Click += (sender, e) => btnSelectAttendedTaskFolder_Click(sender, e, txtTasksFolder);
+        }
+        private void showApplicationDebugSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Debug", FontSize.Large, true);
+
+            createCheckBox("chkShowDebug", "Show Debug Window when Script Execute", newAppSettings.EngineSettings, "ShowDebugWindow", true);
+            createCheckBox("chkAutoCloseDebugWindow", "Automatically Close Debug Window", newAppSettings.EngineSettings, "AutoCloseDebugWindow", true);
+            createCheckBox("chkShowAdvancedDebug", "Show Advanced Debug Logs During Execution", newAppSettings.EngineSettings, "ShowAdvancedDebugOutput", true);
+        }
+        #endregion
+
+        #region Automation Engine
+        private void showAutomationEngineParserSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Parser", FontSize.Large, true);
+
+            createLabel("lblStartMarker", "Start Marker:", FontSize.Normal, false);
+            TextBox txtStart = createTextBox("txtStartMarker", 40, newAppSettings.EngineSettings, "VariableStartMarker", false);
+            createLabel("lblEndMarker", "End Marker:", FontSize.Normal, false);
+            TextBox txtEnd = createTextBox("txtEndMarker", 40, newAppSettings.EngineSettings, "VariableEndMarker", true);
+            Label lblNotice = createLabel("lblMarkerNotice", "If Start Maker and End Marker are the same,\nthe variable may not expand properly.", FontSize.Small, false);
+            lblNotice.Padding = new Padding(0, 4, 0, 0);
+            Label lblExample = createLabel("lblVariableExample", newAppSettings.EngineSettings.VariableStartMarker + "VariableName" + newAppSettings.EngineSettings.VariableEndMarker, FontSize.Normal, true);
+
+            txtStart.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
+            txtEnd.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
+
+            createCheckBox("chkUserNewParser", "Use New Parser (beta)", newAppSettings.EngineSettings, "UseNewParser", true);
+            createCheckBox("chkIgnoreFirstMarker", "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)", newAppSettings.EngineSettings, "IgnoreFirstVariableMarkerInOutputParameter", true);
+        }
+        private void showAutomationEngineKeywordSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Keyword", FontSize.Large, true);
+
+            createLabel("lblWindowKeyword", "Window Keyword", FontSize.Normal, true);
+
+            createLabel("lblCurrentWindow", "Current Window Keyword", FontSize.Small, true);
+            createTextBox("txtCurrentWindow", 400, newAppSettings.EngineSettings, "CurrentWindowKeyword", true);
+
+            createLabel("lblExcelKeyword", "Excel Keyword", FontSize.Normal, true);
+            createLabel("lblCurrentSheet", "Current Worksheet Keyword", FontSize.Small, true);
+            createTextBox("txtCurrentSheet", 400, newAppSettings.EngineSettings, "CurrentWorksheetKeyword", true);
+            createLabel("lblNextSheet", "Next Worksheet Keyword", FontSize.Small, true);
+            createTextBox("txtNextSheet", 400, newAppSettings.EngineSettings, "NextWorksheetKeyword", true);
+            createLabel("lblPreviousSheet", "Previous Worksheet Keyword", FontSize.Small, true);
+            createTextBox("txtPreviousSheet", 400, newAppSettings.EngineSettings, "PreviousWorksheetKeyword", true);
+        }
+        #endregion
+
+        #region Create Controls
+        private void removeSettingControls()
+        {
+            flowLayoutSettings.Controls.Clear();
+        }
         private Label createLabel(string name, string text, FontSize fontSize = FontSize.Normal, bool isBreak = false)
         {
             Label lbl = new Label();
@@ -100,12 +179,12 @@ namespace taskt.UI.Forms
                 case FontSize.Small:
                     lbl.Font = new Font("Segoe UI Semilight", (Single)9.75);
                     lbl.ForeColor = Color.SlateGray;
-                    lbl.Padding = new Padding(0, 16, 0, 0);
+                    lbl.Height = 16;
                     break;
                 case FontSize.Normal:
                     lbl.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                     lbl.ForeColor = Color.SteelBlue;
-                    lbl.Padding = new Padding(0, 4, 0, 0);
+                    lbl.Height = 24;
                     break;
                 case FontSize.Large:
                     lbl.Font = new Font("Segoe UI Light", (Single)15.75);
@@ -176,7 +255,7 @@ namespace taskt.UI.Forms
             btn.Name = name;
             btn.Text = text;
             btn.Width = width;
-            btn.Height = 25;
+            btn.Height = 29;
             btn.Font = new Font("Segoe UI", (Single)9.75);
 
             flowLayoutSettings.Controls.Add(btn);
@@ -184,7 +263,116 @@ namespace taskt.UI.Forms
 
             return btn;
         }
+        #endregion
 
-        
+        #region StartUp Events
+        private void btnLaunchAttendedMode_Click(object sender, EventArgs e)
+        {
+            scriptBuilderForm.showAttendedModeFormProcess();
+            this.Close();
+        }
+        #endregion
+
+        #region Folder Events
+        private void btnSelectRootFolder_Click(object sender, EventArgs e, TextBox txt)
+        {
+            string currentFolerPath = newAppSettings.ClientSettings.RootFolder;
+
+            //prompt user to confirm they want to select a new folder
+            var updateFolderRequest = 
+                MessageBox.Show(
+                    "Would you like to change the default root folder that taskt uses to store tasks and information? " + Environment.NewLine + Environment.NewLine +
+                    "Current Root Folder: " + currentFolerPath, 
+                    "Change Default Root Folder", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            //if user does not want to update folder then exit
+            if (updateFolderRequest == DialogResult.No)
+            {
+                return;
+            }
+
+            //user folder browser to let user select top level folder
+            using (var fbd = new FolderBrowserDialog())
+            {
+                //check if user selected a folder
+                if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    //create references to old and new root folders
+                    var oldRootFolder = currentFolerPath;
+                    var newRootFolder = System.IO.Path.Combine(fbd.SelectedPath, "taskt");
+
+                    //ask user to confirm
+                    var confirmNewFolderSelection = 
+                        MessageBox.Show(
+                            "Please confirm the changes below:" + Environment.NewLine + Environment.NewLine +
+                            "Old Root Folder: " + oldRootFolder + Environment.NewLine + Environment.NewLine +
+                            "New Root Folder: " + newRootFolder, 
+                            "Change Default Root Folder", 
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                    //handle if user decides to cancel
+                    if (confirmNewFolderSelection == DialogResult.Cancel)
+                    {
+                        return;
+                    }
+
+                    //ask if we should migrate the data
+                    var migrateCopyData = 
+                        MessageBox.Show(
+                            "Would you like to attempt to move the data from the old folder to the new folder?  Please note, depending on how many files you have, this could take a few minutes.", 
+                            "Migrate Data?", 
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    //check if user wants to migrate data
+                    if (migrateCopyData == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            //find and copy files
+                            foreach (string dirPath in System.IO.Directory.GetDirectories(oldRootFolder, "*", System.IO.SearchOption.AllDirectories))
+                            {
+                                System.IO.Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
+                            }
+                            foreach (string newPath in System.IO.Directory.GetFiles(oldRootFolder, "*.*", System.IO.SearchOption.AllDirectories))
+                            {
+                                System.IO.File.Copy(newPath, newPath.Replace(oldRootFolder, newRootFolder), true);
+                            }
+
+                            MessageBox.Show("Data Migration Complete", "Data Migration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            //handle any unexpected errors
+                            MessageBox.Show("An Error Occured during Data Migration Copy: " + ex.ToString());
+                        }
+                    }
+
+                    //update textbox which will be updated once user selects "Ok"
+                    newAppSettings.ClientSettings.RootFolder = newRootFolder;
+                }
+            }
+        }
+
+        private void btnSelectAttendedTaskFolder_Click(object sender, EventArgs e, TextBox txt)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);
+                    txt.Text = newAttendedTaskFolder;
+                }
+            }
+        }
+        #endregion
+
+        #region Parser Events
+        private void VariableMarker_TextChanged(object sender,EventArgs e, TextBox startMarker, TextBox endMaker, Label exampleLabel)
+        {
+            exampleLabel.Text = startMarker.Text + "VariableName" + endMaker.Text;
+        }
+        #endregion
     }
 }
