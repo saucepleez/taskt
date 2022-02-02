@@ -30,16 +30,23 @@
         {
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Debug");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Folder");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Start Up");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Application", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Script Metric");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Start Up");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Application", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Keyword");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Parser");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Automation Engine", new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
+            treeNode3,
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Engine");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Keyword");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Parser");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Variable");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Automation Engine", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7,
+            treeNode8,
+            treeNode9});
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Editor");
             this.tableLayoutBase = new System.Windows.Forms.TableLayoutPanel();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -182,19 +189,28 @@
             treeNode1.Text = "Debug";
             treeNode2.Name = "nodeFolder";
             treeNode2.Text = "Folder";
-            treeNode3.Name = "nodeStartUp";
-            treeNode3.Text = "Start Up";
-            treeNode4.Name = "nodeApplication";
-            treeNode4.Text = "Application";
-            treeNode5.Name = "nodeKeyword";
-            treeNode5.Text = "Keyword";
-            treeNode6.Name = "nodeParser";
-            treeNode6.Text = "Parser";
-            treeNode7.Name = "nodeAutomationEngine";
-            treeNode7.Text = "Automation Engine";
+            treeNode3.Name = "nodeMetric";
+            treeNode3.Text = "Script Metric";
+            treeNode4.Name = "nodeStartUp";
+            treeNode4.Text = "Start Up";
+            treeNode5.Name = "nodeApplication";
+            treeNode5.Text = "Application";
+            treeNode6.Name = "nodeEngine";
+            treeNode6.Text = "Engine";
+            treeNode7.Name = "nodeKeyword";
+            treeNode7.Text = "Keyword";
+            treeNode8.Name = "nodeParser";
+            treeNode8.Text = "Parser";
+            treeNode9.Name = "nodeVariable";
+            treeNode9.Text = "Variable";
+            treeNode10.Name = "nodeAutomationEngine";
+            treeNode10.Text = "Automation Engine";
+            treeNode11.Name = "nodeEditor";
+            treeNode11.Text = "Editor";
             this.tvSettingsMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode7});
+            treeNode5,
+            treeNode10,
+            treeNode11});
             this.tvSettingsMenu.Size = new System.Drawing.Size(194, 308);
             this.tvSettingsMenu.TabIndex = 0;
             this.tvSettingsMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSettingsMenu_AfterSelect);

@@ -57,6 +57,9 @@ namespace taskt.UI.Forms
                 case "Application - Folder":
                     showApplicationFolderSettings();
                     break;
+                case "Application - Script Metric":
+                    showApplicationMetricSettings();
+                    break;
                 case "Application - Start Up":
                     showApplicationStartUpSetting();
                     break;
@@ -117,6 +120,19 @@ namespace taskt.UI.Forms
             createCheckBox("chkAutoCloseDebugWindow", "Automatically Close Debug Window", newAppSettings.EngineSettings, "AutoCloseDebugWindow", true);
             createCheckBox("chkShowAdvancedDebug", "Show Advanced Debug Logs During Execution", newAppSettings.EngineSettings, "ShowAdvancedDebugOutput", true);
         }
+        private void showApplicationMetricSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Script Metric", FontSize.Large, true);
+
+            createCheckBox("chkTrackMetrics", "Track Execution Metrics", newAppSettings.EngineSettings, "TrackExecutionMetrics", true);
+
+            createLabel("lblTitleMetrics", "Script Execution Metrics (Last 10 per Script)", FontSize.Small, true);
+            createLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
+
+            createButton("btnClearMetrics", "Clear Metrics", 200, true);
+        }
         #endregion
 
         #region Automation Engine
@@ -136,6 +152,8 @@ namespace taskt.UI.Forms
 
             txtStart.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
             txtEnd.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
+
+            createCheckBox("chkCalculateAutomatically", "Calculate Automatically", newAppSettings.EngineSettings, "AutoCalcVariables", true);
 
             createCheckBox("chkUserNewParser", "Use New Parser (beta)", newAppSettings.EngineSettings, "UseNewParser", true);
             createCheckBox("chkIgnoreFirstMarker", "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)", newAppSettings.EngineSettings, "IgnoreFirstVariableMarkerInOutputParameter", true);
