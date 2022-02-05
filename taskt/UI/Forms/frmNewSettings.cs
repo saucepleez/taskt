@@ -15,10 +15,13 @@ namespace taskt.UI.Forms
         Core.ApplicationSettings newAppSettings;
         frmScriptBuilder scriptBuilderForm;
 
+        private string[] keysList;
+
         private enum FontSize
         {
             Small,
             Normal,
+            NormalBold,
             Large
         }
 
@@ -27,6 +30,14 @@ namespace taskt.UI.Forms
         {
             InitializeComponent();
             this.scriptBuilderForm = fm;
+
+            var keys = Enum.GetValues(typeof(Keys));
+            keysList = new string[keys.Length];
+            int i = 0;
+            foreach (var key in keys)
+            {
+                keysList[i++] = key.ToString();
+            }
         }
 
         private void frmNewSettings_Load(object sender, EventArgs e)
@@ -57,6 +68,9 @@ namespace taskt.UI.Forms
                 case "Application - Folder":
                     showApplicationFolderSettings();
                     break;
+                case "Application - Other":
+                    showApplicationOtherSettings();
+                    break;
                 case "Application - Script Metric":
                     showApplicationMetricSettings();
                     break;
@@ -64,12 +78,26 @@ namespace taskt.UI.Forms
                     showApplicationStartUpSetting();
                     break;
 
+                case "Automation Engine - Engine":
+                    showAutomationEngineEngineSettings();
+                    break;
                 case "Automation Engine - Keyword":
                     showAutomationEngineKeywordSettings();
+                    break;
+                case "Automation Engine - Log":
+                    showAutomationEngineLogSettings();
                     break;
                 case "Automation Engine - Parser":
                     showAutomationEngineParserSettings();
                     break;
+                case "Automation Engine - Variable":
+                    showAutomationEngineVariableSettings();
+                    break;
+
+                case "Editor - Menu Bar":
+                    showEditorMenuBarSettings();
+                    break;
+
                 default:
                     break;
             }
@@ -83,14 +111,14 @@ namespace taskt.UI.Forms
         {
             removeSettingControls();
 
-            createLabel("lblTitie", "App Settings", FontSize.Large, true);
+            createLabel("lblTitie", "Start Up", FontSize.Large, true);
             createCheckBox("chkAntiIdle", "Anti-Idle (while app is open)", newAppSettings.ClientSettings, "AntiIdleWhileOpen", true);
             CheckBox chkPre = createCheckBox("chkPreLoadCommands", "Load Commands at Startup (Reduces Flicker)", newAppSettings.ClientSettings, "PreloadBuilderCommands", true);
             chkPre.Visible = false;
             createLabel("lblStartMode", "Start Mode:", FontSize.Normal, false);
             createComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, "StartupMode", true);
 
-            Button btnAttended = createButton("btnLunchAttended", "Launch Attended Mode", 120, true);
+            Button btnAttended = createButton("btnLunchAttended", "Launch Attended Mode", 240, true);
             btnAttended.Click += (sender, e) => btnLaunchAttendedMode_Click(sender, e);
         }
 
@@ -133,6 +161,14 @@ namespace taskt.UI.Forms
 
             createButton("btnClearMetrics", "Clear Metrics", 200, true);
         }
+        private void showApplicationOtherSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Other", FontSize.Large, true);
+
+            createCheckBox("chkMinimizeToTary", "Minimize to System Tray", newAppSettings.ClientSettings, "MinimizeToTray", true);
+        }
         #endregion
 
         #region Automation Engine
@@ -148,7 +184,7 @@ namespace taskt.UI.Forms
             TextBox txtEnd = createTextBox("txtEndMarker", 40, newAppSettings.EngineSettings, "VariableEndMarker", true);
             Label lblNotice = createLabel("lblMarkerNotice", "If Start Maker and End Marker are the same,\nthe variable may not expand properly.", FontSize.Small, false);
             lblNotice.Padding = new Padding(0, 4, 0, 0);
-            Label lblExample = createLabel("lblVariableExample", newAppSettings.EngineSettings.VariableStartMarker + "VariableName" + newAppSettings.EngineSettings.VariableEndMarker, FontSize.Normal, true);
+            Label lblExample = createLabel("lblVariableExample", newAppSettings.EngineSettings.VariableStartMarker + "VariableName" + newAppSettings.EngineSettings.VariableEndMarker, FontSize.NormalBold, true);
 
             txtStart.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
             txtEnd.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
@@ -164,18 +200,62 @@ namespace taskt.UI.Forms
 
             createLabel("lblTitle", "Keyword", FontSize.Large, true);
 
-            createLabel("lblWindowKeyword", "Window Keyword", FontSize.Normal, true);
+            createLabel("lblWindowKeyword", "Window Keyword", FontSize.NormalBold, true);
 
             createLabel("lblCurrentWindow", "Current Window Keyword", FontSize.Small, true);
             createTextBox("txtCurrentWindow", 400, newAppSettings.EngineSettings, "CurrentWindowKeyword", true);
 
-            createLabel("lblExcelKeyword", "Excel Keyword", FontSize.Normal, true);
+            createLabel("lblExcelKeyword", "Excel Keyword", FontSize.NormalBold, true);
             createLabel("lblCurrentSheet", "Current Worksheet Keyword", FontSize.Small, true);
             createTextBox("txtCurrentSheet", 400, newAppSettings.EngineSettings, "CurrentWorksheetKeyword", true);
             createLabel("lblNextSheet", "Next Worksheet Keyword", FontSize.Small, true);
             createTextBox("txtNextSheet", 400, newAppSettings.EngineSettings, "NextWorksheetKeyword", true);
             createLabel("lblPreviousSheet", "Previous Worksheet Keyword", FontSize.Small, true);
             createTextBox("txtPreviousSheet", 400, newAppSettings.EngineSettings, "PreviousWorksheetKeyword", true);
+        }
+
+        private void showAutomationEngineEngineSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Engine", FontSize.Large, true);
+
+            createCheckBox("chkOverrideAppInstance", "Override App Instances", newAppSettings.EngineSettings, "OverrideExistingAppInstances", true);
+
+            createLabel("lblCommandDelay", "Default delay between executing commands (ms):", FontSize.Normal, false);
+            createTextBox("txtCommandDelay", 80, newAppSettings.EngineSettings, "DelayBetweenCommands", true);
+
+            
+
+            createLabel("lblCancelKey", "End Script Hotkey:", FontSize.Normal, false);
+            createComboBox("cmbCancellationKey", keysList, 240, newAppSettings.EngineSettings, "CancellationKey", true);
+        }
+        private void showAutomationEngineVariableSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Variable", FontSize.Large, true);
+
+            createCheckBox("chkCreateMissingVariable", "Create Missing Variables During Execution", newAppSettings.EngineSettings, "CreateMissingVariablesDuringExecution", true);
+        }
+        private void showAutomationEngineLogSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Log", FontSize.Large, true);
+
+            createCheckBox("chkEnableLogging", "Enable Diagnostic Logging", newAppSettings.EngineSettings, "EnableDiagnosticLogging", true);
+        }
+        #endregion
+
+        #region Editor
+        private void showEditorMenuBarSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Menu Bar", FontSize.Large, true);
+
+            createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (Restart required)", newAppSettings.ClientSettings, "UseSlimActionBar", true);
         }
         #endregion
 
@@ -200,6 +280,11 @@ namespace taskt.UI.Forms
                     lbl.Height = 16;
                     break;
                 case FontSize.Normal:
+                    lbl.Font = new Font("Segoe UI Light", 12);
+                    lbl.ForeColor = Color.SteelBlue;
+                    lbl.Height = 24;
+                    break;
+                case FontSize.NormalBold:
                     lbl.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
                     lbl.ForeColor = Color.SteelBlue;
                     lbl.Height = 24;
@@ -256,7 +341,9 @@ namespace taskt.UI.Forms
             cmb.Font = new Font("Segoe UI", 12);
             cmb.DropDownStyle = ComboBoxStyle.DropDownList;
 
+            cmb.BeginUpdate();
             cmb.Items.AddRange(items);
+            cmb.EndUpdate();
             cmb.Width = width;
 
             cmb.DataBindings.Add("Text", source, memberName, false, DataSourceUpdateMode.OnPropertyChanged);
