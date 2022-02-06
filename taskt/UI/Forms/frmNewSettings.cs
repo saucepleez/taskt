@@ -71,6 +71,9 @@ namespace taskt.UI.Forms
                 case "Application - Other":
                     showApplicationOtherSettings();
                     break;
+                case "Application - Script File":
+                    showApplicationScriptFileSettings();
+                    break;
                 case "Application - Script Metric":
                     showApplicationMetricSettings();
                     break;
@@ -94,8 +97,26 @@ namespace taskt.UI.Forms
                     showAutomationEngineVariableSettings();
                     break;
 
+                case "Editor - Command List":
+                    showEditorCommandListSettings();
+                    break;
+                case "Editor - Indent":
+                    showEditorIndentSettings();
+                    break;
+                case "Editor - Instance":
+                    showEditorInstanceSettings();
+                    break;
+                case "Editor - Insert Command":
+                    showEditorInsertCommandSettings();
+                    break;
+                case "Editor - Mini Map":
+                    showEditorMiniMapSettings();
+                    break;
                 case "Editor - Menu Bar":
                     showEditorMenuBarSettings();
+                    break;
+                case "Editor - Variable":
+                    showEditorVariableSettings();
                     break;
 
                 default:
@@ -168,6 +189,14 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Other", FontSize.Large, true);
 
             createCheckBox("chkMinimizeToTary", "Minimize to System Tray", newAppSettings.ClientSettings, "MinimizeToTray", true);
+        }
+        private void showApplicationScriptFileSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Script File", FontSize.Large, true);
+
+            createCheckBox("lblScriptIntermediate", "Export Intermediate Script File", newAppSettings.EngineSettings, "ExportIntermediateXML", true);
         }
         #endregion
 
@@ -256,6 +285,83 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Menu Bar", FontSize.Large, true);
 
             createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (Restart required)", newAppSettings.ClientSettings, "UseSlimActionBar", true);
+        }
+        private void showEditorCommandListSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Command List", FontSize.Large, true);
+
+            createLabel("lblGrouping", "Command List", FontSize.NormalBold, true);
+            createCheckBox("chkGroupBySubgroup", "Gruoping by subgroup (Restart required)", newAppSettings.ClientSettings, "GroupingBySubgroup", true);
+
+            createLabel("lblSearch", "Command Search", FontSize.NormalBold, true);
+
+            createCheckBox("chkMakeGroupNameSearchTarget", "Make Group Name a Search Target", newAppSettings.ClientSettings, "SearchTargetGroupName", true);
+            createCheckBox("chkGreedlyGroupName", "Show All Commands if Group Name Matches", newAppSettings.ClientSettings, "SearchGreedlyGroupName", true);
+            createCheckBox("chkMakeSubGroupNameSearchTarget", "Make SubGroup Name a Search Target", newAppSettings.ClientSettings, "SearchTargetSubGroupName", true);
+            createCheckBox("chkGreedlySubGroupName", "Show All Commands if SubGroup Name Matches", newAppSettings.ClientSettings, "SearchGreedlySubGroupName", true);
+        }
+        private void showEditorInstanceSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Instance", FontSize.Large, true);
+
+            createLabel("lblSortHeader", "Instance Sort", FontSize.NormalBold, true);
+            createLabel("lblSortOrder", "Instance Name Sort Order:", FontSize.Normal, false);
+            createComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, "InstanceNameOrder", true);
+
+            createLabel("lblDefaultInstance", "Default Instance Name", FontSize.NormalBold, true);
+            createLabel("lblDefaultDatabase", "Default Database Instance Name", FontSize.Small, true);
+            createTextBox("txtDefaultDatabase", 400, newAppSettings.ClientSettings, "DefaultDBInstanceName", true);
+            createLabel("lblDefaultExcel", "Default Excel Instance Name", FontSize.Small, true);
+            createTextBox("txtDefaultExcel", 400, newAppSettings.ClientSettings, "DefaultExcelInstanceName", true);
+            createLabel("lblDefaultNLG", "Default NLG Instance Name", FontSize.Small, true);
+            createTextBox("txtDefaultNLG", 400, newAppSettings.ClientSettings, "DefaultNLGInstanceName", true);
+            createLabel("lblDefaultStopWatch", "Default StopWatch Instance Name", FontSize.Small, true);
+            createTextBox("txtDefaultStopWatch", 400, newAppSettings.ClientSettings, "DefaultStopWatchInstanceName", true);
+            createLabel("lblDefaultWebBrowser", "Default WebBrowser Instance Name", FontSize.Small, true);
+            createTextBox("txtDefaultWebBrowser", 400, newAppSettings.ClientSettings, "DefaultBrowserInstanceName", true);
+            createLabel("lblDefaultWord", "Default Word Instance Name", FontSize.Small, true);
+            createTextBox("txtDefaultWord", 400, newAppSettings.ClientSettings, "DefaultWordInstanceName", true);
+        }
+        private void showEditorInsertCommandSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Insert Command", FontSize.Large, true);
+
+            createCheckBox("chkInsertCommandsInline", "New Commands Insert Below Selected Command", newAppSettings.ClientSettings, "InsertCommandsInline", true);
+            createCheckBox("chkSequenceDragDrop", "Allow Drag and Drop into Sequence Commands", newAppSettings.ClientSettings, "EnableSequenceDragDrop", true);
+            createCheckBox("chkInsertElse", "Insert Else when BeginIf command inserted", newAppSettings.ClientSettings, "InsertElseAutomatically", true);
+            createCheckBox("chkInsertCommentIfLoop", "Insert Comment above If, Loop, Try", newAppSettings.ClientSettings, "InsertCommentIfLoopAbove", true);
+        }
+        private void showEditorMiniMapSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Mini Map", FontSize.Large, true);
+
+            createCheckBox("chkShowMiniMap", "Show Script Mini Map (beta)", newAppSettings.ClientSettings, "ShowScriptMiniMap", true);
+        }
+        private void showEditorIndentSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Indent", FontSize.Large, true);
+
+            createCheckBox("chkShowIndentLine", "Show Indent Line", newAppSettings.ClientSettings, "ShowIndentLine", true);
+            createLabel("lblIndentWidth", "Indent Width (1 to 32):", FontSize.Normal, false);
+            createTextBox("txtIndentWidth", 60, newAppSettings.ClientSettings, "IndentWidth", true);
+        }
+        private void showEditorVariableSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Variable", FontSize.Large, true);
+
+            createCheckBox("chkInsertVariablePosition", "Insert variable at cursor position(Textbox / Combobox)", newAppSettings.ClientSettings, "InsertVariableAtCursor", true);
         }
         #endregion
 
