@@ -123,6 +123,7 @@ namespace taskt.UI.Forms
                     showNetworkLocalListerSettings();
                     break;
                 case "Network - Server":
+                    showNetworkServerSettings();
                     break;
 
                 default:
@@ -401,6 +402,30 @@ namespace taskt.UI.Forms
 
             Label lblListeningState = createLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
         }
+        private void showNetworkServerSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Server", FontSize.Large, true);
+
+            createLabel("lblMessage", "Enable this functionality to connect to a local instance of taskt server for workforce \nmanagement. After testing the connection, the client will be assigned a new GUID \nwhich must be approved by an administrator in the server.", FontSize.Small, true);
+
+            createCheckBox("chkServerEnabled", "Server Connection Enabled", newAppSettings.ServerSettings, "ServerConnectionEnabled", true);
+            createCheckBox("chkAutomaticallyConnect", "Check In On Startup", newAppSettings.ServerSettings, "ConnectToServerOnStartup", true);
+
+            createLabel("lblServerURL", "HTTPS Server URL", FontSize.NormalBold, true);
+            createLabel("lblServerURLex", "Enter the location of the taskt server (ex. https://localhost:60281", FontSize.Normal, true);
+            TextBox txtAddress = createTextBox("txtHttpsAddress", 480, newAppSettings.ServerSettings, "HTTPServerURL", true);
+            Button btnTestConnection = createButton("btnTestConnection", "Test Connection", 240, true);
+
+            createLabel("lblClientGUID", "Client GUID", FontSize.NormalBold, true);
+            createLabel("lblClientGUIDex", "Indicates the GUID the client will use when connecting to taskt server", FontSize.Normal, true);
+            createTextBox("txtGUID", 480, newAppSettings.ServerSettings, "HTTPGuid", true);
+            Button btnPublishTask = createButton("btnPublishTask", "Publish Task", 240, true);
+
+            btnTestConnection.Click += (sender, e) => btnTestConnection_Click(sender, e, txtAddress);
+            btnPublishTask.Click += (sender, e) => btnPublishTask_Click(sender, e);
+        }
         #endregion
 
         #region Create Controls
@@ -621,6 +646,42 @@ namespace taskt.UI.Forms
         private void VariableMarker_TextChanged(object sender,EventArgs e, TextBox startMarker, TextBox endMaker, Label exampleLabel)
         {
             exampleLabel.Text = startMarker.Text + "VariableName" + endMaker.Text;
+        }
+        #endregion
+
+        #region Network Events
+        private void btnTestConnection_Click(object sender, EventArgs e, TextBox txtAddress)
+        {
+            var successfulConnection = Core.Server.HttpServerClient.TestConnection(txtAddress.Text);
+
+            if (successfulConnection)
+            {
+                var pulledNewGUID = Core.Server.HttpServerClient.GetGuid();
+
+                if (pulledNewGUID)
+                {
+                    newAppSettings = new Core.ApplicationSettings();
+                    newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+                    txtAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
+                    MessageBox.Show("Connected Successfully!\nGUID will be reloaded automatically the next time settings is loaded!", "Taskt", MessageBoxButtons.OK);
+                }
+                MessageBox.Show("Connected Successfully!", "Taskt", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Unable To Connect!", "Taskt", MessageBoxButtons.OK);
+            }
+        }
+        private void btnPublishTask_Click(object sender, EventArgs e)
+        {
+            if (System.IO.File.Exists(scriptBuilderForm.ScriptFilePath))
+            {
+                Core.Server.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.Server.PublishedScript.PublishType.ServerReference);
+            }
+            else
+            {
+                MessageBox.Show("Please open the task in order to publish it.", "Taskt", MessageBoxButtons.OK);
+            }
         }
         #endregion
     }

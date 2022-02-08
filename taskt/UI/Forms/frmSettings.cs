@@ -544,8 +544,6 @@ namespace taskt.UI.Forms
                 DisableListenerButtons();
                 Core.Server.LocalTCPListener.StartListening(portNumber);
             }
-           
- 
         }
 
         private void btnStopListening_Click(object sender, EventArgs e)
