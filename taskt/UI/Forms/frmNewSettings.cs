@@ -119,6 +119,12 @@ namespace taskt.UI.Forms
                     showEditorVariableSettings();
                     break;
 
+                case "Network - Local Listener":
+                    showNetworkLocalListerSettings();
+                    break;
+                case "Network - Server":
+                    break;
+
                 default:
                     break;
             }
@@ -362,6 +368,38 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Variable", FontSize.Large, true);
 
             createCheckBox("chkInsertVariablePosition", "Insert variable at cursor position(Textbox / Combobox)", newAppSettings.ClientSettings, "InsertVariableAtCursor", true);
+        }
+        #endregion
+
+        #region Network
+        private void showNetworkLocalListerSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Local Listener (Beta)", FontSize.Large, true);
+
+            createLabel("lbmMessage", "Enable this functionality to allow this computer to accept script execution requests from \nother taskt or REST-capable clients.", FontSize.Small, true);
+
+            createCheckBox("chkAutoStartListener", "Start Listening on Startup", newAppSettings.ListenerSettings, "StartListenerOnStartup", true);
+            createCheckBox("chkEnableListening", "Local Listening Enabled", newAppSettings.ListenerSettings, "LocalListeningEnabled", true);
+
+            createLabel("lblListeningPort", "Listening Port:", FontSize.Normal, false);
+            createTextBox("txtListeningPort", 120, newAppSettings.ListenerSettings, "ListeningPort", true);
+
+            createCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, "RequireListenerAuthenticationKey", true);
+            createLabel("lblAuthenicationKey", "Authentication Key", FontSize.Small, true);
+            createTextBox("txtAuthenicationKey", 480, newAppSettings, "ListenerSettings.AuthKey", true);
+
+            createCheckBox("chkEnableWhitelit", "Enable IP Verification (Seperate with comma)", newAppSettings.ListenerSettings, "EnableWhitelist", true);
+            TextBox txtWhite = createTextBox("txtWhitelist", 480, newAppSettings.ListenerSettings, "IPWhiteList", true);
+            txtWhite.Multiline = true;
+            txtWhite.ScrollBars = ScrollBars.Vertical;
+            txtWhite.Height = 80;
+
+            Button btnStart = createButton("btnStartListening", "Start Listening", 140, false);
+            Button btnEnd = createButton("btnEndListening", "Stop Listening", 140, true);
+
+            Label lblListeningState = createLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
         }
         #endregion
 

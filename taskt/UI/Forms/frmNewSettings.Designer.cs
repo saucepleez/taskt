@@ -67,6 +67,11 @@
             treeNode18,
             treeNode19,
             treeNode20});
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Local Listener");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Server");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Network", new System.Windows.Forms.TreeNode[] {
+            treeNode22,
+            treeNode23});
             this.tableLayoutBase = new System.Windows.Forms.TableLayoutPanel();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -247,10 +252,17 @@
             treeNode20.Text = "Variable";
             treeNode21.Name = "nodeEditor";
             treeNode21.Text = "Editor";
+            treeNode22.Name = "nodeLocalListener";
+            treeNode22.Text = "Local Listener";
+            treeNode23.Name = "nodeServer";
+            treeNode23.Text = "Server";
+            treeNode24.Name = "nodeNetwork";
+            treeNode24.Text = "Network";
             this.tvSettingsMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode7,
             treeNode13,
-            treeNode21});
+            treeNode21,
+            treeNode24});
             this.tvSettingsMenu.Size = new System.Drawing.Size(194, 308);
             this.tvSettingsMenu.TabIndex = 0;
             this.tvSettingsMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSettingsMenu_AfterSelect);
