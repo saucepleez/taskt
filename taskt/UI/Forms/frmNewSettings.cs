@@ -15,6 +15,10 @@ namespace taskt.UI.Forms
         Core.ApplicationSettings newAppSettings;
         frmScriptBuilder scriptBuilderForm;
 
+        private Button btnStartListening = null;
+        private Button btnStopListening = null;
+        private Label lblListeningState = null;
+
         private string[] keysList;
 
         private enum FontSize
@@ -44,6 +48,10 @@ namespace taskt.UI.Forms
         {
             newAppSettings = new Core.ApplicationSettings();
             newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+
+            // Network -> Server
+            Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
+            Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
 
             tvSettingsMenu.ExpandAll();
         }
@@ -385,7 +393,7 @@ namespace taskt.UI.Forms
             createCheckBox("chkEnableListening", "Local Listening Enabled", newAppSettings.ListenerSettings, "LocalListeningEnabled", true);
 
             createLabel("lblListeningPort", "Listening Port:", FontSize.Normal, false);
-            createTextBox("txtListeningPort", 120, newAppSettings.ListenerSettings, "ListeningPort", true);
+            TextBox txtListeningPort = createTextBox("txtListeningPort", 120, newAppSettings.ListenerSettings, "ListeningPort", true);
 
             createCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, "RequireListenerAuthenticationKey", true);
             createLabel("lblAuthenicationKey", "Authentication Key", FontSize.Small, true);
@@ -397,10 +405,15 @@ namespace taskt.UI.Forms
             txtWhite.ScrollBars = ScrollBars.Vertical;
             txtWhite.Height = 80;
 
-            Button btnStart = createButton("btnStartListening", "Start Listening", 140, false);
-            Button btnEnd = createButton("btnEndListening", "Stop Listening", 140, true);
+            btnStartListening = createButton("btnStartListening", "Start Listening", 140, false);
+            btnStopListening = createButton("btnEndListening", "Stop Listening", 140, true);
 
-            Label lblListeningState = createLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
+            btnStartListening.Click += (sender, e) => btnStartListening_Click(sender, e, txtListeningPort);
+            btnStopListening.Click += (sender, e) => btnStopListening_Click(sender, e);
+
+            lblListeningState = createLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
+
+            SetupListeningUI();
         }
         private void showNetworkServerSettings()
         {
@@ -681,6 +694,78 @@ namespace taskt.UI.Forms
             else
             {
                 MessageBox.Show("Please open the task in order to publish it.", "Taskt", MessageBoxButtons.OK);
+            }
+        }
+        private void btnStartListening_Click(object sender, EventArgs e, TextBox txtPort)
+        {
+            if (int.TryParse(txtPort.Text, out var portNumber))
+            {
+                DisableListenerButtons();
+                Core.Server.LocalTCPListener.StartListening(portNumber);
+            }
+        }
+        private void btnStopListening_Click(object sender, EventArgs e)
+        {
+            DisableListenerButtons();
+            Core.Server.LocalTCPListener.StopAutomationListener();
+        }
+        private void DisableListenerButtons()
+        {
+            if ((btnStartListening == null) || (btnStopListening == null))
+            {
+                return;
+            }
+            btnStartListening.Enabled = false;
+            btnStopListening.Enabled = false;
+        }
+        private void SetupListeningUI()
+        {
+            if ((btnStartListening == null) || (btnStopListening == null) || (lblListeningState == null))
+            {
+                return;
+            }
+
+            if (Core.Server.LocalTCPListener.IsListening)
+            {
+                lblListeningState.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
+                btnStartListening.Enabled = false;
+                btnStopListening.Enabled = true;
+            }
+            else
+            {
+                lblListeningState.Text = $"Client is Not Listening!";
+                btnStartListening.Enabled = true;
+                btnStopListening.Enabled = false;
+            }
+            lblListeningState.Show();
+        }
+        #endregion
+
+        #region LocalListener Events
+        public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
+        public delegate void AutomationTCPListener_StoppedDelegate(object sender, EventArgs e);
+        private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStopped);
+                Invoke(stoppedDelegate, new object[] { sender, e });
+            }
+            else
+            {
+                SetupListeningUI();
+            }
+        }
+        private void AutomationTCPListener_ListeningStarted(object sender, EventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                var startedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStarted);
+                Invoke(startedDelegate, new object[] { sender, e });
+            }
+            else
+            {
+                SetupListeningUI();
             }
         }
         #endregion
