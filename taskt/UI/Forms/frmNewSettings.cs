@@ -15,9 +15,14 @@ namespace taskt.UI.Forms
         Core.ApplicationSettings newAppSettings;
         frmScriptBuilder scriptBuilderForm;
 
+        // Local Listener
         private Button btnStartListening = null;
         private Button btnStopListening = null;
         private Label lblListeningState = null;
+
+        // Server
+        private Label lblSocketState = null;
+        private Label lblSocketException = null;
 
         private string[] keysList;
 
@@ -436,6 +441,9 @@ namespace taskt.UI.Forms
             createTextBox("txtGUID", 480, newAppSettings.ServerSettings, "HTTPGuid", true);
             Button btnPublishTask = createButton("btnPublishTask", "Publish Task", 240, true);
 
+            lblSocketState = createLabel("lblSocketState", "Socket Status", FontSize.Large, true);
+            lblSocketException = createLabel("lblSocketException", "Socket Exception", FontSize.Normal, true);
+
             btnTestConnection.Click += (sender, e) => btnTestConnection_Click(sender, e, txtAddress);
             btnPublishTask.Click += (sender, e) => btnPublishTask_Click(sender, e);
         }
@@ -696,6 +704,19 @@ namespace taskt.UI.Forms
                 MessageBox.Show("Please open the task in order to publish it.", "Taskt", MessageBoxButtons.OK);
             }
         }
+        private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
+        {
+            lblSocketState.Text = "Socket Status: " + Core.Server.SocketClient.GetSocketState();
+            if (Core.Server.SocketClient.connectionException != string.Empty)
+            {
+                lblSocketException.Show();
+                lblSocketException.Text = Core.Server.SocketClient.connectionException;
+            }
+            else
+            {
+                lblSocketException.Hide();
+            }
+        }
         private void btnStartListening_Click(object sender, EventArgs e, TextBox txtPort)
         {
             if (int.TryParse(txtPort.Text, out var portNumber))
@@ -769,5 +790,7 @@ namespace taskt.UI.Forms
             }
         }
         #endregion
+
+        
     }
 }
