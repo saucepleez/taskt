@@ -706,6 +706,10 @@ namespace taskt.UI.Forms
         }
         private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
         {
+            if ((lblSocketState == null) || (lblSocketException == null))
+            {
+                return;
+            }
             lblSocketState.Text = "Socket Status: " + Core.Server.SocketClient.GetSocketState();
             if (Core.Server.SocketClient.connectionException != string.Empty)
             {
