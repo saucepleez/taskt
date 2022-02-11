@@ -227,7 +227,8 @@ namespace taskt.UI.Forms
             CheckBox chkPre = createCheckBox("chkPreLoadCommands", "Load Commands at Startup (Reduces Flicker)", newAppSettings.ClientSettings, "PreloadBuilderCommands", true);
             chkPre.Visible = false;
             createLabel("lblStartMode", "Start Mode:", FontSize.Normal, false);
-            createComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, "StartupMode", true);
+            ComboBox cmbStart = createComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, "StartupMode", true);
+            cmbStart.SelectionChangeCommitted += (sender, e) => cmbStartUpMode_SelectionChangeCommitted(sender, e);
 
             Button btnAttended = createButton("btnLunchAttended", "Launch Attended Mode", 240, true);
             btnAttended.Click += (sender, e) => btnLaunchAttendedMode_Click(sender, e);
@@ -425,6 +426,7 @@ namespace taskt.UI.Forms
             createLabel("lblSortOrder", "Instance Name Sort Order:", FontSize.Normal, false);
             ComboBox cmbSort = createComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, "InstanceNameOrder", true);
             cmbSort.Text = newAppSettings.ClientSettings.InstanceNameOrder;
+            cmbSort.SelectionChangeCommitted += (sender, e) => cmbInstanceSortOrder_SelectionChangeCommitted(sender, e);
 
             createLabel("lblDefaultInstance", "Default Instance Name", FontSize.NormalBold, true);
             createLabel("lblDefaultDatabase", "Default Database Instance Name", FontSize.Small, true);
@@ -661,7 +663,6 @@ namespace taskt.UI.Forms
 
             return cmb;
         }
-
         private Button createButton(string name, string text, int width, bool isBreak = false)
         {
             Button btn = new Button();
@@ -683,6 +684,10 @@ namespace taskt.UI.Forms
         {
             scriptBuilderForm.showAttendedModeFormProcess();
             this.Close();
+        }
+        private void cmbStartUpMode_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            newAppSettings.ClientSettings.StartupMode = ((ComboBox)sender).Text;
         }
         #endregion
 
@@ -1058,10 +1063,9 @@ namespace taskt.UI.Forms
         #endregion
 
         #region Editor Events
-        private void cmdInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cmbInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Keys key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
-            newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
         }
         #endregion
     }
