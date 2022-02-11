@@ -4100,7 +4100,20 @@ namespace taskt.UI.Forms
                 Core.Server.HttpServerClient.Initialize();
             }
         }
+        private void showNewSettingForm()
+        {
+            using (frmNewSettings newSettings = new frmNewSettings(this))
+            {
+                newSettings.ShowDialog();
 
+                //reload app settings
+                appSettings = new Core.ApplicationSettings();
+                appSettings = appSettings.GetOrCreateApplicationSettings();
+
+                //reinit
+                Core.Server.HttpServerClient.Initialize();
+            }
+        }
         private void showScriptInformationForm()
         {
             using (frmScriptInformations frm = new frmScriptInformations())
@@ -4393,7 +4406,10 @@ namespace taskt.UI.Forms
             //Core.Server.HttpServerClient.Initialize();
             showSettingForm();
         }
-
+        private void newSettigsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showNewSettingForm();
+        }
         private void showScriptFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowScriptFolderProcess();
@@ -4706,12 +4722,6 @@ namespace taskt.UI.Forms
         }
 
         #endregion
-
-        private void newSettigsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmNewSettings fm = new frmNewSettings(this);
-            fm.Show();
-        }
     }
 
 }

@@ -69,6 +69,7 @@
             this.scriptInformationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionToolStripSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newSettigsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showScriptFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLogFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionToolStripSep2 = new System.Windows.Forms.ToolStripSeparator();
@@ -187,7 +188,6 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
-            this.newSettigsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -605,7 +605,7 @@
             this.variablesToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
             this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
             this.variablesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.variablesToolStripMenuItem.Text = "&Variable Manager";
             this.variablesToolStripMenuItem.Click += new System.EventHandler(this.variablesToolStripMenuItem_Click);
             // 
@@ -614,29 +614,38 @@
             this.scriptInformationsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.scriptInformationsToolStripMenuItem.Image = global::taskt.Properties.Resources.various_info;
             this.scriptInformationsToolStripMenuItem.Name = "scriptInformationsToolStripMenuItem";
-            this.scriptInformationsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.scriptInformationsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.scriptInformationsToolStripMenuItem.Text = "Script &Informations";
             this.scriptInformationsToolStripMenuItem.Click += new System.EventHandler(this.scriptInformationsToolStripMenuItem_Click);
             // 
             // optionToolStripSep1
             // 
             this.optionToolStripSep1.Name = "optionToolStripSep1";
-            this.optionToolStripSep1.Size = new System.Drawing.Size(202, 6);
+            this.optionToolStripSep1.Size = new System.Drawing.Size(209, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.settingsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_config;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.settingsToolStripMenuItem.Text = "&Settings Manager";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.settingsToolStripMenuItem.Text = "&Settings Manager (Classic)";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // newSettigsToolStripMenuItem
+            // 
+            this.newSettigsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newSettigsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_config;
+            this.newSettigsToolStripMenuItem.Name = "newSettigsToolStripMenuItem";
+            this.newSettigsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.newSettigsToolStripMenuItem.Text = "Settings Manager (beta)";
+            this.newSettigsToolStripMenuItem.Click += new System.EventHandler(this.newSettigsToolStripMenuItem_Click);
             // 
             // showScriptFolderToolStripMenuItem
             // 
             this.showScriptFolderToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.showScriptFolderToolStripMenuItem.Name = "showScriptFolderToolStripMenuItem";
-            this.showScriptFolderToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.showScriptFolderToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.showScriptFolderToolStripMenuItem.Text = "Show &Script Folder";
             this.showScriptFolderToolStripMenuItem.Click += new System.EventHandler(this.showScriptFolderToolStripMenuItem_Click);
             // 
@@ -644,20 +653,20 @@
             // 
             this.showLogFolderToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.showLogFolderToolStripMenuItem.Name = "showLogFolderToolStripMenuItem";
-            this.showLogFolderToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.showLogFolderToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.showLogFolderToolStripMenuItem.Text = "Show &Log Folder";
             this.showLogFolderToolStripMenuItem.Click += new System.EventHandler(this.showLogFolderToolStripMenuItem_Click);
             // 
             // optionToolStripSep2
             // 
             this.optionToolStripSep2.Name = "optionToolStripSep2";
-            this.optionToolStripSep2.Size = new System.Drawing.Size(202, 6);
+            this.optionToolStripSep2.Size = new System.Drawing.Size(209, 6);
             // 
             // showSearchBarToolStripMenuItem
             // 
             this.showSearchBarToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.showSearchBarToolStripMenuItem.Name = "showSearchBarToolStripMenuItem";
-            this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.showSearchBarToolStripMenuItem.Text = "Show Search &Bar";
             this.showSearchBarToolStripMenuItem.Click += new System.EventHandler(this.showSearchBarToolStripMenuItem_Click);
             // 
@@ -1978,13 +1987,6 @@
             // miniMapLoadingDelayTimer
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
-            // 
-            // newSettigsToolStripMenuItem
-            // 
-            this.newSettigsToolStripMenuItem.Name = "newSettigsToolStripMenuItem";
-            this.newSettigsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.newSettigsToolStripMenuItem.Text = "Settings (beta)";
-            this.newSettigsToolStripMenuItem.Click += new System.EventHandler(this.newSettigsToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 
