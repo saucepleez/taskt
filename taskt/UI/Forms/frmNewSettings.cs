@@ -15,6 +15,13 @@ namespace taskt.UI.Forms
         Core.ApplicationSettings newAppSettings;
         frmScriptBuilder scriptBuilderForm;
 
+        private string prevPage = "";
+
+        // Metric
+        private Label lblMetrics = null;
+        private TreeView tvExecutionTimes = null;
+        private Button btnClearMetrics = null;
+
         // Local Listener
         private Button btnStartListening = null;
         private Button btnStopListening = null;
@@ -62,6 +69,22 @@ namespace taskt.UI.Forms
         }
         #endregion
 
+        #region footer buttons
+        private void uiBtnOpen_Click(object sender, EventArgs e)
+        {
+            //Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
+            //newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.Save(newAppSettings);
+            Core.Server.SocketClient.LoadSettings();
+            this.Close();
+        }
+
+        private void uiCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
+
         #region tvSettingMenu
         private void tvSettingsMenu_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -73,7 +96,9 @@ namespace taskt.UI.Forms
 
             flowLayoutSettings.SuspendLayout();
 
-            switch (rootNode.Text + " - " + tvSettingsMenu.SelectedNode.Text)
+            string newPage = rootNode.Text + " - " + tvSettingsMenu.SelectedNode.Text;
+
+            switch (newPage)
             {
                 case "Application - Debug":
                     showApplicationDebugSettings();
@@ -110,6 +135,10 @@ namespace taskt.UI.Forms
                     showAutomationEngineVariableSettings();
                     break;
 
+                case "Documents - Command Reference":
+                    showDocumentsCommandReferenceSettings();
+                    break;
+
                 case "Editor - Command List":
                     showEditorCommandListSettings();
                     break;
@@ -139,12 +168,53 @@ namespace taskt.UI.Forms
                     showNetworkServerSettings();
                     break;
 
+                case "Update - Check Update":
+                    showUpdateCheckUpdateSettings();
+                    break;
+
+                case "VM - Display Manager":
+                    showVMDisplayManagerSettings();
+                    break;
+
                 default:
+                    newPage = prevPage;
                     break;
             }
+            updatePrevPage(newPage);
 
             flowLayoutSettings.ResumeLayout();
         }
+
+        private void updatePrevPage(string currentPage)
+        {
+            if (currentPage == prevPage)
+            {
+                return;
+            }
+            else
+            {
+                switch (prevPage)
+                {
+                    case "Application - Script Metric":
+                        lblMetrics = null;
+                        tvExecutionTimes = null;
+                        btnClearMetrics = null;
+                        break;
+
+                    case "Network - Local Listener":
+                        btnStartListening = null;
+                        btnStopListening = null;
+                        break;
+
+                    case "Network - Server":
+                        lblSocketState = null;
+                        lblSocketException = null;
+                        break;
+                }
+            }
+            prevPage = currentPage;
+        }
+
         #endregion
 
         #region Application
@@ -198,9 +268,21 @@ namespace taskt.UI.Forms
             createCheckBox("chkTrackMetrics", "Track Execution Metrics", newAppSettings.EngineSettings, "TrackExecutionMetrics", true);
 
             createLabel("lblTitleMetrics", "Script Execution Metrics (Last 10 per Script)", FontSize.Small, true);
-            createLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
+            lblMetrics = createLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
 
-            createButton("btnClearMetrics", "Clear Metrics", 200, true);
+            TreeView tv = new TreeView();
+            tv.Name = "tvExecutionTimes";
+            tv.Size = new Size(500, 120);
+            tv.Font = new Font("Segoe UI", 12);
+            flowLayoutSettings.Controls.Add(tv);
+
+            tvExecutionTimes = tv;
+
+            btnClearMetrics = createButton("btnClearMetrics", "Clear Metrics", 200, true);
+            btnClearMetrics.Click += (sender, e) => btnClearMetrics_Click(sender, e);
+
+            //get metrics
+            bgwMetrics.RunWorkerAsync();
         }
         private void showApplicationOtherSettings()
         {
@@ -274,10 +356,9 @@ namespace taskt.UI.Forms
             createLabel("lblCommandDelay", "Default delay between executing commands (ms):", FontSize.Normal, false);
             createTextBox("txtCommandDelay", 80, newAppSettings.EngineSettings, "DelayBetweenCommands", true);
 
-            
-
             createLabel("lblCancelKey", "End Script Hotkey:", FontSize.Normal, false);
-            createComboBox("cmbCancellationKey", keysList, 240, newAppSettings.EngineSettings, "CancellationKey", true);
+            ComboBox cmb =createComboBox("cmbCancellationKey", keysList, 240, newAppSettings.EngineSettings, "CancellationKey", true);
+            cmb.SelectionChangeCommitted += (sender, e) => cmdCancellationButton_SelectionChangeCommitted(sender, e);
         }
         private void showAutomationEngineVariableSettings()
         {
@@ -294,6 +375,18 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Log", FontSize.Large, true);
 
             createCheckBox("chkEnableLogging", "Enable Diagnostic Logging", newAppSettings.EngineSettings, "EnableDiagnosticLogging", true);
+        }
+        #endregion
+
+        #region Documents
+        private void showDocumentsCommandReferenceSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Command Reference", FontSize.Large, true);
+
+            Button btn = createButton("btnCreateCommandRef", "Create Command Reference", 300, true);
+            btn.Click += (sender, e) => btnCreateCommandReference_Click(sender, e);
         }
         #endregion
 
@@ -330,7 +423,8 @@ namespace taskt.UI.Forms
 
             createLabel("lblSortHeader", "Instance Sort", FontSize.NormalBold, true);
             createLabel("lblSortOrder", "Instance Name Sort Order:", FontSize.Normal, false);
-            createComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, "InstanceNameOrder", true);
+            ComboBox cmbSort = createComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, "InstanceNameOrder", true);
+            cmbSort.Text = newAppSettings.ClientSettings.InstanceNameOrder;
 
             createLabel("lblDefaultInstance", "Default Instance Name", FontSize.NormalBold, true);
             createLabel("lblDefaultDatabase", "Default Database Instance Name", FontSize.Small, true);
@@ -446,6 +540,30 @@ namespace taskt.UI.Forms
 
             btnTestConnection.Click += (sender, e) => btnTestConnection_Click(sender, e, txtAddress);
             btnPublishTask.Click += (sender, e) => btnPublishTask_Click(sender, e);
+        }
+        #endregion
+
+        #region Update
+        private void showUpdateCheckUpdateSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Check Update", FontSize.Large, true);
+
+            Button btn = createButton("btnCheckUpdate", "Check For Updates", 200, true);
+            btn.Click += (sender, e) => btnCheckUpdate_Click(sender, e);
+        }
+        #endregion
+
+        #region VM
+        private void showVMDisplayManagerSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Display Manager", FontSize.Large, true);
+
+            Button btn = createButton("btnDisplayManager", "Launch Display Manager", 200, true);
+            btn.Click += (sender, e) => btnLaunchDisplayManager_Click(sender, e);
         }
         #endregion
 
@@ -793,8 +911,158 @@ namespace taskt.UI.Forms
                 SetupListeningUI();
             }
         }
+
         #endregion
 
-        
+        #region Metrics Events
+        private void btnClearMetrics_Click(object sender, EventArgs e)
+        {
+            new Core.Metrics().ClearExecutionMetrics();
+            bgwMetrics.RunWorkerAsync();
+        }
+        private void bgwMetrics_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = new Core.Metrics().ExecutionMetricsSummary();
+        }
+        private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if ((lblMetrics == null) || (tvExecutionTimes == null) || (btnClearMetrics == null))
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                if (e.Error is System.IO.FileNotFoundException)
+                {
+                    lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
+                }
+                else
+                {
+                    lblMetrics.Text = "Metrics Unavailable: " + e.Error.ToString();
+                }
+            }
+            else
+            {
+                var metricsSummary = (List<Core.ExecutionMetric>)(e.Result);
+
+                if (metricsSummary.Count == 0)
+                {
+                    lblMetrics.Text = "No Metrics Found";
+                    lblMetrics.Show();
+                    tvExecutionTimes.Hide();
+                    btnClearMetrics.Hide();
+                }
+                else
+                {
+                    lblMetrics.Hide();
+                    tvExecutionTimes.Show();
+                    btnClearMetrics.Show();
+                }
+
+                foreach (var metric in metricsSummary)
+                {
+                    var rootNode = new TreeNode();
+                    rootNode.Text = metric.FileName + " [" + metric.AverageExecutionTime + " avg.]";
+
+                    foreach (var metricItem in metric.ExecutionData)
+                    {
+                        var subNode = new TreeNode();
+                        subNode.Text = string.Join(" - ", metricItem.LoggedOn.ToString("MM/dd/yy hh:mm"), metricItem.ExecutionTime);
+                        rootNode.Nodes.Add(subNode);
+                    }
+
+                    tvExecutionTimes.Nodes.Add(rootNode);
+                }
+            }
+        }
+        #endregion
+
+        #region Update Events
+        private void btnCheckUpdate_Click(object sender, EventArgs e)
+        {
+            taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
+            Core.UpdateManifest manifest = new Core.UpdateManifest();
+            try
+            {
+                manifest = updater.GetManifest();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error getting manifest: " + ex.ToString());
+                return;
+            }
+
+            if (manifest.RemoteVersionNewer)
+            {
+                Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
+                if (frmUpdate.ShowDialog() == DialogResult.OK)
+                {
+
+                    //move update exe to root folder for execution
+                    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
+                    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+
+                    if (!System.IO.File.Exists(updaterExecutionResources))
+                    {
+                        MessageBox.Show("taskt-updater.exe not found in resources directory!");
+                        return;
+                    }
+                    else
+                    {
+                        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
+                    }
+
+                    var updateProcess = new System.Diagnostics.Process();
+                    updateProcess.StartInfo.FileName = updaterExecutableDestination;
+                    updateProcess.StartInfo.Arguments = manifest.PackageURL;
+
+                    updateProcess.Start();
+                    Application.Exit();
+                }
+            }
+            else
+            {
+                MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
+            }
+        }
+        #endregion
+
+        #region VM Events
+        private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Close Settings form to launch Display Manager.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Display Manager now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Supplemental.frmDisplayManager displayManager = new Supplemental.frmDisplayManager();
+                displayManager.Show();
+                this.Close();
+            }   
+        }
+        #endregion
+
+        #region Documents Events
+        private void btnCreateCommandReference_Click(object sender, EventArgs e)
+        {
+            Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
+            var docsRoot = docGeneration.GenerateMarkdownFiles();
+            System.Diagnostics.Process.Start(docsRoot);
+        }
+        #endregion
+
+        #region Engine Events
+        private void cmdCancellationButton_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Keys key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
+            newAppSettings.EngineSettings.CancellationKey = key;
+        }
+        #endregion
+
+        #region Editor Events
+        private void cmdInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Keys key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
+            newAppSettings.EngineSettings.CancellationKey = key;
+        }
+        #endregion
     }
 }
