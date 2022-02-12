@@ -340,7 +340,7 @@ namespace taskt.UI.Forms
             frmSearch = new Supplement_Forms.frmSearchCommands(this);
 
             // instance count
-            instanceList = new Core.InstanceCounter();
+            instanceList = new Core.InstanceCounter(appSettings);
 
             // miniMap
             miniMapImg = new Bitmap(8, lstScriptActions.Height);
@@ -3041,7 +3041,7 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Clear();
                 scriptVariables = new List<Core.Script.ScriptVariable>();
                 scriptInfo = null;
-                instanceList = new Core.InstanceCounter();
+                instanceList = new Core.InstanceCounter(appSettings);
 
                 //get deserialized script
                 Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings);
@@ -3439,7 +3439,7 @@ namespace taskt.UI.Forms
             lstScriptActions.Items.Clear();
             scriptVariables = new List<Core.Script.ScriptVariable>();
             scriptInfo = new Core.Script.ScriptInformation();
-            instanceList = new Core.InstanceCounter();
+            instanceList = new Core.InstanceCounter(appSettings);
 
             ChangeSaveState(false);
         }

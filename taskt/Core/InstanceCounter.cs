@@ -9,6 +9,8 @@ namespace taskt.Core
 {
     public class InstanceCounter
     {
+        private ApplicationSettings appSettings = null;
+
         // instance
         private Dictionary<string, Dictionary<string, int>> databaseInstance = new Dictionary<string, Dictionary<string, int>>
         {
@@ -67,14 +69,14 @@ namespace taskt.Core
             { "used", new Dictionary<string, int>() }
         };
 
-        public InstanceCounter()
+        public InstanceCounter(ApplicationSettings settings)
         {
-
+            this.appSettings = settings;
         }
 
-        private void addInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
+        private void addInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType instanceType, bool isUsed = false)
         {
-            Dictionary<string, int> targetDic = decideDictionary(instanceType, isUsed);
+            Dictionary<string, int> targetDic = decideDictionary(instanceType.instanceType, isUsed);
 
             if (String.IsNullOrEmpty(instanceName))
             {
@@ -84,6 +86,11 @@ namespace taskt.Core
             if (instanceName.Length == 0)
             {
                 return;
+            }
+
+            if (instanceType.autoWrapVariableMarker)
+            {
+                instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
             }
             
             if (targetDic.ContainsKey(instanceName))
@@ -101,9 +108,9 @@ namespace taskt.Core
         //    this.addInstance(nameType.Name, nameType.InstanceType);
         //}
 
-        private void removeInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
+        private void removeInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType instanceType, bool isUsed = false)
         {
-            Dictionary<string, int> targetDic = decideDictionary(instanceType, isUsed);
+            Dictionary<string, int> targetDic = decideDictionary(instanceType.instanceType, isUsed);
 
             if (String.IsNullOrEmpty(instanceName))
             {
@@ -113,6 +120,11 @@ namespace taskt.Core
             if (instanceName.Length == 0)
             {
                 return;
+            }
+
+            if (instanceType.autoWrapVariableMarker)
+            {
+                instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
             }
 
             if (targetDic.ContainsKey(instanceName))
@@ -253,12 +265,12 @@ namespace taskt.Core
                         if ((insType != null) && (direction != null) &&
                                 (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            this.addInstance(insValue, insType.instanceType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
-                            this.addInstance(insValue, insType.instanceType, true);
+                            this.addInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
+                            this.addInstance(insValue, insType, true);
                         }
                         else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            this.addInstance(insValue, insType.instanceType, true);
+                            this.addInstance(insValue, insType, true);
                         }
                     }
                 }
@@ -329,12 +341,12 @@ namespace taskt.Core
                         if ((insType != null) && (direction != null) &&
                                 (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            this.removeInstance(insValue, insType.instanceType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
-                            this.removeInstance(insValue, insType.instanceType, true);
+                            this.removeInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
+                            this.removeInstance(insValue, insType, true);
                         }
                         else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            this.removeInstance(insValue, insType.instanceType, true);
+                            this.removeInstance(insValue, insType, true);
                         }
                     }
                 }

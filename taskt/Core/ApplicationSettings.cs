@@ -326,6 +326,24 @@ namespace taskt.Core
             return this.VariableStartMarker + variableName + this.VariableEndMarker;
         }
 
+        public string unwrapVariableMarker(string variableName)
+        {
+            if (this.isWrappedVariableMarker(variableName))
+            {
+                string rmvSt = variableName.Substring(this.VariableStartMarker.Length);
+                return rmvSt.Substring(0, rmvSt.Length - this.VariableEndMarker.Length);
+            }
+            else
+            {
+                return variableName;
+            }
+        }
+        
+        public bool isWrappedVariableMarker(string variableName)
+        {
+            return (variableName.StartsWith(this.VariableStartMarker) && variableName.EndsWith(this.VariableEndMarker));
+        }
+
         public string wrapIntermediateVariableMaker(string variableName)
         {
             return "\u2983" + variableName + "\u2984";
