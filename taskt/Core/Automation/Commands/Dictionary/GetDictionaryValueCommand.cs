@@ -17,7 +17,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class GetDictionaryValueCommand : ScriptCommand
     {
-
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please input The Dictionary Variable")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -95,21 +94,21 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
             }
         }
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputData).FirstOrDefault();
+        //private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        //{
+        //    //search for the variable
+        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputData).FirstOrDefault();
 
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_InputData.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
+        //    //if variable was not found but it starts with variable naming pattern
+        //    if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+        //    {
+        //        //reformat and attempt
+        //        var reformattedVariable = v_InputData.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+        //        requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+        //    }
 
-            return requiredVariable;
-        }
+        //    return requiredVariable;
+        //}
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
