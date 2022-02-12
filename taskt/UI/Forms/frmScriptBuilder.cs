@@ -3867,7 +3867,20 @@ namespace taskt.UI.Forms
                         {
                             foreach (TreeNode item in parentGroup.Nodes)
                             {
-                                pGroup.Nodes.Add(item.Text);
+                                //pGroup.Nodes.Add(item.Text);
+                                if (item.Nodes.Count == 0)
+                                {
+                                    pGroup.Nodes.Add(item.Text);
+                                }
+                                else
+                                {
+                                    TreeNode sGroup = new TreeNode(item.Text, 1, 1);
+                                    foreach(TreeNode i in item.Nodes)
+                                    {
+                                        sGroup.Nodes.Add(i.Text);
+                                    }
+                                    pGroup.Nodes.Add(sGroup);
+                                }
                             }
                         }
                         else
