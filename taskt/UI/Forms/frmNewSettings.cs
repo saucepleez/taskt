@@ -292,6 +292,11 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Other", FontSize.Large, true);
 
             createCheckBox("chkMinimizeToTary", "Minimize to System Tray", newAppSettings.ClientSettings, "MinimizeToTray", true);
+
+            createLabel("lblResourceTitle", "Resources Folder", FontSize.NormalBold, true);
+            createLabel("lblResource", "If you want to update the WebDriver (chromedriver.exe etc),\nopen the Resources folder and overwrite the file.", FontSize.Small, true);
+            Button btnRes = createButton("btnOpenResources", "Open Resources Folder", 280, true);
+            btnRes.Click += (sender, e) => btnShowRecoures_Click(sender, e);
         }
         private void showApplicationScriptFileSettings()
         {
@@ -1066,6 +1071,15 @@ namespace taskt.UI.Forms
         private void cmbInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
         {
             newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
+        }
+        #endregion
+
+        #region Application Events
+        private void btnShowRecoures_Click(object sender, EventArgs e)
+        {
+            var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
+            string path = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
+            System.Diagnostics.Process.Start(path);
         }
         #endregion
     }
