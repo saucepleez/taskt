@@ -88,7 +88,7 @@ namespace taskt.Core
                 return;
             }
 
-            if (instanceType.autoWrapVariableMarker)
+            if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
             {
                 instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
             }
@@ -122,7 +122,7 @@ namespace taskt.Core
                 return;
             }
 
-            if (instanceType.autoWrapVariableMarker)
+            if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
             {
                 instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
             }
