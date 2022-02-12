@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,36 +19,39 @@ namespace taskt.Core.Automation.Commands
     public class GetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please input The Dictionary Variable")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyDescription("Please input The Dictionary Variable")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key for the Dictionary")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**key1** or **{{{vKeyName}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyDescription("Please indicate the key for the Dictionary")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**key1** or **{{{vKeyName}}}**")]
+        [Remarks("If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "Current Position")]
         public string v_Key { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the variable to apply result")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        [Attributes.PropertyAttributes.SampleUsage("**vMyData** or **{{{myData}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [PropertyDescription("Please indicate the variable to apply result")]
+        [InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        [SampleUsage("**vMyData** or **{{{myData}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_OutputVariable { get; set; }
 
         public GetDictionaryValueCommand()
@@ -61,8 +65,8 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //Retrieve Dictionary by name
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vKey = v_Key.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
+            
             //var dataSetVariable = LookupVariable(engine);
 
             ////Declare local dictionary and assign output
@@ -84,6 +88,26 @@ namespace taskt.Core.Automation.Commands
 
             //Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
             Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+
+            string vKey = "";
+            if (String.IsNullOrEmpty(v_Key))
+            {
+                var variable = v_InputData.GetRawVariable(engine);
+                int pos = variable.CurrentPosition;
+                string[] keys = dic.Keys.ToArray();
+                if ((pos >= 0) && (pos < keys.Length))
+                {
+                    vKey = keys[pos];
+                }
+                else
+                {
+                    throw new Exception("Strange Current Position value in Dictionary " + v_InputData);
+                }
+            }
+            else
+            {
+                vKey = v_Key.ConvertToUserVariable(sender);
+            }
 
             if (dic.ContainsKey(vKey))
             {
@@ -128,27 +152,27 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + $" [From: {v_InputData}, Get: {v_Key}, Store In: {v_OutputVariable}]";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(v_OutputVariable))
-            {
-                this.IsValid = false;
-                this.validationResult += "Variable is empty.\n";
-            }
-            if (String.IsNullOrEmpty(v_InputData))
-            {
-                this.IsValid = false;
-                this.validationResult += "Dictionary Variable Name is empty.\n";
-            }
-            if (String.IsNullOrEmpty(v_Key))
-            {
-                this.IsValid = false;
-                this.validationResult += "Key is empty.\n";
-            }
+        //    if (String.IsNullOrEmpty(v_OutputVariable))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Variable is empty.\n";
+        //    }
+        //    if (String.IsNullOrEmpty(v_InputData))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Dictionary Variable Name is empty.\n";
+        //    }
+        //    if (String.IsNullOrEmpty(v_Key))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Key is empty.\n";
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
