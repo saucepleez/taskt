@@ -81,21 +81,21 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_ListName).FirstOrDefault();
+        //private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        //{
+        //    //search for the variable
+        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_ListName).FirstOrDefault();
 
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_ListName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_ListName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_ListName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
+        //    //if variable was not found but it starts with variable naming pattern
+        //    if ((requiredVariable == null) && (v_ListName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_ListName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+        //    {
+        //        //reformat and attempt
+        //        var reformattedVariable = v_ListName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
+        //        requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+        //    }
 
-            return requiredVariable;
-        }
+        //    return requiredVariable;
+        //}
 
         public override string GetDisplayValue()
         {
