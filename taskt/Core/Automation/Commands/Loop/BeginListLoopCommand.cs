@@ -38,9 +38,7 @@ namespace taskt.Core.Automation.Commands
             Core.Automation.Commands.BeginListLoopCommand loopCommand = (Core.Automation.Commands.BeginListLoopCommand)parentCommand.ScriptCommand;
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            int loopTimes;
             Script.ScriptVariable complexVariable = null;
-
 
             //get variable by regular name
             complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
@@ -80,6 +78,10 @@ namespace taskt.Core.Automation.Commands
             {
                 listToLoop = (List<MailItem>)complexVariable.VariableValue;
             }
+            else if (complexVariable.VariableValue is Dictionary<string, string>)
+            {
+                listToLoop = ((Dictionary<string, string>)complexVariable.VariableValue).Values.ToList();
+            }
             else if ((complexVariable.VariableValue.ToString().StartsWith("[")) && (complexVariable.VariableValue.ToString().EndsWith("]")) && (complexVariable.VariableValue.ToString().Contains(",")))
             {
                 //automatically handle if user has given a json array
@@ -100,28 +102,27 @@ namespace taskt.Core.Automation.Commands
                 throw new System.Exception("Complex Variable List Type<T> Not Supported");
             }
 
-
-            loopTimes = listToLoop.Count;
-
+            int loopTimes = listToLoop.Count;
 
             for (int i = 0; i < loopTimes; i++)
             {
                 if (complexVariable != null)
+                {
                     complexVariable.CurrentPosition = i;
-
-             
-
+                }
+                
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
                     if (engine.IsCancellationPending)
+                    {
                         return;
+                    }
 
                     (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                     engine.ExecuteCommand(cmd);
-
 
                     if (engine.CurrentLoopCancelled)
                     {
