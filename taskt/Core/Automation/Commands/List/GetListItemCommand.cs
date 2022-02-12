@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,32 +19,35 @@ namespace taskt.Core.Automation.Commands
     public class GetListItemCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the List Variable Name.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing List.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myList** or **{{{myList}}}** or **[1,2,3]**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
+        [PropertyDescription("Please indicate the List Variable Name.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a existing List.")]
+        [SampleUsage("**myList** or **{{{myList}}}** or **[1,2,3]**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the List item.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid List index value")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vIndex}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please enter the index of the List item.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a valid List index value")]
+        [SampleUsage("**0** or **-1** or **{{{vIndex}}}**")]
+        [Remarks("If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "Current Position")]
         public string v_ItemIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Assign to Variable")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [PropertyDescription("Assign to Variable")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_UserVariableName { get; set; }
 
         public GetListItemCommand()
@@ -52,12 +56,11 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get List Item";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             //var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
             //int index = int.Parse(itemIndex);
             ////get variable by regular name
@@ -127,7 +130,7 @@ namespace taskt.Core.Automation.Commands
             var listVariable = v_ListName.GetRawVariable(engine);
             if (listVariable == null)
             {
-                throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+                throw new Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
             }
 
             dynamic listToIndex;
@@ -162,8 +165,17 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
-            int index = int.Parse(itemIndex);
+            int index = 0;
+            if (String.IsNullOrEmpty(v_ItemIndex))
+            {
+                index = listVariable.CurrentPosition;
+            }
+            else
+            {
+                var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
+                index = int.Parse(itemIndex);
+            }
+            
             if (index < 0)
             {
                 index = listToIndex.Count + index;
@@ -209,39 +221,39 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + $" [From '{v_ListName}', Index: '{v_ItemIndex}', Store In: '{v_UserVariableName}']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_ListName))
-            {
-                this.validationResult += "List Name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_ItemIndex))
-            {
-                this.validationResult += "Index of List item is empty.\n";
-                this.IsValid = false;
-            }
-            //else
-            //{
-            //    int vIndex;
-            //    if (int.TryParse(this.v_ItemIndex, out vIndex))
-            //    {
-            //        if (vIndex < 0)
-            //        {
-            //            this.validationResult += "Specify a value of 0 or more for index of List item.\n";
-            //            this.IsValid = false;
-            //        }
-            //    }
-            //}
-            if (String.IsNullOrEmpty(this.v_UserVariableName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_ListName))
+        //    {
+        //        this.validationResult += "List Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_ItemIndex))
+        //    {
+        //        this.validationResult += "Index of List item is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    //else
+        //    //{
+        //    //    int vIndex;
+        //    //    if (int.TryParse(this.v_ItemIndex, out vIndex))
+        //    //    {
+        //    //        if (vIndex < 0)
+        //    //        {
+        //    //            this.validationResult += "Specify a value of 0 or more for index of List item.\n";
+        //    //            this.IsValid = false;
+        //    //        }
+        //    //    }
+        //    //}
+        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
