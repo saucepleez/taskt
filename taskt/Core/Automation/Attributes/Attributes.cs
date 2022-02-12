@@ -347,10 +347,12 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyInstanceType : System.Attribute
     {
         public InstanceType instanceType = InstanceType.none;
+        public bool autoWrapVariableMarker = false;
 
-        public PropertyInstanceType(InstanceType type)
+        public PropertyInstanceType(InstanceType type, bool autoWrapVariableMarker = false)
         {
             this.instanceType = type;
+            this.autoWrapVariableMarker = autoWrapVariableMarker;
         }
 
         public enum InstanceType
