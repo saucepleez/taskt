@@ -7,9 +7,8 @@ using System.Data;
 
 namespace taskt.Core
 {
-    class DatasetCommands
+    class DataTableControl
     {
-
         public System.Data.DataTable CreateDataTable(string connection, string query)
         {
             //create vars
@@ -34,7 +33,6 @@ namespace taskt.Core
             //}
 
             return dataTable;
-
         }
 
 
