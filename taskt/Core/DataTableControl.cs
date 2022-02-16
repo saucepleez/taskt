@@ -34,8 +34,5 @@ namespace taskt.Core
 
             return dataTable;
         }
-
-
-
     }
 }
