@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
 
             if ((index < 0) || (index >= srcDT.Rows.Count))
             {
-                throw new Exception("Row Index is out of range of DataTable");
+                throw new Exception("Strange Row Index " + v_DataRowIndex + ", parsed " + index);
             }
 
             List<string> myList = new List<string>();
