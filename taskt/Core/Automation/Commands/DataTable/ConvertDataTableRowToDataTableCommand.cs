@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,36 +19,39 @@ namespace taskt.Core.Automation.Commands
     public class ConvertDataTableRowToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to fet rows from.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please indicate the DataTable Variable Name")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a existing DataTable to fet rows from.")]
+        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the index of the Row")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid DataRow index value")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vRowIndex}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyDescription("Please enter the index of the Row")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a valid DataRow index value")]
+        [SampleUsage("**0** or **1** or **-1** or **{{{vRowIndex}}}**")]
+        [Remarks("**-1** means index of the last row.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "Current Position")]
         public string v_DataRowIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable Name To Assign The DataTable")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyDescription("Please Specify the Variable Name To Assign The DataTable")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("Result DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_OutputVariableName { get; set; }
 
         public ConvertDataTableRowToDataTableCommand()
@@ -60,19 +64,28 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
             DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
-            int index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
-            if (index < 0)
+            int index = 0;
+            if (String.IsNullOrEmpty(v_DataRowIndex))
             {
-                throw new Exception("Index of row is < 0");
+                index = v_DataTableName.GetRawVariable(engine).CurrentPosition;
             }
-            else if (index > srcDT.Rows.Count)
+            else
             {
-                throw new Exception("Index exceeds the number of rows");
+                index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
+                if (index < 0)
+                {
+                    index = srcDT.Rows.Count + index;
+                }
+            }
+
+            if ((index < 0) || (index >= srcDT.Rows.Count))
+            {
+                throw new Exception("Strange Row Index " + v_DataRowIndex + ", parsed " + index);
             }
 
             DataTable myDT = new DataTable();
@@ -103,38 +116,38 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Row '" + v_DataRowIndex + "' to DataTable '" + v_OutputVariableName + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-            if (String.IsNullOrEmpty(this.v_DataTableName))
-            {
-                this.validationResult += "DataTable is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_DataRowIndex))
-            {
-                this.validationResult += "Index is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                int index;
-                if (int.TryParse(this.v_DataRowIndex, out index))
-                {
-                    if (index < 0)
-                    {
-                        this.validationResult += "Index value is < 0.\n";
-                        this.IsValid = false;
-                    }
-                }
-            }
-            if (String.IsNullOrEmpty(this.v_OutputVariableName))
-            {
-                this.validationResult += "Result DataTable is empty.\n";
-                this.IsValid = false;
-            }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+        //    if (String.IsNullOrEmpty(this.v_DataTableName))
+        //    {
+        //        this.validationResult += "DataTable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_DataRowIndex))
+        //    {
+        //        this.validationResult += "Index is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        int index;
+        //        if (int.TryParse(this.v_DataRowIndex, out index))
+        //        {
+        //            if (index < 0)
+        //            {
+        //                this.validationResult += "Index value is < 0.\n";
+        //                this.IsValid = false;
+        //            }
+        //        }
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_OutputVariableName))
+        //    {
+        //        this.validationResult += "Result DataTable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
