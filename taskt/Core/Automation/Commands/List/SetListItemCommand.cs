@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Strange index value : " + v_ItemIndex);
+                throw new Exception("Strange index " + v_ItemIndex + ", parsed " + index);
             }
         }
 
