@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    throw new Exception("Strange Current Position in Dictionary " + v_InputData);
+                    throw new Exception("Strange Current Position in Dictionary " + pos);
                 }
             }
             else
