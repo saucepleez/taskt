@@ -34,5 +34,31 @@ namespace taskt.Core
 
             return dataTable;
         }
+
+        public static int GetRowIndex(string dataTableName, string rowIndex, Automation.Engine.AutomationEngineInstance engine)
+        {
+            var srcDT = dataTableName.GetDataTableVariable(engine);
+
+            int index;
+            if (String.IsNullOrEmpty(rowIndex))
+            {
+                index = dataTableName.GetRawVariable(engine).CurrentPosition;
+            }
+            else
+            {
+                index = int.Parse(rowIndex.ConvertToUserVariable(engine));
+                if (index < 0)
+                {
+                    index = srcDT.Rows.Count + index;
+                }
+            }
+
+            if ((index < 0) || (index >= srcDT.Rows.Count))
+            {
+                throw new Exception("Strange Row Index " + rowIndex + ", parsed " + index);
+            }
+
+            return index;
+        }
     }
 }
