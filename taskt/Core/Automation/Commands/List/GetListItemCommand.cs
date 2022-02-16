@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Enter a valid List index value")]
         [SampleUsage("**0** or **-1** or **{{{vIndex}}}**")]
-        [Remarks("If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
+        [Remarks("**-1** means index of the last row. If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Position")]
         public string v_ItemIndex { get; set; }
