@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,23 +19,25 @@ namespace taskt.Core.Automation.Commands
     public class DeleteDataTableRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name to be delete a row")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable Variable Name")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please indicate the DataTable Variable Name to be delete a row")]
+        [InputSpecification("Enter a existing DataTable Variable Name")]
+        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Row Index to delete")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vRow}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please specify the Row Index to delete")]
+        [InputSpecification("")]
+        [SampleUsage("**0** or **1** or **-1** or **{{{vRow}}}**")]
+        [Remarks("**-1** means index of the last row.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "Current Row")]
         public string v_RowIndex { get; set; }
 
         public DeleteDataTableRowCommand()
@@ -47,7 +50,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //Script.ScriptVariable dtVar = v_DataTableName.GetRawVariable(engine);
             //DataTable myDT;
@@ -61,13 +64,14 @@ namespace taskt.Core.Automation.Commands
             //}
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            var vIndex = v_RowIndex.ConvertToUserVariable(engine);
-            int index = int.Parse(vIndex);
-            
-            if ((index < 0) || (index >= myDT.Rows.Count))
-            {
-                throw new Exception("Row index " + v_RowIndex + " does not exists");
-            }
+            //var vIndex = v_RowIndex.ConvertToUserVariable(engine);
+            //int index = int.Parse(vIndex);
+
+            //if ((index < 0) || (index >= myDT.Rows.Count))
+            //{
+            //    throw new Exception("Row index " + v_RowIndex + " does not exists");
+            //}
+            int index = DataTableControl.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             myDT.Rows[index].Delete();
         }
@@ -86,34 +90,34 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Delete DataTable '" + v_DataTableName + "' Row Index '" + v_RowIndex + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_DataTableName))
-            {
-                this.validationResult += "DataTable Name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_RowIndex))
-            {
-                this.validationResult += "Row index is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                int index;
-                if (int.TryParse(this.v_RowIndex, out index))
-                {
-                    if (index < 0)
-                    {
-                        this.validationResult += "Row index is less than 0.\n";
-                        this.IsValid = false;
-                    }
-                }
-            }
+        //    if (String.IsNullOrEmpty(this.v_DataTableName))
+        //    {
+        //        this.validationResult += "DataTable Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_RowIndex))
+        //    {
+        //        this.validationResult += "Row index is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        int index;
+        //        if (int.TryParse(this.v_RowIndex, out index))
+        //        {
+        //            if (index < 0)
+        //            {
+        //                this.validationResult += "Row index is less than 0.\n";
+        //                this.IsValid = false;
+        //            }
+        //        }
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
