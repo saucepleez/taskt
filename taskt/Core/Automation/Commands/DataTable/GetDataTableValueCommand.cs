@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,53 +19,56 @@ namespace taskt.Core.Automation.Commands
     public class GetDataTableValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please indicate the DataTable Variable Name")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a existing DataTable.")]
+        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column value type")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**Index** or **Column Name**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
+        [PropertyDescription("Please specify the Column value type")]
+        [InputSpecification("")]
+        [SampleUsage("**Index** or **Column Name**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Index")]
+        [PropertyUISelectionOption("Column Name")]
+        [PropertyIsOptional(true, "Column Name")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column Name or Index")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **id** or **{{{vIndex}}}** or **{{{vColumn}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please specify the Column Name or Index")]
+        [InputSpecification("")]
+        [SampleUsage("**0** or **id** or **{{{vIndex}}}** or **{{{vColumn}}}**")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
         public string v_ColumnIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Row Index")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vIndex}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please specify the Row Index")]
+        [InputSpecification("")]
+        [SampleUsage("**0** or **1** or **-1** or **{{{vIndex}}}**")]
+        [Remarks("**-1** means index of last row.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "Current Row")]
         public string v_RowIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable Name To Assign the Value")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [PropertyDescription("Please Specify the Variable Name To Assign the Value")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_UserVariableName { get; set; }
 
         public GetDataTableValueCommand()
@@ -77,7 +81,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
             //string columnType = "Column Name";
@@ -99,12 +103,13 @@ namespace taskt.Core.Automation.Commands
 
             string columnPosition = v_ColumnIndex.ConvertToUserVariable(engine);
 
-            string vRow = v_RowIndex.ConvertToUserVariable(engine);
-            int rowIndex = int.Parse(vRow);
-            if ((rowIndex < 0) || (rowIndex >= myDT.Rows.Count))
-            {
-                throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
-            }
+            //string vRow = v_RowIndex.ConvertToUserVariable(engine);
+            //int rowIndex = int.Parse(vRow);
+            //if ((rowIndex < 0) || (rowIndex >= myDT.Rows.Count))
+            //{
+            //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
+            //}
+            int rowIndex = DataTableControl.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             string v;
             if (columnType == "column name")
@@ -134,32 +139,32 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [DataTable '" + v_DataTableName + "' Column '" + v_ColumnIndex+ "' Row '" + v_RowIndex + "', Store In: '" + v_UserVariableName + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_DataTableName))
-            {
-                this.validationResult += "DataTable Name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_ColumnIndex))
-            {
-                this.validationResult += "Column Name or Index is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_RowIndex))
-            {
-                this.validationResult += "Row Index is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_UserVariableName))
-            {
-                this.validationResult += "Result Value variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_DataTableName))
+        //    {
+        //        this.validationResult += "DataTable Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_ColumnIndex))
+        //    {
+        //        this.validationResult += "Column Name or Index is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_RowIndex))
+        //    {
+        //        this.validationResult += "Row Index is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
+        //    {
+        //        this.validationResult += "Result Value variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
