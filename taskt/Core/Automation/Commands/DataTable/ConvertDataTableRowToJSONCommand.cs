@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("**-1** means index of the last row.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyIsOptional(true, "Current Position")]
+        [PropertyIsOptional(true, "Current Row")]
         public string v_DataRowIndex { get; set; }
 
         [XmlAttribute]
@@ -69,24 +69,25 @@ namespace taskt.Core.Automation.Commands
             //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
             DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
-            int index = 0;
-            if (String.IsNullOrEmpty(v_DataRowIndex))
-            {
-                index = v_DataTableName.GetRawVariable(engine).CurrentPosition;
-            }
-            else
-            {
-                index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
-                if (index < 0)
-                {
-                    index = srcDT.Rows.Count + index;
-                }
-            }
+            //int index = 0;
+            //if (String.IsNullOrEmpty(v_DataRowIndex))
+            //{
+            //    index = v_DataTableName.GetRawVariable(engine).CurrentPosition;
+            //}
+            //else
+            //{
+            //    index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
+            //    if (index < 0)
+            //    {
+            //        index = srcDT.Rows.Count + index;
+            //    }
+            //}
 
-            if ((index < 0) || (index >= srcDT.Rows.Count))
-            {
-                throw new Exception("Strange Row Index " + v_DataRowIndex + ", parsed " + index);
-            }
+            //if ((index < 0) || (index >= srcDT.Rows.Count))
+            //{
+            //    throw new Exception("Strange Row Index " + v_DataRowIndex + ", parsed " + index);
+            //}
+            int index = DataTableControl.GetRowIndex(v_DataTableName, v_DataRowIndex, engine);
 
             Dictionary<string, string> tDic = new Dictionary<string, string>();
             for(int i = 0; i < srcDT.Columns.Count; i++)
