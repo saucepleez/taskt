@@ -60,5 +60,69 @@ namespace taskt.Core
 
             return index;
         }
+
+        public static bool isColumnExists(DataTable table, string columnName)
+        {
+            foreach(string column in table.Columns)
+            {
+                if (column == columnName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool isColumnExists(DataTable table, int columnIndex)
+        {
+            if (columnIndex >= 0)
+            {
+                return (columnIndex < table.Columns.Count);
+            }
+            else
+            {
+                int idx = table.Columns.Count + columnIndex;
+                return ((idx >= 0) && (idx < table.Columns.Count));
+            }
+        }
+
+        public static string GetColumnName(string tableName, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        {
+            DataTable table = tableName.GetDataTableVariable(engine);
+            string col = columnName.ConvertToUserVariable(engine);
+            if (isColumnExists(table, col))
+            {
+                return col;
+            }
+            else
+            {
+                throw new Exception("Strange Column Name " + columnName);
+            }
+        }
+
+        public static int GetColumnIndex(string tableName, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
+        {
+            DataTable table = tableName.GetDataTableVariable(engine);
+
+            int index;
+            if (int.TryParse(columnIndex.ConvertToUserVariable(engine), out index))
+            {
+                if (index < 0)
+                {
+                    index = table.Columns.Count + index;
+                }
+                if (isColumnExists(table, index))
+                {
+                    return index;
+                }
+                else
+                {
+                    throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
+                }
+            }
+            else
+            {
+                throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
+            }
+        }
     }
 }
