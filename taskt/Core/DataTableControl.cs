@@ -63,9 +63,9 @@ namespace taskt.Core
 
         public static bool isColumnExists(DataTable table, string columnName)
         {
-            foreach(string column in table.Columns)
+            for (int i = 0; i < table.Columns.Count; i++)
             {
-                if (column == columnName)
+                if (table.Columns[i].ColumnName == columnName)
                 {
                     return true;
                 }
@@ -85,9 +85,8 @@ namespace taskt.Core
             }
         }
 
-        public static string GetColumnName(string tableName, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        public static string GetColumnName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
-            DataTable table = tableName.GetDataTableVariable(engine);
             string col = columnName.ConvertToUserVariable(engine);
             if (isColumnExists(table, col))
             {
@@ -99,10 +98,8 @@ namespace taskt.Core
             }
         }
 
-        public static int GetColumnIndex(string tableName, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
+        public static int GetColumnIndex(DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
         {
-            DataTable table = tableName.GetDataTableVariable(engine);
-
             int index;
             if (int.TryParse(columnIndex.ConvertToUserVariable(engine), out index))
             {
