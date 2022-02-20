@@ -100,10 +100,10 @@ namespace taskt.Core.Automation.Commands
 
                 case "index":
                     //int colIdx = int.Parse(v_DataColumnIndex.ConvertToUserVariable(engine));
-                    int colIdx = DataTableControl.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
+                    int colIndex = DataTableControl.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
                     for (int i = 0; i < srcDT.Rows.Count; i++)
                     {
-                        myList.Add((srcDT.Rows[i][colIdx] != null) ? srcDT.Rows[i][colIdx].ToString() : "");
+                        myList.Add((srcDT.Rows[i][colIndex] != null) ? srcDT.Rows[i][colIndex].ToString() : "");
                     }
                     break;
             }
