@@ -44,8 +44,8 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Please specify the Column Name or Index")]
         [InputSpecification("")]
-        [SampleUsage("**0** or **id** or **{{{vIndex}}}** or **{{{vColumn}}}**")]
-        [Remarks("")]
+        [SampleUsage("**0** or **id** or **{{{vColumn}}}** or **-1**")]
+        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
         public string v_ColumnIndex { get; set; }
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
             //}
             string columnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
-            string columnPosition = v_ColumnIndex.ConvertToUserVariable(engine);
+            //string columnPosition = v_ColumnIndex.ConvertToUserVariable(engine);
 
             //string vRow = v_RowIndex.ConvertToUserVariable(engine);
             //int rowIndex = int.Parse(vRow);
@@ -112,12 +112,13 @@ namespace taskt.Core.Automation.Commands
             
             if (columnType == "column name")
             {
-                myDT.Rows[rowIndex][columnPosition] = newValue;
+                string columnName = DataTableControl.GetColumnName(myDT, v_ColumnIndex, engine);
+                myDT.Rows[rowIndex][columnName] = newValue;
                 
             }
             else
             {
-                int colIndex = int.Parse(columnPosition);
+                int colIndex = DataTableControl.GetColumnIndex(myDT, v_ColumnIndex, engine);
                 myDT.Rows[rowIndex][colIndex] = newValue;
             }
         }
