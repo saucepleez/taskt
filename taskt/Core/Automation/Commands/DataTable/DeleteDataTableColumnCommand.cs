@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,35 +19,37 @@ namespace taskt.Core.Automation.Commands
     public class DeleteDataTableColumnCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to add rows to.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please indicate the DataTable Variable Name")]
+        [InputSpecification("Enter a existing DataTable to add rows to.")]
+        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column type (Default is Column Name)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
+        [PropertyDescription("Please specify the Column type (Default is Column Name)")]
+        [InputSpecification("")]
+        [SampleUsage("**Column Name** or **Index**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Column Name")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyIsOptional(true, "Column Name")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify the Column Name to delete")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **newColumn** or **{{{vNewColumn}}}** or **{{{vIndex}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyDescription("Please specify the Column Name to delete")]
+        [InputSpecification("")]
+        [SampleUsage("**0** or **newColumn** or **{{{vColumn}}}** or **-1**")]
+        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DeleteColumnName { get; set; }
 
         public DeleteDataTableColumnCommand()
@@ -59,7 +62,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
             //string colType = "Column Name";
@@ -82,30 +85,34 @@ namespace taskt.Core.Automation.Commands
 
             if (colType == "column name")
             {
-                string trgColumn = v_DeleteColumnName.ConvertToUserVariable(engine);
+                //string trgColumn = v_DeleteColumnName.ConvertToUserVariable(engine);
 
-                for (int i = 0; i < myDT.Columns.Count; i++)
-                {
-                    if (myDT.Columns[i].ColumnName == trgColumn)
-                    {
-                        myDT.Columns.Remove(trgColumn);
-                        return;
-                    }
-                }
-                throw new Exception("Column " + v_DeleteColumnName + " does not exists");
+                //for (int i = 0; i < myDT.Columns.Count; i++)
+                //{
+                //    if (myDT.Columns[i].ColumnName == trgColumn)
+                //    {
+                //        myDT.Columns.Remove(trgColumn);
+                //        return;
+                //    }
+                //}
+                //throw new Exception("Column " + v_DeleteColumnName + " does not exists");
+                string trgColumn = DataTableControl.GetColumnName(myDT, v_DeleteColumnName, engine);
+                myDT.Columns.Remove(trgColumn);
             }
             else
             {
-                string tCol = v_DeleteColumnName.ConvertToUserVariable(engine);
-                int colIndex = int.Parse(tCol);
-                if ((colIndex >= 0) && (colIndex < myDT.Columns.Count))
-                {
-                    myDT.Columns.RemoveAt(colIndex);
-                }
-                else
-                {
-                    throw new Exception("Column index " + v_DeleteColumnName + " does not exists");
-                }
+                //string tCol = v_DeleteColumnName.ConvertToUserVariable(engine);
+                //int colIndex = int.Parse(tCol);
+                //if ((colIndex >= 0) && (colIndex < myDT.Columns.Count))
+                //{
+                //    myDT.Columns.RemoveAt(colIndex);
+                //}
+                //else
+                //{
+                //    throw new Exception("Column index " + v_DeleteColumnName + " does not exists");
+                //}
+                int colIndex = DataTableControl.GetColumnIndex(myDT, v_DeleteColumnName, engine);
+                myDT.Columns.RemoveAt(colIndex);
             }
         }
         public override List<Control> Render(frmCommandEditor editor)
@@ -123,22 +130,22 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Delete DataTable '" + v_DataTableName + "' Column '" + v_DeleteColumnName + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_DataTableName))
-            {
-                this.validationResult += "DataTable Name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_DeleteColumnName))
-            {
-                this.validationResult += "Column Name is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_DataTableName))
+        //    {
+        //        this.validationResult += "DataTable Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_DeleteColumnName))
+        //    {
+        //        this.validationResult += "Column Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
