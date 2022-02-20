@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,47 +19,50 @@ namespace taskt.Core.Automation.Commands
     public class ConvertDataTableColumnToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to fet rows from.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please indicate the DataTable Variable Name")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a existing DataTable to fet rows from.")]
+        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Column type")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**Column Name** or **Index**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Column Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Column Name")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please specify Column type")]
+        [InputSpecification("")]
+        [SampleUsage("**Column Name** or **Index**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Column Name")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyIsOptional(true, "Column Name")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the Name or Index of the Column")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a valid Column index value")]
-        [Attributes.PropertyAttributes.SampleUsage("**id** or **0** or **{{{vColumn}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyDescription("Please enter the Name or Index of the Column")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a valid Column index value")]
+        [SampleUsage("**id** or **0** or **{{{vColumn}}}** or **-1**")]
+        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DataColumnIndex { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Specify the Variable Name To Assign The List")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyDescription("Please Specify the Variable Name To Assign The DataTable")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("Converted DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_OutputVariableName { get; set; }
 
         public ConvertDataTableColumnToDataTableCommand()
@@ -71,7 +75,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
             DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
@@ -82,7 +86,8 @@ namespace taskt.Core.Automation.Commands
             switch (colType)
             {
                 case "column name":
-                    var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
+                    //var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
+                    string colName = DataTableControl.GetColumnName(srcDT, v_DataColumnIndex, engine);
                     myDT.Columns.Add(colName);
                     for (int i = 0; i < srcDT.Rows.Count; i++)
                     {
@@ -92,7 +97,8 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "index":
-                    int colIdx = int.Parse(v_DataColumnIndex.ConvertToUserVariable(engine));
+                    //int colIdx = int.Parse(v_DataColumnIndex.ConvertToUserVariable(engine));
+                    int colIdx = DataTableControl.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
                     myDT.Columns.Add(srcDT.Columns[colIdx].ColumnName);
                     for (int i = 0; i < srcDT.Rows.Count; i++)
                     {
@@ -120,26 +126,26 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Column '" + v_DataColumnIndex + "' to DataTable '" + v_OutputVariableName + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-            if (String.IsNullOrEmpty(this.v_DataTableName))
-            {
-                this.validationResult += "DataTable is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_DataColumnIndex))
-            {
-                this.validationResult += "Column Name or Index is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_OutputVariableName))
-            {
-                this.validationResult += "Result DataTable is empty.\n";
-                this.IsValid = false;
-            }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+        //    if (String.IsNullOrEmpty(this.v_DataTableName))
+        //    {
+        //        this.validationResult += "DataTable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_DataColumnIndex))
+        //    {
+        //        this.validationResult += "Column Name or Index is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_OutputVariableName))
+        //    {
+        //        this.validationResult += "Result DataTable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
