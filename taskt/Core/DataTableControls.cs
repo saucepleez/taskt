@@ -61,7 +61,7 @@ namespace taskt.Core
             return index;
         }
 
-        public static bool isColumnExists(DataTable table, string columnName)
+        public static bool isColumnExists(this DataTable table, string columnName)
         {
             for (int i = 0; i < table.Columns.Count; i++)
             {
@@ -72,7 +72,7 @@ namespace taskt.Core
             }
             return false;
         }
-        public static bool isColumnExists(DataTable table, int columnIndex)
+        public static bool isColumnExists(this DataTable table, int columnIndex)
         {
             if (columnIndex >= 0)
             {
@@ -85,7 +85,7 @@ namespace taskt.Core
             }
         }
 
-        public static string GetColumnName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        public static string GetColumnName(this DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
             string col = columnName.ConvertToUserVariable(engine);
             if (isColumnExists(table, col))
@@ -98,7 +98,7 @@ namespace taskt.Core
             }
         }
 
-        public static int GetColumnIndex(DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
+        public static int GetColumnIndex(this DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
         {
             int index;
             if (int.TryParse(columnIndex.ConvertToUserVariable(engine), out index))
@@ -120,6 +120,32 @@ namespace taskt.Core
             {
                 throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
             }
+        }
+
+        public static string GetFieldValue(this DataTable dt, string parameterName, string parameterColumnName = "Parameter Name", string valueColumnName = "Parameter Value")
+        {
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+                {
+                    return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+                }
+            }
+            return "";
+        }
+
+        public static Dictionary<string, string> GetFieldValues(this DataTable dt, string parameterColumnName = "Parameter Name", string valueColumnName = "Parameter Value")
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i][parameterColumnName] == null)
+                {
+                    string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+                    dic.Add(dt.Rows[i][parameterColumnName].ToString(), value);
+                }
+            }
+            return dic;
         }
     }
 }
