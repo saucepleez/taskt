@@ -157,6 +157,9 @@ namespace taskt.UI.Forms
                 case "Editor - Menu Bar":
                     showEditorMenuBarSettings();
                     break;
+                case "Editor - Validation":
+                    showEditorValidationSettings();
+                    break;
                 case "Editor - Variable":
                     showEditorVariableSettings();
                     break;
@@ -483,6 +486,14 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Variable", FontSize.Large, true);
 
             createCheckBox("chkInsertVariablePosition", "Insert variable at cursor position(Textbox / Combobox)", newAppSettings.ClientSettings, "InsertVariableAtCursor", true);
+        }
+        private void showEditorValidationSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Validation", FontSize.Large, true);
+
+            createCheckBox("chkSilentValidation", "Don't show Script Command Validation Message", newAppSettings.ClientSettings, "DontShowValidationMessage", true);
         }
         #endregion
 

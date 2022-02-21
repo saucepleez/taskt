@@ -62,26 +62,28 @@
             System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Insert Command");
             System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Menu Bar");
             System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Mini Map");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Variable");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Editor", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Validation");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Variable");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Editor", new System.Windows.Forms.TreeNode[] {
             treeNode16,
             treeNode17,
             treeNode18,
             treeNode19,
             treeNode20,
             treeNode21,
-            treeNode22});
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Local Listener");
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Server");
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Network", new System.Windows.Forms.TreeNode[] {
-            treeNode24,
-            treeNode25});
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Check Update");
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Update", new System.Windows.Forms.TreeNode[] {
-            treeNode27});
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Display Manager");
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("VM", new System.Windows.Forms.TreeNode[] {
-            treeNode29});
+            treeNode22,
+            treeNode23});
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Local Listener");
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Server");
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Network", new System.Windows.Forms.TreeNode[] {
+            treeNode25,
+            treeNode26});
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Check Update");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Update", new System.Windows.Forms.TreeNode[] {
+            treeNode28});
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Display Manager");
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("VM", new System.Windows.Forms.TreeNode[] {
+            treeNode30});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNewSettings));
             this.tableLayoutBase = new System.Windows.Forms.TableLayoutPanel();
             this.panelHeader = new System.Windows.Forms.Panel();
@@ -267,32 +269,34 @@
             treeNode20.Text = "Menu Bar";
             treeNode21.Name = "nodeMiniMap";
             treeNode21.Text = "Mini Map";
-            treeNode22.Name = "nodeVariable";
-            treeNode22.Text = "Variable";
-            treeNode23.Name = "nodeEditor";
-            treeNode23.Text = "Editor";
-            treeNode24.Name = "nodeLocalListener";
-            treeNode24.Text = "Local Listener";
-            treeNode25.Name = "nodeServer";
-            treeNode25.Text = "Server";
-            treeNode26.Name = "nodeNetwork";
-            treeNode26.Text = "Network";
-            treeNode27.Name = "nodeCheckUpdate";
-            treeNode27.Text = "Check Update";
-            treeNode28.Name = "nodeUpdate";
-            treeNode28.Text = "Update";
-            treeNode29.Name = "nodeDisplayManager";
-            treeNode29.Text = "Display Manager";
-            treeNode30.Name = "nodeVM";
-            treeNode30.Text = "VM";
+            treeNode22.Name = "nodeValidation";
+            treeNode22.Text = "Validation";
+            treeNode23.Name = "nodeVariable";
+            treeNode23.Text = "Variable";
+            treeNode24.Name = "nodeEditor";
+            treeNode24.Text = "Editor";
+            treeNode25.Name = "nodeLocalListener";
+            treeNode25.Text = "Local Listener";
+            treeNode26.Name = "nodeServer";
+            treeNode26.Text = "Server";
+            treeNode27.Name = "nodeNetwork";
+            treeNode27.Text = "Network";
+            treeNode28.Name = "nodeCheckUpdate";
+            treeNode28.Text = "Check Update";
+            treeNode29.Name = "nodeUpdate";
+            treeNode29.Text = "Update";
+            treeNode30.Name = "nodeDisplayManager";
+            treeNode30.Text = "Display Manager";
+            treeNode31.Name = "nodeVM";
+            treeNode31.Text = "VM";
             this.tvSettingsMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode7,
             treeNode13,
             treeNode15,
-            treeNode23,
-            treeNode26,
-            treeNode28,
-            treeNode30});
+            treeNode24,
+            treeNode27,
+            treeNode29,
+            treeNode31});
             this.tvSettingsMenu.Size = new System.Drawing.Size(194, 308);
             this.tvSettingsMenu.TabIndex = 0;
             this.tvSettingsMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSettingsMenu_AfterSelect);

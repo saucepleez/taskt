@@ -568,7 +568,7 @@
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />
-    <Compile Include="Core\DataTableControl.cs" />
+    <Compile Include="Core\DataTableControls.cs" />
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\InstanceCounter.cs" />
