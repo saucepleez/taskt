@@ -18,6 +18,34 @@ namespace taskt.Core
             '\n', '\r', '\t'
         };
 
+        public static int ConvertToUserVariableAsInteger(this string str, string parameterName, object sender)
+        {
+            string convertedText = str.ConvertToUserVariable(sender);
+            int v;
+            if (int.TryParse(convertedText, out v))
+            {
+                return v;
+            }
+            else
+            {
+                throw new Exception(parameterName + " is not a integer number.");
+            }
+        }
+
+        public static decimal ConvertToUserVariableAsDecimal(this string str, string parameterName, object sender)
+        {
+            string convertedText = str.ConvertToUserVariable(sender);
+            decimal v;
+            if (decimal.TryParse(convertedText, out v))
+            {
+                return v;
+            }
+            else
+            {
+                throw new Exception(parameterName + " is not a number.");
+            }
+        }
+
         /// <summary>
         /// Replaces variable placeholders ([variable]) with variable text.
         /// </summary>
