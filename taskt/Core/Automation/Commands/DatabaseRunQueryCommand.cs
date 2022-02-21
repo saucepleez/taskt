@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
 
-            DataTableControl dataSetCommand = new DataTableControl();
+            DataTableControls dataSetCommand = new DataTableControls();
             DataTable requiredData = dataSetCommand.CreateDataTable(v_ConnectionString.ConvertToUserVariable(sender), v_UserQuery);
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;

@@ -202,11 +202,11 @@ namespace taskt.Core.Automation.Commands
             string trgColumnName;
             if (colType == "column name")
             {
-                trgColumnName = DataTableControl.GetColumnName(myDT, v_SetColumnName, engine);
+                trgColumnName = DataTableControls.GetColumnName(myDT, v_SetColumnName, engine);
             }
             else
             {
-                int colIndex = DataTableControl.GetColumnIndex(myDT, v_SetColumnName, engine);
+                int colIndex = DataTableControls.GetColumnIndex(myDT, v_SetColumnName, engine);
                 trgColumnName = myDT.Columns[colIndex].ColumnName;
             }
 

@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.Commands
             {
                 case "column name":
                     //var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
-                    string colName = DataTableControl.GetColumnName(srcDT, v_DataColumnIndex, engine);
+                    string colName = DataTableControls.GetColumnName(srcDT, v_DataColumnIndex, engine);
                     for (int i = 0; i < srcDT.Rows.Count; i++)
                     {
                         myList.Add((srcDT.Rows[i][colName] != null) ? srcDT.Rows[i][colName].ToString() : "");
@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
 
                 case "index":
                     //int colIdx = int.Parse(v_DataColumnIndex.ConvertToUserVariable(engine));
-                    int colIndex = DataTableControl.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
+                    int colIndex = DataTableControls.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
                     for (int i = 0; i < srcDT.Rows.Count; i++)
                     {
                         myList.Add((srcDT.Rows[i][colIndex] != null) ? srcDT.Rows[i][colIndex].ToString() : "");

@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    throw new Exception("Strange Row Index " + v_DataRowIndex + ", parsed " + index);
             //}
-            int index = DataTableControl.GetRowIndex(v_DataTableName, v_DataRowIndex, engine);
+            int index = DataTableControls.GetRowIndex(v_DataTableName, v_DataRowIndex, engine);
 
             Dictionary<string, string> tDic = new Dictionary<string, string>();
             for(int i = 0; i < srcDT.Columns.Count; i++)

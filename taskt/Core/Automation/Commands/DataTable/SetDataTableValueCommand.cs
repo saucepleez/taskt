@@ -106,19 +106,19 @@ namespace taskt.Core.Automation.Commands
             //{
             //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
             //}
-            int rowIndex = DataTableControl.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             string newValue = v_NewValue.ConvertToUserVariable(engine);
             
             if (columnType == "column name")
             {
-                string columnName = DataTableControl.GetColumnName(myDT, v_ColumnIndex, engine);
+                string columnName = DataTableControls.GetColumnName(myDT, v_ColumnIndex, engine);
                 myDT.Rows[rowIndex][columnName] = newValue;
                 
             }
             else
             {
-                int colIndex = DataTableControl.GetColumnIndex(myDT, v_ColumnIndex, engine);
+                int colIndex = DataTableControls.GetColumnIndex(myDT, v_ColumnIndex, engine);
                 myDT.Rows[rowIndex][colIndex] = newValue;
             }
         }

@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
                 //    }
                 //}
                 //throw new Exception("Column " + v_DeleteColumnName + " does not exists");
-                string trgColumn = DataTableControl.GetColumnName(myDT, v_DeleteColumnName, engine);
+                string trgColumn = DataTableControls.GetColumnName(myDT, v_DeleteColumnName, engine);
                 myDT.Columns.Remove(trgColumn);
             }
             else
@@ -111,7 +111,7 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    throw new Exception("Column index " + v_DeleteColumnName + " does not exists");
                 //}
-                int colIndex = DataTableControl.GetColumnIndex(myDT, v_DeleteColumnName, engine);
+                int colIndex = DataTableControls.GetColumnIndex(myDT, v_DeleteColumnName, engine);
                 myDT.Columns.RemoveAt(colIndex);
             }
         }

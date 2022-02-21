@@ -178,11 +178,11 @@ namespace taskt.Core.Automation.Commands
             string trgColName;
             if (colType == "column name")
             {
-                trgColName = DataTableControl.GetColumnName(setDT, v_SetColumnName, engine);
+                trgColName = DataTableControls.GetColumnName(setDT, v_SetColumnName, engine);
             }
             else
             {
-                int colIndex = DataTableControl.GetColumnIndex(setDT, v_SetColumnName, engine);
+                int colIndex = DataTableControls.GetColumnIndex(setDT, v_SetColumnName, engine);
                 trgColName = setDT.Columns[colIndex].ColumnName;
             }
             //bool isExistsCol = false;
@@ -222,7 +222,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    throw new Exception("Column " + v_SetColumnName + " does not exists in DataTable to setted");
             //}
-            if (!DataTableControl.isColumnExists(myDT, trgColName))
+            if (!DataTableControls.isColumnExists(myDT, trgColName))
             {
                 throw new Exception("Column " + v_SetColumnName + " does not exists in DataTable to setted");
             }

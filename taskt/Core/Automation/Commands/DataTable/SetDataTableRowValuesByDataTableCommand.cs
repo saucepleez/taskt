@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
             //}
-            int rowIndex = DataTableControl.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             //string vSrcRowIndex = v_SrcRowIndex.ConvertToUserVariable(engine);
             //int srcRowIndex = int.Parse(vSrcRowIndex);
@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
             //}
-            int srcRowIndex = DataTableControl.GetRowIndex(v_RowName, v_SrcRowIndex, engine);
+            int srcRowIndex = DataTableControls.GetRowIndex(v_RowName, v_SrcRowIndex, engine);
 
             //string notExistsKey;
             //if (String.IsNullOrEmpty(v_NotExistsKey))

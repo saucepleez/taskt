@@ -120,7 +120,7 @@ namespace taskt.Core.Automation.Commands
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
             //Query required from workbook using OLEDB
-            DataTableControl dataSetCommand = new DataTableControl();
+            DataTableControls dataSetCommand = new DataTableControls();
 
             string param = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=""" + vFilePath + @""";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""";
             string queue = "Select " + vKeyColumn + "," + vValueColumn + " From " + "[" + vSheet + "$]";

@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    throw new Exception("Row index " + v_RowIndex + " does not exists");
             //}
-            int index = DataTableControl.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            int index = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             myDT.Rows[index].Delete();
         }

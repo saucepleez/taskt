@@ -109,7 +109,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
             //}
-            int rowIndex = DataTableControl.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             string v;
             if (columnType == "column name")
