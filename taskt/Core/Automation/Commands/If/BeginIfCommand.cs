@@ -599,17 +599,13 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(ActionDropdown);
 
-
-
             ParameterControls = new List<Control>();
             ParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionParameterTable", this));
             ParameterControls.Add(RecorderControl);
             ParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfActionParameterTable", this, new Control[] { IfGridViewHelper }, editor));
             ParameterControls.Add(IfGridViewHelper);
 
-
             RenderedControls.AddRange(ParameterControls);
-
 
             return RenderedControls;
         }
@@ -617,25 +613,22 @@ namespace taskt.Core.Automation.Commands
 
         private void ifAction_SelectionChangeCommitted(object sender, EventArgs e, frmCommandEditor editor)
         {
-
-
             ComboBox ifAction = (ComboBox)ActionDropdown;
             DataGridView ifActionParameterBox = (DataGridView)IfGridViewHelper;
-           
-
-
 
             Core.Automation.Commands.BeginIfCommand cmd = (Core.Automation.Commands.BeginIfCommand)this;
             DataTable actionParameters = cmd.v_IfActionParameterTable;
 
             //sender is null when command is updating
             if (sender != null)
+            {
                 actionParameters.Rows.Clear();
+            }
 
-            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+            //DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
 
             //recorder control
-            Control recorderControl = (Control)RecorderControl;
+            //Control recorderControl = (Control)RecorderControl;
 
             //remove if exists            
             if (RecorderControl.Visible)
@@ -643,252 +636,266 @@ namespace taskt.Core.Automation.Commands
                 RecorderControl.Hide();
             }
 
-
             switch (ifAction.SelectedItem)
             {
                 case "Value":
                 case "Date Compare":
-
-                    ifActionParameterBox.Visible = true;
-
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Value1", "");
-                        actionParameters.Rows.Add("Operand", "");
-                        actionParameters.Rows.Add("Value2", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-                    //combobox cell for Variable Name
-                    comparisonComboBox = new DataGridViewComboBoxCell();
-                    comparisonComboBox.Items.Add("is equal to");
-                    comparisonComboBox.Items.Add("is greater than");
-                    comparisonComboBox.Items.Add("is greater than or equal to");
-                    comparisonComboBox.Items.Add("is less than");
-                    comparisonComboBox.Items.Add("is less than or equal to");
-                    comparisonComboBox.Items.Add("is not equal to");
-
-                    //assign cell as a combobox
-                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-
+                    RenderValueCompare(sender, ifActionParameterBox, actionParameters);
                     break;
+
                 case "Variable Compare":
-   
-                    ifActionParameterBox.Visible = true;
-
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Value1", "");
-                        actionParameters.Rows.Add("Operand", "");
-                        actionParameters.Rows.Add("Value2", "");
-                        actionParameters.Rows.Add("Case Sensitive", "No");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-                    //combobox cell for Variable Name
-                    comparisonComboBox = new DataGridViewComboBoxCell();
-                    comparisonComboBox.Items.Add("contains");
-                    comparisonComboBox.Items.Add("does not contain");
-                    comparisonComboBox.Items.Add("is equal to");
-                    comparisonComboBox.Items.Add("is not equal to");
-
-                    //assign cell as a combobox
-                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-
-                    comparisonComboBox = new DataGridViewComboBoxCell();
-                    comparisonComboBox.Items.Add("Yes");
-                    comparisonComboBox.Items.Add("No");
-
-                    //assign cell as a combobox
-                    ifActionParameterBox.Rows[3].Cells[1] = comparisonComboBox;
-
+                    RenderVariableCompare(sender, ifActionParameterBox, actionParameters);
                     break;
+
 
                 case "Variable Has Value":
-      
-                    ifActionParameterBox.Visible = true;
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Variable Name", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-                    break;
                 case "Variable Is Numeric":
-              
-                    ifActionParameterBox.Visible = true;
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Variable Name", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
+                    RenderVariableIsHas(sender, ifActionParameterBox, actionParameters);
                     break;
+
                 case "Error Occured":
-             
-                    ifActionParameterBox.Visible = true;
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Line Number", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-                    break;
                 case "Error Did Not Occur":
-
-                    ifActionParameterBox.Visible = true;
-
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Line Number", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
+                    RenderErrorOccur(sender, ifActionParameterBox, actionParameters);
                     break;
+
                 case "Window Name Exists":
                 case "Active Window Name Is":
-   
-                    ifActionParameterBox.Visible = true;
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Window Name", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
+                    RenderWindowName(sender, ifActionParameterBox, actionParameters);
                     break;
+
                 case "File Exists":
-         
-                    ifActionParameterBox.Visible = true;
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("File Path", "");
-                        actionParameters.Rows.Add("True When", "It Does Exist");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-
-                    //combobox cell for Variable Name
-                    comparisonComboBox = new DataGridViewComboBoxCell();
-                    comparisonComboBox.Items.Add("It Does Exist");
-                    comparisonComboBox.Items.Add("It Does Not Exist");
-
-                    //assign cell as a combobox
-                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-
+                    RenderFileExists(sender, ifActionParameterBox, actionParameters);
                     break;
+
                 case "Folder Exists":
-           
-                    ifActionParameterBox.Visible = true;
-
-
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Folder Path", "");
-                        actionParameters.Rows.Add("True When", "It Does Exist");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-                    //combobox cell for Variable Name
-                    comparisonComboBox = new DataGridViewComboBoxCell();
-                    comparisonComboBox.Items.Add("It Does Exist");
-                    comparisonComboBox.Items.Add("It Does Not Exist");
-
-                    //assign cell as a combobox
-                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+                    RenderFolderExists(sender, ifActionParameterBox, actionParameters);
                     break;
+
                 case "Web Element Exists":
-      
-                    ifActionParameterBox.Visible = true;
-
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Selenium Instance Name", editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
-                        actionParameters.Rows.Add("Element Search Method", "");
-                        actionParameters.Rows.Add("Element Search Parameter", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-
-
-                    comparisonComboBox = new DataGridViewComboBoxCell();
-                    comparisonComboBox.Items.Add("Find Element By XPath");
-                    comparisonComboBox.Items.Add("Find Element By ID");
-                    comparisonComboBox.Items.Add("Find Element By Name");
-                    comparisonComboBox.Items.Add("Find Element By Tag Name");
-                    comparisonComboBox.Items.Add("Find Element By Class Name");
-                    comparisonComboBox.Items.Add("Find Element By CSS Selector");
-
-                    //assign cell as a combobox
-                    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-
+                    RenderWebElement(sender, ifActionParameterBox, actionParameters, editor);
                     break;
+
                 case "GUI Element Exists":
-
-         
-                    ifActionParameterBox.Visible = true;
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Window Name", editor.appSettings.EngineSettings.CurrentWindowKeyword);
-                        actionParameters.Rows.Add("Element Search Method", "");
-                        actionParameters.Rows.Add("Element Search Parameter", "");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-
-
-
-                    var parameterName = new DataGridViewComboBoxCell();
-                    parameterName.Items.Add("AcceleratorKey");
-                    parameterName.Items.Add("AccessKey");
-                    parameterName.Items.Add("AutomationId");
-                    parameterName.Items.Add("ClassName");
-                    parameterName.Items.Add("FrameworkId");
-                    parameterName.Items.Add("HasKeyboardFocus");
-                    parameterName.Items.Add("HelpText");
-                    parameterName.Items.Add("IsContentElement");
-                    parameterName.Items.Add("IsControlElement");
-                    parameterName.Items.Add("IsEnabled");
-                    parameterName.Items.Add("IsKeyboardFocusable");
-                    parameterName.Items.Add("IsOffscreen");
-                    parameterName.Items.Add("IsPassword");
-                    parameterName.Items.Add("IsRequiredForForm");
-                    parameterName.Items.Add("ItemStatus");
-                    parameterName.Items.Add("ItemType");
-                    parameterName.Items.Add("LocalizedControlType");
-                    parameterName.Items.Add("Name");
-                    parameterName.Items.Add("NativeWindowHandle");
-                    parameterName.Items.Add("ProcessID");
-
-                    //assign cell as a combobox
-                    ifActionParameterBox.Rows[1].Cells[1] = parameterName;
-
-                    RecorderControl.Show();
-
+                    RenderGUIElement(sender, ifActionParameterBox, actionParameters, editor);
                     break;
 
                 case "Boolean":
-                    ifActionParameterBox.Visible = true;
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Variable Name", "");
-                        actionParameters.Rows.Add("Value Is", "True");
-                        ifActionParameterBox.DataSource = actionParameters;
-                    }
-                    //assign cell as a combobox
-                    var booleanParam = new DataGridViewComboBoxCell();
-                    booleanParam.Items.Add("True");
-                    booleanParam.Items.Add("False");
-                    ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
-
-                    RecorderControl.Show();
+                    RenderBoolean(sender, ifActionParameterBox, actionParameters);
                     break;
 
                 default:
                     break;
             }
         }
+
+        private void RenderValueCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Value1", "");
+                actionParameters.Rows.Add("Operand", "");
+                actionParameters.Rows.Add("Value2", "");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+
+            //combobox cell for Variable Name
+            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+            comparisonComboBox.Items.Add("is equal to");
+            comparisonComboBox.Items.Add("is greater than");
+            comparisonComboBox.Items.Add("is greater than or equal to");
+            comparisonComboBox.Items.Add("is less than");
+            comparisonComboBox.Items.Add("is less than or equal to");
+            comparisonComboBox.Items.Add("is not equal to");
+
+            //assign cell as a combobox
+            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+        }
+
+        private void RenderVariableCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Value1", "");
+                actionParameters.Rows.Add("Operand", "");
+                actionParameters.Rows.Add("Value2", "");
+                actionParameters.Rows.Add("Case Sensitive", "No");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+
+            //combobox cell for Variable Name
+            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+            comparisonComboBox.Items.Add("contains");
+            comparisonComboBox.Items.Add("does not contain");
+            comparisonComboBox.Items.Add("is equal to");
+            comparisonComboBox.Items.Add("is not equal to");
+
+            //assign cell as a combobox
+            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+
+            DataGridViewComboBoxCell caseSensitiveComboBox = new DataGridViewComboBoxCell();
+            caseSensitiveComboBox.Items.Add("Yes");
+            caseSensitiveComboBox.Items.Add("No");
+
+            //assign cell as a combobox
+            ifActionParameterBox.Rows[3].Cells[1] = caseSensitiveComboBox;
+        }
+
+        private void RenderVariableIsHas(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Variable Name", "");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+        }
+
+        private void RenderErrorOccur(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Line Number", "");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+        }
+
+        private void RenderWindowName(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Window Name", "");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+        }
+
+        private void RenderFileExists(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("File Path", "");
+                actionParameters.Rows.Add("True When", "It Does Exist");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+
+            //combobox cell for Variable Name
+            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+            comparisonComboBox.Items.Add("It Does Exist");
+            comparisonComboBox.Items.Add("It Does Not Exist");
+
+            //assign cell as a combobox
+            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+        }
+
+        private void RenderFolderExists(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Folder Path", "");
+                actionParameters.Rows.Add("True When", "It Does Exist");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+
+            //combobox cell for Variable Name
+            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+            comparisonComboBox.Items.Add("It Does Exist");
+            comparisonComboBox.Items.Add("It Does Not Exist");
+
+            //assign cell as a combobox
+            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+        }
+
+        private void RenderWebElement(object sender, DataGridView ifActionParameterBox, DataTable actionParameters, frmCommandEditor editor)
+        {
+            ifActionParameterBox.Visible = true;
+
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Selenium Instance Name", editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
+                actionParameters.Rows.Add("Element Search Method", "");
+                actionParameters.Rows.Add("Element Search Parameter", "");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+
+            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+            comparisonComboBox.Items.Add("Find Element By XPath");
+            comparisonComboBox.Items.Add("Find Element By ID");
+            comparisonComboBox.Items.Add("Find Element By Name");
+            comparisonComboBox.Items.Add("Find Element By Tag Name");
+            comparisonComboBox.Items.Add("Find Element By Class Name");
+            comparisonComboBox.Items.Add("Find Element By CSS Selector");
+
+            //assign cell as a combobox
+            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+        }
+
+        private void RenderGUIElement(object sender, DataGridView ifActionParameterBox, DataTable actionParameters, frmCommandEditor editor)
+        {
+            ifActionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Window Name", editor.appSettings.EngineSettings.CurrentWindowKeyword);
+                actionParameters.Rows.Add("Element Search Method", "");
+                actionParameters.Rows.Add("Element Search Parameter", "");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+
+            var parameterName = new DataGridViewComboBoxCell();
+            parameterName.Items.Add("AcceleratorKey");
+            parameterName.Items.Add("AccessKey");
+            parameterName.Items.Add("AutomationId");
+            parameterName.Items.Add("ClassName");
+            parameterName.Items.Add("FrameworkId");
+            parameterName.Items.Add("HasKeyboardFocus");
+            parameterName.Items.Add("HelpText");
+            parameterName.Items.Add("IsContentElement");
+            parameterName.Items.Add("IsControlElement");
+            parameterName.Items.Add("IsEnabled");
+            parameterName.Items.Add("IsKeyboardFocusable");
+            parameterName.Items.Add("IsOffscreen");
+            parameterName.Items.Add("IsPassword");
+            parameterName.Items.Add("IsRequiredForForm");
+            parameterName.Items.Add("ItemStatus");
+            parameterName.Items.Add("ItemType");
+            parameterName.Items.Add("LocalizedControlType");
+            parameterName.Items.Add("Name");
+            parameterName.Items.Add("NativeWindowHandle");
+            parameterName.Items.Add("ProcessID");
+
+            //assign cell as a combobox
+            ifActionParameterBox.Rows[1].Cells[1] = parameterName;
+
+            //RecorderControl.Show();
+        }
+
+        private void RenderBoolean(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Variable Name", "");
+                actionParameters.Rows.Add("Value Is", "True");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+            //assign cell as a combobox
+            DataGridViewComboBoxCell booleanParam = new DataGridViewComboBoxCell();
+            booleanParam.Items.Add("True");
+            booleanParam.Items.Add("False");
+            ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
+
+            //RecorderControl.Show();
+        }
+
         private void ShowIfElementRecorder(object sender, EventArgs e)
         {
-
             //get command reference
             Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
 
@@ -915,12 +922,7 @@ namespace taskt.Core.Automation.Commands
             DataGridView ifActionBox = IfGridViewHelper;
             ifActionBox.Rows[0].Cells[1].Value = newElementRecorder.cboWindowTitle.Text;
 
-
             MessageBox.Show(sb.ToString());
-
-
-
-
         }
         public override string GetDisplayValue()
         {
@@ -941,12 +943,15 @@ namespace taskt.Core.Automation.Commands
 
                     return "If ([" + v_IfActionType + "] " + value1 + " " + operand + " " + value2 + ")";
 
+
                 case "Variable Has Value":
                     string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Variable Name"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Variable " + variableName + " Has Value)";
+
+
                 case "Variable Is Numeric":
                     string varName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                             where rw.Field<string>("Parameter Name") == "Variable Name"
@@ -954,30 +959,33 @@ namespace taskt.Core.Automation.Commands
 
                     return "If (Variable " + varName + " Is Numeric)";
 
-                case "Error Occured":
 
+                case "Error Occured":
                     string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                           where rw.Field<string>("Parameter Name") == "Line Number"
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Error Occured on Line Number " + lineNumber + ")";
-                case "Error Did Not Occur":
 
+
+                case "Error Did Not Occur":
                     string lineNum = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                           where rw.Field<string>("Parameter Name") == "Line Number"
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If (Error Did Not Occur on Line Number " + lineNum + ")";
+
+
                 case "Window Name Exists":
                 case "Active Window Name Is":
-
                     string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                           where rw.Field<string>("Parameter Name") == "Window Name"
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                     return "If " + v_IfActionType + " [Name: " + windowName + "]";
-                case "File Exists":
 
+
+                case "File Exists":
                     string filePath = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                         where rw.Field<string>("Parameter Name") == "File Path"
                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -989,8 +997,8 @@ namespace taskt.Core.Automation.Commands
 
                     return "If " + v_IfActionType + " [File: " + filePath + "]";
 
-                case "Folder Exists":
 
+                case "Folder Exists":
                     string folderPath = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                           where rw.Field<string>("Parameter Name") == "Folder Path"
                                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -1002,9 +1010,8 @@ namespace taskt.Core.Automation.Commands
 
                     return "If " + v_IfActionType + " [Folder: " + folderPath + "]";
 
+
                 case "Web Element Exists":
-
-
                     string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                              where rw.Field<string>("Parameter Name") == "Element Search Parameter"
                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -1013,12 +1020,10 @@ namespace taskt.Core.Automation.Commands
                                             where rw.Field<string>("Parameter Name") == "Element Search Method"
                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-
                     return "If Web Element Exists [" + searchMethod + ": " + parameterName + "]";
 
+
                 case "GUI Element Exists":
-
-
                     string guiWindowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                          where rw.Field<string>("Parameter Name") == "Window Name"
                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -1027,10 +1032,8 @@ namespace taskt.Core.Automation.Commands
                                              where rw.Field<string>("Parameter Name") == "Element Search Parameter"
                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-
-
-
                     return "If GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
+
 
                 case "Boolean":
                     string booleanVariable = ((from rw in v_IfActionParameterTable.AsEnumerable()
@@ -1042,13 +1045,12 @@ namespace taskt.Core.Automation.Commands
                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
                     return "If [Boolean] " + booleanVariable + " is " + compareTo;
                     
-                default:
 
+                default:
                     return "If .... ";
             }
 
         }
-
 
         private void IfGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
