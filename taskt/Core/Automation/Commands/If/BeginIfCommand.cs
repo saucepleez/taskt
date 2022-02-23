@@ -64,6 +64,10 @@ namespace taskt.Core.Automation.Commands
         //[NonSerialized]
         //CommandItemControl RecorderControl;
 
+        [XmlIgnore]
+        [NonSerialized]
+        CommandItemControl lnkBrowserInstance;
+
         public BeginIfCommand()
         {
             this.CommandName = "BeginIfCommand";
@@ -858,7 +862,17 @@ namespace taskt.Core.Automation.Commands
             ParameterControls = new List<Control>();
             ParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionParameterTable", this));
             //ParameterControls.Add(RecorderControl);
-            ParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfActionParameterTable", this, new Control[] { IfGridViewHelper }, editor));
+
+            var helpers = CommandControls.CreateUIHelpersFor("v_IfActionParameterTable", this, new Control[] { IfGridViewHelper }, editor);
+
+            lnkBrowserInstance = CommandControls.CreateUIHelper();
+            lnkBrowserInstance.Name = "v_IfActionParameterTable_helper_WebBrowser";
+            lnkBrowserInstance.CommandDisplay = "Select WebBrowser Instance";
+            //RenderedControls.Add(lnkBrowserInstance);
+
+            helpers.Add(lnkBrowserInstance);
+
+            ParameterControls.AddRange(helpers);
             ParameterControls.Add(IfGridViewHelper);
 
             RenderedControls.AddRange(ParameterControls);
@@ -891,6 +905,8 @@ namespace taskt.Core.Automation.Commands
             //{
             //    RecorderControl.Hide();
             //}
+
+            lnkBrowserInstance.Hide();
 
             switch (ifAction.SelectedItem)
             {
@@ -929,6 +945,7 @@ namespace taskt.Core.Automation.Commands
 
                 case "Web Element Exists":
                     ConditionControls.RenderWebElement(sender, ifActionParameterBox, actionParameters, editor.appSettings);
+                    lnkBrowserInstance.Show();
                     break;
 
                 case "GUI Element Exists":
