@@ -564,12 +564,12 @@
     <Compile Include="Core\Automation\Commands\TextFile\WriteTextFileCommand.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
-    <Compile Include="Core\FilePathControls.cs" />
+    <Compile Include="Core\Automation\Commands\FilePathControls.cs" />
     <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />
-    <Compile Include="Core\DataTableControls.cs" />
+    <Compile Include="Core\Automation\Commands\DataTableControls.cs" />
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\InstanceCounter.cs" />
@@ -606,7 +606,7 @@
     <Compile Include="UI\CustomControls\CustomControls.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core\ExcelControls.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelControls.cs" />
     <Compile Include="UI\Forms\frmAttendedMode.cs">
       <SubType>Form</SubType>
     </Compile>

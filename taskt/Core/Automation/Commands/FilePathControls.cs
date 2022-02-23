@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace taskt.Core
 {
-    public class FilePathControls
+    internal class FilePathControls
     {
         public static bool hasFolderPath(string path)
         {

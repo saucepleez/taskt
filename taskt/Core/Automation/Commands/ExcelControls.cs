@@ -3,7 +3,7 @@ using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core
 {
-    public class ExcelControls
+    internal class ExcelControls
     {
         public static Application getExcelInstance(Automation.Engine.AutomationEngineInstance engine, string instanceName)
         {

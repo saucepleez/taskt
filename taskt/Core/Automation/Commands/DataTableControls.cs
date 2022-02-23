@@ -7,7 +7,7 @@ using System.Data;
 
 namespace taskt.Core
 {
-    class DataTableControls
+    internal class DataTableControls
     {
         public System.Data.DataTable CreateDataTable(string connection, string query)
         {
