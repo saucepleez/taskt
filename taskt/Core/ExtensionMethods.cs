@@ -60,6 +60,20 @@ namespace taskt.Core
             }
         }
 
+        public static DateTime ConvertToUserVariableAsDate(this string str, string parameterName, object sender)
+        {
+            string convertedText = str.ConvertToUserVariable(sender);
+            DateTime v;
+            if (DateTime.TryParse(convertedText, out v))
+            {
+                return v;
+            }
+            else
+            {
+                throw new Exception(parameterName + " is not a DateTime.");
+            }
+        }
+
         /// <summary>
         /// Replaces variable placeholders ([variable]) with variable text.
         /// </summary>
