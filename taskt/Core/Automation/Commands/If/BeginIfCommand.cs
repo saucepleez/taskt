@@ -60,9 +60,9 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private List<Control> ParameterControls;
 
-        [XmlIgnore]
-        [NonSerialized]
-        CommandItemControl RecorderControl;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //CommandItemControl RecorderControl;
 
         public BeginIfCommand()
         {
@@ -835,18 +835,18 @@ namespace taskt.Core.Automation.Commands
             IfGridViewHelper.CellClick += IfGridViewHelper_CellClick;
             IfGridViewHelper.CellBeginEdit += IfGridViewHelper_CellBeginEdit;
 
-            var helperTheme = editor.Theme.UIHelper;
-            RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
-            RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            //RecorderControl.ForeColor = Color.AliceBlue;
-            RecorderControl.Font = new Font(helperTheme.Font, helperTheme.FontSize, helperTheme.Style);
-            RecorderControl.ForeColor = helperTheme.FontColor;
-            RecorderControl.BackColor = helperTheme.BackColor;
-            RecorderControl.Name = "guirecorder_helper";
-            RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-            RecorderControl.CommandDisplay = "Element Recorder";
-            RecorderControl.Click += ShowIfElementRecorder;
-            RecorderControl.Hide();
+            //var helperTheme = editor.Theme.UIHelper;
+            //RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
+            //RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            ////RecorderControl.ForeColor = Color.AliceBlue;
+            //RecorderControl.Font = new Font(helperTheme.Font, helperTheme.FontSize, helperTheme.Style);
+            //RecorderControl.ForeColor = helperTheme.FontColor;
+            //RecorderControl.BackColor = helperTheme.BackColor;
+            //RecorderControl.Name = "guirecorder_helper";
+            //RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            //RecorderControl.CommandDisplay = "Element Recorder";
+            //RecorderControl.Click += ShowIfElementRecorder;
+            //RecorderControl.Hide();
 
             ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_IfActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionType", this));
@@ -857,7 +857,7 @@ namespace taskt.Core.Automation.Commands
 
             ParameterControls = new List<Control>();
             ParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionParameterTable", this));
-            ParameterControls.Add(RecorderControl);
+            //ParameterControls.Add(RecorderControl);
             ParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfActionParameterTable", this, new Control[] { IfGridViewHelper }, editor));
             ParameterControls.Add(IfGridViewHelper);
 
@@ -887,10 +887,10 @@ namespace taskt.Core.Automation.Commands
             //Control recorderControl = (Control)RecorderControl;
 
             //remove if exists            
-            if (RecorderControl.Visible)
-            {
-                RecorderControl.Hide();
-            }
+            //if (RecorderControl.Visible)
+            //{
+            //    RecorderControl.Hide();
+            //}
 
             switch (ifAction.SelectedItem)
             {
@@ -1150,36 +1150,36 @@ namespace taskt.Core.Automation.Commands
         //    //RecorderControl.Show();
         //}
 
-        private void ShowIfElementRecorder(object sender, EventArgs e)
-        {
-            //get command reference
-            Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
+        //private void ShowIfElementRecorder(object sender, EventArgs e)
+        //{
+        //    //get command reference
+        //    Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
 
-            //create recorder
-            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
+        //    //create recorder
+        //    UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
+        //    newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
 
-            //show form
-            newElementRecorder.ShowDialog();
+        //    //show form
+        //    newElementRecorder.ShowDialog();
 
 
-            var sb = new StringBuilder();
-            sb.AppendLine("Element Properties Found!");
-            sb.AppendLine(Environment.NewLine);
-            sb.AppendLine("Element Search Method - Element Search Parameter");
-            foreach (DataRow rw in cmd.v_UIASearchParameters.Rows)
-            {
-                if (rw.ItemArray[2].ToString().Trim() == string.Empty)
-                    continue;
+        //    var sb = new StringBuilder();
+        //    sb.AppendLine("Element Properties Found!");
+        //    sb.AppendLine(Environment.NewLine);
+        //    sb.AppendLine("Element Search Method - Element Search Parameter");
+        //    foreach (DataRow rw in cmd.v_UIASearchParameters.Rows)
+        //    {
+        //        if (rw.ItemArray[2].ToString().Trim() == string.Empty)
+        //            continue;
 
-                sb.AppendLine(rw.ItemArray[1].ToString() + " - " + rw.ItemArray[2].ToString());
-            }
+        //        sb.AppendLine(rw.ItemArray[1].ToString() + " - " + rw.ItemArray[2].ToString());
+        //    }
 
-            DataGridView ifActionBox = IfGridViewHelper;
-            ifActionBox.Rows[0].Cells[1].Value = newElementRecorder.cboWindowTitle.Text;
+        //    DataGridView ifActionBox = IfGridViewHelper;
+        //    ifActionBox.Rows[0].Cells[1].Value = newElementRecorder.cboWindowTitle.Text;
 
-            MessageBox.Show(sb.ToString());
-        }
+        //    MessageBox.Show(sb.ToString());
+        //}
         public override string GetDisplayValue()
         {
             switch (v_IfActionType)
