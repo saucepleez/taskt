@@ -56,7 +56,7 @@ namespace taskt.Core
             }
             else
             {
-                throw new Exception(parameterName + " is not a bool.");
+                throw new Exception(parameterName + " is not a boolean.");
             }
         }
 
