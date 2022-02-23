@@ -89,7 +89,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var ifResult = DetermineStatementTruth(sender);
+            bool ifResult = DetermineStatementTruth(sender);
 
             int startIndex, endIndex, elseIndex;
             if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.Automation.Commands.ElseCommand))
@@ -132,436 +132,692 @@ namespace taskt.Core.Automation.Commands
 
             bool ifResult = false;
 
-            if (v_IfActionType == "Value")
+            string actionType = v_IfActionType.ConvertToUserVariable(engine);
+
+            switch (actionType.ToLower())
             {
-                string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value1"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Operand"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value2"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                case "value":
+                    ifResult = DetermineStatementTruth_Value(engine);
+                    break;
 
-                value1 = value1.ConvertToUserVariable(sender);
-                value2 = value2.ConvertToUserVariable(sender);
+                case "date compare":
+                    ifResult = DetermineStatementTruth_DateCompare(engine);
+                    break;
 
-                bool tempBool;
-                bool isBoolCompare = (bool.TryParse(value1, out tempBool) && bool.TryParse(value2, out tempBool));
-                decimal cdecValue1, cdecValue2;
+                case "variable compare":
+                    ifResult = DetermineStatementTruth_VariableCompare(engine);
+                    break;
 
-                switch (operand)
-                {
-                    case "is equal to":
-                        if (isBoolCompare)
-                        {
-                            ifResult = (bool.Parse(value1) == bool.Parse(value2));
-                        }
-                        else
-                        {
-                            ifResult = (value1 == value2);
-                        }
-                        break;
+                case "variable has value":
+                    ifResult = DetermineStatementTruth_VariableHasValue(engine);
+                    break;
 
-                    case "is not equal to":
-                        if (isBoolCompare)
-                        {
-                            ifResult = (bool.Parse(value1) != bool.Parse(value2));
-                        }
-                        else
-                        {
-                            ifResult = (value1 != value2);
-                        }
-                        break;
+                case "variable is numeric":
+                    ifResult = DetermineStatementTruth_VariableIsNumeric(engine);
+                    break;
 
-                    case "is greater than":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        ifResult = (cdecValue1 > cdecValue2);
-                        break;
+                case "error occured":
+                    ifResult = DetermineStatementTruth_ErrorOccur(engine, false);
+                    break;
 
-                    case "is greater than or equal to":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        ifResult = (cdecValue1 >= cdecValue2);
-                        break;
+                case "error did not occur":
+                    ifResult = DetermineStatementTruth_ErrorOccur(engine, true);
+                    break;
 
-                    case "is less than":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        ifResult = (cdecValue1 < cdecValue2);
-                        break;
+                case "window name exists":
+                    ifResult = DetermineStatementTruth_WindowNameExists(engine);
+                    break;
 
-                    case "is less than or equal to":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        ifResult = (cdecValue1 <= cdecValue2);
-                        break;
-                }
+                case "active window name is":
+                    ifResult = DetermineStatementTruth_ActiveWindow(engine);
+                    break;
+
+                case "file exists":
+                    ifResult = DetermineStatementTruth_File(engine);
+                    break;
+
+                case "folder exists":
+                    ifResult = DetermineStatementTruth_Folder(engine);
+                    break;
+
+                case "web element exists":
+                    ifResult = DetermineStatementTruth_WebElement(engine);
+                    break;
+
+                case "gui element exists":
+                    ifResult = DetermineStatementTruth_GUIElement(engine);
+                    break;
+
+                case "boolean":
+                    ifResult = DetermineStatementTruth_Boolean(engine);
+                    break;
+
+                default:
+                    throw new Exception("If type not recognized!");
+                    break;
             }
-            else if (v_IfActionType == "Date Compare")
-            {
-                string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value1"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Operand"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value2"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                value1 = value1.ConvertToUserVariable(sender);
-                value2 = value2.ConvertToUserVariable(sender);
-
-                DateTime dt1, dt2;
-                dt1 = DateTime.Parse(value1);
-                dt2 = DateTime.Parse(value2);
-                switch (operand)
-                {
-                    case "is equal to":
-                        ifResult = (dt1 == dt2);
-                        break;
-
-                    case "is not equal to":
-                        ifResult = (dt1 != dt2);
-                        break;
-
-                    case "is greater than":
-                        ifResult = (dt1 > dt2);
-                        break;
-
-                    case "is greater than or equal to":
-                        ifResult = (dt1 >= dt2);
-                        break;
-
-                    case "is less than":
-                        ifResult = (dt1 < dt2);
-                        break;
-
-                    case "is less than or equal to":
-                        ifResult = (dt1 <= dt2);
-                        break;
-                }
-            }
-            else if (v_IfActionType == "Variable Compare")
-            {
-                string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value1"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Operand"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value2"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string caseSensitive = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Case Sensitive"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                value1 = value1.ConvertToUserVariable(sender);
-                value2 = value2.ConvertToUserVariable(sender);
-
-                if (caseSensitive == "No")
-                {
-                    value1 = value1.ToUpper();
-                    value2 = value2.ToUpper();
-                }
-
-                switch (operand)
-                {
-                    case "contains":
-                        ifResult = (value1.Contains(value2));
-                        break;
-
-                    case "does not contain":
-                        ifResult = (!value1.Contains(value2));
-                        break;
-
-                    case "is equal to":
-                        ifResult = (value1 == value2);
-                        break;
-
-                    case "is not equal to":
-                        ifResult = (value1 != value2);
-                        break;
-                }
-            }
-            else if (v_IfActionType == "Variable Has Value")
-            {
-                string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Variable Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
-
-                if (!string.IsNullOrEmpty(actualVariable))
-                {
-                    ifResult = true;
-                }
-                else
-                {
-                    ifResult = false;
-                }
-
-            }
-            else if (v_IfActionType == "Variable Is Numeric")
-            {
-                string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Variable Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
-
-                var numericTest = decimal.TryParse(actualVariable, out decimal parsedResult);
-
-                if (numericTest)
-                {
-                    ifResult = true;
-                }
-                else
-                {
-                    ifResult = false;
-                }
-
-            }
-            else if (v_IfActionType == "Error Occured")
-            {
-                //get line number
-                string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Line Number"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                //convert to variable
-                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
-
-                //convert to int
-                int lineNumber = int.Parse(variableLineNumber);
-
-                //determine if error happened
-                if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
-                {
-
-                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
-                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
-                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
-                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
-
-                    ifResult = true;
-                }
-                else
-                {
-                    ifResult = false;
-                }
-
-            }
-            else if (v_IfActionType == "Error Did Not Occur")
-            {
-                //get line number
-                string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Line Number"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                //convert to variable
-                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
-
-                //convert to int
-                int lineNumber = int.Parse(variableLineNumber);
-
-                //determine if error happened
-                if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() == 0)
-                {
-                    ifResult = true;
-                }
-                else
-                {
-                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
-                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
-                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
-                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
-
-                    ifResult = false;
-                }
-
-            }
-            else if (v_IfActionType == "Window Name Exists")
-            {
-                //get user supplied name
-                string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Window Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                //variable translation
-                string variablizedWindowName = windowName.ConvertToUserVariable(sender);
-
-                //search for window
-                IntPtr windowPtr = User32Functions.FindWindow(variablizedWindowName);
-
-                //conditional
-                if (windowPtr != IntPtr.Zero)
-                {
-                    ifResult = true;
-                }
-
-            }
-            else if (v_IfActionType == "Active Window Name Is")
-            {
-                string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Window Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string variablizedWindowName = windowName.ConvertToUserVariable(sender);
-
-                var currentWindowTitle = User32Functions.GetActiveWindowTitle();
-
-                if (currentWindowTitle == variablizedWindowName)
-                {
-                    ifResult = true;
-                }
-
-            }
-            else if (v_IfActionType == "File Exists")
-            {
-
-                string fileName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "File Path"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                              where rw.Field<string>("Parameter Name") == "True When"
-                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var userFileSelected = fileName.ConvertToUserVariable(sender);
-
-                bool existCheck = false;
-                if (trueWhenFileExists == "It Does Exist")
-                {
-                    existCheck = true;
-                }
-
-
-                if (System.IO.File.Exists(userFileSelected) == existCheck)
-                {
-                    ifResult = true;
-                }
-
-
-            }
-            else if (v_IfActionType == "Folder Exists")
-            {
-                string folderName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Folder Path"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                              where rw.Field<string>("Parameter Name") == "True When"
-                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var userFolderSelected = folderName.ConvertToUserVariable(sender);
-
-                bool existCheck = false;
-                if (trueWhenFileExists == "It Does Exist")
-                {
-                    existCheck = true;
-                }
-
-
-                if (System.IO.Directory.Exists(folderName) == existCheck)
-                {
-                    ifResult = true;
-                }
-
-            }
-            else if (v_IfActionType == "Web Element Exists")
-            {
-                string instanceName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Element Search Method"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-
-                SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
-                newElementActionCommand.v_SeleniumSearchType = searchMethod;
-                newElementActionCommand.v_InstanceName = instanceName.ConvertToUserVariable(sender);
-                bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
-                ifResult = elementExists;
-
-            }
-            else if (v_IfActionType == "GUI Element Exists")
-            {
-                string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Window Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                string elementSearchParam = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                              where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                              select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                string elementSearchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                               where rw.Field<string>("Parameter Name") == "Element Search Method"
-                                               select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-
-                if (windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
-                {
-                    windowName = User32Functions.GetActiveWindowTitle();
-                }
-
-                UIAutomationCommand newUIACommand = new UIAutomationCommand();
-                newUIACommand.v_WindowName = windowName;
-                newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
-                var handle = newUIACommand.SearchForGUIElement(sender, windowName);
-
-                if (handle is null)
-                {
-                    ifResult = false;
-                }
-                else
-                {
-                    ifResult = true;
-                }
-
-
-            }
-            else if (v_IfActionType == "Boolean")
-            {
-                string value = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Variable Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                string compare = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Value Is"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                bool vValue = bool.Parse(value);
-                switch (compare.ToLower())
-                {
-                    case "true":
-                        ifResult = vValue;
-                        break;
-                    case "false":
-                        ifResult = !vValue;
-                        break;
-                    default:
-                        throw new Exception("Value Is " + compare + " is not support.");
-                        break;
-                }
-            }
-            else
-            {
-                throw new Exception("If type not recognized!");
-            }
+            //if (v_IfActionType == "Value")
+            //{
+            //    ifResult = DetermineStatementTruth_Value(engine);
+            //}
+            //else if (v_IfActionType == "Date Compare")
+            //{
+            //    ifResult = DetermineStatementTruth_DateCompare(engine);
+            //}
+            //else if (v_IfActionType == "Variable Compare")
+            //{
+            //    ifResult = DetermineStatementTruth_VariableCompare(engine);
+            //}
+            //else if (v_IfActionType == "Variable Has Value")
+            //{
+            //    ifResult = DetermineStatementTruth_VariableHasValue(engine);
+            //}
+            //else if (v_IfActionType == "Variable Is Numeric")
+            //{
+            //    ifResult = DetermineStatementTruth_VariableIsNumeric(engine);
+            //}
+            //else if (v_IfActionType == "Error Occured")
+            //{
+            //    ////get line number
+            //    //string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //    //                          where rw.Field<string>("Parameter Name") == "Line Number"
+            //    //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //    ////convert to variable
+            //    //string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+            //    ////convert to int
+            //    //int lineNumber = int.Parse(variableLineNumber);
+
+            //    ////determine if error happened
+            //    //if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
+            //    //{
+
+            //    //    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+            //    //    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
+            //    //    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
+            //    //    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
+
+            //    //    ifResult = true;
+            //    //}
+            //    //else
+            //    //{
+            //    //    ifResult = false;
+            //    //}
+            //    ifResult = DetermineStatementTruth_ErrorDidOccur(engine, false);
+            //}
+            //else if (v_IfActionType == "Error Did Not Occur")
+            //{
+            //    ifResult = DetermineStatementTruth_ErrorDidOccur(engine, true);
+            //}
+            //else if (v_IfActionType == "Window Name Exists")
+            //{
+            //    ifResult = DetermineStatementTruth_WindowNameExists(engine);
+            //}
+            //else if (v_IfActionType == "Active Window Name Is")
+            //{
+            //    ifResult = DetermineStatementTruth_ActiveWindow(engine);
+            //}
+            //else if (v_IfActionType == "File Exists")
+            //{
+            //    ifResult = DetermineStatementTruth_File(engine);
+            //}
+            //else if (v_IfActionType == "Folder Exists")
+            //{
+            //    ifResult = DetermineStatementTruth_Folder(engine);
+            //}
+            //else if (v_IfActionType == "Web Element Exists")
+            //{
+            //    ifResult = DetermineStatementTruth_WebElement(engine);
+            //}
+            //else if (v_IfActionType == "GUI Element Exists")
+            //{
+            //    ifResult = DetermineStatementTruth_GUIElement(engine);
+            //}
+            //else if (v_IfActionType == "Boolean")
+            //{
+            //    ifResult = DetermineStatementTruth_Boolean(engine);
+            //}
+            //else
+            //{
+            //    throw new Exception("If type not recognized!");
+            //}
 
             return ifResult;
         }
+
+        private bool DetermineStatementTruth_Value(Engine.AutomationEngineInstance engine)
+        {
+            //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Value1"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                   where rw.Field<string>("Parameter Name") == "Operand"
+            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Value2"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //value1 = value1.ConvertToUserVariable(sender);
+            //value2 = value2.ConvertToUserVariable(sender);
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+
+            string operand = param["Operand"].ConvertToUserVariable(engine);
+
+            bool isBoolCompare = false;
+            decimal value1 = 0;
+            decimal value2 = 0;
+            switch (operand.ToLower())
+            {
+                case "is equal to":
+                case "is not equal to":
+                    bool tempBool;
+                    isBoolCompare = bool.TryParse(param["Value1"], out tempBool) && bool.TryParse(param["Value2"], out tempBool);
+                    break;
+                default:
+                    value1 = param["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
+                    value2 = param["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
+                    break;
+            }
+
+            //bool tempBool;
+            //bool isBoolCompare = (bool.TryParse(value1, out tempBool) && bool.TryParse(value2, out tempBool));
+            //decimal cdecValue1, cdecValue2;
+
+            bool ifResult;
+            switch (operand.ToLower())
+            {
+                case "is equal to":
+                    if (isBoolCompare)
+                    {
+                        ifResult = (bool.Parse(param["Value1"]) == bool.Parse(param["Value2"]));
+                    }
+                    else
+                    {
+                        ifResult = (param["Value1"] == param["Value2"]);
+                    }
+                    break;
+
+                case "is not equal to":
+                    if (isBoolCompare)
+                    {
+                        ifResult = (bool.Parse(param["Value1"]) != bool.Parse(param["Value2"]));
+                    }
+                    else
+                    {
+                        ifResult = (param["Value1"] != param["Value2"]);
+                    }
+                    break;
+
+                case "is greater than":
+                    //cdecValue1 = Convert.ToDecimal(value1);
+                    //cdecValue2 = Convert.ToDecimal(value2);
+                    //ifResult = (cdecValue1 > cdecValue2);
+                    ifResult = value1 > value2;
+                    break;
+
+                case "is greater than or equal to":
+                    //cdecValue1 = Convert.ToDecimal(value1);
+                    //cdecValue2 = Convert.ToDecimal(value2);
+                    //ifResult = (cdecValue1 >= cdecValue2);
+                    ifResult = value1 >= value2;
+                    break;
+
+                case "is less than":
+                    //cdecValue1 = Convert.ToDecimal(value1);
+                    //cdecValue2 = Convert.ToDecimal(value2);
+                    //ifResult = (cdecValue1 < cdecValue2);
+                    ifResult = value1 < value2;
+                    break;
+
+                case "is less than or equal to":
+                    //cdecValue1 = Convert.ToDecimal(value1);
+                    //cdecValue2 = Convert.ToDecimal(value2);
+                    //ifResult = (cdecValue1 <= cdecValue2);
+                    ifResult = value1 <= value2;
+                    break;
+                default:
+                    throw new Exception("Strange Operand " + param["Operand"]);
+                    break;
+            }
+            return ifResult;
+        }
+
+        private bool DetermineStatementTruth_DateCompare(Engine.AutomationEngineInstance engine)
+        {
+            //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Value1"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                   where rw.Field<string>("Parameter Name") == "Operand"
+            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Value2"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //value1 = value1.ConvertToUserVariable(sender);
+            //value2 = value2.ConvertToUserVariable(sender);
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+
+            string operand = param["Operand"].ConvertToUserVariable(engine);
+
+            DateTime dt1 = param["Value1"].ConvertToUserVariableAsDate("Value1", engine);
+            DateTime dt2 = param["Value2"].ConvertToUserVariableAsDate("Value2", engine);
+
+            //DateTime dt1, dt2;
+            //dt1 = DateTime.Parse(value1);
+            //dt2 = DateTime.Parse(value2);
+
+            bool ifResult;
+            switch (operand.ToLower())
+            {
+                case "is equal to":
+                    ifResult = (dt1 == dt2);
+                    break;
+
+                case "is not equal to":
+                    ifResult = (dt1 != dt2);
+                    break;
+
+                case "is greater than":
+                    ifResult = (dt1 > dt2);
+                    break;
+
+                case "is greater than or equal to":
+                    ifResult = (dt1 >= dt2);
+                    break;
+
+                case "is less than":
+                    ifResult = (dt1 < dt2);
+                    break;
+
+                case "is less than or equal to":
+                    ifResult = (dt1 <= dt2);
+                    break;
+
+                default:
+                    throw new Exception("Strange Operand " + param["Operand"]);
+                    break;
+            }
+            return ifResult;
+        }
+
+        private bool DetermineStatementTruth_VariableCompare(Engine.AutomationEngineInstance engine)
+        {
+            //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Value1"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                   where rw.Field<string>("Parameter Name") == "Operand"
+            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Value2"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string caseSensitive = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                         where rw.Field<string>("Parameter Name") == "Case Sensitive"
+            //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //value1 = value1.ConvertToUserVariable(sender);
+            //value2 = value2.ConvertToUserVariable(sender);
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            //if (caseSensitive == "No")
+            //{
+            //    value1 = value1.ToUpper();
+            //    value2 = value2.ToUpper();
+            //}
+
+            string value1 = param["Value1"];
+            string value2 = param["Value2"];
+            if (param["Case Sensitive"].ToLower() == "no")
+            {
+                value1 = value1.ToLower();
+                value2 = value2.ToLower();
+            }
+
+            bool ifResult;
+            switch (param["Operand"].ToLower())
+            {
+                case "contains":
+                    ifResult = (value1.Contains(value2));
+                    break;
+
+                case "does not contain":
+                    ifResult = (!value1.Contains(value2));
+                    break;
+
+                case "is equal to":
+                    ifResult = (value1 == value2);
+                    break;
+
+                case "is not equal to":
+                    ifResult = (value1 != value2);
+                    break;
+
+                default:
+                    throw new Exception("Strange Operand " + param["Operand"]);
+                    break;
+            }
+            return ifResult;
+        }
+
+        private bool DetermineStatementTruth_VariableHasValue(Engine.AutomationEngineInstance engine)
+        {
+            //string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                        where rw.Field<string>("Parameter Name") == "Variable Name"
+            //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            string actualVariable = param["Variable Name"].Trim();
+
+            //if (!string.IsNullOrEmpty(actualVariable))
+            //{
+            //    ifResult = true;
+            //}
+            //else
+            //{
+            //    ifResult = false;
+            //}
+
+            return (!string.IsNullOrEmpty(actualVariable));
+        }
+
+        private bool DetermineStatementTruth_VariableIsNumeric(Engine.AutomationEngineInstance engine)
+        {
+            //string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                        where rw.Field<string>("Parameter Name") == "Variable Name"
+            //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
+
+            var dic = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            var numericTest = decimal.TryParse(dic["Variable Name"], out decimal parsedResult);
+
+            //if (numericTest)
+            //{
+            //    ifResult = true;
+            //}
+            //else
+            //{
+            //    ifResult = false;
+            //}
+            return numericTest;
+        }
+
+        private bool DetermineStatementTruth_ErrorOccur(Engine.AutomationEngineInstance engine, bool inverseResult = false)
+        {
+            ////get line number
+            //string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                          where rw.Field<string>("Parameter Name") == "Line Number"
+            //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            ////convert to variable
+            //string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+            ////convert to int
+            //int lineNumber = int.Parse(variableLineNumber);
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+            int lineNumber = param["Line Number"].ConvertToUserVariableAsInteger("Line Number", engine);
+
+            bool result;
+
+            ////determine if error happened
+            //if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() == 0)
+            //{
+            //    result = true;
+            //}
+            //else
+            //{
+            //    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+            //    error.ErrorMessage.StoreInUserVariable(engine, "Error.Message");
+            //    error.LineNumber.ToString().StoreInUserVariable(engine, "Error.Line");
+            //    error.StackTrace.StoreInUserVariable(engine, "Error.StackTrace");
+
+            //    result = false;
+            //}
+
+            //determine if error happened
+            if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
+            {
+
+                var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+                error.ErrorMessage.StoreInUserVariable(engine, "Error.Message");
+                error.LineNumber.ToString().StoreInUserVariable(engine, "Error.Line");
+                error.StackTrace.StoreInUserVariable(engine, "Error.StackTrace");
+
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+
+            return inverseResult ? !result : result;
+        }
+        private bool DetermineStatementTruth_WindowNameExists(Engine.AutomationEngineInstance engine)
+        {
+            ////get user supplied name
+            //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                      where rw.Field<string>("Parameter Name") == "Window Name"
+            //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            ////variable translation
+            //string variablizedWindowName = windowName.ConvertToUserVariable(sender);
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            //search for window
+            IntPtr windowPtr = User32Functions.FindWindow(param["Window Name"]);
+
+            ////conditional
+            //if (windowPtr != IntPtr.Zero)
+            //{
+            //    ifResult = true;
+            //}
+            return (windowPtr != IntPtr.Zero);
+        }
+        private bool DetermineStatementTruth_ActiveWindow(Engine.AutomationEngineInstance engine)
+        {
+            //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                      where rw.Field<string>("Parameter Name") == "Window Name"
+            //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string variablizedWindowName = windowName.ConvertToUserVariable(sender);
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            var currentWindowTitle = User32Functions.GetActiveWindowTitle();
+
+            //if (currentWindowTitle == variablizedWindowName)
+            //{
+            //    ifResult = true;
+            //}
+            return (currentWindowTitle == param["Window Name"]);
+        }
+        private bool DetermineStatementTruth_File(Engine.AutomationEngineInstance engine)
+        {
+            //string fileName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                    where rw.Field<string>("Parameter Name") == "File Path"
+            //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                              where rw.Field<string>("Parameter Name") == "True When"
+            //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            //var userFileSelected = fileName.ConvertToUserVariable(sender);
+
+            //bool existCheck = false;
+            //if (trueWhenFileExists == "It Does Exist")
+            //{
+            //    existCheck = true;
+            //}
+
+
+            //if (System.IO.File.Exists(userFileSelected) == existCheck)
+            //{
+            //    ifResult = true;
+            //}
+
+            bool existCheck = System.IO.File.Exists(param["File Path"]);
+            switch (param["True When"].ToLower())
+            {
+                case "it does exist":
+                    return existCheck;
+                    break;
+
+                case "it does not exist":
+                    return !existCheck;
+                    break;
+
+                default:
+                    throw new Exception("True When is strange value " + param["True When"]);
+                    break;
+            }
+        }
+        private bool DetermineStatementTruth_Folder(Engine.AutomationEngineInstance engine)
+        {
+            //string folderName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                      where rw.Field<string>("Parameter Name") == "Folder Path"
+            //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                              where rw.Field<string>("Parameter Name") == "True When"
+            //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            //var userFolderSelected = folderName.ConvertToUserVariable(sender);
+
+            //bool existCheck = false;
+            //if (trueWhenFileExists == "It Does Exist")
+            //{
+            //    existCheck = true;
+            //}
+
+
+            //if (System.IO.Directory.Exists(folderName) == existCheck)
+            //{
+            //    ifResult = true;
+            //}
+
+            bool existCheck = System.IO.Directory.Exists(param["Folder Path"]);
+            switch(param["True When"].ToLower())
+            {
+                case "it does exist":
+                    return existCheck;
+                    break;
+
+                case "it does not exist":
+                    return !existCheck;
+                    break;
+
+                default:
+                    throw new Exception("True When is strange value " + param["True When"]);
+                    break;
+            }
+        }
+
+        private bool DetermineStatementTruth_WebElement(Engine.AutomationEngineInstance engine)
+        {
+            //string instanceName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                        where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+            //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+            //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                        where rw.Field<string>("Parameter Name") == "Element Search Method"
+            //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
+            newElementActionCommand.v_SeleniumSearchType = param["Element Search Method"];
+            newElementActionCommand.v_InstanceName = param["Selenium Instance Name"];
+            bool elementExists = newElementActionCommand.ElementExists(engine, param["Element Search Method"], param["Element Search Parameter"]);
+            return elementExists;
+        }
+
+        private bool DetermineStatementTruth_GUIElement(Engine.AutomationEngineInstance engine)
+        {
+            //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                      where rw.Field<string>("Parameter Name") == "Window Name"
+            //                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+            //string elementSearchParam = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                              where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+            //                              select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+            //string elementSearchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                               where rw.Field<string>("Parameter Name") == "Element Search Method"
+            //                               select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
+            string windowName = param["Window Name"];
+
+            if (windowName == engine.engineSettings.CurrentWindowKeyword)
+            {
+                windowName = User32Functions.GetActiveWindowTitle();
+            }
+
+            UIAutomationCommand newUIACommand = new UIAutomationCommand();
+            newUIACommand.v_WindowName = windowName;
+            newUIACommand.v_UIASearchParameters.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
+            var handle = newUIACommand.SearchForGUIElement(engine, windowName);
+
+            //if (handle is null)
+            //{
+            //    ifResult = false;
+            //}
+            //else
+            //{
+            //    ifResult = true;
+            //}
+            return !(handle is null);
+        }
+        private bool DetermineStatementTruth_Boolean(Engine.AutomationEngineInstance engine)
+        {
+            //string value = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                 where rw.Field<string>("Parameter Name") == "Variable Name"
+            //                 select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+            //string compare = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                   where rw.Field<string>("Parameter Name") == "Value Is"
+            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+
+            bool value = param["Variable Name"].ConvertToUserVariableAsBool("Variable Name", engine);
+            string compare = param["Value Is"].ConvertToUserVariable(engine);
+
+            switch (compare.ToLower())
+            {
+                case "true":
+                    return value;
+                    break;
+                case "false":
+                    return !value;
+                    break;
+                default:
+                    throw new Exception("Value Is " + param["Value Is"] + " is not support.");
+                    break;
+            }
+        }
+
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
