@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
     {
         public static bool DetermineStatementTruth(string actionType, DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
-            bool ifResult = false;
+            bool ifResult;
 
             //string actionType = actionType.ConvertToUserVariable(engine);
 
