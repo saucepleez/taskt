@@ -64,7 +64,8 @@ namespace taskt.Core.Automation.Commands
                 var commandData = rw["CommandData"].ToString();
                 var ifCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginIfCommand>(commandData);
 
-                var statementResult = ifCommand.DetermineStatementTruth(sender);
+                //var statementResult = ifCommand.DetermineStatementTruth(sender);
+                var statementResult = ConditionControls.DetermineStatementTruth(ifCommand.v_IfActionType, ifCommand.v_IfActionParameterTable, engine);
 
                 if (!statementResult)
                 {
