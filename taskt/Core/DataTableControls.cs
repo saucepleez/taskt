@@ -148,7 +148,8 @@ namespace taskt.Core
 
             if (engine != null)
             {
-                foreach (var key in dic.Keys)
+                var keys = dic.Keys.ToArray();
+                foreach (string key in keys)
                 {
                     dic[key] = dic[key].ConvertToUserVariable(engine);
                 }
