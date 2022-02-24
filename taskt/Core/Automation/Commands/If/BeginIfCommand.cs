@@ -66,7 +66,11 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        CommandItemControl lnkBrowserInstance;
+        CommandItemControl lnkBrowserInstanceSelector;
+
+        [XmlIgnore]
+        [NonSerialized]
+        CommandItemControl lnkWindowNameSelector;
 
         public BeginIfCommand()
         {
@@ -865,13 +869,19 @@ namespace taskt.Core.Automation.Commands
 
             var helpers = CommandControls.CreateUIHelpersFor("v_IfActionParameterTable", this, new Control[] { IfGridViewHelper }, editor);
 
-            lnkBrowserInstance = CommandControls.CreateUIHelper();
-            lnkBrowserInstance.Name = "v_IfActionParameterTable_helper_WebBrowser";
-            lnkBrowserInstance.CommandDisplay = "Select WebBrowser Instance";
-            lnkBrowserInstance.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
+            lnkBrowserInstanceSelector = CommandControls.CreateUIHelper();
+            lnkBrowserInstanceSelector.Name = "v_IfActionParameterTable_helper_WebBrowser";
+            lnkBrowserInstanceSelector.CommandDisplay = "Select WebBrowser Instance";
+            lnkBrowserInstanceSelector.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
             //RenderedControls.Add(lnkBrowserInstance);
 
-            helpers.Add(lnkBrowserInstance);
+            helpers.Add(lnkBrowserInstanceSelector);
+
+            lnkWindowNameSelector = CommandControls.CreateUIHelper();
+            lnkWindowNameSelector.Name = "v_IfActionParameterTable_helper_WindowName";
+            lnkWindowNameSelector.CommandDisplay = "Select Window Name";
+            lnkWindowNameSelector.Click += (sender, e) => linkWindowNameSelector_Click(sender, e, editor);
+            helpers.Add(lnkWindowNameSelector);
 
             ParameterControls.AddRange(helpers);
             ParameterControls.Add(IfGridViewHelper);
@@ -893,6 +903,36 @@ namespace taskt.Core.Automation.Commands
                     if (!DataTableControls.SetParameterValue(v_IfActionParameterTable, selectedItem, "Selenium Instance Name", "Parameter Name", "Parameter Value"))
                     {
                         throw new Exception("Fail update Selenium Instance Name");
+                    }
+                }
+            }
+        }
+
+        private void linkWindowNameSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        {
+            List<string> windowNames = new List<string>();
+
+            windowNames.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+
+            System.Diagnostics.Process[] processlist = System.Diagnostics.Process.GetProcesses();
+            //pull the main window title for each
+            foreach (var process in processlist)
+            {
+                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                {
+                    //add to the control list of available windows
+                    windowNames.Add(process.MainWindowTitle);
+                }
+            }
+
+            using (var frm = new UI.Forms.Supplemental.frmItemSelector(windowNames))
+            {
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedItem = frm.selectedItem.ToString();
+                    if (!DataTableControls.SetParameterValue(v_IfActionParameterTable, selectedItem, "Window Name", "Parameter Name", "Parameter Value"))
+                    {
+                        throw new Exception("Fail update Window Name");
                     }
                 }
             }
@@ -923,7 +963,8 @@ namespace taskt.Core.Automation.Commands
             //    RecorderControl.Hide();
             //}
 
-            lnkBrowserInstance.Hide();
+            lnkBrowserInstanceSelector.Hide();
+            lnkWindowNameSelector.Hide();
 
             switch (ifAction.SelectedItem)
             {
@@ -950,6 +991,7 @@ namespace taskt.Core.Automation.Commands
                 case "Window Name Exists":
                 case "Active Window Name Is":
                     ConditionControls.RenderWindowName(sender, ifActionParameterBox, actionParameters);
+                    lnkWindowNameSelector.Show();
                     break;
 
                 case "File Exists":
@@ -962,11 +1004,12 @@ namespace taskt.Core.Automation.Commands
 
                 case "Web Element Exists":
                     ConditionControls.RenderWebElement(sender, ifActionParameterBox, actionParameters, editor.appSettings);
-                    lnkBrowserInstance.Show();
+                    lnkBrowserInstanceSelector.Show();
                     break;
 
                 case "GUI Element Exists":
                     ConditionControls.RenderGUIElement(sender, ifActionParameterBox, actionParameters, editor.appSettings);
+                    lnkWindowNameSelector.Show();
                     break;
 
                 case "Boolean":
