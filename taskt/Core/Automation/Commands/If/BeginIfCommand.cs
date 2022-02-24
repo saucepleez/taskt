@@ -868,6 +868,7 @@ namespace taskt.Core.Automation.Commands
             lnkBrowserInstance = CommandControls.CreateUIHelper();
             lnkBrowserInstance.Name = "v_IfActionParameterTable_helper_WebBrowser";
             lnkBrowserInstance.CommandDisplay = "Select WebBrowser Instance";
+            lnkBrowserInstance.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
             //RenderedControls.Add(lnkBrowserInstance);
 
             helpers.Add(lnkBrowserInstance);
@@ -880,6 +881,22 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
+        private void linkWebBrowserInstanceSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        {
+            var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
+
+            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
+            {
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedItem = frm.selectedItem.ToString();
+                    if (!DataTableControls.SetParameterValue(v_IfActionParameterTable, selectedItem, "Selenium Instance Name", "Parameter Name", "Parameter Value"))
+                    {
+                        throw new Exception("Fail update Selenium Instance Name");
+                    }
+                }
+            }
+        }
 
         private void ifAction_SelectionChangeCommitted(object sender, EventArgs e, frmCommandEditor editor)
         {
