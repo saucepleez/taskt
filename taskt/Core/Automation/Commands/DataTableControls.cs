@@ -124,6 +124,11 @@ namespace taskt.Core
 
         public static string GetFieldValue(DataTable dt, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
+            if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
+            {
+                throw new Exception("Parameter Column or Value Column does not exists");
+            }
+
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
@@ -136,6 +141,11 @@ namespace taskt.Core
 
         public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
         {
+            if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
+            {
+                throw new Exception("Parameter Column or Value Column does not exists");
+            }
+
             Dictionary<string, string> dic = new Dictionary<string, string>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -156,6 +166,23 @@ namespace taskt.Core
             }
 
             return dic;
+        }
+
+        public static bool SetParameterValue(DataTable dt, string newValue, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
+        {
+            if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
+            {
+                return false;
+            }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+                {
+                    dt.Rows[i][valueColumnName] = newValue;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
