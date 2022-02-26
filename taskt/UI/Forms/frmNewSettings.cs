@@ -698,8 +698,11 @@ namespace taskt.UI.Forms
         #region StartUp Events
         private void btnLaunchAttendedMode_Click(object sender, EventArgs e)
         {
-            scriptBuilderForm.showAttendedModeFormProcess();
-            this.Close();
+            if (MessageBox.Show("Close Settings form to launch Attended Mode.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Attended Mode now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                scriptBuilderForm.showAttendedModeFormProcess();
+                this.Close();
+            }
         }
         private void cmbStartUpMode_SelectionChangeCommitted(object sender, EventArgs e)
         {
