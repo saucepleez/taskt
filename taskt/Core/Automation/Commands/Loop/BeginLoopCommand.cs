@@ -60,9 +60,17 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private List<Control> ParameterControls;
 
+        //[XmlIgnore]
+        //[NonSerialized]
+        //CommandItemControl RecorderControl;
+
         [XmlIgnore]
         [NonSerialized]
-        CommandItemControl RecorderControl;
+        CommandItemControl lnkBrowserInstanceSelector;
+
+        [XmlIgnore]
+        [NonSerialized]
+        CommandItemControl lnkWindowNameSelector;
 
         public BeginLoopCommand()
         {
@@ -86,7 +94,11 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var loopResult = DetermineStatementTruth(sender);
+            //var loopResult = DetermineStatementTruth(sender);
+
+            string actionType = v_LoopActionType.ConvertToUserVariable(engine);
+
+            bool loopResult = ConditionControls.DetermineStatementTruth(actionType, v_LoopActionParameterTable, engine);
             engine.ReportProgress("Starting Loop"); 
 
             while (loopResult)
@@ -112,452 +124,453 @@ namespace taskt.Core.Automation.Commands
                         break;
                     }
                 }
-                loopResult = DetermineStatementTruth(sender);
+                //loopResult = DetermineStatementTruth(sender);
+                loopResult = ConditionControls.DetermineStatementTruth(actionType, v_LoopActionParameterTable, engine);
             }
         }
 
-        public bool DetermineStatementTruth(object sender)
-        {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            bool loopResult = false;
-
-            if (v_LoopActionType == "Value")
-            {
-                string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value1"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Operand"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value2"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                value1 = value1.ConvertToUserVariable(sender);
-                value2 = value2.ConvertToUserVariable(sender);
-                bool tempBool;
-                bool isBoolCompare = (bool.TryParse(value1, out tempBool) && bool.TryParse(value2, out tempBool));
-
-                decimal cdecValue1, cdecValue2;
-
-                switch (operand)
-                {
-                    case "is equal to":
-                        if (isBoolCompare)
-                        {
-                            loopResult = (bool.Parse(value1) == bool.Parse(value2));
-                        }
-                        else
-                        {
-                            loopResult = (value1 == value2);
-                        }
-                        break;
-
-                    case "is not equal to":
-                        if (isBoolCompare)
-                        {
-                            loopResult = (bool.Parse(value1) != bool.Parse(value2));
-                        }
-                        else
-                        {
-                            loopResult = (value1 != value2);
-                        }
-                        break;
-
-                    case "is greater than":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        loopResult = (cdecValue1 > cdecValue2);
-                        break;
-
-                    case "is greater than or equal to":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        loopResult = (cdecValue1 >= cdecValue2);
-                        break;
-
-                    case "is less than":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        loopResult = (cdecValue1 < cdecValue2);
-                        break;
-
-                    case "is less than or equal to":
-                        cdecValue1 = Convert.ToDecimal(value1);
-                        cdecValue2 = Convert.ToDecimal(value2);
-                        loopResult = (cdecValue1 <= cdecValue2);
-                        break;
-                }
-            }
-            else if (v_LoopActionType == "Date Compare")
-            {
-                string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value1"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Operand"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value2"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                value1 = value1.ConvertToUserVariable(sender);
-                value2 = value2.ConvertToUserVariable(sender);
-
-
-
-                DateTime dt1, dt2;
-                dt1 = DateTime.Parse(value1);
-                dt2 = DateTime.Parse(value2);
-                switch (operand)
-                {
-                    case "is equal to":
-                        loopResult = (dt1 == dt2);
-                        break;
-
-                    case "is not equal to":
-                        loopResult = (dt1 != dt2);
-                        break;
-
-                    case "is greater than":
-                        loopResult = (dt1 > dt2);
-                        break;
-
-                    case "is greater than or equal to":
-                        loopResult = (dt1 >= dt2);
-                        break;
-
-                    case "is less than":
-                        loopResult = (dt1 < dt2);
-                        break;
-
-                    case "is less than or equal to":
-                        loopResult = (dt1 <= dt2);
-                        break;
-                }
-            }
-            else if (v_LoopActionType == "Variable Compare")
-            {
-                string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value1"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Operand"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Value2"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string caseSensitive = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Case Sensitive"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                value1 = value1.ConvertToUserVariable(sender);
-                value2 = value2.ConvertToUserVariable(sender);
-
-                if (caseSensitive == "No")
-                {
-                    value1 = value1.ToUpper();
-                    value2 = value2.ToUpper();
-                }
-
-
-
-                switch (operand)
-                {
-                    case "contains":
-                        loopResult = (value1.Contains(value2));
-                        break;
-
-                    case "does not contain":
-                        loopResult = (!value1.Contains(value2));
-                        break;
-
-                    case "is equal to":
-                        loopResult = (value1 == value2);
-                        break;
-
-                    case "is not equal to":
-                        loopResult = (value1 != value2);
-                        break;
-                }
-            }
-            else if (v_LoopActionType == "Variable Has Value")
-            {
-                string variableName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Variable Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
-
-                if (!string.IsNullOrEmpty(actualVariable))
-                {
-                    loopResult = true;
-                }
-                else
-                {
-                    loopResult = false;
-                }
-
-            }
-            else if (v_LoopActionType == "Variable Is Numeric")
-            {
-                string variableName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Variable Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
-
-                var numericTest = decimal.TryParse(actualVariable, out decimal parsedResult);
-
-                if (numericTest)
-                {
-                    loopResult = true;
-                }
-                else
-                {
-                    loopResult = false;
-                }
-
-            }
-            else if (v_LoopActionType == "Error Occured")
-            {
-                //get line number
-                string userLineNumber = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Line Number"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                //convert to variable
-                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
-
-                //convert to int
-                int lineNumber = int.Parse(variableLineNumber);
-
-                //determine if error happened
-                if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
-                {
-
-                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
-                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
-                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
-                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
-
-                    loopResult = true;
-                }
-                else
-                {
-                    loopResult = false;
-                }
-
-            }
-            else if (v_LoopActionType == "Error Did Not Occur")
-            {
-                //get line number
-                string userLineNumber = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Line Number"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                //convert to variable
-                string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
-
-                //convert to int
-                int lineNumber = int.Parse(variableLineNumber);
-
-                //determine if error happened
-                if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() == 0)
-                {
-                    loopResult = true;
-                }
-                else
-                {
-                    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
-                    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
-                    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
-                    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
-
-                    loopResult = false;
-                }
-
-            }
-            else if (v_LoopActionType == "Window Name Exists")
-            {
-                //get user supplied name
-                string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Window Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                //variable translation
-                string variablizedWindowName = windowName.ConvertToUserVariable(sender);
-
-                //search for window
-                IntPtr windowPtr = User32Functions.FindWindow(variablizedWindowName);
-
-                //conditional
-                if (windowPtr != IntPtr.Zero)
-                {
-                    loopResult = true;
-                }
-
-
-
-            }
-            else if (v_LoopActionType == "Active Window Name Is")
-            {
-                string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Window Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string variablizedWindowName = windowName.ConvertToUserVariable(sender);
-
-                var currentWindowTitle = User32Functions.GetActiveWindowTitle();
-
-                if (currentWindowTitle == variablizedWindowName)
-                {
-                    loopResult = true;
-                }
-
-            }
-            else if (v_LoopActionType == "File Exists")
-            {
-
-                string fileName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "File Path"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string trueWhenFileExists = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                              where rw.Field<string>("Parameter Name") == "True When"
-                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var userFileSelected = fileName.ConvertToUserVariable(sender);
-
-                bool existCheck = false;
-                if (trueWhenFileExists == "It Does Exist")
-                {
-                    existCheck = true;
-                }
-
-
-                if (System.IO.File.Exists(userFileSelected) == existCheck)
-                {
-                    loopResult = true;
-                }
-
-
-            }
-            else if (v_LoopActionType == "Folder Exists")
-            {
-                string folderName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Folder Path"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string trueWhenFileExists = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                              where rw.Field<string>("Parameter Name") == "True When"
-                                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                var userFolderSelected = folderName.ConvertToUserVariable(sender);
-
-                bool existCheck = false;
-                if (trueWhenFileExists == "It Does Exist")
-                {
-                    existCheck = true;
-                }
-
-
-                if (System.IO.Directory.Exists(folderName) == existCheck)
-                {
-                    loopResult = true;
-                }
-
-            }
-            else if (v_LoopActionType == "Web Element Exists")
-            {
-                string instanceName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string parameterName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                string searchMethod = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "Element Search Method"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-
-                SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
-                newElementActionCommand.v_SeleniumSearchType = searchMethod;
-                newElementActionCommand.v_InstanceName = instanceName.ConvertToUserVariable(sender);
-                bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
-                loopResult = elementExists;
-
-            }
-            else if (v_LoopActionType == "GUI Element Exists")
-            {
-                string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Window Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                string elementSearchParam = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                              where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                              select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                string elementSearchMethod = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                               where rw.Field<string>("Parameter Name") == "Element Search Method"
-                                               select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-
-                if (windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
-                {
-                    windowName = User32Functions.GetActiveWindowTitle();
-                }
-
-                UIAutomationCommand newUIACommand = new UIAutomationCommand();
-                newUIACommand.v_WindowName = windowName;
-                newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
-                var handle = newUIACommand.SearchForGUIElement(sender, windowName);
-
-                if (handle is null)
-                {
-                    loopResult = false;
-                }
-                else
-                {
-                    loopResult = true;
-                }
-
-
-            }
-            else if (v_LoopActionType == "Boolean")
-            {
-                string value = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                 where rw.Field<string>("Parameter Name") == "Variable Name"
-                                 select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                string compare = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                   where rw.Field<string>("Parameter Name") == "Value Is"
-                                   select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-                bool vValue = bool.Parse(value);
-                switch (compare.ToLower())
-                {
-                    case "true":
-                        loopResult = vValue;
-                        break;
-                    case "false":
-                        loopResult = !vValue;
-                        break;
-                    default:
-                        throw new Exception("Value Is " + compare + " is not support.");
-                        break;
-                }
-            }
-            else
-            {
-                throw new Exception("Loop type not recognized!");
-            }
-
-            return loopResult;
-        }
+        //public bool DetermineStatementTruth(object sender)
+        //{
+        //    var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+
+        //    bool loopResult = false;
+
+        //    if (v_LoopActionType == "Value")
+        //    {
+        //        string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                          where rw.Field<string>("Parameter Name") == "Value1"
+        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //        string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                           where rw.Field<string>("Parameter Name") == "Operand"
+        //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //        string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                          where rw.Field<string>("Parameter Name") == "Value2"
+        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        value1 = value1.ConvertToUserVariable(sender);
+        //        value2 = value2.ConvertToUserVariable(sender);
+        //        bool tempBool;
+        //        bool isBoolCompare = (bool.TryParse(value1, out tempBool) && bool.TryParse(value2, out tempBool));
+
+        //        decimal cdecValue1, cdecValue2;
+
+        //        switch (operand)
+        //        {
+        //            case "is equal to":
+        //                if (isBoolCompare)
+        //                {
+        //                    loopResult = (bool.Parse(value1) == bool.Parse(value2));
+        //                }
+        //                else
+        //                {
+        //                    loopResult = (value1 == value2);
+        //                }
+        //                break;
+
+        //            case "is not equal to":
+        //                if (isBoolCompare)
+        //                {
+        //                    loopResult = (bool.Parse(value1) != bool.Parse(value2));
+        //                }
+        //                else
+        //                {
+        //                    loopResult = (value1 != value2);
+        //                }
+        //                break;
+
+        //            case "is greater than":
+        //                cdecValue1 = Convert.ToDecimal(value1);
+        //                cdecValue2 = Convert.ToDecimal(value2);
+        //                loopResult = (cdecValue1 > cdecValue2);
+        //                break;
+
+        //            case "is greater than or equal to":
+        //                cdecValue1 = Convert.ToDecimal(value1);
+        //                cdecValue2 = Convert.ToDecimal(value2);
+        //                loopResult = (cdecValue1 >= cdecValue2);
+        //                break;
+
+        //            case "is less than":
+        //                cdecValue1 = Convert.ToDecimal(value1);
+        //                cdecValue2 = Convert.ToDecimal(value2);
+        //                loopResult = (cdecValue1 < cdecValue2);
+        //                break;
+
+        //            case "is less than or equal to":
+        //                cdecValue1 = Convert.ToDecimal(value1);
+        //                cdecValue2 = Convert.ToDecimal(value2);
+        //                loopResult = (cdecValue1 <= cdecValue2);
+        //                break;
+        //        }
+        //    }
+        //    else if (v_LoopActionType == "Date Compare")
+        //    {
+        //        string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                          where rw.Field<string>("Parameter Name") == "Value1"
+        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //        string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                           where rw.Field<string>("Parameter Name") == "Operand"
+        //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //        string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                          where rw.Field<string>("Parameter Name") == "Value2"
+        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        value1 = value1.ConvertToUserVariable(sender);
+        //        value2 = value2.ConvertToUserVariable(sender);
+
+
+
+        //        DateTime dt1, dt2;
+        //        dt1 = DateTime.Parse(value1);
+        //        dt2 = DateTime.Parse(value2);
+        //        switch (operand)
+        //        {
+        //            case "is equal to":
+        //                loopResult = (dt1 == dt2);
+        //                break;
+
+        //            case "is not equal to":
+        //                loopResult = (dt1 != dt2);
+        //                break;
+
+        //            case "is greater than":
+        //                loopResult = (dt1 > dt2);
+        //                break;
+
+        //            case "is greater than or equal to":
+        //                loopResult = (dt1 >= dt2);
+        //                break;
+
+        //            case "is less than":
+        //                loopResult = (dt1 < dt2);
+        //                break;
+
+        //            case "is less than or equal to":
+        //                loopResult = (dt1 <= dt2);
+        //                break;
+        //        }
+        //    }
+        //    else if (v_LoopActionType == "Variable Compare")
+        //    {
+        //        string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                          where rw.Field<string>("Parameter Name") == "Value1"
+        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //        string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                           where rw.Field<string>("Parameter Name") == "Operand"
+        //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //        string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                          where rw.Field<string>("Parameter Name") == "Value2"
+        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        string caseSensitive = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                 where rw.Field<string>("Parameter Name") == "Case Sensitive"
+        //                                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        value1 = value1.ConvertToUserVariable(sender);
+        //        value2 = value2.ConvertToUserVariable(sender);
+
+        //        if (caseSensitive == "No")
+        //        {
+        //            value1 = value1.ToUpper();
+        //            value2 = value2.ToUpper();
+        //        }
+
+
+
+        //        switch (operand)
+        //        {
+        //            case "contains":
+        //                loopResult = (value1.Contains(value2));
+        //                break;
+
+        //            case "does not contain":
+        //                loopResult = (!value1.Contains(value2));
+        //                break;
+
+        //            case "is equal to":
+        //                loopResult = (value1 == value2);
+        //                break;
+
+        //            case "is not equal to":
+        //                loopResult = (value1 != value2);
+        //                break;
+        //        }
+        //    }
+        //    else if (v_LoopActionType == "Variable Has Value")
+        //    {
+        //        string variableName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                where rw.Field<string>("Parameter Name") == "Variable Name"
+        //                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
+
+        //        if (!string.IsNullOrEmpty(actualVariable))
+        //        {
+        //            loopResult = true;
+        //        }
+        //        else
+        //        {
+        //            loopResult = false;
+        //        }
+
+        //    }
+        //    else if (v_LoopActionType == "Variable Is Numeric")
+        //    {
+        //        string variableName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                where rw.Field<string>("Parameter Name") == "Variable Name"
+        //                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
+
+        //        var numericTest = decimal.TryParse(actualVariable, out decimal parsedResult);
+
+        //        if (numericTest)
+        //        {
+        //            loopResult = true;
+        //        }
+        //        else
+        //        {
+        //            loopResult = false;
+        //        }
+
+        //    }
+        //    else if (v_LoopActionType == "Error Occured")
+        //    {
+        //        //get line number
+        //        string userLineNumber = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                  where rw.Field<string>("Parameter Name") == "Line Number"
+        //                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        //convert to variable
+        //        string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+        //        //convert to int
+        //        int lineNumber = int.Parse(variableLineNumber);
+
+        //        //determine if error happened
+        //        if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
+        //        {
+
+        //            var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+        //            error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
+        //            error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
+        //            error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
+
+        //            loopResult = true;
+        //        }
+        //        else
+        //        {
+        //            loopResult = false;
+        //        }
+
+        //    }
+        //    else if (v_LoopActionType == "Error Did Not Occur")
+        //    {
+        //        //get line number
+        //        string userLineNumber = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                  where rw.Field<string>("Parameter Name") == "Line Number"
+        //                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        //convert to variable
+        //        string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
+
+        //        //convert to int
+        //        int lineNumber = int.Parse(variableLineNumber);
+
+        //        //determine if error happened
+        //        if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() == 0)
+        //        {
+        //            loopResult = true;
+        //        }
+        //        else
+        //        {
+        //            var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
+        //            error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
+        //            error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
+        //            error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
+
+        //            loopResult = false;
+        //        }
+
+        //    }
+        //    else if (v_LoopActionType == "Window Name Exists")
+        //    {
+        //        //get user supplied name
+        //        string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                              where rw.Field<string>("Parameter Name") == "Window Name"
+        //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //        //variable translation
+        //        string variablizedWindowName = windowName.ConvertToUserVariable(sender);
+
+        //        //search for window
+        //        IntPtr windowPtr = User32Functions.FindWindow(variablizedWindowName);
+
+        //        //conditional
+        //        if (windowPtr != IntPtr.Zero)
+        //        {
+        //            loopResult = true;
+        //        }
+
+
+
+        //    }
+        //    else if (v_LoopActionType == "Active Window Name Is")
+        //    {
+        //        string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                              where rw.Field<string>("Parameter Name") == "Window Name"
+        //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        string variablizedWindowName = windowName.ConvertToUserVariable(sender);
+
+        //        var currentWindowTitle = User32Functions.GetActiveWindowTitle();
+
+        //        if (currentWindowTitle == variablizedWindowName)
+        //        {
+        //            loopResult = true;
+        //        }
+
+        //    }
+        //    else if (v_LoopActionType == "File Exists")
+        //    {
+
+        //        string fileName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                            where rw.Field<string>("Parameter Name") == "File Path"
+        //                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        string trueWhenFileExists = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                      where rw.Field<string>("Parameter Name") == "True When"
+        //                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        var userFileSelected = fileName.ConvertToUserVariable(sender);
+
+        //        bool existCheck = false;
+        //        if (trueWhenFileExists == "It Does Exist")
+        //        {
+        //            existCheck = true;
+        //        }
+
+
+        //        if (System.IO.File.Exists(userFileSelected) == existCheck)
+        //        {
+        //            loopResult = true;
+        //        }
+
+
+        //    }
+        //    else if (v_LoopActionType == "Folder Exists")
+        //    {
+        //        string folderName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                              where rw.Field<string>("Parameter Name") == "Folder Path"
+        //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        string trueWhenFileExists = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                      where rw.Field<string>("Parameter Name") == "True When"
+        //                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        var userFolderSelected = folderName.ConvertToUserVariable(sender);
+
+        //        bool existCheck = false;
+        //        if (trueWhenFileExists == "It Does Exist")
+        //        {
+        //            existCheck = true;
+        //        }
+
+
+        //        if (System.IO.Directory.Exists(folderName) == existCheck)
+        //        {
+        //            loopResult = true;
+        //        }
+
+        //    }
+        //    else if (v_LoopActionType == "Web Element Exists")
+        //    {
+        //        string instanceName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+        //                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        string parameterName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+        //                                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+        //        string searchMethod = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                where rw.Field<string>("Parameter Name") == "Element Search Method"
+        //                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+
+        //        SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
+        //        newElementActionCommand.v_SeleniumSearchType = searchMethod;
+        //        newElementActionCommand.v_InstanceName = instanceName.ConvertToUserVariable(sender);
+        //        bool elementExists = newElementActionCommand.ElementExists(sender, searchMethod, parameterName);
+        //        loopResult = elementExists;
+
+        //    }
+        //    else if (v_LoopActionType == "GUI Element Exists")
+        //    {
+        //        string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                              where rw.Field<string>("Parameter Name") == "Window Name"
+        //                              select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+        //        string elementSearchParam = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                      where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+        //                                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+        //        string elementSearchMethod = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                                       where rw.Field<string>("Parameter Name") == "Element Search Method"
+        //                                       select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+
+        //        if (windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+        //        {
+        //            windowName = User32Functions.GetActiveWindowTitle();
+        //        }
+
+        //        UIAutomationCommand newUIACommand = new UIAutomationCommand();
+        //        newUIACommand.v_WindowName = windowName;
+        //        newUIACommand.v_UIASearchParameters.Rows.Add(true, elementSearchMethod, elementSearchParam);
+        //        var handle = newUIACommand.SearchForGUIElement(sender, windowName);
+
+        //        if (handle is null)
+        //        {
+        //            loopResult = false;
+        //        }
+        //        else
+        //        {
+        //            loopResult = true;
+        //        }
+
+
+        //    }
+        //    else if (v_LoopActionType == "Boolean")
+        //    {
+        //        string value = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                         where rw.Field<string>("Parameter Name") == "Variable Name"
+        //                         select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+        //        string compare = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                           where rw.Field<string>("Parameter Name") == "Value Is"
+        //                           select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
+
+        //        bool vValue = bool.Parse(value);
+        //        switch (compare.ToLower())
+        //        {
+        //            case "true":
+        //                loopResult = vValue;
+        //                break;
+        //            case "false":
+        //                loopResult = !vValue;
+        //                break;
+        //            default:
+        //                throw new Exception("Value Is " + compare + " is not support.");
+        //                break;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Loop type not recognized!");
+        //    }
+
+        //    return loopResult;
+        //}
 
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -576,18 +589,18 @@ namespace taskt.Core.Automation.Commands
             LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
             LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;
 
-            var helperTheme = editor.Theme.UIHelper;
-            RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
-            RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            //RecorderControl.ForeColor = Color.AliceBlue;
-            RecorderControl.Font = new Font(helperTheme.Font, helperTheme.FontSize, helperTheme.Style);
-            RecorderControl.ForeColor = helperTheme.FontColor;
-            RecorderControl.BackColor = helperTheme.BackColor;
-            RecorderControl.Name = "guirecorder_helper";
-            RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-            RecorderControl.CommandDisplay = "Element Recorder";
-            RecorderControl.Click += ShowLoopElementRecorder;
-            RecorderControl.Hide();
+            //var helperTheme = editor.Theme.UIHelper;
+            //RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
+            //RecorderControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            ////RecorderControl.ForeColor = Color.AliceBlue;
+            //RecorderControl.Font = new Font(helperTheme.Font, helperTheme.FontSize, helperTheme.Style);
+            //RecorderControl.ForeColor = helperTheme.FontColor;
+            //RecorderControl.BackColor = helperTheme.BackColor;
+            //RecorderControl.Name = "guirecorder_helper";
+            //RecorderControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
+            //RecorderControl.CommandDisplay = "Element Recorder";
+            //RecorderControl.Click += ShowLoopElementRecorder;
+            //RecorderControl.Hide();
 
             ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_LoopActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionType", this));
@@ -598,8 +611,24 @@ namespace taskt.Core.Automation.Commands
 
             ParameterControls = new List<Control>();
             ParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionParameterTable", this));
-            ParameterControls.Add(RecorderControl);
-            ParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_LoopActionParameterTable", this, new Control[] { LoopGridViewHelper }, editor));
+            //ParameterControls.Add(RecorderControl);
+
+            var helpers = CommandControls.CreateUIHelpersFor("v_LoopActionParameterTable", this, new Control[] { LoopGridViewHelper }, editor);
+
+            lnkBrowserInstanceSelector = CommandControls.CreateUIHelper();
+            lnkBrowserInstanceSelector.Name = "v_LoopActionParameterTable_helper_WebBrowser";
+            lnkBrowserInstanceSelector.CommandDisplay = "Select WebBrowser Instance";
+            lnkBrowserInstanceSelector.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
+
+            helpers.Add(lnkBrowserInstanceSelector);
+
+            lnkWindowNameSelector = CommandControls.CreateUIHelper();
+            lnkWindowNameSelector.Name = "v_LoopActionParameterTable_helper_WindowName";
+            lnkWindowNameSelector.CommandDisplay = "Select Window Name";
+            lnkWindowNameSelector.Click += (sender, e) => linkWindowNameSelector_Click(sender, e, editor);
+            helpers.Add(lnkWindowNameSelector);
+
+            ParameterControls.AddRange(helpers);
             ParameterControls.Add(LoopGridViewHelper);
 
             RenderedControls.AddRange(ParameterControls);
@@ -632,6 +661,8 @@ namespace taskt.Core.Automation.Commands
             //    RecorderControl.Hide();
             //}
 
+            lnkBrowserInstanceSelector.Hide();
+            lnkWindowNameSelector.Hide();
 
             switch (loopAction.SelectedItem)
             {
@@ -752,6 +783,7 @@ namespace taskt.Core.Automation.Commands
                     //    loopActionParameterBox.DataSource = actionParameters;
                     //}
                     ConditionControls.RenderWindowName(sender, LoopGridViewHelper, v_LoopActionParameterTable);
+                    lnkWindowNameSelector.Show();
                     break;
 
 
@@ -818,6 +850,7 @@ namespace taskt.Core.Automation.Commands
                     ////assign cell as a combobox
                     //loopActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
                     ConditionControls.RenderWebElement(sender, LoopGridViewHelper, v_LoopActionParameterTable, editor.appSettings);
+                    lnkBrowserInstanceSelector.Show();
                     break;
 
 
@@ -858,6 +891,7 @@ namespace taskt.Core.Automation.Commands
 
                     //RecorderControl.Show();
                     ConditionControls.RenderGUIElement(sender, LoopGridViewHelper, v_LoopActionParameterTable, editor.appSettings);
+                    lnkWindowNameSelector.Show();
                     break;
 
 
@@ -884,35 +918,82 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private void ShowLoopElementRecorder(object sender, EventArgs e)
+        private void linkWebBrowserInstanceSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
         {
-            //get command reference
-            Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
+            var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
 
-            //create recorder
-            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
-
-            //show form
-            newElementRecorder.ShowDialog();
-
-            var sb = new StringBuilder();
-            sb.AppendLine("Element Properties Found!");
-            sb.AppendLine(Environment.NewLine);
-            sb.AppendLine("Element Search Method - Element Search Parameter");
-            foreach (DataRow rw in cmd.v_UIASearchParameters.Rows)
+            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
             {
-                if (rw.ItemArray[2].ToString().Trim() == string.Empty)
-                    continue;
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedItem = frm.selectedItem.ToString();
+                    if (!DataTableControls.SetParameterValue(v_LoopActionParameterTable, selectedItem, "Selenium Instance Name", "Parameter Name", "Parameter Value"))
+                    {
+                        throw new Exception("Fail update Selenium Instance Name");
+                    }
+                }
+            }
+        }
 
-                sb.AppendLine(rw.ItemArray[1].ToString() + " - " + rw.ItemArray[2].ToString());
+        private void linkWindowNameSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        {
+            List<string> windowNames = new List<string>();
+
+            windowNames.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+
+            System.Diagnostics.Process[] processlist = System.Diagnostics.Process.GetProcesses();
+            //pull the main window title for each
+            foreach (var process in processlist)
+            {
+                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                {
+                    //add to the control list of available windows
+                    windowNames.Add(process.MainWindowTitle);
+                }
             }
 
-            DataGridView loopActionBox = LoopGridViewHelper;
-            loopActionBox.Rows[0].Cells[1].Value = newElementRecorder.cboWindowTitle.Text;
-
-            MessageBox.Show(sb.ToString());
+            using (var frm = new UI.Forms.Supplemental.frmItemSelector(windowNames))
+            {
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedItem = frm.selectedItem.ToString();
+                    if (!DataTableControls.SetParameterValue(v_LoopActionParameterTable, selectedItem, "Window Name", "Parameter Name", "Parameter Value"))
+                    {
+                        throw new Exception("Fail update Window Name");
+                    }
+                }
+            }
         }
+
+        //private void ShowLoopElementRecorder(object sender, EventArgs e)
+        //{
+        //    //get command reference
+        //    Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
+
+        //    //create recorder
+        //    UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
+        //    newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
+
+        //    //show form
+        //    newElementRecorder.ShowDialog();
+
+        //    var sb = new StringBuilder();
+        //    sb.AppendLine("Element Properties Found!");
+        //    sb.AppendLine(Environment.NewLine);
+        //    sb.AppendLine("Element Search Method - Element Search Parameter");
+        //    foreach (DataRow rw in cmd.v_UIASearchParameters.Rows)
+        //    {
+        //        if (rw.ItemArray[2].ToString().Trim() == string.Empty)
+        //            continue;
+
+        //        sb.AppendLine(rw.ItemArray[1].ToString() + " - " + rw.ItemArray[2].ToString());
+        //    }
+
+        //    DataGridView loopActionBox = LoopGridViewHelper;
+        //    loopActionBox.Rows[0].Cells[1].Value = newElementRecorder.cboWindowTitle.Text;
+
+        //    MessageBox.Show(sb.ToString());
+        //}
 
         public override string GetDisplayValue()
         {

@@ -93,13 +93,15 @@ namespace taskt.Core.Automation.Commands
 
         private bool DetermineMultiStatementTruth(object sender)
         {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             bool isTrueStatement = true;
             foreach (DataRow rw in v_LoopConditionsTable.Rows)
             {
                 var commandData = rw["CommandData"].ToString();
                 var loopCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginLoopCommand>(commandData);
 
-                var statementResult = loopCommand.DetermineStatementTruth(sender);
+                //var statementResult = loopCommand.DetermineStatementTruth(sender);
+                bool statementResult = ConditionControls.DetermineStatementTruth(loopCommand.v_LoopActionType, loopCommand.v_LoopActionParameterTable, engine);
 
                 if (!statementResult)
                 {
