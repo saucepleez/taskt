@@ -142,6 +142,9 @@ namespace taskt.UI.Forms
                 case "Editor - Command List":
                     showEditorCommandListSettings();
                     break;
+                case "Editor - Command Search":
+                    showEditorCommandSearchSettings();
+                    break;
                 case "Editor - Indent":
                     showEditorIndentSettings();
                     break;
@@ -494,6 +497,14 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Validation", FontSize.Large, true);
 
             createCheckBox("chkSilentValidation", "Don't show Script Command Validation Message", newAppSettings.ClientSettings, "DontShowValidationMessage", true);
+        }
+        private void showEditorCommandSearchSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Command Search", FontSize.Large, true);
+
+            createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
         }
         #endregion
 

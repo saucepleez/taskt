@@ -345,6 +345,9 @@ namespace taskt.UI.Forms
             // miniMap
             miniMapImg = new Bitmap(8, lstScriptActions.Height);
 
+            // command search box
+            setCommandSearchBoxState();
+
             // release
             GC.Collect();
 
@@ -4136,6 +4139,31 @@ namespace taskt.UI.Forms
                 ChangeSaveState(true);
             }
         }
+
+        private void setCommandSearchBoxState()
+        {
+            var state = appSettings.ClientSettings.ShowCommandSearchBar;
+
+            //set to empty
+            tsSearchResult.Text = "";
+            tsSearchBox.Text = "";
+
+            //show or hide
+            tsSearchBox.Visible = state;
+            tsSearchButton.Visible = state;
+            tsSearchResult.Visible = state;
+
+            //update verbiage
+            if (state)
+            {
+                showSearchBarToolStripMenuItem.Text = "Hide Search Bar";
+            }
+            else
+            {
+                showSearchBarToolStripMenuItem.Text = "Show Search Bar";
+            }
+            showSearchBarToolStripMenuItem.Checked = state;
+        }
         #endregion
 
         #region taskt About Form
@@ -4434,27 +4462,8 @@ namespace taskt.UI.Forms
         }
         private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //set to empty
-            tsSearchResult.Text = "";
-            tsSearchBox.Text = "";
-
-            //show or hide
-            tsSearchBox.Visible = !tsSearchBox.Visible;
-            tsSearchButton.Visible = !tsSearchButton.Visible;
-            tsSearchResult.Visible = !tsSearchResult.Visible;
-
-            //update verbiage
-            if (tsSearchBox.Visible)
-            {
-                showSearchBarToolStripMenuItem.Text = "Hide Search Bar";
-                showSearchBarToolStripMenuItem.Checked = true;
-            }
-            else
-            {
-                showSearchBarToolStripMenuItem.Text = "Show Search Bar";
-                showSearchBarToolStripMenuItem.Checked = false;
-            }
-
+            appSettings.ClientSettings.ShowCommandSearchBar = !appSettings.ClientSettings.ShowCommandSearchBar;
+            setCommandSearchBoxState();
         }
         #endregion
 

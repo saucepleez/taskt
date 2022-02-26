@@ -446,6 +446,9 @@ namespace taskt.Core
         public bool SearchGreedlyGroupName { get; set; }
         public bool SearchGreedlySubGroupName { get; set; }
 
+
+        public bool ShowCommandSearchBar { get; set; }
+
         private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
         private static string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
@@ -483,6 +486,8 @@ namespace taskt.Core
             SearchTargetSubGroupName = false;
             SearchGreedlyGroupName = true;
             SearchGreedlySubGroupName = false;
+
+            ShowCommandSearchBar = false;
         }
 
         public string replaceClientKeyword(string targetString)
