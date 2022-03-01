@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
 
         private static bool DetermineStatementTruth_Value(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
 
             string operand = param["Operand"].ConvertToUserVariable(engine);
 
