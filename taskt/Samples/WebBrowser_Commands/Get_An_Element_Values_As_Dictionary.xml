@@ -17,7 +17,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="3fce376d-36d4-4f2c-a940-07db7c81cf67" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Get 3rd textbox attribute values (id, class, name)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserGetAElementValuesAsDictionaryCommand" CommandID="cfe7ac67-b087-46ca-9d81-6ba762740597" CommandName="SeleniumBrowserGetAElementValuesAsDictionaryCommand" IsCommented="false" SelectionName="Get A Element Values As Dictionary" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Elements By XPath" v_SeleniumSearchParameter="//input[not(@type)]" v_ElementIndex="2" v_DictionaryVariableName="vDic">
+      <ScriptCommand xsi:type="SeleniumBrowserGetAnElementValuesAsDictionaryCommand" CommandID="cfe7ac67-b087-46ca-9d81-6ba762740597" CommandName="SeleniumBrowserGetAnElementValuesAsDictionaryCommand" IsCommented="false" SelectionName="Get An Element Values As Dictionary" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Elements By XPath" v_SeleniumSearchParameter="//input[not(@type)]" v_ElementIndex="2" v_DictionaryVariableName="vDic">
         <v_AttributesName>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="AttributesName012622.050811">
@@ -76,7 +76,7 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.0.61</TasktVersion>
+    <TasktVersion>3.5.0.67</TasktVersion>
     <Author />
     <LastRunTime>2022-01-26T17:09:09.2519282+09:00</LastRunTime>
     <RunTimes>4</RunTimes>
