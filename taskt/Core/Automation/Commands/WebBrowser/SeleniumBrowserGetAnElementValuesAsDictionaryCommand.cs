@@ -16,10 +16,10 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for a Element As Dictionary.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for a Element As Dictionary.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for an Element As Dictionary.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for an Element As Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class SeleniumBrowserGetAElementValuesAsDictionaryCommand : ScriptCommand
+    public class SeleniumBrowserGetAnElementValuesAsDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please Enter the instance name")]
@@ -116,10 +116,10 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private List<Control> ElementIndexControls;
 
-        public SeleniumBrowserGetAElementValuesAsDictionaryCommand()
+        public SeleniumBrowserGetAnElementValuesAsDictionaryCommand()
         {
-            this.CommandName = "SeleniumBrowserGetAElementValuesAsDictionaryCommand";
-            this.SelectionName = "Get A Element Values As Dictionary";
+            this.CommandName = "SeleniumBrowserGetAnElementValuesAsDictionaryCommand";
+            this.SelectionName = "Get An Element Values As Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

@@ -270,6 +270,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_51(doc);
             convertTo3_5_0_52(doc);
             convertTo3_5_0_57(doc);
+            convertTo3_5_0_67(doc);
 
             return doc;
         }
@@ -508,6 +509,40 @@ namespace taskt.Core.Script
                 cmd.SetAttributeValue("CommandName", "ExtractionTextCommand");
                 cmd.SetAttributeValue(ns + "type", "ExtractionTextCommand");
                 cmd.SetAttributeValue("SelectionName", "Extraction Text");
+            }
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_67(XDocument doc)
+        {
+            // GetAElement -> GetAnElement
+            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsListCommand"));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in getList)
+            {
+                cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsListCommand");
+                cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsListCommand");
+                cmd.SetAttributeValue("SelectionName", "Get An Element Values As List");
+            }
+
+            IEnumerable<XElement> getDic = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsDictionaryCommand"));
+            foreach (var cmd in getDic)
+            {
+                cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand");
+                cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand");
+                cmd.SetAttributeValue("SelectionName", "Get An Element Values As Dictionary");
+            }
+
+            IEnumerable<XElement> getDT = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsDataTableCommand"));
+            foreach (var cmd in getDT)
+            {
+                cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsDataTableCommand");
+                cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsDataTableCommand");
+                cmd.SetAttributeValue("SelectionName", "Get An Element Values As DataTable");
             }
 
             return doc;

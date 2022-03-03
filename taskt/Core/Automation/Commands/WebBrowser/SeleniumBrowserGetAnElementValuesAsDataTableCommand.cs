@@ -16,10 +16,10 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for a Element As List.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for a Element As List.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for an Element As DataTable.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for an Element As DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class SeleniumBrowserGetAElementValuesAsListCommand : ScriptCommand
+    public class SeleniumBrowserGetAnElementValuesAsDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please Enter the instance name")]
@@ -94,15 +94,15 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_AttributesName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify List Variable Name to store result")]
+        [PropertyDescription("Please Specify DataTable Variable Name to store result")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_ListVariableName { get; set; }
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_DataTableVariableName { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
@@ -116,10 +116,10 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private List<Control> ElementIndexControls;
 
-        public SeleniumBrowserGetAElementValuesAsListCommand()
+        public SeleniumBrowserGetAnElementValuesAsDataTableCommand()
         {
-            this.CommandName = "SeleniumBrowserGetAElementValuesAsListCommand";
-            this.SelectionName = "Get A Element Values As List";
+            this.CommandName = "SeleniumBrowserGetAnElementValuesAsDataTableCommand";
+            this.SelectionName = "Get An Element Values As DataTable";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -157,21 +157,25 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("not WebBrowser Element");
             }
 
-            List<string> newList = new List<string>();
+            DataTable newDT = new DataTable();
 
             int rows = v_AttributesName.Rows.Count;
+            if (rows > 0)
+            {
+                newDT.Rows.Add();
+            }
             for (int i = 0; i < rows; i++)
             {
                 string attrName = (v_AttributesName.Rows[i][0] == null) ? "" : v_AttributesName.Rows[i][0].ToString();
                 if (attrName != "")
                 {
-                    newList.Add(SeleniumControls.getAttribute(trgElem, attrName));
+                    newDT.Columns.Add(attrName);
+                    newDT.Rows[0][i] = SeleniumControls.getAttribute(trgElem, attrName);
                 }
             }
 
-            newList.StoreInUserVariable(engine, v_ListVariableName);
+            newDT.StoreInUserVariable(engine, v_DataTableVariableName);
         }
-
 
         private void SearchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -231,7 +235,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Get " + v_SeleniumSearchType + " element " + v_AttributesName.Rows.Count + " Attributes to store " + v_ListVariableName + ", Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Get " + v_SeleniumSearchType + " element " + v_AttributesName.Rows.Count + " Attributes to store " + v_DataTableVariableName + ", Instance Name: '" + v_InstanceName + "']";
         }
 
         public override bool IsValidate(frmCommandEditor editor)
