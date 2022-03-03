@@ -68,6 +68,16 @@ namespace taskt.Core
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
         };
+        private Dictionary<string, Dictionary<string, int>> booleanInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> dateTimeInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
 
         public InstanceCounter(ApplicationSettings settings)
         {
@@ -159,11 +169,17 @@ namespace taskt.Core
             Dictionary<string, Dictionary<string, int>> targetDic;
             switch (instanceType)
             {
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean:
+                    targetDic = booleanInstance;
+                    break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
                     targetDic = databaseInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable:
                     targetDic = dataTableInstance;
+                    break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DateTime:
+                    targetDic = dateTimeInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary:
                     targetDic = dictionaryInstance;
@@ -357,11 +373,17 @@ namespace taskt.Core
         {
             switch (instanceType.ToLower())
             {
+                case "boolean":
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean;
+                    break;
                 case "database":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
                     break;
                 case "datatable":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
+                    break;
+                case "datetime":
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DateTime;
                     break;
                 case "dictionary":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;

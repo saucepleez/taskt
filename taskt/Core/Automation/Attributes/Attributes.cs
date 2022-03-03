@@ -368,7 +368,9 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             Dictionary,
             DataTable,
             JSON,
-            List
+            List,
+            Boolean,
+            DateTime
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]
