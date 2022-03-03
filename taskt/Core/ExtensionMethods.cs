@@ -428,11 +428,28 @@ namespace taskt.Core
 
         private static bool ExpandVariableDotProperty(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
         {
-            if (variableName == "taskt.EngineContext")
+            //if (variableName == "taskt.EngineContext")
+            //{
+            //    result = engine.GetEngineContext();
+            //    return true;
+            //}
+
+            switch (variableName)
             {
-                result = engine.GetEngineContext();
-                return true;
+                case "taskt.EngineContext":
+                    result = engine.GetEngineContext();
+                    return true;
+                    break;
+
+                case "File.CurrentScriptFile":
+                    result = engine.FileName;
+                    return true;
+                    break;
+
+                default:
+                    break;
             }
+
             if (ExpandVariableNormal(variableName, variables, out result))
             {
                 // System Variables
