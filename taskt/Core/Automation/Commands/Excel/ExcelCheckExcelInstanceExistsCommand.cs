@@ -32,6 +32,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("Result is **TRUE** or **FALSE**.")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean, true)]
         public string v_applyToVariableName { get; set; }
         public ExcelCheckExcelInstanceExistsCommand()
         {
