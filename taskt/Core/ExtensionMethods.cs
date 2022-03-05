@@ -763,11 +763,20 @@ namespace taskt.Core
                     continue;
 
 
-                if (potentialVariable == "taskt.EngineContext")
+                //if (potentialVariable == "taskt.EngineContext")
+                //{
+                //    varCheck.VariableValue = engine.GetEngineContext();
+                //}
+                switch (potentialVariable)
                 {
-                    varCheck.VariableValue = engine.GetEngineContext();
-                }
+                    case "taskt.EngineContext":
+                        varCheck.VariableValue = engine.GetEngineContext();
+                        break;
 
+                    case "File.CurrentScriptFile":
+                        varCheck.VariableValue = engine.FileName;
+                        break;
+                }
 
                 if (varCheck != null)
                 {
