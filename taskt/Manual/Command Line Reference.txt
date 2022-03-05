@@ -1,0 +1,21 @@
+taskt command line reference
+
+-r
+	Run(Execute) script file.
+	ex.) taskt -r myscript.xml
+	
+-e
+	Run (Execute) script file.
+	ex.) taskt -e myscript.xml
+
+-o
+	Open script file.
+	ex.) taskt -o myscript.xml
+
+-oh
+	Open script file as unsaved file.
+	ex.) taskt -oh myscript.xml
+	
+nothing
+	Run (Execute) script file.
+	ex.) taskt myscript.xml
