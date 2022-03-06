@@ -139,6 +139,24 @@ namespace taskt.Core
             return "";
         }
 
+        public static string GetFieldValue(DataTable dt, int rowIndex, string columnName = "ParameterValue")
+        {
+            if (!isColumnExists(dt, columnName))
+            {
+                throw new Exception("Column Name does not exists");
+            }
+            if (rowIndex < 0)
+            {
+                rowIndex = dt.Rows.Count + rowIndex;
+            }
+            if (rowIndex > dt.Rows.Count)
+            {
+                throw new Exception("Strange Row Index " + rowIndex);
+            }
+
+            return dt.Rows[rowIndex][columnName] == null ? "" : dt.Rows[rowIndex][columnName].ToString();
+        }
+
         public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
         {
             if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
