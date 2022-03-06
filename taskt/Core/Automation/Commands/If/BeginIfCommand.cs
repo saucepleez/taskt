@@ -35,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean Compare")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**, **Boolean**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -71,6 +72,10 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         CommandItemControl lnkWindowNameSelector;
+
+        [XmlIgnore]
+        [NonSerialized]
+        CommandItemControl lnkBooleanSelector;
 
         public BeginIfCommand()
         {
@@ -874,7 +879,6 @@ namespace taskt.Core.Automation.Commands
             lnkBrowserInstanceSelector.CommandDisplay = "Select WebBrowser Instance";
             lnkBrowserInstanceSelector.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
             //RenderedControls.Add(lnkBrowserInstance);
-
             helpers.Add(lnkBrowserInstanceSelector);
 
             lnkWindowNameSelector = CommandControls.CreateUIHelper();
@@ -882,6 +886,12 @@ namespace taskt.Core.Automation.Commands
             lnkWindowNameSelector.CommandDisplay = "Select Window Name";
             lnkWindowNameSelector.Click += (sender, e) => linkWindowNameSelector_Click(sender, e, editor);
             helpers.Add(lnkWindowNameSelector);
+
+            lnkBooleanSelector = CommandControls.CreateUIHelper();
+            lnkBooleanSelector.Name = "v_IfActionParameterTable_helper_Boolean";
+            lnkBooleanSelector.CommandDisplay = "Select Boolean Instance";
+            lnkBooleanSelector.Click += (sender, e) => linkBooleanInstanceSelector_Click(sender, e, editor);
+            helpers.Add(lnkBooleanSelector);
 
             ParameterControls.AddRange(helpers);
             ParameterControls.Add(IfGridViewHelper);
@@ -938,6 +948,38 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        private void linkBooleanInstanceSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        {
+            var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean);
+
+            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
+            {
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedItem = frm.selectedItem.ToString();
+                    //int currentRow = IfGridViewHelper.CurrentRow.Index;
+                    string parameterName = DataTableControls.GetFieldValue(v_IfActionParameterTable, IfGridViewHelper.CurrentRow.Index, "Parameter Name");
+
+                    switch (v_IfActionType.ToLower())
+                    {
+                        case "boolean":
+                            DataTableControls.SetParameterValue(v_IfActionParameterTable, selectedItem, "Variable Name", "Parameter Name", "Parameter Value");
+                            break;
+
+                        case "boolean compare":
+                            switch (parameterName)
+                            {
+                                case "Value1":
+                                case "Value2":
+                                    DataTableControls.SetParameterValue(v_IfActionParameterTable, selectedItem, parameterName, "Parameter Name", "Parameter Value");
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
         private void ifAction_SelectionChangeCommitted(object sender, EventArgs e, frmCommandEditor editor)
         {
             ComboBox ifAction = (ComboBox)ActionDropdown;
@@ -965,6 +1007,7 @@ namespace taskt.Core.Automation.Commands
 
             lnkBrowserInstanceSelector.Hide();
             lnkWindowNameSelector.Hide();
+            lnkBooleanSelector.Hide();
 
             switch (ifAction.SelectedItem)
             {
@@ -1014,6 +1057,12 @@ namespace taskt.Core.Automation.Commands
 
                 case "Boolean":
                     ConditionControls.RenderBoolean(sender, ifActionParameterBox, actionParameters);
+                    lnkBooleanSelector.Show();
+                    break;
+
+                case "Boolean Compare":
+                    ConditionControls.RenderBooleanCompare(sender, ifActionParameterBox, actionParameters);
+                    lnkBooleanSelector.Show();
                     break;
 
                 default:
@@ -1264,6 +1313,7 @@ namespace taskt.Core.Automation.Commands
                 case "Value":
                 case "Date Compare":
                 case "Variable Compare":
+                case "Boolean Compare":
                     string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Value1"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -1377,7 +1427,7 @@ namespace taskt.Core.Automation.Commands
                                          where rw.Field<string>("Parameter Name") == "Value Is"
                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
                     return "If [Boolean] " + booleanVariable + " is " + compareTo;
-                    
+
 
                 default:
                     return "If .... ";
@@ -1482,6 +1532,10 @@ namespace taskt.Core.Automation.Commands
 
                     case "Boolean":
                         BooleanValidate();
+                        break;
+
+                    case "Boolean Compare":
+                        BooleanCompareValidate();
                         break;
 
                     default:
@@ -1648,6 +1702,27 @@ namespace taskt.Core.Automation.Commands
             if (String.IsNullOrEmpty(variable))
             {
                 this.validationResult += "Variable is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
+        private void BooleanCompareValidate()
+        {
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+
+            if (String.IsNullOrEmpty(param["Value1"]))
+            {
+                this.validationResult += "Value1 is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param["Value2"]))
+            {
+                this.validationResult += "Value2 is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param["Operand"]))
+            {
+                this.validationResult += "Operand is empty.\n";
                 this.IsValid = false;
             }
         }

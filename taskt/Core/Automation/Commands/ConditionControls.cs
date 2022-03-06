@@ -74,6 +74,10 @@ namespace taskt.Core.Automation.Commands
                     ifResult = DetermineStatementTruth_Boolean(actionParameterTable, engine);
                     break;
 
+                case "boolean compare":
+                    ifResult = DetermineStatementTruth_BooleanCompare(actionParameterTable, engine);
+                    break;
+
                 default:
                     throw new Exception("If type not recognized!");
                     break;
@@ -381,6 +385,37 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
         }
+        private static bool DetermineStatementTruth_BooleanCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
+        {
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+
+            bool value1 = param["Value1"].ConvertToUserVariableAsBool("Variable Name", engine);
+            bool value2 = param["Value2"].ConvertToUserVariableAsBool("Variable Name", engine);
+            string operand = param["Operand"].ConvertToUserVariable(engine);
+
+            switch (operand.ToLower())
+            {
+                case "is equal to":
+                    return (value1 == value2);
+                    break;
+
+                case "is not equal to":
+                    return (value1 != value2);
+                    break;
+
+                case "both are true":
+                    return (value1 & value2);
+                    break;
+
+                case "both or one of them are true":
+                    return (value1 | value2);
+                    break;
+
+                default:
+                    throw new Exception("Value Is " + param["Value Is"] + " is not support.");
+                    break;
+            }
+        }
 
         public static void RenderValueCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
         {
@@ -581,6 +616,25 @@ namespace taskt.Core.Automation.Commands
             DataGridViewComboBoxCell booleanParam = new DataGridViewComboBoxCell();
             booleanParam.Items.Add("True");
             booleanParam.Items.Add("False");
+            ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
+        }
+
+        public static void RenderBooleanCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        {
+            ifActionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Value1", "");
+                actionParameters.Rows.Add("Operand", "");
+                actionParameters.Rows.Add("Value2", "");
+                ifActionParameterBox.DataSource = actionParameters;
+            }
+            //assign cell as a combobox
+            DataGridViewComboBoxCell booleanParam = new DataGridViewComboBoxCell();
+            booleanParam.Items.Add("is equal to");
+            booleanParam.Items.Add("is not equal to");
+            booleanParam.Items.Add("both are True");
+            booleanParam.Items.Add("both or one of them are True");
             ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
         }
     }

@@ -35,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Occured")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean Compare")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -71,6 +72,10 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         CommandItemControl lnkWindowNameSelector;
+
+        [XmlIgnore]
+        [NonSerialized]
+        CommandItemControl lnkBooleanSelector;
 
         public BeginLoopCommand()
         {
@@ -619,7 +624,6 @@ namespace taskt.Core.Automation.Commands
             lnkBrowserInstanceSelector.Name = "v_LoopActionParameterTable_helper_WebBrowser";
             lnkBrowserInstanceSelector.CommandDisplay = "Select WebBrowser Instance";
             lnkBrowserInstanceSelector.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
-
             helpers.Add(lnkBrowserInstanceSelector);
 
             lnkWindowNameSelector = CommandControls.CreateUIHelper();
@@ -627,6 +631,12 @@ namespace taskt.Core.Automation.Commands
             lnkWindowNameSelector.CommandDisplay = "Select Window Name";
             lnkWindowNameSelector.Click += (sender, e) => linkWindowNameSelector_Click(sender, e, editor);
             helpers.Add(lnkWindowNameSelector);
+
+            lnkBooleanSelector = CommandControls.CreateUIHelper();
+            lnkBooleanSelector.Name = "v_LoopActionParameterTable_helper_Boolean";
+            lnkBooleanSelector.CommandDisplay = "Select Boolean Instance";
+            lnkBooleanSelector.Click += (sender, e) => linkBooleanInstanceSelector_Click(sender, e, editor);
+            helpers.Add(lnkBooleanSelector);
 
             ParameterControls.AddRange(helpers);
             ParameterControls.Add(LoopGridViewHelper);
@@ -913,6 +923,10 @@ namespace taskt.Core.Automation.Commands
                     ConditionControls.RenderBoolean(sender, LoopGridViewHelper, v_LoopActionParameterTable);
                     break;
 
+                case "Boolean Compare":
+                    ConditionControls.RenderBooleanCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
+                    break;
+
                 default:
                     break;
             }
@@ -964,6 +978,37 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+        private void linkBooleanInstanceSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        {
+            var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean);
+
+            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
+            {
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedItem = frm.selectedItem.ToString();
+                    //int currentRow = IfGridViewHelper.CurrentRow.Index;
+                    string parameterName = DataTableControls.GetFieldValue(v_LoopActionParameterTable, LoopGridViewHelper.CurrentRow.Index, "Parameter Name");
+
+                    switch (v_LoopActionType.ToLower())
+                    {
+                        case "boolean":
+                            DataTableControls.SetParameterValue(v_LoopActionParameterTable, selectedItem, "Variable Name", "Parameter Name", "Parameter Value");
+                            break;
+
+                        case "boolean compare":
+                            switch (parameterName)
+                            {
+                                case "Value1":
+                                case "Value2":
+                                    DataTableControls.SetParameterValue(v_LoopActionParameterTable, selectedItem, parameterName, "Parameter Name", "Parameter Value");
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
 
         //private void ShowLoopElementRecorder(object sender, EventArgs e)
         //{
@@ -1002,6 +1047,7 @@ namespace taskt.Core.Automation.Commands
                 case "Value":
                 case "Date Compare":
                 case "Variable Compare":
+                case "Boolean Compare":
                     string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Value1"
                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
@@ -1220,6 +1266,10 @@ namespace taskt.Core.Automation.Commands
                         BooleanValidate();
                         break;
 
+                    case "Boolean Compare":
+                        BooleanCompareValidate();
+                        break;
+
                     default:
                         break;
                 }
@@ -1387,6 +1437,27 @@ namespace taskt.Core.Automation.Commands
                 this.IsValid = false;
             }
         }
+        private void BooleanCompareValidate()
+        {
+            var param = DataTableControls.GetFieldValues(v_LoopActionParameterTable, "Parameter Name", "Parameter Value");
+
+            if (String.IsNullOrEmpty(param["Value1"]))
+            {
+                this.validationResult += "Value1 is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param["Value2"]))
+            {
+                this.validationResult += "Value2 is empty.\n";
+                this.IsValid = false;
+            }
+            if (String.IsNullOrEmpty(param["Operand"]))
+            {
+                this.validationResult += "Operand is empty.\n";
+                this.IsValid = false;
+            }
+        }
+
         public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
             if (this.v_LoopActionType == "GUI Element Exists")
