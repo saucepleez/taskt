@@ -34,8 +34,13 @@ namespace taskt.UI.Forms.Supplemental
         #region form events
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            lblAppVersion.Text = "version: " + new Version(System.Windows.Forms.Application.ProductVersion);
-            lblBuildDate.Text = "build date: " + System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("MM.dd.yy hh.mm.ss");
+            var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var info = FileVersionInfo.GetVersionInfo(location);
+            lblProjectName.Text = info.ProductName;
+            //lblAppVersion.Text = "version: " + new Version(System.Windows.Forms.Application.ProductVersion);
+            lblAppVersion.Text = "version: " + info.ProductVersion;
+            //lblBuildDate.Text = "build date: " + System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("MM.dd.yy hh.mm.ss");
+            lblBuildDate.Text = "build date: " + System.IO.File.GetLastWriteTime(location).ToString("MM.dd.yy hh.mm.ss");
         }
         private void frmAbout_KeyDown(object sender, KeyEventArgs e)
         {

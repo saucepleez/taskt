@@ -133,6 +133,10 @@ namespace taskt.UI.Forms
             //load all commands
             automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
+            // title
+            var info = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            lblMainLogo.Text = info.ProductName;
+
             // init Pen
             indentDashLine = new Pen(Color.LightGray, 1);
             indentDashLine.DashStyle = DashStyle.Dash;
