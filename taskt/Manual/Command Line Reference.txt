@@ -1,21 +1,21 @@
 taskt command line reference
 
--r
-	Run(Execute) script file.
-	ex.) taskt -r myscript.xml
-	
--e
-	Run (Execute) script file.
-	ex.) taskt -e myscript.xml
-
 -o
 	Open script file.
-	ex.) taskt -o myscript.xml
+	ex.) taskt -o "C:\scripts\myscript.xml"
 
 -oh
 	Open script file as unsaved file.
-	ex.) taskt -oh myscript.xml
+	ex.) taskt -oh "C:\scripts\myscript.xml"
 	
-nothing
+nothing (only file path)
 	Run (Execute) script file.
-	ex.) taskt myscript.xml
+	ex.) taskt "C:\scripts\myscript.xml"
+
+-r
+	Run(Execute) script file.
+	ex.) taskt -r "C:\scripts\myscript.xml"
+	
+-e
+	Run (Execute) script file.
+	ex.) taskt -e "C:\scripts\myscript.xml"
