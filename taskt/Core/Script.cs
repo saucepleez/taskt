@@ -271,6 +271,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_52(doc);
             convertTo3_5_0_57(doc);
             convertTo3_5_0_67(doc);
+            convertTo3_5_0_69(doc);
 
             return doc;
         }
@@ -545,6 +546,34 @@ namespace taskt.Core.Script
                 cmd.SetAttributeValue("SelectionName", "Get An Element Values As DataTable");
             }
 
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_69(XDocument doc)
+        {
+            // UI Automation Boolean Fix
+            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationCommand"));
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach (var cmd in getList)
+            {
+                XElement tableParams = cmd.Element("v_UIASearchParameters").Element(ns + "diffgram").Element("DocumentElement");
+                var elems = tableParams.Elements();
+                foreach (XElement elem in elems)
+                {
+                    XElement elemEnabled = elem.Element("Enabled");
+                    switch (elemEnabled.Value.ToLower())
+                    {
+                        case "true":
+                        case "false":
+                            break;
+
+                        default:
+                            elemEnabled.SetValue("False");
+                            break;
+                    }
+                }
+            }
             return doc;
         }
     }
