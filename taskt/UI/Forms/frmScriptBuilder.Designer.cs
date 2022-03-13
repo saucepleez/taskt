@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme1 = new taskt.Core.Theme();
+            taskt.Core.Theme theme2 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -106,9 +106,9 @@
             this.lnkStartEdit = new System.Windows.Forms.LinkLabel();
             this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
             this.lblFilesMissing = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picRecentFiles = new System.Windows.Forms.PictureBox();
+            this.picWebLinks = new System.Windows.Forms.PictureBox();
+            this.picWelcomeToTaskt = new System.Windows.Forms.PictureBox();
             this.lblRecentFiles = new System.Windows.Forms.Label();
             this.lnkGitWiki = new System.Windows.Forms.LinkLabel();
             this.lnkGitIssue = new System.Windows.Forms.LinkLabel();
@@ -200,9 +200,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).BeginInit();
             this.commandListPanelD.SuspendLayout();
             this.pnlCommandHelper.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picRecentFiles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWebLinks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWelcomeToTaskt)).BeginInit();
             this.pnlHeader.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
@@ -687,7 +687,7 @@
             this.recordToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.recordToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
             this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
-            this.recordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recordToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.recordToolStripMenuItem.Text = "R&ecord";
             this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
             // 
@@ -696,7 +696,7 @@
             this.scheduleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.scheduleToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_schedule;
             this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
-            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.scheduleToolStripMenuItem.Text = "&Schedule";
             this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
             // 
@@ -706,7 +706,7 @@
             this.runToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F5)));
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.runToolStripMenuItem.Text = "&Run";
             this.runToolStripMenuItem.ToolTipText = "Run Script without Save";
             this.runToolStripMenuItem.Visible = false;
@@ -975,9 +975,9 @@
             this.pnlCommandHelper.Controls.Add(this.lnkStartEdit);
             this.pnlCommandHelper.Controls.Add(this.flwRecentFiles);
             this.pnlCommandHelper.Controls.Add(this.lblFilesMissing);
-            this.pnlCommandHelper.Controls.Add(this.pictureBox4);
-            this.pnlCommandHelper.Controls.Add(this.pictureBox3);
-            this.pnlCommandHelper.Controls.Add(this.pictureBox1);
+            this.pnlCommandHelper.Controls.Add(this.picRecentFiles);
+            this.pnlCommandHelper.Controls.Add(this.picWebLinks);
+            this.pnlCommandHelper.Controls.Add(this.picWelcomeToTaskt);
             this.pnlCommandHelper.Controls.Add(this.lblRecentFiles);
             this.pnlCommandHelper.Controls.Add(this.lnkGitWiki);
             this.pnlCommandHelper.Controls.Add(this.lnkGitIssue);
@@ -1047,35 +1047,37 @@
             this.lblFilesMissing.Text = "there were no script files found in your script directory.";
             this.lblFilesMissing.Visible = false;
             // 
-            // pictureBox4
+            // picRecentFiles
             // 
-            this.pictureBox4.Image = global::taskt.Properties.Resources.recent_files;
-            this.pictureBox4.Location = new System.Drawing.Point(12, 219);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 15;
-            this.pictureBox4.TabStop = false;
+            this.picRecentFiles.Image = global::taskt.Properties.Resources.recent_files;
+            this.picRecentFiles.Location = new System.Drawing.Point(12, 219);
+            this.picRecentFiles.Name = "picRecentFiles";
+            this.picRecentFiles.Size = new System.Drawing.Size(84, 84);
+            this.picRecentFiles.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picRecentFiles.TabIndex = 15;
+            this.picRecentFiles.TabStop = false;
+            this.myToolTip.SetToolTip(this.picRecentFiles, "Click to Open File Dialog");
+            this.picRecentFiles.Click += new System.EventHandler(this.picRecentFiles_Click);
             // 
-            // pictureBox3
+            // picWebLinks
             // 
-            this.pictureBox3.Image = global::taskt.Properties.Resources.links_header;
-            this.pictureBox3.Location = new System.Drawing.Point(12, 108);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
+            this.picWebLinks.Image = global::taskt.Properties.Resources.links_header;
+            this.picWebLinks.Location = new System.Drawing.Point(12, 108);
+            this.picWebLinks.Name = "picWebLinks";
+            this.picWebLinks.Size = new System.Drawing.Size(84, 84);
+            this.picWebLinks.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picWebLinks.TabIndex = 14;
+            this.picWebLinks.TabStop = false;
             // 
-            // pictureBox1
+            // picWelcomeToTaskt
             // 
-            this.pictureBox1.Image = global::taskt.Properties.Resources.item_header;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(84, 84);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
+            this.picWelcomeToTaskt.Image = global::taskt.Properties.Resources.item_header;
+            this.picWelcomeToTaskt.Location = new System.Drawing.Point(12, 8);
+            this.picWelcomeToTaskt.Name = "picWelcomeToTaskt";
+            this.picWelcomeToTaskt.Size = new System.Drawing.Size(84, 84);
+            this.picWelcomeToTaskt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picWelcomeToTaskt.TabIndex = 13;
+            this.picWelcomeToTaskt.TabStop = false;
             // 
             // lblRecentFiles
             // 
@@ -1235,9 +1237,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme1;
+            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme2;
             // 
             // lblMainLogo
             // 
@@ -2020,9 +2022,9 @@
             this.commandListPanelD.ResumeLayout(false);
             this.pnlCommandHelper.ResumeLayout(false);
             this.pnlCommandHelper.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picRecentFiles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWebLinks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWelcomeToTaskt)).EndInit();
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
@@ -2090,10 +2092,10 @@
         private System.Windows.Forms.LinkLabel lnkGitWiki;
         private System.Windows.Forms.Label lblRecentFiles;
         private CustomControls.UIFlowLayoutPanel flwRecentFiles;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picWelcomeToTaskt;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox picRecentFiles;
+        private System.Windows.Forms.PictureBox picWebLinks;
         private System.Windows.Forms.Label lblFilesMissing;
         private CustomControls.UIPictureButton uiBtnRecordSequence;
         private CustomControls.UIPictureButton uiBtnClearAll;

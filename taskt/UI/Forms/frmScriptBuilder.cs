@@ -4748,6 +4748,13 @@ namespace taskt.UI.Forms
         }
 
         #endregion
+
+        #region Welcom Screen
+        private void picRecentFiles_Click(object sender, EventArgs e)
+        {
+            BeginOpenScriptProcess();
+        }
+        #endregion
     }
 
 }
