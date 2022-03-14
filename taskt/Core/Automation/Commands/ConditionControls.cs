@@ -637,5 +637,127 @@ namespace taskt.Core.Automation.Commands
             booleanParam.Items.Add("both or one of them are True");
             actionParameterBox.Rows[1].Cells[1] = booleanParam;
         }
+
+        public static bool ValueValidate(DataTable actionParameters, out string result)
+        {
+            //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                   where rw.Field<string>("Parameter Name") == "Operand"
+            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            string operand = DataTableControls.GetFieldValue(actionParameters, "Operand", "Parameter Name", "Parameter Value");
+            result = "";
+            if (String.IsNullOrEmpty(operand))
+            {
+                result += "Operand is empty.\n";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static bool VariableValidate(DataTable actionParameters, out string result)
+        {
+            //string v = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //             where rw.Field<string>("Parameter Name") == "Variable Name"
+            //             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            string variableName = DataTableControls.GetFieldValue(actionParameters, "Variable Name", "Parameter Name", "Parameter Value");
+            result = "";
+            if (String.IsNullOrEmpty(variableName))
+            {
+                result += "Variable Name is empty.\n";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static bool WindowValidate(DataTable actionParameters, out string result)
+        {
+            //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                      where rw.Field<string>("Parameter Name") == "Window Name"
+            //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            string windowName = DataTableControls.GetFieldValue(actionParameters, "Window Name", "Parameter Name", "Parameter Value");
+            result = "";
+            if (String.IsNullOrEmpty(windowName))
+            {
+                result += "Window Name is empty.\n";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static bool FileValidate(DataTable actionParameters, out string result)
+        {
+            //string fp = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //              where rw.Field<string>("Parameter Name") == "File Path"
+            //              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            string filePath = DataTableControls.GetFieldValue(actionParameters, "File Path", "Parameter Name", "Parameter Value");
+            result = "";
+            if (String.IsNullOrEmpty(filePath))
+            {
+                result += "File Path is empty.\n";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static bool FolderValidate(DataTable actionParameters, out string result)
+        {
+            //string fp = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //              where rw.Field<string>("Parameter Name") == "Folder Path"
+            //              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            string folderPath = DataTableControls.GetFieldValue(actionParameters, "Folder Path", "Parameter Name", "Parameter Value");
+            result = "";
+            if (String.IsNullOrEmpty(folderPath))
+            {
+                result += "Folder Path is empty.\n";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static bool WebValidate(DataTable actionParameters, out string result)
+        {
+            //string instance = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                    where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+            //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string method = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Element Search Method"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string param = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+            //                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            result = "";
+            if (String.IsNullOrEmpty(param["Selenium Instance Name"]))
+            {
+                result += "Browser Instance Name (Selenium Insntance) is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["Element Search Method"]))
+            {
+                result += "Search Method is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["Element Search Parameter"]))
+            {
+                result += "Search Parameter is empty.\n";
+            }
+
+            return (result.Length == 0);
+        }
     }
 }
