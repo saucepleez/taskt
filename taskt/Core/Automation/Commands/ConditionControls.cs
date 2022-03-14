@@ -417,16 +417,16 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void RenderValueCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderValueCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
 
             if (sender != null)
             {
                 actionParameters.Rows.Add("Value1", "");
                 actionParameters.Rows.Add("Operand", "");
                 actionParameters.Rows.Add("Value2", "");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
 
             //combobox cell for Variable Name
@@ -439,12 +439,12 @@ namespace taskt.Core.Automation.Commands
             comparisonComboBox.Items.Add("is not equal to");
 
             //assign cell as a combobox
-            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+            actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
-        public static void RenderVariableCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderVariableCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
 
             if (sender != null)
             {
@@ -452,7 +452,7 @@ namespace taskt.Core.Automation.Commands
                 actionParameters.Rows.Add("Operand", "");
                 actionParameters.Rows.Add("Value2", "");
                 actionParameters.Rows.Add("Case Sensitive", "No");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
 
             //combobox cell for Variable Name
@@ -463,54 +463,54 @@ namespace taskt.Core.Automation.Commands
             comparisonComboBox.Items.Add("is not equal to");
 
             //assign cell as a combobox
-            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+            actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
 
             DataGridViewComboBoxCell caseSensitiveComboBox = new DataGridViewComboBoxCell();
             caseSensitiveComboBox.Items.Add("Yes");
             caseSensitiveComboBox.Items.Add("No");
 
             //assign cell as a combobox
-            ifActionParameterBox.Rows[3].Cells[1] = caseSensitiveComboBox;
+            actionParameterBox.Rows[3].Cells[1] = caseSensitiveComboBox;
         }
 
-        public static void RenderVariableIsHas(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderVariableIsHas(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
             if (sender != null)
             {
                 actionParameters.Rows.Add("Variable Name", "");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
         }
 
-        public static void RenderErrorOccur(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderErrorOccur(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
             if (sender != null)
             {
                 actionParameters.Rows.Add("Line Number", "");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
         }
 
-        public static void RenderWindowName(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderWindowName(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
             if (sender != null)
             {
                 actionParameters.Rows.Add("Window Name", "");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
         }
 
-        public static void RenderFileExists(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderFileExists(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
             if (sender != null)
             {
                 actionParameters.Rows.Add("File Path", "");
                 actionParameters.Rows.Add("True When", "It Does Exist");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
 
             //combobox cell for Variable Name
@@ -519,7 +519,7 @@ namespace taskt.Core.Automation.Commands
             comparisonComboBox.Items.Add("It Does Not Exist");
 
             //assign cell as a combobox
-            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+            actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
         public static void RenderFolderExists(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
@@ -542,16 +542,16 @@ namespace taskt.Core.Automation.Commands
             ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
-        public static void RenderWebElement(object sender, DataGridView ifActionParameterBox, DataTable actionParameters, ApplicationSettings settings)
+        public static void RenderWebElement(object sender, DataGridView actionParameterBox, DataTable actionParameters, ApplicationSettings settings)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
 
             if (sender != null)
             {
                 actionParameters.Rows.Add("Selenium Instance Name", settings.ClientSettings.DefaultBrowserInstanceName);
                 actionParameters.Rows.Add("Element Search Method", "");
                 actionParameters.Rows.Add("Element Search Parameter", "");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
 
             DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
@@ -563,18 +563,18 @@ namespace taskt.Core.Automation.Commands
             comparisonComboBox.Items.Add("Find Element By CSS Selector");
 
             //assign cell as a combobox
-            ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
+            actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
-        public static void RenderGUIElement(object sender, DataGridView ifActionParameterBox, DataTable actionParameters, ApplicationSettings settings)
+        public static void RenderGUIElement(object sender, DataGridView actionParameterBox, DataTable actionParameters, ApplicationSettings settings)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
             if (sender != null)
             {
                 actionParameters.Rows.Add("Window Name", settings.EngineSettings.CurrentWindowKeyword);
                 actionParameters.Rows.Add("Element Search Method", "");
                 actionParameters.Rows.Add("Element Search Parameter", "");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
 
             var parameterName = new DataGridViewComboBoxCell();
@@ -600,34 +600,34 @@ namespace taskt.Core.Automation.Commands
             parameterName.Items.Add("ProcessID");
 
             //assign cell as a combobox
-            ifActionParameterBox.Rows[1].Cells[1] = parameterName;
+            actionParameterBox.Rows[1].Cells[1] = parameterName;
         }
 
-        public static void RenderBoolean(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderBoolean(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
             if (sender != null)
             {
                 actionParameters.Rows.Add("Variable Name", "");
                 actionParameters.Rows.Add("Value Is", "True");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
             //assign cell as a combobox
             DataGridViewComboBoxCell booleanParam = new DataGridViewComboBoxCell();
             booleanParam.Items.Add("True");
             booleanParam.Items.Add("False");
-            ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
+            actionParameterBox.Rows[1].Cells[1] = booleanParam;
         }
 
-        public static void RenderBooleanCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
+        public static void RenderBooleanCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
-            ifActionParameterBox.Visible = true;
+            actionParameterBox.Visible = true;
             if (sender != null)
             {
                 actionParameters.Rows.Add("Value1", "");
                 actionParameters.Rows.Add("Operand", "");
                 actionParameters.Rows.Add("Value2", "");
-                ifActionParameterBox.DataSource = actionParameters;
+                actionParameterBox.DataSource = actionParameters;
             }
             //assign cell as a combobox
             DataGridViewComboBoxCell booleanParam = new DataGridViewComboBoxCell();
@@ -635,7 +635,7 @@ namespace taskt.Core.Automation.Commands
             booleanParam.Items.Add("is not equal to");
             booleanParam.Items.Add("both are True");
             booleanParam.Items.Add("both or one of them are True");
-            ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
+            actionParameterBox.Rows[1].Cells[1] = booleanParam;
         }
     }
 }
