@@ -135,6 +135,7 @@ namespace taskt.UI.Forms
 
             // title
             var info = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            this.Text = info.ProductName;
             lblMainLogo.Text = info.ProductName;
 
             // init Pen
