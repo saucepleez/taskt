@@ -69,7 +69,23 @@ namespace taskt.Core.Automation.Commands
             }
 
             bool targetIsCurrentWindow = windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword;
-            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
+
+            List<IntPtr> targetWindows;
+            try
+            {
+                targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "Window not found")
+                {
+                    targetWindows = new List<IntPtr>();
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
 
             bool existResult = false;
 
