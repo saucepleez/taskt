@@ -28,8 +28,8 @@ namespace taskt
         [STAThread]
         static void Main(string[] args)
         {
-
-            //SetProcessDPIAware();
+            // High DPI
+            SetProcessDPIAware();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
