@@ -65,15 +65,12 @@ namespace taskt.Core.Automation.User32
             {
                 //try to find exact window name
                 IntPtr hWnd = FindWindowNative(null, windowName);
-
-
                 if (hWnd == IntPtr.Zero)
                 {
                     //potentially wait for some additional initialization
                     System.Threading.Thread.Sleep(1000);
                     hWnd = FindWindowNative(null, windowName);
                 }
-
 
                 //if exact window was not found, try partial match
                 if (hWnd == IntPtr.Zero)
@@ -134,7 +131,6 @@ namespace taskt.Core.Automation.User32
                 return ret;
             }
         }
-
         public static List<IntPtr> FindTargetWindows(string windowName, bool findCurrentWindow = false, bool greedy = false)
         {
             //create list of hwnds to target
@@ -208,11 +204,13 @@ namespace taskt.Core.Automation.User32
 
             return targetWindows;
         }
+
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
         [DllImport("User32.dll", EntryPoint = "SetForegroundWindow")]
         private static extern IntPtr SetForegroundWindowNative(IntPtr hWnd);
+
         public static void SetForegroundWindow(IntPtr hWnd)
         {
             SetForegroundWindowNative(hWnd);
@@ -224,7 +222,6 @@ namespace taskt.Core.Automation.User32
         {
             ShowWindow(hWnd, (int)windowState);
         }
-
         public enum WindowState
         {
             [Description("Minimizes a window, even if the thread that owns the window is not responding. This flag should only be used when minimizing windows from a different thread.")]
@@ -267,7 +264,6 @@ namespace taskt.Core.Automation.User32
         }
         public static void SetWindowSize(IntPtr hWnd, int newXSize, int newYSize)
         {
-
             const short SWP_NOZORDER = 0X4;
             const int SWP_SHOWWINDOW = 0x0040;
 
@@ -542,6 +538,31 @@ namespace taskt.Core.Automation.User32
             return screenshot;
         }
 
+        //public struct CursorPoint
+        //{
+        //    public int X;
+        //    public int Y;
+        //}
+
+        //[System.Runtime.InteropServices.DllImport("user32.dll")]
+        //public static extern bool GetPhysicalCursorPos(ref CursorPoint lpPoint);
+
+        //public static System.Windows.Point GetPhysicalPosition(System.Windows.Point point)
+        //{
+        //    var p = new CursorPoint()
+        //    {
+        //        X = (int)point.X,
+        //        Y = (int)point.Y
+        //    };
+        //    GetPhysicalCursorPos(ref p);
+        //    return new System.Windows.Point()
+        //    {
+        //        X = p.X,
+        //        Y = p.Y
+        //    };
+        //}
+
+
         public class GlobalHook
         {
             private const int WH_KEYBOARD_LL = 13;
@@ -635,33 +656,25 @@ namespace taskt.Core.Automation.User32
                 //BuildCommentCommand();
 
                 HookStopped(null, new EventArgs());
-
             }
 
 
             //mouse and keyboard hook event triggers
             private static IntPtr KeyboardHookEvent(int nCode, IntPtr wParam, IntPtr lParam)
            {
-
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
-
                 {
-
                     int vkCode = Marshal.ReadInt32(lParam);
 
                     BuildKeyboardCommand((Keys)vkCode);
-
-
                 }
 
                 return CallNextHookEx(_keyboardHookID, nCode, wParam, lParam);
-
+            
             }
             public static event EventHandler<MouseCoordinateEventArgs> MouseEvent;
             private static IntPtr MouseHookForLeftClickUpEvent(int nCode, IntPtr wParam, IntPtr lParam)
-
             {
-
                 if (nCode >= 0)
                 {
                     var message = (MouseMessages)wParam;
@@ -677,34 +690,27 @@ namespace taskt.Core.Automation.User32
                         System.Windows.Point point = new System.Windows.Point(hookStruct.pt.x, hookStruct.pt.y);
                         MouseEvent?.Invoke(null, new MouseCoordinateEventArgs() { MouseCoordinates = point });
                     }
-
                 }
 
                 return CallNextHookEx(_mouseHookID, nCode, wParam, lParam);
-
             }
 
             private static IntPtr MouseHookEvent(int nCode, IntPtr wParam, IntPtr lParam)
-
             {
-
                 if (nCode >= 0)
                 {
                     BuildMouseCommand(lParam, (MouseMessages)wParam);
                 }
 
                 return CallNextHookEx(_mouseHookID, nCode, wParam, lParam);
-
             }
 
             //build keyboard command
 
             private static void BuildKeyboardCommand(Keys key)
             {
-
                 var diff = DateTime.Now - keyTime;
                 keyTime = DateTime.Now;
-
 
                 if (diff.Milliseconds < 50 && LastKey != null && LastKey == key)
                 {
@@ -735,10 +741,8 @@ namespace taskt.Core.Automation.User32
                     toUpperCase = false;
                 }
 
-
                 var buf = new StringBuilder(256);
                 var keyboardState = new byte[256];
-
 
                 if (toUpperCase)
                 {
@@ -749,13 +753,10 @@ namespace taskt.Core.Automation.User32
 
                 var selectedKey = buf.ToString();
 
-
-
                 if ((selectedKey == "") || (selectedKey == "\r"))
                 {
                     selectedKey = key.ToString();
                 }
-
 
                 //translate key press to sendkeys identifier
                 if (selectedKey == stopHookKey)
@@ -790,12 +791,10 @@ namespace taskt.Core.Automation.User32
                     return;
                 }
 
-
                 if (!performKeyboardCapture)
                 {
                     return;
                 }
-
 
                 //add braces
                 if (selectedKey.Length > 1)
@@ -831,8 +830,6 @@ namespace taskt.Core.Automation.User32
                         var previouslyInputChars = lastCreatedSendKeysCommand.v_TextToSend;
                         lastCreatedSendKeysCommand.v_TextToSend = previouslyInputChars + selectedKey;
                     }
-
-
                 }
                 else
                 {
@@ -847,11 +844,6 @@ namespace taskt.Core.Automation.User32
                     };
                     generatedCommands.Add(keyboardCommand);
                 }
-
-
-
-
-
             }
 
             public static DateTime keyTime { get; set; }
@@ -860,7 +852,6 @@ namespace taskt.Core.Automation.User32
             //build mouse command
             private static void BuildMouseCommand(IntPtr lParam, MouseMessages mouseMessage)
             {
-
                 string mouseEventClickType = string.Empty;
                 switch (mouseMessage)
                 {
@@ -873,8 +864,6 @@ namespace taskt.Core.Automation.User32
                     case MouseMessages.WM_MOUSEMOVE:
                         mouseEventClickType = "None";
 
-                       
-
                         if (lastMouseMove.ElapsedMilliseconds >= msResolution)
                         {
                             lastMouseMove.Restart();
@@ -883,8 +872,6 @@ namespace taskt.Core.Automation.User32
                         {
                             return;
                         }
-
-         
                         break;
                     case MouseMessages.WM_RBUTTONDOWN:
                         mouseEventClickType = "Right Down";
@@ -900,8 +887,6 @@ namespace taskt.Core.Automation.User32
                 //if (mouseEventClickType == string.Empty)
                 //    return;
 
-
-                   
                 //return if we do not want to capture mouse moves
                 if ((!performMouseMoveCapture) && (mouseEventClickType == "None"))
                 {
@@ -921,15 +906,12 @@ namespace taskt.Core.Automation.User32
                 //define new mouse command
                 MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
 
-               
-
-
                 var mouseMove = new Core.Automation.Commands.SendMouseMoveCommand
                 {
                     v_XMousePosition = hookStruct.pt.x.ToString(),
                     v_YMousePosition = hookStruct.pt.y.ToString(),
                     v_MouseClick = mouseEventClickType
-            };
+                };
 
                 if (mouseEventClickType != "None")
                 {
@@ -939,20 +921,13 @@ namespace taskt.Core.Automation.User32
                     var windowName = _Buffer.ToString();
 
                     mouseMove.v_Comment = "Clicked On Window: " + windowName;
-
-
                 }
 
                 generatedCommands.Add(mouseMove);
-
-
-
             }
             //build window command
             private static void BuildWindowCommand(IntPtr hWinEventHook, SystemEvents @event, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
             {
-
-
                 switch (@event)
                 {
                     case SystemEvents.EVENT_MIN:
@@ -969,19 +944,14 @@ namespace taskt.Core.Automation.User32
                         return;
                 }
 
-
                 int length = GetWindowText(hwnd, _Buffer, _Buffer.Capacity);
                 var windowName = _Buffer.ToString();
-
-
 
                 //bypass screen recorder and Cortana (Win10) which throws errors
                 if ((windowName == "Screen Recorder") || (windowName == "Cortana"))
                 {
                     return;
                 }
-
-           
 
                 if (length > 0)
                 {
@@ -1051,22 +1021,15 @@ namespace taskt.Core.Automation.User32
                             v_Comment = "Generated by Screen Recorder @ " + DateTime.Now.ToString()
 
                         };
-                        
 
                         //add to list
                         generatedCommands.Add(reszWindowCommand);
-
-
                     }
-
-
                 }
-
             }
             //build pause command
             private static void BuildPauseCommand()
             {
-
                 if (sw.ElapsedMilliseconds < 1)
                 {
                     return;
@@ -1082,40 +1045,25 @@ namespace taskt.Core.Automation.User32
                 sw.Restart();
             }
 
-
-
-
             private static IntPtr SetKeyboardHook(LowLevelKeyboardProc proc)
-
             {
-
                 using (Process curProcess = Process.GetCurrentProcess())
 
                 using (ProcessModule curModule = curProcess.MainModule)
-
                 {
-
                     return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
-
-                        GetModuleHandle(curModule.ModuleName), 0);
-
+                                GetModuleHandle(curModule.ModuleName), 0
+                            );
                 }
-
             }
             private static IntPtr SetMouseHook(LowLevelMouseProc proc)
-
             {
-
                 using (Process curProcess = Process.GetCurrentProcess())
 
                 using (ProcessModule curModule = curProcess.MainModule)
-
                 {
-
                     return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
-
                 }
-
             }
             private static IntPtr _WinEventHook;
             private static SystemEventHandler _WinEventHookHandler;
@@ -1244,11 +1192,7 @@ namespace taskt.Core.Automation.User32
             delegate void SystemEventHandler(IntPtr hWinEventHook, SystemEvents @event, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 
             #endregion
-
-
         }
-
-      
     }
     public class WindowHandleInfo
     {
