@@ -1273,185 +1273,185 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        private void ValueValidate()
-        {
-            string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                               where rw.Field<string>("Parameter Name") == "Operand"
-                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            if (String.IsNullOrEmpty(operand))
-            {
-                this.validationResult += "Operand is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //private void ValueValidate()
+        //{
+        //    string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                       where rw.Field<string>("Parameter Name") == "Operand"
+        //                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    if (String.IsNullOrEmpty(operand))
+        //    {
+        //        this.validationResult += "Operand is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
-        private void VariableValidate()
-        {
-            string v = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                         where rw.Field<string>("Parameter Name") == "Variable Name"
-                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            if (String.IsNullOrEmpty(v))
-            {
-                this.validationResult += "Variable Name is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //private void VariableValidate()
+        //{
+        //    string v = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                 where rw.Field<string>("Parameter Name") == "Variable Name"
+        //                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    if (String.IsNullOrEmpty(v))
+        //    {
+        //        this.validationResult += "Variable Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
-        private void WindowValidate()
-        {
-            string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                  where rw.Field<string>("Parameter Name") == "Window Name"
-                                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            if (String.IsNullOrEmpty(windowName))
-            {
-                this.validationResult += "Window Name is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //private void WindowValidate()
+        //{
+        //    string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                          where rw.Field<string>("Parameter Name") == "Window Name"
+        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    if (String.IsNullOrEmpty(windowName))
+        //    {
+        //        this.validationResult += "Window Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
-        private void FileValidate()
-        {
-            string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                          where rw.Field<string>("Parameter Name") == "File Path"
-                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            if (String.IsNullOrEmpty(fp))
-            {
-                this.validationResult += "File Path is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //private void FileValidate()
+        //{
+        //    string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                  where rw.Field<string>("Parameter Name") == "File Path"
+        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    if (String.IsNullOrEmpty(fp))
+        //    {
+        //        this.validationResult += "File Path is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
-        private void FoloderValidate()
-        {
-            string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                          where rw.Field<string>("Parameter Name") == "Folder Path"
-                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            if (String.IsNullOrEmpty(fp))
-            {
-                this.validationResult += "Folder Path is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //private void FoloderValidate()
+        //{
+        //    string fp = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                  where rw.Field<string>("Parameter Name") == "Folder Path"
+        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    if (String.IsNullOrEmpty(fp))
+        //    {
+        //        this.validationResult += "Folder Path is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
-        private void WebValidate()
-        {
-            string instance = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
-                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //private void WebValidate()
+        //{
+        //    string instance = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                        where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
+        //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                              where rw.Field<string>("Parameter Name") == "Element Search Method"
-                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                      where rw.Field<string>("Parameter Name") == "Element Search Method"
+        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                     where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+        //                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            if (String.IsNullOrEmpty(instance))
-            {
-                this.validationResult += "Browser Instance Name (Selenium Insntance) is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(method))
-            {
-                this.validationResult += "Search Method is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(param))
-            {
-                this.validationResult += "Search Parameter is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //    if (String.IsNullOrEmpty(instance))
+        //    {
+        //        this.validationResult += "Browser Instance Name (Selenium Insntance) is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(method))
+        //    {
+        //        this.validationResult += "Search Method is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(param))
+        //    {
+        //        this.validationResult += "Search Parameter is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
-        private void GUIValidate()
-        {
-            string window = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                              where rw.Field<string>("Parameter Name") == "Window Name"
-                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //private void GUIValidate()
+        //{
+        //    string window = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                      where rw.Field<string>("Parameter Name") == "Window Name"
+        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                              where rw.Field<string>("Parameter Name") == "Element Search Method"
-                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    string method = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                      where rw.Field<string>("Parameter Name") == "Element Search Method"
+        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //    string param = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                     where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+        //                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            if (String.IsNullOrEmpty(window))
-            {
-                this.validationResult += "Window Name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(method))
-            {
-                this.validationResult += "Search Method is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(param))
-            {
-                this.validationResult += "Search Parameter is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //    if (String.IsNullOrEmpty(window))
+        //    {
+        //        this.validationResult += "Window Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(method))
+        //    {
+        //        this.validationResult += "Search Method is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(param))
+        //    {
+        //        this.validationResult += "Search Parameter is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
-        private void ErrorValidate()
-        {
-            string line = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                            where rw.Field<string>("Parameter Name") == "Line Number"
-                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //private void ErrorValidate()
+        //{
+        //    string line = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                    where rw.Field<string>("Parameter Name") == "Line Number"
+        //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            if (String.IsNullOrEmpty(line))
-            {
-                this.validationResult += "Line Number is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                int vLine;
-                if (int.TryParse(line, out vLine))
-                {
-                    if (vLine < 1)
-                    {
-                        this.validationResult += "Specify 1 or more to Line Number.\n";
-                        this.IsValid = false;
-                    }
-                }
-            }
-        }
+        //    if (String.IsNullOrEmpty(line))
+        //    {
+        //        this.validationResult += "Line Number is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        int vLine;
+        //        if (int.TryParse(line, out vLine))
+        //        {
+        //            if (vLine < 1)
+        //            {
+        //                this.validationResult += "Specify 1 or more to Line Number.\n";
+        //                this.IsValid = false;
+        //            }
+        //        }
+        //    }
+        //}
 
-        private void BooleanValidate()
-        {
-            string variable = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                where rw.Field<string>("Parameter Name") == "Variable Name"
-                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+        //private void BooleanValidate()
+        //{
+        //    string variable = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+        //                        where rw.Field<string>("Parameter Name") == "Variable Name"
+        //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-            if (String.IsNullOrEmpty(variable))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
-        }
-        private void BooleanCompareValidate()
-        {
-            var param = DataTableControls.GetFieldValues(v_LoopActionParameterTable, "Parameter Name", "Parameter Value");
+        //    if (String.IsNullOrEmpty(variable))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
+        //private void BooleanCompareValidate()
+        //{
+        //    var param = DataTableControls.GetFieldValues(v_LoopActionParameterTable, "Parameter Name", "Parameter Value");
 
-            if (String.IsNullOrEmpty(param["Value1"]))
-            {
-                this.validationResult += "Value1 is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(param["Value2"]))
-            {
-                this.validationResult += "Value2 is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(param["Operand"]))
-            {
-                this.validationResult += "Operand is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //    if (String.IsNullOrEmpty(param["Value1"]))
+        //    {
+        //        this.validationResult += "Value1 is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(param["Value2"]))
+        //    {
+        //        this.validationResult += "Value2 is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(param["Operand"]))
+        //    {
+        //        this.validationResult += "Operand is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
 
         public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
