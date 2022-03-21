@@ -757,7 +757,108 @@ namespace taskt.Core.Automation.Commands
                 result += "Search Parameter is empty.\n";
             }
 
-            return (result.Length == 0);
+            return (result == "");
+        }
+
+        public static bool GUIValidate(DataTable actionParameters, out string result)
+        {
+            //string window = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Window Name"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string method = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                  where rw.Field<string>("Parameter Name") == "Element Search Method"
+            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //string param = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+            //                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            result = "";
+
+            if (String.IsNullOrEmpty(param["Window Name"]))
+            {
+                result += "Window Name is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["Element Search Method"]))
+            {
+                result += "Search Method is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["Element Search Parameter"]))
+            {
+                result += "Search Parameter is empty.\n";
+            }
+
+            return (result == "");
+        }
+
+        public static bool ErrorValidate(DataTable actionParameters, out string result)
+        {
+            //string line = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                where rw.Field<string>("Parameter Name") == "Line Number"
+            //                select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string line = DataTableControls.GetFieldValue(actionParameters, "Line Number", "Parameter Name", "Parameter Value");
+            result = "";
+
+            if (String.IsNullOrEmpty(line))
+            {
+                result += "Line Number is empty.\n";
+            }
+            else
+            {
+                int vLine;
+                if (int.TryParse(line, out vLine))
+                {
+                    if (vLine < 1)
+                    {
+                        result += "Specify 1 or more to Line Number.\n";
+                    }
+                }
+            }
+            return (result == "");
+        }
+
+        public static bool BooleanValidate(DataTable actionParameters, out string result)
+        {
+            //string variable = ((from rw in v_IfActionParameterTable.AsEnumerable()
+            //                    where rw.Field<string>("Parameter Name") == "Variable Name"
+            //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            string variable = DataTableControls.GetFieldValue(actionParameters, "Variable Name", "Parameter Name", "Parameter Value");
+            result = "";
+
+            if (String.IsNullOrEmpty(variable))
+            {
+                result += "Variable is empty.\n";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static bool BooleanCompareValidate(DataTable actionParameters, out string result)
+        {
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            result = "";
+
+            if (String.IsNullOrEmpty(param["Value1"]))
+            {
+                result += "Value1 is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["Value2"]))
+            {
+                result += "Value2 is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["Operand"]))
+            {
+                result += "Operand is empty.\n";
+            }
+
+            return (result == "");
         }
     }
 }
