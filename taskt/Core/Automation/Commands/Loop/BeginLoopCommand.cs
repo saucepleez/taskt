@@ -1208,70 +1208,65 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
+                string message;
+                bool res = true;
                 switch (this.v_LoopActionType)
                 {
                     case "Value":
-                        ValueValidate();
-                        break;
-
                     case "Date Compare":
-                        ValueValidate();
-                        break;
-
                     case "Variable Compare":
-                        ValueValidate();
+                        res = ConditionControls.ValueValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "Variable Has Value":
-                        VariableValidate();
-                        break;
-
                     case "Variable Is Numeric":
-                        VariableValidate();
+                        res = ConditionControls.VariableValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "Window Name Exists":
-                        WindowValidate();
-                        break;
-
                     case "Active Window Name Is":
-                        WindowValidate();
+                        res = ConditionControls.WindowValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "File Exists":
-                        FileValidate();
+                        res = ConditionControls.FileValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "Folder Exists":
-                        FoloderValidate();
+                        res = ConditionControls.FolderValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "Web Element Exists":
-                        WebValidate();
+                        res = ConditionControls.WebValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "GUI Element Exists":
-                        GUIValidate();
+                        res = ConditionControls.GUIValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "Error Occured":
-                        ErrorValidate();
-                        break;
-
                     case "Error Did Not Occur":
-                        ErrorValidate();
+                        res = ConditionControls.ErrorValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "Boolean":
-                        BooleanValidate();
+                        res = ConditionControls.BooleanValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     case "Boolean Compare":
-                        BooleanCompareValidate();
+                        res = ConditionControls.BooleanCompareValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     default:
+                        message = "Strange Action Parameter";
+                        res = false;
                         break;
+                }
+
+                if (!res)
+                {
+                    this.validationResult += message;
+                    this.IsValid = false;
                 }
             }
 
