@@ -441,13 +441,16 @@ namespace taskt.Core
             }
         }
 
+        public bool DontShowDefaultInstanceWhenMultipleItemsExists { get; set; }
+
         public bool SearchTargetGroupName { get; set; }
         public bool SearchTargetSubGroupName { get; set; }
         public bool SearchGreedlyGroupName { get; set; }
         public bool SearchGreedlySubGroupName { get; set; }
 
-
         public bool ShowCommandSearchBar { get; set; }
+
+        public bool HideNotifyAutomatically { get; set; }
 
         private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
@@ -481,6 +484,7 @@ namespace taskt.Core
             DefaultWordInstanceName = "RPAWord";
             DefaultDBInstanceName = "RPADB";
             DefaultNLGInstanceName = "nlgDefaultInstance";
+            DontShowDefaultInstanceWhenMultipleItemsExists = false;
 
             SearchTargetGroupName = true;
             SearchTargetSubGroupName = false;
@@ -488,6 +492,7 @@ namespace taskt.Core
             SearchGreedlySubGroupName = false;
 
             ShowCommandSearchBar = false;
+            HideNotifyAutomatically = true;
         }
 
         public string replaceClientKeyword(string targetString)
