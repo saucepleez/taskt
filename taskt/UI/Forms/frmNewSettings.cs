@@ -142,9 +142,9 @@ namespace taskt.UI.Forms
                 case "Editor - Command List":
                     showEditorCommandListSettings();
                     break;
-                case "Editor - Command Search":
-                    showEditorCommandSearchSettings();
-                    break;
+                //case "Editor - Command Search":
+                //    showEditorCommandSearchSettings();
+                //    break;
                 case "Editor - Indent":
                     showEditorIndentSettings();
                     break;
@@ -410,6 +410,7 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Menu Bar", FontSize.Large, true);
 
             createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (Restart required)", newAppSettings.ClientSettings, "UseSlimActionBar", true);
+            createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
         }
         private void showEditorCommandListSettings()
         {
@@ -498,14 +499,14 @@ namespace taskt.UI.Forms
 
             createCheckBox("chkSilentValidation", "Don't show Script Command Validation Message", newAppSettings.ClientSettings, "DontShowValidationMessage", true);
         }
-        private void showEditorCommandSearchSettings()
-        {
-            removeSettingControls();
+        //private void showEditorCommandSearchSettings()
+        //{
+        //    removeSettingControls();
 
-            createLabel("lblTitle", "Command Search", FontSize.Large, true);
+        //    createLabel("lblTitle", "Command Search", FontSize.Large, true);
 
-            createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
-        }
+        //    createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
+        //}
         #endregion
 
         #region Network
