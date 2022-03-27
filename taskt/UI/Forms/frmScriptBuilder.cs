@@ -213,8 +213,15 @@ namespace taskt.UI.Forms
             //get latest files for recent files list on load
             GenerateRecentFiles();
 
-            //no height for status bar
-            HideNotificationRow();
+            //show/hide status bar
+            if (appSettings.ClientSettings.HideNotifyAutomatically)
+            {
+                HideNotificationRow();
+            }
+            else
+            {
+                ShowNotificationRow();
+            }
 
             //instantiate for script variables
             if (!editMode)
@@ -2900,7 +2907,7 @@ namespace taskt.UI.Forms
         List<string> notificationList = new List<string>();
         private DateTime notificationExpires;
         private bool isDisplaying;
-
+        public string notificationText { get; set; }
 
         private void tmrNotify_Tick(object sender, EventArgs e)
         {
@@ -2909,33 +2916,41 @@ namespace taskt.UI.Forms
                 return;
             }
 
-            if ((notificationExpires < DateTime.Now) && (isDisplaying))
+            if (appSettings.ClientSettings.HideNotifyAutomatically)
             {
-                HideNotification();
+                if ((notificationExpires < DateTime.Now) && (isDisplaying))
+                {
+                    HideNotification();
+                }
+
+                if ((appSettings.ClientSettings.AntiIdleWhileOpen) && (DateTime.Now > lastAntiIdleEvent.AddMinutes(1)))
+                {
+                    PerformAntiIdle();
+                }
+
+                //check if notification is required
+                if ((notificationList.Count > 0) && (notificationExpires < DateTime.Now))
+                {
+                    var itemToDisplay = notificationList[0];
+                    notificationList.RemoveAt(0);
+                    notificationExpires = DateTime.Now.AddSeconds(2);
+                    ShowNotification(itemToDisplay);
+                }
             }
-
-            if ((appSettings.ClientSettings.AntiIdleWhileOpen) && (DateTime.Now > lastAntiIdleEvent.AddMinutes(1)))
-            {
-                PerformAntiIdle();
-            }
-
-
-            //check if notification is required
-            if ((notificationList.Count > 0) && (notificationExpires < DateTime.Now))
-            {
-                var itemToDisplay = notificationList[0];
-                notificationList.RemoveAt(0);
-                notificationExpires = DateTime.Now.AddSeconds(2);
-                ShowNotification(itemToDisplay);
-            }
-
-
         }
         public void Notify(string notificationText)
         {
-            // DBG
-            //MessageBox.Show(notificationText);
-            notificationList.Add(notificationText);
+            if (appSettings.ClientSettings.HideNotifyAutomatically)
+            {
+                // DBG
+                //MessageBox.Show(notificationText);
+                notificationList.Add(notificationText);
+            }
+            else
+            {
+                this.notificationText = notificationText;
+                pnlStatus_Paint(pnlStatus, new PaintEventArgs(pnlStatus.CreateGraphics(), pnlStatus.Bounds));    // force draw
+            }
         }
         private void ShowNotification(string textToDisplay)
         {
@@ -2950,11 +2965,11 @@ namespace taskt.UI.Forms
             //}
             ShowNotificationRow();
             pnlStatus.ResumeLayout();
+
             isDisplaying = true;
         }
         private void HideNotification()
         {
-
             pnlStatus.SuspendLayout();
             //for (int i = 30; i > 0; i--)
             //{
@@ -2974,12 +2989,13 @@ namespace taskt.UI.Forms
         {
             tlpControls.RowStyles[5].Height = 30;
         }
-        public string notificationText { get; set; }
+        
         private void pnlStatus_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.Clear(Color.FromArgb(59, 59, 59));
+            //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(59, 59, 59)), e.ClipRectangle);
             e.Graphics.DrawString(notificationText, pnlStatus.Font, Brushes.White, 30, 4);
             e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
-
         }
 
         private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
