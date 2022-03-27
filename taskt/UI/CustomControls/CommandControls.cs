@@ -143,7 +143,31 @@ namespace taskt.UI.CustomControls
                 if (firstValue != null)
                 {
                     var settings = editor.appSettings;
-                    variableProperties.SetValue(parent, settings.replaceApplicationKeyword(firstValue.firstValue));
+
+                    var instanceType = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
+
+                    if (instanceType == null)
+                    {
+                        variableProperties.SetValue(parent, settings.replaceApplicationKeyword(firstValue.firstValue));
+                    }
+                    else
+                    {
+                        if (createdInput is TextBox)
+                        {
+                            variableProperties.SetValue(parent, settings.replaceApplicationKeyword(firstValue.firstValue));
+                        }
+                        else
+                        {
+                            if (((ComboBox)createdInput).Items.Count > 1)
+                            {
+                                variableProperties.SetValue(parent, "");
+                            }
+                            else
+                            {
+                                variableProperties.SetValue(parent, settings.replaceApplicationKeyword(firstValue.firstValue));
+                            }
+                        }
+                    }
                 }
             }
 

@@ -456,6 +456,8 @@ namespace taskt.UI.Forms
             createTextBox("txtDefaultWebBrowser", 400, newAppSettings.ClientSettings, "DefaultBrowserInstanceName", true);
             createLabel("lblDefaultWord", "Default Word Instance Name", FontSize.Small, true);
             createTextBox("txtDefaultWord", 400, newAppSettings.ClientSettings, "DefaultWordInstanceName", true);
+
+            createCheckBox("chkDontShowDefaultInstance", "Don't Show Default Instance When Multiple Instance Exists (partial support)", newAppSettings.ClientSettings, "DontShowDefaultInstanceWhenMultipleItemsExists", true);
         }
         private void showEditorInsertCommandSettings()
         {
