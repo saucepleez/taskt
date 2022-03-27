@@ -160,6 +160,9 @@ namespace taskt.UI.Forms
                 case "Editor - Menu Bar":
                     showEditorMenuBarSettings();
                     break;
+                case "Editor - Status Bar":
+                    showEditorStatusBarSettings();
+                    break;
                 case "Editor - Validation":
                     showEditorValidationSettings();
                     break;
@@ -409,7 +412,7 @@ namespace taskt.UI.Forms
 
             createLabel("lblTitle", "Menu Bar", FontSize.Large, true);
 
-            createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (Restart required)", newAppSettings.ClientSettings, "UseSlimActionBar", true);
+            createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (required restart)", newAppSettings.ClientSettings, "UseSlimActionBar", true);
             createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
         }
         private void showEditorCommandListSettings()
@@ -507,6 +510,14 @@ namespace taskt.UI.Forms
 
         //    createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
         //}
+        private void showEditorStatusBarSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Status Bar", FontSize.Large, true);
+
+            createCheckBox("chkHideNotifyAutomatically", "Hide Status Bar Automatically (reqired restart)", newAppSettings.ClientSettings, "HideNotifyAutomatically", true);
+        }
         #endregion
 
         #region Network
