@@ -272,6 +272,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_57(doc);
             convertTo3_5_0_67(doc);
             convertTo3_5_0_69(doc);
+            convertTo3_5_0_73(doc);
 
             return doc;
         }
@@ -574,6 +575,52 @@ namespace taskt.Core.Script
                     }
                 }
             }
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_73(XDocument doc)
+        {
+            // BeginIf Selenium -> WebBrowser
+            IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach(XElement cmd in getIf)
+            {
+                if ((string)cmd.Attribute("v_IfActionType") == "Web Element Exists")
+                {
+                    XElement tableParams = cmd.Element("v_IfActionParameterTable").Element(ns + "diffgram").Element("DocumentElement");
+                    var elems = tableParams.Elements();
+                    foreach(XElement elem in elems)
+                    {
+                        if (elem.Element("Parameter_x0020_Name").Value == "Selenium Instance Name")
+                        {
+                            elem.Element("Parameter_x0020_Name").Value = "WebBrowser Instance Name";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // BeginLoop Selenium -> WebBrowser
+            IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            foreach (XElement cmd in getLoop)
+            {
+                if ((string)cmd.Attribute("v_LoopActionType") == "Web Element Exists")
+                {
+                    XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(ns + "diffgram").Element("DocumentElement");
+                    var elems = tableParams.Elements();
+                    foreach (XElement elem in elems)
+                    {
+                        if (elem.Element("Parameter_x0020_Name").Value == "Selenium Instance Name")
+                        {
+                            elem.Element("Parameter_x0020_Name").Value = "WebBrowser Instance Name";
+                            break;
+                        }
+                    }
+                }
+            }
+
             return doc;
         }
     }

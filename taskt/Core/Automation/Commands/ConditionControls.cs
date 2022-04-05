@@ -343,7 +343,7 @@ namespace taskt.Core.Automation.Commands
 
             SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
             newElementActionCommand.v_SeleniumSearchType = param["Element Search Method"];
-            newElementActionCommand.v_InstanceName = param["Selenium Instance Name"];
+            newElementActionCommand.v_InstanceName = param["WebBrowser Instance Name"];
             bool elementExists = newElementActionCommand.ElementExists(engine, param["Element Search Method"], param["Element Search Parameter"]);
             return elementExists;
         }
@@ -548,7 +548,7 @@ namespace taskt.Core.Automation.Commands
 
             if (sender != null)
             {
-                actionParameters.Rows.Add("Selenium Instance Name", settings.ClientSettings.DefaultBrowserInstanceName);
+                actionParameters.Rows.Add("WebBrowser Instance Name", settings.ClientSettings.DefaultBrowserInstanceName);
                 actionParameters.Rows.Add("Element Search Method", "");
                 actionParameters.Rows.Add("Element Search Parameter", "");
                 actionParameterBox.DataSource = actionParameters;
@@ -744,9 +744,9 @@ namespace taskt.Core.Automation.Commands
 
             var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
             result = "";
-            if (String.IsNullOrEmpty(param["Selenium Instance Name"]))
+            if (String.IsNullOrEmpty(param["WebBrowser Instance Name"]))
             {
-                result += "Browser Instance Name (Selenium Insntance) is empty.\n";
+                result += "WebBrowser Instance Name is empty.\n";
             }
             if (String.IsNullOrEmpty(param["Element Search Method"]))
             {
