@@ -139,12 +139,12 @@ namespace taskt.UI.Forms
                     showDocumentsCommandReferenceSettings();
                     break;
 
+                case "Editor - Command Editor":
+                    showEditorCommandEditorSettings();
+                    break;
                 case "Editor - Command List":
                     showEditorCommandListSettings();
                     break;
-                //case "Editor - Command Search":
-                //    showEditorCommandSearchSettings();
-                //    break;
                 case "Editor - Indent":
                     showEditorIndentSettings();
                     break;
@@ -519,6 +519,14 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Status Bar", FontSize.Large, true);
 
             createCheckBox("chkHideNotifyAutomatically", "Hide Status Bar Automatically (reqired restart)", newAppSettings.ClientSettings, "HideNotifyAutomatically", true);
+        }
+        private void showEditorCommandEditorSettings()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Command Editor", FontSize.Large, true);
+
+            createCheckBox("chkRememberCommandEditorSizeAndPosition", "Remember Command Editor Size and Position", newAppSettings.ClientSettings, "RememberCommandEditorSizeAndPosition", true);
         }
         #endregion
 
