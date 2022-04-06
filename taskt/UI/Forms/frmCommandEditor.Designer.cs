@@ -193,6 +193,7 @@
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "frmCommandEditor";
             this.Text = "Add New Command";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCommandEditor_FormClosed);
             this.Load += new System.EventHandler(this.frmNewCommand_Load);
             this.Shown += new System.EventHandler(this.frmCommandEditor_Shown);
             this.Resize += new System.EventHandler(this.frmCommandEditor_Resize);

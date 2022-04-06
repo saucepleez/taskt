@@ -63,6 +63,9 @@ namespace taskt.UI.Forms
         public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
         public CommandEditAction currentEditAction = CommandEditAction.Normal;
 
+        private Size lastEditorSize = new Size { Height = 0, Width = 0 };
+        private Point lastEditorPosition;
+
         // search & replace
         //private List<int> matchingSearchIndex = new List<int>();
         private int currentIndexInMatchItems = -1;
@@ -1397,8 +1400,16 @@ namespace taskt.UI.Forms
                     // set instance counter
                     editCommand.instanceList = this.instanceList;
 
+                    // set size, position
+                    if ((lastEditorSize.Width != 0) && (lastEditorSize.Height != 0))
+                    {
+                        editCommand.Size = lastEditorSize;
+                        editCommand.StartPosition = FormStartPosition.Manual;
+                        editCommand.Location = lastEditorPosition;
+                    }
+
                     //show edit command form and save changes on OK result
-                    if (editCommand.ShowDialog() == DialogResult.OK)
+                    if (editCommand.ShowDialog(this) == DialogResult.OK)
                     {
                         ChangeSaveState(true);
 
@@ -3567,10 +3578,20 @@ namespace taskt.UI.Forms
                 newCommandForm.instanceList = this.instanceList;
 
                 if (specificCommand != "")
+                {
                     newCommandForm.defaultStartupCommand = specificCommand;
+                }
+
+                // set size, position
+                if ((lastEditorSize.Width != 0) && (lastEditorSize.Height != 0))
+                {
+                    newCommandForm.Size = lastEditorSize;
+                    newCommandForm.StartPosition = FormStartPosition.Manual;
+                    newCommandForm.Location = lastEditorPosition;
+                }
 
                 //if a command was selected
-                if (newCommandForm.ShowDialog() == DialogResult.OK)
+                if (newCommandForm.ShowDialog(this) == DialogResult.OK)
                 {
                     ChangeSaveState(true);
 
@@ -4770,6 +4791,19 @@ namespace taskt.UI.Forms
         private void picRecentFiles_Click(object sender, EventArgs e)
         {
             BeginOpenScriptProcess();
+        }
+        #endregion
+
+        #region CommandEditor
+        public void setCommandEditorSizeAndPosition(Forms.frmCommandEditor editor)
+        {
+            if (editor == null)
+            {
+                return;
+            }
+
+            this.lastEditorSize = editor.Size;
+            this.lastEditorPosition = editor.Location;
         }
         #endregion
     }

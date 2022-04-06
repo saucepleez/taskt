@@ -191,6 +191,12 @@ namespace taskt.UI.Forms
             }
         }
 
+        private void frmCommandEditor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // set Size, Position
+            ((frmScriptBuilder)this.Owner).setCommandEditorSizeAndPosition(this);
+        }
+
         #endregion Form Events
 
         private void cboSelectedCommand_SelectionChangeCommitted(object sender, EventArgs e)
@@ -362,5 +368,7 @@ namespace taskt.UI.Forms
             }
         }
         #endregion
+
+        
     }
 }
