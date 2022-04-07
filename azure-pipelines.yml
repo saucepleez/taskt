@@ -8,7 +8,7 @@ trigger:
 - development-branch
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2022'
 
 variables:
   solution: '**/*.sln'
