@@ -18,16 +18,18 @@ namespace taskt.Core.Automation.Commands
 
             switch (actionType.ConvertToUserVariable(engine).ToLower())
             {
-                case "value":
-                    ifResult = DetermineStatementTruth_Value(actionParameterTable, engine);
+                //case "value":
+                case "numeric compare":
+                    ifResult = DetermineStatementTruth_NumericCompare(actionParameterTable, engine);
                     break;
 
                 case "date compare":
                     ifResult = DetermineStatementTruth_DateCompare(actionParameterTable, engine);
                     break;
 
-                case "variable compare":
-                    ifResult = DetermineStatementTruth_VariableCompare(actionParameterTable, engine);
+                //case "variable compare":
+                case "text compare":
+                    ifResult = DetermineStatementTruth_TextCompare(actionParameterTable, engine);
                     break;
 
                 case "variable has value":
@@ -86,7 +88,7 @@ namespace taskt.Core.Automation.Commands
             return ifResult;
         }
 
-        private static bool DetermineStatementTruth_Value(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
+        private static bool DetermineStatementTruth_NumericCompare(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
 
@@ -198,7 +200,7 @@ namespace taskt.Core.Automation.Commands
             return ifResult;
         }
 
-        private static bool DetermineStatementTruth_VariableCompare(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
+        private static bool DetermineStatementTruth_TextCompare(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
 
@@ -417,7 +419,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void RenderValueCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
+        public static void RenderNumericCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
             actionParameterBox.Visible = true;
 
@@ -442,7 +444,7 @@ namespace taskt.Core.Automation.Commands
             actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
-        public static void RenderVariableCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
+        public static void RenderTextCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
             actionParameterBox.Visible = true;
 

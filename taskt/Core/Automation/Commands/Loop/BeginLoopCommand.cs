@@ -21,9 +21,9 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of Loop Command")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Numeric Compare")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Date Compare")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Text Compare")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Is Numeric")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
@@ -676,7 +676,8 @@ namespace taskt.Core.Automation.Commands
 
             switch (loopAction.SelectedItem)
             {
-                case "Value":
+                //case "Value":
+                case "Numeric Compare":
                 case "Date Compare":
                     //loopActionParameterBox.Visible = true;
 
@@ -700,11 +701,12 @@ namespace taskt.Core.Automation.Commands
                     ////assign cell as a combobox
                     //loopActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
 
-                    ConditionControls.RenderValueCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
+                    ConditionControls.RenderNumericCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
                     break;
 
 
-                case "Variable Compare":
+                //case "Variable Compare":
+                case "Text Compare":
                     //loopActionParameterBox.Visible = true;
 
                     //if (sender != null)
@@ -733,7 +735,7 @@ namespace taskt.Core.Automation.Commands
                     ////assign cell as a combobox
                     //loopActionParameterBox.Rows[3].Cells[1] = comparisonComboBox;
 
-                    ConditionControls.RenderVariableCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
+                    ConditionControls.RenderTextCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
                     break;
 
 
@@ -1044,9 +1046,11 @@ namespace taskt.Core.Automation.Commands
         {
             switch (v_LoopActionType)
             {
-                case "Value":
+                //case "Value":
+                case "Numeric Compare":
                 case "Date Compare":
-                case "Variable Compare":
+                //case "Variable Compare":
+                case "Text Compare":
                 case "Boolean Compare":
                     string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Value1"
@@ -1212,9 +1216,11 @@ namespace taskt.Core.Automation.Commands
                 bool res = true;
                 switch (this.v_LoopActionType)
                 {
-                    case "Value":
+                    //case "Value":
+                    case "Numeric Compare":
                     case "Date Compare":
-                    case "Variable Compare":
+                    //case "Variable Compare":
+                    case "Text Compare":
                         res = ConditionControls.ValueValidate(v_LoopActionParameterTable, out message);
                         break;
 

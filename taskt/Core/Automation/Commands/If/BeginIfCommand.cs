@@ -21,9 +21,9 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Value")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Numeric Compare")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Date Compare")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Text Compare")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Has Value")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Variable Is Numeric")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Window Name Exists")]
@@ -1011,13 +1011,15 @@ namespace taskt.Core.Automation.Commands
 
             switch (ifAction.SelectedItem)
             {
-                case "Value":
+                //case "Value":
+                case "Numeric Compare":
                 case "Date Compare":
-                    ConditionControls.RenderValueCompare(sender, ifActionParameterBox, actionParameters);
+                    ConditionControls.RenderNumericCompare(sender, ifActionParameterBox, actionParameters);
                     break;
 
-                case "Variable Compare":
-                    ConditionControls.RenderVariableCompare(sender, ifActionParameterBox, actionParameters);
+                //case "Variable Compare":
+                case "Text Compare":
+                    ConditionControls.RenderTextCompare(sender, ifActionParameterBox, actionParameters);
                     break;
 
 
@@ -1310,9 +1312,11 @@ namespace taskt.Core.Automation.Commands
         {
             switch (v_IfActionType)
             {
-                case "Value":
+                //case "Value":
+                case "Numeric Compare":
                 case "Date Compare":
-                case "Variable Compare":
+                //case "Variable Compare":
+                case "Text Compare":
                 case "Boolean Compare":
                     string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
                                       where rw.Field<string>("Parameter Name") == "Value1"
@@ -1480,9 +1484,11 @@ namespace taskt.Core.Automation.Commands
                 bool res = true;
                 switch (this.v_IfActionType)
                 {
-                    case "Value":
+                    //case "Value":
+                    case "Numeric Compare":
                     case "Date Compare":
-                    case "Variable Compare":
+                    //case "Variable Compare":
+                    case "Text Compare":
                         res = ConditionControls.ValueValidate(v_IfActionParameterTable, out message);
                         break;
 
