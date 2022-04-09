@@ -231,6 +231,14 @@ namespace taskt.Core.Automation.Commands
                     ifResult = (value1 != value2);
                     break;
 
+                case "starts with":
+                    ifResult = value1.StartsWith(value2);
+                    break;
+
+                case "ends with":
+                    ifResult = value1.EndsWith(value2);
+                    break;
+
                 default:
                     throw new Exception("Strange Operand " + param["Operand"]);
                     break;
@@ -463,6 +471,8 @@ namespace taskt.Core.Automation.Commands
             comparisonComboBox.Items.Add("does not contain");
             comparisonComboBox.Items.Add("is equal to");
             comparisonComboBox.Items.Add("is not equal to");
+            comparisonComboBox.Items.Add("starts with");
+            comparisonComboBox.Items.Add("ends with");
 
             //assign cell as a combobox
             actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
