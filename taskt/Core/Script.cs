@@ -273,6 +273,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_67(doc);
             convertTo3_5_0_69(doc);
             convertTo3_5_0_73(doc);
+            convertTo3_5_0_74(doc);
 
             return doc;
         }
@@ -618,6 +619,44 @@ namespace taskt.Core.Script
                             break;
                         }
                     }
+                }
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_74(XDocument doc)
+        {
+            // BeginIf Value, Variable Compare -> Numeric Compare, Text Compare
+            IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
+            foreach (XElement cmd in getIf)
+            {
+                switch ((string)cmd.Attribute("v_IfActionType"))
+                {
+                    case "Value":
+                        cmd.Attribute("v_IfActionType").Value = "Numeric Compare";
+                        break;
+
+                    case "Variable Compare":
+                        cmd.Attribute("v_IfActionType").Value = "Text Compare";
+                        break;
+                }
+            }
+
+            // BeginLoop Value, Variable Compare -> Numeric Compare, Text Compare
+            IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            foreach (XElement cmd in getLoop)
+            {
+                switch ((string)cmd.Attribute("v_LoopActionType"))
+                {
+                    case "Value":
+                        cmd.Attribute("v_LoopActionType").Value = "Numeric Compare";
+                        break;
+
+                    case "Variable Compare":
+                        cmd.Attribute("v_LoopActionType").Value = "Text Compare";
+                        break;
                 }
             }
 
