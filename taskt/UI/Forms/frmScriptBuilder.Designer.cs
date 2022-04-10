@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme2 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -165,6 +165,9 @@
             this.pasteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep3 = new System.Windows.Forms.ToolStripSeparator();
+            this.insertCommentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboveHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.belowHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
             this.searchThisCommnadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1237,9 +1240,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme2;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1703,6 +1706,7 @@
             this.pasteSelectedToolStripMenuItem,
             this.deleteSelectedToolStripMenuItem,
             this.lstContextStripSep3,
+            this.insertCommentToolStripMenuItem,
             this.moveToParentToolStripMenuItem,
             this.lstContextStripSep4,
             this.searchThisCommnadToolStripMenuItem,
@@ -1712,7 +1716,7 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 442);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 466);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -1822,7 +1826,30 @@
             // 
             this.lstContextStripSep3.Name = "lstContextStripSep3";
             this.lstContextStripSep3.Size = new System.Drawing.Size(341, 6);
-            this.lstContextStripSep3.Visible = false;
+            // 
+            // insertCommentToolStripMenuItem
+            // 
+            this.insertCommentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboveHereToolStripMenuItem,
+            this.belowHereToolStripMenuItem});
+            this.insertCommentToolStripMenuItem.Image = global::taskt.Properties.Resources.command_comment;
+            this.insertCommentToolStripMenuItem.Name = "insertCommentToolStripMenuItem";
+            this.insertCommentToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.insertCommentToolStripMenuItem.Text = "Insert Comment";
+            // 
+            // aboveHereToolStripMenuItem
+            // 
+            this.aboveHereToolStripMenuItem.Name = "aboveHereToolStripMenuItem";
+            this.aboveHereToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
+            this.aboveHereToolStripMenuItem.Text = "Above Here";
+            this.aboveHereToolStripMenuItem.Click += new System.EventHandler(this.aboveHereToolStripMenuItem_Click);
+            // 
+            // belowHereToolStripMenuItem
+            // 
+            this.belowHereToolStripMenuItem.Name = "belowHereToolStripMenuItem";
+            this.belowHereToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
+            this.belowHereToolStripMenuItem.Text = "Below Here";
+            this.belowHereToolStripMenuItem.Click += new System.EventHandler(this.belowHereToolStripMenuItem_Click);
             // 
             // moveToParentToolStripMenuItem
             // 
@@ -2216,6 +2243,9 @@
         private System.Windows.Forms.ToolStripMenuItem whereThisCommandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem whereThisCommandToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newSettigsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertCommentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboveHereToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem belowHereToolStripMenuItem;
     }
 }
 

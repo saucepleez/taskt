@@ -1805,7 +1805,7 @@ namespace taskt.UI.Forms
             grpSearch.Left = grpSaveClose.Right + 20;
 
             moveToParentToolStripMenuItem.Visible = true;
-            lstContextStripSep3.Visible = true;
+            //lstContextStripSep3.Visible = true;
             //lstContextStripSep4.Visible = false;
             showScriptInfoMenuItem.Visible = false;
         }
@@ -2795,6 +2795,23 @@ namespace taskt.UI.Forms
             {
                 if (lstScriptActions.FocusedItem.Bounds.Contains(e.Location) == true)
                 {
+                    if (lstScriptActions.SelectedIndices.Count == 0)
+                    {
+                        // no selected command
+                        insertCommentToolStripMenuItem.Visible = false;
+                    }
+                    else if (lstScriptActions.SelectedIndices[0] == 0)
+                    {
+                        // when select line 1, can not insert comment line 0
+                        aboveHereToolStripMenuItem.Enabled = false;
+                        insertCommentToolStripMenuItem.Visible = true;
+                    }
+                    else
+                    {
+                        aboveHereToolStripMenuItem.Enabled = true;
+                        insertCommentToolStripMenuItem.Visible = true;
+                    }
+
                     lstContextStrip.Show(Cursor.Position);
                 }
             }
@@ -2838,6 +2855,39 @@ namespace taskt.UI.Forms
         private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteRows();
+        }
+        private void aboveHereToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstScriptActions.SelectedIndices.Count > 0)
+            {
+                int index = lstScriptActions.SelectedIndices[0];
+                ClearSelectedListViewItems();
+
+                if (index >= 1)
+                {
+                    index--;
+                }
+                lstScriptActions.Items[index].Selected = true;
+
+                bool currentInsertMode = appSettings.ClientSettings.InsertCommandsInline;
+                appSettings.ClientSettings.InsertCommandsInline = true;
+                AddNewCommand("Misc Commands - Add Code Comment");
+                appSettings.ClientSettings.InsertCommandsInline = currentInsertMode;
+            }
+        }
+        private void belowHereToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstScriptActions.SelectedIndices.Count > 0)
+            {
+                int index = lstScriptActions.SelectedIndices[0];
+                ClearSelectedListViewItems();
+                lstScriptActions.Items[index].Selected = true;
+
+                bool currentInsertMode = appSettings.ClientSettings.InsertCommandsInline;
+                appSettings.ClientSettings.InsertCommandsInline = true;
+                AddNewCommand("Misc Commands - Add Code Comment");
+                appSettings.ClientSettings.InsertCommandsInline = currentInsertMode;
+            }
         }
         private void moveToParentToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -3567,6 +3617,9 @@ namespace taskt.UI.Forms
         #region Create Command Logic
         private void AddNewCommand(string specificCommand = "")
         {
+            // DBG
+            //MessageBox.Show(specificCommand);
+
             //bring up new command configuration form
             using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
             {
