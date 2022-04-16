@@ -1377,7 +1377,8 @@ namespace taskt.UI.Forms
             {
                 //Core.InstanceNameType nameType = instanceList.getInstanceNameType(currentCommand);
                 Core.Automation.Commands.ScriptCommand cloneCommand = currentCommand.Clone();
-                instanceList.removeInstance(currentCommand);
+                //instanceList.removeInstance(currentCommand);
+                currentCommand.removeInstance(instanceList);
 
                 //create new command editor form
                 using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
@@ -1419,7 +1420,8 @@ namespace taskt.UI.Forms
 
                         editCommand.selectedCommand.IsDontSavedCommand = true;
 
-                        instanceList.addInstance(editCommand.selectedCommand);
+                        //instanceList.addInstance(editCommand.selectedCommand);
+                        editCommand.selectedCommand.addInstance(instanceList);
                     }
                     else
                     {
@@ -1427,7 +1429,8 @@ namespace taskt.UI.Forms
                         //{
                         //    instanceList.addInstance(nameType);
                         //}
-                        instanceList.addInstance(cloneCommand);
+                        //instanceList.addInstance(cloneCommand);
+                        cloneCommand.addInstance(instanceList);
                     }
                 }
             }
@@ -3492,7 +3495,8 @@ namespace taskt.UI.Forms
         {
             foreach(Core.Automation.Commands.ScriptCommand command in items)
             {
-                instanceList.addInstance(command);
+                //instanceList.addInstance(command);
+                command.addInstance(instanceList);
             }
         }
 
@@ -3500,7 +3504,8 @@ namespace taskt.UI.Forms
         {
             foreach (Core.Automation.Commands.ScriptCommand command in items)
             {
-                instanceList.removeInstance(command);
+                //instanceList.removeInstance(command);
+                command.removeInstance(instanceList);
             }
         }
 
