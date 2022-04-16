@@ -84,7 +84,7 @@ namespace taskt.Core
             this.appSettings = settings;
         }
 
-        private void addInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType instanceType, bool isUsed = false)
+        public void addInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType instanceType, bool isUsed = false)
         {
             Dictionary<string, int> targetDic = decideDictionary(instanceType.instanceType, isUsed);
 
@@ -118,7 +118,7 @@ namespace taskt.Core
         //    this.addInstance(nameType.Name, nameType.InstanceType);
         //}
 
-        private void removeInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType instanceType, bool isUsed = false)
+        public void removeInstance(string instanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType instanceType, bool isUsed = false)
         {
             Dictionary<string, int> targetDic = decideDictionary(instanceType.instanceType, isUsed);
 
@@ -415,73 +415,5 @@ namespace taskt.Core
                     break;
             }
         }
-
-        //public InstanceNameType getInstanceNameType(Core.Automation.Commands.ScriptCommand command)
-        //{
-        //    if (command is Core.Automation.Commands.DatabaseDefineConnectionCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.DatabaseDefineConnectionCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
-        //    }
-        //    else if (command is Core.Automation.Commands.ExcelCreateApplicationCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.ExcelCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel);
-        //    }
-        //    else if (command is Core.Automation.Commands.IEBrowserCreateCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.IEBrowserCreateCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE);
-        //    }
-        //    else if (command is Core.Automation.Commands.NLGCreateInstanceCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.NLGCreateInstanceCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG);
-        //    }
-        //    else if (command is Core.Automation.Commands.StopwatchCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.StopwatchCommand)command).v_StopwatchName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch);
-        //    }
-        //    else if (command is Core.Automation.Commands.SeleniumBrowserCreateCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.SeleniumBrowserCreateCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
-        //    }
-        //    else if (command is Core.Automation.Commands.WordCreateApplicationCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.WordCreateApplicationCommand)command).v_InstanceName, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word);
-        //    }
-        //    else if (command is Core.Automation.Commands.CreateDictionaryCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.CreateDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
-        //    }
-        //    else if (command is Core.Automation.Commands.LoadDictionaryCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.LoadDictionaryCommand)command).v_DictionaryName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary);
-        //    }
-        //    else if (command is Core.Automation.Commands.CreateDataTableCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.CreateDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
-        //    }
-        //    else if (command is Core.Automation.Commands.FilterDataTableCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.CreateDataTableCommand)command).v_DataTableName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
-        //    }
-        //    else if (command is Core.Automation.Commands.LoadDataTableCommand)
-        //    {
-        //        return new InstanceNameType(((Core.Automation.Commands.LoadDataTableCommand)command).v_DataSetName, Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable);
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
     }
-
-    //public class InstanceNameType
-    //{
-    //    public string Name { get; private set; }
-    //    public Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType InstanceType { get; private set; }
-
-    //    public InstanceNameType(string name, Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType type)
-    //    {
-    //        this.Name = name;
-    //        this.InstanceType = type;
-    //    }
-    //}
 }
