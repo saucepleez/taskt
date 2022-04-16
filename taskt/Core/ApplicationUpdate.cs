@@ -19,7 +19,7 @@ namespace taskt.Core
             //get manifest
             try
             {
-             manifestData = webClient.DownloadString("http://www.taskt.net/updates/latest.json");           
+                manifestData = webClient.DownloadString("http://www.taskt.net/updates/latest.json");           
             }
             catch (Exception)
             {
