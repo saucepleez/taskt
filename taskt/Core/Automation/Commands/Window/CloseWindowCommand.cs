@@ -126,6 +126,8 @@ namespace taskt.Core.Automation.Commands
 
             //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
+            // DBG
+            //User32Functions.GetWindowNames();
 
 
             RenderedControls.AddRange(UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));

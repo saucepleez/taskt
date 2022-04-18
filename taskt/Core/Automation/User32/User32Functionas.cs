@@ -28,6 +28,8 @@ namespace taskt.Core.Automation.User32
 {
     public static class User32Functions
     {
+        private static Dictionary<IntPtr, string> windowTitles = null;
+
         [DllImport("user32.dll")]
         public static extern bool LockWorkStation();
 
@@ -40,7 +42,7 @@ namespace taskt.Core.Automation.User32
         }
 
         [DllImport("User32.dll", EntryPoint = "FindWindow")]
-        private static extern IntPtr FindWindowNative(string className, string windowName);
+        public static extern IntPtr FindWindowNative(string className, string windowName);
         public static IntPtr FindWindow(string windowName)
         {
             if (windowName.Contains("Windows Explorer -"))
@@ -204,6 +206,52 @@ namespace taskt.Core.Automation.User32
 
             return targetWindows;
         }
+
+        private delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
+
+        [DllImport("user32.dll")]
+        private static extern int EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
+
+        [DllImport("user32.dll")]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern int GetWindowTextLengthA(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern int GetWindowTextA(IntPtr hWnd, StringBuilder text, int count);
+
+        [DllImport("user32.dll")]
+        private static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+        public static Dictionary<IntPtr, string> GetWindowNames()
+        {
+            windowTitles = new Dictionary<IntPtr, string>();
+
+            EnumWindows(new EnumWindowsDelegate(EnumerateWindow), IntPtr.Zero);
+
+            return new Dictionary<IntPtr, string>(windowTitles);
+        }
+
+        private static bool EnumerateWindow(IntPtr hWnd, IntPtr lParam)
+        {
+            int titleLengthA = GetWindowTextLengthA(hWnd);
+            if (IsWindowVisible(hWnd) && (titleLengthA > 0))
+            {
+                StringBuilder title = new StringBuilder(titleLengthA + 1);
+                GetWindowTextA(hWnd, title, title.Capacity);
+
+                int processId;
+                GetWindowThreadProcessId(hWnd, out processId);
+                Process p = Process.GetProcessById(processId);
+
+                Console.WriteLine(hWnd.ToString() + " : " + title.ToString() + " : " + p.MainWindowTitle + " :=> " + p.MainWindowHandle);
+
+                windowTitles.Add(hWnd, title.ToString());
+            }
+            return true;
+        }
+
 
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
