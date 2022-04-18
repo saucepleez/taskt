@@ -33,98 +33,182 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
-        public static IntPtr FindWindow(string windowName, string searchMethod)
+        private static Dictionary<IntPtr, string> GetAllWindows()
         {
-            var searchFunc = getWindowSearchMethod(searchMethod);
+            return User32.User32Functions.GetWindowNames();
+        }
 
-            if (windowName.StartsWith("Windows Explorer -"))
+        public static string GetCurrentWindowName()
+        {
+            return User32.User32Functions.GetActiveWindowTitle();
+        }
+
+        //public static IntPtr FindWindow(string windowName, string searchMethod)
+        //{
+        //    var searchFunc = getWindowSearchMethod(searchMethod);
+
+        //    if (windowName.StartsWith("Windows Explorer -"))
+        //    {
+        //        var windowLocationName = windowName.Split('-')[1].Trim();
+
+        //        SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+        //        foreach (SHDocVw.InternetExplorer window in shellWindows)
+        //        {
+        //            //if (window.LocationName.Contains(windowLocationName))
+        //            if (searchFunc(window.LocationName, windowName))
+        //            {
+        //                return new IntPtr(window.HWND);
+        //            }
+        //        }
+
+        //        return IntPtr.Zero;
+        //    }
+        //    else
+        //    {
+        //        //try to find exact window name
+        //        IntPtr hWnd = User32.User32Functions.FindWindowNative(null, windowName);
+        //        if (hWnd == IntPtr.Zero)
+        //        {
+        //            //potentially wait for some additional initialization
+        //            System.Threading.Thread.Sleep(1000);
+        //            hWnd = User32.User32Functions.FindWindowNative(null, windowName);
+        //        }
+
+        //        //if exact window was not found, try partial match
+        //        if (hWnd == IntPtr.Zero)
+        //        {
+        //            var potentialWindow = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).FirstOrDefault();
+        //            if (potentialWindow != null)
+        //                hWnd = potentialWindow.MainWindowHandle;
+        //        }
+        //        //return hwnd
+        //        return hWnd;
+        //    }
+        //}
+        public static IntPtr FindWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        {
+            if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                var windowLocationName = windowName.Split('-')[1].Trim();
-
-                SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
-
-                foreach (SHDocVw.InternetExplorer window in shellWindows)
-                {
-                    //if (window.LocationName.Contains(windowLocationName))
-                    if (searchFunc(window.LocationName, windowName))
-                    {
-                        return new IntPtr(window.HWND);
-                    }
-                }
-
-                return IntPtr.Zero;
+                return User32.User32Functions.GetActiveWindow();
             }
             else
             {
-                //try to find exact window name
-                IntPtr hWnd = User32.User32Functions.FindWindowNative(null, windowName);
-                if (hWnd == IntPtr.Zero)
+                var windows = GetAllWindows();
+                var method = getWindowSearchMethod(searchMethod);
+                foreach(var win in windows)
                 {
-                    //potentially wait for some additional initialization
-                    System.Threading.Thread.Sleep(1000);
-                    hWnd = User32.User32Functions.FindWindowNative(null, windowName);
-                }
-
-                //if exact window was not found, try partial match
-                if (hWnd == IntPtr.Zero)
-                {
-                    var potentialWindow = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).FirstOrDefault();
-                    if (potentialWindow != null)
-                        hWnd = potentialWindow.MainWindowHandle;
-                }
-                //return hwnd
-                return hWnd;
-            }
-        }
-        public static List<IntPtr> FindWindows(string windowName, string searchMethod)
-        {
-            var searchFunc = getWindowSearchMethod(searchMethod);
-
-            List<IntPtr> ret = new List<IntPtr>();
-            if (windowName.Contains("Windows Explorer -"))
-            {
-                var windowLocationName = windowName.Split('-')[1].Trim();
-
-                SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
-
-                foreach (SHDocVw.InternetExplorer window in shellWindows)
-                {
-                    //if (window.LocationName.Contains(windowLocationName))
-                    if (searchFunc(window.LocationName, windowName))
+                    if (method(win.Value, windowName))
                     {
-                        ret.Add((IntPtr)window.HWND);
+                        return win.Key;
                     }
                 }
+            }
+            // not found
+            throw new Exception("Window Name not found");
+        }
+        //public static List<IntPtr> FindWindows(string windowName, string searchMethod)
+        //{
+        //    var searchFunc = getWindowSearchMethod(searchMethod);
+
+        //    List<IntPtr> ret = new List<IntPtr>();
+        //    if (windowName.Contains("Windows Explorer -"))
+        //    {
+        //        var windowLocationName = windowName.Split('-')[1].Trim();
+
+        //        SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+        //        foreach (SHDocVw.InternetExplorer window in shellWindows)
+        //        {
+        //            //if (window.LocationName.Contains(windowLocationName))
+        //            if (searchFunc(window.LocationName, windowName))
+        //            {
+        //                ret.Add((IntPtr)window.HWND);
+        //            }
+        //        }
+        //        return ret;
+        //    }
+        //    else
+        //    {
+        //        //try to find exact window name
+        //        IntPtr hWnd = User32.User32Functions.FindWindowNative(null, windowName);
+
+        //        if (hWnd == IntPtr.Zero)
+        //        {
+        //            //potentially wait for some additional initialization
+        //            System.Threading.Thread.Sleep(1000);
+        //            hWnd = User32.User32Functions.FindWindowNative(null, windowName);
+        //            if (hWnd != IntPtr.Zero)
+        //            {
+        //                ret.Add(hWnd);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ret.Add(hWnd);
+        //        }
+        //        //if exact window was not found, try partial match
+        //        var potentialWindows = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).ToList();
+        //        foreach (var potentialWindow in potentialWindows)
+        //        {
+        //            ret.Add(potentialWindow.MainWindowHandle);
+        //        }
+        //        //return hwnd
+        //        return ret;
+        //    }
+        //}
+        public static List<IntPtr> FindWindows(string windowName, string searchMethod, Engine.AutomationEngineInstance engine)
+        {
+            List<IntPtr> ret = new List<IntPtr>();
+
+            if (windowName == engine.engineSettings.CurrentWindowKeyword)
+            {
+                ret.Add(User32.User32Functions.GetActiveWindow());
                 return ret;
             }
             else
             {
-                //try to find exact window name
-                IntPtr hWnd = User32.User32Functions.FindWindowNative(null, windowName);
-
-                if (hWnd == IntPtr.Zero)
+                var windows = GetAllWindows();
+                var method = getWindowSearchMethod(searchMethod);
+                foreach (var win in windows)
                 {
-                    //potentially wait for some additional initialization
-                    System.Threading.Thread.Sleep(1000);
-                    hWnd = User32.User32Functions.FindWindowNative(null, windowName);
-                    if (hWnd != IntPtr.Zero)
+                    if (method(win.Value, windowName))
                     {
-                        ret.Add(hWnd);
+                        ret.Add(win.Key);
                     }
+                }
+                if (ret.Count > 0)
+                {
+                    return ret;
                 }
                 else
                 {
-                    ret.Add(hWnd);
+                    // not found
+                    throw new Exception("Window Name not found");
                 }
-                //if exact window was not found, try partial match
-                var potentialWindows = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).ToList();
-                foreach (var potentialWindow in potentialWindows)
-                {
-                    ret.Add(potentialWindow.MainWindowHandle);
-                }
-                //return hwnd
-                return ret;
             }
+        }
+
+        public static List<string> GetAllWindowTitles()
+        {
+            List<string> ret = new List<string>();
+            var windows = GetAllWindows();
+            foreach(var win in windows)
+            {
+                ret.Add(win.Value);
+            }
+            return ret;
+        }
+
+        public static List<IntPtr> GetAllWindowHandles()
+        {
+            List<IntPtr> ret = new List<IntPtr>();
+            var windows = GetAllWindows();
+            foreach (var win in windows)
+            {
+                ret.Add(win.Key);
+            }
+            return ret;
         }
     }
 }
