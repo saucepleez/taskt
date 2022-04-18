@@ -245,7 +245,7 @@ namespace taskt.Core.Automation.User32
                 GetWindowThreadProcessId(hWnd, out processId);
                 Process p = Process.GetProcessById(processId);
 
-                Console.WriteLine(hWnd.ToString() + " : " + title.ToString() + " : " + p.MainWindowTitle + " :=> " + p.MainWindowHandle);
+                //Console.WriteLine(hWnd.ToString() + " : " + title.ToString() + " : " + p.MainWindowTitle + " :=> " + p.MainWindowHandle);
 
                 windowTitles.Add(hWnd, title.ToString());
             }
