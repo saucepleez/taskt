@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
     internal class WindowNameControls
     {
 
-        private static Func<string, string, bool> getWindowSearchMethod(string searchMethod)
+        public static Func<string, string, bool> getWindowSearchMethod(string searchMethod)
         {
             Func<string, string, bool> ret;
             switch (searchMethod.ToLower())
