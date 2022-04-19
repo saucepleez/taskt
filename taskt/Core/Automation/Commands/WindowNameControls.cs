@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             // not found
-            throw new Exception("Window Name not found");
+            throw new Exception("Window Name '" + windowName + "' not found");
         }
         //public static List<IntPtr> FindWindows(string windowName, string searchMethod)
         //{
@@ -189,7 +189,7 @@ namespace taskt.Core.Automation.Commands
                 else
                 {
                     // not found
-                    throw new Exception("Window Name not found");
+                    throw new Exception("Window Name '" + windowName + "' not found");
                 }
             }
         }
@@ -214,6 +214,21 @@ namespace taskt.Core.Automation.Commands
                 ret.Add(win.Key);
             }
             return ret;
+        }
+
+        public static void ActivateWindow(IntPtr handle)
+        {
+            if (User32.User32Functions.IsIconic(handle))
+            {
+                User32.User32Functions.SetWindowState(handle, User32.User32Functions.WindowState.SW_SHOWNORMAL);
+            }
+            User32.User32Functions.SetForegroundWindow(handle);
+        }
+
+        public static void ActivateWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        {
+            IntPtr hwnd = FindWindow(windowName, searchMethod, engine);
+            ActivateWindow(hwnd);
         }
     }
 }
