@@ -156,11 +156,11 @@ namespace taskt.Core.Automation.Commands
                 {
                     //if (ex.Message.StartsWith("Window name '") && ex.Message.EndsWith("' not found"))
                     //{
-
+                    // true;
                     //}
                     //else
                     //{
-
+                    // false;
                     //}
                     (ex.Message.StartsWith("Window name '") && ex.Message.EndsWith("' not found")).StoreInUserVariable(engine, v_UserVariableName);
                 }
