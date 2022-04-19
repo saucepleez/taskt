@@ -5,6 +5,8 @@ using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
@@ -12,31 +14,32 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
     [Attributes.ClassAttributes.Description("This command activates a window and brings it to the front.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to active a window by name or bring it to attention.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetForegroundWindow', 'ShowWindow' from user32.dll to achieve automation.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ActivateWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to activate.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please enter or select the window that you want to activate.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
+        [Remarks("")]
+        [PropertyIsWindowNamesList(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Window title search method (Default is Contains)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
-        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [PropertyDescription("Window title search method")]
+        [InputSpecification("")]
+        [PropertyUISelectionOption("Contains")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
+        [PropertyUISelectionOption("Exact match")]
+        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Contains")]
         public string v_SearchMethod { get; set; }
 
         [XmlIgnore]
@@ -52,62 +55,76 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender)
         {
-            string windowName = v_WindowName.ConvertToUserVariable(sender);
-            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(searchMethod))
-            {
-                searchMethod = "Contains";
-            }
+            //string windowName = v_WindowName.ConvertToUserVariable(sender);
+            //string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            //if (String.IsNullOrEmpty(searchMethod))
+            //{
+            //    searchMethod = "Contains";
+            //}
 
-            bool targetIsCurrentWindow = windowName == ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword;
-            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
+            //bool targetIsCurrentWindow = windowName == ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword;
+            //var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
 
             //loop each window
-            if (searchMethod == "Contains" || targetIsCurrentWindow)
+            //if (searchMethod == "Contains" || targetIsCurrentWindow)
+            //{
+            //    foreach (var targetedWindow in targetWindows)
+            //    {
+            //        User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
+            //        User32Functions.SetForegroundWindow(targetedWindow);
+            //    }
+            //}
+            //else
+            //{
+            //    Func<string, bool> searchFunc;
+            //    switch(searchMethod)
+            //    {
+            //        case "Starts with":
+            //            searchFunc = (s) => s.StartsWith(windowName);
+            //            break;
+
+            //        case "Ends with":
+            //            searchFunc = (s) => s.EndsWith(windowName);
+            //            break;
+
+            //        case "Exact match":
+            //            searchFunc = (s) => (s == windowName);
+            //            break;
+
+            //        default:
+            //            throw new Exception("Search method " + searchMethod + " is not support.");
+            //            break;
+            //    }
+
+            //    bool isActivated = false;
+            //    foreach (var targetedWindow in targetWindows)
+            //    {
+            //        if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
+            //        {
+            //            User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
+            //            User32Functions.SetForegroundWindow(targetedWindow);
+            //            isActivated = true;
+            //        }
+            //    }
+
+            //    if (!isActivated)
+            //    {
+            //        throw new Exception("Window '" + windowName + "' is not found. Search method is " + searchMethod + ".");
+            //    }
+            //}
+
+            var engine = (Engine.AutomationEngineInstance)sender;
+
+            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
+
+            if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                foreach (var targetedWindow in targetWindows)
-                {
-                    User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
-                    User32Functions.SetForegroundWindow(targetedWindow);
-                }
+                WindowNameControls.ActivateWindow(WindowNameControls.GetCurrentWindowHandle());
             }
             else
             {
-                Func<string, bool> searchFunc;
-                switch(searchMethod)
-                {
-                    case "Starts with":
-                        searchFunc = (s) => s.StartsWith(windowName);
-                        break;
-
-                    case "Ends with":
-                        searchFunc = (s) => s.EndsWith(windowName);
-                        break;
-
-                    case "Exact match":
-                        searchFunc = (s) => (s == windowName);
-                        break;
-
-                    default:
-                        throw new Exception("Search method " + searchMethod + " is not support.");
-                        break;
-                }
-
-                bool isActivated = false;
-                foreach (var targetedWindow in targetWindows)
-                {
-                    if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
-                    {
-                        User32Functions.SetWindowState(targetedWindow, User32Functions.WindowState.SW_SHOWNORMAL);
-                        User32Functions.SetForegroundWindow(targetedWindow);
-                        isActivated = true;
-                    }
-                }
-
-                if (!isActivated)
-                {
-                    throw new Exception("Window '" + windowName + "' is not found. Search method is " + searchMethod + ".");
-                }
+                WindowNameControls.ActivateWindow(windowName, searchMethod, engine);
             }
         }
 
@@ -123,7 +140,7 @@ namespace taskt.Core.Automation.Commands
 
             //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 
@@ -139,20 +156,20 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Target Window: " + v_WindowName + "]";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_WindowName))
-            {
-                this.validationResult += "Window is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_WindowName))
+        //    {
+        //        this.validationResult += "Window is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
 
-        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToIntermediateWindowName");
