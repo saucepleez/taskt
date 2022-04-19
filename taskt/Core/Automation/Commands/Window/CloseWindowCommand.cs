@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.User32;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
@@ -13,31 +14,32 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
     [Attributes.ClassAttributes.Description("This command closes an open window.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an existing window by name.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SendMessage' from user32.dll to achieve automation.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class CloseWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to close. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to close.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please enter or select the window that you want to close. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Input or Type the name of the window that you want to close.")]
+        [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsWindowNamesList(true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Window title search method (Default is Contains)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
-        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Contains")]
+        [PropertyDescription("Window title search method")]
+        [InputSpecification("")]
+        [PropertyUISelectionOption("Contains")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
+        [PropertyUISelectionOption("Exact match")]
+        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Contains")]
         public string v_SearchMethod { get; set; }
 
         [XmlIgnore]
@@ -50,7 +52,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Close Window";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            
+
         }
 
         public override void RunCommand(object sender)
@@ -126,7 +128,7 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 var handles = WindowNameControls.FindWindows(windowName, searchMethod, engine);
-                foreach(var handle in handles)
+                foreach (var handle in handles)
                 {
                     User32Functions.CloseWindow(handle);
                 }
@@ -148,7 +150,7 @@ namespace taskt.Core.Automation.Commands
             //User32Functions.GetWindowNames();
 
 
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 
@@ -164,18 +166,18 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Target Window: " + v_WindowName + "]";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_WindowName))
-            {
-                this.validationResult += "Window is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_WindowName))
+        //    {
+        //        this.validationResult += "Window is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
 
         public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
