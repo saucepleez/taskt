@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Contains")]
         public string v_SearchMethod { get; set; }
 
         [XmlIgnore]
@@ -55,62 +55,80 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            //string windowName = v_WindowName.ConvertToUserVariable(sender);
+            //string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            //if (String.IsNullOrEmpty(searchMethod))
+            //{
+            //    searchMethod = "Contains";
+            //}
+
+            //bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
+
+            //var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
+
+            //if (searchMethod == "Contains" || targetIsCurrentWindow)
+            //{
+            //    //loop each window
+            //    foreach (var targetedWindow in targetWindows)
+            //    {
+            //        User32Functions.CloseWindow(targetedWindow);
+            //    }
+            //}
+            //else
+            //{
+            //    Func<string, bool> searchFunc;
+            //    switch (searchMethod)
+            //    {
+            //        case "Starts with":
+            //            searchFunc = (s) => s.StartsWith(windowName);
+            //            break;
+
+            //        case "Ends with":
+            //            searchFunc = (s) => s.EndsWith(windowName);
+            //            break;
+
+            //        case "Exact match":
+            //            searchFunc = (s) => (s == windowName);
+            //            break;
+
+            //        default:
+            //            throw new Exception("Search method " + searchMethod + " is not support.");
+            //            break;
+            //    }
+
+            //    bool isCloseWindow = false;
+
+            //    //loop each window
+            //    foreach (var targetedWindow in targetWindows)
+            //    {
+            //        if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
+            //        {
+            //            User32Functions.CloseWindow(targetedWindow);
+            //            isCloseWindow = true;
+            //        }
+            //    }
+
+            //    if (!isCloseWindow)
+            //    {
+            //        throw new Exception("Window name " + windowName + " is not found. Search method is " + searchMethod + ".");
+            //    }
+            //}
+
+            var engine = (Automation.Engine.AutomationEngineInstance)sender;
+
             string windowName = v_WindowName.ConvertToUserVariable(sender);
-            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(searchMethod))
+            string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
+
+            if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                searchMethod = "Contains";
-            }
-
-            bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
-
-            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
-
-            if (searchMethod == "Contains" || targetIsCurrentWindow)
-            {
-                //loop each window
-                foreach (var targetedWindow in targetWindows)
-                {
-                    User32Functions.CloseWindow(targetedWindow);
-                }
+                User32Functions.CloseWindow(WindowNameControls.GetCurrentWindowHandle());
             }
             else
             {
-                Func<string, bool> searchFunc;
-                switch (searchMethod)
+                var handles = WindowNameControls.FindWindows(windowName, searchMethod, engine);
+                foreach(var handle in handles)
                 {
-                    case "Starts with":
-                        searchFunc = (s) => s.StartsWith(windowName);
-                        break;
-
-                    case "Ends with":
-                        searchFunc = (s) => s.EndsWith(windowName);
-                        break;
-
-                    case "Exact match":
-                        searchFunc = (s) => (s == windowName);
-                        break;
-
-                    default:
-                        throw new Exception("Search method " + searchMethod + " is not support.");
-                        break;
-                }
-
-                bool isCloseWindow = false;
-
-                //loop each window
-                foreach (var targetedWindow in targetWindows)
-                {
-                    if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
-                    {
-                        User32Functions.CloseWindow(targetedWindow);
-                        isCloseWindow = true;
-                    }
-                }
-
-                if (!isCloseWindow)
-                {
-                    throw new Exception("Window name " + windowName + " is not found. Search method is " + searchMethod + ".");
+                    User32Functions.CloseWindow(handle);
                 }
             }
         }
