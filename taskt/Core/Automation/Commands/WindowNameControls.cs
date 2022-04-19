@@ -43,6 +43,11 @@ namespace taskt.Core.Automation.Commands
             return User32.User32Functions.GetActiveWindowTitle();
         }
 
+        public static IntPtr GetCurrentWindowHandle()
+        {
+            return User32.User32Functions.GetActiveWindow();
+        }
+
         //public static IntPtr FindWindow(string windowName, string searchMethod)
         //{
         //    var searchFunc = getWindowSearchMethod(searchMethod);
