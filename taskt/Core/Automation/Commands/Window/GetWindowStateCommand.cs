@@ -144,12 +144,12 @@ namespace taskt.Core.Automation.Commands
             wInfo.showCmd.ToString().StoreInUserVariable(engine, v_UserVariableName);
         }
 
-        private int GetWindowState(IntPtr whnd)
-        {
-            User32Functions.WINDOWPLACEMENT wInfo = new User32Functions.WINDOWPLACEMENT();
-            User32Functions.GetWindowPlacement(whnd, ref wInfo);
-            return wInfo.showCmd;
-        }
+        //private int GetWindowState(IntPtr whnd)
+        //{
+        //    User32Functions.WINDOWPLACEMENT wInfo = new User32Functions.WINDOWPLACEMENT();
+        //    User32Functions.GetWindowPlacement(whnd, ref wInfo);
+        //    return wInfo.showCmd;
+        //}
 
         public override List<Control> Render(frmCommandEditor editor)
         {
