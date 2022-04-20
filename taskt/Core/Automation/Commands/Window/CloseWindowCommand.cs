@@ -123,15 +123,12 @@ namespace taskt.Core.Automation.Commands
 
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                User32Functions.CloseWindow(WindowNameControls.GetCurrentWindowHandle());
+                windowName = WindowNameControls.GetCurrentWindowName();
             }
-            else
+            var handles = WindowNameControls.FindWindows(windowName, searchMethod, engine);
+            foreach (var handle in handles)
             {
-                var handles = WindowNameControls.FindWindows(windowName, searchMethod, engine);
-                foreach (var handle in handles)
-                {
-                    User32Functions.CloseWindow(handle);
-                }
+                User32Functions.CloseWindow(handle);
             }
         }
         public override List<Control> Render(frmCommandEditor editor)
