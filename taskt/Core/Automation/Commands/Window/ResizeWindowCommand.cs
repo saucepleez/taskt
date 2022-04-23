@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**640** or **{{{vWidth}}}**")]
         [Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid width range could be 0-1920")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("X Window Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.GreaterThanZero)]
+        [PropertyValidationRule("X Window Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_XWindowSize { get; set; }
         [XmlAttribute]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**480** or **{{{vHeight}}}**")]
         [Remarks("This number is limited by your resolution. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid height range could be 0-1080")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Y Window Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.GreaterThanZero)]
+        [PropertyValidationRule("Y Window Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_YWindowSize { get; set; }
 
         [XmlIgnore]
