@@ -44,8 +44,6 @@ namespace taskt.Core.Automation.Commands
     // DataTable
     [XmlInclude(typeof(AddDataRowCommand))]
     [XmlInclude(typeof(AddDataTableColumnCommand))]
-    //[XmlInclude(typeof(AddDataTableColumnAndFillValuesByListCommand))]
-    //[XmlInclude(typeof(AddDataTableColumnsAndFillValuesByDataTableCommand))]
     [XmlInclude(typeof(AddDataTableRowByDictionaryCommand))]
     [XmlInclude(typeof(AddDataTableRowCommand))]
     [XmlInclude(typeof(AddDataTableRowsByDataTableCommand))]
@@ -358,10 +356,12 @@ namespace taskt.Core.Automation.Commands
 
 
     // ?
-    [XmlInclude(typeof(ThickAppClickItemCommand))]
-    [XmlInclude(typeof(ThickAppGetTextCommand))]
-    [XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
-    [XmlInclude(typeof(DatabaseRunQueryCommand))]
+    //[XmlInclude(typeof(ThickAppClickItemCommand))]
+    //[XmlInclude(typeof(ThickAppGetTextCommand))]
+    //[XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
+    //[XmlInclude(typeof(DatabaseRunQueryCommand))]
+    //[XmlInclude(typeof(AddDataTableColumnAndFillValuesByListCommand))]
+    //[XmlInclude(typeof(AddDataTableColumnsAndFillValuesByDataTableCommand))]
     [XmlInclude(typeof(ExcelAddWorksheetCommand))]
     [XmlInclude(typeof(LoadTaskCommand))]
     [XmlInclude(typeof(UnloadTaskCommand))]
