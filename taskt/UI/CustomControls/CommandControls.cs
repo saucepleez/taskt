@@ -1586,16 +1586,17 @@ namespace taskt.UI.CustomControls
                 }
             }
 
-            Process[] processlist = Process.GetProcesses();
-            //pull the main window title for each
-            foreach (Process process in processlist)
-            {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
-                {
-                    //add to the control list of available windows
-                    cbo.Items.Add(process.MainWindowTitle);
-                }
-            }
+            //Process[] processlist = Process.GetProcesses();
+            ////pull the main window title for each
+            //foreach (Process process in processlist)
+            //{
+            //    if (!String.IsNullOrEmpty(process.MainWindowTitle))
+            //    {
+            //        //add to the control list of available windows
+            //        cbo.Items.Add(process.MainWindowTitle);
+            //    }
+            //}
+            cbo.Items.AddRange(Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
 
             cbo.EndUpdate();
 
