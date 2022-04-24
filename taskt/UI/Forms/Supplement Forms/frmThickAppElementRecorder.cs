@@ -26,15 +26,12 @@ namespace taskt.UI.Forms.Supplemental
         private void frmThickAppElementRecorder_Load(object sender, EventArgs e)
         {
             //create data source from windows
-            cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            
+            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
         }
 
-
-      
         private void pbRecord_Click(object sender, EventArgs e)
         {
-
             // this.WindowState = FormWindowState.Minimized;
 
             if (!chkStopOnClick.Checked)
@@ -49,7 +46,6 @@ namespace taskt.UI.Forms.Supplemental
             }
          
             this.Size = new Size(540, 140);
-
 
             this.searchParameters = new DataTable();
             this.searchParameters.Columns.Add("Enabled");
@@ -94,7 +90,6 @@ namespace taskt.UI.Forms.Supplemental
             //invoke UIA
             try
             {
-            
                 System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
                 System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
 
@@ -125,7 +120,6 @@ namespace taskt.UI.Forms.Supplemental
                     {
                         MessageBox.Show("Error Iterating over properties in window: " + ex.ToString());
                     }
-
                 }
             }
             catch (Exception)
@@ -138,17 +132,13 @@ namespace taskt.UI.Forms.Supplemental
             {
                 this.Close();     
             }
-              
-            
-           
-
-
         }
 
         private void pbRefresh_Click(object sender, EventArgs e)
         {
             //handle window refresh requests
-            cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)

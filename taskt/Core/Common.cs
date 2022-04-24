@@ -207,34 +207,34 @@ namespace taskt.Core
             return image;
         }
 
-        public static List<string> GetAvailableWindowNames()
-        {
-            List<string> windowList = new List<string>();
-            //get all running processes
-            Process[] processlist = Process.GetProcesses();
-            //pull the main window title for each
-            foreach (Process process in processlist)
-            {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
-                {
-                    //add to the control list of available windows
-                    windowList.Add(process.MainWindowTitle);
-                }
-            }
+        //public static List<string> GetAvailableWindowNames()
+        //{
+        //    List<string> windowList = new List<string>();
+        //    //get all running processes
+        //    Process[] processlist = Process.GetProcesses();
+        //    //pull the main window title for each
+        //    foreach (Process process in processlist)
+        //    {
+        //        if (!String.IsNullOrEmpty(process.MainWindowTitle))
+        //        {
+        //            //add to the control list of available windows
+        //            windowList.Add(process.MainWindowTitle);
+        //        }
+        //    }
 
 
-            SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+        //    SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
 
-            foreach (SHDocVw.InternetExplorer window in shellWindows)
-            {
-                windowList.Add("Windows Explorer - " + window.LocationName);
-            }
+        //    foreach (SHDocVw.InternetExplorer window in shellWindows)
+        //    {
+        //        windowList.Add("Windows Explorer - " + window.LocationName);
+        //    }
 
 
-            windowList.Sort();
+        //    windowList.Sort();
 
-            return windowList;
-        }
+        //    return windowList;
+        //}
 
         private static string GetKeyDescription(Keys key)
         {
