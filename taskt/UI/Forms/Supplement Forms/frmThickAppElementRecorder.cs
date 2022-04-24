@@ -53,20 +53,16 @@ namespace taskt.UI.Forms.Supplemental
             this.searchParameters.Columns.Add("Parameter Value");
             this.searchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
-
             //clear all
             searchParameters.Rows.Clear();
 
             //get window name and find window
             string windowName = cboWindowTitle.Text;
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
-
-            //check if window is found
-            if (hWnd != IntPtr.Zero)
+            //IntPtr hWnd = User32Functions.FindWindow(windowName);
+            try
             {
-                //set window state and move to 0,0
-                User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
-                User32Functions.SetForegroundWindow(hWnd);
+                IntPtr hWnd = WindowNameControls.FindWindow(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
+                WindowNameControls.ActivateWindow(hWnd);
                 User32Functions.SetWindowPosition(hWnd, 0, 0);
 
                 //start global hook and wait for left mouse down event
@@ -75,6 +71,25 @@ namespace taskt.UI.Forms.Supplemental
                 User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
                 User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            ////check if window is found
+            //if (hWnd != IntPtr.Zero)
+            //{
+            //    //set window state and move to 0,0
+            //    User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
+            //    User32Functions.SetForegroundWindow(hWnd);
+            //    User32Functions.SetWindowPosition(hWnd, 0, 0);
+
+            //    //start global hook and wait for left mouse down event
+            //    User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
+            //    User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
+            //    User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
+            //    User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
+            //}
         }
 
         private void GlobalHook_HookStopped(object sender, EventArgs e)
@@ -107,14 +122,14 @@ namespace taskt.UI.Forms.Supplemental
                 {
                     try
                     {         
-                    var propName = property.Name;
-                    var propValue = property.GetValue(elementProperties, null);
+                        var propName = property.Name;
+                        var propValue = property.GetValue(elementProperties, null);
 
-                    //if property is a basic type then display
-                    if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
-                    {
-                        searchParameters.Rows.Add(false, propName, propValue);
-                    }
+                        //if property is a basic type then display
+                        if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
+                        {
+                            searchParameters.Rows.Add(false, propName, propValue);
+                        }
                     }
                     catch (Exception ex)
                     {
