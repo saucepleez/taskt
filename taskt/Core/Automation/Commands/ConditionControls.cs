@@ -289,22 +289,37 @@ namespace taskt.Core.Automation.Commands
 
             return inverseResult ? !result : result;
         }
-        private static bool DetermineStatementTruth_WindowNameExists(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
+        private static bool DetermineStatementTruth_WindowNameExists(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", engine);
+            //var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", engine);
 
-            //search for window
-            IntPtr windowPtr = User32.User32Functions.FindWindow(param["Window Name"]);
+            ////search for window
+            //IntPtr windowPtr = User32.User32Functions.FindWindow(param["Window Name"]);
 
-            return (windowPtr != IntPtr.Zero);
+            //return (windowPtr != IntPtr.Zero);
+
+            var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
+            try
+            {
+                IntPtr wHnd = WindowNameControls.FindWindow(param["Window Name"], param["Search Method"], engine);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         private static bool DetermineStatementTruth_ActiveWindow(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
+            //var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
+
+            //var currentWindowTitle = User32.User32Functions.GetActiveWindowTitle();
+
+            //return (currentWindowTitle == param["Window Name"]);
+
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-            var currentWindowTitle = User32.User32Functions.GetActiveWindowTitle();
-
-            return (currentWindowTitle == param["Window Name"]);
+            var searchFunc = WindowNameControls.getWindowSearchMethod(param["Search Method"]);
+            return (searchFunc(WindowNameControls.GetCurrentWindowName(), param["Window Name"]));
         }
         private static bool DetermineStatementTruth_File(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
@@ -511,8 +526,19 @@ namespace taskt.Core.Automation.Commands
             if (sender != null)
             {
                 actionParameters.Rows.Add("Window Name", "");
+                actionParameters.Rows.Add("Search Method", "Contains");
                 actionParameterBox.DataSource = actionParameters;
             }
+
+            //combobox cell for Variable Name
+            DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
+            comparisonComboBox.Items.Add("Contains");
+            comparisonComboBox.Items.Add("Starts with");
+            comparisonComboBox.Items.Add("Ends with");
+            comparisonComboBox.Items.Add("Exact match");
+
+            //assign cell as a combobox
+            actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
         public static void RenderFileExists(object sender, DataGridView actionParameterBox, DataTable actionParameters)
