@@ -168,29 +168,48 @@ namespace taskt.Core.Automation.Commands
 
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                ret.Add(User32.User32Functions.GetActiveWindow());
+                //ret.Add(User32.User32Functions.GetActiveWindow());
+                //return ret;
+                windowName = GetCurrentWindowName();
+            }
+            //else
+            //{
+            //    var windows = GetAllWindows();
+            //    var method = getWindowSearchMethod(searchMethod);
+            //    foreach (var win in windows)
+            //    {
+            //        if (method(win.Value, windowName))
+            //        {
+            //            ret.Add(win.Key);
+            //        }
+            //    }
+            //    if (ret.Count > 0)
+            //    {
+            //        return ret;
+            //    }
+            //    else
+            //    {
+            //        // not found
+            //        throw new Exception("Window Name '" + windowName + "' not found");
+            //    }
+            //}
+            var windows = GetAllWindows();
+            var method = getWindowSearchMethod(searchMethod);
+            foreach (var win in windows)
+            {
+                if (method(win.Value, windowName))
+                {
+                    ret.Add(win.Key);
+                }
+            }
+            if (ret.Count > 0)
+            {
                 return ret;
             }
             else
             {
-                var windows = GetAllWindows();
-                var method = getWindowSearchMethod(searchMethod);
-                foreach (var win in windows)
-                {
-                    if (method(win.Value, windowName))
-                    {
-                        ret.Add(win.Key);
-                    }
-                }
-                if (ret.Count > 0)
-                {
-                    return ret;
-                }
-                else
-                {
-                    // not found
-                    throw new Exception("Window Name '" + windowName + "' not found");
-                }
+                // not found
+                throw new Exception("Window Name '" + windowName + "' not found");
             }
         }
 
