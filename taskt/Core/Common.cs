@@ -568,18 +568,16 @@ namespace taskt.Core
 
         public static string ConvertObjectToJson(object obj)
         {
-           
-                //set json settings
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.Error = (serializer, err) =>
-                {
-                    err.ErrorContext.Handled = true;
-                };
+            //set json settings
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Error = (serializer, err) =>
+            {
+                err.ErrorContext.Handled = true;
+            };
 
-                settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
 
-                return JsonConvert.SerializeObject(obj, settings);
-         
+            return JsonConvert.SerializeObject(obj, settings);
         }
 
     }
