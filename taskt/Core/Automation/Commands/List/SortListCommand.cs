@@ -124,10 +124,10 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "number":
-                    List<double> valueList = new List<double>();
+                    List<decimal> valueList = new List<decimal>();
                     foreach(var v in targetList)
                     {
-                        valueList.Add(double.Parse(v));
+                        valueList.Add(decimal.Parse(v));
                     }
                     valueList.Sort();
                     if (sortOrder == "descending")
