@@ -141,15 +141,15 @@ namespace taskt.UI.Forms.Supplemental
             cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
         }
 
-        private void uiBtnOk_Click(object sender, EventArgs e)
-        {       
-            this.DialogResult = DialogResult.OK;
-        }
+        //private void uiBtnOk_Click(object sender, EventArgs e)
+        //{       
+        //    this.DialogResult = DialogResult.OK;
+        //}
 
-        private void uiBtnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-        }
+        //private void uiBtnCancel_Click(object sender, EventArgs e)
+        //{
+        //    this.DialogResult = DialogResult.Cancel;
+        //}
     }
 
 }
