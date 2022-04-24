@@ -170,11 +170,6 @@ namespace taskt.Core.Automation.Commands
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            if (windowName == engine.engineSettings.CurrentWindowKeyword)
-            {
-                windowName = WindowNameControls.GetCurrentWindowName();
-            }
-
             string windowState = v_WindowState.GetUISelectionValue("v_WindowState", this, engine);
             User32Functions.WindowState state = User32Functions.WindowState.SW_RESTORE;
             switch (windowState.ToLower())

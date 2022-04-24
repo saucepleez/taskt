@@ -121,10 +121,6 @@ namespace taskt.Core.Automation.Commands
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            if (windowName == engine.engineSettings.CurrentWindowKeyword)
-            {
-                windowName = WindowNameControls.GetCurrentWindowName();
-            }
             var handles = WindowNameControls.FindWindows(windowName, searchMethod, engine);
             foreach (var handle in handles)
             {

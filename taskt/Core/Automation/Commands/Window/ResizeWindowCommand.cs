@@ -145,11 +145,6 @@ namespace taskt.Core.Automation.Commands
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string serachMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            if (windowName == engine.engineSettings.CurrentWindowKeyword)
-            {
-                windowName = WindowNameControls.GetCurrentWindowName();
-            }
-
             int xSize = v_XWindowSize.ConvertToUserVariableAsInteger("X Window Size", engine);
             int ySize = v_YWindowSize.ConvertToUserVariableAsInteger("Y Window Size", engine);
 
