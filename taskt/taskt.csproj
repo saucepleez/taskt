@@ -291,8 +291,8 @@
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\DeleteDataTableColumnCommand.cs" />
-    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnsAndFillValuesByDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnAndFillValuesByListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\AddDataTableColumnsAndFillValuesByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\AddDataTableColumnAndFillValuesByListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableValueCommand.cs" />
