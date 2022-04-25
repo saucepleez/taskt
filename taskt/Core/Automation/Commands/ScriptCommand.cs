@@ -301,6 +301,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddToVariableCommand))]
     [XmlInclude(typeof(VariableCommand))]
     [XmlInclude(typeof(AddVariableCommand))]
+    [XmlInclude(typeof(CheckVariableExistsCommand))]
+    [XmlInclude(typeof(GetVariableTypeCommand))]
     [XmlInclude(typeof(SetVariableIndexCommand))]
 
     // Web

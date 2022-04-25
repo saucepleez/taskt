@@ -49,7 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<AllowedReferenceRelatedFileExtensions>
+    <AllowedReferenceRelatedFileExtensions>
 	  *.xml;
 	  *.pdb
 	</AllowedReferenceRelatedFileExtensions>
@@ -382,6 +382,8 @@
     <Compile Include="Core\Automation\Commands\Misc\ClipboardClearTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumControls.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValuesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnElementValuesAsDataTableCommand.cs" />

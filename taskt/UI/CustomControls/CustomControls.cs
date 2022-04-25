@@ -718,6 +718,8 @@ namespace taskt.UI
             // Variable
             {"AddToVariableCommand", "taskt.Properties.Resources.command_function"},
             {"AddVariableCommand", "taskt.Properties.Resources.command_function"},
+            {"CheckVariableExistsCommand", "taskt.Properties.Resources.command_function"},
+            {"GetVariableTypeCommand", "taskt.Properties.Resources.command_function"},
             {"VariableCommand", "taskt.Properties.Resources.command_function"},
             {"SetVariableIndexCommand", "taskt.Properties.Resources.command_function"},
 
