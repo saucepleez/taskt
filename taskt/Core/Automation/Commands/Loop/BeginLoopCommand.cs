@@ -1163,7 +1163,7 @@ namespace taskt.Core.Automation.Commands
                     string compareTo = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                          where rw.Field<string>("Parameter Name") == "Value Is"
                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                    return "If [Boolean] " + booleanVariable + " is " + compareTo;
+                    return "Loop While [Boolean] " + booleanVariable + " is " + compareTo;
 
                 default:
 
