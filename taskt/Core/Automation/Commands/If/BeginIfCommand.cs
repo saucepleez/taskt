@@ -1325,6 +1325,8 @@ namespace taskt.Core.Automation.Commands
         //}
         public override string GetDisplayValue()
         {
+            var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+
             switch (v_IfActionType)
             {
                 //case "Value":
@@ -1333,131 +1335,146 @@ namespace taskt.Core.Automation.Commands
                 //case "Variable Compare":
                 case "Text Compare":
                 case "Boolean Compare":
-                    string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Value1"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                    string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Operand"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                    string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Value2"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                  where rw.Field<string>("Parameter Name") == "Value1"
+                    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                   where rw.Field<string>("Parameter Name") == "Operand"
+                    //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                  where rw.Field<string>("Parameter Name") == "Value2"
+                    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If ([" + v_IfActionType + "] " + value1 + " " + operand + " " + value2 + ")";
-
+                    //return "If ([" + v_IfActionType + "] " + value1 + " " + operand + " " + value2 + ")";
+                    return "If ([" + v_IfActionType + "] " + param["Value1"] + " " + param["Operand"] + " " + param["Value2"] + ")";
+                    break;
 
                 case "Variable Has Value":
-                    string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Variable Name"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                  where rw.Field<string>("Parameter Name") == "Variable Name"
+                    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If (Variable " + variableName + " Has Value)";
-
+                    //return "If (Variable " + variableName + " Has Value)";
+                    return "If (Variable " + param["Variable Name"] + " Has Value)";
+                    break;
 
                 case "Variable Is Numeric":
-                    string varName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                            where rw.Field<string>("Parameter Name") == "Variable Name"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string varName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                        where rw.Field<string>("Parameter Name") == "Variable Name"
+                    //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If (Variable " + varName + " Is Numeric)";
-
+                    //return "If (Variable " + varName + " Is Numeric)";
+                    return "If (Variable " + param["Variable Name"] + " Is Numeric)";
+                    break;
 
                 case "Error Occured":
-                    string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Line Number"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                      where rw.Field<string>("Parameter Name") == "Line Number"
+                    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If (Error Occured on Line Number " + lineNumber + ")";
+                    //return "If (Error Occured on Line Number " + lineNumber + ")";
+                    return "If (Error Occured on Line Number " + param["Line Number"] + ")";
+                    break;
 
 
                 case "Error Did Not Occur":
-                    string lineNum = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Line Number"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string lineNum = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                      where rw.Field<string>("Parameter Name") == "Line Number"
+                    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If (Error Did Not Occur on Line Number " + lineNum + ")";
-
+                    //return "If (Error Did Not Occur on Line Number " + lineNum + ")";
+                    return "If (Error Did Not Occur on Line Number " + param["Line Number"] + ")";
+                    break;
 
                 case "Window Name Exists":
                 case "Active Window Name Is":
-                    string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Window Name"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                      where rw.Field<string>("Parameter Name") == "Window Name"
+                    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If " + v_IfActionType + " [Name: " + windowName + "]";
-
+                    //return "If " + v_IfActionType + " [Name: " + windowName + "]";
+                    return "If " + v_IfActionType + " [Name: " + param["Window Name"] + "]";
+                    break;
 
                 case "File Exists":
-                    string filePath = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "File Path"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string filePath = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                    where rw.Field<string>("Parameter Name") == "File Path"
+                    //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    string fileCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                               where rw.Field<string>("Parameter Name") == "True When"
-                                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string fileCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                           where rw.Field<string>("Parameter Name") == "True When"
+                    //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    return "If " + v_IfActionType + " [File: " + filePath + "]";
+                    //return "If " + v_IfActionType + " [File: " + filePath + "]";
+                    return "If " + v_IfActionType + " [File: " + param["File Path"] + "]";
+                    break;
 
 
                 case "Folder Exists":
-                    string folderPath = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Folder Path"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string folderPath = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                      where rw.Field<string>("Parameter Name") == "Folder Path"
+                    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    string folderCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                                 where rw.Field<string>("Parameter Name") == "True When"
-                                                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string folderCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                             where rw.Field<string>("Parameter Name") == "True When"
+                    //                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    return "If " + v_IfActionType + " [Folder: " + folderPath + "]";
+                    //return "If " + v_IfActionType + " [Folder: " + folderPath + "]";
+                    return "If " + v_IfActionType + " [Folder: " + param["Folder Path"] + "]";
+                    break;
 
 
                 case "Web Element Exists":
-                    string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                    //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                            where rw.Field<string>("Parameter Name") == "Element Search Method"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                        where rw.Field<string>("Parameter Name") == "Element Search Method"
+                    //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If Web Element Exists [" + searchMethod + ": " + parameterName + "]";
-
+                    //return "If Web Element Exists [" + searchMethod + ": " + parameterName + "]";
+                    return "If Web Element Exists [" + param["Element Search Method"] + ": " + param["Element Search Parameter"] + "]";
+                    break;
 
                 case "GUI Element Exists":
-                    string guiWindowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Window Name"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string guiWindowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                     where rw.Field<string>("Parameter Name") == "Window Name"
+                    //                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    string guiSearch = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string guiSearch = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+                    //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "If GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
-
+                    //return "If GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
+                    return "If GUI Element Exists [Find " + param["Element Search Parameter"] + " Element In " + param["Window Name"] + "]";
+                    break;
 
                 case "Boolean":
-                    string booleanVariable = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                             where rw.Field<string>("Parameter Name") == "Variable Name"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //string booleanVariable = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                         where rw.Field<string>("Parameter Name") == "Variable Name"
+                    //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    string compareTo = ((from rw in v_IfActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Value Is"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                    return "If [Boolean] " + booleanVariable + " is " + compareTo;
+                    //string compareTo = ((from rw in v_IfActionParameterTable.AsEnumerable()
+                    //                     where rw.Field<string>("Parameter Name") == "Value Is"
+                    //                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
+                    //return "If [Boolean] " + booleanVariable + " is " + compareTo;
+                    return "If [Boolean] " + param["Variable Name"] + " is " + param["Value Is"];
+                    break;
 
                 case "List Compare":
-                    var paramList = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-                    return "If [List Compare] '" + paramList["List1"] + "' and '" + paramList["List2"] + "'";
+                    //var paramList = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+                    return "If [List Compare] '" + param["List1"] + "' and '" + param["List2"] + "'";
 
                 case "Dictionary Compare":
-                    var paramDic = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-                    return "If [Dictionary Compare] '" + paramDic["Dictionary1"] + "' and '" + paramDic["Dictionary2"] + "'";
+                    //var paramDic = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+                    return "If [Dictionary Compare] '" + param["Dictionary1"] + "' and '" + param["Dictionary2"] + "'";
 
                 case "DataTable Compare":
-                    var paramDT = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-                    return "If [DataTable Compare] '" + paramDT["DataTable1"] + "' and '" + paramDT["DataTable2"] + "'";
+                    //var paramDT = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+                    return "If [DataTable Compare] '" + param["DataTable1"] + "' and '" + param["DataTable2"] + "'";
 
                 default:
                     return "If .... ";
