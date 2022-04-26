@@ -80,6 +80,18 @@ namespace taskt.Core.Automation.Commands
                     ifResult = DetermineStatementTruth_BooleanCompare(actionParameterTable, engine);
                     break;
 
+                case "list compare":
+                    ifResult = DetermineStatementTruth_ListCompare(actionParameterTable, engine);
+                    break;
+
+                case "dictionary compare":
+                    ifResult = DetermineStatementTruth_DictionaryCompare(actionParameterTable, engine);
+                    break;
+
+                case "datatable compare":
+                    ifResult = DetermineStatementTruth_DataTableCompare(actionParameterTable, engine);
+                    break;
+
                 default:
                     throw new Exception("If type not recognized!");
                     break;
@@ -442,6 +454,111 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        private static bool DetermineStatementTruth_ListCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
+        {
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+
+            var list1 = param["List1"].GetListVariable(engine);
+            var list2 = param["List2"].GetListVariable(engine);
+
+            if (list1.Count == list2.Count)
+            {
+                for (int i = list1.Count - 1; i >= 0; i--)
+                {
+                    if (list1[i] != list2[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private static bool DetermineStatementTruth_DictionaryCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
+        {
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+
+            var dic1 = param["Dictionary1"].GetDictionaryVariable(engine);
+            var dic2 = param["Dictionary2"].GetDictionaryVariable(engine);
+
+            if (dic1.Count == dic2.Count)
+            {
+                List<string> keys = dic1.Keys.ToList();
+                foreach(var key in keys)
+                {
+                    if (!dic2.ContainsKey(key))
+                    {
+                        return false;
+                    }
+                    else if (dic1[key] != dic2[key])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private static bool DetermineStatementTruth_DataTableCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
+        {
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+
+            var dt1 = param["DataTable1"].GetDataTableVariable(engine);
+            var dt2 = param["DataTable2"].GetDataTableVariable(engine);
+
+            if ((dt1.Rows.Count == dt2.Rows.Count) && (dt1.Columns.Count == dt2.Columns.Count))
+            {
+                // Get columns name list
+                List<string> columns = new List<string>();
+                for (int i = 0; i < dt1.Columns.Count; i++)
+                {
+                    columns.Add(dt1.Columns[i].ColumnName);
+                }
+                // check columns exists
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    int j;
+                    for (j = 0; j < dt2.Columns.Count; j++)
+                    {
+                        if (columns[i] == dt2.Columns[j].ColumnName)
+                        {
+                            break;
+                        }
+                    }
+                    if (j == columns.Count)
+                    {
+                        return false;
+                    }
+                }
+
+                for (int i = 0; i < dt1.Rows.Count; i++)
+                {
+                    for (int j = 0; j < columns.Count; j++)
+                    {
+                        string value1 = (dt1.Rows[i][columns[j]] == null) ? "" : dt1.Rows[i][columns[j]].ToString();
+                        string value2 = (dt2.Rows[i][columns[j]] == null) ? "" : dt2.Rows[i][columns[j]].ToString();
+                        if (value1 != value2)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public static void RenderNumericCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
             actionParameterBox.Visible = true;
@@ -676,6 +793,39 @@ namespace taskt.Core.Automation.Commands
             actionParameterBox.Rows[1].Cells[1] = booleanParam;
         }
 
+        public static void RenderListCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
+        {
+            actionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("List1", "");
+                actionParameters.Rows.Add("List2", "");
+                actionParameterBox.DataSource = actionParameters;
+            }
+        }
+
+        public static void RenderDictionaryCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
+        {
+            actionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("Dictionary1", "");
+                actionParameters.Rows.Add("Dictionary2", "");
+                actionParameterBox.DataSource = actionParameters;
+            }
+        }
+
+        public static void RenderDataTableCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
+        {
+            actionParameterBox.Visible = true;
+            if (sender != null)
+            {
+                actionParameters.Rows.Add("DataTable1", "");
+                actionParameters.Rows.Add("DataTable2", "");
+                actionParameterBox.DataSource = actionParameters;
+            }
+        }
+
         public static bool ValueValidate(DataTable actionParameters, out string result)
         {
             //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
@@ -894,6 +1044,57 @@ namespace taskt.Core.Automation.Commands
             if (String.IsNullOrEmpty(param["Operand"]))
             {
                 result += "Operand is empty.\n";
+            }
+
+            return (result == "");
+        }
+
+        public static bool ListCompareValidate(DataTable actionParameters, out string result)
+        {
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            result = "";
+
+            if (String.IsNullOrEmpty(param["List1"]))
+            {
+                result += "List1 is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["List2"]))
+            {
+                result += "List2 is empty.\n";
+            }
+
+            return (result == "");
+        }
+
+        public static bool DictionaryCompareValidate(DataTable actionParameters, out string result)
+        {
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            result = "";
+
+            if (String.IsNullOrEmpty(param["Dictionary1"]))
+            {
+                result += "Dictionary1 is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["Dictionary2"]))
+            {
+                result += "Dictionary2 is empty.\n";
+            }
+
+            return (result == "");
+        }
+
+        public static bool DataTableCompareValidate(DataTable actionParameters, out string result)
+        {
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            result = "";
+
+            if (String.IsNullOrEmpty(param["DataTable1"]))
+            {
+                result += "DataTable1 is empty.\n";
+            }
+            if (String.IsNullOrEmpty(param["DataTable2"]))
+            {
+                result += "DataTable2 is empty.\n";
             }
 
             return (result == "");

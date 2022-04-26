@@ -36,6 +36,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("List Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Dictionary Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("DataTable Compare")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**, **Boolean**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -1067,6 +1070,18 @@ namespace taskt.Core.Automation.Commands
                     lnkBooleanSelector.Show();
                     break;
 
+                case "List Compare":
+                    ConditionControls.RenderListCompare(sender, ifActionParameterBox, actionParameters);
+                    break;
+
+                case "Dictionary Compare":
+                    ConditionControls.RenderDictionaryCompare(sender, ifActionParameterBox, actionParameters);
+                    break;
+
+                case "DataTable Compare":
+                    ConditionControls.RenderDataTableCompare(sender, ifActionParameterBox, actionParameters);
+                    break;
+
                 default:
                     break;
             }
@@ -1432,6 +1447,17 @@ namespace taskt.Core.Automation.Commands
                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
                     return "If [Boolean] " + booleanVariable + " is " + compareTo;
 
+                case "List Compare":
+                    var paramList = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+                    return "If [List Compare] '" + paramList["List1"] + "' and '" + paramList["List2"] + "'";
+
+                case "Dictionary Compare":
+                    var paramDic = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+                    return "If [Dictionary Compare] '" + paramDic["Dictionary1"] + "' and '" + paramDic["Dictionary2"] + "'";
+
+                case "DataTable Compare":
+                    var paramDT = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
+                    return "If [DataTable Compare] '" + paramDT["DataTable1"] + "' and '" + paramDT["DataTable2"] + "'";
 
                 default:
                     return "If .... ";
@@ -1529,6 +1555,18 @@ namespace taskt.Core.Automation.Commands
 
                     case "Boolean Compare":
                         res = ConditionControls.BooleanCompareValidate(v_IfActionParameterTable, out message);
+                        break;
+
+                    case "List Compare":
+                        res = ConditionControls.ListCompareValidate(v_IfActionParameterTable, out message);
+                        break;
+
+                    case "Dictionary Compare":
+                        res = ConditionControls.DictionaryCompareValidate(v_IfActionParameterTable, out message);
+                        break;
+
+                    case "DataTable Compare":
+                        res = ConditionControls.DataTableCompareValidate(v_IfActionParameterTable, out message);
                         break;
 
                     default:
