@@ -36,6 +36,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Error Did Not Occur")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Boolean Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("List Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Dictionary Compare")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("DataTable Compare")]
         [Attributes.PropertyAttributes.InputSpecification("Select the necessary comparison type.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Value**, **Window Name Exists**, **Active Window Name Is**, **File Exists**, **Folder Exists**, **Web Element Exists**, **Error Occured**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -929,6 +932,18 @@ namespace taskt.Core.Automation.Commands
                     ConditionControls.RenderBooleanCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
                     break;
 
+                case "List Compare":
+                    ConditionControls.RenderListCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
+                    break;
+
+                case "Dictionary Compare":
+                    ConditionControls.RenderDictionaryCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
+                    break;
+
+                case "DataTable Compare":
+                    ConditionControls.RenderDataTableCompare(sender, LoopGridViewHelper, v_LoopActionParameterTable);
+                    break;
+
                 default:
                     break;
             }
@@ -1044,133 +1059,135 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            switch (v_LoopActionType)
-            {
-                //case "Value":
-                case "Numeric Compare":
-                case "Date Compare":
-                //case "Variable Compare":
-                case "Text Compare":
-                case "Boolean Compare":
-                    string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Value1"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                    string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Operand"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                    string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                      where rw.Field<string>("Parameter Name") == "Value2"
-                                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //switch (v_LoopActionType)
+            //{
+            //    //case "Value":
+            //    case "Numeric Compare":
+            //    case "Date Compare":
+            //    //case "Variable Compare":
+            //    case "Text Compare":
+            //    case "Boolean Compare":
+            //        string value1 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                          where rw.Field<string>("Parameter Name") == "Value1"
+            //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        string operand = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Operand"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                          where rw.Field<string>("Parameter Name") == "Value2"
+            //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "Loop While (" + value1 + " " + operand + " " + value2 + ")";
+            //        return "Loop While (" + value1 + " " + operand + " " + value2 + ")";
 
-                case "Variable Has Value":
-                    string variableName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                            where rw.Field<string>("Parameter Name") == "Variable Name"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //    case "Variable Has Value":
+            //        string variableName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                                where rw.Field<string>("Parameter Name") == "Variable Name"
+            //                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "Loop While (Variable " + variableName + " Has Value)";
-                case "Variable Is Numeric":
-                    string varName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Variable Name"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        return "Loop While (Variable " + variableName + " Has Value)";
+            //    case "Variable Is Numeric":
+            //        string varName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Variable Name"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "Loop While (Variable " + varName + " Is Numeric)";
+            //        return "Loop While (Variable " + varName + " Is Numeric)";
 
-                case "Error Occured":
+            //    case "Error Occured":
 
-                    string lineNumber = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Line Number"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        string lineNumber = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                              where rw.Field<string>("Parameter Name") == "Line Number"
+            //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "Loop While (Error Occured on Line Number " + lineNumber + ")";
-                case "Error Did Not Occur":
+            //        return "Loop While (Error Occured on Line Number " + lineNumber + ")";
+            //    case "Error Did Not Occur":
 
-                    string lineNum = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Line Number"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        string lineNum = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Line Number"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "Loop While (Error Did Not Occur on Line Number " + lineNum + ")";
-                case "Window Name Exists":
-                case "Active Window Name Is":
+            //        return "Loop While (Error Did Not Occur on Line Number " + lineNum + ")";
+            //    case "Window Name Exists":
+            //    case "Active Window Name Is":
 
-                    string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Window Name"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        string windowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                              where rw.Field<string>("Parameter Name") == "Window Name"
+            //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "Loop While " + v_LoopActionType + " [Name: " + windowName + "]";
-                case "File Exists":
+            //        return "Loop While " + v_LoopActionType + " [Name: " + windowName + "]";
+            //    case "File Exists":
 
-                    string filePath = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                        where rw.Field<string>("Parameter Name") == "File Path"
-                                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        string filePath = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                            where rw.Field<string>("Parameter Name") == "File Path"
+            //                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    string fileCompareType = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                               where rw.Field<string>("Parameter Name") == "True When"
-                                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-
-                    return "Loop While " + v_LoopActionType + " [File: " + filePath + "]";
-
-                case "Folder Exists":
-
-                    string folderPath = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                          where rw.Field<string>("Parameter Name") == "Folder Path"
-                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                    string folderCompareType = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                                 where rw.Field<string>("Parameter Name") == "True When"
-                                                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        string fileCompareType = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                                   where rw.Field<string>("Parameter Name") == "True When"
+            //                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    return "Loop While " + v_LoopActionType + " [Folder: " + folderPath + "]";
+            //        return "Loop While " + v_LoopActionType + " [File: " + filePath + "]";
 
-                case "Web Element Exists":
+            //    case "Folder Exists":
 
+            //        string folderPath = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                              where rw.Field<string>("Parameter Name") == "Folder Path"
+            //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    string parameterName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-                    string searchMethod = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                            where rw.Field<string>("Parameter Name") == "Element Search Method"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-
-                    return "Loop While Web Element Exists [" + searchMethod + ": " + parameterName + "]";
-
-                case "GUI Element Exists":
+            //        string folderCompareType = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                                     where rw.Field<string>("Parameter Name") == "True When"
+            //                                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    string guiWindowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                             where rw.Field<string>("Parameter Name") == "Window Name"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        return "Loop While " + v_LoopActionType + " [Folder: " + folderPath + "]";
 
-                    string guiSearch = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //    case "Web Element Exists":
 
 
+            //        string parameterName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+            //                                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //        string searchMethod = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                                where rw.Field<string>("Parameter Name") == "Element Search Method"
+            //                                select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
 
-                    return "Loop While GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
+            //        return "Loop While Web Element Exists [" + searchMethod + ": " + parameterName + "]";
 
-                case "Boolean":
-                    string booleanVariable = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                               where rw.Field<string>("Parameter Name") == "Variable Name"
-                                               select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //    case "GUI Element Exists":
 
-                    string compareTo = ((from rw in v_LoopActionParameterTable.AsEnumerable()
-                                         where rw.Field<string>("Parameter Name") == "Value Is"
-                                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-                    return "Loop While [Boolean] " + booleanVariable + " is " + compareTo;
 
-                default:
+            //        string guiWindowName = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                                 where rw.Field<string>("Parameter Name") == "Window Name"
+            //                                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                    return "Loop While .... ";
-            }
+            //        string guiSearch = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                             where rw.Field<string>("Parameter Name") == "Element Search Parameter"
+            //                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
+
+
+
+            //        return "Loop While GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
+
+            //    case "Boolean":
+            //        string booleanVariable = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                                   where rw.Field<string>("Parameter Name") == "Variable Name"
+            //                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
+
+            //        string compareTo = ((from rw in v_LoopActionParameterTable.AsEnumerable()
+            //                             where rw.Field<string>("Parameter Name") == "Value Is"
+            //                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
+            //        return "Loop While [Boolean] " + booleanVariable + " is " + compareTo;
+
+            //    default:
+
+            //        return "Loop While .... ";
+            //}
+
+            return ConditionControls.GetDisplayValue("Loop While", v_LoopActionType, v_LoopActionParameterTable);
         }
+
         private void LoopGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             if (e.ColumnIndex == 0)
@@ -1261,6 +1278,18 @@ namespace taskt.Core.Automation.Commands
 
                     case "Boolean Compare":
                         res = ConditionControls.BooleanCompareValidate(v_LoopActionParameterTable, out message);
+                        break;
+
+                    case "List Compare":
+                        res = ConditionControls.ListCompareValidate(v_LoopActionParameterTable, out message);
+                        break;
+
+                    case "Dictionary Compare":
+                        res = ConditionControls.DictionaryCompareValidate(v_LoopActionParameterTable, out message);
+                        break;
+
+                    case "DataTable Compare":
+                        res = ConditionControls.DataTableCompareValidate(v_LoopActionParameterTable, out message);
                         break;
 
                     default:
