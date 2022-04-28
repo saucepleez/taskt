@@ -3004,10 +3004,11 @@ namespace taskt.UI.Forms
         }
         public void Notify(string notificationText)
         {
+            // DBG
+            //MessageBox.Show(notificationText);
+
             if (appSettings.ClientSettings.HideNotifyAutomatically)
             {
-                // DBG
-                //MessageBox.Show(notificationText);
                 notificationList.Add(notificationText);
             }
             else
