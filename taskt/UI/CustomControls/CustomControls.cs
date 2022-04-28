@@ -668,6 +668,7 @@ namespace taskt.UI
             {"ClipboardClearTextCommand", "taskt.Properties.Resources.command_files"},
             {"ClipboardSetTextCommand", "taskt.Properties.Resources.command_files"},
             {"ClipboardGetTextCommand", "taskt.Properties.Resources.command_files"},
+            {"CreateShortcutCommand", "taskt.Properties.Resources.command_files"},
             {"PingCommand", "taskt.Properties.Resources.command_web"},
             {"SMTPSendEmailCommand", "taskt.Properties.Resources.command_smtp"},
             {"SequenceCommand", "taskt.Properties.Resources.command_sequence"},

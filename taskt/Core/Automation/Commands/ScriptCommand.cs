@@ -255,6 +255,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SequenceCommand))]
     [XmlInclude(typeof(ClipboardSetTextCommand))]
     [XmlInclude(typeof(MessageBoxCommand))]
+    [XmlInclude(typeof(CreateShortcutCommand))]
 
     // NLG
     [XmlInclude(typeof(NLGCreateInstanceCommand))]
