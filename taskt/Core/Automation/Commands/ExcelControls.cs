@@ -39,9 +39,9 @@ namespace taskt.Core
             }
         }
 
-        public static Workbook getCurrentWorksheet(Application excelInstance)
+        public static Worksheet getCurrentWorksheet(Application excelInstance)
         {
-            return (Workbook)excelInstance.ActiveSheet;
+            return (Worksheet)excelInstance.ActiveSheet;
         }
 
         public static Worksheet getNextWorksheet(Application excelInstance, Worksheet mySheet = null)
