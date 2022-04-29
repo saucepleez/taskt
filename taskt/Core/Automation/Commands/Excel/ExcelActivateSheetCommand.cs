@@ -90,10 +90,14 @@ namespace taskt.Core.Automation.Commands
             //    workSheet.Select();
             //}
 
+            Microsoft.Office.Interop.Excel.Worksheet currentSheet = ExcelControls.getCurrentWorksheet(excelInstance);
             Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetToActive);
             if (targetSheet != null)
             {
-                targetSheet.Select();
+                if (currentSheet.Name != targetSheet.Name)
+                {
+                    targetSheet.Select();
+                }
             }
             else
             {
