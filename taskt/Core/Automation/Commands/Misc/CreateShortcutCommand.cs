@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,64 +19,91 @@ namespace taskt.Core.Automation.Commands
     public class CreateShortcutCommand : ScriptCommand
     {
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Shortcut target File, Folder, or URL")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please specify Shortcut Target File, Folder, or URL")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**C:\\temp\\target.txt** or **C:\\temp** or **http://example.com** or **{{{vPath}}** or **{{{vURL}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Target", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TargetPath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify saved Shortcut Path")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please specify saved Shortcut Path")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**C:\\temp\\shortcut.lnk** or **C:\\temp\\shortcut.url** or **{{{vShortcut}}}**")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyValidationRule("Shortcut", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_SavePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please specify Shortcut Description")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please specify Shortcut Description")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true)]
         public string v_Description { get; set; }
 
         public CreateShortcutCommand()
         {
             this.CommandName = "CreateShortcutCommand";
-            this.SelectionName = "Create Shortcut Command";
+            this.SelectionName = "Create Shortcut";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             string targetPath = v_TargetPath.ConvertToUserVariable(engine);
+            bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 
             string savePath = v_SavePath.ConvertToUserVariable(engine);
-            savePath = FilePathControls.formatFilePath(savePath, engine);
-            if (!FilePathControls.hasExtension(savePath))
+
+            if (!isURL)
             {
-                savePath += ".lnk";
+                savePath = FilePathControls.formatFilePath(savePath, engine);
+                if (!FilePathControls.hasExtension(savePath))
+                {
+                    savePath += ".lnk";
+                }
+
+                string description = v_Description.ConvertToUserVariable(engine);
+
+                // WshShell
+                Type t = Type.GetTypeFromCLSID(new Guid("72C24DD5-D70A-438B-8A42-98424B88AFB8"));
+                dynamic shell = Activator.CreateInstance(t);
+                var shortcut = shell.CreateShortcut(savePath);
+
+                shortcut.TargetPath = targetPath;
+                shortcut.Description = description;
+                shortcut.Save();
+
+                System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shortcut);
+                System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shell);
             }
-
-            string description = v_Description.ConvertToUserVariable(engine);
-
-            // WshShell
-            Type t = Type.GetTypeFromCLSID(new Guid("72C24DD5-D70A-438B-8A42-98424B88AFB8"));
-            dynamic shell = Activator.CreateInstance(t);
-            var shortcut = shell.CreateShortcut(savePath);
-
-            shortcut.TargetPath = targetPath;
-            shortcut.Save();
-
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shortcut);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shell);
+            else
+            {
+                savePath = FilePathControls.formatFilePath(savePath, engine);
+                if (!FilePathControls.hasExtension(savePath))
+                {
+                    savePath += ".url";
+                }
+                string outputText = "[InternetShortcut]\nURL=" + targetPath;
+                WriteTextFileCommand writeText = new WriteTextFileCommand
+                {
+                    v_FilePath = savePath,
+                    v_TextToWrite = outputText
+                };
+                writeText.RunCommand(engine);
+            }
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -90,7 +118,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue();
+            return base.GetDisplayValue() + " [Target: '" + v_TargetPath + "', Shortcut: '" + v_SavePath + "']";
         }
     }
 }
