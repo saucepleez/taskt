@@ -274,6 +274,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_69(doc);
             convertTo3_5_0_73(doc);
             convertTo3_5_0_74(doc);
+            convertTo3_5_0_78(doc);
 
             return doc;
         }
@@ -656,6 +657,100 @@ namespace taskt.Core.Script
 
                     case "Variable Compare":
                         cmd.Attribute("v_LoopActionType").Value = "Text Compare";
+                        break;
+                }
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_78(XDocument doc)
+        {
+            // BeginIf Window Search Method
+            IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
+            XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
+            foreach (XElement cmd in getIf)
+            {
+                switch ((string)cmd.Attribute("v_IfActionType"))
+                {
+                    case "Window Name Exists":
+                    case "Active Window Name Is":
+                        XElement tableParams = cmd.Element("v_IfActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
+                        var elems = tableParams.Elements();
+                        bool isExists = false;
+                        foreach (XElement elem in elems)
+                        {
+                            if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
+                            {
+                                isExists = true;
+                                break;
+                            }
+                        }
+                        if (!isExists)
+                        {
+                            var elem = elems.ElementAt(0);
+                            var newElem = new XElement(elem.Name);
+                            newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
+                            newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
+
+                            // name
+                            var nameElem = new XElement("Parameter_x0020_Name");
+                            nameElem.Value = "Search Method";
+
+                            // value
+                            var valueElem = new XElement("Parameter_x0020_Value");
+                            valueElem.Value = "Contains";
+
+                            newElem.Add(nameElem);
+                            newElem.Add(valueElem);
+
+                            tableParams.Add(newElem);
+                        }
+                        break;
+                }
+            }
+
+            // BeginLoop Window Search Method
+            IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            foreach (XElement cmd in getLoop)
+            {
+                switch ((string)cmd.Attribute("v_LoopActionType"))
+                {
+                    case "Window Name Exists":
+                    case "Active Window Name Is":
+                        XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
+                        var elems = tableParams.Elements();
+                        bool isExists = false;
+                        foreach (XElement elem in elems)
+                        {
+                            if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
+                            {
+                                isExists = true;
+                                break;
+                            }
+                        }
+                        if (!isExists)
+                        {
+                            var elem = elems.ElementAt(0);
+                            var newElem = new XElement(elem.Name);
+                            newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
+                            newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
+
+                            // name
+                            var nameElem = new XElement("Parameter_x0020_Name");
+                            nameElem.Value = "Search Method";
+
+                            // value
+                            var valueElem = new XElement("Parameter_x0020_Value");
+                            valueElem.Value = "Contains";
+
+                            newElem.Add(nameElem);
+                            newElem.Add(valueElem);
+
+                            tableParams.Add(newElem);
+                        }
                         break;
                 }
             }
