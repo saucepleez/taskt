@@ -37,16 +37,28 @@ namespace taskt.Core
             }
 
             //create file path
-            var filePath =  System.IO.Path.Combine(settingsDir, "AppSettings.xml");
+            var filePath = System.IO.Path.Combine(settingsDir, "AppSettings.xml");
 
-            //create filestream
-            var fileStream = System.IO.File.Create(filePath);
+            ////create filestream
+            //var fileStream = System.IO.File.Create(filePath);
 
-            //output to xml file
-            XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
-            serializer.Serialize(fileStream, appSettings);
-            fileStream.Close();
+            ////output to xml file
+            //XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
+            //serializer.Serialize(fileStream, appSettings);
+            //fileStream.Close();
+            SaveAs(appSettings, filePath);
         }
+
+        public void SaveAs(ApplicationSettings appSettings, string filePath)
+        {
+            using (FileStream fileStream = System.IO.File.Create(filePath))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
+                serializer.Serialize(fileStream, appSettings);
+                fileStream.Close();
+            }       
+        }
+
         public ApplicationSettings GetOrCreateApplicationSettings()
         {
             //create settings directory
@@ -58,9 +70,35 @@ namespace taskt.Core
             ApplicationSettings appSettings;
             if (System.IO.File.Exists(filePath))
             {
-                //open file and return it or return new settings on error
-                var fileStream = System.IO.File.Open(filePath, FileMode.Open);
+                ////open file and return it or return new settings on error
+                //var fileStream = System.IO.File.Open(filePath, FileMode.Open);
 
+                //try
+                //{
+                //    XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
+                //    appSettings = (ApplicationSettings)serializer.Deserialize(fileStream);
+                //}
+                //catch (Exception)
+                //{
+                //    appSettings = new ApplicationSettings();
+                //}
+
+                //fileStream.Close();
+                appSettings = Open(filePath);
+            }
+            else
+            {
+                appSettings = new ApplicationSettings();
+            }
+
+            return appSettings;
+        }
+
+        public ApplicationSettings Open(string filePath)
+        {
+            ApplicationSettings appSettings = null;
+            using (FileStream fileStream = System.IO.File.Open(filePath, FileMode.Open))
+            {
                 try
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
@@ -73,11 +111,6 @@ namespace taskt.Core
 
                 fileStream.Close();
             }
-            else
-            {
-                appSettings = new ApplicationSettings();
-            }
-
             return appSettings;
         }
 
