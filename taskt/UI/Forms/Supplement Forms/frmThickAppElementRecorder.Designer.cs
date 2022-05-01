@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmThickAppElementRecorder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeader = new System.Windows.Forms.Panel();
@@ -38,6 +39,7 @@
             this.chkStopOnClick = new System.Windows.Forms.CheckBox();
             this.lblSubHeader = new System.Windows.Forms.Label();
             this.lblHeader = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tlpControls.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRefresh)).BeginInit();
@@ -84,6 +86,7 @@
             this.pbRefresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbRefresh.TabIndex = 19;
             this.pbRefresh.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbRefresh, "Update Window Names");
             this.pbRefresh.Click += new System.EventHandler(this.pbRefresh_Click);
             // 
             // cboWindowTitle
@@ -108,6 +111,7 @@
             this.pbRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbRecord.TabIndex = 4;
             this.pbRecord.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbRecord, "Start Recording");
             this.pbRecord.Click += new System.EventHandler(this.pbRecord_Click);
             // 
             // lblDescription
@@ -153,9 +157,9 @@
             this.lblHeader.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblHeader.Location = new System.Drawing.Point(7, 8);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(273, 37);
+            this.lblHeader.Size = new System.Drawing.Size(288, 37);
             this.lblHeader.TabIndex = 0;
-            this.lblHeader.Text = "element recorder";
+            this.lblHeader.Text = "Element Recorder";
             // 
             // frmThickAppElementRecorder
             // 
@@ -168,7 +172,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmThickAppElementRecorder";
-            this.Text = "element recorder";
+            this.Text = "Element Recorder";
             this.Load += new System.EventHandler(this.frmThickAppElementRecorder_Load);
             this.tlpControls.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
@@ -189,5 +193,6 @@
         private System.Windows.Forms.PictureBox pbRefresh;
         public System.Windows.Forms.ComboBox cboWindowTitle;
         private System.Windows.Forms.CheckBox chkStopOnClick;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
