@@ -49,7 +49,7 @@ namespace taskt.Core
             SaveAs(appSettings, filePath);
         }
 
-        public void SaveAs(ApplicationSettings appSettings, string filePath)
+        public static void SaveAs(ApplicationSettings appSettings, string filePath)
         {
             using (FileStream fileStream = System.IO.File.Create(filePath))
             {
@@ -94,7 +94,7 @@ namespace taskt.Core
             return appSettings;
         }
 
-        public ApplicationSettings Open(string filePath)
+        public static ApplicationSettings Open(string filePath)
         {
             ApplicationSettings appSettings = null;
             using (FileStream fileStream = System.IO.File.Open(filePath, FileMode.Open))
