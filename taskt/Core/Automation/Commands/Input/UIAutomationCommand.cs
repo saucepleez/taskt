@@ -545,10 +545,16 @@ namespace taskt.Core.Automation.Commands
             emptyParameterLink.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
             emptyParameterLink.Click += (sender, e) => EmptySearchParameterClicked(sender, e);
 
+            var inspectParserLink = CommandControls.CreateUIHelper();
+            inspectParserLink.CommandDisplay = "Inspect Tool Parser";
+            inspectParserLink.DrawIcon = taskt.Properties.Resources.command_window;
+            inspectParserLink.Click += (sender, e) => InspectToolParserClicked(sender, e);
+
             //create search parameters   
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIASearchParameters", this));
             RenderedControls.Add(helperControl);
             RenderedControls.Add(emptyParameterLink);
+            RenderedControls.Add(inspectParserLink);
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIASearchParameters", this, new Control[] { SearchParametersGridViewHelper }, editor));
             RenderedControls.Add(SearchParametersGridViewHelper);
 
@@ -790,6 +796,121 @@ namespace taskt.Core.Automation.Commands
             v_UIASearchParameters.Rows.Add(false, "ProcessID", "");
 
             SearchParametersGridViewHelper.ResumeLayout();
+        }
+
+        private void InspectToolParserClicked(object sender, EventArgs e)
+        {
+            using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
+            {
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    string inspect = frm.inspectResult;
+                    string[] results = inspect.Split(new [] { "\r\n" }, StringSplitOptions.None);
+                    if ((results.Length >= 1) && (inspect != ""))
+                    {
+                        v_UIASearchParameters.Rows.Clear();
+                        EmptySearchParameterClicked(null, null);  // add rows
+
+                        List<string> ancestors = new List<string>();
+                        string currentParam = "";
+                        foreach(string res in results)
+                        {
+                            string[] spt = res.Split('\t');
+                            string value = (spt.Length >= 2) ? spt[1] : "";
+                            if (value.StartsWith("\"") && value.EndsWith("\""))
+                            {
+                                value = value.Substring(1, value.Length - 2);
+                            }
+                            if (spt[0] != "")
+                            {
+                                string name = spt[0].Substring(0, spt[0].Length - 1);
+                                currentParam = name;
+                                
+                                switch (name)
+                                {
+                                    case "AcceleratorKey":
+                                    case "AccessKey":
+                                    case "AutomationId":
+                                    case "ClassName":
+                                    case "FrameworkId":
+                                    case "HasKeyboardFocus":
+                                    case "HelpText":
+                                    case "IsContentElement":
+                                    case "IsControlElement":
+                                    case "IsEnabled":
+                                    case "IsKeyboardFocusable":
+                                    case "IsOffscreen":
+                                    case "IsPassword":
+                                    case "IsRequiredForForm":
+                                    case "ItemStatus":
+                                    case "ItemType":
+                                    case "LocalizedControlType":
+                                    case "Name":
+                                    case "NativeWindowHandle":
+                                    case "ProcessID":
+                                        DataTableControls.SetParameterValue(v_UIASearchParameters, value, name, "Parameter Name", "Parameter Value");
+                                        break;
+
+                                    case "Ancestors":
+                                        ancestors.Add(value);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                if (currentParam == "Ancestors")
+                                {
+                                    ancestors.Add(value);
+                                }
+                            }
+                        }
+                        if (ancestors.Count > 0)
+                        {
+                            string[] windows = new string[WindowNameControl.Items.Count];
+                            WindowNameControl.Items.CopyTo(windows, 0);
+
+                            bool isFound = false;
+                            foreach(string ancestor in ancestors)
+                            {
+                                // get quoted " " text
+                                int pos = ancestor.IndexOf("\"");
+                                if (pos < 0)
+                                {
+                                    continue;
+                                }
+
+                                string winName = ancestor.Substring(pos + 1);
+                                pos = winName.IndexOf("\"");
+                                if (pos < 0)
+                                {
+                                    continue;
+                                }
+                                winName = winName.Substring(0, pos);
+
+                                foreach(string win in windows)
+                                {
+                                    if (winName == win)
+                                    {
+                                        v_WindowName = winName;
+                                        WindowNameControl.Text = winName;
+                                        isFound = true;
+                                        break;
+                                    }
+                                }
+                                if (isFound)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var f = new UI.Forms.Supplemental.frmDialog("No Inspect Tool Results", "Fail Parse", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0);
+                        f.ShowDialog();
+                    }
+                }
+            }
         }
 
         public override string GetDisplayValue()
