@@ -109,7 +109,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "frmAbout";
-            this.Text = "about";
+            this.Text = "About";
             this.Load += new System.EventHandler(this.frmAbout_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAbout_KeyDown);
             this.ResumeLayout(false);
