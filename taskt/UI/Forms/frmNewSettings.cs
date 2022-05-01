@@ -115,6 +115,9 @@ namespace taskt.UI.Forms
                 case "Application - Script Metric":
                     showApplicationMetricSettings();
                     break;
+                case "Application - Settings File":
+                    showApplicationSettingsFile();
+                    break;
                 case "Application - Start Up":
                     showApplicationStartUpSetting();
                     break;
@@ -315,6 +318,21 @@ namespace taskt.UI.Forms
 
             createCheckBox("lblScriptIntermediate", "Export Intermediate Script File", newAppSettings.EngineSettings, "ExportIntermediateXML", true);
         }
+        private void showApplicationSettingsFile()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "Settings File", FontSize.Large, true);
+
+            createLabel("lblImport", "Import Settings", FontSize.NormalBold, true);
+            Button btnImport = createButton("btnImport", "Import", 200, true);
+            btnImport.Click += (sender, e) => btnImportSettings_Click(sender, e);
+
+            createLabel("lblExport", "Export Settings", FontSize.NormalBold, true);
+            Button btnExport = createButton("btnExport", "Export", 200, true);
+            btnExport.Click += (sender, e) => btnExportSettings_Click(sender, e);
+        }
+
         #endregion
 
         #region Automation Engine
@@ -1127,6 +1145,33 @@ namespace taskt.UI.Forms
             var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
             string path = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
             System.Diagnostics.Process.Start(path);
+        }
+
+        private void btnImportSettings_Click(object sender, EventArgs e)
+        {
+            using (var frm = new OpenFileDialog())
+            {
+                frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
+                frm.Title = "Import Settings";
+                frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    newAppSettings = taskt.Core.ApplicationSettings.Open(frm.FileName);
+                }
+            }
+        }
+        private void btnExportSettings_Click(object sender, EventArgs e)
+        {
+            using (var frm = new SaveFileDialog())
+            {
+                frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
+                frm.Title = "Import Settings";
+                frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    Core.ApplicationSettings.SaveAs(newAppSettings, frm.FileName);
+                }
+            }
         }
         #endregion
     }
