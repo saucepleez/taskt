@@ -159,9 +159,9 @@
             this.lblMainLogo.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblMainLogo.Location = new System.Drawing.Point(3, 0);
             this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(125, 45);
+            this.lblMainLogo.Size = new System.Drawing.Size(128, 45);
             this.lblMainLogo.TabIndex = 15;
-            this.lblMainLogo.Text = "settings";
+            this.lblMainLogo.Text = "Settings";
             // 
             // panelFooter
             // 
