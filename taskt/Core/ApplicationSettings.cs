@@ -84,7 +84,14 @@ namespace taskt.Core
                 //}
 
                 //fileStream.Close();
-                appSettings = Open(filePath);
+                try
+                {
+                    appSettings = Open(filePath);
+                }
+                catch
+                {
+                    appSettings = new ApplicationSettings();
+                }
             }
             else
             {
@@ -104,12 +111,15 @@ namespace taskt.Core
                     XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
                     appSettings = (ApplicationSettings)serializer.Deserialize(fileStream);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    appSettings = new ApplicationSettings();
+                    //appSettings = new ApplicationSettings();
+                    throw ex;
                 }
-
-                fileStream.Close();
+                finally
+                {
+                    fileStream.Close();
+                }
             }
             return appSettings;
         }
