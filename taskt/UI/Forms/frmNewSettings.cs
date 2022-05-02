@@ -331,6 +331,10 @@ namespace taskt.UI.Forms
             createLabel("lblExport", "Export Settings", FontSize.NormalBold, true);
             Button btnExport = createButton("btnExport", "Export", 200, true);
             btnExport.Click += (sender, e) => btnExportSettings_Click(sender, e);
+
+            createLabel("lblLoadDefault", "Load Default Settings", FontSize.NormalBold, true);
+            Button btnLoadDefault = createButton("btnLoadDefault", "Load Default", 200, true);
+            btnLoadDefault.Click += (sender, e) => btnLoadDefaultSettings_Click(sender, e);
         }
 
         #endregion
@@ -1171,6 +1175,13 @@ namespace taskt.UI.Forms
                 {
                     Core.ApplicationSettings.SaveAs(newAppSettings, frm.FileName);
                 }
+            }
+        }
+        private void btnLoadDefaultSettings_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to Load Default Settings?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                newAppSettings = new taskt.Core.ApplicationSettings();
             }
         }
         #endregion
