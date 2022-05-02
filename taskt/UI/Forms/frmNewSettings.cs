@@ -1160,7 +1160,15 @@ namespace taskt.UI.Forms
                 frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    newAppSettings = taskt.Core.ApplicationSettings.Open(frm.FileName);
+                    try
+                    {
+                        newAppSettings = taskt.Core.ApplicationSettings.Open(frm.FileName);
+                        MessageBox.Show("Imported", "taskt", MessageBoxButtons.OK);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Fail import", "taskt", MessageBoxButtons.OK);
+                    }
                 }
             }
         }
@@ -1173,7 +1181,15 @@ namespace taskt.UI.Forms
                 frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    Core.ApplicationSettings.SaveAs(newAppSettings, frm.FileName);
+                    try
+                    {
+                        Core.ApplicationSettings.SaveAs(newAppSettings, frm.FileName);
+                        MessageBox.Show("Exported", "taskt", MessageBoxButtons.OK);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Fail export", "taskt", MessageBoxButtons.OK);
+                    }
                 }
             }
         }
@@ -1182,6 +1198,7 @@ namespace taskt.UI.Forms
             if (MessageBox.Show("Are you sure to Load Default Settings?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 newAppSettings = new taskt.Core.ApplicationSettings();
+                MessageBox.Show("Load Default Settings", "taskt", MessageBoxButtons.OK);
             }
         }
         #endregion
