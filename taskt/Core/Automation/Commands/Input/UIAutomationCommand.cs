@@ -33,6 +33,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_AutomationType { get; set; }
 
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
@@ -55,6 +56,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_SearchMethod { get; set; }
 
+        [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Use the Element Recorder to generate a listing of potential search parameters.")]
@@ -63,7 +65,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         public DataTable v_UIASearchParameters { get; set; }
 
-        
+        [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Set Action Parameters")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Define the parameters for the actions.")]
