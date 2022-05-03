@@ -266,9 +266,10 @@ namespace taskt.Core.Automation.Commands
 
             while (node != null)
             {
-                //string parsed = (node.Cached.Name == null ? "(null)" : node.Cached.Name);
+                //string parsed = (node.Current.Name == null ? "(null)" : node.Current.Name);
                 //parsed += " *** " + (node.Current.LocalizedControlType == null ? "(null)" : node.Current.LocalizedControlType);
                 //parsed += " !!! " + (node.Current.NativeWindowHandle == 0 ? "(null)" : node.Current.NativeWindowHandle.ToString());
+                //parsed += " !!! " + (node.TryGetCurrentPattern(InvokePattern.Pattern, out object aba) ? "invoked" : "noinvo");
 
                 //// cast several pattern
                 //object ptn;
@@ -373,7 +374,7 @@ namespace taskt.Core.Automation.Commands
                 //    WindowPattern wPtn = (WindowPattern)ptn;
                 //    parsed += " %%% Window";
                 //}
-                
+
                 //Console.WriteLine("walker: " + parsed);
 
                 bool result = true;
