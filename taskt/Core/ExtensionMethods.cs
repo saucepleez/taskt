@@ -982,6 +982,11 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value, sender, false);
         }
 
+        public static void StoreInUserVariable(this System.Windows.Automation.AutomationElement value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
@@ -1075,6 +1080,19 @@ namespace taskt.Core
             else
             {
                 throw new Exception("Variable " + variableName + " is not DataTable");
+            }
+        }
+
+        public static System.Windows.Automation.AutomationElement GetAutomationElementVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            Script.ScriptVariable v = variableName.GetRawVariable(engine);
+            if (v.VariableValue is System.Windows.Automation.AutomationElement)
+            {
+                return (System.Windows.Automation.AutomationElement)v.VariableValue;
+            }
+            else
+            {
+                throw new Exception("Variable " + variableName + " is not AutomationElement");
             }
         }
 
