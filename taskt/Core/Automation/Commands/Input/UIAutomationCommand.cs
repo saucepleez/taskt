@@ -225,10 +225,189 @@ namespace taskt.Core.Automation.Commands
             {
                 // more deep search
                 element = windowElement.FindFirst(TreeScope.Subtree, searchConditions);
+                if (element == null)
+                {
+                    element = DeepSearchGUIElement(windowElement, searchConditions);
+                }
             }
             // if element not found, don't throw exception here
             return element;
         }
+
+        private AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition)
+        {
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            // format conditions
+            PropertyCondition[] conditions;
+            if (searchCondition is AndCondition)
+            {
+                Condition[] conds = ((AndCondition)searchCondition).GetConditions();
+                conditions = new PropertyCondition[conds.Length];
+                for (int i = 0; i < conds.Length; i++)
+                {
+                    conditions[i] = (PropertyCondition)conds[i];
+                }
+            }
+            else
+            {
+                conditions = new PropertyCondition[1];
+                conditions[0] = (PropertyCondition)searchCondition;
+            }
+
+            var ret =  WalkerSearch(rootElement, conditions, walker);
+            return ret;
+        }
+
+        private AutomationElement WalkerSearch(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker)
+        {
+            AutomationElement node = walker.GetFirstChild(rootElement);
+            AutomationElement ret = null;
+
+            while (node != null)
+            {
+                //string parsed = (node.Cached.Name == null ? "(null)" : node.Cached.Name);
+                //parsed += " *** " + (node.Current.LocalizedControlType == null ? "(null)" : node.Current.LocalizedControlType);
+                //parsed += " !!! " + (node.Current.NativeWindowHandle == 0 ? "(null)" : node.Current.NativeWindowHandle.ToString());
+
+                //// cast several pattern
+                //object ptn;
+                //if (node.TryGetCurrentPattern(DockPattern.Pattern, out ptn))
+                //{
+                //    DockPattern dPtn = (DockPattern)ptn;
+                //    parsed += " %%% Dock";
+                //}
+                //if (node.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out ptn))
+                //{
+                //    ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)ptn;
+                //    parsed += " %%% ExpandCollapse";
+                //}
+                //if (node.TryGetCurrentPattern(GridItemPattern.Pattern, out ptn))
+                //{
+                //    GridItemPattern giPtn = (GridItemPattern)ptn;
+                //    parsed += " %%% GridItem";
+                //}
+                //if (node.TryGetCurrentPattern(InvokePattern.Pattern, out ptn))
+                //{
+                //    InvokePattern iPtn = (InvokePattern)ptn;
+                //    parsed += " %%% Invoke";
+                //    System.Windows.Point clickablePoint;
+                //    if (node.TryGetClickablePoint(out clickablePoint))
+                //    {
+                //        parsed += " [] " + clickablePoint.ToString();
+                //    }
+                //}
+                //if (node.TryGetCurrentPattern(ItemContainerPattern.Pattern, out ptn))
+                //{
+                //    ItemContainerPattern icPtn = (ItemContainerPattern)ptn;
+                //    //icPtn.FindItemByProperty()
+                //    parsed += " %%% ItemContainer";
+                //}
+                //if (node.TryGetCurrentPattern(MultipleViewPattern.Pattern, out ptn))
+                //{
+                //    MultipleViewPattern mvPtn = (MultipleViewPattern)ptn;
+                //    parsed += " %%% MultipleView";
+                //}
+                //if (node.TryGetCurrentPattern(RangeValuePattern.Pattern, out ptn))
+                //{
+                //    RangeValuePattern rvPtn = (RangeValuePattern)ptn;
+                //    parsed += " %%% RangeValue";
+                //}
+                //if (node.TryGetCurrentPattern(ScrollPattern.Pattern, out ptn))
+                //{
+                //    ScrollPattern sPtn = (ScrollPattern)ptn;
+                //    parsed += " %%% Scroll";
+                //}
+                //if (node.TryGetCurrentPattern(ScrollItemPattern.Pattern, out ptn))
+                //{
+                //    ScrollItemPattern siPtn = (ScrollItemPattern)ptn;
+                //    parsed += " %%% ScrollItem";
+                //}
+                //if (node.TryGetCurrentPattern(SelectionPattern.Pattern, out ptn))
+                //{
+                //    SelectionPattern sPtn = (SelectionPattern)ptn;
+                //    parsed += " %%% Selection";
+                //}
+                //if (node.TryGetCurrentPattern(SelectionItemPattern.Pattern, out ptn))
+                //{
+                //    SelectionItemPattern siPtn = (SelectionItemPattern)ptn;
+                //    parsed += " %%% SelectionItem";
+                //}
+                //if (node.TryGetCurrentPattern(SynchronizedInputPattern.Pattern, out ptn))
+                //{
+                //    SynchronizedInputPattern siPtn = (SynchronizedInputPattern)ptn;
+                //    parsed += " %%% SynchronizedItem";
+                //}
+                //if (node.TryGetCurrentPattern(TableItemPattern.Pattern, out ptn))
+                //{
+                //    TableItemPattern tiPtn = (TableItemPattern)ptn;
+                //    parsed += " %%% TableItem";
+                //}
+                //if (node.TryGetCurrentPattern(TextPattern.Pattern, out ptn))
+                //{
+                //    TextPattern tPtn = (TextPattern)ptn;
+                //    parsed += " %%% Text";
+                //}
+                //if (node.TryGetCurrentPattern(TogglePattern.Pattern, out ptn))
+                //{
+                //    TogglePattern tPtn = (TogglePattern)ptn;
+                //    parsed += " %%% Toggle";
+                //}
+                //if (node.TryGetCurrentPattern(TransformPattern.Pattern, out ptn))
+                //{
+                //    TransformPattern tPtn = (TransformPattern)ptn;
+                //    parsed += " %%% Transform";
+                //}
+                //if (node.TryGetCurrentPattern(ValuePattern.Pattern, out ptn))
+                //{
+                //    ValuePattern vPtn = (ValuePattern)ptn;
+                //    parsed += " %%% Value";
+                //}
+                //if (node.TryGetCurrentPattern(VirtualizedItemPattern.Pattern, out ptn))
+                //{
+                //    VirtualizedItemPattern viPtn = (VirtualizedItemPattern)ptn;
+                //    parsed += " %%% VirtualizedItem";
+                //}
+                //if (node.TryGetCurrentPattern(WindowPattern.Pattern, out ptn))
+                //{
+                //    WindowPattern wPtn = (WindowPattern)ptn;
+                //    parsed += " %%% Window";
+                //}
+                
+                //Console.WriteLine("walker: " + parsed);
+
+                bool result = true;
+                foreach (PropertyCondition condition in searchConditions)
+                {
+                    if (node.GetCurrentPropertyValue(condition.Property) != condition.Value)
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                if (result)
+                {
+                    ret = node;
+                    break;
+                }
+
+                // search child node
+                if (walker.GetFirstChild(node) != null)
+                {
+                    ret = WalkerSearch(node, searchConditions, walker);
+                    if (ret != null)
+                    {
+                        break;
+                    }
+                }
+
+                // next sibling
+                node = walker.GetNextSibling(node);
+            }
+
+            return ret;
+        }
+
         public override void RunCommand(object sender)
         {
 
