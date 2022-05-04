@@ -291,6 +291,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
     <Compile Include="Core\Automation\Commands\ConditionControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByListCommand.cs" />
@@ -383,6 +384,9 @@
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumControls.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\GetChildAutomationElementFromAutomationElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\GetAutomationElementFromAutomationElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\GetAutomationElementFromWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />

@@ -298,6 +298,11 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ReadTextFileCommand))]
     [XmlInclude(typeof(WriteTextFileCommand))]
 
+    // UIAutomation
+    [XmlInclude(typeof(GetAutomationElementFromWindowCommand))]
+    [XmlInclude(typeof(GetAutomationElementFromAutomationElementCommand))]
+    [XmlInclude(typeof(GetChildAutomationElementFromAutomationElementCommand))]
+
     // Variable
     [XmlInclude(typeof(AddToVariableCommand))]
     [XmlInclude(typeof(VariableCommand))]
