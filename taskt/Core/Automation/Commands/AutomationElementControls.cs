@@ -388,5 +388,20 @@ namespace taskt.Core.Automation.Commands
 
             return elems;
         }
+
+        public static AutomationElement GetParentElement(AutomationElement targetElement)
+        {
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            var parent = walker.GetParent(targetElement);
+            if (parent != null)
+            {
+                return parent;
+            }
+            else
+            {
+                throw new Exception("Parent Element not exists");
+            }
+        }
     }
 }
