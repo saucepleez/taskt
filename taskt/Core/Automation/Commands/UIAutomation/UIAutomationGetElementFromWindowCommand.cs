@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.Description("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class GetAutomationElementFromWindowCommand : ScriptCommand
+    public class UIAutomationGetElementFromWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please select the Window to Automate (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}")]
@@ -51,10 +51,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AutomationElementVariable { get; set; }
 
-        public GetAutomationElementFromWindowCommand()
+        public UIAutomationGetElementFromWindowCommand()
         {
-            this.CommandName = "GetAutomationElementFromWindowCommand";
-            this.SelectionName = "Get AutomationElement From Window";
+            this.CommandName = "GetElementFromWindowCommand";
+            this.SelectionName = "Get Element From Window";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -67,15 +67,9 @@ namespace taskt.Core.Automation.Commands
             var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
             var searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            // Activate Window
-            var command = new ActivateWindowCommand()
-            {
-                v_WindowName = variableWindowName,
-                v_SearchMethod = searchMethod
-            };
-            command.RunCommand(sender);
+            string windowName = WindowNameControls.GetMatchedWindowName(variableWindowName, searchMethod, engine);
 
-            var windowElement = AutomationElementControls.GetFromWindowName(WindowNameControls.GetCurrentWindowName());
+            var windowElement = AutomationElementControls.GetFromWindowName(windowName);
             windowElement.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 

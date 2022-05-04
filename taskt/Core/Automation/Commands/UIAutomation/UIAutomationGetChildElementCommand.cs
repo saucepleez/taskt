@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.Description("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class GetAutomationElementFromAutomationElementCommand : ScriptCommand
+    public class UIAutomationGetChildElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify AutomationElement Variable")]
@@ -42,6 +42,15 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
+        [PropertyDescription("Please specify a Child Element Index")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_Index { get; set; }
+
+        [XmlAttribute]
         [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
         [InputSpecification("")]
         [SampleUsage("")]
@@ -55,10 +64,10 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private DataGridView SearchParametersGridViewHelper;
 
-        public GetAutomationElementFromAutomationElementCommand()
+        public UIAutomationGetChildElementCommand()
         {
-            this.CommandName = "GetAutomationElementFromAutomationElementCommand";
-            this.SelectionName = "Get AutomationElement From AutomationElement";
+            this.CommandName = "GetChildElementFromElementCommand";
+            this.SelectionName = "Get Child Element From Element";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -68,11 +77,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var rootElement = v_RootElement.GetAutomationElementVariable(engine);
+            int index = v_Index.ConvertToUserVariableAsInteger("v_Index", engine);
 
-            AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
-            if (elem != null)
+            var elems = AutomationElementControls.GetAllGUIElements(rootElement, v_SearchParameters, engine);
+            if (elems.Count > 0)
             {
-                elem.StoreInUserVariable(engine, v_AutomationElementVariable);
+                elems[index].StoreInUserVariable(engine, v_AutomationElementVariable);
             }
             else
             {
