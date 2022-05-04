@@ -249,5 +249,27 @@ namespace taskt.Core.Automation.Commands
             IntPtr hwnd = FindWindow(windowName, searchMethod, engine);
             ActivateWindow(hwnd);
         }
+
+        public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        {
+            if (windowName == engine.engineSettings.CurrentWindowKeyword)
+            {
+                return GetCurrentWindowName();
+            }
+            else
+            {
+                var windows = GetAllWindows();
+                var method = getWindowSearchMethod(searchMethod);
+                foreach (var win in windows)
+                {
+                    if (method(win.Value, windowName))
+                    {
+                        return win.Value;
+                    }
+                }
+            }
+            // not found
+            throw new Exception("Window Name '" + windowName + "' not found");
+        }
     }
 }
