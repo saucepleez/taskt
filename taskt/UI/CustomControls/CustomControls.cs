@@ -722,6 +722,8 @@ namespace taskt.UI
             {"UIAutomationGetElementFromElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementFromWindowCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetParentElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetSelectedStateFromElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetTextFromElementCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
             {"AddToVariableCommand", "taskt.Properties.Resources.command_function"},
