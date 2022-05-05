@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetChildElementCommand()
         {
-            this.CommandName = "GetChildElementCommand";
+            this.CommandName = "UIAutomationGetChildElementCommand";
             this.SelectionName = "Get Child Element";
             this.CommandEnabled = true;
             this.CustomRendering = true;
@@ -88,11 +88,6 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("AutomationElement not found");
             }
-        }
-
-        private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
-        {
-            AutomationElementControls.CreateEmptyParamters(v_SearchParameters);
         }
 
         public override List<Control> Render(frmCommandEditor editor)

@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetElementFromWindowCommand()
         {
-            this.CommandName = "GetElementFromWindowCommand";
+            this.CommandName = "UIAutomationGetElementFromWindowCommand";
             this.SelectionName = "Get Element From Window";
             this.CommandEnabled = true;
             this.CustomRendering = true;
