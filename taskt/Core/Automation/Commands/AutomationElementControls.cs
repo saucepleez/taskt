@@ -403,5 +403,22 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Parent Element not exists");
             }
         }
+
+        public static string GetWindowName(AutomationElement targetElement)
+        {
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            if (targetElement.Current.ControlType == ControlType.Window)
+            {
+                return targetElement.Current.Name;
+            }
+
+            var parent = walker.GetParent(targetElement);
+            while(parent.Current.ControlType != ControlType.Window)
+            {
+                parent = walker.GetParent(parent);
+            }
+            return parent.Current.Name;
+        }
     }
 }
