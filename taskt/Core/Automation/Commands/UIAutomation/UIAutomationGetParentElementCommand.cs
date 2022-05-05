@@ -13,25 +13,27 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.Description("")]
-    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Parent Element from AutomationElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent Element from AutomationElement.")]
     public class UIAutomationGetParentElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify AutomationElement Variable")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
+        [InputSpecification("")]
+        [SampleUsage("**vElement** or **{{{vElement}}}**")]
         [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_RootElement { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
+        [PropertyDescription("Please specify a Variable to store Parent AutomationElement")]
         [InputSpecification("")]
-        [SampleUsage("")]
+        [SampleUsage("**vElement** or **{{{vElement}}}**")]
         [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
