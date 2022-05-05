@@ -897,7 +897,7 @@ namespace taskt.Core.Script
                 //}
                 return GetDisplayValue(trgDic, requiredProperty);
             }
-            else
+            else if (VariableValue is List<string>)
             {
                 List<string> requiredValue = (List<string>)VariableValue;
                 //switch (requiredProperty)
@@ -936,6 +936,15 @@ namespace taskt.Core.Script
                 //        return requiredValue[CurrentPosition];
                 //}
                 return GetDisplayValue(requiredValue, requiredProperty);
+            }
+            else if (VariableValue is System.Windows.Automation.AutomationElement)
+            {
+                System.Windows.Automation.AutomationElement elem = (System.Windows.Automation.AutomationElement)VariableValue;
+                return GetDisplayValue(elem, requiredProperty);
+            }
+            else
+            {
+                return "UNKNOWN";
             }
         }
         private string GetDisplayValue(DataTable myDT, string requiredProperty = "")
@@ -1056,6 +1065,18 @@ namespace taskt.Core.Script
                     return "LIST";
                 default:
                     return myList[CurrentPosition];
+            }
+        }
+        private string GetDisplayValue(System.Windows.Automation.AutomationElement element, string requiredProperty)
+        {
+            switch (requiredProperty)
+            {
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "AUTOMATIONELEMENT";
+                default:
+                    return "Name: " + element.Current.Name + ", LocalizedControlType: " + element.Current.LocalizedControlType;
             }
         }
     }
