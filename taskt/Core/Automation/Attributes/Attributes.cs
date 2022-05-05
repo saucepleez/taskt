@@ -300,7 +300,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         {
             TextBox,
             ComboBox,
-            CheckBox
+            CheckBox,
+            All
         }
     }
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]

@@ -934,6 +934,9 @@ namespace taskt.UI.CustomControls
                         case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox:
                             newDGVColumn = new DataGridViewCheckBoxColumn();
                             break;
+                        default:
+                            newDGVColumn = new DataGridViewColumn();
+                            break;
                     }
                     newDGVColumn.HeaderText = colSetting.headerText;
                     newDGVColumn.DataPropertyName = colSetting.columnName;

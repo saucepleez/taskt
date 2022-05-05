@@ -34,14 +34,14 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("n/a")]
         [Remarks("Once you have clicked on a valid window the search parameters will be populated.  Enable only the ones required to be a match at runtime.")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(false, false, true)]
-        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        //[PropertyDataGridViewSetting(false, false, true)]
+        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.All)]
         public DataTable v_ActionParameters { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
-        private DataGridView SearchParametersGridViewHelper;
+        private DataGridView ActionParametersGridViewHelper;
 
         public UIAutomationClickElementCommand()
         {
@@ -88,14 +88,33 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+            var trgElem = CommandControls.CreateInferenceDefaultControlGroupFor("v_TargetElement", this, editor);
+            RenderedControls.AddRange(trgElem);
 
-            DataGridView dgv = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_ActionParameters", CommandControls.CommandControlType.Body)[0];
-            v_ActionParameters.Rows.Add("Click Type", "");
+            var actLbl = CommandControls.CreateDefaultLabelFor("v_ActionParameters", this);
+            var actParam = CommandControls.CreateDataGridView(this, "v_ActionParameters", false, false, true);
+            var actLinks = CommandControls.CreateUIHelpersFor("v_ActionParameters", this, new Control[] { actParam }, editor);
+
+            RenderedControls.Add(actLbl);
+            RenderedControls.AddRange(actLinks);
+            RenderedControls.Add(actParam);
+
+            v_ActionParameters = new DataTable();
+            v_ActionParameters.TableName = DateTime.Now.ToString("UIAActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+
+            v_ActionParameters.Columns.Add("ParameterName");
+            v_ActionParameters.Columns.Add("ParameterValue");
+            v_ActionParameters.Rows.Add("Click Type", "Left Click");
             v_ActionParameters.Rows.Add("X Adjustment", 0);
             v_ActionParameters.Rows.Add("Y Adjustment", 0);
 
+            actParam.DataBindingComplete += ActionParametersGridViewHelper_DataBindingComplete;
+
+            return RenderedControls;
+        }
+
+        private void ActionParametersGridViewHelper_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
             var mouseClickBox = new DataGridViewComboBoxCell();
             mouseClickBox.Items.Add("Left Click");
             mouseClickBox.Items.Add("Middle Click");
@@ -107,9 +126,12 @@ namespace taskt.Core.Automation.Commands
             mouseClickBox.Items.Add("Middle Up");
             mouseClickBox.Items.Add("Right Up");
             mouseClickBox.Items.Add("Double Left Click");
+
+            DataGridView dgv = (DataGridView)sender;
             dgv.Rows[0].Cells[1] = mouseClickBox;
 
-            return RenderedControls;
+            dgv.Columns[0].HeaderText = "Parameter Name";
+            dgv.Columns[1].HeaderText = "Parameter Value";
         }
 
         public override string GetDisplayValue()
