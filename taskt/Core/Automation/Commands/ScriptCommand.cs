@@ -299,9 +299,10 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WriteTextFileCommand))]
 
     // UIAutomation
+    [XmlInclude(typeof(UIAutomationClickElementCommand))]
+    [XmlInclude(typeof(UIAutomationGetChildElementCommand))]
     [XmlInclude(typeof(UIAutomationGetElementFromWindowCommand))]
     [XmlInclude(typeof(UIAutomationGetElementFromElementCommand))]
-    [XmlInclude(typeof(UIAutomationGetChildElementCommand))]
     [XmlInclude(typeof(UIAutomationGetParentElementCommand))]
 
     // Variable
