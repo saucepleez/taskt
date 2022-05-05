@@ -717,10 +717,11 @@ namespace taskt.UI
             {"WriteTextFileCommand", "taskt.Properties.Resources.command_files"},
 
             // UIAutomation
-            {"GetElementFromElementCommand", "taskt.Properties.Resources.command_window"},
-            {"GetElementFromWindowCommand", "taskt.Properties.Resources.command_window"},
-            {"GetChildElementFromElementCommand", "taskt.Properties.Resources.command_window"},
-            {"GetParentElementFromElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationClickElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetChildElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetElementFromElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetElementFromWindowCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetParentElementCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
             {"AddToVariableCommand", "taskt.Properties.Resources.command_function"},
