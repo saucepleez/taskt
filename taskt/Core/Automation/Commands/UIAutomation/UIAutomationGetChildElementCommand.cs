@@ -66,8 +66,8 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetChildElementCommand()
         {
-            this.CommandName = "GetChildElementFromElementCommand";
-            this.SelectionName = "Get Child Element From Element";
+            this.CommandName = "GetChildElementCommand";
+            this.SelectionName = "Get Child Element";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
