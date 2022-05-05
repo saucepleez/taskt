@@ -90,6 +90,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
+        {
+            AutomationElementControls.CreateEmptyParamters(v_SearchParameters);
+        }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
