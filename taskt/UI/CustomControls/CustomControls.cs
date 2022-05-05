@@ -720,6 +720,7 @@ namespace taskt.UI
             {"GetElementFromElementCommand", "taskt.Properties.Resources.command_window"},
             {"GetElementFromWindowCommand", "taskt.Properties.Resources.command_window"},
             {"GetChildElementFromElementCommand", "taskt.Properties.Resources.command_window"},
+            {"GetParentElementFromElementCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
             {"AddToVariableCommand", "taskt.Properties.Resources.command_function"},
