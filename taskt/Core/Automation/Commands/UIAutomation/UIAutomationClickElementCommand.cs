@@ -30,7 +30,6 @@ namespace taskt.Core.Automation.Commands
         [XmlElement]
         [PropertyDescription("Set Search Parameters")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Add Empty Parameters", "lnkAddEmptyParameter_Click")]
         [InputSpecification("Use the Element Recorder to generate a listing of potential search parameters.")]
         [SampleUsage("n/a")]
         [Remarks("Once you have clicked on a valid window the search parameters will be populated.  Enable only the ones required to be a match at runtime.")]
