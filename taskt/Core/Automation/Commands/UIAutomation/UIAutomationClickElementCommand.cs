@@ -57,8 +57,45 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
 
+            // Activate Window
+            string windowName = AutomationElementControls.GetWindowName(targetElement);
+            var activateWindow = new ActivateWindowCommand()
+            {
+                v_WindowName = windowName
+            };
+            activateWindow.RunCommand(sender);
+
             System.Windows.Point point;
-            if (!targetElement.TryGetClickablePoint(out point))
+            try
+            {
+                if (!targetElement.TryGetClickablePoint(out point))
+                {
+                    var moveWindow = new MoveWindowCommand()
+                    {
+                        v_WindowName = windowName,
+                        v_XWindowPosition = "0",
+                        v_YWindowPosition = "0"
+                    };
+                    moveWindow.RunCommand(sender);
+                    targetElement.TryGetClickablePoint(out point);
+                }
+                if ((point.X < 0.0) || (point.Y < 0.0))
+                {
+                    var moveWindow = new MoveWindowCommand()
+                    {
+                        v_WindowName = windowName,
+                        v_XWindowPosition = "0",
+                        v_YWindowPosition = "0"
+                    };
+                    moveWindow.RunCommand(sender);
+
+                    if (!targetElement.TryGetClickablePoint(out point))
+                    {
+                        throw new Exception("No Clickable Point in AutomationElement '" + v_TargetElement + "'");
+                    }
+                }
+            }
+            catch (Exception)
             {
                 throw new Exception("No Clickable Point in AutomationElement '" + v_TargetElement + "'");
             }
@@ -67,13 +104,6 @@ namespace taskt.Core.Automation.Commands
             var click = actionParams["Click Type"].ConvertToUserVariable(engine);
             var xAd = actionParams["X Adjustment"].ConvertToUserVariableAsInteger("X Adjustment", engine);
             var yAd = actionParams["Y Adjustment"].ConvertToUserVariableAsInteger("Y Adjustment", engine);
-
-            string windowName = AutomationElementControls.GetWindowName(targetElement);
-            var activateWindow = new ActivateWindowCommand()
-            {
-                v_WindowName = windowName
-            };
-            activateWindow.RunCommand(sender);
 
             var mouseClick = new SendMouseMoveCommand()
             {
