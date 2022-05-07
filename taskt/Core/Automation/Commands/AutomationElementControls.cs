@@ -304,7 +304,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static string GetControlTypeText(ControlType control)
+        public static string GetControlTypeText(ControlType control)
         {
             if (control == ControlType.Button)
             {
