@@ -666,11 +666,11 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                return GetAllChildElements(rootElement);
+                return GetAllChildrenElements(rootElement);
             }
         }
 
-        private static List<AutomationElement> GetAllChildElements(AutomationElement rootElement)
+        private static List<AutomationElement> GetAllChildrenElements(AutomationElement rootElement)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
 
