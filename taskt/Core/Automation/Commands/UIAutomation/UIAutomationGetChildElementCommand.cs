@@ -102,8 +102,10 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrl);
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
+            SearchParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_ActionParameters", CommandControls.CommandControlType.Body)[0];
 
             return RenderedControls;
         }
