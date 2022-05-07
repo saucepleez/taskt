@@ -35,6 +35,7 @@ namespace taskt.Core.Automation.Commands
             table.Rows.Add(false, "AcceleratorKey", "");
             table.Rows.Add(false, "AccessKey", "");
             table.Rows.Add(false, "AutomationId", "");
+            table.Rows.Add(false, "ControlType", "");
             table.Rows.Add(false, "ClassName", "");
             table.Rows.Add(false, "FrameworkId", "");
             table.Rows.Add(false, "HasKeyboardFocus", "");
@@ -102,6 +103,10 @@ namespace taskt.Core.Automation.Commands
                                 DataTableControls.SetParameterValue(table, value, name, "Parameter Name", "Parameter Value");
                                 break;
 
+                            case "ControlType":
+                                DataTableControls.SetParameterValue(table, parseControlTypeInspectToolResult(value), name, "Parameter Name", "Parameter Value");
+                                break;
+
                             case "Ancestors":
                                 ancestors.Add(value);
                                 break;
@@ -127,6 +132,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        private static string parseControlTypeInspectToolResult(string value)
+        {
+            var spt = value.Split(' ');
+            return spt[0].Replace("UIA_", "").Replace("ControlTypeId", "");
+        }
         private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, System.Windows.Forms.ComboBox cmb)
         {
             if (ancestors.Count > 0)
@@ -169,6 +179,291 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        //private static void SetControlTypeCell(System.Windows.Forms.DataGridView dgv)
+        //{
+        //    if ((dgv.Columns[1].Name != "Parameter Name") || (dgv.Columns[2].Name != "Parameter Value"))
+        //    {
+        //        throw new Exception("DataGridView is not UIAutomation SearchParameters");
+        //    }
+
+        //    int row = -1;
+        //    for (int i = 0; i < dgv.Rows.Count; i++)
+        //    {
+        //        string paramValue = (dgv.Rows[i].Cells[1].Value != null) ? dgv.Rows[i].Cells[i].Value.ToString() : "";
+        //        if (paramValue == "ControlType")
+        //        {
+        //            row = i;
+        //            break;
+        //        }
+        //    }
+        //    if (row < 0)
+        //    {
+        //        throw new Exception("DataGridView does not have 'ControlType' row");
+        //    }
+
+        //    System.Windows.Forms.DataGridViewComboBoxCell cmbCell = new System.Windows.Forms.DataGridViewComboBoxCell();
+        //    cmbCell.Items.AddRange(new string[]
+        //    {
+        //        "Button", "Calendar", "CheckBox", "ComboBox", "Custom",
+        //        "DataGrid", "DataItem", "Document", "Edit", "Group",
+        //        "Header", "HeaderItem", "Hyperlink", "Image", "List",
+        //        "ListItem", "Menu", "MenuBar", "MenuItem", "Pane",
+        //        "ProgressBar", "RadioButton", "ScrollBar", "Separator", "Slider",
+        //        "Spinner", "SplitButton", "StatusBar", "Tab", "TabItem",
+        //        "Table", "Text", "Thumb", "TitleBar", "ToolBar",
+        //        "ToolTip", "Tree", "TreeItem", "Window"
+        //    });
+        //    dgv.Rows[row].Cells[2] = cmbCell;
+        //}
+
+        private static ControlType GetControlType(string controlTypeName)
+        {
+            switch (controlTypeName.ToLower())
+            {
+                case "button":
+                    return ControlType.Button;
+                case "calender":
+                    return ControlType.Calendar;
+                case "checkbox":
+                    return ControlType.CheckBox;
+                case "combobox":
+                    return ControlType.ComboBox;
+                case "custom":
+                    return ControlType.Custom;
+                case "datagrid":
+                    return ControlType.DataGrid;
+                case "dataitem":
+                    return ControlType.DataItem;
+                case "document":
+                    return ControlType.Document;
+                case "edit":
+                    return ControlType.Edit;
+                case "group":
+                    return ControlType.Group;
+                case "header":
+                    return ControlType.Header;
+                case "headeritem":
+                    return ControlType.HeaderItem;
+                case "hyperlink":
+                    return ControlType.Hyperlink;
+                case "image":
+                    return ControlType.Image;
+                case "list":
+                    return ControlType.List;
+                case "listitem":
+                    return ControlType.ListItem;
+                case "menu":
+                    return ControlType.Menu;
+                case "menubar":
+                    return ControlType.MenuBar;
+                case "menuitem":
+                    return ControlType.MenuItem;
+                case "pane":
+                    return ControlType.Pane;
+                case "progressbar":
+                    return ControlType.ProgressBar;
+                case "radiobutton":
+                    return ControlType.RadioButton;
+                case "scrollbar":
+                    return ControlType.ScrollBar;
+                case "separator":
+                    return ControlType.Separator;
+                case "slider":
+                    return ControlType.Slider;
+                case "spinner":
+                    return ControlType.Spinner;
+                case "splitbutton":
+                    return ControlType.SplitButton;
+                case "statusbar":
+                    return ControlType.StatusBar;
+                case "tab":
+                    return ControlType.Tab;
+                case "tabitem":
+                    return ControlType.TabItem;
+                case "table":
+                    return ControlType.Table;
+                case "text":
+                    return ControlType.Text;
+                case "thumb":
+                    return ControlType.Thumb;
+                case "titlebar":
+                    return ControlType.TitleBar;
+                case "toolbar":
+                    return ControlType.ToolBar;
+                case "tooltip":
+                    return ControlType.ToolTip;
+                case "tree":
+                    return ControlType.Tree;
+                case "treeitem":
+                    return ControlType.TreeItem;
+                case "window":
+                    return ControlType.Window;
+                default:
+                    throw new Exception("Strange ControlType '" + controlTypeName + "'");
+                    break;
+            }
+        }
+
+        private static string GetControlTypeText(ControlType control)
+        {
+            if (control == ControlType.Button)
+            {
+                return "Button";
+            }
+            else if (control == ControlType.Calendar)
+            {
+                return "Calender";
+            }
+            else if (control == ControlType.CheckBox)
+            {
+                return "CheckBox";
+            }
+            else if (control == ControlType.ComboBox)
+            {
+                return "ComboBox";
+            }
+            else if (control == ControlType.Custom)
+            {
+                return "Custom";
+            }
+            else if (control == ControlType.DataGrid)
+            {
+                return "DataGrid";
+            }
+            else if (control == ControlType.DataItem)
+            {
+                return "DataItem";
+            }
+            else if (control == ControlType.Document)
+            {
+                return "Document";
+            }
+            else if (control == ControlType.Edit)
+            {
+                return "Edit";
+            }
+            else if (control == ControlType.Group)
+            {
+                return "Group";
+            }
+            else if (control == ControlType.Header)
+            {
+                return "Header";
+            }
+            else if (control == ControlType.Hyperlink)
+            {
+                return "Hyperlink";
+            }
+            else if (control == ControlType.Image)
+            {
+                return "Image";
+            }
+            else if (control == ControlType.List)
+            {
+                return "List";
+            }
+            else if (control == ControlType.ListItem)
+            {
+                return "ListItem";
+            }
+            else if (control == ControlType.Menu)
+            {
+                return "Menu";
+            }
+            else if (control == ControlType.MenuBar)
+            {
+                return "MenuBar";
+            }
+            else if (control == ControlType.MenuItem)
+            {
+                return "MenuItem";
+            }
+            else if (control == ControlType.Pane)
+            {
+                return "Pane";
+            }
+            else if (control == ControlType.ProgressBar)
+            {
+                return "ProgressBar";
+            }
+            else if (control == ControlType.RadioButton)
+            {
+                return "RadioButton";
+            }
+            else if (control == ControlType.ScrollBar)
+            {
+                return "ScrollBar";
+            }
+            else if (control == ControlType.Separator)
+            {
+                return "Separator";
+            }
+            else if (control == ControlType.Slider)
+            {
+                return "Slider";
+            }
+            else if (control == ControlType.Spinner)
+            {
+                return "Spinner";
+            }
+            else if (control == ControlType.SplitButton)
+            {
+                return "SplitButton";
+            }
+            else if (control == ControlType.StatusBar)
+            {
+                return "StatusBar";
+            }
+            else if (control == ControlType.Tab)
+            {
+                return "Tab";
+            }
+            else if (control == ControlType.TabItem)
+            {
+                return "TabItem";
+            }
+            else if (control == ControlType.Table)
+            {
+                return "Table";
+            }
+            else if (control == ControlType.Text)
+            {
+                return "Text";
+            }
+            else if (control == ControlType.Thumb)
+            {
+                return "Thumb";
+            }
+            else if (control == ControlType.TitleBar)
+            {
+                return "TitleBar";
+            }
+            else if (control == ControlType.ToolBar)
+            {
+                return "ToolBar";
+            }
+            else if (control == ControlType.ToolTip)
+            {
+                return "ToolTip";
+            }
+            else if (control == ControlType.Tree)
+            {
+                return "Tree";
+            }
+            else if (control == ControlType.TreeItem)
+            {
+                return "TreeItem";
+            }
+            else if (control == ControlType.Window)
+            {
+                return "Window";
+            }
+            else
+            {
+                throw new Exception("Strange ControlType");
+            }
+        }
+
         private static PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
             string propName = propertyName + "Property";
@@ -183,6 +478,8 @@ namespace taskt.Core.Automation.Commands
                     return new PropertyCondition(AutomationElement.AutomationIdProperty, propertyValue);
                 case "ClassName":
                     return new PropertyCondition(AutomationElement.ClassNameProperty, propertyValue);
+                case "ControlType":
+                    return new PropertyCondition(AutomationElement.ControlTypeProperty, GetControlType((string)propertyValue));
                 case "FrameworkId":
                     return new PropertyCondition(AutomationElement.FrameworkIdProperty, propertyValue);
                 case "HasKeyboardFocus":
