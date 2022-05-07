@@ -832,20 +832,7 @@ namespace taskt.Core.Script
         public string GetDisplayValue(string requiredProperty = "")
         {
 
-            if (VariableValue is string)
-            {
-                switch (requiredProperty)
-                {
-                    case "type":
-                    case "Type":
-                    case "TYPE":
-                        return "BASIC";
-                    default:
-                        return (string)VariableValue;
-                }
-
-            }
-            else if (VariableValue is DataTable)
+            if (VariableValue is DataTable)
             {
                 DataTable dataTable = (DataTable)VariableValue;
                 //switch (requiredProperty)
@@ -941,6 +928,19 @@ namespace taskt.Core.Script
             {
                 System.Windows.Automation.AutomationElement elem = (System.Windows.Automation.AutomationElement)VariableValue;
                 return GetDisplayValue(elem, requiredProperty);
+            }
+            else if (VariableValue is string)
+            {
+                switch (requiredProperty)
+                {
+                    case "type":
+                    case "Type":
+                    case "TYPE":
+                        return "BASIC";
+                    default:
+                        return (string)VariableValue;
+                }
+
             }
             else
             {
