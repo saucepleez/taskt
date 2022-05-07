@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
+    [Attributes.ClassAttributes.SubGruop("Get")]
     [Attributes.ClassAttributes.Description("This command allows you to get Selected State from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selected State from AutomationElement.")]
     public class UIAutomationGetSelectedStateFromElementCommand : ScriptCommand

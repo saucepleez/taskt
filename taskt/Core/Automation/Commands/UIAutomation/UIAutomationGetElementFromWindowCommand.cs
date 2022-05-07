@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
+    [Attributes.ClassAttributes.SubGruop("Search")]
     [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from Window Name.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from Window Name.")]
     public class UIAutomationGetElementFromWindowCommand : ScriptCommand

@@ -13,8 +13,9 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Text Value from Table AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from Table AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Element from Table AutomationElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Element from Table AutomationElement.")]
     public class UIAutomationGetElementFromTableElementCommand : ScriptCommand
     {
         [XmlAttribute]
