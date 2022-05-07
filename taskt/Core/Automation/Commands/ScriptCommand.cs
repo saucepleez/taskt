@@ -301,6 +301,7 @@ namespace taskt.Core.Automation.Commands
     // UIAutomation
     [XmlInclude(typeof(UIAutomationClickElementCommand))]
     [XmlInclude(typeof(UIAutomationGetChildElementCommand))]
+    [XmlInclude(typeof(UIAutomationGetChildrenElementsInformationCommand))]
     [XmlInclude(typeof(UIAutomationGetElementFromElementCommand))]
     [XmlInclude(typeof(UIAutomationGetElementFromTableElementCommand))]
     [XmlInclude(typeof(UIAutomationGetElementFromWindowCommand))]

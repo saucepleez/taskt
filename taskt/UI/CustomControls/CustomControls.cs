@@ -719,6 +719,7 @@ namespace taskt.UI
             // UIAutomation
             {"UIAutomationClickElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetChildElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetChildrenElementsInformationCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementFromElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementFromTableElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementFromWindowCommand", "taskt.Properties.Resources.command_window"},
