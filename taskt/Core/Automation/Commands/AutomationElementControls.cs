@@ -648,7 +648,7 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
-        public static List<AutomationElement> GetAllGUIElements(AutomationElement rootElement, DataTable conditionTable, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
+        public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
