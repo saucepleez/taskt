@@ -58,7 +58,6 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            // Activate Window
             string windowName = AutomationElementControls.GetWindowName(targetElement);
             var activateWindow = new ActivateWindowCommand()
             {
@@ -105,6 +104,13 @@ namespace taskt.Core.Automation.Commands
             var click = actionParams["Click Type"].ConvertToUserVariable(engine);
             var xAd = actionParams["X Adjustment"].ConvertToUserVariableAsInteger("X Adjustment", engine);
             var yAd = actionParams["Y Adjustment"].ConvertToUserVariableAsInteger("Y Adjustment", engine);
+
+            // Invoke Pattern Test Code
+            //object invokePtn;
+            //if (targetElement.TryGetCurrentPattern(InvokePattern.Pattern, out invokePtn))
+            //{
+            //    ((InvokePattern)invokePtn).Invoke();
+            //}
 
             var mouseClick = new SendMouseMoveCommand()
             {
