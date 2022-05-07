@@ -717,5 +717,31 @@ namespace taskt.Core.Automation.Commands
             }
             return parent.Current.Name;
         }
+
+        public static string GetTextValue(AutomationElement targetElement)
+        {
+            object patternObj;
+            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
+            {
+                // TextBox
+                return ((ValuePattern)patternObj).Current.Value;
+            }
+            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
+            {
+                // TextBox Multilune
+                return ((TextPattern)patternObj).DocumentRange.GetText(-1);
+            }
+            else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
+            {
+                // combobox
+                AutomationElement selElem = ((SelectionPattern)patternObj).Current.GetSelection()[0];
+                return selElem.Current.Name;
+            }
+            else
+            {
+                // others
+                return targetElement.Current.Name;
+            }
+        }
     }
 }

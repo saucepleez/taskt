@@ -53,27 +53,30 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_RootElement.GetAutomationElementVariable(engine);
 
-            object patternObj;
-            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
-            {
-                // TextBox
-                ((ValuePattern)patternObj).Current.Value.StoreInUserVariable(sender, v_TextVariable);
-            }
-            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
-            {
-                // TextBox Multilune
-                TextPattern tPtn = (TextPattern)patternObj;
-                tPtn.DocumentRange.GetText(-1).StoreInUserVariable(sender, v_TextVariable);
-            }
-            else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
-            {
-                SelectionPattern sPtn = (SelectionPattern)patternObj;
-                sPtn.Current.GetSelection()[0].GetCurrentPropertyValue(AutomationElement.NameProperty).ToString().StoreInUserVariable(sender, v_TextVariable);
-            }
-            else
-            {
-                targetElement.Current.Name.StoreInUserVariable(sender, v_TextVariable);
-            }
+            //object patternObj;
+            //if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
+            //{
+            //    // TextBox
+            //    ((ValuePattern)patternObj).Current.Value.StoreInUserVariable(sender, v_TextVariable);
+            //}
+            //else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
+            //{
+            //    // TextBox Multilune
+            //    TextPattern tPtn = (TextPattern)patternObj;
+            //    tPtn.DocumentRange.GetText(-1).StoreInUserVariable(sender, v_TextVariable);
+            //}
+            //else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
+            //{
+            //    SelectionPattern sPtn = (SelectionPattern)patternObj;
+            //    sPtn.Current.GetSelection()[0].GetCurrentPropertyValue(AutomationElement.NameProperty).ToString().StoreInUserVariable(sender, v_TextVariable);
+            //}
+            //else
+            //{
+            //    targetElement.Current.Name.StoreInUserVariable(sender, v_TextVariable);
+            //}
+
+            string res = AutomationElementControls.GetTextValue(targetElement);
+            res.StoreInUserVariable(engine, v_TextVariable);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
