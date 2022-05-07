@@ -301,11 +301,12 @@ namespace taskt.Core.Automation.Commands
     // UIAutomation
     [XmlInclude(typeof(UIAutomationClickElementCommand))]
     [XmlInclude(typeof(UIAutomationGetChildElementCommand))]
-    [XmlInclude(typeof(UIAutomationGetElementFromWindowCommand))]
     [XmlInclude(typeof(UIAutomationGetElementFromElementCommand))]
+    [XmlInclude(typeof(UIAutomationGetElementFromWindowCommand))]
     [XmlInclude(typeof(UIAutomationGetParentElementCommand))]
     [XmlInclude(typeof(UIAutomationGetSelectedStateFromElementCommand))]
     [XmlInclude(typeof(UIAutomationGetTextFromElementCommand))]
+    [XmlInclude(typeof(UIAutomationGetTextFromTableElementCommand))]
 
     // Variable
     [XmlInclude(typeof(AddToVariableCommand))]

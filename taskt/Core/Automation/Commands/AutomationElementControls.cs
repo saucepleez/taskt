@@ -743,5 +743,23 @@ namespace taskt.Core.Automation.Commands
                 return targetElement.Current.Name;
             }
         }
+
+        public static AutomationElement GetTableElement(AutomationElement targetElement, int row, int column)
+        {
+            object tryObj;
+            if (!targetElement.TryGetCurrentPattern(GridPattern.Pattern, out tryObj))
+            {
+                throw new Exception("AutomationElement is not Table Element");
+            }
+            GridPattern gridPtn = (GridPattern)tryObj;
+
+            AutomationElement cellElem = gridPtn.GetItem(row, column);
+            if (cellElem == null)
+            {
+                throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
+            }
+
+            return cellElem;
+        }
     }
 }

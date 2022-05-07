@@ -386,6 +386,8 @@
     <Compile Include="Core\Automation\Commands\SeleniumControls.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationClickElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromTableElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromTableElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetParentElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildElementCommand.cs" />
