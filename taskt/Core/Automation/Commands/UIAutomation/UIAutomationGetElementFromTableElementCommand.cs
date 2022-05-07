@@ -77,9 +77,7 @@ namespace taskt.Core.Automation.Commands
             int column = v_Column.ConvertToUserVariableAsInteger("v_Column", engine);
 
             AutomationElement cellElem = AutomationElementControls.GetTableElement(targetElement, row, column);
-            "".StoreInUserVariable(engine, "v_AutomationElement");
-            var v = v_AutomationElementVariable.GetRawVariable(engine);
-            v.VariableValue = cellElem;
+            cellElem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
