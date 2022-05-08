@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_RootElement { get; set; }
+        public string v_TargetElement { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please specify a Variable to store Parent AutomationElement")]
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_RootElement.GetAutomationElementVariable(engine);
+            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
             var parent = AutomationElementControls.GetParentElement(rootElement);
             if (parent != null)
@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_RootElement + "', Store: '" + v_AutomationElementVariable + "']";
+            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', Store: '" + v_AutomationElementVariable + "']";
         }
 
     }

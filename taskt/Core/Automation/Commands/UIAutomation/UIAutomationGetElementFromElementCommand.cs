@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_RootElement { get; set; }
+        public string v_TargetElement { get; set; }
 
         [XmlElement]
         [PropertyDescription("Set Search Parameters")]
@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_RootElement.GetAutomationElementVariable(engine);
+            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
             AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
             if (elem != null)
@@ -102,7 +102,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_RootElement + "', Store: '" + v_AutomationElementVariable + "']";
+            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', Store: '" + v_AutomationElementVariable + "']";
         }
 
     }
