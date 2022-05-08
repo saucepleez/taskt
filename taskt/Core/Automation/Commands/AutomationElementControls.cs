@@ -767,36 +767,53 @@ namespace taskt.Core.Automation.Commands
             AutomationElement rootElement = targetElement;
 
             object ptnResult;
-            ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
-            if (!(bool)ptnResult)
-            {
-                rootElement = GetParentElement(rootElement);
-            }
 
-            ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+            ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty);
             if ((bool)ptnResult)
             {
-                object selPtn = rootElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
-
-                ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
-                ecPtn.Expand();
-
+                // DataGridView
                 var elems = rootElement.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
                 List<AutomationElement> ret = new List<AutomationElement>();
-                foreach(AutomationElement elem in elems)
+                foreach (AutomationElement elem in elems)
                 {
                     ret.Add(elem);
-                }
-
-                if (collapseAfter)
-                {
-                    ecPtn.Collapse();
                 }
                 return ret;
             }
             else
             {
-                throw new Exception("This element does not have Selection Items");
+                // ComboBox
+                ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+                if (!(bool)ptnResult)
+                {
+                    rootElement = GetParentElement(rootElement);
+                }
+
+                ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+                if ((bool)ptnResult)
+                {
+                    object selPtn = rootElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
+
+                    ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
+                    ecPtn.Expand();
+
+                    var elems = rootElement.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
+                    List<AutomationElement> ret = new List<AutomationElement>();
+                    foreach (AutomationElement elem in elems)
+                    {
+                        ret.Add(elem);
+                    }
+
+                    if (collapseAfter)
+                    {
+                        ecPtn.Collapse();
+                    }
+                    return ret;
+                }
+                else
+                {
+                    throw new Exception("This element does not have Selection Items");
+                }
             }
         }
     }
