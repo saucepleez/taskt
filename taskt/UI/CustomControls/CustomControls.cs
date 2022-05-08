@@ -728,6 +728,7 @@ namespace taskt.UI
             {"UIAutomationGetSelectionItemsFromElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetTextFromElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetTextFromTableElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationSelectItemInElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationSetTextToElementCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable

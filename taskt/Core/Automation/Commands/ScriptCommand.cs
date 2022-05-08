@@ -310,6 +310,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(UIAutomationGetSelectionItemsFromElementCommand))]
     [XmlInclude(typeof(UIAutomationGetTextFromElementCommand))]
     [XmlInclude(typeof(UIAutomationGetTextFromTableElementCommand))]
+    [XmlInclude(typeof(UIAutomationSelectItemInElementCommand))]
     [XmlInclude(typeof(UIAutomationSetTextToElementCommand))]
 
     // Variable
