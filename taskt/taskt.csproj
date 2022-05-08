@@ -388,6 +388,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildrenElementsInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromTableElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectionItemsFromElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSetTextToElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromTableElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetParentElementCommand.cs" />
