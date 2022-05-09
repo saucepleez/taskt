@@ -718,6 +718,7 @@ namespace taskt.UI
 
             // UIAutomation
             {"UIAutomationClickElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationExpandCollapseItemsInElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetChildElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetChildrenElementsInformationCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementFromElementCommand", "taskt.Properties.Resources.command_window"},
@@ -731,6 +732,7 @@ namespace taskt.UI
             {"UIAutomationSelectElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationSelectItemInElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationSetTextToElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationScrollElementCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
             {"AddToVariableCommand", "taskt.Properties.Resources.command_function"},

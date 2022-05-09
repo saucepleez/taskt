@@ -300,6 +300,7 @@ namespace taskt.Core.Automation.Commands
 
     // UIAutomation
     [XmlInclude(typeof(UIAutomationClickElementCommand))]
+    [XmlInclude(typeof(UIAutomationExpandCollapseItemsInElementCommand))]
     [XmlInclude(typeof(UIAutomationGetChildElementCommand))]
     [XmlInclude(typeof(UIAutomationGetChildrenElementsInformationCommand))]
     [XmlInclude(typeof(UIAutomationGetElementFromElementCommand))]
@@ -313,6 +314,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(UIAutomationSelectElementCommand))]
     [XmlInclude(typeof(UIAutomationSelectItemInElementCommand))]
     [XmlInclude(typeof(UIAutomationSetTextToElementCommand))]
+    [XmlInclude(typeof(UIAutomationScrollElementCommand))]
 
     // Variable
     [XmlInclude(typeof(AddToVariableCommand))]

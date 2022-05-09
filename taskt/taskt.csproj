@@ -389,6 +389,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromTableElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectionItemsFromElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationExpandCollapseItemsInElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationScrollElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectItemInElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSetTextToElementCommand.cs" />
