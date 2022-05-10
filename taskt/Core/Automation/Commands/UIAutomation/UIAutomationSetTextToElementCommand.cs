@@ -22,8 +22,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Please specify AutomationElement Variable")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
+        [SampleUsage("**{{{vElement}}}**")]
+        [Remarks("Supported Element is TextBox, etc.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -31,11 +31,11 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyDescription("Please specify Text to Set")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**Hello** or **{{{vText}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TextVariable { get; set; }
 
         public UIAutomationSetTextToElementCommand()
@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', Store: '" + v_TextVariable + "']";
+            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Text to Set: '" + v_TextVariable + "']";
         }
 
     }

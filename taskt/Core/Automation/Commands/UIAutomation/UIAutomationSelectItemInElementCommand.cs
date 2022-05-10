@@ -14,28 +14,30 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
-    [Attributes.ClassAttributes.Description("This command allows you to select a Item in AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to select a Item in AutomationElement.")]
+    [Attributes.ClassAttributes.Description("This command allows you to Select a Item in AutomationElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select a Item in AutomationElement.")]
     public class UIAutomationSelectItemInElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify AutomationElement Variable")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
+        [SampleUsage("**{{{vElement}}}**")]
+        [Remarks("Supported Element is ComboBox, ListBox, etc.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please specify Item value to Select")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**Hello** or **{{{vItem}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Item", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Item { get; set; }
 
         public UIAutomationSelectItemInElementCommand()
@@ -85,7 +87,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', Store: '" + v_Item + "']";
+            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Item to Select: '" + v_Item + "']";
         }
 
     }

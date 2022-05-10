@@ -14,18 +14,20 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
-    [Attributes.ClassAttributes.Description("This command allows you to set Text Value from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to set Text Value from AutomationElement.")]
+    [Attributes.ClassAttributes.Description("This command allows you to Select AutomationElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select AutomationElement.")]
     public class UIAutomationSelectElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify AutomationElement Variable")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
+        [SampleUsage("**{{{vElement}}}**")]
+        [Remarks("Supported Element is CheckBox, RadioButton, List Items, etc.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TargetElement { get; set; }
 
@@ -76,7 +78,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "']";
+            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "']";
         }
 
     }
