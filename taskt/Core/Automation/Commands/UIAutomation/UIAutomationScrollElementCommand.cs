@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**Horizonal** or **Vertical**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("ScrollBar", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("ScrollBar Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_ScrollBarType { get; set; }
 
         [XmlAttribute]
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**Scroll Small Down or Right** or **Scroll Large Down or Right** or **Scroll Small Up or Left** or **Scroll Large Up or Left**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("Direction and Amount", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Scroll Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_DirectionAndAmount{ get; set; }
 
         public UIAutomationScrollElementCommand()
