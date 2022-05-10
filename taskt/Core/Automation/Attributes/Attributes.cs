@@ -371,7 +371,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             JSON,
             List,
             Boolean,
-            DateTime
+            DateTime,
+            AutomationElement
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]

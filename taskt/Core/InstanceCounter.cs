@@ -78,6 +78,11 @@ namespace taskt.Core
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
         };
+        private Dictionary<string, Dictionary<string, int>> automationElementInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
 
         public InstanceCounter(ApplicationSettings settings)
         {
@@ -157,6 +162,9 @@ namespace taskt.Core
             Dictionary<string, Dictionary<string, int>> targetDic;
             switch (instanceType)
             {
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.AutomationElement:
+                    targetDic = automationElementInstance;
+                    break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean:
                     targetDic = booleanInstance;
                     break;
@@ -361,6 +369,9 @@ namespace taskt.Core
         {
             switch (instanceType.ToLower())
             {
+                case "automationelement":
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.AutomationElement;
+                    break;
                 case "boolean":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean;
                     break;
