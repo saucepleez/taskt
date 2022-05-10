@@ -22,10 +22,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Please specify AutomationElement Variable")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
+        [SampleUsage("**{{{vElement}}}**")]
+        [Remarks("Supported target Element is ListBox, DataGridView, etc.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TargetElement { get; set; }
 
@@ -50,14 +52,14 @@ namespace taskt.Core.Automation.Commands
         public string v_Column { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Variable to store Text Value")]
+        [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
         [InputSpecification("")]
-        [SampleUsage("**vText** or **{{{vText}}}**")]
+        [SampleUsage("**vElement** or **{{{vElement}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AutomationElementVariable { get; set; }
 
         public UIAutomationGetElementFromTableElementCommand()
@@ -92,7 +94,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', Store: '" + v_AutomationElementVariable + "']";
+            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Row: " + v_Row + ", Column: " + v_Column + ", Store: '" + v_AutomationElementVariable + "']";
         }
 
     }

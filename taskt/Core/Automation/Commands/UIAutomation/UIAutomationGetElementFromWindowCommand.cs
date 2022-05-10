@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Optional - Window name search method (Default is Contains)")]
+        [PropertyDescription("Window name search method")]
         [InputSpecification("")]
         [PropertyUISelectionOption("Contains")]
         [PropertyUISelectionOption("Starts with")]
@@ -50,6 +50,8 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AutomationElementVariable { get; set; }
