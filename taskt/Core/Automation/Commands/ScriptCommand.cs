@@ -511,11 +511,14 @@ namespace taskt.Core.Automation.Commands
 
         public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
         {
-            this.IsValid = true;
-            this.IsWarning = false;
+            //this.IsValid = true;
+            //this.IsWarning = false;
             this.validationResult = "";
 
             var props = this.GetType().GetProperties();
+
+            bool v = true;
+            bool w = true;
             foreach(var prop in props)
             {
                 if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
@@ -525,11 +528,14 @@ namespace taskt.Core.Automation.Commands
                     {
                         object va = prop.GetValue(this);
                         string propertyValue = (va == null) ? "" : va.ToString();
-                        this.IsValid = checkValidateByFlags(vr.parameterName, propertyValue, vr.errorRule, prop.Name, prop);
-                        this.IsWarning = !checkValidateByFlags(vr.parameterName, propertyValue, vr.warningRule, prop.Name, prop);
+                        v &= checkValidateByFlags(vr.parameterName, propertyValue, vr.errorRule, prop.Name, prop);
+                        w &= !checkValidateByFlags(vr.parameterName, propertyValue, vr.warningRule, prop.Name, prop);
                     }
                 }
             }
+
+            this.IsValid = v;
+            this.IsWarning = w;
 
             return this.IsValid;
         }
