@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
     [Attributes.ClassAttributes.Description("This command allows you to get Child Element from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child Element from AutomationElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child Element from AutomationElement. Search only for Child Elements.")]
     public class UIAutomationGetChildElementCommand : ScriptCommand
     {
         [XmlAttribute]
