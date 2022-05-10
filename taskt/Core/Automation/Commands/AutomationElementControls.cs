@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             table.Rows.Add(false, "ProcessID", "");
         }
 
-        public static void ParseInspectToolResult(string result, DataTable table, System.Windows.Forms.ComboBox windowNames = null)
+        private static void parseInspectToolResult(string result, DataTable table, System.Windows.Forms.ComboBox windowNames = null)
         {
             string[] results = result.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
@@ -100,11 +100,11 @@ namespace taskt.Core.Automation.Commands
                             case "Name":
                             case "NativeWindowHandle":
                             case "ProcessID":
-                                DataTableControls.SetParameterValue(table, value, name, "Parameter Name", "Parameter Value");
+                                DataTableControls.SetParameterValue(table, value, name, "ParameterName", "ParameterValue");
                                 break;
 
                             case "ControlType":
-                                DataTableControls.SetParameterValue(table, parseControlTypeInspectToolResult(value), name, "Parameter Name", "Parameter Value");
+                                DataTableControls.SetParameterValue(table, parseControlTypeInspectToolResult(value), name, "ParameterName", "ParameterValue");
                                 break;
 
                             case "Ancestors":
@@ -129,6 +129,17 @@ namespace taskt.Core.Automation.Commands
             {
                 var f = new UI.Forms.Supplemental.frmDialog("No Inspect Tool Results", "Fail Parse", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0);
                 f.ShowDialog();
+            }
+        }
+
+        public static void InspectToolParserClicked(DataTable table, System.Windows.Forms.ComboBox windowNames = null)
+        {
+            using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
+            {
+                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    parseInspectToolResult(frm.inspectResult, table, windowNames);
+                }
             }
         }
 
