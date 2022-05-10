@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Index { get; set; }
 
         [XmlAttribute]
