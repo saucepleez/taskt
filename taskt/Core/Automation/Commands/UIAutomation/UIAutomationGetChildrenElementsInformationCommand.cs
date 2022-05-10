@@ -31,6 +31,22 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_RootElement { get; set; }
 
+        [XmlElement]
+        [PropertyDescription("Set Search Parameters")]
+        [PropertyCustomUIHelper("Inspect Tool Parser", "lnkInspectToolParser_Click")]
+        [PropertyCustomUIHelper("Add Empty Parameters", "lnkAddEmptyParameter_Click")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(false, false, true)]
+        [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
+        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        public DataTable v_SearchParameters { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please specify a Variable to store Result")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -57,7 +73,7 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_RootElement.GetAutomationElementVariable(engine);
 
-            var elems = AutomationElementControls.GetChildrenElements(targetElement, new DataTable(), engine);
+            var elems = AutomationElementControls.GetChildrenElements(targetElement, v_SearchParameters, engine);
 
             string result = "";
 
@@ -68,6 +84,16 @@ namespace taskt.Core.Automation.Commands
                 result += "Index: " + i + ", Name: " + elem.Current.Name + ", LocalizedControlType: " + elem.Current.LocalizedControlType + ", ControlType: " + AutomationElementControls.GetControlTypeText(elem.Current.ControlType) + "\n";
             }
             result.Trim().StoreInUserVariable(engine, v_ResultVariable);
+        }
+
+        private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
+        {
+            AutomationElementControls.CreateEmptyParamters(v_SearchParameters);
+        }
+
+        private void lnkInspectToolParser_Click(object sender, EventArgs e)
+        {
+            AutomationElementControls.InspectToolParserClicked(v_SearchParameters);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
