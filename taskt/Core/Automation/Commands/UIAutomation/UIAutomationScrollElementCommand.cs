@@ -22,8 +22,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Please specify AutomationElement Variable")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
+        [SampleUsage("**{{{vElement}}}**")]
+        [Remarks("Supported Element must have a ScrollBar.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -41,13 +41,13 @@ namespace taskt.Core.Automation.Commands
         public string v_ScrollBarType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Scroll Direction and Amount")]
+        [PropertyDescription("Please specify Scroll Method")]
         [InputSpecification("")]
-        [PropertyUISelectionOption("Small Increment")]
-        [PropertyUISelectionOption("Large Increment")]
-        [PropertyUISelectionOption("Small Decrement")]
-        [PropertyUISelectionOption("Large Decrement")]
-        [SampleUsage("**Small Increment** or **Large Increment** or **Small Decrement** or **Large Decrement**")]
+        [PropertyUISelectionOption("Scroll Small Down or Right")]
+        [PropertyUISelectionOption("Scroll Large Down or Right")]
+        [PropertyUISelectionOption("Scroll Small Up or Left")]
+        [PropertyUISelectionOption("Scroll Large Up or Left")]
+        [SampleUsage("**Scroll Small Down or Right** or **Scroll Large Down or Right** or **Scroll Small Up or Left** or **Scroll Large Up or Left**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Direction and Amount", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -72,16 +72,16 @@ namespace taskt.Core.Automation.Commands
             ScrollAmount amount = ScrollAmount.NoAmount;
             switch (dirAndAmo)
             {
-                case "small increment":
+                case "scroll small down or right":
                     amount = ScrollAmount.SmallIncrement;
                     break;
-                case "large increment":
+                case "scroll large down or right":
                     amount = ScrollAmount.LargeIncrement;
                     break;
-                case "small decrement":
+                case "scroll small up or left":
                     amount = ScrollAmount.SmallDecrement;
                     break;
-                case "large decrement":
+                case "scroll large up or left":
                     amount = ScrollAmount.LargeDecrement;
                     break;
             }
@@ -143,7 +143,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "']";
+            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', ScrollBar Type: " + v_ScrollBarType + ", Scroll Method: " + v_DirectionAndAmount + "]";
         }
 
     }
