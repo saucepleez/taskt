@@ -271,10 +271,11 @@ namespace taskt.Core.Script
             convertTo3_5_0_52(doc);
             convertTo3_5_0_57(doc);
             convertTo3_5_0_67(doc);
-            convertTo3_5_0_69(doc);
+            fixUIAutomationCommandEnableParameterValue(doc);
             convertTo3_5_0_73(doc);
             convertTo3_5_0_74(doc);
             convertTo3_5_0_78(doc);
+            fixUIAutomationGroupEnableParameterValue(doc);
 
             return doc;
         }
@@ -552,7 +553,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_0_69(XDocument doc)
+        private static XDocument fixUIAutomationCommandEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
             IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
@@ -755,6 +756,36 @@ namespace taskt.Core.Script
                 }
             }
 
+            return doc;
+        }
+        private static XDocument fixUIAutomationGroupEnableParameterValue(XDocument doc)
+        {
+            // UI Automation Boolean Fix
+            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationGetChidrenElementsInformationCommand") ||
+                            ((string)el.Attribute("CommandName") == "UIAutomationGetChildElementCommand") ||
+                            ((string)el.Attribute("CommandName") == "UIAutomationGetElementFromElementCommand")
+                );
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach (var cmd in getList)
+            {
+                XElement tableParams = cmd.Element("v_SearchParameters").Element(ns + "diffgram").Element("DocumentElement");
+                var elems = tableParams.Elements();
+                foreach (XElement elem in elems)
+                {
+                    XElement elemEnabled = elem.Element("Enabled");
+                    switch (elemEnabled.Value.ToLower())
+                    {
+                        case "true":
+                        case "false":
+                            break;
+
+                        default:
+                            elemEnabled.SetValue("False");
+                            break;
+                    }
+                }
+            }
             return doc;
         }
     }
