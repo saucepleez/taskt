@@ -496,6 +496,7 @@ namespace taskt.UI
             {"WriteDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
 
             // DateTime
+            {"CalculateDateTimeCommand", "taskt.Properties.Resources.command_function"},
             {"ConvertDateTimeToExcelSerialCommand", "taskt.Properties.Resources.command_function"},
             {"CreateDateTimeCommand", "taskt.Properties.Resources.command_function"},
             {"CreateDateTimeFromExcelSerialFromTextCommand", "taskt.Properties.Resources.command_function"},

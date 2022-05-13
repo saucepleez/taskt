@@ -329,6 +329,7 @@
     <Compile Include="Core\Automation\Commands\Data\ExtractionTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\ConvertDateTimeToExcelSerialCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeFromExcelSerialCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CalculateDateTimeCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeFromTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeCommand.cs" />

@@ -79,6 +79,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(LoadDataTableCommand))]
 
     // DateTime
+    [XmlInclude(typeof(CalculateDateTimeCommand))]
     [XmlInclude(typeof(ConvertDateTimeToExcelSerialCommand))]
     [XmlInclude(typeof(CreateDateTimeCommand))]
     [XmlInclude(typeof(CreateDateTimeFromExcelSerialCommand))]
