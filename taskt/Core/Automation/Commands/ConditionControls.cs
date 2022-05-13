@@ -175,8 +175,8 @@ namespace taskt.Core.Automation.Commands
 
             string operand = param["Operand"].ConvertToUserVariable(engine);
 
-            DateTime dt1 = param["Value1"].ConvertToUserVariableAsDate("Value1", engine);
-            DateTime dt2 = param["Value2"].ConvertToUserVariableAsDate("Value2", engine);
+            DateTime dt1 = param["Value1"].ConvertToUserVariableAsDateTime("Value1", engine);
+            DateTime dt2 = param["Value2"].ConvertToUserVariableAsDateTime("Value2", engine);
 
             bool ifResult;
             switch (operand.ToLower())

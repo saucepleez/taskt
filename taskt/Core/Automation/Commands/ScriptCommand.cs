@@ -78,6 +78,13 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WriteDataRowValueCommand))]
     [XmlInclude(typeof(LoadDataTableCommand))]
 
+    // DateTime
+    [XmlInclude(typeof(ConvertDateTimeToExcelSerialCommand))]
+    [XmlInclude(typeof(CreateDateTimeCommand))]
+    [XmlInclude(typeof(CreateDateTimeFromExcelSerialCommand))]
+    [XmlInclude(typeof(CreateDateTimeFromTextCommand))]
+    [XmlInclude(typeof(FormatDateTimeCommand))]
+
     // Dictionary
     [XmlInclude(typeof(AddDictionaryCommand))]
     [XmlInclude(typeof(CheckDictionaryKeyExistsCommand))]

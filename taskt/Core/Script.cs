@@ -973,6 +973,11 @@ namespace taskt.Core.Script
                 System.Windows.Automation.AutomationElement elem = (System.Windows.Automation.AutomationElement)VariableValue;
                 return GetDisplayValue(elem, requiredProperty);
             }
+            else if (VariableValue is DateTime)
+            {
+                DateTime dt = (DateTime)VariableValue;
+                return GetDisplayValue(dt, requiredProperty);
+            }
             else
             {
                 return "UNKNOWN";
@@ -1108,6 +1113,18 @@ namespace taskt.Core.Script
                     return "AUTOMATIONELEMENT";
                 default:
                     return "Name: " + element.Current.Name + ", LocalizedControlType: " + element.Current.LocalizedControlType + ", ControlType: " + taskt.Core.Automation.Commands.AutomationElementControls.GetControlTypeText(element.Current.ControlType);
+            }
+        }
+        private string GetDisplayValue(DateTime dt, string requiredProperty)
+        {
+            switch (requiredProperty)
+            {
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "DATETIME";
+                default:
+                    return dt.ToString();
             }
         }
     }

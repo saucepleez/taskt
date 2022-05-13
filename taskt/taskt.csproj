@@ -327,6 +327,11 @@
     <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\SubstringTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\ExtractionTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\ConvertDateTimeToExcelSerialCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeFromExcelSerialCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeFromTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CopyDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToListCommand.cs" />

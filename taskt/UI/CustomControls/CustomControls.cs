@@ -495,6 +495,13 @@ namespace taskt.UI
             {"SetDataTableValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"WriteDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
 
+            // DateTime
+            {"ConvertDateTimeToExcelSerialCommand", "taskt.Properties.Resources.command_function"},
+            {"CreateDateTimeCommand", "taskt.Properties.Resources.command_function"},
+            {"CreateDateTimeFromExcelSerialFromTextCommand", "taskt.Properties.Resources.command_function"},
+            {"CreateDateTimeFromTextCommand", "taskt.Properties.Resources.command_function"},
+            {"FormatDateTimeCommand", "taskt.Properties.Resources.command_function"},
+
             // Dictionary
             {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"CheckDictionaryKeyExistsCommand", "taskt.Properties.Resources.command_dictionary"},
