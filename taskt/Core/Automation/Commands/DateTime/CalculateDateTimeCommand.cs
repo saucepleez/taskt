@@ -126,7 +126,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [DateTime: '" + v_DateTime + "', Method: '" + v_CalculationMethod + "', Store: '" + v_Result + "', Value: '', Store: '" + v_Result + "']";
+            return base.GetDisplayValue() + " [DateTime: '" + v_DateTime + "', Method: '" + v_CalculationMethod + "', Value: '" + v_Value + "', Store: '" + v_Result + "']";
         }
 
         public override List<Control> Render(UI.Forms.frmCommandEditor editor)
