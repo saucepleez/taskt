@@ -22,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**{{{vDateTime}}}**")]
         [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
