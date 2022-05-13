@@ -56,6 +56,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Total Hours")]
         [PropertyUISelectionOption("Total Minutes")]
         [PropertyUISelectionOption("Total Seconds")]
+        [PropertyUISelectionOption("Ticks")]
+        [PropertyUISelectionOption("DateTime")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Format { get; set; }
@@ -118,6 +120,21 @@ namespace taskt.Core.Automation.Commands
                 case "total seconds":
                     result = diff.TotalSeconds.ToString();
                     break;
+                case "ticks":
+                    result = diff.Ticks.ToString();
+                    break;
+                case "datetime":
+                    // return here
+                    DateTime myDT = new DateTime();
+                    if (diff.Ticks >= 0)
+                    {
+                        myDT.Add(diff).StoreInUserVariable(engine, v_Result);
+                    }
+                    else
+                    {
+                        myDT.Subtract(diff).StoreInUserVariable(engine, v_Result);
+                    }
+                    return;
             }
             result.StoreInUserVariable(engine, v_Result);
         }
