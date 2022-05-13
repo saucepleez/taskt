@@ -501,6 +501,7 @@ namespace taskt.UI
             {"CreateDateTimeCommand", "taskt.Properties.Resources.command_function"},
             {"CreateDateTimeFromExcelSerialFromTextCommand", "taskt.Properties.Resources.command_function"},
             {"CreateDateTimeFromTextCommand", "taskt.Properties.Resources.command_function"},
+            {"GetDateTimeDifferencesCommand", "taskt.Properties.Resources.command_function"},
             {"FormatDateTimeCommand", "taskt.Properties.Resources.command_function"},
 
             // Dictionary

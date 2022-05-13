@@ -84,6 +84,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(CreateDateTimeCommand))]
     [XmlInclude(typeof(CreateDateTimeFromExcelSerialCommand))]
     [XmlInclude(typeof(CreateDateTimeFromTextCommand))]
+    [XmlInclude(typeof(GetDateTimeDifferencesCommand))]
     [XmlInclude(typeof(FormatDateTimeCommand))]
 
     // Dictionary
