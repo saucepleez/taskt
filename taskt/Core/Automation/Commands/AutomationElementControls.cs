@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Xml.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -826,6 +827,68 @@ namespace taskt.Core.Automation.Commands
                     throw new Exception("This element does not have Selection Items");
                 }
             }
+        }
+
+        public static XElement GetXmlFromElement(AutomationElement targetElement, out Dictionary<int, AutomationElement> elemsDic)
+        {
+            XElement root = GetXmlElement(targetElement);
+
+            elemsDic = new Dictionary<int, AutomationElement>();
+            elemsDic.Add(targetElement.GetHashCode(), targetElement);
+
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            GetChildNodeFromElement(root, targetElement, elemsDic, walker);
+
+            return root;
+        }
+
+        private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<int, AutomationElement> elemsDic, TreeWalker walker)
+        {
+            var node = walker.GetFirstChild(rootElement);
+            while (node != null)
+            {
+                var childNode = GetXmlElement(node);
+                rootNode.Add(childNode);
+                elemsDic.Add(childNode.GetHashCode(), node);
+
+                if (walker.GetFirstChild(node) != null)
+                {
+                    GetChildNodeFromElement(childNode, node, elemsDic, walker);
+                }
+
+                node = walker.GetNextSibling(node);
+            }
+
+            return rootNode;
+        }
+
+        private static XElement GetXmlElement(AutomationElement targetElement)
+        {
+            XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
+            node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
+            node.SetAttributeValue("AccessKey", targetElement.Current.AccessKey);
+            node.SetAttributeValue("AutomationId", targetElement.Current.AutomationId);
+            node.SetAttributeValue("ClassName", targetElement.Current.ClassName);
+            node.SetAttributeValue("FrameworkId", targetElement.Current.FrameworkId);
+            node.SetAttributeValue("HasKeyboardFocus", targetElement.Current.HasKeyboardFocus);
+            node.SetAttributeValue("HelpText", targetElement.Current.HelpText);
+            node.SetAttributeValue("IsContentElement", targetElement.Current.IsContentElement);
+            node.SetAttributeValue("IsControlElement", targetElement.Current.IsControlElement);
+            node.SetAttributeValue("IsEnabled", targetElement.Current.IsEnabled);
+            node.SetAttributeValue("IsKeyboardFocusable", targetElement.Current.IsKeyboardFocusable);
+            node.SetAttributeValue("IsOffscreen", targetElement.Current.IsOffscreen);
+            node.SetAttributeValue("IsPassword", targetElement.Current.IsPassword);
+            node.SetAttributeValue("IsRequiredForForm", targetElement.Current.IsRequiredForForm);
+            node.SetAttributeValue("ItemStatus", targetElement.Current.ItemStatus);
+            node.SetAttributeValue("ItemType", targetElement.Current.ItemType);
+            node.SetAttributeValue("LocalizedControlType", targetElement.Current.LocalizedControlType);
+            node.SetAttributeValue("Name", targetElement.Current.Name);
+            node.SetAttributeValue("NativeWindowHandle", targetElement.Current.NativeWindowHandle);
+            node.SetAttributeValue("ProcessID", targetElement.Current.ProcessId);
+            node.SetAttributeValue("Hash", targetElement.GetHashCode());
+
+            return node;
         }
     }
 }
