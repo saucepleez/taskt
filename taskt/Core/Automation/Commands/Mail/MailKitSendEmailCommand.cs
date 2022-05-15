@@ -270,10 +270,10 @@ namespace taskt.Core.Automation.Commands
                 }
                 try
                 {
-                    client.Connect(smtp, port, option);
-                    client.Authenticate(user, pass);
-                    client.Send(message);
-                    client.Disconnect(true);
+                    await client.ConnectAsync(smtp, port, option);
+                    await client.AuthenticateAsync(user, pass);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
                 }
                 catch(Exception ex)
                 {
