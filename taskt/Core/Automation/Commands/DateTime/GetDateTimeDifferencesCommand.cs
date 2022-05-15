@@ -48,14 +48,14 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
-        [PropertyUISelectionOption("Days")]
-        [PropertyUISelectionOption("Hours")]
-        [PropertyUISelectionOption("Minutes")]
-        [PropertyUISelectionOption("Seconds")]
         [PropertyUISelectionOption("Total Days")]
         [PropertyUISelectionOption("Total Hours")]
         [PropertyUISelectionOption("Total Minutes")]
         [PropertyUISelectionOption("Total Seconds")]
+        [PropertyUISelectionOption("Days")]
+        [PropertyUISelectionOption("Hours")]
+        [PropertyUISelectionOption("Minutes")]
+        [PropertyUISelectionOption("Seconds")]
         [PropertyUISelectionOption("Ticks")]
         [PropertyUISelectionOption("DateTime")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
@@ -125,14 +125,13 @@ namespace taskt.Core.Automation.Commands
                     break;
                 case "datetime":
                     // return here
-                    DateTime myDT = new DateTime();
                     if (diff.Ticks >= 0)
                     {
-                        myDT.Add(diff).StoreInUserVariable(engine, v_Result);
+                        new DateTime(0).Add(diff).StoreInUserVariable(engine, v_Result);
                     }
                     else
                     {
-                        myDT.Subtract(diff).StoreInUserVariable(engine, v_Result);
+                        new DateTime(0).Subtract(diff).StoreInUserVariable(engine, v_Result);
                     }
                     return;
             }
