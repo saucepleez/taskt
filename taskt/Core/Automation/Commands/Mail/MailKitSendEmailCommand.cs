@@ -289,7 +289,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
-
         }
 
         public override string GetDisplayValue()
