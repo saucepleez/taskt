@@ -260,6 +260,9 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(BeginNumberOfTimesLoopCommand))]
     [XmlInclude(typeof(NextLoopCommand))]
 
+    // Mail
+    [XmlInclude(typeof(MailKitSendEmailCommand))]
+
     // Misc
     [XmlInclude(typeof(ClipboardClearTextCommand))]
     [XmlInclude(typeof(CommentCommand))]

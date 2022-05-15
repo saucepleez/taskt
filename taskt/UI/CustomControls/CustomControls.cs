@@ -677,6 +677,9 @@ namespace taskt.UI
             {"BeginNumberOfTimesLoopCommand", "taskt.Properties.Resources.command_startloop"},
             {"NextLoopCommand", "taskt.Properties.Resources.command_nextloop"},
 
+            // Mail
+            {"MailKitSendEmail", "taskt.Properties.Resources.command_comment"},
+
             // Misc
             {"CommentCommand", "taskt.Properties.Resources.command_comment"},
             {"EncryptionCommand", "taskt.Properties.Resources.command_input"},
