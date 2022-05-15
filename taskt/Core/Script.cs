@@ -276,6 +276,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_74(doc);
             convertTo3_5_0_78(doc);
             fixUIAutomationGroupEnableParameterValue(doc);
+            convertTo3_5_0_83(doc);
 
             return doc;
         }
@@ -786,6 +787,22 @@ namespace taskt.Core.Script
                     }
                 }
             }
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_83(XDocument doc)
+        {
+            // SMTPSendEmail -> MailKitSendEmail
+            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "SMTPSendEmailCommand"));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in getList)
+            {
+                cmd.SetAttributeValue("CommandName", "MailKitSendEmailCommand");
+                cmd.SetAttributeValue(ns + "type", "MailKitSendEmailCommand");
+                cmd.SetAttributeValue("SelectionName", "Send Email");
+            }
+
             return doc;
         }
     }
