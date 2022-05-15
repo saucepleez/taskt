@@ -292,6 +292,10 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
+    <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\FormatColorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\CreateColorFormHexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\CreateColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\ConditionControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByListCommand.cs" />

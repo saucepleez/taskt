@@ -978,6 +978,11 @@ namespace taskt.Core.Script
                 DateTime dt = (DateTime)VariableValue;
                 return GetDisplayValue(dt, requiredProperty);
             }
+            else if (VariableValue is System.Drawing.Color)
+            {
+                System.Drawing.Color co = (System.Drawing.Color)VariableValue;
+                return GetDisplayValue(co, requiredProperty);
+            }
             else
             {
                 return "UNKNOWN";
@@ -1125,6 +1130,39 @@ namespace taskt.Core.Script
                     return "DATETIME";
                 default:
                     return dt.ToString();
+            }
+        }
+
+        private string GetDisplayValue(System.Drawing.Color co, string requiredProperty)
+        {
+            switch (requiredProperty)
+            {
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "COLOR";
+                case "red":
+                case "Red":
+                case "RED":
+                    return co.R.ToString();
+                case "green":
+                case "Green":
+                case "GREEN":
+                    return co.G.ToString();
+                case "blue":
+                case "Blue":
+                case "BLUE":
+                    return co.B.ToString();
+                case "alpha":
+                case "Alpha":
+                case "ALPHA":
+                    return co.A.ToString();
+                case "hex":
+                case "Hex":
+                case "HEX":
+                    return String.Format("{0:X}{1:X}{2:X}", co.R, co.G, co.B);
+                default:
+                    return co.ToString();
             }
         }
     }

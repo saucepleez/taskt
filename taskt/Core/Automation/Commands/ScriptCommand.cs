@@ -15,6 +15,12 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(HTTPRequestCommand))]
     [XmlInclude(typeof(HTTPQueryResultCommand))]
 
+    // Color
+    [XmlInclude(typeof(CreateColorCommand))]
+    [XmlInclude(typeof(CreateColorFromExcelColorCommand))]
+    [XmlInclude(typeof(CreateColorFromHexCommand))]
+    [XmlInclude(typeof(FormatColorCommand))]
+
     // Data
     [XmlInclude(typeof(CheckTextCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]

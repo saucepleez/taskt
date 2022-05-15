@@ -83,6 +83,11 @@ namespace taskt.Core
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
         };
+        private Dictionary<string, Dictionary<string, int>> colorInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
 
         public InstanceCounter(ApplicationSettings settings)
         {
@@ -167,6 +172,9 @@ namespace taskt.Core
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean:
                     targetDic = booleanInstance;
+                    break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Color:
+                    targetDic = colorInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
                     targetDic = databaseInstance;
@@ -374,6 +382,9 @@ namespace taskt.Core
                     break;
                 case "boolean":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean;
+                    break;
+                case "color":
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Color;
                     break;
                 case "database":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;

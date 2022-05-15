@@ -372,7 +372,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             List,
             Boolean,
             DateTime,
-            AutomationElement
+            AutomationElement,
+            Color
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]

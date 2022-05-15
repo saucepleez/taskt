@@ -430,6 +430,12 @@ namespace taskt.UI
             {"HTTPRequestCommand", "taskt.Properties.Resources.command_web"},
             {"HTTPQueryResultCommand", "taskt.Properties.Resources.command_search"},
 
+            // Color
+            {"CreateColorCommand", "taskt.Properties.Resources.command_function"},
+            {"CreateColorFromExcelColorCommand", "taskt.Properties.Resources.command_function"},
+            {"CreateColorFromHexCommand", "taskt.Properties.Resources.command_function"},
+            {"FormatColorCommand", "taskt.Properties.Resources.command_function"},
+
             // Data
             {"CheckTextCommand", "taskt.Properties.Resources.command_function"},
             {"DateCalculationCommand", "taskt.Properties.Resources.command_function"},
