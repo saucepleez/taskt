@@ -64,11 +64,11 @@ namespace taskt.Core.Automation.Commands
             dynamic listToLoop;
             if (complexVariable.VariableValue is List<string>)
             {
-             listToLoop = (List<string>)complexVariable.VariableValue;
+                listToLoop = (List<string>)complexVariable.VariableValue;
             }
             else if (complexVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
             {
-              listToLoop = (List<OpenQA.Selenium.IWebElement>)complexVariable.VariableValue;
+                listToLoop = (List<OpenQA.Selenium.IWebElement>)complexVariable.VariableValue;
             }
             else if (complexVariable.VariableValue is DataTable)
             {
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
                 //automatically handle if user has given a json array
                 Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(complexVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
 
-               var itemList = new List<string>();
+                var itemList = new List<string>();
                 foreach (var item in jsonArray)
                 {
                     var value = (Newtonsoft.Json.Linq.JValue)item;
