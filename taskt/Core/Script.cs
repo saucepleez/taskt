@@ -794,7 +794,7 @@ namespace taskt.Core.Script
         {
             // SMTPSendEmail -> MailKitSendEmail
             IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "SMTPSendEmailCommand"));
+                .Where(el => ((string)el.Attribute("CommandName") == "SMTPCommand"));
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
             foreach (var cmd in getList)
             {
