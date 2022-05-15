@@ -6,7 +6,6 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using Microsoft.Office.Interop.Outlook;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -74,9 +73,9 @@ namespace taskt.Core.Automation.Commands
             {
                 listToLoop = ((DataTable)complexVariable.VariableValue).Rows;
             }
-            else if (complexVariable.VariableValue is List<MailItem>)
+            else if (complexVariable.VariableValue is List<Microsoft.Office.Interop.Outlook.MailItem>)
             {
-                listToLoop = (List<MailItem>)complexVariable.VariableValue;
+                listToLoop = (List<Microsoft.Office.Interop.Outlook.MailItem>)complexVariable.VariableValue;
             }
             else if (complexVariable.VariableValue is Dictionary<string, string>)
             {
