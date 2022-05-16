@@ -1238,7 +1238,7 @@ namespace taskt.Core.Script
                 case "type":
                 case "Type":
                 case "TYPE":
-                    return "MAILKITLIST";
+                    return "MAILKITMAILLIST";
                 default:
                     return "Index: " + CurrentPosition + ", " + GetDisplayValue(mails[CurrentPosition], "");
             }
