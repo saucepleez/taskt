@@ -60,6 +60,7 @@ namespace taskt.Core.Automation.Commands
             int r = color & 0xFF;
             color >>= 8;
             int g = color & 0xFF;
+            color >>= 8;
             int b = color;
 
             Color co = Color.FromArgb(255, r, g, b);
