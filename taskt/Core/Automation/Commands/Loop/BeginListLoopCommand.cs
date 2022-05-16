@@ -81,6 +81,10 @@ namespace taskt.Core.Automation.Commands
             {
                 listToLoop = ((Dictionary<string, string>)complexVariable.VariableValue).Values.ToList();
             }
+            else if (complexVariable.VariableValue is List<MimeKit.MimeMessage>)
+            {
+                listToLoop = (List<MimeKit.MimeMessage>)complexVariable.VariableValue;
+            }
             else if ((complexVariable.VariableValue.ToString().StartsWith("[")) && (complexVariable.VariableValue.ToString().EndsWith("]")) && (complexVariable.VariableValue.ToString().Contains(",")))
             {
                 //automatically handle if user has given a json array
