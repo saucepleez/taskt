@@ -76,6 +76,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("STARTTLS When Available")]
         public string v_POPSecureOption { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please specify Variable Name to Store Mail List")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**vMails** or **{{{vMails}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        public string v_MailListName { get; set; }
+
         public MailKitRecieveEmailsUsingPOPCommand()
         {
             this.CommandName = "MailKitRecieveEmailsUsingPOPCommand";
@@ -131,6 +142,10 @@ namespace taskt.Core.Automation.Commands
                     }
 
                     await client.DisconnectAsync(true);
+
+                    "".StoreInUserVariable(engine, v_MailListName);
+                    var ml = v_MailListName.GetRawVariable(engine);
+                    ml.VariableValue = messages;
                 }
                 catch(Exception ex)
                 {
