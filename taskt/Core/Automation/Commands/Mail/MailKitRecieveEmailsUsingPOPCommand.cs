@@ -17,40 +17,39 @@ namespace taskt.Core.Automation.Commands
     public class MailKitRecieveEmailsUsingPOPCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Host Name")]
+        [PropertyDescription("Please specify POP Host Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Define the host/service name that the script should use")]
-        [SampleUsage("**smtp.gmail.com** or **{{{vHost}}}**")]
+        [SampleUsage("**pop.gmail.com** or **{{{vHost}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("SMTP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("POP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
         public string v_POPHost { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Port")]
+        [PropertyDescription("Please specify POP Port")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the port number that should be used when contacting the SMTP service")]
-        [SampleUsage("**25** or **587** or **{{{vPort}}}**")]
+        [InputSpecification("Define the port number that should be used when contacting the POP service")]
+        [SampleUsage("**110** or **995** or **{{{vPort}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("SMTP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("POP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyTextBoxSetting(1, false)]
         public string v_POPPort { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Username")]
+        [PropertyDescription("Please specify POP Username")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the username to use when contacting the SMTP service")]
+        [InputSpecification("Define the username to use when contacting the POP service")]
         [SampleUsage("**username** or **{{{vUserName}}}**")]
         [Remarks("")]
-        [PropertyIsOptional(true, "From Email")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         public string v_POPUserName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Password")]
+        [PropertyDescription("Please specify POP Password")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Define the password to use when contacting the SMTP service")]
         [SampleUsage("**password** or **{{{vPassword}}}**")]
@@ -143,9 +142,7 @@ namespace taskt.Core.Automation.Commands
 
                     await client.DisconnectAsync(true);
 
-                    "".StoreInUserVariable(engine, v_MailListName);
-                    var ml = v_MailListName.GetRawVariable(engine);
-                    ml.VariableValue = messages;
+                    messages.StoreInUserVariable(engine, v_MailListName);
                 }
                 catch(Exception ex)
                 {
