@@ -995,6 +995,16 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value, sender, false);
         }
 
+        public static void StoreInUserVariable(this List<MimeKit.MimeMessage> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
+        public static void StoreInUserVariable(this MimeKit.MimeMessage value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
@@ -1129,7 +1139,33 @@ namespace taskt.Core
             }
         }
 
-        
+        public static List<MimeKit.MimeMessage> GetMailKitMailListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            Script.ScriptVariable v = variableName.GetRawVariable(engine);
+            if (v.VariableValue is System.Windows.Automation.AutomationElement)
+            {
+                return (List<MimeKit.MimeMessage>)v.VariableValue;
+            }
+            else
+            {
+                throw new Exception("Variable " + variableName + " is not MailKit MailList");
+            }
+        }
+
+        public static MimeKit.MimeMessage GetMailKitMailVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            Script.ScriptVariable v = variableName.GetRawVariable(engine);
+            if (v.VariableValue is System.Windows.Automation.AutomationElement)
+            {
+                return (MimeKit.MimeMessage)v.VariableValue;
+            }
+            else
+            {
+                throw new Exception("Variable " + variableName + " is not MailKit Mail");
+            }
+        }
+
+
         private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             //search for the variable
