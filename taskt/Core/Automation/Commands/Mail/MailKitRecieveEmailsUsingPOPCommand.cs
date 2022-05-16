@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Please specify POP Password")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the password to use when contacting the SMTP service")]
+        [InputSpecification("Define the password to use when contacting the POP service")]
         [SampleUsage("**password** or **{{{vPassword}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
