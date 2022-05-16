@@ -1182,6 +1182,67 @@ namespace taskt.Core.Script
                     return co.ToString();
             }
         }
+
+        private string GetDisplayValue(MimeKit.MimeMessage mail, string requiredProperty)
+        {
+            switch (requiredProperty)
+            {
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "MAILKITMAIL";
+                case "subject":
+                case "Subject":
+                case "SUBJECT":
+                    return mail.Subject;
+                case "body":
+                case "Body":
+                case "BODY":
+                    return mail.TextBody;
+                case "to":
+                case "To":
+                case "TO":
+                    return mail.To.ToString();
+                case "cc":
+                case "Cc":
+                case "CC":
+                    return mail.Cc.ToString();
+                case "bcc":
+                case "Bcc":
+                case "BCC":
+                    return mail.Bcc.ToString();
+                case "from":
+                case "From":
+                case "FROM":
+                    return mail.From.ToString();
+                case "id":
+                case "Id":
+                case "ID":
+                    return mail.MessageId;
+                default:
+                    return "Subject: " + mail.Subject + ", Message: " + mail.TextBody.Substring(0, 100);
+            }
+        }
+        private string GetDisplayValue(List<MimeKit.MimeMessage> mails, string requiredProperty)
+        {
+            switch (requiredProperty)
+            {
+                case "count":
+                case "Count":
+                case "COUNT":
+                    return mails.Count.ToString();
+                case "index":
+                case "Index":
+                case "INDEX":
+                    return CurrentPosition.ToString();
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "MAILKITLIST";
+                default:
+                    return "Index: " + CurrentPosition + ", " + GetDisplayValue(mails[CurrentPosition], "");
+            }
+        }
     }
 
     #endregion Script and Variables
