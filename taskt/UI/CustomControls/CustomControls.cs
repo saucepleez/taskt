@@ -678,6 +678,7 @@ namespace taskt.UI
             {"NextLoopCommand", "taskt.Properties.Resources.command_nextloop"},
 
             // Mail
+            {"MailKitGetEmailFromMailListCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitRecieveEmailsUsingPOPCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitSendEmailCommand", "taskt.Properties.Resources.command_comment"},
 
