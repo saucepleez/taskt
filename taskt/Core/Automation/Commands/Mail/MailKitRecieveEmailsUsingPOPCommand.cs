@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override async void RunCommand(object sender)
+        public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
@@ -126,21 +126,21 @@ namespace taskt.Core.Automation.Commands
                 }
                 try
                 {
-                    await client.ConnectAsync(pop, port, option);
-                    await client.AuthenticateAsync(user, pass);
+                    client.Connect(pop, port, option);
+                    client.Authenticate(user, pass);
 
                     List<MimeKit.MimeMessage> messages = new List<MimeKit.MimeMessage>();
 
                     for (int i = 0; i < client.Count; i++)
                     {
-                        var mes = client.GetMessageAsync(i);
-                        messages.Add(await mes);
+                        var mes = client.GetMessage(i);
+                        messages.Add(mes);
 
                         // DBG
-                        //Console.WriteLine((await mes).Subject);
+                        //Console.WriteLine((mes).Subject);
                     }
 
-                    await client.DisconnectAsync(true);
+                    client.Disconnect(true);
 
                     messages.StoreInUserVariable(engine, v_MailListName);
                 }
