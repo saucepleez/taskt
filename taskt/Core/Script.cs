@@ -1187,7 +1187,7 @@ namespace taskt.Core.Script
                 case "hex":
                 case "Hex":
                 case "HEX":
-                    return String.Format("{0:X}{1:X}{2:X}", co.R, co.G, co.B);
+                    return String.Format("{0:X2}{1:X2}{2:X2}", co.R, co.G, co.B);
                 default:
                     return co.ToString();
             }
