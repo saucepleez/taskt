@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override async void RunCommand(object sender)
+        public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
@@ -84,7 +84,18 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Index '" + v_Index + "' out of range");
             }
 
-            mails[index].StoreInUserVariable(engine, v_MailVariable);
+            var mes = mails[index];
+
+            // Clone MimeMessage
+            using (var ms = new System.IO.MemoryStream())
+            {
+                mes.WriteTo(ms);
+
+                ms.Position = 0;
+
+                var newMes = MimeKit.MimeMessage.Load(ms);
+                newMes.StoreInUserVariable(engine, v_MailVariable);
+            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
