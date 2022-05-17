@@ -1000,6 +1000,16 @@ namespace taskt.Core.Script
                 System.Drawing.Color co = (System.Drawing.Color)VariableValue;
                 return GetDisplayValue(co, requiredProperty);
             }
+            else if (VariableValue is MimeKit.MimeMessage)
+            {
+                MimeKit.MimeMessage mail = (MimeKit.MimeMessage)VariableValue;
+                return GetDisplayValue(mail, requiredProperty);
+            }
+            else if (VariableValue is List<MimeKit.MimeMessage>)
+            {
+                List<MimeKit.MimeMessage> list = (List<MimeKit.MimeMessage>)VariableValue;
+                return GetDisplayValue(list, requiredProperty);
+            }
             else
             {
                 return "UNKNOWN";
