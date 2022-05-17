@@ -162,7 +162,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override async void RunCommand(object sender)
+        public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
@@ -270,10 +270,10 @@ namespace taskt.Core.Automation.Commands
                 }
                 try
                 {
-                    await client.ConnectAsync(smtp, port, option);
-                    await client.AuthenticateAsync(user, pass);
-                    await client.SendAsync(message);
-                    await client.DisconnectAsync(true);
+                    client.Connect(smtp, port, option);
+                    client.Authenticate(user, pass);
+                    client.Send(message);
+                    client.Disconnect(true);
                 }
                 catch(Exception ex)
                 {
