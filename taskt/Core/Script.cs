@@ -1230,7 +1230,7 @@ namespace taskt.Core.Script
                 case "ID":
                     return mail.MessageId;
                 default:
-                    return "Subject: " + mail.Subject + ", Message: " + mail.TextBody.Substring(0, 100);
+                    return "Subject: " + mail.Subject + ", Message: " + ((mail.TextBody.Length > 100) ? mail.TextBody.Substring(0, 100) : mail.TextBody);
             }
         }
         private string GetDisplayValue(List<MimeKit.MimeMessage> mails, string requiredProperty)
