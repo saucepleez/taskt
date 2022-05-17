@@ -1142,7 +1142,7 @@ namespace taskt.Core
         public static List<MimeKit.MimeMessage> GetMailKitMailListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is System.Windows.Automation.AutomationElement)
+            if (v.VariableValue is List<MimeKit.MimeMessage>)
             {
                 return (List<MimeKit.MimeMessage>)v.VariableValue;
             }
