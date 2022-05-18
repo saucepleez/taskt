@@ -126,23 +126,26 @@ namespace taskt.Core.Automation.Commands
                 }
                 try
                 {
-                    client.Connect(pop, port, option);
-                    client.Authenticate(user, pass);
-
-                    List<MimeKit.MimeMessage> messages = new List<MimeKit.MimeMessage>();
-
-                    for (int i = 0; i < client.Count; i++)
+                    lock (client.SyncRoot)
                     {
-                        var mes = client.GetMessage(i);
-                        messages.Add(mes);
+                        client.Connect(pop, port, option);
+                        client.Authenticate(user, pass);
 
-                        // DBG
-                        //Console.WriteLine((mes).Subject);
+                        List<MimeKit.MimeMessage> messages = new List<MimeKit.MimeMessage>();
+
+                        for (int i = 0; i < client.Count; i++)
+                        {
+                            var mes = client.GetMessage(i);
+                            messages.Add(mes);
+
+                            // DBG
+                            //Console.WriteLine((mes).Subject);
+                        }
+
+                        client.Disconnect(true);
+
+                        messages.StoreInUserVariable(engine, v_MailListName);
                     }
-
-                    client.Disconnect(true);
-
-                    messages.StoreInUserVariable(engine, v_MailListName);
                 }
                 catch(Exception ex)
                 {

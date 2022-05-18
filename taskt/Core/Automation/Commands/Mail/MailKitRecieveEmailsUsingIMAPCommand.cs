@@ -126,23 +126,26 @@ namespace taskt.Core.Automation.Commands
                 }
                 try
                 {
-                    client.Connect(pop, port, option);
-                    client.Authenticate(user, pass);
-
-                    List<MimeKit.MimeMessage> messages = new List<MimeKit.MimeMessage>();
-
-                    client.Inbox.Open(MailKit.FolderAccess.ReadOnly);
-                    var uids = client.Inbox.Search(MailKit.Search.SearchQuery.All);
-
-                    foreach(var uid in uids)
+                    lock (client.SyncRoot)
                     {
-                        var message = client.Inbox.GetMessage(uid);
-                        messages.Add(message);
+                        client.Connect(pop, port, option);
+                        client.Authenticate(user, pass);
+
+                        List<MimeKit.MimeMessage> messages = new List<MimeKit.MimeMessage>();
+
+                        client.Inbox.Open(MailKit.FolderAccess.ReadOnly);
+                        var uids = client.Inbox.Search(MailKit.Search.SearchQuery.All);
+
+                        foreach (var uid in uids)
+                        {
+                            var message = client.Inbox.GetMessage(uid);
+                            messages.Add(message);
+                        }
+
+                        client.Disconnect(true);
+
+                        messages.StoreInUserVariable(engine, v_MailListName);
                     }
-
-                    client.Disconnect(true);
-
-                    messages.StoreInUserVariable(engine, v_MailListName);
                 }
                 catch(Exception ex)
                 {
