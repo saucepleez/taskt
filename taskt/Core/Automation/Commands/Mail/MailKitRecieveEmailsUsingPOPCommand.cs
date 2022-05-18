@@ -137,9 +137,6 @@ namespace taskt.Core.Automation.Commands
                         {
                             var mes = client.GetMessage(i);
                             messages.Add(mes);
-
-                            // DBG
-                            //Console.WriteLine((mes).Subject);
                         }
 
                         client.Disconnect(true);
