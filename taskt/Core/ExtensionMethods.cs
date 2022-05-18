@@ -1042,6 +1042,7 @@ namespace taskt.Core
                 }
                 else
                 {
+                    requiredVariable.VariableValue = null;
                     requiredVariable.VariableValue = variableValue;
                 }
             }
