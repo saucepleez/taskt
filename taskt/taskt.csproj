@@ -391,6 +391,7 @@
     <Compile Include="Core\Automation\Commands\List\CreateListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\SetListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\SetListIndexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Mail\MailKitGetAddressListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitGetMailFromMailListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitRecieveEmailsUsingIMAPCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitRecieveEmailsUsingPOPCommand.cs" />
