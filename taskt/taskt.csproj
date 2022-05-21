@@ -393,6 +393,7 @@
     <Compile Include="Core\Automation\Commands\List\SetListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitGetAddressesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitGetAddressesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Mail\MailKitGetMailTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitGetAddressesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitGetMailFromMailListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Mail\MailKitRecieveEmailsUsingIMAPCommand.cs" />

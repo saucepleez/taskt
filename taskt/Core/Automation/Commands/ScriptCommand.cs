@@ -265,6 +265,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(MailKitGetAddressesAsDictionaryCommand))]
     [XmlInclude(typeof(MailKitGetAddressesAsListCommand))]
     [XmlInclude(typeof(MailKitGetMailFromMailListCommand))]
+    [XmlInclude(typeof(MailKitGetMailTextCommand))]
     [XmlInclude(typeof(MailKitRecieveEmailsUsingIMAPCommand))]
     [XmlInclude(typeof(MailKitRecieveEmailsUsingPOPCommand))]
     [XmlInclude(typeof(MailKitSendEmailCommand))]
