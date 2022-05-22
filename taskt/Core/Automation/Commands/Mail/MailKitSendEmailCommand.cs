@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Please specify SMTP Host Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Define the host/service name that the script should use")]
-        [SampleUsage("**smtp.gmail.com** or **{{{vHost}}}**")]
+        [SampleUsage("**smtp.mymail.com** or **{{{vHost}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("SMTP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]

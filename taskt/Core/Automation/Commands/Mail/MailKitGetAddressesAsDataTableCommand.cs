@@ -12,8 +12,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Mail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get MailKitMail from MailKitMailList.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get MailKitMail from MailKitMailList.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Addresses from Mail.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Addresses from Mail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitGetAddressesAsDataTableCommand : ScriptCommand
     {
@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Please specify Mail Variable Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**{{{vMailList}}}**")]
+        [SampleUsage("**{{{vMailVariable}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Mail", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -49,15 +49,15 @@ namespace taskt.Core.Automation.Commands
         public string v_AddressesType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store Mail")]
+        [PropertyDescription("Please specify Variable Name to Store Addresses")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [SampleUsage("**vAddress** or **{{{vAddresses}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Mail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Addresses Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AddressesDataTable { get; set; }
 
         public MailKitGetAddressesAsDataTableCommand()
