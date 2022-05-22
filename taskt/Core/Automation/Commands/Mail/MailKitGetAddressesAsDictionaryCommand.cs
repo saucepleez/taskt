@@ -45,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Resent-CC")]
         [PropertyUISelectionOption("Resent-BCC")]
         [PropertyUISelectionOption("Resent-Reply-To")]
+        [PropertyValidationRule("Address Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AddressesType { get; set; }
 
         [XmlAttribute]

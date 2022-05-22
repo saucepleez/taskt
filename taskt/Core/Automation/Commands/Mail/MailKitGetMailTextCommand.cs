@@ -42,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Date")]
         [PropertyUISelectionOption("Resent-Message-ID")]
         [PropertyUISelectionOption("Resent-Date")]
+        [PropertyValidationRule("Text Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TextType { get; set; }
 
         [XmlAttribute]
