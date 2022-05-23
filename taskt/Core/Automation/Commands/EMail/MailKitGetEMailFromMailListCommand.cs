@@ -11,24 +11,24 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get EMail from MailList.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMail from MailList.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get EMail from EMailList.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMail from EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitGetEMailFromMailListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify MailList Variable Name")]
+        [PropertyDescription("Please specify EMailList Variable Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**{{{vMailList}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("MailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("EMailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_MailListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify MailList Index")]
+        [PropertyDescription("Please specify EMailList Index")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
@@ -52,8 +52,8 @@ namespace taskt.Core.Automation.Commands
 
         public MailKitGetEMailFromMailListCommand()
         {
-            this.CommandName = "MailKitGetMailFromMailListCommand";
-            this.SelectionName = "Get Mail From MailList";
+            this.CommandName = "MailKitGetEMailFromMailListCommand";
+            this.SelectionName = "Get EMail From MailList";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
