@@ -683,8 +683,8 @@ namespace taskt.UI
             {"MailKitGetAddressesAsListCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitGetEmailFromMailListCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitGetEmailTextCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitRecieveEmailsUsingIMAPCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitRecieveEmailsUsingPOPCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitRecieveEmailListUsingIMAPCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitRecieveEmailListUsingPOPCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitSendEmailCommand", "taskt.Properties.Resources.command_comment"},
 
             // Misc

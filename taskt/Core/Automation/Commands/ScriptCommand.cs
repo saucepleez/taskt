@@ -264,10 +264,10 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(MailKitGetAddressesAsDataTableCommand))]
     [XmlInclude(typeof(MailKitGetAddressesAsDictionaryCommand))]
     [XmlInclude(typeof(MailKitGetAddressesAsListCommand))]
-    [XmlInclude(typeof(MailKitGetMailFromMailListCommand))]
-    [XmlInclude(typeof(MailKitGetMailTextCommand))]
-    [XmlInclude(typeof(MailKitRecieveEmailsUsingIMAPCommand))]
-    [XmlInclude(typeof(MailKitRecieveEmailsUsingPOPCommand))]
+    [XmlInclude(typeof(MailKitGetEMailFromMailListCommand))]
+    [XmlInclude(typeof(MailKitGetEMailTextCommand))]
+    [XmlInclude(typeof(MailKitRecieveEmailListUsingIMAPCommand))]
+    [XmlInclude(typeof(MailKitRecieveEmailListUsingPOPCommand))]
     [XmlInclude(typeof(MailKitSendEmailCommand))]
 
     // Misc

@@ -11,53 +11,53 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get EMails using IMAP protocol.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMails using IMAP protocol. Result Variable Type is MailList.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get MailList(EMails) using POP protocol.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get MailList(EMails) using POP protocol. Result Variable Type is MailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class MailKitRecieveEmailsUsingIMAPCommand : ScriptCommand
+    public class MailKitRecieveEmailListUsingPOPCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Host Name")]
+        [PropertyDescription("Please specify POP Host Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Define the host/service name that the script should use")]
-        [SampleUsage("**imap.mymail.com** or **{{{vHost}}}**")]
+        [SampleUsage("**pop.mymail.com** or **{{{vHost}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("IMAP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("POP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
-        public string v_IMAPHost { get; set; }
+        public string v_POPHost { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Port")]
+        [PropertyDescription("Please specify POP Port")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the port number that should be used when contacting the IMAP service")]
-        [SampleUsage("**143** or **993** or **{{{vPort}}}**")]
+        [InputSpecification("Define the port number that should be used when contacting the POP service")]
+        [SampleUsage("**110** or **995** or **{{{vPort}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("POP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyTextBoxSetting(1, false)]
-        public string v_IMAPPort { get; set; }
+        public string v_POPPort { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Username")]
+        [PropertyDescription("Please specify POP Username")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the username to use when contacting the IMAP service")]
+        [InputSpecification("Define the username to use when contacting the POP service")]
         [SampleUsage("**username** or **{{{vUserName}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        public string v_IMAPUserName { get; set; }
+        public string v_POPUserName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Password")]
+        [PropertyDescription("Please specify POP Password")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the password to use when contacting the IMAP service")]
+        [InputSpecification("Define the password to use when contacting the POP service")]
         [SampleUsage("**password** or **{{{vPassword}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
-        public string v_IMAPPassword { get; set; }
+        public string v_POPPassword { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please specify Secure Option")]
@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Use SSL or TLS")]
         [PropertyUISelectionOption("STARTTLS")]
         [PropertyUISelectionOption("STARTTLS When Available")]
-        public string v_IMAPSecureOption { get; set; }
+        public string v_POPSecureOption { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please specify Variable Name to Store MailList")]
@@ -86,10 +86,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         public string v_MailListName { get; set; }
 
-        public MailKitRecieveEmailsUsingIMAPCommand()
+        public MailKitRecieveEmailListUsingPOPCommand()
         {
-            this.CommandName = "MailKitRecieveEmailsUsingIMAPCommand";
-            this.SelectionName = "Recieve Emails Using IMAP";
+            this.CommandName = "MailKitRecieveEmailsUsingPOPCommand";
+            this.SelectionName = "Recieve Emails Using POP";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -99,14 +99,14 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             // pop host
-            string pop = v_IMAPHost.ConvertToUserVariable(engine);
-            int port = v_IMAPPort.ConvertToUserVariableAsInteger("IMAP Port", engine);
+            string pop = v_POPHost.ConvertToUserVariable(engine);
+            int port = v_POPPort.ConvertToUserVariableAsInteger("POP Port", engine);
             // auth
-            string user = v_IMAPUserName.ConvertToUserVariable(engine);
-            string pass = v_IMAPPassword.ConvertToUserVariable(engine);
-            string secureOption = v_IMAPSecureOption.GetUISelectionValue("v_IMAPSecureOption", this, engine);
+            string user = v_POPUserName.ConvertToUserVariable(engine);
+            string pass = v_POPPassword.ConvertToUserVariable(engine);
+            string secureOption = v_POPSecureOption.GetUISelectionValue("v_POPSecureOption", this, engine);
 
-            using (var client = new MailKit.Net.Imap.ImapClient())
+            using (var client = new MailKit.Net.Pop3.Pop3Client())
             {
                 var option = MailKit.Security.SecureSocketOptions.Auto;
                 switch (secureOption)
@@ -133,13 +133,10 @@ namespace taskt.Core.Automation.Commands
 
                         List<MimeKit.MimeMessage> messages = new List<MimeKit.MimeMessage>();
 
-                        client.Inbox.Open(MailKit.FolderAccess.ReadOnly);
-                        var uids = client.Inbox.Search(MailKit.Search.SearchQuery.All);
-
-                        foreach (var uid in uids)
+                        for (int i = 0; i < client.Count; i++)
                         {
-                            var message = client.Inbox.GetMessage(uid);
-                            messages.Add(message);
+                            var mes = client.GetMessage(i);
+                            messages.Add(mes);
                         }
 
                         client.Disconnect(true);
@@ -165,7 +162,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "[Host: '" + v_IMAPHost + "', User: '" + v_IMAPUserName + "', Store: '" + v_MailListName + "']";
+            return base.GetDisplayValue() + "[Host: '" + v_POPHost + "', User: '" + v_POPUserName + "', Store: '" + v_MailListName + "']";
         }
     }
 }

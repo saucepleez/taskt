@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Text from EMail.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Text from EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class MailKitGetMailTextCommand : ScriptCommand
+    public class MailKitGetEMailTextCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify EMail Variable Name")]
@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Text Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_ResultVariable { get; set; }
 
-        public MailKitGetMailTextCommand()
+        public MailKitGetEMailTextCommand()
         {
             this.CommandName = "MailKitGetMailTextCommand";
             this.SelectionName = "Get Mail Text";
