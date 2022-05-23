@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
         public string v_POPSecureOption { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store MailList")]
+        [PropertyDescription("Please specify Variable Name to Store EMailList")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**vMailList** or **{{{vMailList}}}**")]
