@@ -59,8 +59,8 @@ namespace taskt.Core.Automation.Commands
 
         public MailKitGetEMailTextCommand()
         {
-            this.CommandName = "MailKitGetMailTextCommand";
-            this.SelectionName = "Get Mail Text";
+            this.CommandName = "MailKitGetEMailTextCommand";
+            this.SelectionName = "Get EMail Text";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
