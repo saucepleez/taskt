@@ -133,7 +133,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "";
+            return base.GetDisplayValue() + " [Mail: '" + v_MailName + "', Type: '" + v_AddressesType + "', Store: '" + v_AddressesDataTable + "']";
         }
     }
 }

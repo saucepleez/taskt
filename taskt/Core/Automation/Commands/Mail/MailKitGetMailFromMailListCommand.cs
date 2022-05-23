@@ -109,7 +109,8 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "";
+            string index = (v_Index == null) ? "" : v_Index;
+            return base.GetDisplayValue() + "[MailList: '" + v_MailListName + "', Index: '" + index + "', Store: '" + v_MailVariable + "']";
         }
     }
 }
