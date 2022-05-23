@@ -17,13 +17,13 @@ namespace taskt.Core.Automation.Commands
     public class MailKitGetAddressesAsDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify Mail Variable Name")]
+        [PropertyDescription("Please specify EMail Variable Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**{{{vMailVariable}}}**")]
+        [SampleUsage("**{{{vEMail}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Mail", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_MailName { get; set; }
 
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         public string v_AddressesType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store Mail")]
+        [PropertyDescription("Please specify Variable Name to Store Addresses")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**vAddresses** or **{{{vAddresses}}}**")]

@@ -18,13 +18,13 @@ namespace taskt.Core.Automation.Commands
     public class MailKitGetAddressesAsDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify Mail Variable Name")]
+        [PropertyDescription("Please specify EMail Variable Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**{{{vMailVariable}}}**")]
+        [SampleUsage("**{{{vEMail}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Mail", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_MailName { get; set; }
 

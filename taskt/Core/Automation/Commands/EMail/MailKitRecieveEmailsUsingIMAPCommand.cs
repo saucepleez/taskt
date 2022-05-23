@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
         public string v_IMAPSecureOption { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store Mail List")]
+        [PropertyDescription("Please specify Variable Name to Store MailList")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**vMailList** or **{{{vMailList}}}**")]

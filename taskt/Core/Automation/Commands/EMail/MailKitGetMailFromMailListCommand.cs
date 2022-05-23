@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         public string v_MailListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Mail Index")]
+        [PropertyDescription("Please specify MailList Index")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
@@ -39,15 +39,15 @@ namespace taskt.Core.Automation.Commands
         public string v_Index { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store Mail")]
+        [PropertyDescription("Please specify Variable Name to Store EMail")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vMail** or **{{{vMail}}}**")]
+        [SampleUsage("**vEMail** or **{{{vEMail}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Mail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("EMail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_MailVariable { get; set; }
 
         public MailKitGetMailFromMailListCommand()
