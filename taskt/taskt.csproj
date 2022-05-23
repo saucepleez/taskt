@@ -395,7 +395,7 @@
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetAddressesAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetAddressesAsListCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailFromMailListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailFromEMailListCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingIMAPCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingPOPCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitSendEmailCommand.cs" />
