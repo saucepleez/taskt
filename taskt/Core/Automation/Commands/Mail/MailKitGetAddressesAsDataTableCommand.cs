@@ -12,8 +12,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Mail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Addresses from Mail.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Addresses from Mail.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Addresses from EMail.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Addresses from EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitGetAddressesAsDataTableCommand : ScriptCommand
     {

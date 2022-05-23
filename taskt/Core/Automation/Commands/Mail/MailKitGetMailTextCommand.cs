@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Mail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Text from Mail.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Text from Mail.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Text from EMail.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Text from EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitGetMailTextCommand : ScriptCommand
     {

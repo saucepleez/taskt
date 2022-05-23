@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Mail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get emails using POP protocol.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get emails using POP protocol.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get EMails using POP protocol.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMails using POP protocol. Result Variable Type is MailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitRecieveEmailsUsingPOPCommand : ScriptCommand
     {
