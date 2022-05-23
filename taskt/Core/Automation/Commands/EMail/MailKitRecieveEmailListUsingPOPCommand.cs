@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get MailList(EMails) using POP protocol.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get MailList(EMails) using POP protocol. Result Variable Type is MailList.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get EMailList(EMails) using POP protocol.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get MailList(EMails) using POP protocol. Result Variable Type is EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitRecieveEmailListUsingPOPCommand : ScriptCommand
     {
@@ -88,8 +88,8 @@ namespace taskt.Core.Automation.Commands
 
         public MailKitRecieveEmailListUsingPOPCommand()
         {
-            this.CommandName = "MailKitRecieveEmailsUsingPOPCommand";
-            this.SelectionName = "Recieve Emails Using POP";
+            this.CommandName = "MailKitRecieveEMailListUsingPOPCommand";
+            this.SelectionName = "Recieve EMailList Using POP";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

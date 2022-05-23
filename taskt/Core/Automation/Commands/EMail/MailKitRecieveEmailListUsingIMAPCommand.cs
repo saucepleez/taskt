@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get MailList(Emails) using IMAP protocol.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get MailList(Emails) using IMAP protocol. Result Variable Type is MailList.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get EMailList(Emails) using IMAP protocol.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMailList(Emails) using IMAP protocol. Result Variable Type is EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitRecieveEmailListUsingIMAPCommand : ScriptCommand
     {
@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
         public string v_IMAPSecureOption { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store MailList")]
+        [PropertyDescription("Please specify Variable Name to Store EMailList")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**vMailList** or **{{{vMailList}}}**")]
@@ -88,8 +88,8 @@ namespace taskt.Core.Automation.Commands
 
         public MailKitRecieveEmailListUsingIMAPCommand()
         {
-            this.CommandName = "MailKitRecieveEmailsUsingIMAPCommand";
-            this.SelectionName = "Recieve Emails Using IMAP";
+            this.CommandName = "MailKitRecieveEMailListUsingIMAPCommand";
+            this.SelectionName = "Recieve EMailList Using IMAP";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
