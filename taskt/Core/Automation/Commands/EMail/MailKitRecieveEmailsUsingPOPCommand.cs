@@ -9,7 +9,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Mail Commands")]
+    [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
     [Attributes.ClassAttributes.Description("This command allows you to get EMails using POP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMails using POP protocol. Result Variable Type is MailList.")]
