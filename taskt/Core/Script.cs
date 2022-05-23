@@ -1200,7 +1200,7 @@ namespace taskt.Core.Script
                 case "type":
                 case "Type":
                 case "TYPE":
-                    return "MAILKITMAIL";
+                    return "MAILKIT_EMAIL";
                 case "subject":
                 case "Subject":
                 case "SUBJECT":
@@ -1257,7 +1257,7 @@ namespace taskt.Core.Script
                 case "type":
                 case "Type":
                 case "TYPE":
-                    return "MAILKITMAILLIST";
+                    return "MAILKIT_EMAILLIST";
                 default:
                     return "Index: " + CurrentPosition + ", " + GetDisplayValue(mails[CurrentPosition], "");
             }
