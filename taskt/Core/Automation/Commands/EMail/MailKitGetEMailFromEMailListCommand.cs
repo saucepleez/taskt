@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get EMail from EMailList.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMail from EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class MailKitGetEMailFromMailListCommand : ScriptCommand
+    public class MailKitGetEMailFromEMailListCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify EMailList Variable Name")]
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("EMail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_MailVariable { get; set; }
 
-        public MailKitGetEMailFromMailListCommand()
+        public MailKitGetEMailFromEMailListCommand()
         {
             this.CommandName = "MailKitGetEMailFromMailListCommand";
             this.SelectionName = "Get EMail From MailList";
