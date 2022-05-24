@@ -526,6 +526,16 @@ namespace taskt.UI
             {"RemoveDictionaryItemCommand", "taskt.Properties.Resources.command_dictionary"},
             {"SetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
 
+            // EMail
+            {"MailKitGetAddressesAsDataTableCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitGetAddressesAsDictionaryCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitGetAddressesAsListCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitGetEmailFromEMailListCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitGetEmailTextCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitRecieveEmailListUsingIMAPCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitRecieveEmailListUsingPOPCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitSendEmailCommand", "taskt.Properties.Resources.command_comment"},
+
             // Engine
             {"ErrorHandlingCommand", "taskt.Properties.Resources.command_error"},
             {"GetDataCommand", "taskt.Properties.Resources.command_server"},  // get bot data
@@ -676,16 +686,6 @@ namespace taskt.UI
             {"BeginListLoopCommand", "taskt.Properties.Resources.command_startloop"},
             {"BeginNumberOfTimesLoopCommand", "taskt.Properties.Resources.command_startloop"},
             {"NextLoopCommand", "taskt.Properties.Resources.command_nextloop"},
-
-            // Mail
-            {"MailKitGetAddressesAsDataTableCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitGetAddressesAsDictionaryCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitGetAddressesAsListCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitGetEmailFromEMailListCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitGetEmailTextCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitRecieveEmailListUsingIMAPCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitRecieveEmailListUsingPOPCommand", "taskt.Properties.Resources.command_comment"},
-            {"MailKitSendEmailCommand", "taskt.Properties.Resources.command_comment"},
 
             // Misc
             {"CommentCommand", "taskt.Properties.Resources.command_comment"},

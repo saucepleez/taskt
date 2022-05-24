@@ -109,6 +109,16 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(RemoveDictionaryItemCommand))]
     [XmlInclude(typeof(SetDictionaryValueCommand))]
 
+    // EMail
+    [XmlInclude(typeof(MailKitGetAddressesAsDataTableCommand))]
+    [XmlInclude(typeof(MailKitGetAddressesAsDictionaryCommand))]
+    [XmlInclude(typeof(MailKitGetAddressesAsListCommand))]
+    [XmlInclude(typeof(MailKitGetEMailFromEMailListCommand))]
+    [XmlInclude(typeof(MailKitGetEMailTextCommand))]
+    [XmlInclude(typeof(MailKitRecieveEmailListUsingIMAPCommand))]
+    [XmlInclude(typeof(MailKitRecieveEmailListUsingPOPCommand))]
+    [XmlInclude(typeof(MailKitSendEmailCommand))]
+
     // Engine
     [XmlInclude(typeof(ErrorHandlingCommand))]
     [XmlInclude(typeof(GetDataCommand))]
@@ -259,16 +269,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(BeginListLoopCommand))]
     [XmlInclude(typeof(BeginNumberOfTimesLoopCommand))]
     [XmlInclude(typeof(NextLoopCommand))]
-
-    // Mail
-    [XmlInclude(typeof(MailKitGetAddressesAsDataTableCommand))]
-    [XmlInclude(typeof(MailKitGetAddressesAsDictionaryCommand))]
-    [XmlInclude(typeof(MailKitGetAddressesAsListCommand))]
-    [XmlInclude(typeof(MailKitGetEMailFromEMailListCommand))]
-    [XmlInclude(typeof(MailKitGetEMailTextCommand))]
-    [XmlInclude(typeof(MailKitRecieveEmailListUsingIMAPCommand))]
-    [XmlInclude(typeof(MailKitRecieveEmailListUsingPOPCommand))]
-    [XmlInclude(typeof(MailKitSendEmailCommand))]
 
     // Misc
     [XmlInclude(typeof(ClipboardClearTextCommand))]
