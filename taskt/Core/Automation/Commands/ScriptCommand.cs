@@ -117,6 +117,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(MailKitGetEMailTextCommand))]
     [XmlInclude(typeof(MailKitRecieveEmailListUsingIMAPCommand))]
     [XmlInclude(typeof(MailKitRecieveEmailListUsingPOPCommand))]
+    [XmlInclude(typeof(MailKitSaveEmailCommand))]
     [XmlInclude(typeof(MailKitSendEmailCommand))]
 
     // Engine

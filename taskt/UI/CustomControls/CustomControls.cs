@@ -534,6 +534,7 @@ namespace taskt.UI
             {"MailKitGetEmailTextCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitRecieveEmailListUsingIMAPCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitRecieveEmailListUsingPOPCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitSaveEmailCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitSendEmailCommand", "taskt.Properties.Resources.command_comment"},
 
             // Engine
