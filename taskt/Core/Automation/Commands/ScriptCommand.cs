@@ -113,11 +113,14 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(MailKitGetAddressesAsDataTableCommand))]
     [XmlInclude(typeof(MailKitGetAddressesAsDictionaryCommand))]
     [XmlInclude(typeof(MailKitGetAddressesAsListCommand))]
+    [XmlInclude(typeof(MailKitGetEmailAttachmentsNameCommand))]
     [XmlInclude(typeof(MailKitGetEMailFromEMailListCommand))]
     [XmlInclude(typeof(MailKitGetEMailTextCommand))]
+    [XmlInclude(typeof(MailKitLoadEmailCommand))]
     [XmlInclude(typeof(MailKitRecieveEmailListUsingIMAPCommand))]
     [XmlInclude(typeof(MailKitRecieveEmailListUsingPOPCommand))]
     [XmlInclude(typeof(MailKitSaveEmailCommand))]
+    [XmlInclude(typeof(MailKitSaveEmailAttachmentsCommand))]
     [XmlInclude(typeof(MailKitSendEmailCommand))]
 
     // Engine

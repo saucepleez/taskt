@@ -530,11 +530,14 @@ namespace taskt.UI
             {"MailKitGetAddressesAsDataTableCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitGetAddressesAsDictionaryCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitGetAddressesAsListCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitGetEmailAttachmentsNameCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitGetEmailFromEMailListCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitGetEmailTextCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitLoadEmailCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitRecieveEmailListUsingIMAPCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitRecieveEmailListUsingPOPCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitSaveEmailCommand", "taskt.Properties.Resources.command_comment"},
+            {"MailKitSaveEmailAttachmentsCommand", "taskt.Properties.Resources.command_comment"},
             {"MailKitSendEmailCommand", "taskt.Properties.Resources.command_comment"},
 
             // Engine
