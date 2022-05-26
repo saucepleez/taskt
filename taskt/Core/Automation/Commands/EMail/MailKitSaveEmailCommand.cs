@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "[EMail: '" + v_MailName + "', Path: '" + v_SavePath + "']";
+            return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Path: '" + v_SavePath + "']";
         }
     }
 }

@@ -166,7 +166,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "[Host: '" + v_IMAPHost + "', User: '" + v_IMAPUserName + "', Store: '" + v_MailListName + "']";
+            return base.GetDisplayValue() + " [Host: '" + v_IMAPHost + "', User: '" + v_IMAPUserName + "', Store: '" + v_MailListName + "']";
         }
     }
 }
