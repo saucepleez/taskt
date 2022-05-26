@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Text from EMail.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Text from EMail.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Attachment File Name.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attachment File Name.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitGetEmailAttachmentsNameCommand : ScriptCommand
     {
@@ -28,16 +28,18 @@ namespace taskt.Core.Automation.Commands
         public string v_MailName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Path to the File")]
+        [PropertyDescription("Please specify Variable Name to Store Result")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vText** or **{{{vText}}}**")]
+        [SampleUsage("**vNames** or **{{{vNames}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Text Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AttachmentsList { get; set; }
 
         public MailKitGetEmailAttachmentsNameCommand()
@@ -78,7 +80,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "";
+            return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Store: '" + v_AttachmentsList + "']";
         }
     }
 }

@@ -11,17 +11,17 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Text from EMail.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Text from EMail.")]
+    [Attributes.ClassAttributes.Description("This command allows you to load EMail from File.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load EMail from File.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class MailKitLoadEmailCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify Path to the File")]
+        [PropertyDescription("Please specify Path to the EMail")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vText** or **{{{vText}}}**")]
+        [SampleUsage("**vPath** or **{{{vPath}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "";
+            return base.GetDisplayValue() + " [Path: '" + v_FilePath + "', Store: '" + v_MailName + "']";
         }
     }
 }
