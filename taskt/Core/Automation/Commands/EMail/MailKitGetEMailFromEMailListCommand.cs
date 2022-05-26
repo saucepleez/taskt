@@ -25,6 +25,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("EMailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         public string v_MailListName { get; set; }
 
         [XmlAttribute]
@@ -48,6 +50,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("EMail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         public string v_MailVariable { get; set; }
 
         public MailKitGetEMailFromEMailListCommand()

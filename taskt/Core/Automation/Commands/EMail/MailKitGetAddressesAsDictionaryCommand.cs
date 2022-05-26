@@ -25,6 +25,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         public string v_MailName { get; set; }
 
         [XmlAttribute]
@@ -58,6 +60,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Addresses Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         public string v_AddressesDictionary { get; set; }
 
         public MailKitGetAddressesAsDictionaryCommand()

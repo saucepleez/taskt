@@ -25,6 +25,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         public string v_MailName { get; set; }
 
         [XmlAttribute]
@@ -37,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AttachmentsList { get; set; }

@@ -85,6 +85,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("EMailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         public string v_MailListName { get; set; }
 
         public MailKitRecieveEmailListUsingPOPCommand()

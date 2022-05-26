@@ -38,6 +38,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         public string v_MailName { get; set; }
 
         public MailKitLoadEmailCommand()
