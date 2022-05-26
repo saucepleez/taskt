@@ -373,7 +373,9 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             Boolean,
             DateTime,
             AutomationElement,
-            Color
+            Color,
+            MailKitEMail,
+            MailKitEMailList
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]

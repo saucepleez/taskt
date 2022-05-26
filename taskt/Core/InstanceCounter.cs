@@ -88,6 +88,16 @@ namespace taskt.Core
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
         };
+        private Dictionary<string, Dictionary<string, int>> mailkitEMailInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> mailkitEMailListInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
 
         public InstanceCounter(ApplicationSettings settings)
         {
@@ -199,6 +209,12 @@ namespace taskt.Core
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List:
                     targetDic = listInstance; ;
+                    break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMail:
+                    targetDic = mailkitEMailInstance;
+                    break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMailList:
+                    targetDic = mailkitEMailListInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
                     targetDic = nlgInstance;
@@ -409,6 +425,12 @@ namespace taskt.Core
                     break;
                 case "list":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
+                    break;
+                case "mailkitemail":
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMail;
+                    break;
+                case "mailkitemaillist":
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMailList;
                     break;
                 case "stopwatch":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
