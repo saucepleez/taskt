@@ -8,7 +8,7 @@ using taskt.UI.Forms;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Text File Commands")]
+    [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.Description("This command writes specified data to a text file")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to write data to text files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
