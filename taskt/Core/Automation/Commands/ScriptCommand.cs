@@ -138,7 +138,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ExcelCloseApplicationCommand))]
     [XmlInclude(typeof(ExcelCopyWorksheetCommand))]
     [XmlInclude(typeof(ExcelCreateApplicationCommand))]
-    [XmlInclude(typeof(ExcelCreateDataSetCommand))]
     [XmlInclude(typeof(ExcelDeleteCellCommand))]
     [XmlInclude(typeof(ExcelDeleteRowCommand))]
     [XmlInclude(typeof(ExcelDeleteWorksheetCommand))]
