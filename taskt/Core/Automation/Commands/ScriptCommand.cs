@@ -26,7 +26,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(FormatDataCommand))]
     [XmlInclude(typeof(LogDataCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
-    [XmlInclude(typeof(ParseDatasetRowCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
 
     // Database
@@ -61,6 +60,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetDataTableColumnListCommand))]
     [XmlInclude(typeof(GetDataTableRowCountCommand))]
     [XmlInclude(typeof(GetDataTableValueCommand))]
+    [XmlInclude(typeof(ParseDatasetRowCommand))]
     [XmlInclude(typeof(RemoveDataRowCommand))]
     [XmlInclude(typeof(SetDataTableColumnValuesByDataTableCommand))]
     [XmlInclude(typeof(SetDataTableColumnValuesByListCommand))]

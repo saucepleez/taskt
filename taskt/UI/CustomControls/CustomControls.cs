@@ -441,7 +441,6 @@ namespace taskt.UI
             {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
             {"LogDataCommand", "taskt.Properties.Resources.command_files"},
             {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},            
-            {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
 
             // Database
             {"DatabaseDefineConnectionCommand", "taskt.Properties.Resources.command_database"},
@@ -478,6 +477,7 @@ namespace taskt.UI
             {"GetDataTableRowCountCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataTableValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"LoadDataTableCommand", "taskt.Properties.Resources.command_spreadsheet" },
+            {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
             {"RemoveDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableColumnValuesByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableColumnValuesByListCommand", "taskt.Properties.Resources.command_spreadsheet"},
