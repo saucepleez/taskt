@@ -10,7 +10,6 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
