@@ -22,21 +22,12 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(FormatColorCommand))]
 
     // Data
-    [XmlInclude(typeof(CheckTextCommand))]
     [XmlInclude(typeof(DateCalculationCommand))]
-    [XmlInclude(typeof(ExtractionTextCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
-    [XmlInclude(typeof(GetWordCountCommand))]
-    [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(LogDataCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
-    [XmlInclude(typeof(ModifyTextCommand))]
     [XmlInclude(typeof(ParseDatasetRowCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
-    [XmlInclude(typeof(RegExExtractionTextCommand))]
-    [XmlInclude(typeof(ReplaceTextCommand))]
-    [XmlInclude(typeof(SplitTextCommand))]
-    [XmlInclude(typeof(SubstringTextCommand))]
 
     // Database
     [XmlInclude(typeof(DatabaseDefineConnectionCommand))]
@@ -319,7 +310,16 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(StopTaskCommand))]
 
     // Text
+    [XmlInclude(typeof(CheckTextCommand))]
+    [XmlInclude(typeof(ExtractionTextCommand))]
+    [XmlInclude(typeof(GetWordCountCommand))]
+    [XmlInclude(typeof(GetWordLengthCommand))]
+    [XmlInclude(typeof(ModifyTextCommand))]
     [XmlInclude(typeof(ReadTextFileCommand))]
+    [XmlInclude(typeof(RegExExtractionTextCommand))]
+    [XmlInclude(typeof(ReplaceTextCommand))]
+    [XmlInclude(typeof(SplitTextCommand))]
+    [XmlInclude(typeof(SubstringTextCommand))]
     [XmlInclude(typeof(WriteTextFileCommand))]
 
     // UIAutomation
