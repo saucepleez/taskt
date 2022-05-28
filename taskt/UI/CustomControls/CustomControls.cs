@@ -437,21 +437,11 @@ namespace taskt.UI
             {"FormatColorCommand", "taskt.Properties.Resources.command_function"},
 
             // Data
-            {"CheckTextCommand", "taskt.Properties.Resources.command_function"},
             {"DateCalculationCommand", "taskt.Properties.Resources.command_function"},
-            {"ExtractionTextCommand", "taskt.Properties.Resources.command_function"},
             {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
-            {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
-            {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
             {"LogDataCommand", "taskt.Properties.Resources.command_files"},
-            {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},
-            {"ModifyTextCommand", "taskt.Properties.Resources.command_function"},
+            {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},            
             {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
-            {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
-            {"RegExExtractionTextCommand", "taskt.Properties.Resources.command_function"},
-            {"ReplaceTextCommand", "taskt.Properties.Resources.command_string"},
-            {"SplitTextCommand", "taskt.Properties.Resources.command_string"},
-            {"SubstringTextCommand", "taskt.Properties.Resources.command_string"},
 
             // Database
             {"DatabaseDefineConnectionCommand", "taskt.Properties.Resources.command_database"},
@@ -737,7 +727,17 @@ namespace taskt.UI
             {"StopTaskCommand", "taskt.Properties.Resources.command_stop_process"},
 
             // Text
+            {"CheckTextCommand", "taskt.Properties.Resources.command_function"},
+            {"ExtractionTextCommand", "taskt.Properties.Resources.command_function"},
+            {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
+            {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
+            {"ModifyTextCommand", "taskt.Properties.Resources.command_function"},
+            {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
             {"ReadTextFileCommand", "taskt.Properties.Resources.command_files"},
+            {"RegExExtractionTextCommand", "taskt.Properties.Resources.command_function"},
+            {"ReplaceTextCommand", "taskt.Properties.Resources.command_string"},
+            {"SplitTextCommand", "taskt.Properties.Resources.command_string"},
+            {"SubstringTextCommand", "taskt.Properties.Resources.command_string"},
             {"WriteTextFileCommand", "taskt.Properties.Resources.command_files"},
 
             // UIAutomation
