@@ -8,8 +8,7 @@ using taskt.UI.Forms;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.SubGruop("Text")]
+    [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to you to retrieve the word count of a string or variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find word count of a string or variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
