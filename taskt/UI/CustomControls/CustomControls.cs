@@ -759,7 +759,6 @@ namespace taskt.UI
             {"UIAutomationScrollElementCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
-            {"AddToVariableCommand", "taskt.Properties.Resources.command_function"},
             {"AddVariableCommand", "taskt.Properties.Resources.command_function"},
             {"CheckVariableExistsCommand", "taskt.Properties.Resources.command_function"},
             {"GetVariableTypeCommand", "taskt.Properties.Resources.command_function"},

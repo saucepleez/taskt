@@ -341,7 +341,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(UIAutomationScrollElementCommand))]
 
     // Variable
-    [XmlInclude(typeof(AddToVariableCommand))]
     [XmlInclude(typeof(VariableCommand))]
     [XmlInclude(typeof(AddVariableCommand))]
     [XmlInclude(typeof(CheckVariableExistsCommand))]
