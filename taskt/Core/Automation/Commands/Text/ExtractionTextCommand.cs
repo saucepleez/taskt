@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
+    [Attributes.ClassAttributes.SubGruop("Action")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string extraction.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract a piece of text from a larger text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]

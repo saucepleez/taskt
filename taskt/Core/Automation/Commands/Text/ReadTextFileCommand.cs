@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
+    [Attributes.ClassAttributes.SubGruop("File")]
     [Attributes.ClassAttributes.Description("This command reads text data into a variable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to read data from text files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
