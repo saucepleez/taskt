@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(RegExExtractionTextCommand))]
     [XmlInclude(typeof(ReplaceTextCommand))]
     [XmlInclude(typeof(SplitTextCommand))]
-    [XmlInclude(typeof(SubstringTextCommand))
+    [XmlInclude(typeof(SubstringTextCommand))]
 
     // Database
     [XmlInclude(typeof(DatabaseDefineConnectionCommand))]
