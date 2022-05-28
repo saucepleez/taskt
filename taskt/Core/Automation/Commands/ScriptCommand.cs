@@ -31,17 +31,12 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(LogDataCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
     [XmlInclude(typeof(ModifyTextCommand))]
-    [XmlInclude(typeof(ModifyVariableCommand))]
     [XmlInclude(typeof(ParseDatasetRowCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
     [XmlInclude(typeof(RegExExtractionTextCommand))]
-    [XmlInclude(typeof(RegExExtractorCommand))]
-    [XmlInclude(typeof(StringCheckTextCommand))]
     [XmlInclude(typeof(ReplaceTextCommand))]
-    [XmlInclude(typeof(StringSubstringCommand))]
     [XmlInclude(typeof(SplitTextCommand))]
-    [XmlInclude(typeof(SubstringTextCommand))]
-    [XmlInclude(typeof(TextExtractorCommand))]
+    [XmlInclude(typeof(SubstringTextCommand))
 
     // Database
     [XmlInclude(typeof(DatabaseDefineConnectionCommand))]
