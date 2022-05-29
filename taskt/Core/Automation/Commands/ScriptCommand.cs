@@ -310,6 +310,7 @@ namespace taskt.Core.Automation.Commands
 
     // Text
     [XmlInclude(typeof(CheckTextCommand))]
+    [XmlInclude(typeof(ConcatenateTextVariableCommand))]
     [XmlInclude(typeof(ExtractionTextCommand))]
     [XmlInclude(typeof(GetWordCountCommand))]
     [XmlInclude(typeof(GetWordLengthCommand))]

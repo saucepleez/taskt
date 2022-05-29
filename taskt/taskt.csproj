@@ -326,6 +326,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\CheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\ConcatenateTextVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ModifyTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\RegExExtractionTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\SubstringTextCommand.cs" />

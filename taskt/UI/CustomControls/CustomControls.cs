@@ -727,6 +727,7 @@ namespace taskt.UI
 
             // Text
             {"CheckTextCommand", "taskt.Properties.Resources.command_function"},
+            {"ConcatenateTextVariableCommand", "taskt.Properties.Resources.command_function"},
             {"ExtractionTextCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
