@@ -46,6 +46,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Green")]
         [PropertyUISelectionOption("Blue")]
         [PropertyUISelectionOption("Alpha")]
+        [PropertyUISelectionOption("HSL")]
+        [PropertyUISelectionOption("CMYK")]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Format { get; set; }
 
@@ -77,7 +79,7 @@ namespace taskt.Core.Automation.Commands
             string format = v_Format.GetUISelectionValue("v_Format", this, engine);
 
             string res = "";
-            switch(format)
+            switch (format)
             {
                 case "hex":
                     res = string.Format("{0:X2}{1:X2}{2:X2}", co.R, co.G, co.B);
@@ -103,6 +105,47 @@ namespace taskt.Core.Automation.Commands
                 case "alpha":
                     res = co.A.ToString();
                     break;
+
+                case "hsl":
+                    var hsl = new Dictionary<string, string>()
+                    {
+                        { "Hue", co.GetHue().ToString() },
+                        { "Saturation", co.GetSaturation().ToString() },
+                        { "Lightness", co.GetBrightness().ToString() }
+                    };
+                    hsl.StoreInUserVariable(engine, v_Result);
+                    return;
+
+                case "cmyk":
+                    double r = co.R / 255.0;
+                    double g = co.G / 255.0;
+                    double b = co.B / 255.0;
+
+                    double max = r;
+                    if (max < g)
+                    {
+                        max = g;
+                    }
+                    if (max < b)
+                    {
+                        max = b;
+                    }
+
+                    double k = 1 - max;
+                    double ki = (1 - k);
+                    double c = (1 - r - k) / ki;
+                    double m = (1 - g - k) / ki;
+                    double y = (1 - b - k) / ki;
+
+                    var cmyk = new Dictionary<string, string>()
+                    {
+                        { "Cyan", c.ToString() },
+                        { "Magenta", m.ToString()  },
+                        { "Yellow", y.ToString()  },
+                        { "Key", k.ToString() }
+                    };
+                    cmyk.StoreInUserVariable(engine, v_Result);
+                    return;
             }
             res.StoreInUserVariable(engine, v_Result);
         }
