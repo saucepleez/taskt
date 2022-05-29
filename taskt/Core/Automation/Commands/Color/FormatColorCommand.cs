@@ -48,6 +48,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Alpha")]
         [PropertyUISelectionOption("HSL")]
         [PropertyUISelectionOption("CMYK")]
+        [PropertyUISelectionOption("RGBA Dictionary")]
+        [PropertyUISelectionOption("RGBA DataTable")]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Format { get; set; }
 
@@ -109,9 +111,9 @@ namespace taskt.Core.Automation.Commands
                 case "hsl":
                     var hsl = new Dictionary<string, string>()
                     {
-                        { "Hue", co.GetHue().ToString() },
-                        { "Saturation", co.GetSaturation().ToString() },
-                        { "Lightness", co.GetBrightness().ToString() }
+                        { "H", co.GetHue().ToString() },
+                        { "S", co.GetSaturation().ToString() },
+                        { "L", co.GetBrightness().ToString() }
                     };
                     hsl.StoreInUserVariable(engine, v_Result);
                     return;
@@ -139,12 +141,37 @@ namespace taskt.Core.Automation.Commands
 
                     var cmyk = new Dictionary<string, string>()
                     {
-                        { "Cyan", c.ToString() },
-                        { "Magenta", m.ToString()  },
-                        { "Yellow", y.ToString()  },
-                        { "Key", k.ToString() }
+                        { "C", c.ToString() },
+                        { "M", m.ToString()  },
+                        { "Y", y.ToString()  },
+                        { "K", k.ToString() }
                     };
                     cmyk.StoreInUserVariable(engine, v_Result);
+                    return;
+
+                case "rgba dictionary":
+                    var rgbaDic = new Dictionary<string, string>()
+                    {
+                        { "R", co.R.ToString() },
+                        { "G", co.G.ToString() },
+                        { "B", co.B.ToString() },
+                        { "A", co.A.ToString() }
+                    };
+                    rgbaDic.StoreInUserVariable(engine, v_Result);
+                    return;
+
+                case "rgba datatable":
+                    var rgbaDT = new DataTable();
+                    rgbaDT.Columns.Add("R");
+                    rgbaDT.Columns.Add("G");
+                    rgbaDT.Columns.Add("B");
+                    rgbaDT.Columns.Add("A");
+                    rgbaDT.Rows.Add();
+                    rgbaDT.Rows[0][0] = co.R;
+                    rgbaDT.Rows[0][1] = co.G;
+                    rgbaDT.Rows[0][2] = co.B;
+                    rgbaDT.Rows[0][3] = co.A;
+                    rgbaDT.StoreInUserVariable(engine, v_Result);
                     return;
             }
             res.StoreInUserVariable(engine, v_Result);
