@@ -1347,7 +1347,11 @@ namespace taskt.Core.Automation.Commands
                         if ((insType != null) && (direction != null) &&
                                 (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            counter.addInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
+                            if (direction.porpose == Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)
+                            {
+                                counter.addInstance(insValue, insType, false);
+                            }
+                            //counter.addInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
                             counter.addInstance(insValue, insType, true);
                         }
                         else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
@@ -1374,7 +1378,11 @@ namespace taskt.Core.Automation.Commands
                         if ((insType != null) && (direction != null) &&
                                 (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
-                            counter.removeInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
+                            //counter.removeInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
+                            if (direction.porpose == Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)
+                            {
+                                counter.removeInstance(insValue, insType, false);
+                            }
                             counter.removeInstance(insValue, insType, true);
                         }
                         else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
