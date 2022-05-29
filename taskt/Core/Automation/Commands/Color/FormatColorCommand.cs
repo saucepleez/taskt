@@ -192,5 +192,39 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
+
+        public override void addInstance(InstanceCounter counter)
+        {
+            var format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
+            var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
+            switch (format)
+            {
+                case "hsl":
+                case "cmyk":
+                case "rgba dictioanry":
+                    counter.addInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true), true);
+                    break;
+                case "rgba datatable":
+                    counter.addInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true), true);
+                    break;
+            }
+        }
+
+        public override void removeInstance(InstanceCounter counter)
+        {
+            var format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
+            var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
+            switch (format)
+            {
+                case "hsl":
+                case "cmyk":
+                case "rgba dictioanry":
+                    counter.removeInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true), true);
+                    break;
+                case "rgba datatable":
+                    counter.removeInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true), true);
+                    break;
+            }
+        }
     }
 }
