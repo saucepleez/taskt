@@ -25,7 +25,6 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(DateCalculationCommand))]
     [XmlInclude(typeof(FormatDataCommand))]
     [XmlInclude(typeof(LogDataCommand))]
-    [XmlInclude(typeof(MathCalculationCommand))]
     [XmlInclude(typeof(PDFTextExtractionCommand))]
 
     // Database
@@ -275,6 +274,11 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(NLGCreateInstanceCommand))]
     [XmlInclude(typeof(NLGGeneratePhraseCommand))]
     [XmlInclude(typeof(NLGSetParameterCommand))]
+
+    // Numeric
+    [XmlInclude(typeof(DecreaseNumericalVariableCommand))]
+    [XmlInclude(typeof(IncreaseNumericalVariableCommand))]
+    [XmlInclude(typeof(MathCalculationCommand))]
 
     // Outlook
     [XmlInclude(typeof(OutlookDeleteEmailsCommand))]

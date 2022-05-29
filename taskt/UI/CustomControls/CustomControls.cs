@@ -440,7 +440,7 @@ namespace taskt.UI
             {"DateCalculationCommand", "taskt.Properties.Resources.command_function"},
             {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
             {"LogDataCommand", "taskt.Properties.Resources.command_files"},
-            {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},            
+            {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
 
             // Database
             {"DatabaseDefineConnectionCommand", "taskt.Properties.Resources.command_database"},
@@ -692,6 +692,11 @@ namespace taskt.UI
             {"NLGGeneratePhraseCommand", "taskt.Properties.Resources.command_nlg"},
             {"NLGSetParameterCommand", "taskt.Properties.Resources.command_nlg"},
 
+            // Numeric
+            {"DecreaseNumericVariableCommand", "taskt.Properties.Resources.command_function"},
+            {"IncreaseNumericVariableCommand", "taskt.Properties.Resources.command_function"},
+            {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},     
+
             // Outlook
             {"OutlookDeleteEmailsCommand", "taskt.Properties.Resources.command_smtp"},
             {"OutlookForwardEmailsCommand", "taskt.Properties.Resources.command_smtp"},
@@ -732,7 +737,6 @@ namespace taskt.UI
             {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
             {"ModifyTextCommand", "taskt.Properties.Resources.command_function"},
-            {"PDFTextExtractionCommand", "taskt.Properties.Resources.command_function"},
             {"ReadTextFileCommand", "taskt.Properties.Resources.command_files"},
             {"RegExExtractionTextCommand", "taskt.Properties.Resources.command_function"},
             {"ReplaceTextCommand", "taskt.Properties.Resources.command_string"},

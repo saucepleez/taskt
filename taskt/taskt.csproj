@@ -325,6 +325,8 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\IncreaseNumericalVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\CheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ConcatenateTextVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ModifyTextCommand.cs" />
@@ -488,7 +490,7 @@
     <Compile Include="Core\Automation\Commands\Database\DatabaseExecuteQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Database\DatabaseDefineConnectionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\CatchExceptionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\MathCalculationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\MathCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\EndTryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAppendCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAppendRowCommand.cs" />
