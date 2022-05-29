@@ -202,10 +202,14 @@ namespace taskt.Core.Automation.Commands
                 case "hsl":
                 case "cmyk":
                 case "rgba dictioanry":
-                    counter.addInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true), true);
+                    var dicProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true);
+                    counter.addInstance(ins, dicProp, false);
+                    counter.addInstance(ins, dicProp, true);
                     break;
                 case "rgba datatable":
-                    counter.addInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true), true);
+                    var dtProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true);
+                    counter.addInstance(ins, dtProp, false);
+                    counter.addInstance(ins, dtProp, true);
                     break;
             }
         }
@@ -219,10 +223,14 @@ namespace taskt.Core.Automation.Commands
                 case "hsl":
                 case "cmyk":
                 case "rgba dictioanry":
-                    counter.removeInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true), true);
+                    var dicProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true);
+                    counter.removeInstance(ins, dicProp, false);
+                    counter.removeInstance(ins, dicProp, true);
                     break;
                 case "rgba datatable":
-                    counter.removeInstance(ins, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true), true);
+                    var dtProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true);
+                    counter.removeInstance(ins, dtProp, false);
+                    counter.removeInstance(ins, dtProp, true);
                     break;
             }
         }

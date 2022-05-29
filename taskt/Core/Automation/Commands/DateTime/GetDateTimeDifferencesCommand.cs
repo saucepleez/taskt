@@ -163,7 +163,9 @@ namespace taskt.Core.Automation.Commands
             {
                 case "datetime":
                     string ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
-                    counter.addInstance(ins, new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true), true); ;
+                    var prop = new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
+                    counter.addInstance(ins, prop, false);
+                    counter.addInstance(ins, prop, true);
                     break;
             }
         }
@@ -176,7 +178,9 @@ namespace taskt.Core.Automation.Commands
             {
                 case "datetime":
                     string ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
-                    counter.removeInstance(ins, new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true), true);
+                    var prop = new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
+                    counter.removeInstance(ins, prop, false);
+                    counter.removeInstance(ins, prop, true);
                     break;
             }
         }
