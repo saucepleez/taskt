@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using taskt.UI.CustomControls;
@@ -152,6 +153,32 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
+        }
+
+        public override void addInstance(InstanceCounter counter)
+        {
+            string format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
+
+            switch (format)
+            {
+                case "datetime":
+                    string ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
+                    counter.addInstance(ins, new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true), true); ;
+                    break;
+            }
+        }
+
+        public override void removeInstance(InstanceCounter counter)
+        {
+            string format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
+
+            switch (format)
+            {
+                case "datetime":
+                    string ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
+                    counter.removeInstance(ins, new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true), true);
+                    break;
+            }
         }
     }
 }
