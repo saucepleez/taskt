@@ -11,8 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
-    [Attributes.ClassAttributes.Description("This command allows you to you to retrieve the word count of a string or variable.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find word count of a string or variable.")]
+    [Attributes.ClassAttributes.Description("This command allows you to you to concatenate text to Text Variable.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to concatenate text to Text Variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ConcatenateTextVariableCommand : ScriptCommand
     {
@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         public string v_ConcatText { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Insert Line Break before Concatenate")]
+        [PropertyDescription("Please select Insert Line Break before Concatenate or Not")]
         [InputSpecification("")]
         [SampleUsage("**Yes** or **No**")]
         [Remarks("")]
