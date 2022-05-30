@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**2+1** or **{{{vNum}}}+1**")]
         [Remarks("You can use known numbers or variables.")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(2, false)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Compute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_InputValue { get; set; }
 
