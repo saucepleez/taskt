@@ -279,6 +279,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(DecreaseNumericalVariableCommand))]
     [XmlInclude(typeof(IncreaseNumericalVariableCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
+    [XmlInclude(typeof(RandomNumberCommand))]
+    [XmlInclude(typeof(RoundNumberCommand))]
 
     // Outlook
     [XmlInclude(typeof(OutlookDeleteEmailsCommand))]

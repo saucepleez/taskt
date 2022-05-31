@@ -695,7 +695,9 @@ namespace taskt.UI
             // Numeric
             {"DecreaseNumericVariableCommand", "taskt.Properties.Resources.command_function"},
             {"IncreaseNumericVariableCommand", "taskt.Properties.Resources.command_function"},
-            {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},     
+            {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},
+            {"RandomNumberCommand", "taskt.Properties.Resources.command_function"},
+            {"RoundNumberCommand", "taskt.Properties.Resources.command_function"}, 
 
             // Outlook
             {"OutlookDeleteEmailsCommand", "taskt.Properties.Resources.command_smtp"},
