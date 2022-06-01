@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Variable: '" + v_VariableName + "', Add: '" + v_Value + "']";
+            return base.GetDisplayValue() + " [Variable: '" + v_VariableName + "', Increase: '" + v_Value + "']";
         }
     }
 }
