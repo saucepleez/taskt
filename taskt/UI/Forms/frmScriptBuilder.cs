@@ -79,6 +79,10 @@ namespace taskt.UI.Forms
         private Supplement_Forms.frmSearchCommands frmSearch = null;
         private frmAttendedMode frmAttended = null;
 
+        // script action tooltip
+        private ListViewItem currentHovered = null;
+        private DateTime hoverStarted;
+
         private string _scriptFilePath = null;
         public string ScriptFilePath
         {
@@ -684,6 +688,31 @@ namespace taskt.UI.Forms
         private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
         {
             lstScriptActions.Invalidate();
+
+            //var hitPoint = e.Location;
+            //ListViewHitTestInfo info = lstScriptActions.HitTest(hitPoint);
+            //if (info.Item != null)
+            //{
+            //    if (info.Item == currentHovered)
+            //    {
+            //        if ((DateTime.Now - hoverStarted).TotalMilliseconds >= 500)
+            //        {
+            //            myToolTip.Show(info.Item.Text, lstScriptActions, hitPoint);
+            //        }
+                    
+            //    }
+            //    else
+            //    {
+            //        myToolTip.Hide(lstScriptActions);
+            //        currentHovered = info.Item;
+            //        hoverStarted = DateTime.Now;
+            //    }
+            //}
+            //else
+            //{
+            //    myToolTip.Hide(lstScriptActions);
+            //    currentHovered = null;
+            //}
         }
 
         private void MoveCommands(DragEventArgs e)
@@ -1836,8 +1865,14 @@ namespace taskt.UI.Forms
             //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
 
             newCommand.Text = dispValue;
+            newCommand.ToolTipText = dispValue;
+
             //newCommand.SubItems.AddRange(new string[] { "", "" });
             newCommand.SubItems.AddRange(new string[] { "", "" });
+
+            //ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
+            //subItem.Text = dispValue;
+            //newCommand.SubItems.AddRange(new ListViewItem.ListViewSubItem[] { subItem, subItem, subItem });
 
             cmdDetails.RenderedControls = null;
             newCommand.Tag = cmdDetails;

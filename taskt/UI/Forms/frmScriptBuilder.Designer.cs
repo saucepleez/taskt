@@ -1193,6 +1193,7 @@
             this.lstScriptActions.Margin = new System.Windows.Forms.Padding(5);
             this.lstScriptActions.Name = "lstScriptActions";
             this.lstScriptActions.OwnerDraw = true;
+            this.lstScriptActions.ShowItemToolTips = true;
             this.lstScriptActions.Size = new System.Drawing.Size(731, 364);
             this.lstScriptActions.TabIndex = 6;
             this.lstScriptActions.UseCompatibleStateImageBehavior = false;
