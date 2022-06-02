@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,63 +19,66 @@ namespace taskt.Core.Automation.Commands
     public class CheckTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable to check")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please Supply the Text or Variable to Checked")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Select or provide a variable or text value")]
+        [SampleUsage("**Hello** or **{{{vText}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select the check method")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Starts with** or **Ends with** or **Index of** or **Last Index of**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index of")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Last Index of")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please Select the Check Method")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Index of** or **Last Index of**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Contains")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
+        [PropertyUISelectionOption("Index of")]
+        [PropertyUISelectionOption("Last Index of")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Check Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select the check method")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**Ha** or **{{{vSearchedText}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please Specify Text to Check or Search")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**Ha** or **{{{vSearchedText}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Text to Check or Search", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_CheckParameter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Case sensitive (Default is Yes)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
-        [Attributes.PropertyAttributes.SampleUsage("**Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [PropertyDescription("Case sensitive")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Indicate if only so many characters should be kept")]
+        [SampleUsage("**Yes** or **No**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Yes")]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the result")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertySecondaryLabel(true)]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Contains", "Result is TRUE or FALSE")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Start with", "Result is TRUE or FALSE")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("End with", "Result is TRUE or FALSE")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Index of", "Result is a found position. If not found, the result is -1.")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Last Index of", "Result is the last position found. If not found, the result is -1.")]
-        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("", "", "variable2ndLabel")]
+        [PropertyDescription("Please select the variable to receive the result")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertySecondaryLabel(true)]
+        [PropertyAddtionalParameterInfo("Contains", "Result is TRUE or FALSE")]
+        [PropertyAddtionalParameterInfo("Start with", "Result is TRUE or FALSE")]
+        [PropertyAddtionalParameterInfo("End with", "Result is TRUE or FALSE")]
+        [PropertyAddtionalParameterInfo("Index of", "Result is a found position. If not found, the result is -1.")]
+        [PropertyAddtionalParameterInfo("Last Index of", "Result is the last position found. If not found, the result is -1.")]
+        [PropertyControlIntoCommandField("", "", "variable2ndLabel")]
         public string v_applyToVariableName { get; set; }
 
         [XmlIgnore]
@@ -200,32 +204,32 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Check '" + v_userVariableName + "', Method '" + v_CheckMethod + "', Result '" + v_applyToVariableName + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_userVariableName))
-            {
-                this.validationResult += "Text to check is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_CheckMethod))
-            {
-                this.validationResult += "Search Method is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_CheckParameter))
-            {
-                this.validationResult += "Check Parameter is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariableName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_userVariableName))
+        //    {
+        //        this.validationResult += "Text to check is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_CheckMethod))
+        //    {
+        //        this.validationResult += "Search Method is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_CheckParameter))
+        //    {
+        //        this.validationResult += "Check Parameter is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
