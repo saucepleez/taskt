@@ -39,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0** or *255** or **{{{vRed}}}**")]
         [Remarks("Values range from 0 to 255")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Red", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Red { get; set; }
 
@@ -49,6 +50,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0** or *255** or **{{{vGreen}}}**")]
         [Remarks("Values range from 0 to 255")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Green", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Green { get; set; }
 
@@ -59,6 +61,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0** or *255** or **{{{vBlue}}}**")]
         [Remarks("Values range from 0 to 255")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Blue", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Blue { get; set; }
 
@@ -69,6 +72,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0** or *255** or **{{{Alpha}}}**")]
         [Remarks("Values range from 0 to 255")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "255")]
         public string v_Alpha { get; set; }
 
