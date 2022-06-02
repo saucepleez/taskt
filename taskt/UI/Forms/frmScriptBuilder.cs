@@ -79,10 +79,6 @@ namespace taskt.UI.Forms
         private Supplement_Forms.frmSearchCommands frmSearch = null;
         private frmAttendedMode frmAttended = null;
 
-        // script action tooltip
-        private ListViewItem currentHovered = null;
-        private DateTime hoverStarted;
-
         private string _scriptFilePath = null;
         public string ScriptFilePath
         {
@@ -248,6 +244,9 @@ namespace taskt.UI.Forms
             lstScriptActions.Columns[0].Width = 14; // 1digit width
             lstScriptActions.Columns[1].Width = 16; // icon size
             lstScriptActions.Columns[2].Width = lstScriptActions.ClientSize.Width - 30;
+
+            // myToolTip
+            //myToolTip.SetToolTip(lstScriptActions, "");
 
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
@@ -691,27 +690,29 @@ namespace taskt.UI.Forms
 
             //var hitPoint = e.Location;
             //ListViewHitTestInfo info = lstScriptActions.HitTest(hitPoint);
-            //if (info.Item != null)
+            //if (info.SubItem != null)
             //{
-            //    if (info.Item == currentHovered)
-            //    {
-            //        if ((DateTime.Now - hoverStarted).TotalMilliseconds >= 500)
-            //        {
-            //            myToolTip.Show(info.Item.Text, lstScriptActions, hitPoint);
-            //        }
-                    
-            //    }
-            //    else
-            //    {
-            //        myToolTip.Hide(lstScriptActions);
-            //        currentHovered = info.Item;
-            //        hoverStarted = DateTime.Now;
-            //    }
+            //    //if (info.Item == currentHovered)
+            //    //{
+            //    //    if ((DateTime.Now - hoverStarted).TotalMilliseconds >= 500)
+            //    //    {
+            //    //        myToolTip.Show(info.Item.Text, lstScriptActions, hitPoint);
+            //    //    }
+
+            //    //}
+            //    //else
+            //    //{
+            //    //    myToolTip.Hide(lstScriptActions);
+            //    //    currentHovered = info.Item;
+            //    //    hoverStarted = DateTime.Now;
+            //    //}
+            //    myToolTip.SetToolTip(lstScriptActions, info.Item.Text);
             //}
             //else
             //{
-            //    myToolTip.Hide(lstScriptActions);
-            //    currentHovered = null;
+            //    //myToolTip.Hide(lstScriptActions);
+            //    //currentHovered = null;
+            //    myToolTip.SetToolTip(lstScriptActions, "");
             //}
         }
 
