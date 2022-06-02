@@ -39,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Year", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Year { get; set; }
 
@@ -50,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Month", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Month { get; set; }
 
@@ -61,6 +63,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Day", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Day { get; set; }
 
@@ -72,6 +75,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Hour", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Hour { get; set; }
 
@@ -83,6 +87,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Minute", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Minute { get; set; }
 
@@ -94,6 +99,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Second", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public string v_Second { get; set; }
 
