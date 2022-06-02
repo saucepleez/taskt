@@ -39,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**#ff22bb** or *ff22bb** or **{{{vHex}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Hex", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Hex { get; set; }
 
