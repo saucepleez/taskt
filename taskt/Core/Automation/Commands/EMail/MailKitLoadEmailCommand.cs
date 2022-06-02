@@ -26,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Text Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_FilePath { get; set; }
 
