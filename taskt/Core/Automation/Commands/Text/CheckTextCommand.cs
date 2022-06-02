@@ -13,9 +13,9 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("Check/Get")]
-    [Attributes.ClassAttributes.Description("This command allows you to check a string")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
+    [Attributes.ClassAttributes.Description("This command allows you to check a Text")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check a Text")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class CheckTextCommand : ScriptCommand
     {
         [XmlAttribute]
