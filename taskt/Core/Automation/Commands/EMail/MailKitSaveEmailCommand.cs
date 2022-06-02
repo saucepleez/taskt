@@ -37,8 +37,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**vPath** or **{{{vPath}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_SavePath { get; set; }
 
