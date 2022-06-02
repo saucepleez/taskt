@@ -59,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**5** or **vValue** or **{{{vValue}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Value { get; set; }
 
