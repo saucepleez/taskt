@@ -195,6 +195,9 @@ namespace taskt.Core.Automation.Commands
 
         public override void addInstance(InstanceCounter counter)
         {
+            var co = (string.IsNullOrEmpty(v_Color)) ? "" : v_Color;
+            counter.addInstance(co, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);
+
             var format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
             var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
             switch (format)
@@ -216,6 +219,9 @@ namespace taskt.Core.Automation.Commands
 
         public override void removeInstance(InstanceCounter counter)
         {
+            var co = (string.IsNullOrEmpty(v_Color)) ? "" : v_Color;
+            counter.removeInstance(co, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);
+
             var format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
             var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
             switch (format)
