@@ -39,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**255** or **{{{vColor}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Excel Color", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_ExcelColor { get; set; }
 
