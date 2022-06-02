@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Serial", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Serial { get; set; }
 
