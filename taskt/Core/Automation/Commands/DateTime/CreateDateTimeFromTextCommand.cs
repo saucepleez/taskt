@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**2000-01-01** or **{{{vText}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Text { get; set; }
 

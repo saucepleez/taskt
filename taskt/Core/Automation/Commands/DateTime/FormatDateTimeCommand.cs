@@ -37,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**MM/dd/yyyy** or **HH:mm:ss** or **{{{vFormat}}}**")]
         [Remarks("Please refer to the Microsoft DateTime.ToString() page for format details")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Format { get; set; }
 

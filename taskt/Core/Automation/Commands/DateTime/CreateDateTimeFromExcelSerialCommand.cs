@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**43210** or **{{{vSerial}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Serial", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_Serial { get; set; }
 
