@@ -135,5 +135,47 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Type: '" + v_TextType + "', Store: '" + v_ResultVariable + "']";
         }
+
+        public override void addInstance(InstanceCounter counter)
+        {
+            var mail = (string.IsNullOrEmpty(v_MailName)) ? "" : v_MailName;
+
+            counter.addInstance(mail, new PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true), true);
+
+            var tp = (string.IsNullOrEmpty(v_TextType)) ? "" : v_TextType.ToLower();
+            switch (tp)
+            {
+                case "date":
+                case "resent-date":
+                    var ins = new PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
+                    var name = (string.IsNullOrEmpty(v_ResultVariable)) ? "" : v_ResultVariable;
+
+                    counter.addInstance(name, ins, false);
+                    counter.addInstance(name, ins, true);
+
+                    break;
+            }
+        }
+
+        public override void removeInstance(InstanceCounter counter)
+        {
+            var mail = (string.IsNullOrEmpty(v_MailName)) ? "" : v_MailName;
+
+            counter.removeInstance(mail, new PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true), true);
+
+            var tp = (string.IsNullOrEmpty(v_TextType)) ? "" : v_TextType.ToLower();
+            switch (tp)
+            {
+                case "date":
+                case "resent-date":
+                    var ins = new PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
+                    var name = (string.IsNullOrEmpty(v_ResultVariable)) ? "" : v_ResultVariable;
+
+                    counter.removeInstance(name, ins, false);
+                    counter.removeInstance(name, ins, true);
+
+                    break;
+            }
+        }
     }
 }
