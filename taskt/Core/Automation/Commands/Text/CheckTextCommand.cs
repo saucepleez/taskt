@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         public string v_CheckParameter { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Case sensitive")]
+        [PropertyDescription("Please Select Case sensitive")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Indicate if only so many characters should be kept")]
         [SampleUsage("**Yes** or **No**")]
