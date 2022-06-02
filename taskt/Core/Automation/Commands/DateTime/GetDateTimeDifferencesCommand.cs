@@ -159,11 +159,17 @@ namespace taskt.Core.Automation.Commands
         {
             string format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
 
+            var prop = new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
+
+            var dt1 = string.IsNullOrEmpty(v_DateTime1) ? "" : v_DateTime1;
+            var dt2 = string.IsNullOrEmpty(v_DateTime2) ? "" : v_DateTime2;
+            counter.addInstance(dt1, prop, true);
+            counter.addInstance(dt2, prop, true);
+
             switch (format)
             {
                 case "datetime":
                     string ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
-                    var prop = new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
                     counter.addInstance(ins, prop, false);
                     counter.addInstance(ins, prop, true);
                     break;
@@ -174,11 +180,16 @@ namespace taskt.Core.Automation.Commands
         {
             string format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
 
+            var prop = new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
+            var dt1 = string.IsNullOrEmpty(v_DateTime1) ? "" : v_DateTime1;
+            var dt2 = string.IsNullOrEmpty(v_DateTime2) ? "" : v_DateTime2;
+            counter.removeInstance(dt1, prop, true);
+            counter.removeInstance(dt2, prop, true);
+
             switch (format)
             {
                 case "datetime":
                     string ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
-                    var prop = new Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true);
                     counter.removeInstance(ins, prop, false);
                     counter.removeInstance(ins, prop, true);
                     break;
