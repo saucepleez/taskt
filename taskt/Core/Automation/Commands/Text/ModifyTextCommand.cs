@@ -4,49 +4,52 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
-    [Attributes.ClassAttributes.Description("This command allows you to trim a string")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
+    [Attributes.ClassAttributes.Description("This command allows you to trim Text, convert Text, etc.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to trim Text, convert Text, etc.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ModifyTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable to modify")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please Supply the Text or Variable to modify")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Select or provide a variable or text value")]
+        [SampleUsage("**Hello** or **{{{vText}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select the case type")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate if only so many characters should be kept")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Upper Case")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Lower Case")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("To Base64 String")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("From Base64 String")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim Start")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Trim End")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please Select Modify Method")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Indicate if only so many characters should be kept")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUISelectionOption("To Upper Case")]
+        [PropertyUISelectionOption("To Lower Case")]
+        [PropertyUISelectionOption("To Base64 String")]
+        [PropertyUISelectionOption("From Base64 String")]
+        [PropertyUISelectionOption("Trim")]
+        [PropertyUISelectionOption("Trim Start")]
+        [PropertyUISelectionOption("Trim End")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Modify Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_ConvertType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the changes")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [PropertyDescription("Please select the variable to receive the changes")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_applyToVariableName { get; set; }
         public ModifyTextCommand()
         {
@@ -75,8 +78,8 @@ namespace taskt.Core.Automation.Commands
                     stringValue = Convert.ToBase64String(textAsBytes);
                     break;
                 case "From Base64 String":
-                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(stringValue);
-                    stringValue = System.Text.ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
+                    byte[] encodedDataAsBytes = Convert.FromBase64String(stringValue);
+                    stringValue = System.Text.Encoding.ASCII.GetString(encodedDataAsBytes);
                     break;
                 case "Trim":
                     stringValue = stringValue.Trim();
@@ -116,30 +119,30 @@ namespace taskt.Core.Automation.Commands
         }
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Convert '" + v_userVariableName + "' " + v_ConvertType + "']";
+            return base.GetDisplayValue() + " [Convert '" + v_userVariableName + "', Method: '" + v_ConvertType + "', Store: '" + v_applyToVariableName + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_userVariableName))
-            {
-                this.validationResult += "Text to modify is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_ConvertType))
-            {
-                this.validationResult += "Case type is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariableName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_userVariableName))
+        //    {
+        //        this.validationResult += "Text to modify is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_ConvertType))
+        //    {
+        //        this.validationResult += "Case type is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
