@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,29 +17,36 @@ namespace taskt.Core.Automation.Commands
     public class WriteTextFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the file (ex. C:\\temp\\myfile.txt, {{{vFilePath}}}")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
+        [PropertyDescription("Please indicate the path to the file")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the text file.")]
+        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
+        [Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the text to be written. [crLF] inserts a newline.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate the text should be written to files.")]
-        [Attributes.PropertyAttributes.SampleUsage("**{{{vText}}}** or **Hello World!**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the text to be written. [crLF] inserts a newline.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Indicate the text should be written to files.")]
+        [SampleUsage("**{{{vText}}}** or **Hello World!**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         public string v_TextToWrite { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please select overwrite option (Default is Overwrite)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Append")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Overwrite")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate whether this command should append the text to or overwrite all existing text in the file")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Append** or **Overwrite**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please select overwrite option")]
+        [InputSpecification("Indicate whether this command should append the text to or overwrite all existing text in the file")]
+        [SampleUsage("Select from **Append** or **Overwrite**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Append")]
+        [PropertyUISelectionOption("Overwrite")]
+        [PropertyIsOptional(true, "Overwrite")]
         public string v_Overwrite { get; set; }
         public WriteTextFileCommand()
         {
@@ -54,15 +62,15 @@ namespace taskt.Core.Automation.Commands
 
             //convert variables
             string filePath;
-            if (Core.FilePathControls.containsFileCounter(v_FilePath, engine))
+            if (FilePathControls.containsFileCounter(v_FilePath, engine))
             {
-                filePath = Core.FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".txt");
+                filePath = FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".txt");
             }
             else
             {
                 filePath = v_FilePath.ConvertToUserVariable(sender);
-                filePath = Core.FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
-                if (!Core.FilePathControls.hasExtension(filePath))
+                filePath = FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
+                if (!FilePathControls.hasExtension(filePath))
                 {
                     filePath += ".txt";
                 }
@@ -91,9 +99,12 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToWrite", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Overwrite", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToWrite", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Overwrite", this, editor));
+
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
         }
@@ -104,17 +115,17 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [" + v_Overwrite + " to '" + v_FilePath + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_FilePath))
-            {
-                this.validationResult += "File is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_FilePath))
+        //    {
+        //        this.validationResult += "File is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
