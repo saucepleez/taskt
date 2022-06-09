@@ -95,5 +95,105 @@ namespace taskt.Core
                 cnt++;
             }
         }
+
+
+        public static string formatFilePath_ContainsFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
+        {
+            string f0 = engine.engineSettings.wrapVariableMarker("FileCounter.F0");
+            string f00 = engine.engineSettings.wrapVariableMarker("FileCounter.F00");
+            string f000 = engine.engineSettings.wrapVariableMarker("FileCounter.F000");
+
+            int fileCount = 1;
+
+            while (true)
+            {
+                string replPath = vPath.Replace(f0, fileCount.ToString()).Replace(f00, fileCount.ToString("00")).Replace(f000, fileCount.ToString("000"));
+                string path = replPath.ConvertToUserVariable(engine);
+
+                if (!hasFolderPath(path))
+                {
+                    path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(engine.FileName), path);
+                }
+
+                // extenstion
+                if (!hasExtension(path))
+                {
+                    path = path.EndsWith(".") ? path + extension : path + "." + extension;
+                }
+
+                // check existance
+                if (System.IO.File.Exists(path))
+                {
+                    // use if exists
+                    if (useExistsFile)
+                    {
+                        return path;
+                    }
+                }
+                else
+                {
+                    // use if not exists
+                    if (!useExistsFile)
+                    {
+                        return path;
+                    }
+                }
+
+                fileCount++;    // next count
+            }
+        }
+
+        public static string formatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        {
+            string path = vPath.ConvertToUserVariable(engine);
+
+            if (!hasFolderPath(path))
+            {
+                path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(engine.FileName), path);
+            }
+
+            // no extension
+            if (!hasExtension(path) && allowNoExtensionFile)
+            {
+                if (checkFileExistance)
+                {
+                    // no extension & exists
+                    if (System.IO.File.Exists(path))
+                    {
+                        return path;
+                    }
+                }
+                else
+                {
+                    return path;
+                }
+            }
+
+            if (!hasExtension(path)) 
+            {
+                if (checkFileExistance)
+                {
+                    // add extension loop
+                    foreach(var extension in extensions)
+                    {
+                        string testPath = path.EndsWith(".") ? path + extension : path + "." + extension;
+                        if (System.IO.File.Exists(testPath))
+                        {
+                            return testPath;
+                        }
+                    }
+                    // no exists
+                    return path.EndsWith(".") ? path + extensions[0] : path + "." + extensions[0];
+                }
+                else
+                {
+                    return path.EndsWith(".") ? path + extensions[0] : path + "." + extensions[0];
+                }
+            }
+            else
+            {
+                return path;
+            }
+        }
     }
 }
