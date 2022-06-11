@@ -62,19 +62,20 @@ namespace taskt.Core.Automation.Commands
 
             //convert variables
             string filePath;
-            if (FilePathControls.containsFileCounter(v_FilePath, engine))
-            {
-                filePath = FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".txt");
-            }
-            else
-            {
-                filePath = v_FilePath.ConvertToUserVariable(sender);
-                filePath = FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
-                if (!FilePathControls.hasExtension(filePath))
-                {
-                    filePath += ".txt";
-                }
-            }
+            //if (FilePathControls.containsFileCounter(v_FilePath, engine))
+            //{
+            //    filePath = FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".txt");
+            //}
+            //else
+            //{
+            //    filePath = v_FilePath.ConvertToUserVariable(sender);
+            //    filePath = FilePathControls.formatFilePath(filePath, (Engine.AutomationEngineInstance)sender);
+            //    if (!FilePathControls.hasExtension(filePath))
+            //    {
+            //        filePath += ".txt";
+            //    }
+            //}
+            filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", false);
             
             var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
 
