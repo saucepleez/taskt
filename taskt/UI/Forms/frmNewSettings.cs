@@ -569,7 +569,10 @@ namespace taskt.UI.Forms
 
             createCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, "RequireListenerAuthenticationKey", true);
             createLabel("lblAuthenicationKey", "Authentication Key", FontSize.Small, true);
-            createTextBox("txtAuthenicationKey", 480, newAppSettings, "ListenerSettings.AuthKey", true);
+            TextBox txtAuthKey = createTextBox("txtAuthenicationKey", 480, newAppSettings, "ListenerSettings.AuthKey", true);
+            Button btnRegenerateAuthKey = createButton("btnRegenerateAuthKey", "Regenerate", 140, true);
+
+            btnRegenerateAuthKey.Click += (sender, e) => btnRegenerateAuthKey_Clicked(sender, e, txtAuthKey);
 
             createCheckBox("chkEnableWhitelit", "Enable IP Verification (Seperate with comma)", newAppSettings.ListenerSettings, "EnableWhitelist", true);
             TextBox txtWhite = createTextBox("txtWhitelist", 480, newAppSettings.ListenerSettings, "IPWhiteList", true);
@@ -989,6 +992,12 @@ namespace taskt.UI.Forms
             {
                 SetupListeningUI();
             }
+        }
+        
+        private void btnRegenerateAuthKey_Clicked(object sender, EventArgs e, TextBox txtAuth)
+        {
+            newAppSettings.ListenerSettings.AuthKey = Guid.NewGuid().ToString();
+            txtAuth.Text = newAppSettings.ListenerSettings.AuthKey;
         }
 
         #endregion
