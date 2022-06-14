@@ -65,12 +65,22 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //convert variables
-            var filePath = v_FilePath.ConvertToUserVariable(sender);
+            //var filePath = v_FilePath.ConvertToUserVariable(sender);
 
-            filePath = FilePathControls.formatFilePath(filePath, engine);
-            if (!System.IO.File.Exists(filePath) && !FilePathControls.hasExtension(filePath))
+            //filePath = FilePathControls.formatFilePath(filePath, engine);
+            //if (!System.IO.File.Exists(filePath) && !FilePathControls.hasExtension(filePath))
+            //{
+            //    filePath += ".txt";
+            //}
+
+            string filePath;
+            if (FilePathControls.containsFileCounter(v_FilePath, engine))
             {
-                filePath += ".txt";
+                filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", true);
+            }
+            else
+            {
+                filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt", true, true);
             }
 
             //var readPreference = v_ReadOption.ConvertToUserVariable(sender).ToUpperInvariant();

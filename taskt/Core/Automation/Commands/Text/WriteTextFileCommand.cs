@@ -75,7 +75,16 @@ namespace taskt.Core.Automation.Commands
             //        filePath += ".txt";
             //    }
             //}
-            filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", false);
+            //filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", false);
+
+            if (FilePathControls.containsFileCounter(v_FilePath, engine))
+            {
+                filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", false);
+            }
+            else
+            {
+                filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt");
+            }
             
             var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
 
