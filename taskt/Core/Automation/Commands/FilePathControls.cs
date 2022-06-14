@@ -195,5 +195,10 @@ namespace taskt.Core
                 return path;
             }
         }
+
+        public static string formatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        {
+            return formatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
+        }
     }
 }
