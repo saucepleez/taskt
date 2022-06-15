@@ -53,18 +53,26 @@ namespace taskt.Core.Automation.Commands
             var image = User32Functions.CaptureWindow(targetWindowName);
 
             string outputFile;
-            if (Core.FilePathControls.containsFileCounter(v_FilePath, engine))
+            //if (Core.FilePathControls.containsFileCounter(v_FilePath, engine))
+            //{
+            //     outputFile= Core.FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".png");
+            //}
+            //else
+            //{
+            //    outputFile = v_FilePath.ConvertToUserVariable(sender);
+            //    outputFile = Core.FilePathControls.formatFilePath(outputFile, (Engine.AutomationEngineInstance)sender);
+            //    if (!Core.FilePathControls.hasExtension(outputFile))
+            //    {
+            //        outputFile += ".png";
+            //    }
+            //}
+            if (FilePathControls.containsFileCounter(v_FilePath, engine))
             {
-                 outputFile= Core.FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".png");
+                outputFile = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "png");
             }
             else
             {
-                outputFile = v_FilePath.ConvertToUserVariable(sender);
-                outputFile = Core.FilePathControls.formatFilePath(outputFile, (Engine.AutomationEngineInstance)sender);
-                if (!Core.FilePathControls.hasExtension(outputFile))
-                {
-                    outputFile += ".png";
-                }
+                outputFile = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "png");
             }
 
             image.Save(outputFile);
