@@ -60,22 +60,24 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            //define script path
-            var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
-            scriptPath = Core.FilePathControls.formatFilePath(scriptPath, (Engine.AutomationEngineInstance)sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            if (!System.IO.File.Exists(scriptPath) && !Core.FilePathControls.hasExtension(scriptPath))
-            {
-                string[] exts = new string[] { ".ps1", ".bat" };
-                foreach(string ext in exts)
-                {
-                    if (System.IO.File.Exists(scriptPath + ext))
-                    {
-                        scriptPath += ext;
-                        break;
-                    }
-                }
-            }
+            //define script path
+            //var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
+            //scriptPath = Core.FilePathControls.formatFilePath(scriptPath, (Engine.AutomationEngineInstance)sender);
+            //if (!System.IO.File.Exists(scriptPath) && !Core.FilePathControls.hasExtension(scriptPath))
+            //{
+            //    string[] exts = new string[] { ".ps1", ".bat" };
+            //    foreach(string ext in exts)
+            //    {
+            //        if (System.IO.File.Exists(scriptPath + ext))
+            //        {
+            //            scriptPath += ext;
+            //            break;
+            //        }
+            //    }
+            //}
+            string scriptPath = FilePathControls.formatFilePath_NoFileCounter(v_ScriptPath, engine, new List<string>() { "ps1", "bat" }, true);
 
             //get script text
             var psCommand = System.IO.File.ReadAllText(scriptPath);

@@ -82,24 +82,26 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = DateTime.Now.ToString();
 
-            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            
             var vSheet = v_SheetName.ConvertToUserVariable(sender);
             var vKeyColumn = v_KeyColumn.ConvertToUserVariable(sender);
             var vValueColumn = v_ValueColumn.ConvertToUserVariable(sender);
 
-            vFilePath = Core.FilePathControls.formatFilePath(vFilePath, engine);
-            if (!System.IO.File.Exists(vFilePath) && !FilePathControls.hasExtension(vFilePath))
-            {
-                string[] exts = new string[] { ".xlsx", ".xlsm", ".xls"};
-                foreach (string ext in exts)
-                {
-                    if (System.IO.File.Exists(vFilePath + ext))
-                    {
-                        vFilePath += ext;
-                        break;
-                    }
-                }
-            }
+            //var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            //vFilePath = Core.FilePathControls.formatFilePath(vFilePath, engine);
+            //if (!System.IO.File.Exists(vFilePath) && !FilePathControls.hasExtension(vFilePath))
+            //{
+            //    string[] exts = new string[] { ".xlsx", ".xlsm", ".xls"};
+            //    foreach (string ext in exts)
+            //    {
+            //        if (System.IO.File.Exists(vFilePath + ext))
+            //        {
+            //            vFilePath += ext;
+            //            break;
+            //        }
+            //    }
+            //}
+            string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
 
             //var vDictionaryName = v_DictionaryName;
             //var vDictionary = LookupVariable(engine); 

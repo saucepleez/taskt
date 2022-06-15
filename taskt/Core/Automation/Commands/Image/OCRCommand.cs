@@ -45,21 +45,21 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var filePath = v_FilePath.ConvertToUserVariable(engine);
-            filePath = Core.FilePathControls.formatFilePath(filePath, engine);
-
-            if (!System.IO.File.Exists(filePath) && !Core.FilePathControls.hasExtension(filePath)) ;
-            {
-                string[] exts = new string[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
-                foreach(string ext in exts)
-                {
-                    if (System.IO.File.Exists(filePath + ext))
-                    {
-                        filePath += ext;
-                        break;
-                    }
-                }
-            }
+            //var filePath = v_FilePath.ConvertToUserVariable(engine);
+            //filePath = Core.FilePathControls.formatFilePath(filePath, engine);
+            //if (!System.IO.File.Exists(filePath) && !Core.FilePathControls.hasExtension(filePath))
+            //{
+            //    string[] exts = new string[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+            //    foreach(string ext in exts)
+            //    {
+            //        if (System.IO.File.Exists(filePath + ext))
+            //        {
+            //            filePath += ext;
+            //            break;
+            //        }
+            //    }
+            //}
+            string filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "png", "jpg", "jpeg", "bmp", "gif" }, true);
 
             var ocrEngine = new OneNoteOCRDll.OneNoteOCR();
             var arr = ocrEngine.OcrTexts(filePath).ToArray();

@@ -65,14 +65,23 @@ namespace taskt.Core.Automation.Commands
             string targetPath = v_TargetPath.ConvertToUserVariable(engine);
             bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 
-            string savePath = v_SavePath.ConvertToUserVariable(engine);
+            //string savePath = v_SavePath.ConvertToUserVariable(engine);
+            string savePath;
 
             if (!isURL)
             {
-                savePath = FilePathControls.formatFilePath(savePath, engine);
-                if (!FilePathControls.hasExtension(savePath))
+                //savePath = FilePathControls.formatFilePath(savePath, engine);
+                //if (!FilePathControls.hasExtension(savePath))
+                //{
+                //    savePath += ".lnk";
+                //}
+                if (FilePathControls.containsFileCounter(v_SavePath, engine))
                 {
-                    savePath += ".lnk";
+                    savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "lnk");
+                }
+                else
+                {
+                    savePath = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
                 }
 
                 string description = v_Description.ConvertToUserVariable(engine);
@@ -91,11 +100,20 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                savePath = FilePathControls.formatFilePath(savePath, engine);
-                if (!FilePathControls.hasExtension(savePath))
+                //savePath = FilePathControls.formatFilePath(savePath, engine);
+                //if (!FilePathControls.hasExtension(savePath))
+                //{
+                //    savePath += ".url";
+                //}
+                if (FilePathControls.containsFileCounter(v_SavePath, engine))
                 {
-                    savePath += ".url";
+                    savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "url");
                 }
+                else
+                {
+                    savePath = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "url");
+                }
+
                 string outputText = "[InternetShortcut]\nURL=" + targetPath;
                 WriteTextFileCommand writeText = new WriteTextFileCommand
                 {

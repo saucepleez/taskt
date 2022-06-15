@@ -33,20 +33,23 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
-            scriptPath = Core.FilePathControls.formatFilePath(scriptPath, (Engine.AutomationEngineInstance)sender);
-            if (!System.IO.File.Exists(scriptPath) && !Core.FilePathControls.hasExtension(scriptPath))
-            {
-                string[] exts = new string[] { ".bat", ".vbs", ".js", ".wsf" };
-                foreach(string ext in exts)
-                {
-                    if (System.IO.File.Exists(scriptPath + ext))
-                    {
-                        scriptPath += ext;
-                        break;
-                    }
-                }
-            }
+            var engine = (Engine.AutomationEngineInstance)sender;
+
+            //var scriptPath = v_ScriptPath.ConvertToUserVariable(sender);
+            //scriptPath = Core.FilePathControls.formatFilePath(scriptPath, (Engine.AutomationEngineInstance)sender);
+            //if (!System.IO.File.Exists(scriptPath) && !Core.FilePathControls.hasExtension(scriptPath))
+            //{
+            //    string[] exts = new string[] { ".bat", ".vbs", ".js", ".wsf" };
+            //    foreach(string ext in exts)
+            //    {
+            //        if (System.IO.File.Exists(scriptPath + ext))
+            //        {
+            //            scriptPath += ext;
+            //            break;
+            //        }
+            //    }
+            //}
+            string scriptPath = FilePathControls.formatFilePath_NoFileCounter(v_ScriptPath, engine, new List<string>() { "bat", "vbs", "js", "wsf" }, true);
 
             System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
             scriptProc.StartInfo.FileName = scriptPath;
