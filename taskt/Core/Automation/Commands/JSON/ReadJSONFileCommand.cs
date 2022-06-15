@@ -46,12 +46,13 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var filePath = FilePathControls.formatFilePath(v_FilePath.ConvertToUserVariable(sender), engine);
 
-            if (!FilePathControls.hasExtension(filePath))
-            {
-                filePath += ".json";
-            }
+            //var filePath = FilePathControls.formatFilePath(v_FilePath.ConvertToUserVariable(sender), engine);
+            //if (!FilePathControls.hasExtension(filePath))
+            //{
+            //    filePath += ".json";
+            //}
+            string filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "json", true);
 
             ScriptCommand readFile = new ReadTextFileCommand
             {
