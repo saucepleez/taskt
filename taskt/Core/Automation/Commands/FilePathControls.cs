@@ -20,18 +20,18 @@ namespace taskt.Core
             return (System.IO.Path.GetExtension(path).Length > 0);
         }
 
-        public static string formatFilePath(string path, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            if (hasFolderPath(path))
-            {
-                return path;
-            }
-            else
-            {
-                //return engine.engineSettings.;
-                return System.IO.Path.GetDirectoryName(engine.FileName) + "\\" + path;
-            }
-        }
+        //public static string formatFilePath(string path, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    if (hasFolderPath(path))
+        //    {
+        //        return path;
+        //    }
+        //    else
+        //    {
+        //        //return engine.engineSettings.;
+        //        return System.IO.Path.GetDirectoryName(engine.FileName) + "\\" + path;
+        //    }
+        //}
 
         public static bool containsFileCounter(string path, Core.Automation.Engine.AutomationEngineInstance engine)
         {
