@@ -48,11 +48,20 @@ namespace taskt.Core.Automation.Commands
 
             //convert variables
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var fileName = v_FileName.ConvertToUserVariable(engine);
-            fileName = Core.FilePathControls.formatFilePath(fileName, engine);
-            if (!Core.FilePathControls.hasExtension(fileName))
+            //var fileName = v_FileName.ConvertToUserVariable(engine);
+            //fileName = Core.FilePathControls.formatFilePath(fileName, engine);
+            //if (!Core.FilePathControls.hasExtension(fileName))
+            //{
+            //    fileName += ".docx";
+            //}
+            string fileName;
+            if (FilePathControls.containsFileCounter(v_FileName, engine))
             {
-                fileName += ".docx";
+                fileName = FilePathControls.formatFilePath_ContainsFileCounter(v_FileName, engine, "docx");
+            }
+            else
+            {
+                fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "docx");
             }
 
             //get word app object

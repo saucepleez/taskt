@@ -43,20 +43,21 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
-            vFilePath = Core.FilePathControls.formatFilePath(vFilePath, engine);
-            if (!System.IO.File.Exists(vFilePath) && !Core.FilePathControls.hasExtension(vFilePath))
-            {
-                string[] exts = new string[] { ".docx", "*.docm", "*doc", "*.odt", "*.rtf" };
-                foreach(string ext in exts)
-                {
-                    if (System.IO.File.Exists(vFilePath + ext))
-                    {
-                        vFilePath += ext;
-                        break;
-                    }
-                }
-            }
+            //var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            //vFilePath = Core.FilePathControls.formatFilePath(vFilePath, engine);
+            //if (!System.IO.File.Exists(vFilePath) && !Core.FilePathControls.hasExtension(vFilePath))
+            //{
+            //    string[] exts = new string[] { ".docx", "*.docm", "*doc", "*.odt", "*.rtf" };
+            //    foreach(string ext in exts)
+            //    {
+            //        if (System.IO.File.Exists(vFilePath + ext))
+            //        {
+            //            vFilePath += ext;
+            //            break;
+            //        }
+            //    }
+            //}
+            string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "docx", "docm", "doc", "odt", "rtf" }, true);
 
             var wordObject = engine.GetAppInstance(vInstance);
             Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
