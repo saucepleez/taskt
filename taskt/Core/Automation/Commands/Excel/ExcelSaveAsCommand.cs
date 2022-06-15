@@ -52,11 +52,20 @@ namespace taskt.Core.Automation.Commands
 
             //convert variables
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var fileName = v_FileName.ConvertToUserVariable(engine);
-            fileName = Core.FilePathControls.formatFilePath(fileName, engine);
-            if (!Core.FilePathControls.hasExtension(fileName))
+            //var fileName = v_FileName.ConvertToUserVariable(engine);
+            //fileName = Core.FilePathControls.formatFilePath(fileName, engine);
+            //if (!Core.FilePathControls.hasExtension(fileName))
+            //{
+            //    fileName += ".xlsx";
+            //}
+            string fileName;
+            if (FilePathControls.containsFileCounter(v_FileName, engine))
             {
-                fileName += ".xlsx";
+                fileName = FilePathControls.formatFilePath_ContainsFileCounter(v_FileName, engine, "xlsx");
+            }
+            else
+            {
+                fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
             }
 
             //get excel app object
@@ -69,7 +78,6 @@ namespace taskt.Core.Automation.Commands
             excelInstance.DisplayAlerts = false;
             excelInstance.ActiveWorkbook.SaveAs(fileName);
             excelInstance.DisplayAlerts = true;
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

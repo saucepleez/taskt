@@ -60,20 +60,21 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
-            vFilePath = Core.FilePathControls.formatFilePath(vFilePath, engine);
-            if (!System.IO.File.Exists(vFilePath) && !Core.FilePathControls.hasExtension(vFilePath))
-            {
-                string[] exts = new string[] { ".xlsx", ".xlsm", ".xls", ".csv", ".ods" };
-                foreach(string ext in exts)
-                {
-                    if (System.IO.File.Exists(vFilePath + ext))
-                    {
-                        vFilePath += ext;
-                        break;
-                    }
-                }
-            }
+            //var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            //vFilePath = Core.FilePathControls.formatFilePath(vFilePath, engine);
+            //if (!System.IO.File.Exists(vFilePath) && !Core.FilePathControls.hasExtension(vFilePath))
+            //{
+            //    string[] exts = new string[] { ".xlsx", ".xlsm", ".xls", ".csv", ".ods" };
+            //    foreach(string ext in exts)
+            //    {
+            //        if (System.IO.File.Exists(vFilePath + ext))
+            //        {
+            //            vFilePath += ext;
+            //            break;
+            //        }
+            //    }
+            //}
+            string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls", "csv", "ods" }, true);
 
             var excelObject = engine.GetAppInstance(vInstance);
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
