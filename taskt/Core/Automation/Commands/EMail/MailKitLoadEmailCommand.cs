@@ -21,13 +21,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vPath** or **{{{vPath}}}**")]
+        [SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Text Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
@@ -55,7 +55,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var path = v_FilePath.ConvertToUserVariable(engine);
+            //var path = v_FilePath.ConvertToUserVariable(engine);
+            string path = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "eml", "msg", "txt" }, true);
 
             var mail = MimeKit.MimeMessage.Load(path);
             mail.StoreInUserVariable(engine, v_MailName);

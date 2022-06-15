@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vPath** or **{{{vPath}}}**")]
+        [SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
@@ -55,7 +55,16 @@ namespace taskt.Core.Automation.Commands
 
             var mail = v_MailName.GetMailKitMailVariable(engine);
 
-            var path = v_SavePath.ConvertToUserVariable(engine);
+            //var path = v_SavePath.ConvertToUserVariable(engine);
+            string path;
+            if (FilePathControls.containsFileCounter(v_SavePath, engine))
+            {
+                path = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "eml");
+            }
+            else
+            {
+                path = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "eml");
+            }
 
             mail.WriteTo(path);
         }
