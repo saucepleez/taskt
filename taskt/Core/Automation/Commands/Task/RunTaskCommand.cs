@@ -85,7 +85,9 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             Core.Automation.Engine.AutomationEngineInstance currentScriptEngine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var startFile = v_taskPath.ConvertToUserVariable(sender);
+
+            //var startFile = v_taskPath.ConvertToUserVariable(sender);
+            string startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, currentScriptEngine, "xml", true);
 
             //create variable list
             var variableList = new List<Script.ScriptVariable>();
