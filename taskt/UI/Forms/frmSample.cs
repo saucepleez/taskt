@@ -23,6 +23,11 @@ namespace taskt.UI.Forms
             this.parentForm = parentForm;
         }
 
+        public frmSample(UI.Forms.frmScriptBuilder parentForm, string searchKeyword) : this(parentForm)
+        {
+            txtSearchBox.Text = searchKeyword;
+        }
+
         private void frmSample_Load(object sender, EventArgs e)
         {
             samplePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Samples";
@@ -76,6 +81,11 @@ namespace taskt.UI.Forms
 
             tvSamples.EndUpdate();
             //tvSamples.ExpandAll();
+
+            if (txtSearchBox.Text.Length > 0)
+            {
+                filterSampleProcess();
+            }
         }
         private void frmSample_KeyDown(object sender, KeyEventArgs e)
         {

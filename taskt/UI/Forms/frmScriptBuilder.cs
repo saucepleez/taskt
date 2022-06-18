@@ -4821,6 +4821,19 @@ namespace taskt.UI.Forms
             }
         }
 
+        private void sampleThisCommandTVCommandMenuStrip_Click(object sender, EventArgs e)
+        {
+            if (tvCommands.SelectedNode == null)
+            {
+                return;
+            }
+            string commandName = GetSelectedCommandFullName().Split('-')[1].Trim();
+            using (var frm = new frmSample(this, commandName))
+            {
+                frm.ShowDialog();
+            }
+        }
+
         private void highlightCmdTVCommandMenuStrip_Click(object sender, EventArgs e)
         {
             if (tvCommands.SelectedNode == null)
@@ -4901,6 +4914,8 @@ namespace taskt.UI.Forms
             this.lastEditorPosition = editor.Location;
         }
         #endregion
+
+
     }
 
 }
