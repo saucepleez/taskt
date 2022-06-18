@@ -271,5 +271,27 @@ namespace taskt.Core.Automation.Commands
             // not found
             throw new Exception("Window Name '" + windowName + "' not found");
         }
+
+        public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
+        {
+            string currentText = cmb.Text;
+
+            cmb.BeginUpdate();
+            cmb.Items.Clear();
+
+            var winList = GetAllWindowTitles();
+
+            foreach(var title in winList)
+            {
+                cmb.Items.Add(title);
+            }
+
+            cmb.EndUpdate();
+
+            if (winList.Contains(currentText))
+            {
+                cmb.Text = currentText;
+            }
+        }
     }
 }
