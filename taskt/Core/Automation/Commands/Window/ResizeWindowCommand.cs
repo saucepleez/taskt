@@ -18,12 +18,13 @@ namespace taskt.Core.Automation.Commands
     public class ResizeWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyDescription("Please enter or select the window that you want to resize.")]
         [InputSpecification("Input or Type the name of the window that you want to resize.")]
         [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Up-to-date", "lnkUpToDate_Click")]
         [PropertyIsWindowNamesList(true)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -183,6 +184,11 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Size (" + v_XWindowSize + "," + v_YWindowSize + ")]";
+        }
+        private void lnkUpToDate_Click(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
+            WindowNameControls.UpdateWindowTitleCombobox(cmb);
         }
 
         //public override bool IsValidate(frmCommandEditor editor)

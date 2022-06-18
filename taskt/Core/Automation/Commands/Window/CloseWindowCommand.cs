@@ -19,11 +19,12 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyDescription("Please enter or select the window that you want to close. (ex. Notepad, %kwd_current_window%, {{{vWindow}}})")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Input or Type the name of the window that you want to close.")]
         [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Up-to-date", "lnkUpToDate_Click")]
         [PropertyIsWindowNamesList(true)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -157,6 +158,12 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Target Window: " + v_WindowName + "]";
+        }
+
+        private void lnkUpToDate_Click(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
+            WindowNameControls.UpdateWindowTitleCombobox(cmb);
         }
 
         //public override bool IsValidate(frmCommandEditor editor)

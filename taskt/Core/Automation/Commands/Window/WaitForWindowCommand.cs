@@ -19,11 +19,12 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyDescription("Please enter or select the window name that you are waiting for to exist.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Input or Type the name of the window that you want to wait to exist.")]
         [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Up-to-date", "lnkUpToDate_Click")]
         [PropertyIsWindowNamesList(true)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -201,6 +202,12 @@ namespace taskt.Core.Automation.Commands
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Target Window: '" + v_WindowName + "', Wait Up To " + v_LengthToWait + " seconds]";
+        }
+
+        private void lnkUpToDate_Click(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
+            WindowNameControls.UpdateWindowTitleCombobox(cmb);
         }
 
         //public override bool IsValidate(frmCommandEditor editor)
