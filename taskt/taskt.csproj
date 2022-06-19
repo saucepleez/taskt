@@ -1000,6 +1000,7 @@
     <EmbeddedResource Include="UI\Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="latest.json" />
     <None Include="LICENSE" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
