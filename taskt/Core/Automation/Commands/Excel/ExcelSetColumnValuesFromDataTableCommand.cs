@@ -59,9 +59,9 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**1** or **2** or **{{{vRow}}}**")]
         [Remarks("")]
+        [PropertyIsOptional(true, "1")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Start Row", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_RowStart { get; set; }
 
         [XmlAttribute]
@@ -160,6 +160,10 @@ namespace taskt.Core.Automation.Commands
 
             //int rowStart = int.Parse(v_RowStart.ConvertToUserVariable(engine));
             //int rowEnd = int.Parse(v_RowEnd.ConvertToUserVariable(engine));
+            if (String.IsNullOrEmpty(v_RowStart))
+            {
+                v_RowStart = "1";
+            }
             int rowStart = v_RowStart.ConvertToUserVariableAsInteger("Row Start", engine);
             int rowEnd;
             if (String.IsNullOrEmpty(v_RowEnd))

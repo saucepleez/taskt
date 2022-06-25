@@ -58,9 +58,9 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
         [Remarks("")]
+        [PropertyIsOptional(true, "A or 1")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         public string v_ColumnStart { get; set; }
 
         [XmlAttribute]
@@ -141,6 +141,10 @@ namespace taskt.Core.Automation.Commands
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
+                    if (String.IsNullOrEmpty(v_ColumnStart))
+                    {
+                        v_ColumnStart = "A";
+                    }
                     columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
@@ -155,6 +159,10 @@ namespace taskt.Core.Automation.Commands
                 case "rc":
                     //columnStartIndex = int.Parse(v_ColumnStart.ConvertToUserVariable(engine));
                     //columnEndIndex = int.Parse(v_ColumnEnd.ConvertToUserVariable(engine));
+                    if (String.IsNullOrEmpty(v_ColumnStart))
+                    {
+                        v_ColumnStart = "1";
+                    }
                     columnStartIndex = v_ColumnStart.ConvertToUserVariableAsInteger("Column Start", engine);
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
