@@ -205,5 +205,59 @@ namespace taskt.Core
         {
             return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
         }
+
+        public static int getLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
+        {
+            return getLastRowIndex(sheet, getColumnIndex(sheet, column), startRow, targetType);
+        }
+
+        public static int getLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
+        {
+            int lastRow = startRow;
+            switch (targetType.ToLower())
+            {
+                case "formula":
+                    while ((string)(((Range)sheet.Cells[lastRow][column]).Formula) != "")
+                    {
+                        lastRow++;
+                    }
+                    break;
+
+                default:
+                    while((string)(((Range)sheet.Cells[lastRow][column]).Text) != "")
+                    {
+                        lastRow++;
+                    }
+                    break;
+            }
+            return lastRow;
+        }
+
+        public static int getLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
+        {
+            return getLastColumnIndex(sheet, row, getColumnIndex(sheet, startColum), targetType);
+        }
+
+        public static int getLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
+        {
+            int lastColumn = startColum;
+            switch (targetType.ToLower())
+            {
+                case "formula":
+                    while ((string)(((Range)sheet.Cells[row][lastColumn]).Formula) != "")
+                    {
+                        lastColumn++;
+                    }
+                    break;
+
+                default:
+                    while ((string)(((Range)sheet.Cells[row][lastColumn]).Text) != "")
+                    {
+                        lastColumn++;
+                    }
+                    break;
+            }
+            return lastColumn;
+        }
     }
 }
