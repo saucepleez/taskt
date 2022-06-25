@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
         [Remarks("")]
-        [PropertyIsOptional(true, "End of Column")]
+        [PropertyIsOptional(true, "End of DataTable Column")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
         public string v_ColumnEnd { get; set; }
