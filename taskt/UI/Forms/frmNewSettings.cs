@@ -309,6 +309,15 @@ namespace taskt.UI.Forms
             createLabel("lblResource", "If you want to update the WebDriver (chromedriver.exe etc),\nopen the Resources folder and overwrite the file.", FontSize.Small, true);
             Button btnRes = createButton("btnOpenResources", "Open Resources Folder", 280, true);
             btnRes.Click += (sender, e) => btnShowRecoures_Click(sender, e);
+
+            createLabel("lblWebDriverTitle", "Check WebDrivers", FontSize.Normal, true);
+            Button btnChrome = createButton("btnChrome", "Chrome Driver", 280, true);
+            Button btnEdge = createButton("btnEdge", "Edge Driver", 280, true);
+            Button btnGecko = createButton("btnGecko", "Gecko Driver (Firefox)", 280, true);
+
+            btnChrome.Click += (sender, e) => btnChromeDriver_Click(sender, e);
+            btnEdge.Click += (sender, e) => btnEdgeDriver_Click(sender, e);
+            btnGecko.Click += (sender, e) => btnGeckoDriver_Click(sender, e);
         }
         private void showApplicationScriptFileSettings()
         {
@@ -1158,6 +1167,21 @@ namespace taskt.UI.Forms
             var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
             string path = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
             System.Diagnostics.Process.Start(path);
+        }
+
+        private void btnChromeDriver_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.ChromeDriverURL);
+        }
+
+        private void btnEdgeDriver_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.EdgeDriverURL);
+        }
+
+        private void btnGeckoDriver_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.GeckoDriverURL);
         }
 
         private void btnImportSettings_Click(object sender, EventArgs e)
