@@ -62,7 +62,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "A or 1")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         public string v_ColumnStart { get; set; }
 
         [XmlAttribute]
@@ -74,7 +73,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Last Column")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("End Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         public string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
