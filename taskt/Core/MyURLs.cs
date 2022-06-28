@@ -16,6 +16,10 @@ namespace taskt.Core
         public const string GitterURL = "https://gitter.im/taskt-rpa/Lobby";
         public const string WikiBaseURL = "https://github.com/saucepleez/taskt-wiki/blob/master/";
 
+        public const string ChromeDriverURL = "https://chromedriver.chromium.org/downloads";
+        public const string EdgeDriverURL = "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/";
+        public const string GeckoDriverURL = "https://github.com/mozilla/geckodriver/releases/";
+
         public static string GetWikiURL(string commandName, string groupName)
         {
             string page = commandName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
