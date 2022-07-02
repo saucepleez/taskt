@@ -37,7 +37,7 @@ taskt can perform automation on both web and desktop applications, simulating th
 
 
 ![How can I get started?](https://i.imgur.com/CkESBRT.png)
-Find and download the latest signed release by clicking [HERE](https://github.com/saucepleez/taskt/releases/). Extract to any folder and double-click 'taskt.exe'.  taskt will ask if you want to create a scripts folder to store your scripts as well as copy and deploy sample files.  You can also build directly from source -- take the latest from the master branch!
+Find and download the latest signed release by clicking [HERE](https://github.com/rcktrncn/taskt/releases/). Extract to any folder and double-click 'taskt.exe'.  taskt will ask if you want to create a scripts folder to store your scripts as well as copy and deploy sample files.  You can also build directly from source -- take the latest from the master branch!
 
 
 ![What does taskt Cost?](https://i.imgur.com/fzliKyN.png)
