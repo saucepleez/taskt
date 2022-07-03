@@ -829,7 +829,14 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static XElement GetXmlFromElement(AutomationElement targetElement, out Dictionary<int, AutomationElement> elemsDic)
+        public static XElement GetElementXml(string windowName, out Dictionary<int, AutomationElement> elemsDic)
+        {
+            AutomationElement window = GetFromWindowName(windowName);
+            var ret = GetElementXml(window, out elemsDic);
+            return ret;
+        }
+
+        public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<int, AutomationElement> elemsDic)
         {
             XElement root = GetXmlElement(targetElement);
 
@@ -889,6 +896,80 @@ namespace taskt.Core.Automation.Commands
             node.SetAttributeValue("Hash", targetElement.GetHashCode());
 
             return node;
+        }
+
+        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName)
+        {
+            AutomationElement root = GetFromWindowName(windowName);
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            var tree = CreateTreeNodeFromAutomationElement(root);
+
+            GetChildElementTreeNode(tree, root, walker);
+
+            return tree;
+        }
+
+        private static void GetChildElementTreeNode(System.Windows.Forms.TreeNode tree, AutomationElement rootElement, TreeWalker walker)
+        {
+            AutomationElement node = walker.GetFirstChild(rootElement);
+            while(node != null)
+            {
+                var item = CreateTreeNodeFromAutomationElement(node);
+                tree.Nodes.Add(item);
+
+                if (walker.GetFirstChild(node) != null)
+                {
+                    GetChildElementTreeNode(item, node, walker);
+                }
+
+                node = walker.GetNextSibling(node);
+            }
+        }
+
+        private static System.Windows.Forms.TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
+        {
+            System.Windows.Forms.TreeNode node = new System.Windows.Forms.TreeNode();
+            node.Text = "\"" + element.Current.Name + "\" " + element.Current.LocalizedControlType;
+            node.Tag = element;
+            return node;
+        }
+
+        public static string GetInspectResultFromAutomationElement(AutomationElement elem)
+        {
+            string res = "";
+
+            try
+            {
+                res += "Name: \"" + elem.Current.Name + "\"\r\n";
+                res += "ControlType: " + GetControlTypeText(elem.Current.ControlType) + "\r\n";
+                res += "LocalizedControlType: \"" + elem.Current.LocalizedControlType + "\"\r\n";
+                res += "IsEnabled: " + elem.Current.IsEnabled.ToString() + "\r\n";
+                res += "IsOffscreen: " + elem.Current.IsOffscreen.ToString() + "\r\n";
+                res += "IsKeyboardFocusable: " + elem.Current.IsKeyboardFocusable.ToString() + "\r\n";
+                res += "HasKeyboardFocusable: " + elem.Current.HasKeyboardFocus.ToString() + "\r\n";
+                res += "AccessKey: \"" + elem.Current.AccessKey + "\"\r\n";
+                res += "ProcessId: " + elem.Current.ProcessId.ToString() + "\r\n";
+                res += "AutomationId: \"" + elem.Current.AutomationId + "\"\r\n";
+                res += "FrameworkId: \"" + elem.Current.FrameworkId + "\"\r\n";
+                res += "ClassName: \"" + elem.Current.ClassName + "\"\r\n";
+                res += "IsContentElement: " + elem.Current.IsContentElement.ToString() + "\r\n";
+                res += "IsPassword: " + elem.Current.IsPassword.ToString() + "\r\n";
+
+                res += "AcceleratorKey: \"" + elem.Current.AcceleratorKey + "\"\r\n";
+                res += "HelpText: \"" + elem.Current.HelpText + "\"\r\n";
+                res += "IsControlElement: " + elem.Current.IsControlElement.ToString() + "\r\n";
+                res += "IsRequiredForForm: " + elem.Current.IsRequiredForForm.ToString() + "\r\n";
+                res += "ItemStatus: \"" + elem.Current.ItemStatus + "\"\r\n";
+                res += "ItemType: \"" + elem.Current.ItemType + "\"\r\n";
+                res += "NativeWindowHandle: " + elem.Current.NativeWindowHandle.ToString() + "\r\n";
+            }
+            catch(Exception ex)
+            {
+                res += "Error: " + ex.Message;
+            }
+
+            return res;
         }
     }
 }

@@ -4697,6 +4697,10 @@ namespace taskt.UI.Forms
         private void aboutStripMenuItem_Click(object sender, EventArgs e)
         {
             showAboutForm();
+
+            // dbg
+            var fm = new taskt.UI.Forms.Supplement_Forms.frmInspect();
+            fm.Show();
         }
         #endregion
 
