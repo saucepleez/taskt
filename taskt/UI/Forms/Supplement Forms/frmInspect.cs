@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
 using System.Xml.Linq;
+using System.Windows.Automation;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmInspect : ThemedForm
     {
         private XElement xml = null;
+        private Dictionary<int, AutomationElement> elemDic = null;
 
         public frmInspect()
         {
@@ -39,7 +41,14 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void tvElements_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            showElementInformation((System.Windows.Automation.AutomationElement)e.Node.Tag);
+            if (e.Node.Parent != null)
+            {
+                showElementInformation((AutomationElement)e.Node.Tag);
+            }
+            else
+            {
+                txtXPath.Text = "";
+            }
         }
 
         private void reloadWindowNames()
@@ -80,7 +89,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             string windowName = cmbWindowList.Text;
 
-            var nodes = AutomationElementControls.GetElementTreeNode(windowName);
+            var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml, out elemDic);
 
             tvElements.SuspendLayout();
 
@@ -92,13 +101,13 @@ namespace taskt.UI.Forms.Supplement_Forms
             tvElements.ResumeLayout();
 
             txtElementInformation.Text = "";
-
-            xml = AutomationElementControls.GetElementXml(windowName, out _);
         }
 
-        private void showElementInformation(System.Windows.Automation.AutomationElement elem)
+        private void showElementInformation(AutomationElement elem)
         {
             txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
+
+            txtXPath.Text = AutomationElementControls.GetXPath(xml, elemDic, elem);
         }
 
     }

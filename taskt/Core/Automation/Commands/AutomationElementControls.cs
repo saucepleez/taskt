@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -838,7 +839,7 @@ namespace taskt.Core.Automation.Commands
 
         public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<int, AutomationElement> elemsDic)
         {
-            XElement root = GetXmlElement(targetElement);
+            XElement root = CreateXmlElement(targetElement);
 
             elemsDic = new Dictionary<int, AutomationElement>();
             elemsDic.Add(targetElement.GetHashCode(), targetElement);
@@ -855,7 +856,7 @@ namespace taskt.Core.Automation.Commands
             var node = walker.GetFirstChild(rootElement);
             while (node != null)
             {
-                var childNode = GetXmlElement(node);
+                var childNode = CreateXmlElement(node);
                 rootNode.Add(childNode);
                 elemsDic.Add(childNode.GetHashCode(), node);
 
@@ -870,7 +871,7 @@ namespace taskt.Core.Automation.Commands
             return rootNode;
         }
 
-        private static XElement GetXmlElement(AutomationElement targetElement)
+        private static XElement CreateXmlElement(AutomationElement targetElement)
         {
             XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
             node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
@@ -898,19 +899,23 @@ namespace taskt.Core.Automation.Commands
             return node;
         }
 
-        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName)
+        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName, out XElement xml, out Dictionary<int, AutomationElement> dic)
         {
             AutomationElement root = GetFromWindowName(windowName);
+            dic = new Dictionary<int, AutomationElement>();
+
             TreeWalker walker = TreeWalker.RawViewWalker;
 
             var tree = CreateTreeNodeFromAutomationElement(root);
+            xml = CreateXmlElement(root);
+            dic.Add(root.GetHashCode(), root);
 
-            GetChildElementTreeNode(tree, root, walker);
+            GetChildElementTreeNode(tree, xml, dic, root, walker);
 
             return tree;
         }
 
-        private static void GetChildElementTreeNode(System.Windows.Forms.TreeNode tree, AutomationElement rootElement, TreeWalker walker)
+        private static void GetChildElementTreeNode(System.Windows.Forms.TreeNode tree, XElement xml, Dictionary<int, AutomationElement> dic, AutomationElement rootElement, TreeWalker walker)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
             while(node != null)
@@ -918,9 +923,13 @@ namespace taskt.Core.Automation.Commands
                 var item = CreateTreeNodeFromAutomationElement(node);
                 tree.Nodes.Add(item);
 
+                var childXml = CreateXmlElement(node);
+                xml.Add(childXml);
+                dic.Add(node.GetHashCode(), node);
+
                 if (walker.GetFirstChild(node) != null)
                 {
-                    GetChildElementTreeNode(item, node, walker);
+                    GetChildElementTreeNode(item, childXml, dic, node, walker);
                 }
 
                 node = walker.GetNextSibling(node);
@@ -970,6 +979,74 @@ namespace taskt.Core.Automation.Commands
             }
 
             return res;
+        }
+
+        public static string GetXPath(XElement xml, Dictionary<int, AutomationElement> dic, AutomationElement elem)
+        {
+            if (!dic.ContainsKey(elem.GetHashCode()))
+            {
+                return "";
+            }
+
+            string searchPath = "//" + GetControlTypeText(elem.Current.ControlType) + "[@Hash=\"" + elem.GetHashCode() + "\"]";
+            XElement trgElement = xml.XPathSelectElement(searchPath);
+
+            string xpath = "";
+            while (trgElement.Parent != null)
+            {
+                xpath = CreateXPath(xml, trgElement) + xpath;
+                trgElement = trgElement.Parent;
+            }
+
+            return xpath;
+        }
+
+        private static string CreateXPath(XElement xml, XElement elemNode)
+        {
+            XElement parentNode = elemNode.Parent;
+
+            string parentXPath = "/" + parentNode.Name.ToString();
+
+            string elemType = elemNode.Name.ToString();
+            string elemHash = elemNode.Attribute("Hash").Value;
+            string xpath;
+            
+            if (elemNode.Attribute("AutomationId").ToString() != "")
+            {
+                xpath = "/" + elemType + "[@AutomationId=\"" + elemNode.Attribute("AutomationId").Value + "\"]";
+                XElement idNode = parentNode.XPathSelectElement("." + xpath);
+                if (idNode != null)
+                {
+                    if (idNode.Attribute("Hash").Value == elemHash)
+                    {
+                        return xpath;
+                    }
+                }
+            }
+
+            xpath = "/" + elemType + "[@Name=\"" + elemNode.Attribute("Name").Value + "\"]";
+            XElement nameNode = parentNode.XPathSelectElement("." + xpath);
+            if (nameNode != null)
+            {
+                if (nameNode.Attribute("Hash").Value == elemHash)
+                {
+                    return xpath;
+                }
+            }
+
+            xpath = "/" + elemType;
+            IEnumerable<XElement> typeNodes = parentNode.XPathSelectElements("." + xpath);
+            int idx = 1;
+            foreach(XElement nd in typeNodes)
+            {
+                if (nd.Attribute("Hash").Value == elemHash)
+                {
+                    return xpath + "[" + idx + "]";
+                }
+                idx++;
+            }
+
+            throw new Exception("Fail Create AutomationElement XPath");
         }
     }
 }
