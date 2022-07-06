@@ -16,7 +16,6 @@ namespace taskt.UI.Forms.Supplement_Forms
     public partial class frmInspect : ThemedForm
     {
         private XElement xml = null;
-        private Dictionary<int, AutomationElement> elemDic = null;
 
         public frmInspect()
         {
@@ -89,7 +88,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             string windowName = cmbWindowList.Text;
 
-            var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml, out elemDic);
+            var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml);
 
             tvElements.SuspendLayout();
 
@@ -107,7 +106,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
 
-            txtXPath.Text = AutomationElementControls.GetXPath(xml, elemDic, elem);
+            txtXPath.Text = AutomationElementControls.GetXPath(xml, elem);
         }
 
     }
