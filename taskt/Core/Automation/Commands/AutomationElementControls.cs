@@ -830,35 +830,61 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static XElement GetElementXml(string windowName, out Dictionary<int, AutomationElement> elemsDic)
+        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic)
         {
             AutomationElement window = GetFromWindowName(windowName);
             var ret = GetElementXml(window, out elemsDic);
             return ret;
         }
 
-        public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<int, AutomationElement> elemsDic)
+        public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
         {
-            XElement root = CreateXmlElement(targetElement);
+            AutomationElement window = GetWindowElement(targetElement);
 
-            elemsDic = new Dictionary<int, AutomationElement>();
-            elemsDic.Add(targetElement.GetHashCode(), targetElement);
+            XElement root = CreateXmlElement(window);
+
+            elemsDic = new Dictionary<string, AutomationElement>();
+            elemsDic.Add(window.GetHashCode().ToString(), window);
 
             TreeWalker walker = TreeWalker.RawViewWalker;
 
-            GetChildNodeFromElement(root, targetElement, elemsDic, walker);
+            GetChildNodeFromElement(root, window, elemsDic, walker);
 
             return root;
         }
 
-        private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<int, AutomationElement> elemsDic, TreeWalker walker)
+        private static AutomationElement GetWindowElement(AutomationElement targetElement)
+        {
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            AutomationElement node = targetElement;
+            while(GetControlTypeText(node.Current.ControlType) != "Window")
+            {
+                node = walker.GetParent(node);
+            }
+
+            return node;
+        }
+
+        private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<string, AutomationElement> elemsDic, TreeWalker walker)
         {
             var node = walker.GetFirstChild(rootElement);
             while (node != null)
             {
-                var childNode = CreateXmlElement(node);
+                string hash = node.GetHashCode().ToString();
+                if (elemsDic.ContainsKey(hash))
+                {
+                    int i = 1;
+                    while(elemsDic.ContainsKey(hash + "-" + i))
+                    {
+                        i++;
+                    }
+                    hash += "-" + i;
+                }
+
+                var childNode = CreateXmlElement(node, hash);
                 rootNode.Add(childNode);
-                elemsDic.Add(childNode.GetHashCode(), node);
+                elemsDic.Add(hash, node);
 
                 if (walker.GetFirstChild(node) != null)
                 {
@@ -871,7 +897,7 @@ namespace taskt.Core.Automation.Commands
             return rootNode;
         }
 
-        private static XElement CreateXmlElement(AutomationElement targetElement)
+        private static XElement CreateXmlElement(AutomationElement targetElement, string hash = "")
         {
             XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
             node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
@@ -894,7 +920,16 @@ namespace taskt.Core.Automation.Commands
             node.SetAttributeValue("Name", targetElement.Current.Name);
             node.SetAttributeValue("NativeWindowHandle", targetElement.Current.NativeWindowHandle);
             node.SetAttributeValue("ProcessID", targetElement.Current.ProcessId);
-            node.SetAttributeValue("Hash", targetElement.GetHashCode());
+
+            if (hash == "") 
+            {
+                node.SetAttributeValue("Hash", targetElement.GetHashCode());
+            }
+            else
+            {
+                node.SetAttributeValue("Hash", hash);
+            }
+            
 
             return node;
         }
