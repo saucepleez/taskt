@@ -837,18 +837,31 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
+        //public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
+        //{
+        //    AutomationElement window = GetWindowElement(targetElement);
+
+        //    XElement root = CreateXmlElement(window);
+
+        //    elemsDic = new Dictionary<string, AutomationElement>();
+        //    elemsDic.Add(window.GetHashCode().ToString(), window);
+
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
+
+        //    GetChildNodeFromElement(root, window, elemsDic, walker);
+
+        //    return root;
+        //}
         public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
         {
-            AutomationElement window = GetWindowElement(targetElement);
-
-            XElement root = CreateXmlElement(window);
+            XElement root = CreateXmlElement(targetElement);
 
             elemsDic = new Dictionary<string, AutomationElement>();
-            elemsDic.Add(window.GetHashCode().ToString(), window);
+            elemsDic.Add(targetElement.GetHashCode().ToString(), targetElement);
 
             TreeWalker walker = TreeWalker.RawViewWalker;
 
-            GetChildNodeFromElement(root, window, elemsDic, walker);
+            GetChildNodeFromElement(root, targetElement, elemsDic, walker);
 
             return root;
         }
