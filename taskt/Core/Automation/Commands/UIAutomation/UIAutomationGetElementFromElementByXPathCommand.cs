@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Xml.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -78,15 +79,12 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
-            if (elem != null)
-            {
-                elem.StoreInUserVariable(engine, v_AutomationElementVariable);
-            }
-            else
-            {
-                throw new Exception("AutomationElement not found");
-            }
+            Dictionary<string, AutomationElement> dic = null;
+
+            XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
+
+
+
         }
 
         private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
