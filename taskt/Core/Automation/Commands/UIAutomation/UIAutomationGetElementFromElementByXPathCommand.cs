@@ -8,6 +8,7 @@ using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -34,18 +35,12 @@ namespace taskt.Core.Automation.Commands
 
         [XmlElement]
         [PropertyDescription("Set Search Parameters")]
-        [PropertyCustomUIHelper("Inspect Tool Parser", "lnkInspectToolParser_Click")]
-        [PropertyCustomUIHelper("Add Empty Parameters", "lnkAddEmptyParameter_Click")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(false, false, true)]
-        [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
-        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        public DataTable v_SearchParameters { get; set; }
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
@@ -61,9 +56,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AutomationElementVariable { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView SearchParametersGridViewHelper;
 
         public UIAutomationGetElementFromElementByXPathCommand()
         {
@@ -83,18 +75,17 @@ namespace taskt.Core.Automation.Commands
 
             XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
 
+            string xpath = v_SearchXPath.ConvertToUserVariable(engine);
 
+            XElement resElem = xml.XPathSelectElement(xpath);
 
-        }
+            if (resElem == null)
+            {
+                throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
+            }
 
-        private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
-        {
-            AutomationElementControls.CreateEmptyParamters(v_SearchParameters);
-        }
-
-        private void lnkInspectToolParser_Click(object sender, EventArgs e)
-        {
-            AutomationElementControls.InspectToolParserClicked(v_SearchParameters);
+            AutomationElement res = dic[resElem.Attribute("Hash").Value];
+            res.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -103,8 +94,6 @@ namespace taskt.Core.Automation.Commands
 
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
-
-            SearchParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_SearchParameters", CommandControls.CommandControlType.Body)[0];
 
             return RenderedControls;
         }
