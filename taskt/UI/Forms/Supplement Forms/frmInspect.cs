@@ -109,5 +109,30 @@ namespace taskt.UI.Forms.Supplement_Forms
             txtXPath.Text = AutomationElementControls.GetXPath(xml, elem);
         }
 
+        private void uiBtnAdd_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+        }
+
+        private void uiBtnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
+
+        public string XPath
+        {
+            get
+            {
+                return txtXPath.Text;
+            }
+        }
+
+        public string WindowName
+        {
+            get
+            {
+                return cmbWindowList.Text;
+            }
+        }
     }
 }
