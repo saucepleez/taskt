@@ -363,6 +363,10 @@ namespace taskt.Core.Automation.Commands
             {
                 return "Header";
             }
+            else if (control == ControlType.HeaderItem)
+            {
+                return "HeaderItem";
+            }
             else if (control == ControlType.Hyperlink)
             {
                 return "Hyperlink";
