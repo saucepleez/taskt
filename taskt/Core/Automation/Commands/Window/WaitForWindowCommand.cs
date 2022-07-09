@@ -165,6 +165,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     
                 }
+                engine.ReportProgress("Window Not Yet Found... " + (int)((endDateTime - DateTime.Now).TotalSeconds) + "s remain");
                 System.Threading.Thread.Sleep(1000);
             }
 

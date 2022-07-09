@@ -44,6 +44,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             //convert items to variables
             var fileName = v_FileName.ConvertToUserVariable(sender);
@@ -73,12 +74,9 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 //put thread to sleep before iterating
-                System.Threading.Thread.Sleep(100);
+                engine.ReportProgress("File Not Yet Found... " + (int)((stopWaiting - DateTime.Now).TotalSeconds) + "s remain");
+                System.Threading.Thread.Sleep(1000);
             }
-
-
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
