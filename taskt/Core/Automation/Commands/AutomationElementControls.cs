@@ -1091,5 +1091,16 @@ namespace taskt.Core.Automation.Commands
 
             throw new Exception("Fail Create AutomationElement XPath");
         }
+
+        public static void InspectToolClicked(System.Windows.Forms.TextBox txtXPath)
+        {
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmInspect())
+            {
+                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    txtXPath.Text = fm.XPath;
+                }
+            }
+        }
     }
 }
