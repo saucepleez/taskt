@@ -755,6 +755,7 @@ namespace taskt.UI
             {"UIAutomationGetElementFromElementByXPathCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementFromTableElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementFromWindowCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationGetElementFromWindowByXPathCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetElementTreeXMLFromElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetParentElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetSelectedStateFromElementCommand", "taskt.Properties.Resources.command_window"},
