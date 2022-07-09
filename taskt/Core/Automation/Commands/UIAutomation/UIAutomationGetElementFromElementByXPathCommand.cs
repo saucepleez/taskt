@@ -41,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**//Button[@Name=\"OK\"]** or **{{{vXPath}}}**")]
         [Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_SearchXPath { get; set; }
 
