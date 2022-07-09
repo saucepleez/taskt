@@ -36,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [XmlElement]
         [PropertyDescription("Set Search Parameters")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Inspect Tool", "lnkInspectTool_Clicked")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
@@ -56,6 +57,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_AutomationElementVariable { get; set; }
 
+        [XmlIgnore]
+        [NonSerialized]
+        private TextBox XPathTextBox;
 
         public UIAutomationGetElementFromElementByXPathCommand()
         {
@@ -76,6 +80,10 @@ namespace taskt.Core.Automation.Commands
             XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
 
             string xpath = v_SearchXPath.ConvertToUserVariable(engine);
+            if (!xpath.StartsWith("."))
+            {
+                xpath = "." + xpath;
+            }
 
             XElement resElem = xml.XPathSelectElement(xpath);
 
@@ -95,8 +103,16 @@ namespace taskt.Core.Automation.Commands
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
 
+            XPathTextBox = (TextBox)ctrls.GetControlsByName("v_SearchXPath", CommandControls.CommandControlType.Body)[0];
+
             return RenderedControls;
         }
+
+        private void lnkInspectTool_Clicked(object sender, EventArgs e)
+        {
+            AutomationElementControls.InspectToolClicked(XPathTextBox);
+        }
+
 
         public override string GetDisplayValue()
         {
