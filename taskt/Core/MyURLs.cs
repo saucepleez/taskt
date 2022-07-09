@@ -19,6 +19,7 @@ namespace taskt.Core
         public const string ChromeDriverURL = "https://chromedriver.chromium.org/downloads";
         public const string EdgeDriverURL = "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/";
         public const string GeckoDriverURL = "https://github.com/mozilla/geckodriver/releases/";
+        public const string IEDriverURL = "https://www.selenium.dev/downloads/";
 
         public static string GetWikiURL(string commandName, string groupName)
         {

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -829,12 +830,34 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static XElement GetXmlFromElement(AutomationElement targetElement, out Dictionary<int, AutomationElement> elemsDic)
+        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic)
         {
-            XElement root = GetXmlElement(targetElement);
+            AutomationElement window = GetFromWindowName(windowName);
+            var ret = GetElementXml(window, out elemsDic);
+            return ret;
+        }
 
-            elemsDic = new Dictionary<int, AutomationElement>();
-            elemsDic.Add(targetElement.GetHashCode(), targetElement);
+        //public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
+        //{
+        //    AutomationElement window = GetWindowElement(targetElement);
+
+        //    XElement root = CreateXmlElement(window);
+
+        //    elemsDic = new Dictionary<string, AutomationElement>();
+        //    elemsDic.Add(window.GetHashCode().ToString(), window);
+
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
+
+        //    GetChildNodeFromElement(root, window, elemsDic, walker);
+
+        //    return root;
+        //}
+        public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
+        {
+            XElement root = CreateXmlElement(targetElement);
+
+            elemsDic = new Dictionary<string, AutomationElement>();
+            elemsDic.Add(targetElement.GetHashCode().ToString(), targetElement);
 
             TreeWalker walker = TreeWalker.RawViewWalker;
 
@@ -843,14 +866,38 @@ namespace taskt.Core.Automation.Commands
             return root;
         }
 
-        private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<int, AutomationElement> elemsDic, TreeWalker walker)
+        private static AutomationElement GetWindowElement(AutomationElement targetElement)
+        {
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            AutomationElement node = targetElement;
+            while(GetControlTypeText(node.Current.ControlType) != "Window")
+            {
+                node = walker.GetParent(node);
+            }
+
+            return node;
+        }
+
+        private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<string, AutomationElement> elemsDic, TreeWalker walker)
         {
             var node = walker.GetFirstChild(rootElement);
             while (node != null)
             {
-                var childNode = GetXmlElement(node);
+                string hash = node.GetHashCode().ToString();
+                if (elemsDic.ContainsKey(hash))
+                {
+                    int i = 1;
+                    while(elemsDic.ContainsKey(hash + "-" + i))
+                    {
+                        i++;
+                    }
+                    hash += "-" + i;
+                }
+
+                var childNode = CreateXmlElement(node, hash);
                 rootNode.Add(childNode);
-                elemsDic.Add(childNode.GetHashCode(), node);
+                elemsDic.Add(hash, node);
 
                 if (walker.GetFirstChild(node) != null)
                 {
@@ -863,7 +910,7 @@ namespace taskt.Core.Automation.Commands
             return rootNode;
         }
 
-        private static XElement GetXmlElement(AutomationElement targetElement)
+        private static XElement CreateXmlElement(AutomationElement targetElement, string hash = "")
         {
             XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
             node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
@@ -886,9 +933,174 @@ namespace taskt.Core.Automation.Commands
             node.SetAttributeValue("Name", targetElement.Current.Name);
             node.SetAttributeValue("NativeWindowHandle", targetElement.Current.NativeWindowHandle);
             node.SetAttributeValue("ProcessID", targetElement.Current.ProcessId);
-            node.SetAttributeValue("Hash", targetElement.GetHashCode());
+
+            if (hash == "") 
+            {
+                node.SetAttributeValue("Hash", targetElement.GetHashCode());
+            }
+            else
+            {
+                node.SetAttributeValue("Hash", hash);
+            }
+            
 
             return node;
+        }
+
+        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName, out XElement xml)
+        {
+            AutomationElement root = GetFromWindowName(windowName);
+
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            var tree = CreateTreeNodeFromAutomationElement(root);
+            xml = CreateXmlElement(root);
+
+            GetChildElementTreeNode(tree, xml, root, walker);
+
+            return tree;
+        }
+
+        private static void GetChildElementTreeNode(System.Windows.Forms.TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker)
+        {
+            AutomationElement node = walker.GetFirstChild(rootElement);
+            while(node != null)
+            {
+                var item = CreateTreeNodeFromAutomationElement(node);
+                tree.Nodes.Add(item);
+
+                var childXml = CreateXmlElement(node);
+                xml.Add(childXml);
+
+                if (walker.GetFirstChild(node) != null)
+                {
+                    GetChildElementTreeNode(item, childXml, node, walker);
+                }
+
+                node = walker.GetNextSibling(node);
+            }
+        }
+
+        private static System.Windows.Forms.TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
+        {
+            System.Windows.Forms.TreeNode node = new System.Windows.Forms.TreeNode();
+            node.Text = "\"" + element.Current.Name + "\" " + element.Current.LocalizedControlType;
+            node.Tag = element;
+            return node;
+        }
+
+        public static string GetInspectResultFromAutomationElement(AutomationElement elem)
+        {
+            string res = "";
+
+            try
+            {
+                res += "Name: \"" + elem.Current.Name + "\"\r\n";
+                res += "ControlType: " + GetControlTypeText(elem.Current.ControlType) + "\r\n";
+                res += "LocalizedControlType: \"" + elem.Current.LocalizedControlType + "\"\r\n";
+                res += "IsEnabled: " + elem.Current.IsEnabled.ToString() + "\r\n";
+                res += "IsOffscreen: " + elem.Current.IsOffscreen.ToString() + "\r\n";
+                res += "IsKeyboardFocusable: " + elem.Current.IsKeyboardFocusable.ToString() + "\r\n";
+                res += "HasKeyboardFocusable: " + elem.Current.HasKeyboardFocus.ToString() + "\r\n";
+                res += "AccessKey: \"" + elem.Current.AccessKey + "\"\r\n";
+                res += "ProcessId: " + elem.Current.ProcessId.ToString() + "\r\n";
+                res += "AutomationId: \"" + elem.Current.AutomationId + "\"\r\n";
+                res += "FrameworkId: \"" + elem.Current.FrameworkId + "\"\r\n";
+                res += "ClassName: \"" + elem.Current.ClassName + "\"\r\n";
+                res += "IsContentElement: " + elem.Current.IsContentElement.ToString() + "\r\n";
+                res += "IsPassword: " + elem.Current.IsPassword.ToString() + "\r\n";
+
+                res += "AcceleratorKey: \"" + elem.Current.AcceleratorKey + "\"\r\n";
+                res += "HelpText: \"" + elem.Current.HelpText + "\"\r\n";
+                res += "IsControlElement: " + elem.Current.IsControlElement.ToString() + "\r\n";
+                res += "IsRequiredForForm: " + elem.Current.IsRequiredForForm.ToString() + "\r\n";
+                res += "ItemStatus: \"" + elem.Current.ItemStatus + "\"\r\n";
+                res += "ItemType: \"" + elem.Current.ItemType + "\"\r\n";
+                res += "NativeWindowHandle: " + elem.Current.NativeWindowHandle.ToString() + "\r\n";
+            }
+            catch(Exception ex)
+            {
+                res += "Error: " + ex.Message;
+            }
+
+            return res;
+        }
+
+        public static string GetXPath(XElement xml, AutomationElement elem)
+        {
+            string searchPath = "//" + GetControlTypeText(elem.Current.ControlType) + "[@Hash=\"" + elem.GetHashCode() + "\"]";
+            XElement trgElement = xml.XPathSelectElement(searchPath);
+
+            if (trgElement == null)
+            {
+                return "";
+            }
+
+            string xpath = "";
+            while (trgElement.Parent != null)
+            {
+                xpath = CreateXPath(trgElement) + xpath;
+                trgElement = trgElement.Parent;
+            }
+
+            return xpath;
+        }
+
+        private static string CreateXPath(XElement elemNode)
+        {
+            XElement parentNode = elemNode.Parent;
+
+            string elemType = elemNode.Name.ToString();
+            string elemHash = elemNode.Attribute("Hash").Value;
+            string xpath;
+            
+            if (elemNode.Attribute("AutomationId").ToString() != "")
+            {
+                xpath = "/" + elemType + "[@AutomationId=\"" + elemNode.Attribute("AutomationId").Value + "\"]";
+                XElement idNode = parentNode.XPathSelectElement("." + xpath);
+                if (idNode != null)
+                {
+                    if (idNode.Attribute("Hash").Value == elemHash)
+                    {
+                        return xpath;
+                    }
+                }
+            }
+
+            xpath = "/" + elemType + "[@Name=\"" + elemNode.Attribute("Name").Value + "\"]";
+            XElement nameNode = parentNode.XPathSelectElement("." + xpath);
+            if (nameNode != null)
+            {
+                if (nameNode.Attribute("Hash").Value == elemHash)
+                {
+                    return xpath;
+                }
+            }
+
+            xpath = "/" + elemType;
+            IEnumerable<XElement> typeNodes = parentNode.XPathSelectElements("." + xpath);
+            int idx = 1;
+            foreach(XElement nd in typeNodes)
+            {
+                if (nd.Attribute("Hash").Value == elemHash)
+                {
+                    return xpath + "[" + idx + "]";
+                }
+                idx++;
+            }
+
+            throw new Exception("Fail Create AutomationElement XPath");
+        }
+
+        public static void InspectToolClicked(System.Windows.Forms.TextBox txtXPath)
+        {
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmInspect())
+            {
+                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    txtXPath.Text = fm.XPath;
+                }
+            }
         }
     }
 }

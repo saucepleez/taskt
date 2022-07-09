@@ -310,14 +310,27 @@ namespace taskt.UI.Forms
             Button btnRes = createButton("btnOpenResources", "Open Resources Folder", 280, true);
             btnRes.Click += (sender, e) => btnShowRecoures_Click(sender, e);
 
-            createLabel("lblWebDriverTitle", "Check WebDrivers", FontSize.Normal, true);
+            createLabel("lblWebDriverTitle", "Check WebDrivers", FontSize.Normal, true);            
+
+            // get WebDrivers version
+            var versions = GetWebDriverVersions();
+
+            createLabel("lblChromeDriver", "Chrome Driver Version Result: " + versions["chrome"], FontSize.Small, true);
             Button btnChrome = createButton("btnChrome", "Chrome Driver", 280, true);
+
+            createLabel("lblEdgeDriver", "Edge Driver Version Result: " + versions["edge"], FontSize.Small, true);
             Button btnEdge = createButton("btnEdge", "Edge Driver", 280, true);
+
+            createLabel("lblGeckoDriver", "Gecko Driver Version Result: " + versions["gecko"], FontSize.Small, true);
             Button btnGecko = createButton("btnGecko", "Gecko Driver (Firefox)", 280, true);
+
+            createLabel("lblIEDriver", "IE Driver Version Result: " + versions["ie"], FontSize.Small, true);
+            Button btnIE = createButton("btnIE", "IE Driver", 280, true);
 
             btnChrome.Click += (sender, e) => btnChromeDriver_Click(sender, e);
             btnEdge.Click += (sender, e) => btnEdgeDriver_Click(sender, e);
             btnGecko.Click += (sender, e) => btnGeckoDriver_Click(sender, e);
+            btnIE.Click += (sender, e) => btnIEDriver_Click(sender, e);
         }
         private void showApplicationScriptFileSettings()
         {
@@ -1182,6 +1195,62 @@ namespace taskt.UI.Forms
         private void btnGeckoDriver_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(Core.MyURLs.GeckoDriverURL);
+        }
+
+        private void btnIEDriver_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.IEDriverURL);
+        }
+
+        private static Dictionary<string, string> GetWebDriverVersions()
+        {
+            var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
+            string resourcePath = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
+
+            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            p.StartInfo.FileName = System.Environment.GetEnvironmentVariable("ComSpec");
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardInput = false;
+            p.StartInfo.CreateNoWindow = true;
+
+            p.StartInfo.Arguments = @"/c " + resourcePath + "\\ChromeDriver.exe -V";
+            p.Start();
+            string chromeVersion = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            p.StartInfo.Arguments = @"/c " + resourcePath + "\\msedgedriver.exe -V";
+            p.Start();
+            string edgeVersion = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            p.StartInfo.Arguments = @"/c " + resourcePath + "\\geckodriver.exe -V";
+            p.Start();
+            string geckoVersion = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            p.StartInfo.Arguments = @"/c " + resourcePath + "\\IEDriverServer.exe -V";
+            p.Start();
+            string ieVersion = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            p.Close();
+
+            Dictionary<string, string> ret = new Dictionary<string, string>()
+            {
+                { "chrome", ParseWebDriverVersion(chromeVersion)},
+                { "edge", ParseWebDriverVersion(edgeVersion)},
+                { "gecko", ParseWebDriverVersion(geckoVersion)},
+                { "ie", ParseWebDriverVersion(ieVersion)},
+            };
+
+            return ret;
+        }
+
+        private static string ParseWebDriverVersion(string v)
+        {
+            int idx = v.IndexOf('(');
+            return v.Substring(0, idx);
         }
 
         private void btnImportSettings_Click(object sender, EventArgs e)
