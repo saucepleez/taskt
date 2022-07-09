@@ -179,7 +179,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     catch (Exception)
                     {
-                        engine.ReportProgress("Element Not Yet Found... " + (timeToEnd - DateTime.Now).Seconds + "s remain");
+                        engine.ReportProgress("Element Not Yet Found... " + (int)((timeToEnd - DateTime.Now).TotalSeconds) + "s remain");
                         System.Threading.Thread.Sleep(1000);
                     }
                 }
