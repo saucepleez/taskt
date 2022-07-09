@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme2 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -174,6 +174,8 @@
             this.clearHighlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep5 = new System.Windows.Forms.ToolStripSeparator();
             this.viewCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewXMLCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewJSONCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showScriptInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.variableManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
@@ -185,13 +187,13 @@
             this.cmdTVCommandMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.helpCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.sampleThisCommandTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdTVCommandMenuSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.highlightCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdTVCommandMenuSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
-            this.sampleThisCommandTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1242,9 +1244,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme2;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1718,7 +1720,7 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 466);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 488);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -1890,10 +1892,26 @@
             // 
             // viewCodeToolStripMenuItem
             // 
+            this.viewCodeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ViewXMLCodeToolStripMenuItem,
+            this.ViewJSONCodeToolStripMenuItem});
             this.viewCodeToolStripMenuItem.Name = "viewCodeToolStripMenuItem";
             this.viewCodeToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
             this.viewCodeToolStripMenuItem.Text = "View Code (&I)";
-            this.viewCodeToolStripMenuItem.Click += new System.EventHandler(this.viewCodeToolStripMenuItem_Click);
+            // 
+            // ViewXMLCodeToolStripMenuItem
+            // 
+            this.ViewXMLCodeToolStripMenuItem.Name = "ViewXMLCodeToolStripMenuItem";
+            this.ViewXMLCodeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.ViewXMLCodeToolStripMenuItem.Text = "XML (&X)";
+            this.ViewXMLCodeToolStripMenuItem.Click += new System.EventHandler(this.ViewXMLCodeToolStripMenuItem_Click);
+            // 
+            // ViewJSONCodeToolStripMenuItem
+            // 
+            this.ViewJSONCodeToolStripMenuItem.Name = "ViewJSONCodeToolStripMenuItem";
+            this.ViewJSONCodeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.ViewJSONCodeToolStripMenuItem.Text = "JSON (&J)";
+            this.ViewJSONCodeToolStripMenuItem.Click += new System.EventHandler(this.ViewJSONCodeToolStripMenuItem_Click);
             // 
             // showScriptInfoMenuItem
             // 
@@ -1972,7 +1990,7 @@
             this.cmdTVCommandMenuSep2,
             this.clearCmdTVCommandMenuStrip});
             this.cmdTVCommandMenuStrip.Name = "cmdTVCommandMenuStrip";
-            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(267, 168);
+            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(267, 146);
             // 
             // addCmdTVCommandMenuStrip
             // 
@@ -1989,6 +2007,14 @@
             this.helpCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
             this.helpCmdTVCommandMenuStrip.Text = "Help This Command (&Web)";
             this.helpCmdTVCommandMenuStrip.Click += new System.EventHandler(this.helpCmdTVCommandMenuStrip_Click);
+            // 
+            // sampleThisCommandTVCommandMenuStrip
+            // 
+            this.sampleThisCommandTVCommandMenuStrip.Image = global::taskt.Properties.Resources.sample_templete;
+            this.sampleThisCommandTVCommandMenuStrip.Name = "sampleThisCommandTVCommandMenuStrip";
+            this.sampleThisCommandTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
+            this.sampleThisCommandTVCommandMenuStrip.Text = "Sample This Command";
+            this.sampleThisCommandTVCommandMenuStrip.Click += new System.EventHandler(this.sampleThisCommandTVCommandMenuStrip_Click);
             // 
             // cmdTVCommandMenuSep1
             // 
@@ -2019,14 +2045,6 @@
             // miniMapLoadingDelayTimer
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
-            // 
-            // sampleThisCommandTVCommandMenuStrip
-            // 
-            this.sampleThisCommandTVCommandMenuStrip.Image = global::taskt.Properties.Resources.sample_templete;
-            this.sampleThisCommandTVCommandMenuStrip.Name = "sampleThisCommandTVCommandMenuStrip";
-            this.sampleThisCommandTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
-            this.sampleThisCommandTVCommandMenuStrip.Text = "Sample This Command";
-            this.sampleThisCommandTVCommandMenuStrip.Click += new System.EventHandler(this.sampleThisCommandTVCommandMenuStrip_Click);
             // 
             // frmScriptBuilder
             // 
@@ -2258,6 +2276,8 @@
         private System.Windows.Forms.ToolStripMenuItem aboveHereToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem belowHereToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sampleThisCommandTVCommandMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem ViewXMLCodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ViewJSONCodeToolStripMenuItem;
     }
 }
 

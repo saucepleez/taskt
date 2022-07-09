@@ -2960,14 +2960,36 @@ namespace taskt.UI.Forms
         {
             SearchSelectedCommand();
         }
-        private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
+        private void ViewJSONCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             var currentCommand = lstScriptActions.SelectedItems[0].Tag;
 
             var jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(currentCommand, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
 
-            using (var dialog = new Supplemental.frmDialog(jsonText, "Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0))
+            using (var dialog = new Supplemental.frmDialog(jsonText, "JSON Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void ViewXMLCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var currentCommand = (taskt.Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
+
+            string scriptXML = taskt.Core.Script.Script.SerializeScript(new List<Core.Automation.Commands.ScriptCommand>() { currentCommand });
+
+            int startIdx = scriptXML.IndexOf("<ScriptCommand ");
+
+            int endIdx = scriptXML.IndexOf("</ScriptCommand>");
+            if (endIdx < 0)
+            {
+                endIdx = scriptXML.IndexOf("</ScriptAction>");
+            }
+
+            string commandXML = scriptXML.Substring(startIdx, endIdx - startIdx - 1).Trim();
+
+            using (var dialog = new Supplemental.frmDialog(commandXML, "XML Command Code", Supplemental.frmDialog.DialogType.OkOnly, 0))
             {
                 dialog.ShowDialog();
             }
@@ -4913,9 +4935,8 @@ namespace taskt.UI.Forms
             this.lastEditorSize = editor.Size;
             this.lastEditorPosition = editor.Location;
         }
+
         #endregion
-
-
     }
 
 }
