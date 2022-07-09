@@ -16,8 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. Search for Descendants Elements.")]
+    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement using by XPath.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. XPath does not support to use parent and sibling for root element.")]
     public class UIAutomationGetElementFromElementByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -34,12 +34,12 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Set Search Parameters")]
+        [PropertyDescription("Please specify search XPath")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyCustomUIHelper("Inspect Tool", "lnkInspectTool_Clicked")]
         [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
+        [SampleUsage("**//Button[@Name=\"OK\"]** or **{{{vXPath}}}**")]
+        [Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         public string v_SearchXPath { get; set; }
 
