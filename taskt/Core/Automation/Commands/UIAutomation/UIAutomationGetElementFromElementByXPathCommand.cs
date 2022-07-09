@@ -117,7 +117,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', Store: '" + v_AutomationElementVariable + "']";
+            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', XPath: '" + v_SearchXPath + "', Store: '" + v_AutomationElementVariable + "']";
         }
 
     }
