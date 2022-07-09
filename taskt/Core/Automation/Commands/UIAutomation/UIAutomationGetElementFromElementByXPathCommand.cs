@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            Dictionary<string, AutomationElement> dic = null;
+            Dictionary<string, AutomationElement> dic;
 
             XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
 
