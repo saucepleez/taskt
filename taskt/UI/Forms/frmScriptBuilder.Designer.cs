@@ -194,6 +194,8 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
+            this.optionToolStripSep3 = new System.Windows.Forms.ToolStripSeparator();
+            this.showInspectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -598,7 +600,9 @@
             this.showScriptFolderToolStripMenuItem,
             this.showLogFolderToolStripMenuItem,
             this.optionToolStripSep2,
-            this.showSearchBarToolStripMenuItem});
+            this.showSearchBarToolStripMenuItem,
+            this.optionToolStripSep3,
+            this.showInspectToolToolStripMenuItem});
             this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
@@ -1720,7 +1724,7 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 488);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 466);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -1902,14 +1906,14 @@
             // ViewXMLCodeToolStripMenuItem
             // 
             this.ViewXMLCodeToolStripMenuItem.Name = "ViewXMLCodeToolStripMenuItem";
-            this.ViewXMLCodeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.ViewXMLCodeToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.ViewXMLCodeToolStripMenuItem.Text = "XML (&X)";
             this.ViewXMLCodeToolStripMenuItem.Click += new System.EventHandler(this.ViewXMLCodeToolStripMenuItem_Click);
             // 
             // ViewJSONCodeToolStripMenuItem
             // 
             this.ViewJSONCodeToolStripMenuItem.Name = "ViewJSONCodeToolStripMenuItem";
-            this.ViewJSONCodeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.ViewJSONCodeToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.ViewJSONCodeToolStripMenuItem.Text = "JSON (&J)";
             this.ViewJSONCodeToolStripMenuItem.Click += new System.EventHandler(this.ViewJSONCodeToolStripMenuItem_Click);
             // 
@@ -2045,6 +2049,19 @@
             // miniMapLoadingDelayTimer
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
+            // 
+            // optionToolStripSep3
+            // 
+            this.optionToolStripSep3.Name = "optionToolStripSep3";
+            this.optionToolStripSep3.Size = new System.Drawing.Size(209, 6);
+            // 
+            // showInspectToolToolStripMenuItem
+            // 
+            this.showInspectToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.showInspectToolToolStripMenuItem.Name = "showInspectToolToolStripMenuItem";
+            this.showInspectToolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.showInspectToolToolStripMenuItem.Text = "&Inspect Tool";
+            this.showInspectToolToolStripMenuItem.Click += new System.EventHandler(this.inspectToolToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 
@@ -2278,6 +2295,8 @@
         private System.Windows.Forms.ToolStripMenuItem sampleThisCommandTVCommandMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem ViewXMLCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ViewJSONCodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator optionToolStripSep3;
+        private System.Windows.Forms.ToolStripMenuItem showInspectToolToolStripMenuItem;
     }
 }
 
