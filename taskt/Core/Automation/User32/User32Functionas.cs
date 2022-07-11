@@ -215,11 +215,11 @@ namespace taskt.Core.Automation.User32
         [DllImport("user32.dll")]
         private static extern bool IsWindowVisible(IntPtr hWnd);
 
-        [DllImport("user32.dll")]
-        private static extern int GetWindowTextLengthA(IntPtr hWnd);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextLengthW(IntPtr hWnd);
 
-        [DllImport("user32.dll")]
-        private static extern int GetWindowTextA(IntPtr hWnd, StringBuilder text, int count);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextW(IntPtr hWnd, StringBuilder text, int count);
 
         [DllImport("user32.dll")]
         private static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
@@ -235,11 +235,11 @@ namespace taskt.Core.Automation.User32
 
         private static bool EnumerateWindow(IntPtr hWnd, IntPtr lParam)
         {
-            int titleLengthA = GetWindowTextLengthA(hWnd);
+            int titleLengthA = GetWindowTextLengthW(hWnd);
             if (IsWindowVisible(hWnd) && (titleLengthA > 0))
             {
                 StringBuilder title = new StringBuilder(titleLengthA + 1);
-                GetWindowTextA(hWnd, title, title.Capacity);
+                GetWindowTextW(hWnd, title, title.Capacity);
 
                 int processId;
                 GetWindowThreadProcessId(hWnd, out processId);
