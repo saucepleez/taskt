@@ -91,12 +91,16 @@ namespace taskt.UI.Forms.Supplement_Forms
             var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml);
 
             tvElements.SuspendLayout();
+            tvElements.BeginUpdate();
 
             tvElements.Nodes.Clear();
             tvElements.Nodes.Add(nodes);
 
             tvElements.ExpandAll();
 
+            tvElements.Nodes[0].EnsureVisible();    // move to top
+
+            tvElements.EndUpdate();
             tvElements.ResumeLayout();
 
             txtElementInformation.Text = "";

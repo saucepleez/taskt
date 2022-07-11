@@ -4571,6 +4571,7 @@ namespace taskt.UI.Forms
             //lstScriptActions.Invalidate();
             ClearHighlightListViewItem();
         }
+
         #endregion
 
         #region Options menu event handler
@@ -4623,6 +4624,12 @@ namespace taskt.UI.Forms
         {
             appSettings.ClientSettings.ShowCommandSearchBar = !appSettings.ClientSettings.ShowCommandSearchBar;
             setCommandSearchBoxState();
+        }
+
+        private void inspectToolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fm = new taskt.UI.Forms.Supplement_Forms.frmInspect();
+            fm.Show();
         }
         #endregion
 
@@ -4937,6 +4944,7 @@ namespace taskt.UI.Forms
         }
 
         #endregion
+
     }
 
 }
