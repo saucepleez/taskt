@@ -241,9 +241,9 @@ namespace taskt.Core.Automation.User32
                 StringBuilder title = new StringBuilder(titleLengthA + 1);
                 GetWindowTextW(hWnd, title, title.Capacity);
 
-                int processId;
-                GetWindowThreadProcessId(hWnd, out processId);
-                Process p = Process.GetProcessById(processId);
+                //int processId;
+                //GetWindowThreadProcessId(hWnd, out processId);
+                //Process p = Process.GetProcessById(processId);
 
                 //Console.WriteLine(hWnd.ToString() + " : " + title.ToString() + " : " + p.MainWindowTitle + " :=> " + p.MainWindowHandle);
 
