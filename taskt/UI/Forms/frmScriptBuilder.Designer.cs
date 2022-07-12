@@ -74,6 +74,8 @@
             this.showLogFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionToolStripSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.showSearchBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionToolStripSep3 = new System.Windows.Forms.ToolStripSeparator();
+            this.showInspectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -194,8 +196,6 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
-            this.optionToolStripSep3 = new System.Windows.Forms.ToolStripSeparator();
-            this.showInspectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -639,7 +639,7 @@
             this.settingsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_config;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.settingsToolStripMenuItem.Text = "&Settings Manager (Classic)";
+            this.settingsToolStripMenuItem.Text = "Settings Manager (Classic)";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // newSettigsToolStripMenuItem
@@ -648,7 +648,7 @@
             this.newSettigsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_config;
             this.newSettigsToolStripMenuItem.Name = "newSettigsToolStripMenuItem";
             this.newSettigsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.newSettigsToolStripMenuItem.Text = "Settings Manager (beta)";
+            this.newSettigsToolStripMenuItem.Text = "&Settings Manager (new)";
             this.newSettigsToolStripMenuItem.Click += new System.EventHandler(this.newSettigsToolStripMenuItem_Click);
             // 
             // showScriptFolderToolStripMenuItem
@@ -656,7 +656,7 @@
             this.showScriptFolderToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.showScriptFolderToolStripMenuItem.Name = "showScriptFolderToolStripMenuItem";
             this.showScriptFolderToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.showScriptFolderToolStripMenuItem.Text = "Show &Script Folder";
+            this.showScriptFolderToolStripMenuItem.Text = "Show S&cript Folder";
             this.showScriptFolderToolStripMenuItem.Click += new System.EventHandler(this.showScriptFolderToolStripMenuItem_Click);
             // 
             // showLogFolderToolStripMenuItem
@@ -679,6 +679,19 @@
             this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.showSearchBarToolStripMenuItem.Text = "Show Search &Bar";
             this.showSearchBarToolStripMenuItem.Click += new System.EventHandler(this.showSearchBarToolStripMenuItem_Click);
+            // 
+            // optionToolStripSep3
+            // 
+            this.optionToolStripSep3.Name = "optionToolStripSep3";
+            this.optionToolStripSep3.Size = new System.Drawing.Size(209, 6);
+            // 
+            // showInspectToolToolStripMenuItem
+            // 
+            this.showInspectToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.showInspectToolToolStripMenuItem.Name = "showInspectToolToolStripMenuItem";
+            this.showInspectToolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.showInspectToolToolStripMenuItem.Text = "I&nspect Tool";
+            this.showInspectToolToolStripMenuItem.Click += new System.EventHandler(this.inspectToolToolStripMenuItem_Click);
             // 
             // scriptActionsToolStripMenuItem
             // 
@@ -2049,19 +2062,6 @@
             // miniMapLoadingDelayTimer
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
-            // 
-            // optionToolStripSep3
-            // 
-            this.optionToolStripSep3.Name = "optionToolStripSep3";
-            this.optionToolStripSep3.Size = new System.Drawing.Size(209, 6);
-            // 
-            // showInspectToolToolStripMenuItem
-            // 
-            this.showInspectToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.showInspectToolToolStripMenuItem.Name = "showInspectToolToolStripMenuItem";
-            this.showInspectToolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.showInspectToolToolStripMenuItem.Text = "&Inspect Tool";
-            this.showInspectToolToolStripMenuItem.Click += new System.EventHandler(this.inspectToolToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 
