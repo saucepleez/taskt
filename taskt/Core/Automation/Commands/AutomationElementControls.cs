@@ -14,11 +14,16 @@ namespace taskt.Core.Automation.Commands
     {
         public static AutomationElement GetFromWindowName(string windowName)
         {
-            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, windowName));
+            var windowSearchConditions = new AndCondition(
+                    new PropertyCondition(AutomationElement.NameProperty, windowName),
+                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window)
+                );
+
+            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, windowSearchConditions);
             if (windowElement == null)
             {
                 // more deep search
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, windowName));
+                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
             }
 
             if (windowElement == null)
