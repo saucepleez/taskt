@@ -114,6 +114,7 @@
             this.cmbWindowList.Name = "cmbWindowList";
             this.cmbWindowList.Size = new System.Drawing.Size(382, 23);
             this.cmbWindowList.TabIndex = 2;
+            this.myToolTip.SetToolTip(this.cmbWindowList, "up-to-date");
             this.cmbWindowList.SelectedValueChanged += new System.EventHandler(this.cmbWindowList_SelectedValueChanged);
             // 
             // label1
