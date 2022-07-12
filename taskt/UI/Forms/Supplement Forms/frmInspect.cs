@@ -35,6 +35,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             if (cmbWindowList.Text != "")
             {
                 createElementTree();
+                tvElements.Focus();
             }
         }
 
