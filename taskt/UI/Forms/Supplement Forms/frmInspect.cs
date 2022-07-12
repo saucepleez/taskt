@@ -58,6 +58,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             string currentWindow = cmbWindowList.SelectedText;
 
             cmbWindowList.SuspendLayout();
+            cmbWindowList.BeginUpdate();
             cmbWindowList.Items.Clear();
 
             foreach(string win in windows)
@@ -74,6 +75,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 cmbWindowList.Text = "";
             }
 
+            cmbWindowList.EndUpdate();
             cmbWindowList.ResumeLayout();
 
             createElementTree();
@@ -107,6 +109,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             txtElementInformation.Text = "";
         }
 
+        #region Footer buttons
         private void showElementInformation(AutomationElement elem)
         {
             txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
@@ -118,11 +121,39 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             this.DialogResult = DialogResult.OK;
         }
-
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
+        #endregion
+
+        #region Double-Click TextBox
+        private void txtElementInformation_DoubleClick(object sender, EventArgs e)
+        {
+            txtElementInformation.SelectAll();
+            Clipboard.SetText(txtElementInformation.Text);
+
+            lblMessage.Text = "Element Result Copied!!";
+            lblMessage.Visible = true;
+            timerLabelShowTime.Start();
+        }
+        private void txtXPath_DoubleClick(object sender, EventArgs e)
+        {
+            txtXPath.SelectAll();
+            Clipboard.SetText(txtXPath.Text);
+
+            lblMessage.Text = "XPath Copied!!";
+            lblMessage.Visible = true;
+            timerLabelShowTime.Start();
+        }
+
+        private void timerLabelShowTime_Tick(object sender, EventArgs e)
+        {
+            lblMessage.Visible = false;
+        }
+        #endregion
+
+        #region Properties
 
         public string XPath
         {
@@ -139,5 +170,8 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return cmbWindowList.Text;
             }
         }
+
+        #endregion
+
     }
 }

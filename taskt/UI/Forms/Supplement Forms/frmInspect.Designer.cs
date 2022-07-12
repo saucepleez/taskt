@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelTitle = new System.Windows.Forms.Panel();
             this.btnReload = new System.Windows.Forms.Button();
@@ -41,6 +42,10 @@
             this.panelFooter = new System.Windows.Forms.FlowLayoutPanel();
             this.uiBtnAdd = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
+            this.panelFooterContainer = new System.Windows.Forms.Panel();
+            this.lblMessage = new System.Windows.Forms.Label();
+            this.timerLabelShowTime = new System.Windows.Forms.Timer(this.components);
+            this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.panelXPath.SuspendLayout();
@@ -51,6 +56,7 @@
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
+            this.panelFooterContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -141,6 +147,8 @@
             this.txtXPath.ReadOnly = true;
             this.txtXPath.Size = new System.Drawing.Size(551, 23);
             this.txtXPath.TabIndex = 0;
+            this.myToolTip.SetToolTip(this.txtXPath, "Double-Click to copy XPath in Clipboard");
+            this.txtXPath.DoubleClick += new System.EventHandler(this.txtXPath_DoubleClick);
             // 
             // splitContainer1
             // 
@@ -179,11 +187,14 @@
             this.txtElementInformation.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtElementInformation.Size = new System.Drawing.Size(335, 216);
             this.txtElementInformation.TabIndex = 0;
+            this.myToolTip.SetToolTip(this.txtElementInformation, "Double-Click to copy Element Result in Clipboard");
+            this.txtElementInformation.DoubleClick += new System.EventHandler(this.txtElementInformation_DoubleClick);
             // 
             // panelFooter
             // 
             this.panelFooter.Controls.Add(this.uiBtnAdd);
             this.panelFooter.Controls.Add(this.uiBtnCancel);
+            this.panelFooter.Controls.Add(this.panelFooterContainer);
             this.panelFooter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFooter.Location = new System.Drawing.Point(0, 302);
             this.panelFooter.Margin = new System.Windows.Forms.Padding(0);
@@ -227,6 +238,32 @@
             this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
+            // panelFooterContainer
+            // 
+            this.panelFooterContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelFooterContainer.Controls.Add(this.lblMessage);
+            this.panelFooterContainer.Location = new System.Drawing.Point(203, 3);
+            this.panelFooterContainer.Name = "panelFooterContainer";
+            this.panelFooterContainer.Size = new System.Drawing.Size(363, 51);
+            this.panelFooterContainer.TabIndex = 20;
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.lblMessage.ForeColor = System.Drawing.Color.White;
+            this.lblMessage.Location = new System.Drawing.Point(126, 11);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(65, 20);
+            this.lblMessage.TabIndex = 0;
+            this.lblMessage.Text = "Copied!!";
+            // 
+            // timerLabelShowTime
+            // 
+            this.timerLabelShowTime.Interval = 2000;
+            this.timerLabelShowTime.Tick += new System.EventHandler(this.timerLabelShowTime_Tick);
+            // 
             // frmInspect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -249,6 +286,8 @@
             this.panelFooter.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
+            this.panelFooterContainer.ResumeLayout(false);
+            this.panelFooterContainer.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -268,5 +307,9 @@
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.TreeView tvElements;
         private System.Windows.Forms.TextBox txtElementInformation;
+        private System.Windows.Forms.Panel panelFooterContainer;
+        private System.Windows.Forms.Label lblMessage;
+        private System.Windows.Forms.Timer timerLabelShowTime;
+        private System.Windows.Forms.ToolTip myToolTip;
     }
 }
