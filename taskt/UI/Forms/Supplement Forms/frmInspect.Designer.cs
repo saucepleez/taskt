@@ -258,6 +258,7 @@
             this.lblMessage.Size = new System.Drawing.Size(65, 20);
             this.lblMessage.TabIndex = 0;
             this.lblMessage.Text = "Copied!!";
+            this.lblMessage.Visible = false;
             // 
             // timerLabelShowTime
             // 
