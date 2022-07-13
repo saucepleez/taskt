@@ -23,6 +23,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void frmGUIInspect_Load(object sender, EventArgs e)
         {
+            this.DoubleBuffered = true;
             reloadWindowNames();
         }
         private void btnReload_Click(object sender, EventArgs e)
