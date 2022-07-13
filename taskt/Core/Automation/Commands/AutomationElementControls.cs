@@ -19,11 +19,26 @@ namespace taskt.Core.Automation.Commands
                     new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window)
                 );
 
+            var paneSearchConditions = new AndCondition(
+                    new PropertyCondition(AutomationElement.NameProperty, windowName),
+                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Pane)
+                );
+
             var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, windowSearchConditions);
             if (windowElement == null)
             {
-                // more deep search
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
+                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, paneSearchConditions);
+
+                if (windowElement == null)
+                {
+                    // more deep search
+                    windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
+
+                    if (windowElement == null)
+                    {
+                        windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, paneSearchConditions);
+                    }
+                }
             }
 
             if (windowElement == null)
