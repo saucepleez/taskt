@@ -763,11 +763,11 @@
     <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmInspect.cs">
+    <Compile Include="UI\Forms\Supplement Forms\frmGUIInspect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmInspect.Designer.cs">
-      <DependentUpon>frmInspect.cs</DependentUpon>
+    <Compile Include="UI\Forms\Supplement Forms\frmGUIInspect.Designer.cs">
+      <DependentUpon>frmGUIInspect.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmInspectParser.cs">
       <SubType>Form</SubType>
@@ -967,8 +967,8 @@
     <EmbeddedResource Include="UI\Forms\frmScriptVariables.resx">
       <DependentUpon>frmScriptVariables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInspect.resx">
-      <DependentUpon>frmInspect.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmGUIInspect.resx">
+      <DependentUpon>frmGUIInspect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInspectParser.resx">
       <DependentUpon>frmInspectParser.cs</DependentUpon>

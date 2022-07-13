@@ -4626,9 +4626,9 @@ namespace taskt.UI.Forms
             setCommandSearchBoxState();
         }
 
-        private void inspectToolToolStripMenuItem_Click(object sender, EventArgs e)
+        private void guiInspectToolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fm = new taskt.UI.Forms.Supplement_Forms.frmInspect();
+            var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect();
             fm.Show();
         }
         #endregion

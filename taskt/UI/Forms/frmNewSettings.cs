@@ -66,6 +66,8 @@ namespace taskt.UI.Forms
             Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
 
             tvSettingsMenu.ExpandAll();
+
+            tvSettingsMenu.Nodes[0].EnsureVisible();
         }
         #endregion
 

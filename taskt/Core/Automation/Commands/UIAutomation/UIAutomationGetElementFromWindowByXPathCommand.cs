@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         [XmlElement]
         [PropertyDescription("Please specify search XPath")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Inspect Tool", "lnkInspectTool_Clicked")]
+        [PropertyCustomUIHelper("GUI Inspect Tool", "lnkInspectTool_Clicked")]
         [InputSpecification("")]
         [SampleUsage("**//Button[@Name=\"OK\"]** or **{{{vXPath}}}**")]
         [Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
@@ -130,7 +130,7 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkInspectTool_Clicked(object sender, EventArgs e)
         {
-            AutomationElementControls.InspectToolClicked(XPathTextBox);
+            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(XPathTextBox);
         }
 
         public override string GetDisplayValue()

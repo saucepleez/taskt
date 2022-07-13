@@ -14,11 +14,16 @@ namespace taskt.Core.Automation.Commands
     {
         public static AutomationElement GetFromWindowName(string windowName)
         {
-            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, windowName));
+            var windowSearchConditions = new AndCondition(
+                    new PropertyCondition(AutomationElement.NameProperty, windowName),
+                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window)
+                );
+
+            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, windowSearchConditions);
             if (windowElement == null)
             {
                 // more deep search
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, windowName));
+                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
             }
 
             if (windowElement == null)
@@ -999,28 +1004,28 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                res += "Name: \"" + elem.Current.Name + "\"\r\n";
-                res += "ControlType: " + GetControlTypeText(elem.Current.ControlType) + "\r\n";
-                res += "LocalizedControlType: \"" + elem.Current.LocalizedControlType + "\"\r\n";
-                res += "IsEnabled: " + elem.Current.IsEnabled.ToString() + "\r\n";
-                res += "IsOffscreen: " + elem.Current.IsOffscreen.ToString() + "\r\n";
-                res += "IsKeyboardFocusable: " + elem.Current.IsKeyboardFocusable.ToString() + "\r\n";
-                res += "HasKeyboardFocusable: " + elem.Current.HasKeyboardFocus.ToString() + "\r\n";
-                res += "AccessKey: \"" + elem.Current.AccessKey + "\"\r\n";
-                res += "ProcessId: " + elem.Current.ProcessId.ToString() + "\r\n";
-                res += "AutomationId: \"" + elem.Current.AutomationId + "\"\r\n";
-                res += "FrameworkId: \"" + elem.Current.FrameworkId + "\"\r\n";
-                res += "ClassName: \"" + elem.Current.ClassName + "\"\r\n";
-                res += "IsContentElement: " + elem.Current.IsContentElement.ToString() + "\r\n";
-                res += "IsPassword: " + elem.Current.IsPassword.ToString() + "\r\n";
+                res += "Name:\t\"" + elem.Current.Name + "\"\r\n";
+                res += "ControlType:\t" + GetControlTypeText(elem.Current.ControlType) + "\r\n";
+                res += "LocalizedControlType:\t\"" + elem.Current.LocalizedControlType + "\"\r\n";
+                res += "IsEnabled:\t" + elem.Current.IsEnabled.ToString() + "\r\n";
+                res += "IsOffscreen:\t" + elem.Current.IsOffscreen.ToString() + "\r\n";
+                res += "IsKeyboardFocusable:\t" + elem.Current.IsKeyboardFocusable.ToString() + "\r\n";
+                res += "HasKeyboardFocusable:\t" + elem.Current.HasKeyboardFocus.ToString() + "\r\n";
+                res += "AccessKey:\t\"" + elem.Current.AccessKey + "\"\r\n";
+                res += "ProcessId:\t" + elem.Current.ProcessId.ToString() + "\r\n";
+                res += "AutomationId:\t\"" + elem.Current.AutomationId + "\"\r\n";
+                res += "FrameworkId:\t\"" + elem.Current.FrameworkId + "\"\r\n";
+                res += "ClassName:\t\"" + elem.Current.ClassName + "\"\r\n";
+                res += "IsContentElement:\t" + elem.Current.IsContentElement.ToString() + "\r\n";
+                res += "IsPassword:\t" + elem.Current.IsPassword.ToString() + "\r\n";
 
-                res += "AcceleratorKey: \"" + elem.Current.AcceleratorKey + "\"\r\n";
-                res += "HelpText: \"" + elem.Current.HelpText + "\"\r\n";
-                res += "IsControlElement: " + elem.Current.IsControlElement.ToString() + "\r\n";
-                res += "IsRequiredForForm: " + elem.Current.IsRequiredForForm.ToString() + "\r\n";
-                res += "ItemStatus: \"" + elem.Current.ItemStatus + "\"\r\n";
-                res += "ItemType: \"" + elem.Current.ItemType + "\"\r\n";
-                res += "NativeWindowHandle: " + elem.Current.NativeWindowHandle.ToString() + "\r\n";
+                res += "AcceleratorKey:\t\"" + elem.Current.AcceleratorKey + "\"\r\n";
+                res += "HelpText:\t\"" + elem.Current.HelpText + "\"\r\n";
+                res += "IsControlElement:\t" + elem.Current.IsControlElement.ToString() + "\r\n";
+                res += "IsRequiredForForm:\t" + elem.Current.IsRequiredForForm.ToString() + "\r\n";
+                res += "ItemStatus:\t\"" + elem.Current.ItemStatus + "\"\r\n";
+                res += "ItemType:\t\"" + elem.Current.ItemType + "\"\r\n";
+                res += "NativeWindowHandle:\t" + elem.Current.NativeWindowHandle.ToString() + "\r\n";
             }
             catch(Exception ex)
             {
@@ -1058,7 +1063,7 @@ namespace taskt.Core.Automation.Commands
             string elemHash = elemNode.Attribute("Hash").Value;
             string xpath;
             
-            if (elemNode.Attribute("AutomationId").ToString() != "")
+            if (elemNode.Attribute("AutomationId").Value != "")
             {
                 xpath = "/" + elemType + "[@AutomationId=\"" + elemNode.Attribute("AutomationId").Value + "\"]";
                 XElement idNode = parentNode.XPathSelectElement("." + xpath);
@@ -1096,13 +1101,24 @@ namespace taskt.Core.Automation.Commands
             throw new Exception("Fail Create AutomationElement XPath");
         }
 
-        public static void InspectToolClicked(System.Windows.Forms.TextBox txtXPath)
+        public static void GUIInspectTool_UsedByXPath_Clicked(System.Windows.Forms.TextBox txtXPath)
         {
-            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmInspect())
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     txtXPath.Text = fm.XPath;
+                }
+            }
+        }
+        public static void GUIInspectTool_UsedByInspectResult_Clicked(DataTable searchParams)
+        {
+            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            {
+                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string result = fm.InspectResult;
+                    parseInspectToolResult(result, searchParams);
                 }
             }
         }

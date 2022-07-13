@@ -33,6 +33,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlElement]
         [PropertyDescription("Set Search Parameters")]
+        [PropertyCustomUIHelper("GUI Inspect Tool", "lnkGUIInspectTool_Click")]
         [PropertyCustomUIHelper("Inspect Tool Parser", "lnkInspectToolParser_Click")]
         [PropertyCustomUIHelper("Add Empty Parameters", "lnkAddEmptyParameter_Click")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -97,6 +98,10 @@ namespace taskt.Core.Automation.Commands
         private void lnkInspectToolParser_Click(object sender, EventArgs e)
         {
             AutomationElementControls.InspectToolParserClicked(v_SearchParameters);
+        }
+        private void lnkGUIInspectTool_Click(object sender, EventArgs e)
+        {
+            AutomationElementControls.GUIInspectTool_UsedByInspectResult_Clicked(v_SearchParameters);
         }
 
         public override List<Control> Render(frmCommandEditor editor)

@@ -1,6 +1,6 @@
 ﻿namespace taskt.UI.Forms.Supplement_Forms
 {
-    partial class frmInspect
+    partial class frmGUIInspect
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelTitle = new System.Windows.Forms.Panel();
             this.btnReload = new System.Windows.Forms.Button();
@@ -41,6 +42,10 @@
             this.panelFooter = new System.Windows.Forms.FlowLayoutPanel();
             this.uiBtnAdd = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
+            this.panelFooterContainer = new System.Windows.Forms.Panel();
+            this.lblMessage = new System.Windows.Forms.Label();
+            this.timerLabelShowTime = new System.Windows.Forms.Timer(this.components);
+            this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.panelXPath.SuspendLayout();
@@ -51,6 +56,7 @@
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
+            this.panelFooterContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -104,10 +110,11 @@
             this.cmbWindowList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbWindowList.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.cmbWindowList.FormattingEnabled = true;
-            this.cmbWindowList.Location = new System.Drawing.Point(140, 9);
+            this.cmbWindowList.Location = new System.Drawing.Point(178, 9);
             this.cmbWindowList.Name = "cmbWindowList";
-            this.cmbWindowList.Size = new System.Drawing.Size(382, 23);
+            this.cmbWindowList.Size = new System.Drawing.Size(344, 23);
             this.cmbWindowList.TabIndex = 2;
+            this.myToolTip.SetToolTip(this.cmbWindowList, "up-to-date");
             this.cmbWindowList.SelectedValueChanged += new System.EventHandler(this.cmbWindowList_SelectedValueChanged);
             // 
             // label1
@@ -117,9 +124,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(3, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(131, 30);
+            this.label1.Size = new System.Drawing.Size(173, 30);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Inspect Tool";
+            this.label1.Text = "GUI Inspect Tool";
             // 
             // panelXPath
             // 
@@ -141,6 +148,8 @@
             this.txtXPath.ReadOnly = true;
             this.txtXPath.Size = new System.Drawing.Size(551, 23);
             this.txtXPath.TabIndex = 0;
+            this.myToolTip.SetToolTip(this.txtXPath, "Double-Click to copy XPath in Clipboard");
+            this.txtXPath.DoubleClick += new System.EventHandler(this.txtXPath_DoubleClick);
             // 
             // splitContainer1
             // 
@@ -179,11 +188,14 @@
             this.txtElementInformation.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtElementInformation.Size = new System.Drawing.Size(335, 216);
             this.txtElementInformation.TabIndex = 0;
+            this.myToolTip.SetToolTip(this.txtElementInformation, "Double-Click to copy Element Result in Clipboard");
+            this.txtElementInformation.DoubleClick += new System.EventHandler(this.txtElementInformation_DoubleClick);
             // 
             // panelFooter
             // 
             this.panelFooter.Controls.Add(this.uiBtnAdd);
             this.panelFooter.Controls.Add(this.uiBtnCancel);
+            this.panelFooter.Controls.Add(this.panelFooterContainer);
             this.panelFooter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFooter.Location = new System.Drawing.Point(0, 302);
             this.panelFooter.Margin = new System.Windows.Forms.Padding(0);
@@ -227,6 +239,33 @@
             this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
+            // panelFooterContainer
+            // 
+            this.panelFooterContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelFooterContainer.Controls.Add(this.lblMessage);
+            this.panelFooterContainer.Location = new System.Drawing.Point(203, 3);
+            this.panelFooterContainer.Name = "panelFooterContainer";
+            this.panelFooterContainer.Size = new System.Drawing.Size(363, 51);
+            this.panelFooterContainer.TabIndex = 20;
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.lblMessage.ForeColor = System.Drawing.Color.White;
+            this.lblMessage.Location = new System.Drawing.Point(126, 11);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(65, 20);
+            this.lblMessage.TabIndex = 0;
+            this.lblMessage.Text = "Copied!!";
+            this.lblMessage.Visible = false;
+            // 
+            // timerLabelShowTime
+            // 
+            this.timerLabelShowTime.Interval = 2000;
+            this.timerLabelShowTime.Tick += new System.EventHandler(this.timerLabelShowTime_Tick);
+            // 
             // frmInspect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -234,8 +273,8 @@
             this.ClientSize = new System.Drawing.Size(569, 359);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "frmInspect";
-            this.Text = "Inspect Tool";
-            this.Load += new System.EventHandler(this.frmInspect_Load);
+            this.Text = "GUI Inspect Tool";
+            this.Load += new System.EventHandler(this.frmGUIInspect_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelTitle.ResumeLayout(false);
             this.panelTitle.PerformLayout();
@@ -249,6 +288,8 @@
             this.panelFooter.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
+            this.panelFooterContainer.ResumeLayout(false);
+            this.panelFooterContainer.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -268,5 +309,9 @@
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.TreeView tvElements;
         private System.Windows.Forms.TextBox txtElementInformation;
+        private System.Windows.Forms.Panel panelFooterContainer;
+        private System.Windows.Forms.Label lblMessage;
+        private System.Windows.Forms.Timer timerLabelShowTime;
+        private System.Windows.Forms.ToolTip myToolTip;
     }
 }
