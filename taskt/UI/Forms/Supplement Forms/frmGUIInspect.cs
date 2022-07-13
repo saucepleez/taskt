@@ -16,7 +16,6 @@ namespace taskt.UI.Forms.Supplement_Forms
     public partial class frmGUIInspect : ThemedForm
     {
         private XElement xml = null;
-
         public frmGUIInspect()
         {
             InitializeComponent();
@@ -43,7 +42,9 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             if (e.Node.Parent != null)
             {
+                AutomationElement elem = (AutomationElement)e.Node.Tag;
                 showElementInformation((AutomationElement)e.Node.Tag);
+                highlightElement(elem);
             }
             else
             {
@@ -109,13 +110,49 @@ namespace taskt.UI.Forms.Supplement_Forms
             txtElementInformation.Text = "";
         }
 
-        #region Footer buttons
+        #region node methods
         private void showElementInformation(AutomationElement elem)
         {
             txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
 
             txtXPath.Text = AutomationElementControls.GetXPath(xml, elem);
         }
+
+        private void highlightElement(AutomationElement elem)
+        {
+            System.Windows.Rect rect = elem.Current.BoundingRectangle;
+
+            Rectangle outerRect = new Rectangle
+            {
+                X = (int)rect.X - 3,
+                Y = (int)rect.Y - 3,
+                Width = (int)rect.Width + 6,
+                Height = (int)rect.Height + 6
+            };
+            Rectangle middleRect = new Rectangle
+            {
+                X = (int)rect.X - 2,
+                Y = (int)rect.Y - 2,
+                Width = (int)rect.Width + 4,
+                Height = (int)rect.Height + 4
+            };
+            Rectangle innerRect = new Rectangle
+            {
+                X = (int)rect.X,
+                Y = (int)rect.Y,
+                Width = (int)rect.Width,
+                Height = (int)rect.Height
+            };
+
+            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+
+            g.DrawRectangle(new Pen(Color.Black, 1), outerRect);
+            g.DrawRectangle(new Pen(Color.Yellow, 2), middleRect);
+            g.DrawRectangle(new Pen(Color.Black, 1), innerRect);
+        }
+        #endregion
+
+        #region Footer buttons
 
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
