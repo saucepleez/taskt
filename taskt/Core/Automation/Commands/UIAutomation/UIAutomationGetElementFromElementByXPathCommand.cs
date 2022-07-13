@@ -112,7 +112,7 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkInspectTool_Clicked(object sender, EventArgs e)
         {
-            AutomationElementControls.InspectToolClicked(XPathTextBox);
+            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(XPathTextBox);
         }
 
 
