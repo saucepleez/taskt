@@ -1063,7 +1063,7 @@ namespace taskt.Core.Automation.Commands
             string elemHash = elemNode.Attribute("Hash").Value;
             string xpath;
             
-            if (elemNode.Attribute("AutomationId").ToString() != "")
+            if (elemNode.Attribute("AutomationId").Value != "")
             {
                 xpath = "/" + elemType + "[@AutomationId=\"" + elemNode.Attribute("AutomationId").Value + "\"]";
                 XElement idNode = parentNode.XPathSelectElement("." + xpath);
