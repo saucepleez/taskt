@@ -75,7 +75,7 @@
             this.optionToolStripSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.showSearchBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionToolStripSep3 = new System.Windows.Forms.ToolStripSeparator();
-            this.showInspectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showGUIInspectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -602,7 +602,7 @@
             this.optionToolStripSep2,
             this.showSearchBarToolStripMenuItem,
             this.optionToolStripSep3,
-            this.showInspectToolToolStripMenuItem});
+            this.showGUIInspectToolToolStripMenuItem});
             this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
@@ -685,13 +685,13 @@
             this.optionToolStripSep3.Name = "optionToolStripSep3";
             this.optionToolStripSep3.Size = new System.Drawing.Size(209, 6);
             // 
-            // showInspectToolToolStripMenuItem
+            // showGUIInspectToolToolStripMenuItem
             // 
-            this.showInspectToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.showInspectToolToolStripMenuItem.Name = "showInspectToolToolStripMenuItem";
-            this.showInspectToolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.showInspectToolToolStripMenuItem.Text = "I&nspect Tool";
-            this.showInspectToolToolStripMenuItem.Click += new System.EventHandler(this.inspectToolToolStripMenuItem_Click);
+            this.showGUIInspectToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.showGUIInspectToolToolStripMenuItem.Name = "showGUIInspectToolToolStripMenuItem";
+            this.showGUIInspectToolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.showGUIInspectToolToolStripMenuItem.Text = "&GUI Inspect Tool";
+            this.showGUIInspectToolToolStripMenuItem.Click += new System.EventHandler(this.guiInspectToolToolStripMenuItem_Click);
             // 
             // scriptActionsToolStripMenuItem
             // 
@@ -710,7 +710,7 @@
             this.recordToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.recordToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
             this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
-            this.recordToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.recordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recordToolStripMenuItem.Text = "R&ecord";
             this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
             // 
@@ -719,7 +719,7 @@
             this.scheduleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.scheduleToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_schedule;
             this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
-            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.scheduleToolStripMenuItem.Text = "&Schedule";
             this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
             // 
@@ -729,7 +729,7 @@
             this.runToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F5)));
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.runToolStripMenuItem.Text = "&Run";
             this.runToolStripMenuItem.ToolTipText = "Run Script without Save";
             this.runToolStripMenuItem.Visible = false;
@@ -2296,7 +2296,7 @@
         private System.Windows.Forms.ToolStripMenuItem ViewXMLCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ViewJSONCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator optionToolStripSep3;
-        private System.Windows.Forms.ToolStripMenuItem showInspectToolToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showGUIInspectToolToolStripMenuItem;
     }
 }
 

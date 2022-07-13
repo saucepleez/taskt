@@ -13,16 +13,16 @@ using System.Windows.Automation;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
-    public partial class frmInspect : ThemedForm
+    public partial class frmGUIInspect : ThemedForm
     {
         private XElement xml = null;
 
-        public frmInspect()
+        public frmGUIInspect()
         {
             InitializeComponent();
         }
 
-        private void frmInspect_Load(object sender, EventArgs e)
+        private void frmGUIInspect_Load(object sender, EventArgs e)
         {
             reloadWindowNames();
         }

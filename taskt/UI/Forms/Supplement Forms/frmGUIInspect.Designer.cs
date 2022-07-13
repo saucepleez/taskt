@@ -1,6 +1,6 @@
 ﻿namespace taskt.UI.Forms.Supplement_Forms
 {
-    partial class frmInspect
+    partial class frmGUIInspect
     {
         /// <summary>
         /// Required designer variable.
@@ -110,9 +110,9 @@
             this.cmbWindowList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbWindowList.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.cmbWindowList.FormattingEnabled = true;
-            this.cmbWindowList.Location = new System.Drawing.Point(140, 9);
+            this.cmbWindowList.Location = new System.Drawing.Point(178, 9);
             this.cmbWindowList.Name = "cmbWindowList";
-            this.cmbWindowList.Size = new System.Drawing.Size(382, 23);
+            this.cmbWindowList.Size = new System.Drawing.Size(344, 23);
             this.cmbWindowList.TabIndex = 2;
             this.myToolTip.SetToolTip(this.cmbWindowList, "up-to-date");
             this.cmbWindowList.SelectedValueChanged += new System.EventHandler(this.cmbWindowList_SelectedValueChanged);
@@ -124,9 +124,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(3, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(131, 30);
+            this.label1.Size = new System.Drawing.Size(173, 30);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Inspect Tool";
+            this.label1.Text = "GUI Inspect Tool";
             // 
             // panelXPath
             // 
@@ -273,8 +273,8 @@
             this.ClientSize = new System.Drawing.Size(569, 359);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "frmInspect";
-            this.Text = "Inspect Tool";
-            this.Load += new System.EventHandler(this.frmInspect_Load);
+            this.Text = "GUI Inspect Tool";
+            this.Load += new System.EventHandler(this.frmGUIInspect_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelTitle.ResumeLayout(false);
             this.panelTitle.PerformLayout();

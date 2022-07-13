@@ -1103,7 +1103,7 @@ namespace taskt.Core.Automation.Commands
 
         public static void InspectToolClicked(System.Windows.Forms.TextBox txtXPath)
         {
-            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmInspect())
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
