@@ -171,6 +171,14 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
         }
 
+        public string InspectResult
+        {
+            get
+            {
+                return txtElementInformation.Text;
+            }
+        }
+
         #endregion
 
     }
