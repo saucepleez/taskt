@@ -608,6 +608,7 @@ namespace taskt.UI
             {"GetFoldersCommand", "taskt.Properties.Resources.command_files"},
             {"MoveFolderCommand", "taskt.Properties.Resources.command_files"},
             {"RenameFolderCommand", "taskt.Properties.Resources.command_files"},
+            {"WaitForFolderToExistCommand", "taskt.Properties.Resources.command_files"},
 
             // IE
             {"IEBrowserCloseCommand", "taskt.Properties.Resources.command_window_close"},
