@@ -119,6 +119,25 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         #endregion
 
+        #region XPath checkbox events
+        private void chkUseNameAttr_CheckedChanged(object sender, EventArgs e)
+        {
+            reloadXPath();
+        }
+        private void chkUseAutomationIdAttr_CheckedChanged(object sender, EventArgs e)
+        {
+            reloadXPath();
+        }
+
+        private void reloadXPath()
+        {
+            if (tvElements.SelectedNode != null)
+            {
+                AutomationElement elem = (AutomationElement)tvElements.SelectedNode.Tag;
+                showElementInformation(elem);
+            }
+        }
+        #endregion
 
         #region node methods
         private void showElementInformation(AutomationElement elem)
@@ -227,6 +246,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
 
         #endregion
+
 
     }
 }

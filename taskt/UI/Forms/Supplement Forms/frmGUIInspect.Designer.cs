@@ -35,6 +35,8 @@
             this.cmbWindowList = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panelXPath = new System.Windows.Forms.Panel();
+            this.chkUseAutomationIdAttr = new System.Windows.Forms.CheckBox();
+            this.chkUseNameAttr = new System.Windows.Forms.CheckBox();
             this.txtXPath = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvElements = new System.Windows.Forms.TreeView();
@@ -46,8 +48,6 @@
             this.lblMessage = new System.Windows.Forms.Label();
             this.timerLabelShowTime = new System.Windows.Forms.Timer(this.components);
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.chkUseNameAttr = new System.Windows.Forms.CheckBox();
-            this.chkUseAutomationIdAttr = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.panelXPath.SuspendLayout();
@@ -142,6 +142,34 @@
             this.panelXPath.Name = "panelXPath";
             this.panelXPath.Size = new System.Drawing.Size(569, 80);
             this.panelXPath.TabIndex = 1;
+            // 
+            // chkUseAutomationIdAttr
+            // 
+            this.chkUseAutomationIdAttr.AutoSize = true;
+            this.chkUseAutomationIdAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
+            this.chkUseAutomationIdAttr.ForeColor = System.Drawing.Color.White;
+            this.chkUseAutomationIdAttr.Location = new System.Drawing.Point(203, 47);
+            this.chkUseAutomationIdAttr.Name = "chkUseAutomationIdAttr";
+            this.chkUseAutomationIdAttr.Size = new System.Drawing.Size(199, 19);
+            this.chkUseAutomationIdAttr.TabIndex = 2;
+            this.chkUseAutomationIdAttr.Text = "Use AutomationId Attribute";
+            this.chkUseAutomationIdAttr.UseVisualStyleBackColor = true;
+            this.chkUseAutomationIdAttr.CheckedChanged += new System.EventHandler(this.chkUseAutomationIdAttr_CheckedChanged);
+            // 
+            // chkUseNameAttr
+            // 
+            this.chkUseNameAttr.AutoSize = true;
+            this.chkUseNameAttr.Checked = true;
+            this.chkUseNameAttr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkUseNameAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
+            this.chkUseNameAttr.ForeColor = System.Drawing.Color.White;
+            this.chkUseNameAttr.Location = new System.Drawing.Point(31, 47);
+            this.chkUseNameAttr.Name = "chkUseNameAttr";
+            this.chkUseNameAttr.Size = new System.Drawing.Size(152, 19);
+            this.chkUseNameAttr.TabIndex = 1;
+            this.chkUseNameAttr.Text = "Use Name Attribute";
+            this.chkUseNameAttr.UseVisualStyleBackColor = true;
+            this.chkUseNameAttr.CheckedChanged += new System.EventHandler(this.chkUseNameAttr_CheckedChanged);
             // 
             // txtXPath
             // 
@@ -270,32 +298,6 @@
             // 
             this.timerLabelShowTime.Interval = 2000;
             this.timerLabelShowTime.Tick += new System.EventHandler(this.timerLabelShowTime_Tick);
-            // 
-            // chkUseNameAttr
-            // 
-            this.chkUseNameAttr.AutoSize = true;
-            this.chkUseNameAttr.Checked = true;
-            this.chkUseNameAttr.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkUseNameAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
-            this.chkUseNameAttr.ForeColor = System.Drawing.Color.White;
-            this.chkUseNameAttr.Location = new System.Drawing.Point(31, 47);
-            this.chkUseNameAttr.Name = "chkUseNameAttr";
-            this.chkUseNameAttr.Size = new System.Drawing.Size(152, 19);
-            this.chkUseNameAttr.TabIndex = 1;
-            this.chkUseNameAttr.Text = "Use Name Attribute";
-            this.chkUseNameAttr.UseVisualStyleBackColor = true;
-            // 
-            // chkUseAutomationIdAttr
-            // 
-            this.chkUseAutomationIdAttr.AutoSize = true;
-            this.chkUseAutomationIdAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
-            this.chkUseAutomationIdAttr.ForeColor = System.Drawing.Color.White;
-            this.chkUseAutomationIdAttr.Location = new System.Drawing.Point(203, 47);
-            this.chkUseAutomationIdAttr.Name = "chkUseAutomationIdAttr";
-            this.chkUseAutomationIdAttr.Size = new System.Drawing.Size(199, 19);
-            this.chkUseAutomationIdAttr.TabIndex = 2;
-            this.chkUseAutomationIdAttr.Text = "Use AutomationId Attribute";
-            this.chkUseAutomationIdAttr.UseVisualStyleBackColor = true;
             // 
             // frmGUIInspect
             // 
