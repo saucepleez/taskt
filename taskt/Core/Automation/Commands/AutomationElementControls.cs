@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using System.Security;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -1080,7 +1081,7 @@ namespace taskt.Core.Automation.Commands
             
             if (useAutomationIdAttribute && (elemNode.Attribute("AutomationId").Value != ""))
             {
-                xpath = "/" + elemType + "[@AutomationId=\"" + elemNode.Attribute("AutomationId").Value + "\"]";
+                xpath = "/" + elemType + "[@AutomationId=\"" + SecurityElement.Escape(elemNode.Attribute("AutomationId").Value) + "\"]";
                 XElement idNode = parentNode.XPathSelectElement("." + xpath);
                 if (idNode != null)
                 {
@@ -1093,7 +1094,7 @@ namespace taskt.Core.Automation.Commands
 
             if (useNameAttribute && (elemNode.Attribute("Name").Value != ""))
             {
-                xpath = "/" + elemType + "[@Name=\"" + elemNode.Attribute("Name").Value + "\"]";
+                xpath = "/" + elemType + "[@Name=\"" + SecurityElement.Escape(elemNode.Attribute("Name").Value) + "\"]";
                 XElement nameNode = parentNode.XPathSelectElement("." + xpath);
                 if (nameNode != null)
                 {
