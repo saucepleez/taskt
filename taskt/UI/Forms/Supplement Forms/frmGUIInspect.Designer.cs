@@ -46,6 +46,8 @@
             this.lblMessage = new System.Windows.Forms.Label();
             this.timerLabelShowTime = new System.Windows.Forms.Timer(this.components);
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.chkUseNameAttr = new System.Windows.Forms.CheckBox();
+            this.chkUseAutomationIdAttr = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.panelXPath.SuspendLayout();
@@ -65,18 +67,19 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panelTitle, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelXPath, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panelFooter, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panelXPath, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panelFooter, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(569, 359);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(569, 398);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panelTitle
@@ -130,12 +133,14 @@
             // 
             // panelXPath
             // 
+            this.panelXPath.Controls.Add(this.chkUseAutomationIdAttr);
+            this.panelXPath.Controls.Add(this.chkUseNameAttr);
             this.panelXPath.Controls.Add(this.txtXPath);
             this.panelXPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelXPath.Location = new System.Drawing.Point(0, 262);
+            this.panelXPath.Location = new System.Drawing.Point(0, 261);
             this.panelXPath.Margin = new System.Windows.Forms.Padding(0);
             this.panelXPath.Name = "panelXPath";
-            this.panelXPath.Size = new System.Drawing.Size(569, 40);
+            this.panelXPath.Size = new System.Drawing.Size(569, 80);
             this.panelXPath.TabIndex = 1;
             // 
             // txtXPath
@@ -154,7 +159,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 43);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 73);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -164,7 +169,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtElementInformation);
-            this.splitContainer1.Size = new System.Drawing.Size(563, 216);
+            this.splitContainer1.Size = new System.Drawing.Size(563, 185);
             this.splitContainer1.SplitterDistance = 224;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -174,7 +179,7 @@
             this.tvElements.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tvElements.Location = new System.Drawing.Point(0, 0);
             this.tvElements.Name = "tvElements";
-            this.tvElements.Size = new System.Drawing.Size(224, 216);
+            this.tvElements.Size = new System.Drawing.Size(224, 185);
             this.tvElements.TabIndex = 0;
             this.tvElements.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvElements_NodeMouseClick);
             // 
@@ -186,7 +191,7 @@
             this.txtElementInformation.Multiline = true;
             this.txtElementInformation.Name = "txtElementInformation";
             this.txtElementInformation.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtElementInformation.Size = new System.Drawing.Size(335, 216);
+            this.txtElementInformation.Size = new System.Drawing.Size(335, 185);
             this.txtElementInformation.TabIndex = 0;
             this.myToolTip.SetToolTip(this.txtElementInformation, "Double-Click to copy Element Result in Clipboard");
             this.txtElementInformation.DoubleClick += new System.EventHandler(this.txtElementInformation_DoubleClick);
@@ -197,7 +202,7 @@
             this.panelFooter.Controls.Add(this.uiBtnCancel);
             this.panelFooter.Controls.Add(this.panelFooterContainer);
             this.panelFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFooter.Location = new System.Drawing.Point(0, 302);
+            this.panelFooter.Location = new System.Drawing.Point(0, 341);
             this.panelFooter.Margin = new System.Windows.Forms.Padding(0);
             this.panelFooter.Name = "panelFooter";
             this.panelFooter.Size = new System.Drawing.Size(569, 57);
@@ -266,13 +271,39 @@
             this.timerLabelShowTime.Interval = 2000;
             this.timerLabelShowTime.Tick += new System.EventHandler(this.timerLabelShowTime_Tick);
             // 
-            // frmInspect
+            // chkUseNameAttr
+            // 
+            this.chkUseNameAttr.AutoSize = true;
+            this.chkUseNameAttr.Checked = true;
+            this.chkUseNameAttr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkUseNameAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
+            this.chkUseNameAttr.ForeColor = System.Drawing.Color.White;
+            this.chkUseNameAttr.Location = new System.Drawing.Point(31, 47);
+            this.chkUseNameAttr.Name = "chkUseNameAttr";
+            this.chkUseNameAttr.Size = new System.Drawing.Size(152, 19);
+            this.chkUseNameAttr.TabIndex = 1;
+            this.chkUseNameAttr.Text = "Use Name Attribute";
+            this.chkUseNameAttr.UseVisualStyleBackColor = true;
+            // 
+            // chkUseAutomationIdAttr
+            // 
+            this.chkUseAutomationIdAttr.AutoSize = true;
+            this.chkUseAutomationIdAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
+            this.chkUseAutomationIdAttr.ForeColor = System.Drawing.Color.White;
+            this.chkUseAutomationIdAttr.Location = new System.Drawing.Point(203, 47);
+            this.chkUseAutomationIdAttr.Name = "chkUseAutomationIdAttr";
+            this.chkUseAutomationIdAttr.Size = new System.Drawing.Size(199, 19);
+            this.chkUseAutomationIdAttr.TabIndex = 2;
+            this.chkUseAutomationIdAttr.Text = "Use AutomationId Attribute";
+            this.chkUseAutomationIdAttr.UseVisualStyleBackColor = true;
+            // 
+            // frmGUIInspect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 359);
+            this.ClientSize = new System.Drawing.Size(569, 398);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "frmInspect";
+            this.Name = "frmGUIInspect";
             this.Text = "GUI Inspect Tool";
             this.Load += new System.EventHandler(this.frmGUIInspect_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -313,5 +344,7 @@
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.Timer timerLabelShowTime;
         private System.Windows.Forms.ToolTip myToolTip;
+        private System.Windows.Forms.CheckBox chkUseAutomationIdAttr;
+        private System.Windows.Forms.CheckBox chkUseNameAttr;
     }
 }
