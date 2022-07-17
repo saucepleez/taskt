@@ -12,21 +12,33 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmCommandList : ThemedForm
     {
-        private TreeNode[] treeCommands;
-        public frmCommandList(TreeNode[] commands)
+        private TreeNode[] treeAllCommands;
+        private ImageList treeAllCommandsImage;
+
+        public frmCommandList(TreeNode[] commands, ImageList commandsImage)
         {
             InitializeComponent();
 
-            treeCommands = (TreeNode[])commands.Clone();
+            treeAllCommands = (TreeNode[])commands.Clone();
+            treeAllCommandsImage = commandsImage;
         }
         private void frmCommandList_Load(object sender, EventArgs e)
         {
+            tvCommands.SuspendLayout();
+            tvCommands.BeginUpdate();
+
             tvCommands.Nodes.Clear();
-            //tvCommands.Nodes.AddRange((TreeNode[])treeCommands.Clone());
-            foreach(TreeNode command in treeCommands)
+            foreach (TreeNode command in treeAllCommands)
             {
                 tvCommands.Nodes.Add((TreeNode)command.Clone());
             }
+
+            //taskt.Core.CommandsTreeControls.ShowCommandsTree(tvCommands, treeAllCommands);
+
+            tvCommands.ImageList = treeAllCommandsImage;
+
+            tvCommands.EndUpdate();
+            tvCommands.ResumeLayout();
         }
 
         #region footer buttons
