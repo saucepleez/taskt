@@ -3809,7 +3809,7 @@ namespace taskt.UI.Forms
             //tvCommandImages.Images.Add(Properties.Resources.command_group);
             //tvCommands.ImageList = tvCommandImages;
 
-            bufferedCommandList = taskt.Core.CommandsTreeControls.CreateAllCommandsArray(appSettings);
+            bufferedCommandList = taskt.Core.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
             commandTreeImages = taskt.Core.CommandsTreeControls.CreateCommandImageList();
             tvCommands.ImageList = commandTreeImages;
 

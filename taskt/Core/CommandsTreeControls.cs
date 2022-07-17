@@ -9,13 +9,13 @@ namespace taskt.Core
 {
     internal class CommandsTreeControls
     {
-        public static TreeNode[] CreateAllCommandsArray(Core.ApplicationSettings settings)
+        public static TreeNode[] CreateAllCommandsArray(Core.ClientSettings settings)
         {
             List<taskt.UI.CustomControls.AutomationCommand> automationCommands = UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
             List<TreeNode> commandsTreeList = new List<TreeNode>();
 
-            if (settings.ClientSettings.GroupingBySubgroup)
+            if (settings.GroupingBySubgroup)
             {
                 CommandsSortBySubGroupAndGroup(commandsTreeList, automationCommands);
             }
