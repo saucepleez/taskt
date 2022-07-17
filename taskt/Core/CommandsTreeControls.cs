@@ -9,7 +9,7 @@ namespace taskt.Core
 {
     internal class CommandsTreeControls
     {
-        public static TreeNode[] CreateAllCommandsArray(Core.ClientSettings settings)
+        public static TreeNode[] CreateAllCommandsArray(ClientSettings settings)
         {
             List<taskt.UI.CustomControls.AutomationCommand> automationCommands = UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
@@ -121,7 +121,7 @@ namespace taskt.Core
             return commandImages;
         }
 
-        public static void ShowAllCommands(TreeView tv, TreeNode[] commandTree)
+        public static void ShowCommandsTree(TreeView tv, TreeNode[] commandTree, bool expandAllNodes = false)
         {
             tv.BeginUpdate();
             tv.SuspendLayout();
@@ -131,8 +131,125 @@ namespace taskt.Core
             tv.Nodes.AddRange((TreeNode[])commandTree.Clone());
             tv.Sort();
 
+            if (expandAllNodes)
+            {
+                tv.ExpandAll();
+            }
+
             tv.ResumeLayout();
             tv.EndUpdate();
+        }
+
+        public static TreeNode[] FilterCommands(string keyword, TreeNode[] allCommands, ClientSettings settings)
+        {
+            List<TreeNode> matchedCommands = new List<TreeNode>();
+
+            foreach (TreeNode parentGroup in allCommands)
+            {
+                TreeNode pGroup = new TreeNode(parentGroup.Text, 1, 1);
+
+                bool parentMatched = false;
+
+                // check match parent group
+                if (settings.SearchTargetGroupName)
+                {
+                    if (parentGroup.Text.ToLower().Contains(keyword))
+                    {
+                        // greedly
+                        if (settings.SearchGreedlyGroupName)
+                        {
+                            foreach (TreeNode item in parentGroup.Nodes)
+                            {
+                                //pGroup.Nodes.Add(item.Text);
+                                if (item.Nodes.Count == 0)
+                                {
+                                    pGroup.Nodes.Add(item.Text);
+                                }
+                                else
+                                {
+                                    TreeNode sGroup = new TreeNode(item.Text, 1, 1);
+                                    foreach (TreeNode i in item.Nodes)
+                                    {
+                                        sGroup.Nodes.Add(i.Text);
+                                    }
+                                    pGroup.Nodes.Add(sGroup);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            parentMatched = true;
+                        }
+                    }
+                }
+
+                // not greedly
+                if (pGroup.Nodes.Count == 0)
+                {
+                    foreach (TreeNode item in parentGroup.Nodes)
+                    {
+                        if (item.Nodes.Count > 0)
+                        {
+                            TreeNode sGroup = new TreeNode(item.Text, 1, 1);
+
+                            bool subMatched = false;
+
+                            if (settings.SearchTargetSubGroupName)
+                            {
+                                if (item.Text.ToLower().Contains(keyword))
+                                {
+                                    if (settings.SearchGreedlySubGroupName)
+                                    {
+                                        foreach (TreeNode itm in item.Nodes)
+                                        {
+                                            sGroup.Nodes.Add(itm.Text);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        subMatched = true;
+                                    }
+                                }
+                            }
+
+                            if (sGroup.Nodes.Count == 0)
+                            {
+                                foreach (TreeNode itm in item.Nodes)
+                                {
+                                    if (itm.Text.ToLower().Contains(keyword))
+                                    {
+                                        sGroup.Nodes.Add(itm.Text);
+                                    }
+                                }
+                            }
+
+                            if ((sGroup.Nodes.Count > 0) || subMatched)
+                            {
+                                pGroup.Nodes.Add(sGroup);
+                            }
+                        }
+                        else
+                        {
+                            if (item.Text.ToLower().Contains(keyword))
+                            {
+                                pGroup.Nodes.Add(item.Text);
+                            }
+                        }
+                    }
+                }
+
+                if ((pGroup.Nodes.Count > 0) || parentMatched)
+                {
+                    matchedCommands.Add(pGroup);
+                }
+            }
+
+            if (matchedCommands.Count == 0)
+            {
+                matchedCommands.Add(new TreeNode("nothing :-("));
+            }
+
+            return (TreeNode[])matchedCommands.ToArray();
         }
 
     }
