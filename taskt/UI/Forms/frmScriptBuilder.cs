@@ -100,11 +100,18 @@ namespace taskt.UI.Forms
             }
         }
 
-        public TreeNode[] treeCommands
+        public TreeNode[] treeAllCommands
         {
             get
             {
                 return this.bufferedCommandList;
+            }
+        }
+        public ImageList treeAllCommandsImage
+        {
+            get
+            {
+                return this.commandTreeImages;
             }
         }
         #endregion
@@ -352,7 +359,6 @@ namespace taskt.UI.Forms
             }
 
             pnlMain.Invalidate();
-
         }
         #endregion
 
