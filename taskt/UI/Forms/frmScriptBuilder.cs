@@ -1344,7 +1344,7 @@ namespace taskt.UI.Forms
                 currentCommand.removeInstance(instanceList);
 
                 //create new command editor form
-                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList))
+                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.treeAllCommandsImage))
                 {
                     //creation mode edit locks form to current command
                     editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
@@ -3450,7 +3450,7 @@ namespace taskt.UI.Forms
 
         private void CheckValidateCommands(List<Core.Automation.Commands.ScriptCommand> commands)
         {
-            using (var fm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList))
+            using (var fm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
             {
                 fm.appSettings = this.appSettings;
                 foreach (var cmd in commands)
@@ -3618,7 +3618,7 @@ namespace taskt.UI.Forms
             //MessageBox.Show(specificCommand);
 
             //bring up new command configuration form
-            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList))
+            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.treeAllCommandsImage))
             {
                 newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
                 newCommandForm.scriptVariables = this.scriptVariables;
