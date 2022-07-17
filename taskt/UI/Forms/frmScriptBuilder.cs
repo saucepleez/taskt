@@ -37,7 +37,7 @@ namespace taskt.UI.Forms
     //Features ability to add, drag/drop reorder commands
     {
         private TreeNode[] bufferedCommandList;
-        private ImageList commandTreeImages;
+        private ImageList bufferedCommandTreeImages;
 
         //private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
@@ -1344,7 +1344,7 @@ namespace taskt.UI.Forms
                 currentCommand.removeInstance(instanceList);
 
                 //create new command editor form
-                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.treeAllCommandsImage))
+                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
                 {
                     //creation mode edit locks form to current command
                     editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
@@ -3618,7 +3618,7 @@ namespace taskt.UI.Forms
             //MessageBox.Show(specificCommand);
 
             //bring up new command configuration form
-            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.treeAllCommandsImage))
+            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
             {
                 newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
                 newCommandForm.scriptVariables = this.scriptVariables;
@@ -3720,8 +3720,8 @@ namespace taskt.UI.Forms
         private void GenerateTreeViewCommands()
         {
             bufferedCommandList = taskt.Core.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
-            commandTreeImages = taskt.Core.CommandsTreeControls.CreateCommandImageList();
-            tvCommands.ImageList = commandTreeImages;
+            bufferedCommandTreeImages = taskt.Core.CommandsTreeControls.CreateCommandImageList();
+            tvCommands.ImageList = bufferedCommandTreeImages;
 
             ShowAllCommands();
         }
