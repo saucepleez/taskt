@@ -100,20 +100,20 @@ namespace taskt.UI.Forms
             }
         }
 
-        public TreeNode[] treeAllCommands
-        {
-            get
-            {
-                return this.bufferedCommandList;
-            }
-        }
-        public ImageList treeAllCommandsImage
-        {
-            get
-            {
-                return this.commandTreeImages;
-            }
-        }
+        //public TreeNode[] treeAllCommands
+        //{
+        //    get
+        //    {
+        //        return this.bufferedCommandList;
+        //    }
+        //}
+        //public ImageList treeAllCommandsImage
+        //{
+        //    get
+        //    {
+        //        return this.commandTreeImages;
+        //    }
+        //}
         #endregion
 
         #region enums
