@@ -37,13 +37,16 @@ namespace taskt.UI.Forms
     //Features ability to add, drag/drop reorder commands
     {
         private TreeNode[] bufferedCommandList;
+        private ImageList commandTreeImages;
 
         //private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
         private Core.Script.ScriptInformation scriptInfo;
-        private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
+        
         private bool editMode { get; set; }
-        private ImageList uiImages; 
+
+        private ImageList scriptImages;
+
         public Core.ApplicationSettings appSettings;
         private List<List<ListViewItem>> undoList;
         private DateTime lastAntiIdleEvent;
@@ -80,6 +83,10 @@ namespace taskt.UI.Forms
         private frmAttendedMode frmAttended = null;
 
         private string _scriptFilePath = null;
+
+        #region properties
+        private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
+
         public string ScriptFilePath
         {
             get
@@ -92,6 +99,15 @@ namespace taskt.UI.Forms
                 UpdateWindowTitle();
             }
         }
+
+        public TreeNode[] treeCommands
+        {
+            get
+            {
+                return this.bufferedCommandList;
+            }
+        }
+        #endregion
 
         #region enums
         public enum CommandEditorState
@@ -237,10 +253,10 @@ namespace taskt.UI.Forms
             //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
 
             //instantiate and populate display icons for commands
-            uiImages = UI.Images.UIImageList();
+            scriptImages = UI.Images.UIImageList();
 
             //set image list
-            lstScriptActions.SmallImageList = uiImages;
+            lstScriptActions.SmallImageList = scriptImages;
             lstScriptActions.Columns[0].Width = 14; // 1digit width
             lstScriptActions.Columns[1].Width = 16; // icon size
             lstScriptActions.Columns[2].Width = lstScriptActions.ClientSize.Width - 30;
@@ -251,97 +267,8 @@ namespace taskt.UI.Forms
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
 
-            //tvCommands.BeginUpdate();
-            //tvCommands.SuspendLayout();
-
-            //if (appSettings.ClientSettings.GroupingBySubgroup)
-            //{
-            //    var groupedCommands = automationCommands.GroupBy(f => new { f.DisplayGroup, f.DisplaySubGroup })
-            //                        .OrderBy(f => f.Key.DisplayGroup);
-            //    string prevPrimayGroup = "----";
-            //    TreeNode pGroup = null;
-            //    foreach (var primaryGroup in groupedCommands)
-            //    {
-            //        if (primaryGroup.Key.DisplayGroup != prevPrimayGroup)
-            //        {
-            //            if (prevPrimayGroup != "----")
-            //            {
-            //                tvCommands.Nodes.Add(pGroup);
-            //            }
-            //            pGroup = new TreeNode(primaryGroup.Key.DisplayGroup);
-            //            prevPrimayGroup = primaryGroup.Key.DisplayGroup;
-            //        }
-
-            //        string prevSubGroup = "----";
-            //        TreeNode sGroup = null;
-            //        foreach (var cmd in primaryGroup)
-            //        {
-            //            if (cmd.DisplaySubGroup != prevSubGroup)
-            //            {
-            //                if (prevSubGroup != "----")
-            //                {
-            //                    if (prevSubGroup != "")
-            //                    {
-            //                        pGroup.Nodes.Add(sGroup);
-            //                    }
-            //                }
-            //                prevSubGroup = cmd.DisplaySubGroup;
-
-            //                if (cmd.DisplaySubGroup != "")
-            //                {
-            //                    sGroup = new TreeNode(cmd.DisplaySubGroup);
-            //                }
-            //            }
-
-            //            TreeNode subNode = new TreeNode(cmd.ShortName);
-            //            if (!cmd.Command.CustomRendering)
-            //            {
-            //                subNode.ForeColor = Color.Red;
-            //            }
-            //            if (cmd.DisplaySubGroup == "")
-            //            {
-            //                pGroup.Nodes.Add(subNode);
-            //            }
-            //            else
-            //            {
-            //                sGroup.Nodes.Add(subNode);
-            //            }
-            //        }
-            //        if (prevSubGroup != "")
-            //        {
-            //            pGroup.Nodes.Add(sGroup);
-            //        }
-            //    }
-            //    tvCommands.Nodes.Add(pGroup);
-            //}
-            //else
-            //{
-            //    var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
-
-            //    foreach (var cmd in groupedCommands)
-            //    {
-            //        TreeNode newGroup = new TreeNode(cmd.Key);
-
-            //        foreach (var subcmd in cmd)
-            //        {
-            //            TreeNode subNode = new TreeNode(subcmd.ShortName);
-
-            //            if (!subcmd.Command.CustomRendering)
-            //            {
-            //                subNode.ForeColor = Color.Red;
-            //            }
-            //            newGroup.Nodes.Add(subNode);
-            //        }
-            //        tvCommands.Nodes.Add(newGroup);
-            //    }
-            //}
-            //tvCommands.Sort();
-            //tvCommands.ResumeLayout();
-            //tvCommands.EndUpdate();
-
             GenerateTreeViewCommands();
 
-            //tvCommands.ImageList = uiImages;
 
             //start attended mode if selected
             if (appSettings.ClientSettings.StartupMode == "Attended Task Mode")
@@ -1411,7 +1338,7 @@ namespace taskt.UI.Forms
                 currentCommand.removeInstance(instanceList);
 
                 //create new command editor form
-                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
+                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList))
                 {
                     //creation mode edit locks form to current command
                     editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
@@ -3517,7 +3444,7 @@ namespace taskt.UI.Forms
 
         private void CheckValidateCommands(List<Core.Automation.Commands.ScriptCommand> commands)
         {
-            using (var fm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
+            using (var fm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList))
             {
                 fm.appSettings = this.appSettings;
                 foreach (var cmd in commands)
@@ -3685,7 +3612,7 @@ namespace taskt.UI.Forms
             //MessageBox.Show(specificCommand);
 
             //bring up new command configuration form
-            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
+            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList))
             {
                 newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
                 newCommandForm.scriptVariables = this.scriptVariables;

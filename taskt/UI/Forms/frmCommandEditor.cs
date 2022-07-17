@@ -53,18 +53,33 @@ namespace taskt.UI.Forms
         public Core.ApplicationSettings appSettings;
         // instance counter
         public Core.InstanceCounter instanceList;
-        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
-        {
-            InitializeComponent();
-            commandList = commands;
-            configuredCommands = existingCommands;
-        }
+        // command tree
+        private TreeNode[] treeCommands;
 
         public enum CreationMode
         {
             Add,
             Edit
         }
+
+        #region constructors
+        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
+        {
+            InitializeComponent();
+            commandList = commands;
+            configuredCommands = existingCommands;
+
+            cboSelectedCommand.Enabled = false;
+        }
+
+        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands, TreeNode[] treeCommands)
+        {
+            InitializeComponent();
+            commandList = commands;
+            configuredCommands = existingCommands;
+            this.treeCommands = treeCommands;
+        }
+        #endregion
 
         #region Form Events
 
@@ -367,8 +382,17 @@ namespace taskt.UI.Forms
                 }
             }
         }
+
         #endregion
 
-        
+        #region command list
+        private void cboSelectedCommand_Click(object sender, EventArgs e)
+        {
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmCommandList(treeCommands))
+            {
+                fm.ShowDialog();
+            }
+        }
+        #endregion
     }
 }
