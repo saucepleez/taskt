@@ -121,5 +121,19 @@ namespace taskt.Core
             return commandImages;
         }
 
+        public static void ShowAllCommands(TreeView tv, TreeNode[] commandTree)
+        {
+            tv.BeginUpdate();
+            tv.SuspendLayout();
+
+            tv.Nodes.Clear();
+
+            tv.Nodes.AddRange((TreeNode[])commandTree.Clone());
+            tv.Sort();
+
+            tv.ResumeLayout();
+            tv.EndUpdate();
+        }
+
     }
 }

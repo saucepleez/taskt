@@ -3713,101 +3713,105 @@ namespace taskt.UI.Forms
         #region TreeView Events
         private void GenerateTreeViewCommands()
         {
-            bufferedCommandList = null;
+            //bufferedCommandList = null;
 
-            List<TreeNode> tvcmd = new List<TreeNode>();
+            //List<TreeNode> tvcmd = new List<TreeNode>();
 
-            if (appSettings.ClientSettings.GroupingBySubgroup)
-            {
-                var groupedCommands = automationCommands.GroupBy(f => new { f.DisplayGroup, f.DisplaySubGroup })
-                                    .OrderBy(f => f.Key.DisplayGroup);
-                string prevPrimayGroup = "----";
-                TreeNode pGroup = null;
-                foreach (var primaryGroup in groupedCommands)
-                {
-                    if (primaryGroup.Key.DisplayGroup != prevPrimayGroup)
-                    {
-                        if (prevPrimayGroup != "----")
-                        {
-                            tvcmd.Add(pGroup);
-                        }
-                        pGroup = new TreeNode(primaryGroup.Key.DisplayGroup, 1, 1);
-                        prevPrimayGroup = primaryGroup.Key.DisplayGroup;
-                    }
+            //if (appSettings.ClientSettings.GroupingBySubgroup)
+            //{
+            //    var groupedCommands = automationCommands.GroupBy(f => new { f.DisplayGroup, f.DisplaySubGroup })
+            //                        .OrderBy(f => f.Key.DisplayGroup);
+            //    string prevPrimayGroup = "----";
+            //    TreeNode pGroup = null;
+            //    foreach (var primaryGroup in groupedCommands)
+            //    {
+            //        if (primaryGroup.Key.DisplayGroup != prevPrimayGroup)
+            //        {
+            //            if (prevPrimayGroup != "----")
+            //            {
+            //                tvcmd.Add(pGroup);
+            //            }
+            //            pGroup = new TreeNode(primaryGroup.Key.DisplayGroup, 1, 1);
+            //            prevPrimayGroup = primaryGroup.Key.DisplayGroup;
+            //        }
 
-                    string prevSubGroup = "----";
-                    TreeNode sGroup = null;
-                    foreach (var cmd in primaryGroup)
-                    {
-                        if (cmd.DisplaySubGroup != prevSubGroup)
-                        {
-                            if (prevSubGroup != "----")
-                            {
-                                if (prevSubGroup != "")
-                                {
-                                    pGroup.Nodes.Add(sGroup);
-                                }
-                            }
-                            prevSubGroup = cmd.DisplaySubGroup;
+            //        string prevSubGroup = "----";
+            //        TreeNode sGroup = null;
+            //        foreach (var cmd in primaryGroup)
+            //        {
+            //            if (cmd.DisplaySubGroup != prevSubGroup)
+            //            {
+            //                if (prevSubGroup != "----")
+            //                {
+            //                    if (prevSubGroup != "")
+            //                    {
+            //                        pGroup.Nodes.Add(sGroup);
+            //                    }
+            //                }
+            //                prevSubGroup = cmd.DisplaySubGroup;
 
-                            if (cmd.DisplaySubGroup != "")
-                            {
-                                sGroup = new TreeNode(cmd.DisplaySubGroup, 1, 1);
-                            }
-                        }
+            //                if (cmd.DisplaySubGroup != "")
+            //                {
+            //                    sGroup = new TreeNode(cmd.DisplaySubGroup, 1, 1);
+            //                }
+            //            }
 
-                        TreeNode subNode = new TreeNode(cmd.ShortName);
-                        subNode.ToolTipText = cmd.ShortName;
-                        if (!cmd.Command.CustomRendering)
-                        {
-                            subNode.ForeColor = Color.Red;
-                        }
-                        if (cmd.DisplaySubGroup == "")
-                        {
-                            pGroup.Nodes.Add(subNode);
-                        }
-                        else
-                        {
-                            sGroup.Nodes.Add(subNode);
-                        }
-                    }
-                    if (prevSubGroup != "")
-                    {
-                        pGroup.Nodes.Add(sGroup);
-                    }
-                }
-                tvcmd.Add(pGroup);
-            }
-            else
-            {
-                var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
+            //            TreeNode subNode = new TreeNode(cmd.ShortName);
+            //            subNode.ToolTipText = cmd.ShortName;
+            //            if (!cmd.Command.CustomRendering)
+            //            {
+            //                subNode.ForeColor = Color.Red;
+            //            }
+            //            if (cmd.DisplaySubGroup == "")
+            //            {
+            //                pGroup.Nodes.Add(subNode);
+            //            }
+            //            else
+            //            {
+            //                sGroup.Nodes.Add(subNode);
+            //            }
+            //        }
+            //        if (prevSubGroup != "")
+            //        {
+            //            pGroup.Nodes.Add(sGroup);
+            //        }
+            //    }
+            //    tvcmd.Add(pGroup);
+            //}
+            //else
+            //{
+            //    var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
 
-                foreach (var cmd in groupedCommands)
-                {
-                    TreeNode newGroup = new TreeNode(cmd.Key, 1, 1);
+            //    foreach (var cmd in groupedCommands)
+            //    {
+            //        TreeNode newGroup = new TreeNode(cmd.Key, 1, 1);
 
-                    foreach (var subcmd in cmd)
-                    {
-                        TreeNode subNode = new TreeNode(subcmd.ShortName);
-                        subNode.ToolTipText = subcmd.ShortName;
+            //        foreach (var subcmd in cmd)
+            //        {
+            //            TreeNode subNode = new TreeNode(subcmd.ShortName);
+            //            subNode.ToolTipText = subcmd.ShortName;
 
-                        if (!subcmd.Command.CustomRendering)
-                        {
-                            subNode.ForeColor = Color.Red;
-                        }
-                        newGroup.Nodes.Add(subNode);
-                    }
-                    tvcmd.Add(newGroup);
-                }
-            }
+            //            if (!subcmd.Command.CustomRendering)
+            //            {
+            //                subNode.ForeColor = Color.Red;
+            //            }
+            //            newGroup.Nodes.Add(subNode);
+            //        }
+            //        tvcmd.Add(newGroup);
+            //    }
+            //}
 
-            bufferedCommandList = tvcmd.ToArray();
+            //bufferedCommandList = tvcmd.ToArray();
 
-            ImageList tvCommandImages = new ImageList();
-            tvCommandImages.ImageSize = new Size(16, 16);
-            tvCommandImages.Images.Add(Properties.Resources.file_icon);
-            tvCommandImages.Images.Add(Properties.Resources.command_group);
-            tvCommands.ImageList = tvCommandImages;
+            //ImageList tvCommandImages = new ImageList();
+            //tvCommandImages.ImageSize = new Size(16, 16);
+            //tvCommandImages.Images.Add(Properties.Resources.file_icon);
+            //tvCommandImages.Images.Add(Properties.Resources.command_group);
+            //tvCommands.ImageList = tvCommandImages;
+
+            bufferedCommandList = taskt.Core.CommandsTreeControls.CreateAllCommandsArray(appSettings);
+            commandTreeImages = taskt.Core.CommandsTreeControls.CreateCommandImageList();
+            tvCommands.ImageList = commandTreeImages;
 
             ShowAllCommands();
         }
@@ -4094,16 +4098,18 @@ namespace taskt.UI.Forms
         {
             txtCommandFilter.Text = "";
 
-            tvCommands.BeginUpdate();
-            tvCommands.SuspendLayout();
+            //tvCommands.BeginUpdate();
+            //tvCommands.SuspendLayout();
 
-            tvCommands.Nodes.Clear();
+            //tvCommands.Nodes.Clear();
 
-            tvCommands.Nodes.AddRange((TreeNode[])bufferedCommandList.Clone());
-            tvCommands.Sort();
+            //tvCommands.Nodes.AddRange((TreeNode[])bufferedCommandList.Clone());
+            //tvCommands.Sort();
 
-            tvCommands.ResumeLayout();
-            tvCommands.EndUpdate();
+            //tvCommands.ResumeLayout();
+            //tvCommands.EndUpdate();
+
+            taskt.Core.CommandsTreeControls.ShowAllCommands(tvCommands, bufferedCommandList);
 
             clearCmdTVCommandMenuStrip.Enabled = false;
             clearRootTVCommandMenuStrip.Enabled = false;
