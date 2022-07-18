@@ -94,7 +94,5 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return taskt.Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
             }
         }
-
-
     }
 }
