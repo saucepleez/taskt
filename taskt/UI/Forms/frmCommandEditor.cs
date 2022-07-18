@@ -394,9 +394,13 @@ namespace taskt.UI.Forms
         #region command list
         private void cboSelectedCommand_Click(object sender, EventArgs e)
         {
-            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmCommandList(treeAllCommands, treeAllCommandsImage))
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmCommandList(treeAllCommands, treeAllCommandsImage, cboSelectedCommand.Text))
             {
-                fm.ShowDialog();
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    cboSelectedCommand.Text = fm.FullCommandName;
+                    cboSelectedCommand_SelectionChangeCommitted(null, null);
+                }
             }
         }
         #endregion

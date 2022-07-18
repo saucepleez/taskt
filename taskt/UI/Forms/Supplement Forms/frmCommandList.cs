@@ -15,12 +15,29 @@ namespace taskt.UI.Forms.Supplement_Forms
         private TreeNode[] treeAllCommands;
         private ImageList treeAllCommandsImage;
 
-        public frmCommandList(TreeNode[] commands, ImageList commandsImage)
+        private string firstGroup;
+        private string firstCommand;
+
+        private string selectedFullCommand;
+
+        public frmCommandList(TreeNode[] commands, ImageList commandsImage, string selectedCommand)
         {
             InitializeComponent();
 
             treeAllCommands = (TreeNode[])commands.Clone();
             treeAllCommandsImage = commandsImage;
+
+            var spt = selectedCommand.Split('-');
+            if (spt.Length == 2)
+            {
+                firstGroup = spt[0].Trim();
+                firstCommand = spt[1].Trim();
+            }
+            else
+            {
+                firstGroup = "";
+                firstCommand = "";
+            }
         }
         private void frmCommandList_Load(object sender, EventArgs e)
         {
@@ -39,6 +56,11 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             tvCommands.EndUpdate();
             tvCommands.ResumeLayout();
+
+            if ((firstGroup != "") && (firstCommand != ""))
+            {
+                taskt.Core.CommandsTreeControls.FocusCommand(firstGroup, firstCommand, tvCommands);
+            }
         }
 
         #region footer buttons
@@ -51,7 +73,27 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             this.DialogResult = DialogResult.Cancel;
         }
+
         #endregion
+
+        private void tvCommands_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (tvCommands.SelectedNode != null)
+            {
+                if (tvCommands.SelectedNode.Nodes.Count == 0)
+                {
+                    this.DialogResult = DialogResult.OK;
+                }
+            }
+        }
+
+        public string FullCommandName
+        {
+            get
+            {
+                return taskt.Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
+            }
+        }
 
 
     }
