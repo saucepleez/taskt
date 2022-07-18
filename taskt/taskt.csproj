@@ -325,6 +325,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />
@@ -634,6 +635,7 @@
     <Compile Include="Core\Automation\Commands\Word\WordSaveCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\WriteDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\WriteTextFileCommand.cs" />
+    <Compile Include="Core\CommandsTreeControls.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
     <Compile Include="Core\Automation\Commands\FilePathControls.cs" />
@@ -726,6 +728,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmCodeBuilder.Designer.cs">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmCommandList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmCommandList.Designer.cs">
+      <DependentUpon>frmCommandList.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmDisplayManager.cs">
       <SubType>Form</SubType>
@@ -942,6 +950,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCodeBuilder.resx">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCommandList.resx">
+      <DependentUpon>frmCommandList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDialog.resx">
       <DependentUpon>frmDialog.cs</DependentUpon>

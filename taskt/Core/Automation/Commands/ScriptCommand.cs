@@ -191,6 +191,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetFoldersCommand))]
     [XmlInclude(typeof(MoveFolderCommand))]
     [XmlInclude(typeof(RenameFolderCommand))]
+    [XmlInclude(typeof(WaitForFolderToExistCommand))]
 
     // IE
     [XmlInclude(typeof(IEBrowserCloseCommand))]

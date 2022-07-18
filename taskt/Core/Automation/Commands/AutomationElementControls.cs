@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using System.Security;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -19,11 +20,26 @@ namespace taskt.Core.Automation.Commands
                     new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window)
                 );
 
+            var paneSearchConditions = new AndCondition(
+                    new PropertyCondition(AutomationElement.NameProperty, windowName),
+                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Pane)
+                );
+
             var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, windowSearchConditions);
             if (windowElement == null)
             {
-                // more deep search
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
+                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, paneSearchConditions);
+
+                if (windowElement == null)
+                {
+                    // more deep search
+                    windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
+
+                    if (windowElement == null)
+                    {
+                        windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, paneSearchConditions);
+                    }
+                }
             }
 
             if (windowElement == null)
@@ -1035,7 +1051,7 @@ namespace taskt.Core.Automation.Commands
             return res;
         }
 
-        public static string GetXPath(XElement xml, AutomationElement elem)
+        public static string GetXPath(XElement xml, AutomationElement elem, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
         {
             string searchPath = "//" + GetControlTypeText(elem.Current.ControlType) + "[@Hash=\"" + elem.GetHashCode() + "\"]";
             XElement trgElement = xml.XPathSelectElement(searchPath);
@@ -1048,14 +1064,14 @@ namespace taskt.Core.Automation.Commands
             string xpath = "";
             while (trgElement.Parent != null)
             {
-                xpath = CreateXPath(trgElement) + xpath;
+                xpath = CreateXPath(trgElement, useNameAttribute, useAutomationIdAttribute) + xpath;
                 trgElement = trgElement.Parent;
             }
 
             return xpath;
         }
 
-        private static string CreateXPath(XElement elemNode)
+        private static string CreateXPath(XElement elemNode, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
         {
             XElement parentNode = elemNode.Parent;
 
@@ -1063,9 +1079,9 @@ namespace taskt.Core.Automation.Commands
             string elemHash = elemNode.Attribute("Hash").Value;
             string xpath;
             
-            if (elemNode.Attribute("AutomationId").Value != "")
+            if (useAutomationIdAttribute && (elemNode.Attribute("AutomationId").Value != ""))
             {
-                xpath = "/" + elemType + "[@AutomationId=\"" + elemNode.Attribute("AutomationId").Value + "\"]";
+                xpath = "/" + elemType + "[@AutomationId=\"" + SecurityElement.Escape(elemNode.Attribute("AutomationId").Value) + "\"]";
                 XElement idNode = parentNode.XPathSelectElement("." + xpath);
                 if (idNode != null)
                 {
@@ -1076,13 +1092,16 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            xpath = "/" + elemType + "[@Name=\"" + elemNode.Attribute("Name").Value + "\"]";
-            XElement nameNode = parentNode.XPathSelectElement("." + xpath);
-            if (nameNode != null)
+            if (useNameAttribute && (elemNode.Attribute("Name").Value != ""))
             {
-                if (nameNode.Attribute("Hash").Value == elemHash)
+                xpath = "/" + elemType + "[@Name=\"" + SecurityElement.Escape(elemNode.Attribute("Name").Value) + "\"]";
+                XElement nameNode = parentNode.XPathSelectElement("." + xpath);
+                if (nameNode != null)
                 {
-                    return xpath;
+                    if (nameNode.Attribute("Hash").Value == elemHash)
+                    {
+                        return xpath;
+                    }
                 }
             }
 

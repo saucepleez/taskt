@@ -53,18 +53,39 @@ namespace taskt.UI.Forms
         public Core.ApplicationSettings appSettings;
         // instance counter
         public Core.InstanceCounter instanceList;
-        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
-        {
-            InitializeComponent();
-            commandList = commands;
-            configuredCommands = existingCommands;
-        }
+
+        // command tree
+        private TreeNode[] treeAllCommands;
+        private ImageList treeAllCommandsImage;
 
         public enum CreationMode
         {
             Add,
             Edit
         }
+
+        #region constructors
+        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
+        {
+            InitializeComponent();
+            commandList = commands;
+            configuredCommands = existingCommands;
+
+            treeAllCommands = null;
+            treeAllCommandsImage = null;
+
+            cboSelectedCommand.Enabled = false;
+        }
+
+        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands, TreeNode[] treeCommands, ImageList treeCommandImage)
+        {
+            InitializeComponent();
+            commandList = commands;
+            configuredCommands = existingCommands;
+            this.treeAllCommands = treeCommands;
+            this.treeAllCommandsImage = treeCommandImage;
+        }
+        #endregion
 
         #region Form Events
 
@@ -367,8 +388,25 @@ namespace taskt.UI.Forms
                 }
             }
         }
+
         #endregion
 
-        
+        #region command list
+        private void cboSelectedCommand_Click(object sender, EventArgs e)
+        {
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmCommandList(appSettings, treeAllCommands, treeAllCommandsImage, cboSelectedCommand.Text))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    string newCommand = fm.FullCommandName;
+                    if (cboSelectedCommand.Text != fm.FullCommandName)
+                    {
+                        cboSelectedCommand.Text = fm.FullCommandName;
+                        cboSelectedCommand_SelectionChangeCommitted(null, null);
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }

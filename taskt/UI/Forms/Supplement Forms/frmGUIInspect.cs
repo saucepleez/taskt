@@ -16,16 +16,21 @@ namespace taskt.UI.Forms.Supplement_Forms
     public partial class frmGUIInspect : ThemedForm
     {
         private XElement xml = null;
+
         public frmGUIInspect()
         {
             InitializeComponent();
         }
 
+        #region form events
         private void frmGUIInspect_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
             reloadWindowNames();
         }
+        #endregion
+
+        #region window name events
         private void btnReload_Click(object sender, EventArgs e)
         {
             reloadWindowNames();
@@ -39,20 +44,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
         }
 
-        private void tvElements_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node.Parent != null)
-            {
-                AutomationElement elem = (AutomationElement)e.Node.Tag;
-                showElementInformation((AutomationElement)e.Node.Tag);
-                highlightElement(elem);
-            }
-            else
-            {
-                txtXPath.Text = "";
-            }
-        }
-
         private void reloadWindowNames()
         {
             List<string> windows = WindowNameControls.GetAllWindowTitles();
@@ -63,7 +54,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             cmbWindowList.BeginUpdate();
             cmbWindowList.Items.Clear();
 
-            foreach(string win in windows)
+            foreach (string win in windows)
             {
                 cmbWindowList.Items.Add(win);
             }
@@ -110,13 +101,50 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             txtElementInformation.Text = "";
         }
+        #endregion
+
+        #region treeview events
+        private void tvElements_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Parent != null)
+            {
+                AutomationElement elem = (AutomationElement)e.Node.Tag;
+                showElementInformation((AutomationElement)e.Node.Tag);
+                highlightElement(elem);
+            }
+            else
+            {
+                txtXPath.Text = "";
+            }
+        }
+        #endregion
+
+        #region XPath checkbox events
+        private void chkUseNameAttr_CheckedChanged(object sender, EventArgs e)
+        {
+            reloadXPath();
+        }
+        private void chkUseAutomationIdAttr_CheckedChanged(object sender, EventArgs e)
+        {
+            reloadXPath();
+        }
+
+        private void reloadXPath()
+        {
+            if (tvElements.SelectedNode != null)
+            {
+                AutomationElement elem = (AutomationElement)tvElements.SelectedNode.Tag;
+                showElementInformation(elem);
+            }
+        }
+        #endregion
 
         #region node methods
         private void showElementInformation(AutomationElement elem)
         {
             txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
 
-            txtXPath.Text = AutomationElementControls.GetXPath(xml, elem);
+            txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
         }
 
         private void highlightElement(AutomationElement elem)
@@ -218,6 +246,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
 
         #endregion
+
 
     }
 }
