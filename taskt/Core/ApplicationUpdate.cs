@@ -9,8 +9,7 @@ namespace taskt.Core
 {
     public class ApplicationUpdate
     {
-
-       public UpdateManifest GetManifest()
+        public UpdateManifest GetManifest()
         {
             //create web client
             WebClient webClient = new WebClient();
@@ -19,7 +18,7 @@ namespace taskt.Core
             //get manifest
             try
             {
-                manifestData = webClient.DownloadString("http://www.taskt.net/updates/latest.json");           
+                manifestData = webClient.DownloadString(MyURLs.LatestJSONURL);           
             }
             catch (Exception)
             {
@@ -32,7 +31,7 @@ namespace taskt.Core
 
             try
             {
-                 manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestData);
+                manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestData);
             }
             catch (Exception)
             {
@@ -40,7 +39,6 @@ namespace taskt.Core
                 throw;
             }
 
-     
             //create versions
             manifestConfig.RemoteVersionProper = new Version(manifestConfig.RemoteVersion);
             manifestConfig.LocalVersionProper = new Version(System.Windows.Forms.Application.ProductVersion);
@@ -58,12 +56,8 @@ namespace taskt.Core
             }
 
             return manifestConfig;
-
         }
-
     }
-
-
 
     public class UpdateManifest
     {
@@ -75,7 +69,5 @@ namespace taskt.Core
         public bool RemoteVersionNewer { get; set; }
         public Version RemoteVersionProper { get; set; }
         public Version LocalVersionProper { get; set; }
-
     }
-   
 }
