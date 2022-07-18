@@ -128,7 +128,11 @@ namespace taskt.Core
 
             tvCommands.Nodes.Clear();
 
-            tvCommands.Nodes.AddRange((TreeNode[])commandTree.Clone());
+            //tvCommands.Nodes.AddRange((TreeNode[])commandTree.Clone());
+            foreach(TreeNode node in commandTree)
+            {
+                tvCommands.Nodes.Add((TreeNode)node.Clone());
+            }
             tvCommands.Sort();
 
             if (expandAllNodes)

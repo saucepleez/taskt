@@ -12,18 +12,19 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmCommandList : ThemedForm
     {
+        private taskt.Core.ApplicationSettings appSettings;
+
         private TreeNode[] treeAllCommands;
         private ImageList treeAllCommandsImage;
 
         private string firstGroup;
         private string firstCommand;
 
-        private string selectedFullCommand;
-
-        public frmCommandList(TreeNode[] commands, ImageList commandsImage, string selectedCommand)
+        public frmCommandList(taskt.Core.ApplicationSettings appSettings,TreeNode[] commands, ImageList commandsImage, string selectedCommand)
         {
             InitializeComponent();
 
+            this.appSettings = appSettings;
             treeAllCommands = (TreeNode[])commands.Clone();
             treeAllCommandsImage = commandsImage;
 
@@ -76,6 +77,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         #endregion
 
+        #region tvCommands Events
         private void tvCommands_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (tvCommands.SelectedNode != null)
@@ -86,6 +88,44 @@ namespace taskt.UI.Forms.Supplement_Forms
                 }
             }
         }
+        #endregion
+
+        #region Commands Search
+        private void txtSearchKeyword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                SearchCommandProcess();
+            }
+        }
+
+        private void picCommandSearch_Click(object sender, EventArgs e)
+        {
+            SearchCommandProcess();
+        }
+
+        private void picCommandClear_Click(object sender, EventArgs e)
+        {
+            txtSearchKeyword.Text = "";
+            SearchCommandProcess();
+        }
+
+        private void SearchCommandProcess()
+        {
+            string keyword = txtSearchKeyword.Text.Trim().ToLower();
+            if (keyword == "")
+            {
+                taskt.Core.CommandsTreeControls.ShowCommandsTree(tvCommands, treeAllCommands);
+            }
+            else
+            {
+                var filterdCommands = taskt.Core.CommandsTreeControls.FilterCommands(keyword, treeAllCommands, appSettings.ClientSettings);
+                taskt.Core.CommandsTreeControls.ShowCommandsTree(tvCommands, filterdCommands, true);
+            }
+        }
+        #endregion
 
         public string FullCommandName
         {
@@ -94,5 +134,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return taskt.Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
             }
         }
+
+       
     }
 }

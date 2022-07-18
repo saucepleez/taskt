@@ -35,13 +35,17 @@
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.tvCommands = new System.Windows.Forms.TreeView();
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtSearchKeyword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.picCommandClear = new System.Windows.Forms.PictureBox();
+            this.picCommandSearch = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.panelHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -125,34 +129,61 @@
             // 
             // panelHeader
             // 
-            this.panelHeader.Controls.Add(this.textBox1);
+            this.panelHeader.BackColor = System.Drawing.Color.Black;
+            this.panelHeader.Controls.Add(this.picCommandClear);
+            this.panelHeader.Controls.Add(this.picCommandSearch);
+            this.panelHeader.Controls.Add(this.txtSearchKeyword);
             this.panelHeader.Controls.Add(this.label1);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelHeader.Location = new System.Drawing.Point(3, 3);
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(371, 34);
+            this.panelHeader.Size = new System.Drawing.Size(377, 40);
             this.panelHeader.TabIndex = 2;
             // 
-            // textBox1
+            // txtSearchKeyword
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtSearchKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.textBox1.Location = new System.Drawing.Point(92, 2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(244, 29);
-            this.textBox1.TabIndex = 1;
+            this.txtSearchKeyword.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtSearchKeyword.Location = new System.Drawing.Point(92, 8);
+            this.txtSearchKeyword.Name = "txtSearchKeyword";
+            this.txtSearchKeyword.Size = new System.Drawing.Size(226, 29);
+            this.txtSearchKeyword.TabIndex = 1;
+            this.txtSearchKeyword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearchKeyword_KeyDown);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 6);
+            this.label1.Location = new System.Drawing.Point(3, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 21);
             this.label1.TabIndex = 0;
             this.label1.Text = "&Command";
+            // 
+            // picCommandClear
+            // 
+            this.picCommandClear.Image = global::taskt.Properties.Resources.command_error;
+            this.picCommandClear.Location = new System.Drawing.Point(354, 13);
+            this.picCommandClear.Name = "picCommandClear";
+            this.picCommandClear.Size = new System.Drawing.Size(20, 20);
+            this.picCommandClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandClear.TabIndex = 23;
+            this.picCommandClear.TabStop = false;
+            this.picCommandClear.Click += new System.EventHandler(this.picCommandClear_Click);
+            // 
+            // picCommandSearch
+            // 
+            this.picCommandSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.picCommandSearch.Location = new System.Drawing.Point(324, 10);
+            this.picCommandSearch.Name = "picCommandSearch";
+            this.picCommandSearch.Size = new System.Drawing.Size(24, 24);
+            this.picCommandSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandSearch.TabIndex = 22;
+            this.picCommandSearch.TabStop = false;
+            this.picCommandSearch.Click += new System.EventHandler(this.picCommandSearch_Click);
             // 
             // frmCommandList
             // 
@@ -172,6 +203,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -184,7 +217,9 @@
         private CustomControls.UIPictureButton uiBtnCancel;
         private System.Windows.Forms.TreeView tvCommands;
         private System.Windows.Forms.Panel panelHeader;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSearchKeyword;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox picCommandClear;
+        private System.Windows.Forms.PictureBox picCommandSearch;
     }
 }
