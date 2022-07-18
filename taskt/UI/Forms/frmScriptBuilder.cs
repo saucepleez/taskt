@@ -3683,35 +3683,36 @@ namespace taskt.UI.Forms
         }
         private string GetSelectedCommandFullName()
         {
-            switch (tvCommands.SelectedNode.Level)
-            {
-                case 0:
-                    return "";
-                    break;
+            //switch (tvCommands.SelectedNode.Level)
+            //{
+            //    case 0:
+            //        return "";
+            //        break;
 
-                case 1:
-                    if (tvCommands.SelectedNode.Nodes.Count > 0)
-                    {
-                        return "";
-                    }
-                    else if (tvCommands.SelectedNode.ImageIndex == 1)
-                    {
-                        return "";
-                    }
-                    else
-                    {
-                        return tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text;
-                    }
-                    break;
+            //    case 1:
+            //        if (tvCommands.SelectedNode.Nodes.Count > 0)
+            //        {
+            //            return "";
+            //        }
+            //        else if (tvCommands.SelectedNode.ImageIndex == 1)
+            //        {
+            //            return "";
+            //        }
+            //        else
+            //        {
+            //            return tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text;
+            //        }
+            //        break;
 
-                case 2:
-                    return tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text;
-                    break;
+            //    case 2:
+            //        return tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text;
+            //        break;
 
-                default:
-                    return "";
-                    break;
-            }
+            //    default:
+            //        return "";
+            //        break;
+            //}
+            return taskt.Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
         }
         #endregion
 
@@ -3856,44 +3857,45 @@ namespace taskt.UI.Forms
             var tp = command.GetType();
             var group = (Core.Automation.Attributes.ClassAttributes.Group)tp.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group));
 
-            TreeNode parentNode = null;
-            foreach (TreeNode node in tvCommands.Nodes)
-            {
-                if (node.Text == group.groupName)
-                {
-                    parentNode = node;
-                    break;
-                }
-            }
-            if (parentNode != null)
-            {
-                parentNode.Expand();
-                foreach (TreeNode node in parentNode.Nodes)
-                {
-                    if (node.Nodes.Count > 0)
-                    {
-                        foreach (TreeNode no in node.Nodes)
-                        {
-                            if (no.Text == command.SelectionName)
-                            {
-                                node.Expand();
-                                tvCommands.SelectedNode = no;
-                                tvCommands.Focus();
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (node.Text == command.SelectionName)
-                        {
-                            tvCommands.SelectedNode = node;
-                            tvCommands.Focus();
-                            break;
-                        }
-                    }
-                }
-            }
+            //TreeNode parentNode = null;
+            //foreach (TreeNode node in tvCommands.Nodes)
+            //{
+            //    if (node.Text == group.groupName)
+            //    {
+            //        parentNode = node;
+            //        break;
+            //    }
+            //}
+            //if (parentNode != null)
+            //{
+            //    parentNode.Expand();
+            //    foreach (TreeNode node in parentNode.Nodes)
+            //    {
+            //        if (node.Nodes.Count > 0)
+            //        {
+            //            foreach (TreeNode no in node.Nodes)
+            //            {
+            //                if (no.Text == command.SelectionName)
+            //                {
+            //                    node.Expand();
+            //                    tvCommands.SelectedNode = no;
+            //                    tvCommands.Focus();
+            //                    break;
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (node.Text == command.SelectionName)
+            //            {
+            //                tvCommands.SelectedNode = node;
+            //                tvCommands.Focus();
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
+            taskt.Core.CommandsTreeControls.FocusCommand(group.groupName, command.SelectionName, tvCommands);
         }
 
         #endregion

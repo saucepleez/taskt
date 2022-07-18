@@ -121,23 +121,23 @@ namespace taskt.Core
             return commandImages;
         }
 
-        public static void ShowCommandsTree(TreeView tv, TreeNode[] commandTree, bool expandAllNodes = false)
+        public static void ShowCommandsTree(TreeView tvCommands, TreeNode[] commandTree, bool expandAllNodes = false)
         {
-            tv.BeginUpdate();
-            tv.SuspendLayout();
+            tvCommands.BeginUpdate();
+            tvCommands.SuspendLayout();
 
-            tv.Nodes.Clear();
+            tvCommands.Nodes.Clear();
 
-            tv.Nodes.AddRange((TreeNode[])commandTree.Clone());
-            tv.Sort();
+            tvCommands.Nodes.AddRange((TreeNode[])commandTree.Clone());
+            tvCommands.Sort();
 
             if (expandAllNodes)
             {
-                tv.ExpandAll();
+                tvCommands.ExpandAll();
             }
 
-            tv.ResumeLayout();
-            tv.EndUpdate();
+            tvCommands.ResumeLayout();
+            tvCommands.EndUpdate();
         }
 
         public static TreeNode[] FilterCommands(string keyword, TreeNode[] allCommands, ClientSettings settings)
@@ -250,6 +250,82 @@ namespace taskt.Core
             }
 
             return (TreeNode[])matchedCommands.ToArray();
+        }
+
+        public static string GetSelectedFullCommandName(TreeView tvCommands)
+        {
+            if (tvCommands.SelectedNode == null)
+            {
+                return "";
+            }
+
+            switch (tvCommands.SelectedNode.Level)
+            {
+                case 0:
+                    return "";
+
+                case 1:
+                    if (tvCommands.SelectedNode.Nodes.Count > 0)
+                    {
+                        return "";
+                    }
+                    else if (tvCommands.SelectedNode.ImageIndex == 1)
+                    {
+                        return "";
+                    }
+                    else
+                    {
+                        return tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text;
+                    }
+
+                case 2:
+                    return tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text;
+
+                default:
+                    return "";
+            }
+        }
+
+        public static void FocusCommand(string group, string command, TreeView tvCommands)
+        {
+            TreeNode parentNode = null;
+            foreach (TreeNode node in tvCommands.Nodes)
+            {
+                if (node.Text == group)
+                {
+                    parentNode = node;
+                    break;
+                }
+            }
+            if (parentNode != null)
+            {
+                parentNode.Expand();
+                foreach (TreeNode node in parentNode.Nodes)
+                {
+                    if (node.Nodes.Count > 0)
+                    {
+                        foreach (TreeNode no in node.Nodes)
+                        {
+                            if (no.Text == command)
+                            {
+                                node.Expand();
+                                tvCommands.SelectedNode = no;
+                                tvCommands.Focus();
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (node.Text == command)
+                        {
+                            tvCommands.SelectedNode = node;
+                            tvCommands.Focus();
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
     }
