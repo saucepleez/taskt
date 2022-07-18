@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
-    public partial class frmUpdate : UIForm
+    public partial class frmUpdate : ThemedForm
     {
       
         public frmUpdate(Core.UpdateManifest manifest)
