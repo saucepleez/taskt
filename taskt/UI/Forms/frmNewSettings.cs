@@ -1107,30 +1107,34 @@ namespace taskt.UI.Forms
 
             if (manifest.RemoteVersionNewer)
             {
-                Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
-                if (frmUpdate.ShowDialog() == DialogResult.OK)
+                //Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
+                //if (frmUpdate.ShowDialog() == DialogResult.OK)
+                //{
+
+                //    //move update exe to root folder for execution
+                //    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
+                //    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+
+                //    if (!System.IO.File.Exists(updaterExecutionResources))
+                //    {
+                //        MessageBox.Show("taskt-updater.exe not found in resources directory!");
+                //        return;
+                //    }
+                //    else
+                //    {
+                //        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
+                //    }
+
+                //    var updateProcess = new System.Diagnostics.Process();
+                //    updateProcess.StartInfo.FileName = updaterExecutableDestination;
+                //    updateProcess.StartInfo.Arguments = manifest.PackageURL;
+
+                //    updateProcess.Start();
+                //    Application.Exit();
+                //}
+                using (var fm = new Supplement_Forms.frmUpdate(manifest))
                 {
-
-                    //move update exe to root folder for execution
-                    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
-                    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
-
-                    if (!System.IO.File.Exists(updaterExecutionResources))
-                    {
-                        MessageBox.Show("taskt-updater.exe not found in resources directory!");
-                        return;
-                    }
-                    else
-                    {
-                        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
-                    }
-
-                    var updateProcess = new System.Diagnostics.Process();
-                    updateProcess.StartInfo.FileName = updaterExecutableDestination;
-                    updateProcess.StartInfo.Arguments = manifest.PackageURL;
-
-                    updateProcess.Start();
-                    Application.Exit();
+                    fm.ShowDialog();
                 }
             }
             else
