@@ -398,8 +398,12 @@ namespace taskt.UI.Forms
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    cboSelectedCommand.Text = fm.FullCommandName;
-                    cboSelectedCommand_SelectionChangeCommitted(null, null);
+                    string newCommand = fm.FullCommandName;
+                    if (cboSelectedCommand.Text != fm.FullCommandName)
+                    {
+                        cboSelectedCommand.Text = fm.FullCommandName;
+                        cboSelectedCommand_SelectionChangeCommitted(null, null);
+                    }
                 }
             }
         }
