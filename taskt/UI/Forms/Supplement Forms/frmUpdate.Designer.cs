@@ -87,6 +87,7 @@
             this.uiBtnOk.TabIndex = 24;
             this.uiBtnOk.TabStop = false;
             this.uiBtnOk.Text = "OK";
+            this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // uiBtnCancel
             // 
@@ -105,17 +106,20 @@
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
             this.uiBtnCancel.Visible = false;
+            this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // panelBody
             // 
+            this.panelBody.BackColor = System.Drawing.Color.DimGray;
             this.panelBody.Controls.Add(this.lblText);
             this.panelBody.Controls.Add(this.lblRemote);
             this.panelBody.Controls.Add(this.lblLocal);
             this.panelBody.Controls.Add(this.lblXPosition);
             this.panelBody.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelBody.Location = new System.Drawing.Point(3, 3);
+            this.panelBody.Location = new System.Drawing.Point(0, 0);
+            this.panelBody.Margin = new System.Windows.Forms.Padding(0);
             this.panelBody.Name = "panelBody";
-            this.panelBody.Size = new System.Drawing.Size(389, 179);
+            this.panelBody.Size = new System.Drawing.Size(395, 185);
             this.panelBody.TabIndex = 1;
             // 
             // lblText
@@ -179,7 +183,6 @@
             this.MinimizeBox = false;
             this.Name = "frmUpdate";
             this.Text = "An Update is Available!";
-            this.Load += new System.EventHandler(this.Update_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelFooter.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
