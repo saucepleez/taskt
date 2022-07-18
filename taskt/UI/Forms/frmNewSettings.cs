@@ -652,6 +652,8 @@ namespace taskt.UI.Forms
 
             Button btn = createButton("btnCheckUpdate", "Check For Updates", 200, true);
             btn.Click += (sender, e) => btnCheckUpdate_Click(sender, e);
+
+            createCheckBox("chkUpdate", "Check for update at startup", newAppSettings.ClientSettings, "CheckForUpdateAtStartup", true);
         }
         #endregion
 
@@ -1145,7 +1147,7 @@ namespace taskt.UI.Forms
             //        fm.ShowDialog();
             //    }
             //}
-            taskt.Core.ApplicationUpdate.ShowUpdateResult();
+            taskt.Core.ApplicationUpdate.ShowUpdateResult(false);
         }
         #endregion
 

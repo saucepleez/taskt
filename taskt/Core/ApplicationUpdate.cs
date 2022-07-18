@@ -58,7 +58,7 @@ namespace taskt.Core
             return manifestConfig;
         }
 
-        public static void ShowUpdateResult()
+        public static void ShowUpdateResult(bool silent = true)
         {
             taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
             Core.UpdateManifest manifest = new Core.UpdateManifest();
@@ -69,9 +69,12 @@ namespace taskt.Core
             catch (Exception ex)
             {
                 //MessageBox.Show("Error getting manifest: " + ex.ToString());
-                using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("Error getting manifest: " + ex.ToString(), "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                if (!silent)
                 {
-                    fm.ShowDialog();
+                    using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("Error getting manifest: " + ex.ToString(), "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
                 }
                 return;
             }
@@ -111,9 +114,12 @@ namespace taskt.Core
             else
             {
                 //MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
-                using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt is currently up-to-date!", "No Updates Available", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                if (!silent)
                 {
-                    fm.ShowDialog();
+                    using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt is currently up-to-date!", "No Updates Available", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
                 }
             }
         }
