@@ -103,6 +103,7 @@
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(30, 30);
             this.btnReload.TabIndex = 3;
+            this.myToolTip.SetToolTip(this.btnReload, "up-to-date");
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
@@ -117,7 +118,6 @@
             this.cmbWindowList.Name = "cmbWindowList";
             this.cmbWindowList.Size = new System.Drawing.Size(344, 23);
             this.cmbWindowList.TabIndex = 2;
-            this.myToolTip.SetToolTip(this.cmbWindowList, "up-to-date");
             this.cmbWindowList.SelectedValueChanged += new System.EventHandler(this.cmbWindowList_SelectedValueChanged);
             // 
             // label1
