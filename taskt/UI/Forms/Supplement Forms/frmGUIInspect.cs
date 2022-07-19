@@ -48,6 +48,8 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void reloadWindowNames()
         {
+            this.Enabled = false;
+
             List<string> windows = WindowNameControls.GetAllWindowTitles();
 
             string currentWindow = cmbWindowList.SelectedText;
@@ -74,6 +76,9 @@ namespace taskt.UI.Forms.Supplement_Forms
             cmbWindowList.ResumeLayout();
 
             createElementTree();
+
+            this.Enabled = true;
+            showMessageTimer("Window name updated");
         }
 
         private void createElementTree()
@@ -85,6 +90,8 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return;
             }
             string windowName = cmbWindowList.Text;
+
+            this.Enabled = false;
 
             try
             {
@@ -104,12 +111,16 @@ namespace taskt.UI.Forms.Supplement_Forms
                 tvElements.ResumeLayout();
 
                 txtElementInformation.Text = "";
+
+                showMessageTimer("Element Tree created.");
             }
             catch(Exception ex)
             {
                 tvElements.Nodes.Clear();
                 txtElementInformation.Text = "Error: " + ex.Message;
             }
+
+            this.Enabled = true;
         }
         #endregion
 
@@ -209,23 +220,33 @@ namespace taskt.UI.Forms.Supplement_Forms
             txtElementInformation.SelectAll();
             Clipboard.SetText(txtElementInformation.Text);
 
-            lblMessage.Text = "Element Result Copied!!";
-            lblMessage.Visible = true;
-            timerLabelShowTime.Start();
+            //lblMessage.Text = "Element Result Copied!!";
+            //lblMessage.Visible = true;
+            //timerLabelShowTime.Start();
+            showMessageTimer("Element Result Copied!!");
         }
         private void txtXPath_DoubleClick(object sender, EventArgs e)
         {
             txtXPath.SelectAll();
             Clipboard.SetText(txtXPath.Text);
 
-            lblMessage.Text = "XPath Copied!!";
-            lblMessage.Visible = true;
-            timerLabelShowTime.Start();
+            //lblMessage.Text = "XPath Copied!!";
+            //lblMessage.Visible = true;
+            //timerLabelShowTime.Start();
+            showMessageTimer("XPath Copied!!");
         }
 
         private void timerLabelShowTime_Tick(object sender, EventArgs e)
         {
             lblMessage.Visible = false;
+        }
+
+        private void showMessageTimer(string message)
+        {
+            lblMessage.Text = message;
+            lblMessage.Visible = true;
+            timerLabelShowTime.Stop();
+            timerLabelShowTime.Start();
         }
         #endregion
 
