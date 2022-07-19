@@ -48,11 +48,11 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void reloadWindowNames()
         {
-            this.Enabled = false;
-
             List<string> windows = WindowNameControls.GetAllWindowTitles();
 
             string currentWindow = cmbWindowList.Text;
+
+            cmbWindowList.Enabled = false;
 
             cmbWindowList.SuspendLayout();
             cmbWindowList.BeginUpdate();
@@ -75,9 +75,10 @@ namespace taskt.UI.Forms.Supplement_Forms
             cmbWindowList.EndUpdate();
             cmbWindowList.ResumeLayout();
 
+            cmbWindowList.Enabled = true;
+
             createElementTree();
 
-            this.Enabled = true;
             showMessageTimer("Window name updated");
         }
 
@@ -91,7 +92,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             string windowName = cmbWindowList.Text;
 
-            this.Enabled = false;
+            cmbWindowList.Enabled = false;
 
             try
             {
@@ -120,7 +121,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 txtElementInformation.Text = "Error: " + ex.Message;
             }
 
-            this.Enabled = true;
+            cmbWindowList.Enabled = true;
         }
         #endregion
 
