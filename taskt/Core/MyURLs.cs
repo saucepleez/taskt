@@ -16,7 +16,7 @@ namespace taskt.Core
         public const string GitterURL = "https://gitter.im/taskt-rpa/Lobby";
         public const string WikiBaseURL = "https://github.com/rcktrncn/taskt-wiki/blob/master/";
 
-        public const string LatestJSONURL = "http://www.taskt.net/updates/latest.json";
+        public const string LatestJSONURL = "https://raw.githubusercontent.com/rcktrncn/taskt/uob-release/taskt/latest.json";
 
         public const string ChromeDriverURL = "https://chromedriver.chromium.org/downloads";
         public const string EdgeDriverURL = "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/";
