@@ -52,7 +52,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             List<string> windows = WindowNameControls.GetAllWindowTitles();
 
-            string currentWindow = cmbWindowList.SelectedText;
+            string currentWindow = cmbWindowList.Text;
 
             cmbWindowList.SuspendLayout();
             cmbWindowList.BeginUpdate();
