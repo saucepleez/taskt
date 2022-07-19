@@ -84,22 +84,30 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             string windowName = cmbWindowList.Text;
 
-            var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml);
+            try
+            {
+                var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml);
 
-            tvElements.SuspendLayout();
-            tvElements.BeginUpdate();
+                tvElements.SuspendLayout();
+                tvElements.BeginUpdate();
 
-            tvElements.Nodes.Clear();
-            tvElements.Nodes.Add(nodes);
+                tvElements.Nodes.Clear();
+                tvElements.Nodes.Add(nodes);
 
-            tvElements.ExpandAll();
+                tvElements.ExpandAll();
 
-            tvElements.Nodes[0].EnsureVisible();    // move to top
+                tvElements.Nodes[0].EnsureVisible();    // move to top
 
-            tvElements.EndUpdate();
-            tvElements.ResumeLayout();
+                tvElements.EndUpdate();
+                tvElements.ResumeLayout();
 
-            txtElementInformation.Text = "";
+                txtElementInformation.Text = "";
+            }
+            catch(Exception ex)
+            {
+                tvElements.Nodes.Clear();
+                txtElementInformation.Text = "Error: " + ex.Message;
+            }
         }
         #endregion
 
