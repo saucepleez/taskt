@@ -16,10 +16,12 @@ namespace taskt.UI.Forms.Supplement_Forms
     public partial class frmGUIInspect : ThemedForm
     {
         private XElement xml = null;
+        private taskt.Core.Automation.Engine.AutomationEngineInstance engine;
 
         public frmGUIInspect()
         {
             InitializeComponent();
+            engine = new Core.Automation.Engine.AutomationEngineInstance();
         }
 
         #region form events
@@ -48,7 +50,9 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             List<string> windows = WindowNameControls.GetAllWindowTitles();
 
-            string currentWindow = cmbWindowList.SelectedText;
+            string currentWindow = cmbWindowList.Text;
+
+            cmbWindowList.Enabled = false;
 
             cmbWindowList.SuspendLayout();
             cmbWindowList.BeginUpdate();
@@ -71,7 +75,11 @@ namespace taskt.UI.Forms.Supplement_Forms
             cmbWindowList.EndUpdate();
             cmbWindowList.ResumeLayout();
 
+            cmbWindowList.Enabled = true;
+
             createElementTree();
+
+            showMessageTimer("Window name updated");
         }
 
         private void createElementTree()
@@ -84,22 +92,36 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             string windowName = cmbWindowList.Text;
 
-            var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml);
+            cmbWindowList.Enabled = false;
 
-            tvElements.SuspendLayout();
-            tvElements.BeginUpdate();
+            try
+            {
+                var nodes = AutomationElementControls.GetElementTreeNode(windowName, engine, out xml);
 
-            tvElements.Nodes.Clear();
-            tvElements.Nodes.Add(nodes);
+                tvElements.SuspendLayout();
+                tvElements.BeginUpdate();
 
-            tvElements.ExpandAll();
+                tvElements.Nodes.Clear();
+                tvElements.Nodes.Add(nodes);
 
-            tvElements.Nodes[0].EnsureVisible();    // move to top
+                tvElements.ExpandAll();
 
-            tvElements.EndUpdate();
-            tvElements.ResumeLayout();
+                tvElements.Nodes[0].EnsureVisible();    // move to top
 
-            txtElementInformation.Text = "";
+                tvElements.EndUpdate();
+                tvElements.ResumeLayout();
+
+                txtElementInformation.Text = "";
+
+                showMessageTimer("Element Tree created.");
+            }
+            catch(Exception ex)
+            {
+                tvElements.Nodes.Clear();
+                txtElementInformation.Text = "Error: " + ex.Message;
+            }
+
+            cmbWindowList.Enabled = true;
         }
         #endregion
 
@@ -199,28 +221,37 @@ namespace taskt.UI.Forms.Supplement_Forms
             txtElementInformation.SelectAll();
             Clipboard.SetText(txtElementInformation.Text);
 
-            lblMessage.Text = "Element Result Copied!!";
-            lblMessage.Visible = true;
-            timerLabelShowTime.Start();
+            //lblMessage.Text = "Element Result Copied!!";
+            //lblMessage.Visible = true;
+            //timerLabelShowTime.Start();
+            showMessageTimer("Element Result Copied!!");
         }
         private void txtXPath_DoubleClick(object sender, EventArgs e)
         {
             txtXPath.SelectAll();
             Clipboard.SetText(txtXPath.Text);
 
-            lblMessage.Text = "XPath Copied!!";
-            lblMessage.Visible = true;
-            timerLabelShowTime.Start();
+            //lblMessage.Text = "XPath Copied!!";
+            //lblMessage.Visible = true;
+            //timerLabelShowTime.Start();
+            showMessageTimer("XPath Copied!!");
         }
 
         private void timerLabelShowTime_Tick(object sender, EventArgs e)
         {
             lblMessage.Visible = false;
         }
+
+        private void showMessageTimer(string message)
+        {
+            lblMessage.Text = message;
+            lblMessage.Visible = true;
+            timerLabelShowTime.Stop();
+            timerLabelShowTime.Start();
+        }
         #endregion
 
         #region Properties
-
         public string XPath
         {
             get
@@ -244,9 +275,6 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return txtElementInformation.Text;
             }
         }
-
         #endregion
-
-
     }
 }

@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
 
             string windowName = WindowNameControls.GetMatchedWindowName(variableWindowName, searchMethod, engine);
 
-            var windowElement = AutomationElementControls.GetFromWindowName(windowName);
+            var windowElement = AutomationElementControls.GetFromWindowName(windowName, engine);
             windowElement.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 

@@ -89,7 +89,7 @@ namespace taskt.Core.Automation.Commands
 
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
             string windowName = WindowNameControls.GetMatchedWindowName(v_WindowName, searchMethod, engine);
-            var rootElement = AutomationElementControls.GetFromWindowName(windowName);
+            var rootElement = AutomationElementControls.GetFromWindowName(windowName, engine);
 
             if (rootElement == null)
             {

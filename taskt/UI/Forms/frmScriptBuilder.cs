@@ -314,6 +314,12 @@ namespace taskt.UI.Forms
                     OpenScriptFromFilePath(this.ScriptFilePath, true);
                 }
             }
+
+            // check update
+            if ((appSettings.ClientSettings.CheckForUpdateAtStartup) && (this.parentBuilder == null))
+            {
+                taskt.Core.ApplicationUpdate.ShowUpdateResult();
+            }
         }
         
         private void frmScriptBuilder_Shown(object sender, EventArgs e)

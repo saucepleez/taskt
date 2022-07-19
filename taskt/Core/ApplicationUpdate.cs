@@ -9,8 +9,7 @@ namespace taskt.Core
 {
     public class ApplicationUpdate
     {
-
-       public UpdateManifest GetManifest()
+        public UpdateManifest GetManifest()
         {
             //create web client
             WebClient webClient = new WebClient();
@@ -19,7 +18,7 @@ namespace taskt.Core
             //get manifest
             try
             {
-                manifestData = webClient.DownloadString("http://www.taskt.net/updates/latest.json");           
+                manifestData = webClient.DownloadString(MyURLs.LatestJSONURL);           
             }
             catch (Exception)
             {
@@ -32,7 +31,7 @@ namespace taskt.Core
 
             try
             {
-                 manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestData);
+                manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestData);
             }
             catch (Exception)
             {
@@ -40,7 +39,6 @@ namespace taskt.Core
                 throw;
             }
 
-     
             //create versions
             manifestConfig.RemoteVersionProper = new Version(manifestConfig.RemoteVersion);
             manifestConfig.LocalVersionProper = new Version(System.Windows.Forms.Application.ProductVersion);
@@ -58,12 +56,74 @@ namespace taskt.Core
             }
 
             return manifestConfig;
-
         }
 
+        public static void ShowUpdateResult(bool silent = true)
+        {
+            taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
+            Core.UpdateManifest manifest = new Core.UpdateManifest();
+            try
+            {
+                manifest = updater.GetManifest();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Error getting manifest: " + ex.ToString());
+                if (!silent)
+                {
+                    using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("Error getting manifest: " + ex.ToString(), "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
+                }
+                return;
+            }
+
+            if (manifest.RemoteVersionNewer)
+            {
+                //Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
+                //if (frmUpdate.ShowDialog() == DialogResult.OK)
+                //{
+
+                //    //move update exe to root folder for execution
+                //    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
+                //    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+
+                //    if (!System.IO.File.Exists(updaterExecutionResources))
+                //    {
+                //        MessageBox.Show("taskt-updater.exe not found in resources directory!");
+                //        return;
+                //    }
+                //    else
+                //    {
+                //        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
+                //    }
+
+                //    var updateProcess = new System.Diagnostics.Process();
+                //    updateProcess.StartInfo.FileName = updaterExecutableDestination;
+                //    updateProcess.StartInfo.Arguments = manifest.PackageURL;
+
+                //    updateProcess.Start();
+                //    Application.Exit();
+                //}
+                using (var fm = new taskt.UI.Forms.Supplement_Forms.frmUpdate(manifest))
+                {
+                    fm.ShowDialog();
+                }
+            }
+            else
+            {
+                //MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
+                if (!silent)
+                {
+                    using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt is currently up-to-date!", "No Updates Available", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
+                }
+            }
+        }
     }
-
-
 
     public class UpdateManifest
     {
@@ -75,7 +135,5 @@ namespace taskt.Core
         public bool RemoteVersionNewer { get; set; }
         public Version RemoteVersionProper { get; set; }
         public Version LocalVersionProper { get; set; }
-
     }
-   
 }

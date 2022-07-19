@@ -10,20 +10,14 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
-    public partial class frmUpdate : UIForm
+    public partial class frmUpdate : ThemedForm
     {
       
         public frmUpdate(Core.UpdateManifest manifest)
         {
-
             InitializeComponent();
             lblLocal.Text = "your version: " + manifest.LocalVersionProper.ToString();
             lblRemote.Text = "latest version: " + manifest.RemoteVersionProper.ToString();
-        }
-
-        private void Update_Load(object sender, EventArgs e)
-        {
-        
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
