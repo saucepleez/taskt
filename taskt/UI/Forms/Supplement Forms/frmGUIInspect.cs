@@ -16,10 +16,12 @@ namespace taskt.UI.Forms.Supplement_Forms
     public partial class frmGUIInspect : ThemedForm
     {
         private XElement xml = null;
+        private taskt.Core.Automation.Engine.AutomationEngineInstance engine;
 
         public frmGUIInspect()
         {
             InitializeComponent();
+            engine = new Core.Automation.Engine.AutomationEngineInstance();
         }
 
         #region form events
@@ -86,7 +88,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             try
             {
-                var nodes = AutomationElementControls.GetElementTreeNode(windowName, out xml);
+                var nodes = AutomationElementControls.GetElementTreeNode(windowName, engine, out xml);
 
                 tvElements.SuspendLayout();
                 tvElements.BeginUpdate();

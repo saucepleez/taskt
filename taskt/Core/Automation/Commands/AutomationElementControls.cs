@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
 {
     internal class AutomationElementControls
     {
-        public static AutomationElement GetFromWindowName(string windowName)
+        public static AutomationElement GetFromWindowName(string windowName, Automation.Engine.AutomationEngineInstance engine)
         {
             var windowSearchConditions = new AndCondition(
                     new PropertyCondition(AutomationElement.NameProperty, windowName),
@@ -28,18 +28,31 @@ namespace taskt.Core.Automation.Commands
             var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, windowSearchConditions);
             if (windowElement == null)
             {
+                // Pane search
                 windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, paneSearchConditions);
-
-                if (windowElement == null)
+            }
+            if (windowElement == null)
+            {
+                // try window handle
+                try
                 {
-                    // more deep search
-                    windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
-
-                    if (windowElement == null)
-                    {
-                        windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, paneSearchConditions);
-                    }
+                    IntPtr wHnd = WindowNameControls.FindWindow(windowName, "exact match", engine);
+                    windowElement = AutomationElement.FromHandle(wHnd);
                 }
+                catch
+                {
+                    // nothing to do
+                }
+            }
+            if (windowElement == null)
+            {
+                // more deep search window
+                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
+            }
+            if (windowElement == null)
+            {
+                // more deep search pane
+                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, paneSearchConditions);
             }
 
             if (windowElement == null)
@@ -855,9 +868,9 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic)
+        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic, Automation.Engine.AutomationEngineInstance engine)
         {
-            AutomationElement window = GetFromWindowName(windowName);
+            AutomationElement window = GetFromWindowName(windowName, engine);
             var ret = GetElementXml(window, out elemsDic);
             return ret;
         }
@@ -972,9 +985,9 @@ namespace taskt.Core.Automation.Commands
             return node;
         }
 
-        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName, out XElement xml)
+        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName, Automation.Engine.AutomationEngineInstance engine, out XElement xml)
         {
-            AutomationElement root = GetFromWindowName(windowName);
+            AutomationElement root = GetFromWindowName(windowName, engine);
 
             TreeWalker walker = TreeWalker.RawViewWalker;
 
