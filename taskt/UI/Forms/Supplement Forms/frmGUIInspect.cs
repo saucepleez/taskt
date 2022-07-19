@@ -252,7 +252,6 @@ namespace taskt.UI.Forms.Supplement_Forms
         #endregion
 
         #region Properties
-
         public string XPath
         {
             get
@@ -276,9 +275,6 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return txtElementInformation.Text;
             }
         }
-
         #endregion
-
-
     }
 }
