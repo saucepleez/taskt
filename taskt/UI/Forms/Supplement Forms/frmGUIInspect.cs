@@ -265,6 +265,31 @@ namespace taskt.UI.Forms.Supplement_Forms
             return null;
         }
 
+        private void chkElementReload_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkElementReload.Checked)
+            {
+                timerElementReload.Stop();
+                timerElementReload.Start();
+            }
+            else
+            {
+                timerElementReload.Stop();
+            }
+        }
+
+        private void timerElementReload_Tick(object sender, EventArgs e)
+        {
+            if (cmbWindowList.Text != "")
+            {
+                timerElementReload.Stop();
+
+                createElementTree();
+                tvElements.Focus();
+                
+                timerElementReload.Start();
+            }
+        }
         #endregion
 
         #region XPath checkbox events
@@ -306,35 +331,41 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void highlightElement(AutomationElement elem)
         {
-            System.Windows.Rect rect = elem.Current.BoundingRectangle;
-
-            Rectangle outerRect = new Rectangle
+            try
             {
-                X = (int)rect.X - 3,
-                Y = (int)rect.Y - 3,
-                Width = (int)rect.Width + 6,
-                Height = (int)rect.Height + 6
-            };
-            Rectangle middleRect = new Rectangle
-            {
-                X = (int)rect.X - 2,
-                Y = (int)rect.Y - 2,
-                Width = (int)rect.Width + 4,
-                Height = (int)rect.Height + 4
-            };
-            Rectangle innerRect = new Rectangle
-            {
-                X = (int)rect.X,
-                Y = (int)rect.Y,
-                Width = (int)rect.Width,
-                Height = (int)rect.Height
-            };
+                System.Windows.Rect rect = elem.Current.BoundingRectangle;
+                Rectangle outerRect = new Rectangle
+                {
+                    X = (int)rect.X - 3,
+                    Y = (int)rect.Y - 3,
+                    Width = (int)rect.Width + 6,
+                    Height = (int)rect.Height + 6
+                };
+                Rectangle middleRect = new Rectangle
+                {
+                    X = (int)rect.X - 2,
+                    Y = (int)rect.Y - 2,
+                    Width = (int)rect.Width + 4,
+                    Height = (int)rect.Height + 4
+                };
+                Rectangle innerRect = new Rectangle
+                {
+                    X = (int)rect.X,
+                    Y = (int)rect.Y,
+                    Width = (int)rect.Width,
+                    Height = (int)rect.Height
+                };
 
-            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+                Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 
-            g.DrawRectangle(new Pen(Color.Black, 1), outerRect);
-            g.DrawRectangle(new Pen(Color.Yellow, 2), middleRect);
-            g.DrawRectangle(new Pen(Color.Black, 1), innerRect);
+                g.DrawRectangle(new Pen(Color.Black, 1), outerRect);
+                g.DrawRectangle(new Pen(Color.Yellow, 2), middleRect);
+                g.DrawRectangle(new Pen(Color.Black, 1), innerRect);
+            }
+            catch
+            {
+                return;
+            }
         }
         #endregion
 
@@ -436,8 +467,8 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return txtElementInformation.Text;
             }
         }
-        #endregion
 
+        #endregion
 
     }
 }

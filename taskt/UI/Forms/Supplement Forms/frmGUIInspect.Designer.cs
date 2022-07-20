@@ -347,6 +347,7 @@
             // timerElementReload
             // 
             this.timerElementReload.Interval = 5000;
+            this.timerElementReload.Tick += new System.EventHandler(this.timerElementReload_Tick);
             // 
             // chkElementReload
             // 
@@ -358,6 +359,7 @@
             this.chkElementReload.TabIndex = 2;
             this.chkElementReload.Text = "Auto Reload (5s)";
             this.chkElementReload.UseVisualStyleBackColor = true;
+            this.chkElementReload.CheckedChanged += new System.EventHandler(this.chkElementReload_CheckedChanged);
             // 
             // frmGUIInspect
             // 
