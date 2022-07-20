@@ -1084,6 +1084,49 @@ namespace taskt.Core.Automation.Commands
             return xpath;
         }
 
+        public static string GetXPath(XElement xml, AutomationElement trgElem, AutomationElement curElem, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
+        {
+            string searchPath = "//" + GetControlTypeText(trgElem.Current.ControlType) + "[@Hash=\"" + trgElem.GetHashCode() + "\"]";
+            XElement trgElement = xml.XPathSelectElement(searchPath);
+
+            searchPath = GetControlTypeText(curElem.Current.ControlType) + "[@Hash=\"" + curElem.GetHashCode() + "\"]";
+            XElement curElement = xml.XPathSelectElement("//" + searchPath);
+            if (curElement == null)
+            {
+                // curElem is root-window-node ?
+                if (xml.Attribute("Hash").Value == curElem.GetHashCode().ToString())
+                {
+                    curElement = xml;
+                }
+            }
+
+            if ((trgElement == null) || (curElement == null))
+            {
+                return "";
+            }
+
+            string xpath = "";
+            while (trgElement.Parent != null)
+            {
+                xpath = CreateXPath(trgElement, useNameAttribute, useAutomationIdAttribute) + xpath;
+                trgElement = trgElement.Parent;
+
+                if (trgElement == curElement)
+                {
+                    break;
+                }
+            }
+
+            if (trgElement == curElement)
+            {
+                return "/" + xpath;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         private static string CreateXPath(XElement elemNode, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
         {
             XElement parentNode = elemNode.Parent;

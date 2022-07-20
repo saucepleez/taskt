@@ -51,6 +51,8 @@
             this.chkShowInTree = new System.Windows.Forms.CheckBox();
             this.timerLabelShowTime = new System.Windows.Forms.Timer(this.components);
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.timerElementReload = new System.Windows.Forms.Timer(this.components);
+            this.chkElementReload = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.panelXPath.SuspendLayout();
@@ -302,6 +304,7 @@
             // 
             // panelMenu
             // 
+            this.panelMenu.Controls.Add(this.chkElementReload);
             this.panelMenu.Controls.Add(this.chkXPathRelative);
             this.panelMenu.Controls.Add(this.chkShowInTree);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -340,6 +343,21 @@
             // 
             this.timerLabelShowTime.Interval = 2000;
             this.timerLabelShowTime.Tick += new System.EventHandler(this.timerLabelShowTime_Tick);
+            // 
+            // timerElementReload
+            // 
+            this.timerElementReload.Interval = 5000;
+            // 
+            // chkElementReload
+            // 
+            this.chkElementReload.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkElementReload.AutoSize = true;
+            this.chkElementReload.Location = new System.Drawing.Point(420, 5);
+            this.chkElementReload.Name = "chkElementReload";
+            this.chkElementReload.Size = new System.Drawing.Size(102, 22);
+            this.chkElementReload.TabIndex = 2;
+            this.chkElementReload.Text = "Auto Reload (5s)";
+            this.chkElementReload.UseVisualStyleBackColor = true;
             // 
             // frmGUIInspect
             // 
@@ -395,5 +413,7 @@
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.CheckBox chkShowInTree;
         private System.Windows.Forms.CheckBox chkXPathRelative;
+        private System.Windows.Forms.Timer timerElementReload;
+        private System.Windows.Forms.CheckBox chkElementReload;
     }
 }

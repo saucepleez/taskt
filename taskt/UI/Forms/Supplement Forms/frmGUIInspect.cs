@@ -292,7 +292,16 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
 
-            txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+            if ((chkShowInTree.Checked) && (chkXPathRelative.Checked))
+            {
+                TreeNode chk = getCheckedNode();
+                AutomationElement curElem = (AutomationElement)chk.Tag;
+                txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, curElem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+            }
+            else
+            {
+                txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+            }
         }
 
         private void highlightElement(AutomationElement elem)
@@ -334,10 +343,12 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
         #endregion
 
@@ -383,6 +394,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             bool chkState = chkShowInTree.Checked;
             tvElements.CheckBoxes = chkState;
             chkXPathRelative.Visible = chkState;
+            chkXPathRelative.Checked = chkState;
 
             if (chkState)
             {
@@ -394,6 +406,9 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
 
             tvElements.ExpandAll();
+
+            txtElementInformation.Text = "";
+            txtXPath.Text = "";
         }
         #endregion
 
