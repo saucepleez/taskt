@@ -139,6 +139,132 @@ namespace taskt.UI.Forms.Supplement_Forms
                 txtXPath.Text = "";
             }
         }
+        private void tvElements_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            //Console.WriteLine(countCheckedInTvElements());
+
+            if (e.Action != TreeViewAction.Unknown)
+            {
+                clearAllCheckInTvElements();
+                e.Node.Checked = true;
+            }
+        }
+
+        private void clearAllCheckInTvElements()
+        {
+            if (!tvElements.CheckBoxes)
+            {
+                return;
+            }
+
+            tvElements.BeginUpdate();
+
+            tvElements.Nodes[0].Checked = false;
+            clearCheckTreeNode(tvElements.Nodes[0]);
+
+            tvElements.EndUpdate();
+        }
+
+        private static void clearCheckTreeNode(TreeNode root)
+        {
+            if (root.Nodes.Count == 0)
+            {
+                root.Checked = false;
+                return;
+            }
+            foreach(TreeNode node in root.Nodes)
+            {
+                node.Checked = false;
+                if (node.Nodes.Count > 0)
+                {
+                    clearCheckTreeNode(node);
+                }
+            }
+        }
+
+        //private int countCheckedInTvElements()
+        //{
+        //    if (!tvElements.CheckBoxes)
+        //    {
+        //        return 0;
+        //    }
+
+        //    return (tvElements.Nodes[0].Checked ? 1 : 0) + countWalkTvElements(tvElements.Nodes[0]);
+        //}
+
+        //private static int countWalkTvElements(TreeNode root)
+        //{
+        //    if (root.Nodes.Count == 0)
+        //    {
+        //        return (root.Checked ? 1 : 0);
+        //    }
+        //    else
+        //    {
+        //        int sum = 0;
+        //        foreach(TreeNode node in root.Nodes)
+        //        {
+        //            if (node.Checked)
+        //            {
+        //                sum++;
+        //            }
+        //            if (node.Nodes.Count > 0)
+        //            {
+        //                sum += countWalkTvElements(node);
+        //            }
+        //        }
+        //        return sum;
+        //    }
+        //}
+
+        private TreeNode getCheckedNode()
+        {
+            if (!tvElements.CheckBoxes)
+            {
+                return tvElements.Nodes[0];
+            }
+
+            TreeNode checkedNode = searchCheckedNode(tvElements.Nodes[0]);
+            if (checkedNode != null)
+            {
+                return checkedNode;
+            }
+            else
+            {
+                return tvElements.Nodes[0];
+            }
+        }
+
+        private static TreeNode searchCheckedNode(TreeNode root)
+        {
+            if (root.Nodes.Count == 0)
+            {
+                if (root.Checked)
+                {
+                    return root;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            foreach(TreeNode node in root.Nodes)
+            {
+                if (node.Checked)
+                {
+                    return node;
+                }
+
+                TreeNode t = searchCheckedNode(node);
+                if (t != null)
+                {
+                    return t;
+                }
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region XPath checkbox events
@@ -251,6 +377,26 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         #endregion
 
+        #region controlPanel
+        private void chkShowInTree_CheckedChanged(object sender, EventArgs e)
+        {
+            bool chkState = chkShowInTree.Checked;
+            tvElements.CheckBoxes = chkState;
+            chkXPathRelative.Visible = chkState;
+
+            if (chkState)
+            {
+                chkShowInTree.Text = "Show Check";
+            }
+            else
+            {
+                chkShowInTree.Text = "Hide Check";
+            }
+
+            tvElements.ExpandAll();
+        }
+        #endregion
+
         #region Properties
         public string XPath
         {
@@ -276,5 +422,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
         }
         #endregion
+
+
     }
 }

@@ -46,6 +46,9 @@
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.panelFooterContainer = new System.Windows.Forms.Panel();
             this.lblMessage = new System.Windows.Forms.Label();
+            this.panelMenu = new System.Windows.Forms.Panel();
+            this.chkXPathRelative = new System.Windows.Forms.CheckBox();
+            this.chkShowInTree = new System.Windows.Forms.CheckBox();
             this.timerLabelShowTime = new System.Windows.Forms.Timer(this.components);
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
@@ -59,6 +62,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.panelFooterContainer.SuspendLayout();
+            this.panelMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -70,6 +74,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panelXPath, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panelFooter, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.panelMenu, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -209,6 +214,7 @@
             this.tvElements.Name = "tvElements";
             this.tvElements.Size = new System.Drawing.Size(224, 185);
             this.tvElements.TabIndex = 0;
+            this.tvElements.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvElements_AfterCheck);
             this.tvElements.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvElements_NodeMouseClick);
             // 
             // txtElementInformation
@@ -294,6 +300,42 @@
             this.lblMessage.Text = "Copied!!";
             this.lblMessage.Visible = false;
             // 
+            // panelMenu
+            // 
+            this.panelMenu.Controls.Add(this.chkXPathRelative);
+            this.panelMenu.Controls.Add(this.chkShowInTree);
+            this.panelMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMenu.Location = new System.Drawing.Point(0, 40);
+            this.panelMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.panelMenu.Name = "panelMenu";
+            this.panelMenu.Size = new System.Drawing.Size(569, 30);
+            this.panelMenu.TabIndex = 4;
+            // 
+            // chkXPathRelative
+            // 
+            this.chkXPathRelative.AutoSize = true;
+            this.chkXPathRelative.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.chkXPathRelative.ForeColor = System.Drawing.Color.White;
+            this.chkXPathRelative.Location = new System.Drawing.Point(88, 6);
+            this.chkXPathRelative.Name = "chkXPathRelative";
+            this.chkXPathRelative.Size = new System.Drawing.Size(289, 19);
+            this.chkXPathRelative.TabIndex = 1;
+            this.chkXPathRelative.Text = "XPath is relative to the checked element";
+            this.chkXPathRelative.UseVisualStyleBackColor = true;
+            this.chkXPathRelative.Visible = false;
+            // 
+            // chkShowInTree
+            // 
+            this.chkShowInTree.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkShowInTree.AutoSize = true;
+            this.chkShowInTree.Location = new System.Drawing.Point(8, 5);
+            this.chkShowInTree.Name = "chkShowInTree";
+            this.chkShowInTree.Size = new System.Drawing.Size(74, 22);
+            this.chkShowInTree.TabIndex = 0;
+            this.chkShowInTree.Text = "Hide Check";
+            this.chkShowInTree.UseVisualStyleBackColor = true;
+            this.chkShowInTree.CheckedChanged += new System.EventHandler(this.chkShowInTree_CheckedChanged);
+            // 
             // timerLabelShowTime
             // 
             this.timerLabelShowTime.Interval = 2000;
@@ -323,6 +365,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.panelFooterContainer.ResumeLayout(false);
             this.panelFooterContainer.PerformLayout();
+            this.panelMenu.ResumeLayout(false);
+            this.panelMenu.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -348,5 +392,8 @@
         private System.Windows.Forms.ToolTip myToolTip;
         private System.Windows.Forms.CheckBox chkUseAutomationIdAttr;
         private System.Windows.Forms.CheckBox chkUseNameAttr;
+        private System.Windows.Forms.Panel panelMenu;
+        private System.Windows.Forms.CheckBox chkShowInTree;
+        private System.Windows.Forms.CheckBox chkXPathRelative;
     }
 }
