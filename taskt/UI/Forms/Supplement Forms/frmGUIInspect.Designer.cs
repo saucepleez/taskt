@@ -47,12 +47,12 @@
             this.panelFooterContainer = new System.Windows.Forms.Panel();
             this.lblMessage = new System.Windows.Forms.Label();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.chkElementReload = new System.Windows.Forms.CheckBox();
             this.chkXPathRelative = new System.Windows.Forms.CheckBox();
             this.chkShowInTree = new System.Windows.Forms.CheckBox();
             this.timerLabelShowTime = new System.Windows.Forms.Timer(this.components);
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.timerElementReload = new System.Windows.Forms.Timer(this.components);
-            this.chkElementReload = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.panelXPath.SuspendLayout();
@@ -314,6 +314,18 @@
             this.panelMenu.Size = new System.Drawing.Size(569, 30);
             this.panelMenu.TabIndex = 4;
             // 
+            // chkElementReload
+            // 
+            this.chkElementReload.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkElementReload.AutoSize = true;
+            this.chkElementReload.Location = new System.Drawing.Point(420, 5);
+            this.chkElementReload.Name = "chkElementReload";
+            this.chkElementReload.Size = new System.Drawing.Size(102, 22);
+            this.chkElementReload.TabIndex = 2;
+            this.chkElementReload.Text = "Auto Reload (5s)";
+            this.chkElementReload.UseVisualStyleBackColor = true;
+            this.chkElementReload.CheckedChanged += new System.EventHandler(this.chkElementReload_CheckedChanged);
+            // 
             // chkXPathRelative
             // 
             this.chkXPathRelative.AutoSize = true;
@@ -326,6 +338,7 @@
             this.chkXPathRelative.Text = "XPath is relative to the checked element";
             this.chkXPathRelative.UseVisualStyleBackColor = true;
             this.chkXPathRelative.Visible = false;
+            this.chkXPathRelative.CheckedChanged += new System.EventHandler(this.chkXPathRelative_CheckedChanged);
             // 
             // chkShowInTree
             // 
@@ -348,18 +361,6 @@
             // 
             this.timerElementReload.Interval = 5000;
             this.timerElementReload.Tick += new System.EventHandler(this.timerElementReload_Tick);
-            // 
-            // chkElementReload
-            // 
-            this.chkElementReload.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkElementReload.AutoSize = true;
-            this.chkElementReload.Location = new System.Drawing.Point(420, 5);
-            this.chkElementReload.Name = "chkElementReload";
-            this.chkElementReload.Size = new System.Drawing.Size(102, 22);
-            this.chkElementReload.TabIndex = 2;
-            this.chkElementReload.Text = "Auto Reload (5s)";
-            this.chkElementReload.UseVisualStyleBackColor = true;
-            this.chkElementReload.CheckedChanged += new System.EventHandler(this.chkElementReload_CheckedChanged);
             // 
             // frmGUIInspect
             // 

@@ -422,6 +422,12 @@ namespace taskt.UI.Forms.Supplement_Forms
         #region controlPanel
         private void chkShowInTree_CheckedChanged(object sender, EventArgs e)
         {
+            TreeNode selectedNode = null;
+            if (tvElements.SelectedNode != null)
+            {
+                selectedNode = tvElements.SelectedNode;
+            }
+
             bool chkState = chkShowInTree.Checked;
             tvElements.CheckBoxes = chkState;
             chkXPathRelative.Visible = chkState;
@@ -438,8 +444,25 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             tvElements.ExpandAll();
 
-            txtElementInformation.Text = "";
-            txtXPath.Text = "";
+            if (selectedNode != null)
+            {
+                tvElements.SelectedNode = selectedNode;
+                tvElements.SelectedNode.EnsureVisible();
+            }
+            else
+            {
+                tvElements.Nodes[0].EnsureVisible();
+                txtElementInformation.Text = "";
+                txtXPath.Text = "";
+            }
+            tvElements.Focus();
+        }
+        private void chkXPathRelative_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tvElements.SelectedNode != null)
+            {
+                showElementInformation((AutomationElement)tvElements.SelectedNode.Tag);
+            }
         }
         #endregion
 
@@ -469,6 +492,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
 
         #endregion
+
 
     }
 }
