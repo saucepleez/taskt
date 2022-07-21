@@ -318,7 +318,7 @@ namespace taskt.UI.Forms
             // check update
             if ((appSettings.ClientSettings.CheckForUpdateAtStartup) && (this.parentBuilder == null))
             {
-                taskt.Core.ApplicationUpdate.ShowUpdateResult();
+                taskt.Core.ApplicationUpdate.ShowUpdateResultAsync();
             }
         }
         

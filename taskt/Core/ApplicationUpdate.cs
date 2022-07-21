@@ -123,6 +123,66 @@ namespace taskt.Core
                 }
             }
         }
+
+        public static void ShowUpdateResultAsync()
+        {
+            WebClient wc = new WebClient();
+            wc.Encoding = Encoding.UTF8;
+
+            //get manifest
+            try
+            {
+                wc.DownloadStringCompleted += CompleteDownloadUpdateInformation;
+                wc.DownloadDataAsync(new Uri(MyURLs.LatestJSONURL));
+            }
+            catch (Exception ex)
+            {
+                // silent! ;-)
+                //throw new Exception("Fail check update : " + ex.Message);
+            }
+        }
+
+        private static void CompleteDownloadUpdateInformation(object sender, DownloadStringCompletedEventArgs e)
+        {
+            string manifestString = e.Result;
+            try
+            {
+                //initialize config
+                UpdateManifest manifestConfig = new UpdateManifest();
+
+                manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestString);
+                //create versions
+                manifestConfig.RemoteVersionProper = new Version(manifestConfig.RemoteVersion);
+                manifestConfig.LocalVersionProper = new Version(System.Windows.Forms.Application.ProductVersion);
+
+                //determine comparison
+                int versionCompare = manifestConfig.LocalVersionProper.CompareTo(manifestConfig.RemoteVersionProper);
+
+                if (versionCompare < 0)
+                {
+                    manifestConfig.RemoteVersionNewer = true;
+                }
+                else
+                {
+                    manifestConfig.RemoteVersionNewer = false;
+                }
+
+                if (manifestConfig.RemoteVersionNewer)
+                {
+                    // show new version message
+                    using (var fm = new taskt.UI.Forms.Supplement_Forms.frmUpdate(manifestConfig))
+                    {
+                        fm.ShowDialog();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // silent! ;-)
+                //bad json received
+                //throw new Exception("Fail parse update info : " + ex.Message);
+            }
+        }
     }
 
     public class UpdateManifest
