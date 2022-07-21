@@ -139,6 +139,157 @@ namespace taskt.UI.Forms.Supplement_Forms
                 txtXPath.Text = "";
             }
         }
+        private void tvElements_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            //Console.WriteLine(countCheckedInTvElements());
+
+            if (e.Action != TreeViewAction.Unknown)
+            {
+                clearAllCheckInTvElements();
+                e.Node.Checked = true;
+            }
+        }
+
+        private void clearAllCheckInTvElements()
+        {
+            if (!tvElements.CheckBoxes)
+            {
+                return;
+            }
+
+            tvElements.BeginUpdate();
+
+            tvElements.Nodes[0].Checked = false;
+            clearCheckTreeNode(tvElements.Nodes[0]);
+
+            tvElements.EndUpdate();
+        }
+
+        private static void clearCheckTreeNode(TreeNode root)
+        {
+            if (root.Nodes.Count == 0)
+            {
+                root.Checked = false;
+                return;
+            }
+            foreach(TreeNode node in root.Nodes)
+            {
+                node.Checked = false;
+                if (node.Nodes.Count > 0)
+                {
+                    clearCheckTreeNode(node);
+                }
+            }
+        }
+
+        //private int countCheckedInTvElements()
+        //{
+        //    if (!tvElements.CheckBoxes)
+        //    {
+        //        return 0;
+        //    }
+
+        //    return (tvElements.Nodes[0].Checked ? 1 : 0) + countWalkTvElements(tvElements.Nodes[0]);
+        //}
+
+        //private static int countWalkTvElements(TreeNode root)
+        //{
+        //    if (root.Nodes.Count == 0)
+        //    {
+        //        return (root.Checked ? 1 : 0);
+        //    }
+        //    else
+        //    {
+        //        int sum = 0;
+        //        foreach(TreeNode node in root.Nodes)
+        //        {
+        //            if (node.Checked)
+        //            {
+        //                sum++;
+        //            }
+        //            if (node.Nodes.Count > 0)
+        //            {
+        //                sum += countWalkTvElements(node);
+        //            }
+        //        }
+        //        return sum;
+        //    }
+        //}
+
+        private TreeNode getCheckedNode()
+        {
+            if (!tvElements.CheckBoxes)
+            {
+                return tvElements.Nodes[0];
+            }
+
+            TreeNode checkedNode = searchCheckedNode(tvElements.Nodes[0]);
+            if (checkedNode != null)
+            {
+                return checkedNode;
+            }
+            else
+            {
+                return tvElements.Nodes[0];
+            }
+        }
+
+        private static TreeNode searchCheckedNode(TreeNode root)
+        {
+            if (root.Nodes.Count == 0)
+            {
+                if (root.Checked)
+                {
+                    return root;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            foreach(TreeNode node in root.Nodes)
+            {
+                if (node.Checked)
+                {
+                    return node;
+                }
+
+                TreeNode t = searchCheckedNode(node);
+                if (t != null)
+                {
+                    return t;
+                }
+            }
+
+            return null;
+        }
+
+        private void chkElementReload_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkElementReload.Checked)
+            {
+                timerElementReload.Stop();
+                timerElementReload.Start();
+            }
+            else
+            {
+                timerElementReload.Stop();
+            }
+        }
+
+        private void timerElementReload_Tick(object sender, EventArgs e)
+        {
+            if (cmbWindowList.Text != "")
+            {
+                timerElementReload.Stop();
+
+                createElementTree();
+                tvElements.Focus();
+                
+                timerElementReload.Start();
+            }
+        }
         #endregion
 
         #region XPath checkbox events
@@ -166,40 +317,55 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
 
-            txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+            if ((chkShowInTree.Checked) && (chkXPathRelative.Checked))
+            {
+                TreeNode chk = getCheckedNode();
+                AutomationElement curElem = (AutomationElement)chk.Tag;
+                txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, curElem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+            }
+            else
+            {
+                txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+            }
         }
 
         private void highlightElement(AutomationElement elem)
         {
-            System.Windows.Rect rect = elem.Current.BoundingRectangle;
-
-            Rectangle outerRect = new Rectangle
+            try
             {
-                X = (int)rect.X - 3,
-                Y = (int)rect.Y - 3,
-                Width = (int)rect.Width + 6,
-                Height = (int)rect.Height + 6
-            };
-            Rectangle middleRect = new Rectangle
-            {
-                X = (int)rect.X - 2,
-                Y = (int)rect.Y - 2,
-                Width = (int)rect.Width + 4,
-                Height = (int)rect.Height + 4
-            };
-            Rectangle innerRect = new Rectangle
-            {
-                X = (int)rect.X,
-                Y = (int)rect.Y,
-                Width = (int)rect.Width,
-                Height = (int)rect.Height
-            };
+                System.Windows.Rect rect = elem.Current.BoundingRectangle;
+                Rectangle outerRect = new Rectangle
+                {
+                    X = (int)rect.X - 3,
+                    Y = (int)rect.Y - 3,
+                    Width = (int)rect.Width + 6,
+                    Height = (int)rect.Height + 6
+                };
+                Rectangle middleRect = new Rectangle
+                {
+                    X = (int)rect.X - 2,
+                    Y = (int)rect.Y - 2,
+                    Width = (int)rect.Width + 4,
+                    Height = (int)rect.Height + 4
+                };
+                Rectangle innerRect = new Rectangle
+                {
+                    X = (int)rect.X,
+                    Y = (int)rect.Y,
+                    Width = (int)rect.Width,
+                    Height = (int)rect.Height
+                };
 
-            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+                Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 
-            g.DrawRectangle(new Pen(Color.Black, 1), outerRect);
-            g.DrawRectangle(new Pen(Color.Yellow, 2), middleRect);
-            g.DrawRectangle(new Pen(Color.Black, 1), innerRect);
+                g.DrawRectangle(new Pen(Color.Black, 1), outerRect);
+                g.DrawRectangle(new Pen(Color.Yellow, 2), middleRect);
+                g.DrawRectangle(new Pen(Color.Black, 1), innerRect);
+            }
+            catch
+            {
+                return;
+            }
         }
         #endregion
 
@@ -208,10 +374,12 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
         #endregion
 
@@ -251,6 +419,53 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         #endregion
 
+        #region controlPanel
+        private void chkShowInTree_CheckedChanged(object sender, EventArgs e)
+        {
+            TreeNode selectedNode = null;
+            if (tvElements.SelectedNode != null)
+            {
+                selectedNode = tvElements.SelectedNode;
+            }
+
+            bool chkState = chkShowInTree.Checked;
+            tvElements.CheckBoxes = chkState;
+            chkXPathRelative.Visible = chkState;
+            chkXPathRelative.Checked = chkState;
+
+            if (chkState)
+            {
+                chkShowInTree.Text = "Show Check";
+            }
+            else
+            {
+                chkShowInTree.Text = "Hide Check";
+            }
+
+            tvElements.ExpandAll();
+
+            if (selectedNode != null)
+            {
+                tvElements.SelectedNode = selectedNode;
+                tvElements.SelectedNode.EnsureVisible();
+            }
+            else
+            {
+                tvElements.Nodes[0].EnsureVisible();
+                txtElementInformation.Text = "";
+                txtXPath.Text = "";
+            }
+            tvElements.Focus();
+        }
+        private void chkXPathRelative_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tvElements.SelectedNode != null)
+            {
+                showElementInformation((AutomationElement)tvElements.SelectedNode.Tag);
+            }
+        }
+        #endregion
+
         #region Properties
         public string XPath
         {
@@ -275,6 +490,9 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return txtElementInformation.Text;
             }
         }
+
         #endregion
+
+
     }
 }
