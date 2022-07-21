@@ -133,7 +133,7 @@ namespace taskt.Core
             try
             {
                 wc.DownloadStringCompleted += CompleteDownloadUpdateInformation;
-                wc.DownloadDataAsync(new Uri(MyURLs.LatestJSONURL));
+                wc.DownloadStringAsync(new Uri(MyURLs.LatestJSONURL));
             }
             catch (Exception ex)
             {
