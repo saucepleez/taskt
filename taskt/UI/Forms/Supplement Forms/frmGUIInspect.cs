@@ -451,7 +451,11 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
             else
             {
-                tvElements.Nodes[0].EnsureVisible();
+                if (tvElements.Nodes.Count > 0)
+                {
+                    tvElements.Nodes[0].EnsureVisible();
+                }
+                
                 txtElementInformation.Text = "";
                 txtXPath.Text = "";
             }
