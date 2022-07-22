@@ -153,11 +153,11 @@
             // chkUseAutomationIdAttr
             // 
             this.chkUseAutomationIdAttr.AutoSize = true;
-            this.chkUseAutomationIdAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
+            this.chkUseAutomationIdAttr.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.chkUseAutomationIdAttr.ForeColor = System.Drawing.Color.White;
             this.chkUseAutomationIdAttr.Location = new System.Drawing.Point(203, 47);
             this.chkUseAutomationIdAttr.Name = "chkUseAutomationIdAttr";
-            this.chkUseAutomationIdAttr.Size = new System.Drawing.Size(199, 19);
+            this.chkUseAutomationIdAttr.Size = new System.Drawing.Size(199, 23);
             this.chkUseAutomationIdAttr.TabIndex = 2;
             this.chkUseAutomationIdAttr.Text = "Use AutomationId Attribute";
             this.chkUseAutomationIdAttr.UseVisualStyleBackColor = true;
@@ -168,11 +168,11 @@
             this.chkUseNameAttr.AutoSize = true;
             this.chkUseNameAttr.Checked = true;
             this.chkUseNameAttr.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkUseNameAttr.Font = new System.Drawing.Font("MS UI Gothic", 11F);
+            this.chkUseNameAttr.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.chkUseNameAttr.ForeColor = System.Drawing.Color.White;
             this.chkUseNameAttr.Location = new System.Drawing.Point(31, 47);
             this.chkUseNameAttr.Name = "chkUseNameAttr";
-            this.chkUseNameAttr.Size = new System.Drawing.Size(152, 19);
+            this.chkUseNameAttr.Size = new System.Drawing.Size(150, 23);
             this.chkUseNameAttr.TabIndex = 1;
             this.chkUseNameAttr.Text = "Use Name Attribute";
             this.chkUseNameAttr.UseVisualStyleBackColor = true;
@@ -318,9 +318,10 @@
             // 
             this.chkElementReload.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkElementReload.AutoSize = true;
+            this.chkElementReload.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.chkElementReload.Location = new System.Drawing.Point(420, 5);
             this.chkElementReload.Name = "chkElementReload";
-            this.chkElementReload.Size = new System.Drawing.Size(102, 22);
+            this.chkElementReload.Size = new System.Drawing.Size(104, 25);
             this.chkElementReload.TabIndex = 2;
             this.chkElementReload.Text = "Auto Reload (5s)";
             this.chkElementReload.UseVisualStyleBackColor = true;
@@ -329,11 +330,11 @@
             // chkXPathRelative
             // 
             this.chkXPathRelative.AutoSize = true;
-            this.chkXPathRelative.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.chkXPathRelative.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.chkXPathRelative.ForeColor = System.Drawing.Color.White;
-            this.chkXPathRelative.Location = new System.Drawing.Point(88, 6);
+            this.chkXPathRelative.Location = new System.Drawing.Point(92, 7);
             this.chkXPathRelative.Name = "chkXPathRelative";
-            this.chkXPathRelative.Size = new System.Drawing.Size(289, 19);
+            this.chkXPathRelative.Size = new System.Drawing.Size(272, 23);
             this.chkXPathRelative.TabIndex = 1;
             this.chkXPathRelative.Text = "XPath is relative to the checked element";
             this.chkXPathRelative.UseVisualStyleBackColor = true;
@@ -344,9 +345,10 @@
             // 
             this.chkShowInTree.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowInTree.AutoSize = true;
+            this.chkShowInTree.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.chkShowInTree.Location = new System.Drawing.Point(8, 5);
             this.chkShowInTree.Name = "chkShowInTree";
-            this.chkShowInTree.Size = new System.Drawing.Size(74, 22);
+            this.chkShowInTree.Size = new System.Drawing.Size(78, 25);
             this.chkShowInTree.TabIndex = 0;
             this.chkShowInTree.Text = "Hide Check";
             this.chkShowInTree.UseVisualStyleBackColor = true;
