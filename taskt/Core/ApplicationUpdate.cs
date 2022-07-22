@@ -144,9 +144,10 @@ namespace taskt.Core
 
         private static void CompleteDownloadUpdateInformation(object sender, DownloadStringCompletedEventArgs e)
         {
-            string manifestString = e.Result;
             try
             {
+                string manifestString = e.Result;
+
                 //initialize config
                 UpdateManifest manifestConfig = new UpdateManifest();
 
