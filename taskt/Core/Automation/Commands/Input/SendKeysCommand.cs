@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,45 +18,49 @@ namespace taskt.Core.Automation.Commands
     public class SendKeysCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
+        [PropertyDescription("Please Enter the Window name")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsWindowNamesList(true)]
+        [PropertyShowSampleUsageInDescription(true)]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window name search method (Default is Contains)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
-        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Window name search method")]
+        [InputSpecification("")]
+        [PropertyUISelectionOption("Contains")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
+        [PropertyUISelectionOption("Exact match")]
+        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Contains")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter text to send. (ex. Hello, ^s, {{{vText}}}, {WIN_KEY}, {WIN_KEY+R})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the text that should be sent to the specified window.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello, World!** or **{{{vEntryText}}}** or **{WIN_KEY}** or **{WIN_KEY+R}**")]
-        [Attributes.PropertyAttributes.Remarks("This command supports sending variables within brackets {{{vVariable}}}")]
+        [PropertyDescription("Please Enter text to send.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Keys Builder", "lnkKeysBulider_Click")]
+        [PropertyCustomUIHelper("Encrypt Text", "lnkEncryptText_Click")]
+        [InputSpecification("Enter the text that should be sent to the specified window.")]
+        [SampleUsage("**Hello, World!** or **^s** or **{{{vEntryText}}}** or **{WIN_KEY}** or **{WIN_KEY+R}**")]
+        [Remarks("This command supports sending variables within brackets {{{vVariable}}}")]
+        [PropertyShowSampleUsageInDescription(true)]
         public string v_TextToSend { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please Indicate if Text is Encrypted (default is Not Encrypted)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Not Encrypted")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Encrypted")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate if the text in 'TextToSend' is Encrypted.")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please Indicate if Text is Encrypted")]
+        [PropertyUISelectionOption("Not Encrypted")]
+        [PropertyUISelectionOption("Encrypted")]
+        [InputSpecification("Indicate if the text in 'TextToSend' is Encrypted.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Not Encrypted")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_EncryptionOption { get; set; }
 
         [XmlIgnore]
@@ -98,37 +103,37 @@ namespace taskt.Core.Automation.Commands
 
             if (EncryptionOption == "Encrypted")
             {
-                textToSend = Core.EncryptionServices.DecryptString(textToSend, "TASKT");
+                textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
             }
 
             if (textToSend == "{WIN_KEY}")
             {
-                User32Functions.KeyDown(System.Windows.Forms.Keys.LWin);
-                User32Functions.KeyUp(System.Windows.Forms.Keys.LWin);
+                User32Functions.KeyDown(Keys.LWin);
+                User32Functions.KeyUp(Keys.LWin);
 
             }
             else if (textToSend.Contains("{WIN_KEY+"))
             {
-                User32Functions.KeyDown(System.Windows.Forms.Keys.LWin);
+                User32Functions.KeyDown(Keys.LWin);
                 var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
 
                 foreach (var c in remainingText)
                 {
-                    System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), c.ToString());
+                    Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
                     User32Functions.KeyDown(key);
                 }
 
-                User32Functions.KeyUp(System.Windows.Forms.Keys.LWin);
+                User32Functions.KeyUp(Keys.LWin);
 
                 foreach (var c in remainingText)
                 {
-                    System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), c.ToString());
+                    Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
                     User32Functions.KeyUp(key);
                 }
             }
             else
             {
-                System.Windows.Forms.SendKeys.SendWait(textToSend);
+                SendKeys.SendWait(textToSend);
             }
 
             System.Threading.Thread.Sleep(500);
@@ -138,19 +143,19 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
 
-            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            var WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
             RenderedControls.Add(WindowNameControl);
 
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             //taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
-            taskt.UI.CustomControls.CommandItemControl encryptLink = CommandControls.CreateUIHelper();
-            encryptLink.CommandDisplay = "Encrypt Text";
-            encryptLink.Click += (sender, e) => HelperControl_Click(sender, e);
+            //CommandItemControl encryptLink = CommandControls.CreateUIHelper();
+            //encryptLink.CommandDisplay = "Encrypt Text";
+            //encryptLink.Click += (sender, e) => lnkEncryptText_Click(sender, e);
 
-            var textInputGroup = CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor, new List<Control>() { encryptLink } );
+            var textInputGroup = CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor);
             RenderedControls.AddRange(textInputGroup);
 
             //InputText = (TextBox)textInputGroup[2];
@@ -167,9 +172,8 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        private void HelperControl_Click(object sender, EventArgs e)
+        private void lnkEncryptText_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrEmpty(InputText.Text))
             {
                 MessageBox.Show("Text to send is empty.", "Notice");
@@ -180,7 +184,17 @@ namespace taskt.Core.Automation.Commands
             this.v_EncryptionOption = "Encrypted";
 
             InputText.Text = encrypted;
+        }
 
+        private void lnkKeysBulider_Click(object sender, EventArgs e)
+        {
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmKeysBuilder())
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    InputText.Text = fm.Result;
+                }
+            }
         }
 
         public override string GetDisplayValue()
@@ -201,7 +215,7 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToIntermediateWindowName");
