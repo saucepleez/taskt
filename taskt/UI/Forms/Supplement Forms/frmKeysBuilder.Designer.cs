@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelFooter = new System.Windows.Forms.Panel();
             this.uiBtnAdd = new taskt.UI.CustomControls.UIPictureButton();
@@ -47,6 +48,7 @@
             this.panelResult = new System.Windows.Forms.Panel();
             this.lblResult = new System.Windows.Forms.Label();
             this.txtResult = new System.Windows.Forms.TextBox();
+            this.myTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
@@ -334,5 +336,6 @@
         private System.Windows.Forms.Panel panelResult;
         private System.Windows.Forms.TextBox txtResult;
         private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.ToolTip myTooltip;
     }
 }
