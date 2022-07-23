@@ -275,7 +275,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                     return "DIVIDE";
 
                 default:
-                    return cmbKey.Text.ToUpper();
+                    return (needBracket ? cmbKey.Text.ToUpper() : cmbKey.Text.ToLower());
             }
         }
 
