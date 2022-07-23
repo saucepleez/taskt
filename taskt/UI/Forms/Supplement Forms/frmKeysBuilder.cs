@@ -188,7 +188,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                         }
                         else
                         {
-                            result = "{WINKEY+" + key + "}";
+                            result = "{WIN_KEY+" + key + "}";
                         }
                     }
                     else if (isHotkey || needBlacket)
