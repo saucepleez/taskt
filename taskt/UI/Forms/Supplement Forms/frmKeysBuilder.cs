@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
-    public partial class frmKeysBuilder : Form
+    public partial class frmKeysBuilder : ThemedForm
     {
         public frmKeysBuilder()
         {
