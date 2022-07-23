@@ -286,7 +286,7 @@
             // 
             // panelResult
             // 
-            this.panelResult.BackColor = System.Drawing.Color.Black;
+            this.panelResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.panelResult.Controls.Add(this.txtResult);
             this.panelResult.Controls.Add(this.lblResult);
             this.panelResult.Dock = System.Windows.Forms.DockStyle.Fill;

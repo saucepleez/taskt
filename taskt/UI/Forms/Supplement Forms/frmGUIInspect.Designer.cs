@@ -140,6 +140,7 @@
             // 
             // panelXPath
             // 
+            this.panelXPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.panelXPath.Controls.Add(this.chkUseAutomationIdAttr);
             this.panelXPath.Controls.Add(this.chkUseNameAttr);
             this.panelXPath.Controls.Add(this.txtXPath);
