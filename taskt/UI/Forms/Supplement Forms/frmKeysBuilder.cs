@@ -181,11 +181,11 @@ namespace taskt.UI.Forms.Supplement_Forms
                     {
                         if (String.IsNullOrEmpty(key))
                         {
-                            result = "{WINKEY}";
+                            result = "{WIN_KEY}";
                         }
                         else
                         {
-                            result = "{WINKEY_" + key + "}";
+                            result = "{WINKEY+" + key + "}";
                         }
                     }
                     else if (isHotkey || needBlacket)
@@ -205,11 +205,11 @@ namespace taskt.UI.Forms.Supplement_Forms
                 {
                     if (String.IsNullOrEmpty(key))
                     {
-                        result = "{WINKEY}";
+                        result = "{WIN_KEY}";
                     }
                     else
                     {
-                        result = "{WINKEY_" + key + "}";
+                        result = "{WIN_KEY+" + key + "}";
                     }
                 }
                 else if (isHotkey || needBlacket)
