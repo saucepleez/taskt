@@ -36,6 +36,7 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelBody = new System.Windows.Forms.Panel();
+            this.lblWinKeyMessage = new System.Windows.Forms.Label();
             this.txtTimes = new System.Windows.Forms.TextBox();
             this.lblTimes = new System.Windows.Forms.Label();
             this.lblPress = new System.Windows.Forms.Label();
@@ -49,7 +50,6 @@
             this.txtResult = new System.Windows.Forms.TextBox();
             this.lblResult = new System.Windows.Forms.Label();
             this.myTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.lblWinKeyMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
@@ -165,6 +165,18 @@
             this.panelBody.Size = new System.Drawing.Size(459, 143);
             this.panelBody.TabIndex = 0;
             // 
+            // lblWinKeyMessage
+            // 
+            this.lblWinKeyMessage.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblWinKeyMessage.ForeColor = System.Drawing.Color.White;
+            this.lblWinKeyMessage.Location = new System.Drawing.Point(164, 74);
+            this.lblWinKeyMessage.Name = "lblWinKeyMessage";
+            this.lblWinKeyMessage.Size = new System.Drawing.Size(285, 64);
+            this.lblWinKeyMessage.TabIndex = 9;
+            this.lblWinKeyMessage.Text = "If you want to press Shift, Ctrl, Alt, etc. at the same time as the Windows key, " +
+    "please use the \'Send Advanced Keystrokes\' command.";
+            this.lblWinKeyMessage.Visible = false;
+            // 
             // txtTimes
             // 
             this.txtTimes.Font = new System.Drawing.Font("Segoe UI", 11F);
@@ -274,12 +286,14 @@
             // 
             // panelResult
             // 
+            this.panelResult.BackColor = System.Drawing.Color.Black;
             this.panelResult.Controls.Add(this.txtResult);
             this.panelResult.Controls.Add(this.lblResult);
             this.panelResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelResult.Location = new System.Drawing.Point(3, 192);
+            this.panelResult.Location = new System.Drawing.Point(0, 189);
+            this.panelResult.Margin = new System.Windows.Forms.Padding(0);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(459, 44);
+            this.panelResult.Size = new System.Drawing.Size(465, 50);
             this.panelResult.TabIndex = 2;
             // 
             // txtResult
@@ -287,6 +301,7 @@
             this.txtResult.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.txtResult.Location = new System.Drawing.Point(87, 10);
             this.txtResult.Name = "txtResult";
+            this.txtResult.ReadOnly = true;
             this.txtResult.Size = new System.Drawing.Size(362, 27);
             this.txtResult.TabIndex = 1;
             // 
@@ -300,18 +315,6 @@
             this.lblResult.Size = new System.Drawing.Size(72, 20);
             this.lblResult.TabIndex = 0;
             this.lblResult.Text = "SendKeys";
-            // 
-            // lblWinKeyMessage
-            // 
-            this.lblWinKeyMessage.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblWinKeyMessage.ForeColor = System.Drawing.Color.White;
-            this.lblWinKeyMessage.Location = new System.Drawing.Point(164, 74);
-            this.lblWinKeyMessage.Name = "lblWinKeyMessage";
-            this.lblWinKeyMessage.Size = new System.Drawing.Size(285, 64);
-            this.lblWinKeyMessage.TabIndex = 9;
-            this.lblWinKeyMessage.Text = "If you want to press Shift, Ctrl, Alt, etc. at the same time as the Windows key, " +
-    "please use the \'Send Advanced Keystrokes\' command.";
-            this.lblWinKeyMessage.Visible = false;
             // 
             // frmKeysBuilder
             // 
