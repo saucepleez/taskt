@@ -49,6 +49,7 @@
             this.txtResult = new System.Windows.Forms.TextBox();
             this.lblResult = new System.Windows.Forms.Label();
             this.myTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.lblWinKeyMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
@@ -148,6 +149,7 @@
             // 
             // panelBody
             // 
+            this.panelBody.Controls.Add(this.lblWinKeyMessage);
             this.panelBody.Controls.Add(this.txtTimes);
             this.panelBody.Controls.Add(this.lblTimes);
             this.panelBody.Controls.Add(this.lblPress);
@@ -299,6 +301,18 @@
             this.lblResult.TabIndex = 0;
             this.lblResult.Text = "SendKeys";
             // 
+            // lblWinKeyMessage
+            // 
+            this.lblWinKeyMessage.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblWinKeyMessage.ForeColor = System.Drawing.Color.White;
+            this.lblWinKeyMessage.Location = new System.Drawing.Point(164, 74);
+            this.lblWinKeyMessage.Name = "lblWinKeyMessage";
+            this.lblWinKeyMessage.Size = new System.Drawing.Size(285, 64);
+            this.lblWinKeyMessage.TabIndex = 9;
+            this.lblWinKeyMessage.Text = "If you want to press Shift, Ctrl, Alt, etc. at the same time as the Windows key, " +
+    "please use the \'Send Advanced Keystrokes\' command.";
+            this.lblWinKeyMessage.Visible = false;
+            // 
             // frmKeysBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -345,5 +359,6 @@
         private System.Windows.Forms.TextBox txtResult;
         private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.ToolTip myTooltip;
+        private System.Windows.Forms.Label lblWinKeyMessage;
     }
 }

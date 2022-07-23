@@ -109,6 +109,9 @@ namespace taskt.UI.Forms.Supplement_Forms
                 txtTimes.Enabled = true;
             }
 
+            // show message
+            lblWinKeyMessage.Visible = chkWin.Checked;
+
             ShowSendKey();
         }
         #endregion
