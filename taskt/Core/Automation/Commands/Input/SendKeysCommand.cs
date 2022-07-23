@@ -44,6 +44,8 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Please Enter text to send.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Keys Builder", "lnkKeysBulider_Click")]
+        [PropertyCustomUIHelper("Encrypt Text", "lnkEncryptText_Click")]
         [InputSpecification("Enter the text that should be sent to the specified window.")]
         [SampleUsage("**Hello, World!** or **^s** or **{{{vEntryText}}}** or **{WIN_KEY}** or **{WIN_KEY+R}**")]
         [Remarks("This command supports sending variables within brackets {{{vVariable}}}")]
@@ -149,11 +151,11 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
             //taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
-            CommandItemControl encryptLink = CommandControls.CreateUIHelper();
-            encryptLink.CommandDisplay = "Encrypt Text";
-            encryptLink.Click += (sender, e) => HelperControl_Click(sender, e);
+            //CommandItemControl encryptLink = CommandControls.CreateUIHelper();
+            //encryptLink.CommandDisplay = "Encrypt Text";
+            //encryptLink.Click += (sender, e) => lnkEncryptText_Click(sender, e);
 
-            var textInputGroup = CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor, new List<Control>() { encryptLink } );
+            var textInputGroup = CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor);
             RenderedControls.AddRange(textInputGroup);
 
             //InputText = (TextBox)textInputGroup[2];
@@ -170,9 +172,8 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        private void HelperControl_Click(object sender, EventArgs e)
+        private void lnkEncryptText_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrEmpty(InputText.Text))
             {
                 MessageBox.Show("Text to send is empty.", "Notice");
@@ -183,7 +184,17 @@ namespace taskt.Core.Automation.Commands
             this.v_EncryptionOption = "Encrypted";
 
             InputText.Text = encrypted;
+        }
 
+        private void lnkKeysBulider_Click(object sender, EventArgs e)
+        {
+            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmKeysBuilder())
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    InputText.Text = fm.Result;
+                }
+            }
         }
 
         public override string GetDisplayValue()
