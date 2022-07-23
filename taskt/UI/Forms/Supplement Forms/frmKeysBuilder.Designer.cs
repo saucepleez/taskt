@@ -34,20 +34,20 @@
             this.uiBtnAdd = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.panelBody = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.chkShift = new System.Windows.Forms.CheckBox();
-            this.chkCtrl = new System.Windows.Forms.CheckBox();
-            this.chkAlt = new System.Windows.Forms.CheckBox();
-            this.chkWin = new System.Windows.Forms.CheckBox();
-            this.lblKey = new System.Windows.Forms.Label();
-            this.cmbKey = new System.Windows.Forms.ComboBox();
-            this.lblPress = new System.Windows.Forms.Label();
-            this.lblTimes = new System.Windows.Forms.Label();
+            this.panelBody = new System.Windows.Forms.Panel();
             this.txtTimes = new System.Windows.Forms.TextBox();
+            this.lblTimes = new System.Windows.Forms.Label();
+            this.lblPress = new System.Windows.Forms.Label();
+            this.cmbKey = new System.Windows.Forms.ComboBox();
+            this.lblKey = new System.Windows.Forms.Label();
+            this.chkWin = new System.Windows.Forms.CheckBox();
+            this.chkAlt = new System.Windows.Forms.CheckBox();
+            this.chkCtrl = new System.Windows.Forms.CheckBox();
+            this.chkShift = new System.Windows.Forms.CheckBox();
             this.panelResult = new System.Windows.Forms.Panel();
-            this.lblResult = new System.Windows.Forms.Label();
             this.txtResult = new System.Windows.Forms.TextBox();
+            this.lblResult = new System.Windows.Forms.Label();
             this.myTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
@@ -75,7 +75,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 296);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(465, 296);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panelFooter
@@ -86,7 +86,7 @@
             this.panelFooter.Location = new System.Drawing.Point(0, 239);
             this.panelFooter.Margin = new System.Windows.Forms.Padding(0);
             this.panelFooter.Name = "panelFooter";
-            this.panelFooter.Size = new System.Drawing.Size(464, 57);
+            this.panelFooter.Size = new System.Drawing.Size(465, 57);
             this.panelFooter.TabIndex = 0;
             // 
             // uiBtnAdd
@@ -130,8 +130,19 @@
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(464, 40);
+            this.panelHeader.Size = new System.Drawing.Size(465, 40);
             this.panelHeader.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Emoji", 16F);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(3, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(132, 30);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Keys Builder";
             // 
             // panelBody
             // 
@@ -147,99 +158,19 @@
             this.panelBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelBody.Location = new System.Drawing.Point(3, 43);
             this.panelBody.Name = "panelBody";
-            this.panelBody.Size = new System.Drawing.Size(458, 143);
+            this.panelBody.Size = new System.Drawing.Size(459, 143);
             this.panelBody.TabIndex = 0;
             // 
-            // label1
+            // txtTimes
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Emoji", 16F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 30);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Keys Builder";
-            // 
-            // chkShift
-            // 
-            this.chkShift.AutoSize = true;
-            this.chkShift.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.chkShift.ForeColor = System.Drawing.Color.White;
-            this.chkShift.Location = new System.Drawing.Point(9, 14);
-            this.chkShift.Name = "chkShift";
-            this.chkShift.Size = new System.Drawing.Size(58, 24);
-            this.chkShift.TabIndex = 0;
-            this.chkShift.Text = "&Shift";
-            this.chkShift.UseVisualStyleBackColor = true;
-            // 
-            // chkCtrl
-            // 
-            this.chkCtrl.AutoSize = true;
-            this.chkCtrl.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.chkCtrl.ForeColor = System.Drawing.Color.White;
-            this.chkCtrl.Location = new System.Drawing.Point(9, 44);
-            this.chkCtrl.Name = "chkCtrl";
-            this.chkCtrl.Size = new System.Drawing.Size(51, 24);
-            this.chkCtrl.TabIndex = 1;
-            this.chkCtrl.Text = "&Ctrl";
-            this.chkCtrl.UseVisualStyleBackColor = true;
-            // 
-            // chkAlt
-            // 
-            this.chkAlt.AutoSize = true;
-            this.chkAlt.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.chkAlt.ForeColor = System.Drawing.Color.White;
-            this.chkAlt.Location = new System.Drawing.Point(9, 74);
-            this.chkAlt.Name = "chkAlt";
-            this.chkAlt.Size = new System.Drawing.Size(47, 24);
-            this.chkAlt.TabIndex = 2;
-            this.chkAlt.Text = "&Alt";
-            this.chkAlt.UseVisualStyleBackColor = true;
-            // 
-            // chkWin
-            // 
-            this.chkWin.AutoSize = true;
-            this.chkWin.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.chkWin.ForeColor = System.Drawing.Color.White;
-            this.chkWin.Location = new System.Drawing.Point(9, 114);
-            this.chkWin.Name = "chkWin";
-            this.chkWin.Size = new System.Drawing.Size(54, 24);
-            this.chkWin.TabIndex = 3;
-            this.chkWin.Text = "&Win";
-            this.chkWin.UseVisualStyleBackColor = true;
-            // 
-            // lblKey
-            // 
-            this.lblKey.AutoSize = true;
-            this.lblKey.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblKey.ForeColor = System.Drawing.Color.White;
-            this.lblKey.Location = new System.Drawing.Point(97, 21);
-            this.lblKey.Name = "lblKey";
-            this.lblKey.Size = new System.Drawing.Size(33, 20);
-            this.lblKey.TabIndex = 4;
-            this.lblKey.Text = "&Key";
-            // 
-            // cmbKey
-            // 
-            this.cmbKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbKey.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.cmbKey.FormattingEnabled = true;
-            this.cmbKey.Location = new System.Drawing.Point(136, 18);
-            this.cmbKey.Name = "cmbKey";
-            this.cmbKey.Size = new System.Drawing.Size(103, 28);
-            this.cmbKey.TabIndex = 5;
-            // 
-            // lblPress
-            // 
-            this.lblPress.AutoSize = true;
-            this.lblPress.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblPress.ForeColor = System.Drawing.Color.White;
-            this.lblPress.Location = new System.Drawing.Point(277, 21);
-            this.lblPress.Name = "lblPress";
-            this.lblPress.Size = new System.Drawing.Size(42, 20);
-            this.lblPress.TabIndex = 6;
-            this.lblPress.Text = "&Press";
+            this.txtTimes.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtTimes.Location = new System.Drawing.Point(325, 18);
+            this.txtTimes.Name = "txtTimes";
+            this.txtTimes.Size = new System.Drawing.Size(70, 27);
+            this.txtTimes.TabIndex = 7;
+            this.txtTimes.Text = "1";
+            this.txtTimes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtTimes.TextChanged += new System.EventHandler(this.txtTimes_TextChanged);
             // 
             // lblTimes
             // 
@@ -252,15 +183,90 @@
             this.lblTimes.TabIndex = 8;
             this.lblTimes.Text = "time(s)";
             // 
-            // txtTimes
+            // lblPress
             // 
-            this.txtTimes.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtTimes.Location = new System.Drawing.Point(325, 18);
-            this.txtTimes.Name = "txtTimes";
-            this.txtTimes.Size = new System.Drawing.Size(70, 27);
-            this.txtTimes.TabIndex = 7;
-            this.txtTimes.Text = "1";
-            this.txtTimes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.lblPress.AutoSize = true;
+            this.lblPress.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblPress.ForeColor = System.Drawing.Color.White;
+            this.lblPress.Location = new System.Drawing.Point(277, 21);
+            this.lblPress.Name = "lblPress";
+            this.lblPress.Size = new System.Drawing.Size(42, 20);
+            this.lblPress.TabIndex = 6;
+            this.lblPress.Text = "&Press";
+            // 
+            // cmbKey
+            // 
+            this.cmbKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKey.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cmbKey.FormattingEnabled = true;
+            this.cmbKey.Location = new System.Drawing.Point(136, 18);
+            this.cmbKey.Name = "cmbKey";
+            this.cmbKey.Size = new System.Drawing.Size(103, 28);
+            this.cmbKey.TabIndex = 5;
+            this.cmbKey.SelectedIndexChanged += new System.EventHandler(this.cmbKey_SelectedIndexChanged);
+            // 
+            // lblKey
+            // 
+            this.lblKey.AutoSize = true;
+            this.lblKey.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblKey.ForeColor = System.Drawing.Color.White;
+            this.lblKey.Location = new System.Drawing.Point(97, 21);
+            this.lblKey.Name = "lblKey";
+            this.lblKey.Size = new System.Drawing.Size(33, 20);
+            this.lblKey.TabIndex = 4;
+            this.lblKey.Text = "&Key";
+            // 
+            // chkWin
+            // 
+            this.chkWin.AutoSize = true;
+            this.chkWin.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.chkWin.ForeColor = System.Drawing.Color.White;
+            this.chkWin.Location = new System.Drawing.Point(9, 114);
+            this.chkWin.Name = "chkWin";
+            this.chkWin.Size = new System.Drawing.Size(54, 24);
+            this.chkWin.TabIndex = 3;
+            this.chkWin.Text = "&Win";
+            this.chkWin.UseVisualStyleBackColor = true;
+            this.chkWin.CheckedChanged += new System.EventHandler(this.chkWin_CheckedChanged);
+            // 
+            // chkAlt
+            // 
+            this.chkAlt.AutoSize = true;
+            this.chkAlt.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.chkAlt.ForeColor = System.Drawing.Color.White;
+            this.chkAlt.Location = new System.Drawing.Point(9, 74);
+            this.chkAlt.Name = "chkAlt";
+            this.chkAlt.Size = new System.Drawing.Size(47, 24);
+            this.chkAlt.TabIndex = 2;
+            this.chkAlt.Text = "&Alt";
+            this.chkAlt.UseVisualStyleBackColor = true;
+            this.chkAlt.CheckedChanged += new System.EventHandler(this.chkAlt_CheckedChanged);
+            // 
+            // chkCtrl
+            // 
+            this.chkCtrl.AutoSize = true;
+            this.chkCtrl.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.chkCtrl.ForeColor = System.Drawing.Color.White;
+            this.chkCtrl.Location = new System.Drawing.Point(9, 44);
+            this.chkCtrl.Name = "chkCtrl";
+            this.chkCtrl.Size = new System.Drawing.Size(51, 24);
+            this.chkCtrl.TabIndex = 1;
+            this.chkCtrl.Text = "&Ctrl";
+            this.chkCtrl.UseVisualStyleBackColor = true;
+            this.chkCtrl.CheckedChanged += new System.EventHandler(this.chkCtrl_CheckedChanged);
+            // 
+            // chkShift
+            // 
+            this.chkShift.AutoSize = true;
+            this.chkShift.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.chkShift.ForeColor = System.Drawing.Color.White;
+            this.chkShift.Location = new System.Drawing.Point(9, 14);
+            this.chkShift.Name = "chkShift";
+            this.chkShift.Size = new System.Drawing.Size(58, 24);
+            this.chkShift.TabIndex = 0;
+            this.chkShift.Text = "&Shift";
+            this.chkShift.UseVisualStyleBackColor = true;
+            this.chkShift.CheckedChanged += new System.EventHandler(this.chkShift_CheckedChanged);
             // 
             // panelResult
             // 
@@ -269,8 +275,16 @@
             this.panelResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelResult.Location = new System.Drawing.Point(3, 192);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(458, 44);
+            this.panelResult.Size = new System.Drawing.Size(459, 44);
             this.panelResult.TabIndex = 2;
+            // 
+            // txtResult
+            // 
+            this.txtResult.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtResult.Location = new System.Drawing.Point(87, 10);
+            this.txtResult.Name = "txtResult";
+            this.txtResult.Size = new System.Drawing.Size(362, 27);
+            this.txtResult.TabIndex = 1;
             // 
             // lblResult
             // 
@@ -283,19 +297,11 @@
             this.lblResult.TabIndex = 0;
             this.lblResult.Text = "SendKeys";
             // 
-            // txtResult
-            // 
-            this.txtResult.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtResult.Location = new System.Drawing.Point(87, 10);
-            this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(362, 27);
-            this.txtResult.TabIndex = 1;
-            // 
             // frmKeysBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 296);
+            this.ClientSize = new System.Drawing.Size(465, 296);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
