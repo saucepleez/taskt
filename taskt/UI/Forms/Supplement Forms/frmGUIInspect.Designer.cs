@@ -183,11 +183,11 @@
             // 
             this.txtXPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtXPath.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.txtXPath.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.txtXPath.Location = new System.Drawing.Point(4, 9);
             this.txtXPath.Name = "txtXPath";
             this.txtXPath.ReadOnly = true;
-            this.txtXPath.Size = new System.Drawing.Size(551, 23);
+            this.txtXPath.Size = new System.Drawing.Size(551, 29);
             this.txtXPath.TabIndex = 0;
             this.myToolTip.SetToolTip(this.txtXPath, "Double-Click to copy XPath in Clipboard");
             this.txtXPath.DoubleClick += new System.EventHandler(this.txtXPath_DoubleClick);
