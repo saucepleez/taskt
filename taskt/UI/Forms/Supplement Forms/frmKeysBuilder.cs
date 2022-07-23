@@ -17,13 +17,27 @@ namespace taskt.UI.Forms.Supplement_Forms
             InitializeComponent();
 
             var keys = Enum.GetValues(typeof(Keys));
-            string[] keysList = new string[keys.Length];
-            int i = 0;
-            foreach (var key in keys)
+            string[] keysList = new string[]
             {
-                keysList[i++] = key.ToString();
-            }
+                "",
+                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+                "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+                "U", "V", "W", "X", "Y", "Z",
+                "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
+                "F11", "F12", "F13", "F14", "F15", "F16",
 
+                "Enter", "BackSpace", "Delete", "ESC", "Tab",
+                "↑", "→", "↓", "←",
+                "Home", "End", "Page Up", "Page Down",
+                "+ (Plus)", "- (Minus)", "* (Mul)", "/ (Divide)",
+                "Insert",
+                "Break",
+                "Caps Lock",
+                "Help",
+                "Num Lock",
+                "Scroll Lock",
+            };
             cmbKey.Items.AddRange(keysList);
         }
 
@@ -69,12 +83,17 @@ namespace taskt.UI.Forms.Supplement_Forms
                 chkShift.Checked = false;
                 chkCtrl.Checked = false;
                 chkAlt.Checked = false;
+
+                txtTimes.Text = "1";
+                txtTimes.Enabled = false;
             }
             else
             {
                 chkShift.Enabled = true;
                 chkCtrl.Enabled = true;
                 chkAlt.Enabled = true;
+
+                txtTimes.Enabled = true;
             }
 
             ShowSendKey();
@@ -89,6 +108,11 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void txtTimes_TextChanged(object sender, EventArgs e)
         {
+            if (chkWin.Checked)
+            {
+                return;
+            }
+
             int times;
             if (int.TryParse(txtTimes.Text, out times))
             {
@@ -121,26 +145,43 @@ namespace taskt.UI.Forms.Supplement_Forms
                 isHotkey = true;
             }
 
+            bool needBlacket;
+            string key = convertKeyCode(out needBlacket);
+
+            // not support
+            if (chkWin.Checked && needBlacket)
+            {
+                txtResult.Text = "Error not supported keys.";
+                return;
+            }
+
             int times;
             if (int.TryParse(txtTimes.Text, out times))
             {
                 if (times > 1)
                 {
-                    result += "{" + cmbKey.Text + " [" + times + "]}";
+                    result += "{" + key + " [" + times + "]}";
                 }
                 else
                 {
                     if (chkWin.Checked)
                     {
-                        result = "{WINKEY_" + cmbKey.Text + "}";
+                        if (String.IsNullOrEmpty(key))
+                        {
+                            result = "{WINKEY}";
+                        }
+                        else
+                        {
+                            result = "{WINKEY_" + key + "}";
+                        }
                     }
-                    else if (isHotkey)
+                    else if (isHotkey || needBlacket)
                     {
-                        result += "{" + cmbKey.Text + "}";
+                        result += "{" + key + "}";
                     }
                     else
                     {
-                        result = cmbKey.Text;
+                        result = key;
                     }
                 }
                 txtResult.Text = result;
@@ -149,17 +190,79 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 if (chkWin.Checked)
                 {
-                    result = "{WINKEY_" + cmbKey.Text + "}";
+                    if (String.IsNullOrEmpty(key))
+                    {
+                        result = "{WINKEY}";
+                    }
+                    else
+                    {
+                        result = "{WINKEY_" + key + "}";
+                    }
                 }
-                else if (isHotkey)
+                else if (isHotkey || needBlacket)
                 {
-                    result += "{" + cmbKey.Text + "}";
+                    result += "{" + key + "}";
                 }
                 else
                 {
-                    result = cmbKey.Text;
+                    result = key;
                 }
                 txtResult.Text = result;
+            }
+        }
+
+        private string convertKeyCode(out bool needBracket)
+        {
+            needBracket = false;
+
+            if (cmbKey.SelectedIndex > 36)
+            {
+                needBracket = true;
+            }
+
+            switch (cmbKey.Text)
+            {
+                case "Caps Lock":
+                    return "CAPSLOCK";
+
+                case "↑":
+                    return "UP";
+
+                case "→":
+                    return "RIGHT";
+
+                case "↓":
+                    return "DOWN";
+
+                case "←":
+                    return "LEFT";
+
+                case "Num Lock":
+                    return "NUMLOCK";
+
+                case "Page Down":
+                    return "PGDN";
+
+                case "Page Up":
+                    return "PGUP";
+
+                case "Scroll Lock":
+                    return "SCROLLLOCK";
+
+                case "+ (Plus)":
+                    return "ADD";
+
+                case "- (Minus)":
+                    return "SUBTRACT";
+
+                case "* (Mul)":
+                    return "MULTIPLY";
+
+                case "/ (Divide)":
+                    return "DIVIDE";
+
+                default:
+                    return cmbKey.Text.ToUpper();
             }
         }
 
