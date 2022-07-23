@@ -41,6 +41,19 @@ namespace taskt.UI.Forms.Supplement_Forms
             cmbKey.Items.AddRange(keysList);
         }
 
+        #region footer buttons
+
+        private void uiBtnAdd_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+        }
+
+        private void uiBtnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
+        #endregion
+
         #region shift, ctrl, alt, win
         private void chkShift_CheckedChanged(object sender, EventArgs e)
         {
@@ -265,6 +278,16 @@ namespace taskt.UI.Forms.Supplement_Forms
                     return cmbKey.Text.ToUpper();
             }
         }
+
+        #region properties
+        public string Result
+        {
+            get
+            {
+                return txtResult.Text;
+            }
+        }
+        #endregion
 
     }
 }

@@ -105,6 +105,7 @@
             this.uiBtnAdd.TabIndex = 18;
             this.uiBtnAdd.TabStop = false;
             this.uiBtnAdd.Text = "Ok";
+            this.uiBtnAdd.Click += new System.EventHandler(this.uiBtnAdd_Click);
             // 
             // uiBtnCancel
             // 
@@ -122,6 +123,7 @@
             this.uiBtnCancel.TabIndex = 19;
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
+            this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // panelHeader
             // 
