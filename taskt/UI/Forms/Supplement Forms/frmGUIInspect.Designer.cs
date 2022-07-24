@@ -160,7 +160,7 @@
             this.chkUseAutomationIdAttr.Name = "chkUseAutomationIdAttr";
             this.chkUseAutomationIdAttr.Size = new System.Drawing.Size(199, 23);
             this.chkUseAutomationIdAttr.TabIndex = 2;
-            this.chkUseAutomationIdAttr.Text = "Use AutomationId Attribute";
+            this.chkUseAutomationIdAttr.Text = "Use &AutomationId Attribute";
             this.chkUseAutomationIdAttr.UseVisualStyleBackColor = true;
             this.chkUseAutomationIdAttr.CheckedChanged += new System.EventHandler(this.chkUseAutomationIdAttr_CheckedChanged);
             // 
@@ -175,7 +175,7 @@
             this.chkUseNameAttr.Name = "chkUseNameAttr";
             this.chkUseNameAttr.Size = new System.Drawing.Size(150, 23);
             this.chkUseNameAttr.TabIndex = 1;
-            this.chkUseNameAttr.Text = "Use Name Attribute";
+            this.chkUseNameAttr.Text = "Use &Name Attribute";
             this.chkUseNameAttr.UseVisualStyleBackColor = true;
             this.chkUseNameAttr.CheckedChanged += new System.EventHandler(this.chkUseNameAttr_CheckedChanged);
             // 
@@ -183,11 +183,11 @@
             // 
             this.txtXPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtXPath.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.txtXPath.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.txtXPath.Location = new System.Drawing.Point(4, 9);
             this.txtXPath.Name = "txtXPath";
             this.txtXPath.ReadOnly = true;
-            this.txtXPath.Size = new System.Drawing.Size(551, 23);
+            this.txtXPath.Size = new System.Drawing.Size(551, 29);
             this.txtXPath.TabIndex = 0;
             this.myToolTip.SetToolTip(this.txtXPath, "Double-Click to copy XPath in Clipboard");
             this.txtXPath.DoubleClick += new System.EventHandler(this.txtXPath_DoubleClick);
@@ -324,7 +324,7 @@
             this.chkElementReload.Name = "chkElementReload";
             this.chkElementReload.Size = new System.Drawing.Size(104, 25);
             this.chkElementReload.TabIndex = 2;
-            this.chkElementReload.Text = "Auto Reload (5s)";
+            this.chkElementReload.Text = "Auto Reload (&5s)";
             this.chkElementReload.UseVisualStyleBackColor = true;
             this.chkElementReload.CheckedChanged += new System.EventHandler(this.chkElementReload_CheckedChanged);
             // 
@@ -335,9 +335,9 @@
             this.chkXPathRelative.ForeColor = System.Drawing.Color.White;
             this.chkXPathRelative.Location = new System.Drawing.Point(92, 7);
             this.chkXPathRelative.Name = "chkXPathRelative";
-            this.chkXPathRelative.Size = new System.Drawing.Size(272, 23);
+            this.chkXPathRelative.Size = new System.Drawing.Size(275, 23);
             this.chkXPathRelative.TabIndex = 1;
-            this.chkXPathRelative.Text = "XPath is relative to the checked element";
+            this.chkXPathRelative.Text = "XPath is &Relative to the checked element";
             this.chkXPathRelative.UseVisualStyleBackColor = true;
             this.chkXPathRelative.Visible = false;
             this.chkXPathRelative.CheckedChanged += new System.EventHandler(this.chkXPathRelative_CheckedChanged);
@@ -351,7 +351,7 @@
             this.chkShowInTree.Name = "chkShowInTree";
             this.chkShowInTree.Size = new System.Drawing.Size(78, 25);
             this.chkShowInTree.TabIndex = 0;
-            this.chkShowInTree.Text = "Hide Check";
+            this.chkShowInTree.Text = "Hide &Check";
             this.chkShowInTree.UseVisualStyleBackColor = true;
             this.chkShowInTree.CheckedChanged += new System.EventHandler(this.chkShowInTree_CheckedChanged);
             // 
