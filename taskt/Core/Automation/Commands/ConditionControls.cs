@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     internal class ConditionControls
     {
+        #region Determin Statement Truth
         public static bool DetermineStatementTruth(string actionType, DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
             bool ifResult;
@@ -559,6 +560,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        #endregion
+
+        #region Render
+
         public static void RenderNumericCompare(object sender, DataGridView actionParameterBox, DataTable actionParameters)
         {
             actionParameterBox.Visible = true;
@@ -825,6 +830,9 @@ namespace taskt.Core.Automation.Commands
                 actionParameterBox.DataSource = actionParameters;
             }
         }
+        #endregion
+
+        #region Validate
 
         public static bool ValueValidate(DataTable actionParameters, out string result)
         {
@@ -1099,6 +1107,9 @@ namespace taskt.Core.Automation.Commands
 
             return (result == "");
         }
+        #endregion
+
+        #region Display Value
 
         public static string GetDisplayValue(string commandPrefix, string actionType, DataTable parameterTable, string parameterNameColumn = "Parameter Name", string parameterValueColumn = "Parameter Value")
         {
@@ -1186,5 +1197,43 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
         }
+        #endregion
+
+        #region ComboBox Items Filter
+
+        public static void AddFilterActionItems_Text(System.Windows.Forms.ComboBox cmb)
+        {
+            cmb.BeginUpdate();
+            cmb.Items.Clear();
+
+            cmb.Items.AddRange(new string[]
+            {
+                "Contains", "Not Contains",
+                "Starts with", "Not starts with",
+                "Ends With", "Not Ends with",
+                "Is Equal To", "Is Not Equal To",
+                "Is Numeric", "Is Not Numeric"
+            });
+
+            cmb.EndUpdate();
+        }
+
+        public static void AddFilterActionItems_Numeric(System.Windows.Forms.ComboBox cmb)
+        {
+            cmb.BeginUpdate();
+            cmb.Items.Clear();
+
+            cmb.Items.AddRange(new string[]
+            {
+                "Is Equal To", "Is Not Equal To",
+                "Is Greater than", "Is Greater Than or Equal To",
+                "Is Less than", "Is Less Than or Equal To",
+                "Between"
+            });
+
+            cmb.EndUpdate();
+        }
+
+        #endregion
     }
 }
