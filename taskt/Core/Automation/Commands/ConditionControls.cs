@@ -1234,6 +1234,55 @@ namespace taskt.Core.Automation.Commands
             cmb.EndUpdate();
         }
 
+        public static void RenderFilter(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType, ComboBox dataType)
+        {
+            switch (dataType.Text.ToLower())
+            {
+                case "text":
+                    RenderFilter_Text(actionParameters, actionParametersBox, actionType);
+                    break;
+                case "numeric":
+                    RenderFilter_Numeric(actionParameters, actionParametersBox, actionType);
+                    break;
+            }
+        }
+
+        private static void RenderFilter_Text(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType)
+        {
+            actionParameters.Rows.Clear();
+
+            switch (actionType.Text.ToLower())
+            {
+                case "is numeric":
+                case "is not numeric":
+                    // no parameters
+                    break;
+                default:
+                    actionParameters.Rows.Add("Value", "");
+                    break;
+            }
+
+            actionParametersBox.DataSource = actionParameters;
+        }
+
+        private static void RenderFilter_Numeric(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType)
+        {
+            actionParameters.Rows.Clear();
+
+            switch (actionType.Text.ToLower())
+            {
+                case "between":
+                    actionParameters.Rows.Add("Value1", "");
+                    actionParameters.Rows.Add("Value2", "");
+                    break;
+                default:
+                    actionParameters.Rows.Add("Value", "");
+                    break;
+            }
+
+            actionParametersBox.DataSource = actionParameters;
+        }
+
         #endregion
     }
 }
