@@ -326,6 +326,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />

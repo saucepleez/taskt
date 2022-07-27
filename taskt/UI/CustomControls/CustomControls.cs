@@ -658,6 +658,7 @@ namespace taskt.UI
             {"ConvertListToJSONCommand", "taskt.Properties.Resources.command_function"},
             {"CopyListCommand", "taskt.Properties.Resources.command_function"},
             {"CreateListCommand", "taskt.Properties.Resources.command_function"},
+            {"FilterListCommand", "taskt.Properties.Resources.command_function"},
             {"GetAverageFromListCommand", "taskt.Properties.Resources.command_function"},
             {"GetListCountCommand", "taskt.Properties.Resources.command_function"},
             {"GetListIndexFromValue", "taskt.Properties.Resources.command_function"},

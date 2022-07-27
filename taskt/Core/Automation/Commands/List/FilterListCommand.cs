@@ -49,6 +49,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ActionType { get; set; }
 
+        [XmlElement]
+        [PropertyDescription("Additional Parameters")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(false, false, true)]
+        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
+        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        public DataTable v_FilterActionParameterTable { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please select a List Variable Name of the Filtered List")]
         [InputSpecification("")]
@@ -60,6 +72,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_OutputList { get; set; }
+
+        [XmlIgnore]
+        [NonSerialized]
+        private DataGridView FilterGridViewHelper;
 
         public FilterListCommand()
         {
@@ -75,43 +91,6 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_InputList.GetListVariable(engine);
 
-            string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-
-            switch (targetType)
-            {
-                case "text":
-                    List<string> newList = new List<string>();
-                    newList.AddRange(targetList);
-
-                    newList.Sort();
-                    if (sortOrder == "descending")
-                    {
-                        newList.Reverse();
-                    }
-                    newList.StoreInUserVariable(engine, v_OutputList);
-                    break;
-
-                case "number":
-                    List<decimal> valueList = new List<decimal>();
-                    foreach(var v in targetList)
-                    {
-                        valueList.Add(decimal.Parse(v));
-                    }
-                    valueList.Sort();
-                    if (sortOrder == "descending")
-                    {
-                        valueList.Reverse();
-                    }
-
-                    List<string> newList2 = new List<string>();
-                    foreach(var v in valueList)
-                    {
-                        newList2.Add(v.ToString());
-                    }
-                    newList2.StoreInUserVariable(engine, v_OutputList);
-
-                    break;
-            }
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -124,7 +103,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Sort List " + this.v_InputList + ", To: " + this.v_OutputList + ", Order: " + this.v_SortOrder + "]";
+            return base.GetDisplayValue() + " [Sort List " + this.v_InputList + ", To: " + this.v_OutputList + "]";
         }
     }
 }

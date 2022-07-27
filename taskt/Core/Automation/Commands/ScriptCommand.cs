@@ -241,6 +241,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ConvertListToJSONCommand))]
     [XmlInclude(typeof(CopyListCommand))]
     [XmlInclude(typeof(CreateListCommand))]
+    [XmlInclude(typeof(FilterListCommand))]
     [XmlInclude(typeof(GetAverageFromListCommand))]
     [XmlInclude(typeof(GetListCountCommand))]
     [XmlInclude(typeof(GetListIndexFromValueCommand))]
