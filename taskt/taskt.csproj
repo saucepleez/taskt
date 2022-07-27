@@ -327,6 +327,13 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetAverageFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetMaxFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetMedianFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetMinFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetSumFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetVarianceFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\MathListControls.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />

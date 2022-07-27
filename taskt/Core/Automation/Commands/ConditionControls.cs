@@ -1201,7 +1201,21 @@ namespace taskt.Core.Automation.Commands
 
         #region ComboBox Items Filter
 
-        public static void AddFilterActionItems_Text(System.Windows.Forms.ComboBox cmb)
+        public static void AddFilterActionItems(System.Windows.Forms.ComboBox cmbType, System.Windows.Forms.ComboBox cmbAction)
+        {
+            switch (cmbType.SelectedItem.ToString().ToLower())
+            {
+                case "text":
+                    AddFilterActionItems_Text(cmbAction);
+                    break;
+
+                case "numeric":
+                    AddFilterActionItems_Numeric(cmbAction);
+                    break;
+            }
+        }
+
+        private static void AddFilterActionItems_Text(System.Windows.Forms.ComboBox cmb)
         {
             cmb.BeginUpdate();
             cmb.Items.Clear();
@@ -1218,7 +1232,7 @@ namespace taskt.Core.Automation.Commands
             cmb.EndUpdate();
         }
 
-        public static void AddFilterActionItems_Numeric(System.Windows.Forms.ComboBox cmb)
+        private static void AddFilterActionItems_Numeric(System.Windows.Forms.ComboBox cmb)
         {
             cmb.BeginUpdate();
             cmb.Items.Clear();
@@ -1236,7 +1250,7 @@ namespace taskt.Core.Automation.Commands
 
         public static void RenderFilter(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType, ComboBox dataType)
         {
-            switch (dataType.Text.ToLower())
+            switch (dataType.SelectedItem.ToString().ToLower())
             {
                 case "text":
                     RenderFilter_Text(actionParameters, actionParametersBox, actionType);
@@ -1251,7 +1265,7 @@ namespace taskt.Core.Automation.Commands
         {
             actionParameters.Rows.Clear();
 
-            switch (actionType.Text.ToLower())
+            switch (actionType.SelectedItem.ToString().ToLower())
             {
                 case "is numeric":
                 case "is not numeric":
@@ -1259,6 +1273,7 @@ namespace taskt.Core.Automation.Commands
                     break;
                 default:
                     actionParameters.Rows.Add("Value", "");
+                    actionParameters.Rows.Add("Case Sensitive", "No");
                     break;
             }
 
@@ -1269,7 +1284,7 @@ namespace taskt.Core.Automation.Commands
         {
             actionParameters.Rows.Clear();
 
-            switch (actionType.Text.ToLower())
+            switch (actionType.SelectedItem.ToString().ToLower())
             {
                 case "between":
                     actionParameters.Rows.Add("Value1", "");
@@ -1281,6 +1296,140 @@ namespace taskt.Core.Automation.Commands
             }
 
             actionParametersBox.DataSource = actionParameters;
+        }
+
+        #endregion
+
+        #region Filter Determin Statement
+
+        public static bool FilterDeterminStatementTruth(string value, string targetType, string filterAction, DataTable filterParameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            var paramDic = DataTableControls.GetFieldValues(filterParameters, "ParameterName", "ParameterValue", engine);
+
+            value = value.ConvertToUserVariable(engine);
+            targetType = targetType.ConvertToUserVariable(engine);
+            filterAction = filterAction.ConvertToUserVariable(engine);
+
+            switch (targetType.ToLower())
+            {
+                case "text":
+                    return FilterDeterminStatementTruth_Text(value, filterAction, paramDic, engine);
+
+                case "numeric":
+                    return FilterDeterminStatementTruth_Numeric(value, filterAction, paramDic, engine);
+
+                default:
+                    throw new Exception("Strange Filter Target Type '" + targetType + "'");
+            }
+        }
+
+        private static bool FilterDeterminStatementTruth_Text(string trgText, string filterAction, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            string value = "";
+
+            filterAction = filterAction.ToLower();
+            switch (filterAction)
+            {
+                case "is numeric":
+                case "is not numeric":
+                    break;
+                default:
+                    if (parameters["Case Sensitive"].ToLower() == "yes")
+                    {
+                        trgText = trgText.ToLower();
+                        value = parameters["Value"].ToLower();
+                    }
+                    else
+                    {
+                        value = parameters["Value"];
+                    }
+                    break;
+            }
+
+            switch (filterAction)
+            {
+                case "contains":
+                    return trgText.Contains(value);
+                case "not contains":
+                    return !trgText.Contains(value);
+                case "starts with":
+                    return trgText.StartsWith(value);
+                case "not starts with":
+                    return !trgText.StartsWith(value);
+                case "ends with":
+                    return trgText.EndsWith(value);
+                case "not ends with":
+                    return !trgText.EndsWith(value);
+                case "is equal to":
+                    return (trgText == value);
+                case "is not equal to":
+                    return (trgText != value);
+
+                case "is numeric":
+                    return decimal.TryParse(value, out _);
+                case "is not numeric":
+                    return !decimal.TryParse(value, out _);
+
+                default:
+                    return false;
+            }
+        }
+        private static bool FilterDeterminStatementTruth_Numeric(string trgText, string filterAction, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            decimal trgValue, value1 = 0, value2 = 0;
+            trgValue = trgText.ConvertToUserVariableAsDecimal("Value", engine);
+            
+            filterAction = filterAction.ToLower();
+            switch (filterAction)
+            {
+                case "between":
+                    //if (decimal.TryParse(parameters["Value1"], out value1))
+                    //{
+                    //    throw new Exception("Value1 is not numeric");
+                    //}
+                    //if (decimal.TryParse(parameters["Value2"], out value2))
+                    //{
+                    //    throw new Exception("Value2 is not numeric");
+                    //}
+                    value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
+                    value2 = parameters["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
+                    break;
+                default:
+                    //if (decimal.TryParse(parameters["Value"], out value1))
+                    //{
+                    //    throw new Exception("Value is not numeric");
+                    //}
+                    value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value", engine);
+                    break;
+            }
+
+            switch (filterAction)
+            {
+                case "is equal to":
+                    return (trgValue == value1);
+                case "is not equal to":
+                    return (trgValue != value1);
+                case "is greater than":
+                    return (trgValue > value1);
+                case "is greater than or equal to":
+                    return (trgValue >= value1);
+                case "is less than":
+                    return (trgValue < value1);
+                case "is less than or equal to":
+                    return (trgValue <= value1);
+
+                case "between":
+                    if (value1 > value2)
+                    {
+                        decimal t = value1;
+                        value1 = value2;
+                        value2 = t;
+                    }
+                    return ((trgValue >= value1) && (trgValue <= value2));
+
+                default:
+                    return false;
+            }
         }
 
         #endregion
