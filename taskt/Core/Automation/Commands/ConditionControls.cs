@@ -1366,9 +1366,9 @@ namespace taskt.Core.Automation.Commands
                     return (trgText != value);
 
                 case "is numeric":
-                    return decimal.TryParse(value, out _);
+                    return decimal.TryParse(trgText, out _);
                 case "is not numeric":
-                    return !decimal.TryParse(value, out _);
+                    return !decimal.TryParse(trgText, out _);
 
                 default:
                     return false;
