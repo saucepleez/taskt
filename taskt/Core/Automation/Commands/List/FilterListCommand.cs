@@ -139,11 +139,12 @@ namespace taskt.Core.Automation.Commands
             FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
             FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
 
-            TargetTypeComboboxHelper.SelectedItem = v_TargetType;
-            FilterActionComboboxHelper.SelectedItem = v_FilterAction;
-            ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
-
             return RenderedControls;
+        }
+
+        public override void AfterShown()
+        {
+            ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
         }
 
         public override string GetDisplayValue()

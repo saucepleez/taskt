@@ -1383,23 +1383,11 @@ namespace taskt.Core.Automation.Commands
             switch (filterAction)
             {
                 case "between":
-                    //if (decimal.TryParse(parameters["Value1"], out value1))
-                    //{
-                    //    throw new Exception("Value1 is not numeric");
-                    //}
-                    //if (decimal.TryParse(parameters["Value2"], out value2))
-                    //{
-                    //    throw new Exception("Value2 is not numeric");
-                    //}
                     value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
                     value2 = parameters["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
                     break;
                 default:
-                    //if (decimal.TryParse(parameters["Value"], out value1))
-                    //{
-                    //    throw new Exception("Value is not numeric");
-                    //}
-                    value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value", engine);
+                    value1 = parameters["Value"].ConvertToUserVariableAsDecimal("Value", engine);
                     break;
             }
 
