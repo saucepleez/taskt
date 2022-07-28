@@ -1242,7 +1242,7 @@ namespace taskt.Core.Automation.Commands
                 "Is Equal To", "Is Not Equal To",
                 "Is Greater than", "Is Greater Than or Equal To",
                 "Is Less than", "Is Less Than or Equal To",
-                "Between"
+                "Between", "Not Between"
             });
 
             cmb.EndUpdate();
@@ -1287,6 +1287,7 @@ namespace taskt.Core.Automation.Commands
             switch (actionType.SelectedItem.ToString().ToLower())
             {
                 case "between":
+                case "not between":
                     actionParameters.Rows.Add("Value1", "");
                     actionParameters.Rows.Add("Value2", "");
                     break;
@@ -1383,8 +1384,15 @@ namespace taskt.Core.Automation.Commands
             switch (filterAction)
             {
                 case "between":
+                case "not between":
                     value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
                     value2 = parameters["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
+                    if (value1 > value2)
+                    {
+                        decimal t = value1;
+                        value1 = value2;
+                        value2 = t;
+                    }
                     break;
                 default:
                     value1 = parameters["Value"].ConvertToUserVariableAsDecimal("Value", engine);
@@ -1407,13 +1415,9 @@ namespace taskt.Core.Automation.Commands
                     return (trgValue <= value1);
 
                 case "between":
-                    if (value1 > value2)
-                    {
-                        decimal t = value1;
-                        value1 = value2;
-                        value2 = t;
-                    }
                     return ((trgValue >= value1) && (trgValue <= value2));
+                case "not between":
+                    return ((trgValue < value1) || (trgValue > value2));
 
                 default:
                     return false;
