@@ -210,6 +210,8 @@ namespace taskt.UI.Forms
             {
                 this.Text = "Edit Command";
             }
+
+
         }
 
         private void frmCommandEditor_FormClosed(object sender, FormClosedEventArgs e)
@@ -334,6 +336,8 @@ namespace taskt.UI.Forms
                 item.Width = this.Width - 70;
             }
             flw_InputVariables.ResumeLayout();
+
+            selectedCommand.AfterShown();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)

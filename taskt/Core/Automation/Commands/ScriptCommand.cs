@@ -540,6 +540,11 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
+        public virtual void AfterShown()
+        {
+
+        }
+
         public virtual void Refresh(UI.Forms.frmCommandEditor editor = null)
         {
 
