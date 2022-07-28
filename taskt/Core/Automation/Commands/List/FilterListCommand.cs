@@ -92,6 +92,8 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Filter List";
             this.CommandEnabled = true;
             this.CustomRendering = true;
+
+            this.v_TargetType = "Text";
         }
 
         public override void RunCommand(object sender)
@@ -136,6 +138,10 @@ namespace taskt.Core.Automation.Commands
             TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
             FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
             FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
+
+            TargetTypeComboboxHelper.SelectedItem = v_TargetType;
+            FilterActionComboboxHelper.SelectedItem = v_FilterAction;
+            ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
 
             return RenderedControls;
         }
