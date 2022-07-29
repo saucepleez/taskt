@@ -251,6 +251,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetMinFromListCommand))]
     [XmlInclude(typeof(GetSumFromListCommand))]
     [XmlInclude(typeof(GetVarianceFromListCommand))]
+    [XmlInclude(typeof(ReplaceListCommand))]
     [XmlInclude(typeof(ReverseListCommand))]
     [XmlInclude(typeof(SetListIndexCommand))]
     [XmlInclude(typeof(SetListItemCommand))]

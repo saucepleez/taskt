@@ -668,6 +668,7 @@ namespace taskt.UI
             {"GetMinFromListCommand", "taskt.Properties.Resources.command_function"},
             {"GetSumFromListCommand", "taskt.Properties.Resources.command_function"},
             {"GetVarianceFromListCommand", "taskt.Properties.Resources.command_function"},
+            {"ReplaceListCommand", "taskt.Properties.Resources.command_function"},
             {"ReverseListCommand", "taskt.Properties.Resources.command_function"},
             {"SetListIndexCommand", "taskt.Properties.Resources.command_function"},
             {"SetListItemCommand", "taskt.Properties.Resources.command_function"},
