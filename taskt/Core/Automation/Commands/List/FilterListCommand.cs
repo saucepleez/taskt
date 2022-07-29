@@ -150,7 +150,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Sort List " + this.v_InputList + ", To: " + this.v_OutputList + "]";
+            return base.GetDisplayValue() + " [ List: '" + this.v_InputList + "', Type: '" + this.v_OutputList + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputList + "']";
         }
     }
 }
