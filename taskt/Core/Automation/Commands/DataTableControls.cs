@@ -202,5 +202,37 @@ namespace taskt.Core
             }
             return false;
         }
+
+        public static bool IsParameterNamesExists(DataTable dt, List<string> parameterNames, string parameterNameColumn = "ParameterName")
+        {
+            if (!isColumnExists(dt, parameterNameColumn))
+            {
+                return false;
+            }
+            if (dt.Rows.Count != parameterNames.Count)
+            {
+                return false;
+            }
+            else
+            {
+                bool isExists = false;
+                foreach(string n in parameterNames)
+                {
+                    for (int i = dt.Rows.Count - 1; i >= 0; i--)
+                    {
+                        if (dt.Rows[i][parameterNameColumn].ToString() == n)
+                        {
+                            isExists = true;
+                            break;
+                        }
+                    }
+                    if (!isExists)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
 }

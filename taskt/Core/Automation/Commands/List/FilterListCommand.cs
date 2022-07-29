@@ -94,6 +94,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             this.v_TargetType = "Text";
+            //this.v_FilterAction = "Contains";
         }
 
         public override void RunCommand(object sender)
@@ -145,7 +146,7 @@ namespace taskt.Core.Automation.Commands
         public override void AfterShown()
         {
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
-            ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
+            //ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
         public override string GetDisplayValue()

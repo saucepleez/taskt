@@ -1263,17 +1263,33 @@ namespace taskt.Core.Automation.Commands
 
         private static void RenderFilter_Text(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType)
         {
-            actionParameters.Rows.Clear();
+            string actionValue;
+            if (actionType.SelectedItem != null)
+            {
+                actionValue = actionType.SelectedItem.ToString().ToLower();
+            }
+            else
+            {
+                actionValue = actionType.Text.ToLower();
+            }
 
-            switch (actionType.SelectedItem.ToString().ToLower())
+            switch (actionValue)
             {
                 case "is numeric":
                 case "is not numeric":
                     // no parameters
+                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>()))
+                    {
+                        actionParameters.Rows.Clear();
+                    }
                     break;
                 default:
-                    actionParameters.Rows.Add("Value", "");
-                    actionParameters.Rows.Add("Case Sensitive", "No");
+                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>() { "Value", "Case Sensitive" }))
+                    {
+                        actionParameters.Rows.Clear();
+                        actionParameters.Rows.Add("Value", "");
+                        actionParameters.Rows.Add("Case Sensitive", "No");
+                    }
                     break;
             }
 
@@ -1282,17 +1298,33 @@ namespace taskt.Core.Automation.Commands
 
         private static void RenderFilter_Numeric(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType)
         {
-            actionParameters.Rows.Clear();
+            string actionValue;
+            if (actionType.SelectedItem != null)
+            {
+                actionValue = actionType.SelectedItem.ToString().ToLower();
+            }
+            else
+            {
+                actionValue = actionType.Text.ToLower();
+            }
 
-            switch (actionType.SelectedItem.ToString().ToLower())
+            switch (actionValue)
             {
                 case "between":
                 case "not between":
-                    actionParameters.Rows.Add("Value1", "");
-                    actionParameters.Rows.Add("Value2", "");
+                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>() { "Value1", "Value2" }))
+                    {
+                        actionParameters.Rows.Clear();
+                        actionParameters.Rows.Add("Value1", "");
+                        actionParameters.Rows.Add("Value2", "");
+                    }
                     break;
                 default:
-                    actionParameters.Rows.Add("Value", "");
+                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>() { "Value"}))
+                    {
+                        actionParameters.Rows.Clear();
+                        actionParameters.Rows.Add("Value", "");
+                    }
                     break;
             }
 
