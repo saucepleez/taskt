@@ -1294,6 +1294,19 @@ namespace taskt.Core.Automation.Commands
             }
 
             actionParametersBox.DataSource = actionParameters;
+
+            switch (actionValue)
+            {
+                case "is numeric":
+                case "is not numeric":
+                    break;
+                default:
+                    int x = actionParametersBox.Rows.Count;
+                    var cmb = new DataGridViewComboBoxCell();
+                    cmb.Items.AddRange(new string[] { "Yes", "No" });
+                    actionParametersBox.Rows[1].Cells[1] = cmb;
+                    break;
+            }
         }
 
         private static void RenderFilter_Numeric(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType)
@@ -1317,6 +1330,7 @@ namespace taskt.Core.Automation.Commands
                         actionParameters.Rows.Clear();
                         actionParameters.Rows.Add("Value1", "");
                         actionParameters.Rows.Add("Value2", "");
+                        actionParameters.Rows.Add("If Not Numeric", "Error");
                     }
                     break;
                 default:
@@ -1324,11 +1338,25 @@ namespace taskt.Core.Automation.Commands
                     {
                         actionParameters.Rows.Clear();
                         actionParameters.Rows.Add("Value", "");
+                        actionParameters.Rows.Add("If Not Numeric", "Error");
                     }
                     break;
             }
 
             actionParametersBox.DataSource = actionParameters;
+
+            var cmb = new DataGridViewComboBoxCell();
+            cmb.Items.AddRange(new string[] { "Error", "Ignore"});
+            switch (actionValue)
+            {
+                case "between":
+                case "not between":
+                    actionParametersBox.Rows[2].Cells[1] = cmb;
+                    break;
+                default:
+                    actionParametersBox.Rows[1].Cells[1] = cmb;
+                    break;
+            }
         }
 
         #endregion
@@ -1410,7 +1438,28 @@ namespace taskt.Core.Automation.Commands
         private static bool FilterDeterminStatementTruth_Numeric(string trgText, string filterAction, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
         {
             decimal trgValue, value1 = 0, value2 = 0;
-            trgValue = trgText.ConvertToUserVariableAsDecimal("Value", engine);
+
+            try
+            {
+                trgValue = trgText.ConvertToUserVariableAsDecimal("Value", engine);
+            }
+            catch(Exception ex)
+            {
+                if (ex.Message.EndsWith(" is not a number."))
+                {
+                    switch(parameters["If Not Numeric"].ToLower())
+                    {
+                        case "ignore":
+                            return false;
+                        default:
+                            throw ex;
+                    }
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
             
             filterAction = filterAction.ToLower();
             switch (filterAction)
