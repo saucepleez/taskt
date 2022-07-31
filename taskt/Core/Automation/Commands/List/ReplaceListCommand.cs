@@ -13,13 +13,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Actions")]
-    [Attributes.ClassAttributes.Description("This command allows you to filter list value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter list value.")]
+    [Attributes.ClassAttributes.Description("This command allows you to relace list value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace list value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ReplaceListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name to Filter")]
+        [PropertyDescription("Please select a List Variable Name to Replace")]
         [InputSpecification("")]
         [SampleUsage("**vList** or **{{{vList}}}**")]
         [Remarks("")]
@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select filter target value type")]
+        [PropertyDescription("Please select replace target value type")]
         [InputSpecification("")]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select filter action")]
+        [PropertyDescription("Please select replace action")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
