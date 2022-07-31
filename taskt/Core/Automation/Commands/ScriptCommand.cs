@@ -87,11 +87,13 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ConvertDictionaryToJSONCommand))]
     [XmlInclude(typeof(ConvertDictionaryToListCommand))]
     [XmlInclude(typeof(CopyDictionaryCommand))]
+    [XmlInclude(typeof(FilterDictionaryCommand))]
     [XmlInclude(typeof(GetDictionaryKeyFromValueCommand))]
     [XmlInclude(typeof(GetDictionaryKeysListCommand))]
     [XmlInclude(typeof(GetDictionaryValueCommand))]
     [XmlInclude(typeof(LoadDictionaryCommand))]
     [XmlInclude(typeof(RemoveDictionaryItemCommand))]
+    [XmlInclude(typeof(ReplaceDictionaryCommand))]
     [XmlInclude(typeof(SetDictionaryValueCommand))]
 
     // EMail

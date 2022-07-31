@@ -325,6 +325,8 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\FilterDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ReplaceDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ReplaceListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />

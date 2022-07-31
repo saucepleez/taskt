@@ -11,24 +11,24 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.SubGruop("List Actions")]
-    [Attributes.ClassAttributes.Description("This command allows you to filter List value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter List value.")]
+    [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
+    [Attributes.ClassAttributes.Description("This command allows you to filter Dictionary value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class FilterListCommand : ScriptCommand
+    public class FilterDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name to Filter")]
+        [PropertyDescription("Please select a Dictionary Variable Name to Filter")]
         [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [SampleUsage("**vDic** or **{{{vDic}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_InputList { get; set; }
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyValidationRule("Dictionary to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_InputDictionary { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please select filter target value type")]
@@ -65,16 +65,16 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name of the Filtered List")]
+        [PropertyDescription("Please select a Dictionary Variable Name of the Filtered List")]
         [InputSpecification("")]
-        [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
+        [SampleUsage("**vNewDic** or **{{{vNewDic}}}**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_OutputList { get; set; }
+        [PropertyValidationRule("Filtered Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_OutputDictionary { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
@@ -88,37 +88,36 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private DataGridView FilterParametersGridViewHelper;
 
-        public FilterListCommand()
+        public FilterDictionaryCommand()
         {
-            this.CommandName = "FilterListCommand";
-            this.SelectionName = "Filter List";
+            this.CommandName = "FilterDictionaryCommand";
+            this.SelectionName = "Filter Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
             this.v_TargetType = "Text";
-            //this.v_FilterAction = "Contains";
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            var targetDic = v_InputDictionary.GetDictionaryVariable(engine);
 
             string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
             string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
 
-            List<string> res = new List<string>();
+            var res = new Dictionary<string, string>();
 
-            foreach(string item in targetList)
+            foreach(var item in targetDic)
             {
-                if (ConditionControls.FilterDeterminStatementTruth(item, targetType, filterAction, v_FilterActionParameterTable, engine))
+                if (ConditionControls.FilterDeterminStatementTruth(item.Value, targetType, filterAction, v_FilterActionParameterTable, engine))
                 {
-                    res.Add(item);
+                    res.Add(item.Key, item.Value);
                 }
             }
 
-            res.StoreInUserVariable(engine, v_OutputList);
+            res.StoreInUserVariable(engine, v_OutputDictionary);
         }
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)
@@ -153,7 +152,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [ List: '" + this.v_InputList + "', Type: '" + this.v_OutputList + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputList + "']";
+            return base.GetDisplayValue() + " [ Dictionary: '" + this.v_InputDictionary + "', Type: '" + this.v_OutputDictionary + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDictionary + "']";
         }
     }
 }
