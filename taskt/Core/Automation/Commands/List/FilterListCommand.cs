@@ -13,8 +13,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Actions")]
-    [Attributes.ClassAttributes.Description("This command allows you to filter list value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter list value.")]
+    [Attributes.ClassAttributes.Description("This command allows you to filter List value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter List value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class FilterListCommand : ScriptCommand
     {

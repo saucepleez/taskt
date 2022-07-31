@@ -13,8 +13,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Actions")]
-    [Attributes.ClassAttributes.Description("This command allows you to relace list value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace list value.")]
+    [Attributes.ClassAttributes.Description("This command allows you to relace List value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace List value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class ReplaceListCommand : ScriptCommand
     {
