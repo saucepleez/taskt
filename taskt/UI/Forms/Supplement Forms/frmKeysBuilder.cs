@@ -188,7 +188,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                         }
                         else
                         {
-                            result = "{WIN_KEY+" + key + "}";
+                            result = "{WIN_KEY+" + key.ToUpper() + "}";
                         }
                     }
                     else if (isHotkey || needBlacket)
@@ -212,7 +212,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                     }
                     else
                     {
-                        result = "{WIN_KEY+" + key + "}";
+                        result = "{WIN_KEY+" + key.ToUpper() + "}";
                     }
                 }
                 else if (isHotkey || needBlacket)

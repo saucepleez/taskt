@@ -241,6 +241,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ConvertListToJSONCommand))]
     [XmlInclude(typeof(CopyListCommand))]
     [XmlInclude(typeof(CreateListCommand))]
+    [XmlInclude(typeof(FilterListCommand))]
     [XmlInclude(typeof(GetAverageFromListCommand))]
     [XmlInclude(typeof(GetListCountCommand))]
     [XmlInclude(typeof(GetListIndexFromValueCommand))]
@@ -250,6 +251,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetMinFromListCommand))]
     [XmlInclude(typeof(GetSumFromListCommand))]
     [XmlInclude(typeof(GetVarianceFromListCommand))]
+    [XmlInclude(typeof(ReplaceListCommand))]
     [XmlInclude(typeof(ReverseListCommand))]
     [XmlInclude(typeof(SetListIndexCommand))]
     [XmlInclude(typeof(SetListItemCommand))]
@@ -537,6 +539,11 @@ namespace taskt.Core.Automation.Commands
         {
             RenderedControls = new List<Control>();
             return RenderedControls;
+        }
+
+        public virtual void AfterShown()
+        {
+
         }
 
         public virtual void Refresh(UI.Forms.frmCommandEditor editor = null)
