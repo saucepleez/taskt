@@ -935,7 +935,7 @@ namespace taskt.UI.CustomControls
                             newDGVColumn = new DataGridViewCheckBoxColumn();
                             break;
                         default:
-                            newDGVColumn = new DataGridViewColumn();
+                            newDGVColumn = new DataGridViewTextBoxColumn();
                             break;
                     }
                     newDGVColumn.HeaderText = colSetting.headerText;
