@@ -215,9 +215,9 @@ namespace taskt.Core
             }
             else
             {
-                bool isExists = false;
                 foreach(string n in parameterNames)
-                {
+                { 
+                    bool isExists = false;
                     for (int i = dt.Rows.Count - 1; i >= 0; i--)
                     {
                         if (dt.Rows[i][parameterNameColumn].ToString() == n)
