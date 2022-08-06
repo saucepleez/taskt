@@ -11,24 +11,24 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.SubGruop("List Actions")]
-    [Attributes.ClassAttributes.Description("This command allows you to relace List value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace List value.")]
+    [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("DataTable Action")]
+    [Attributes.ClassAttributes.Description("This command allows you to Replace values.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Replace values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class ReplaceListCommand : ScriptCommand
+    public class ReplaceDataTableValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name to Replace")]
+        [PropertyDescription("Please select a DataTable Variable Name to Replace")]
         [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [SampleUsage("**vTable** or **{{{vTable}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_TargetList { get; set; }
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_InputDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please select replace target value type")]
@@ -65,11 +65,11 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Replace value")]
+        [PropertyDescription("Please specify replace value")]
         [InputSpecification("")]
-        [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
+        [SampleUsage("**newValue** or **{{{vNewValue}}}**")]
         [Remarks("")]
-        public string v_ReplaceValue { get; set; }
+        public string v_NewValue { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
@@ -83,10 +83,10 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private DataGridView ReplaceParametersGridViewHelper;
 
-        public ReplaceListCommand()
+        public ReplaceDataTableValueCommand()
         {
-            this.CommandName = "ReplaceListCommand";
-            this.SelectionName = "Replace List";
+            this.CommandName = "ReplaceDataTableValueCommand";
+            this.SelectionName = "Replace DataTable Value";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
@@ -97,18 +97,25 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_TargetList.GetListVariable(engine);
+            var targetDT = v_InputDataTable.GetDataTableVariable(engine);
 
             string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            string replaceAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
+            string filterAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
 
-            string newValue = v_ReplaceValue.ConvertToUserVariable(engine);
+            string newValue = v_NewValue.ConvertToUserVariable(engine);
 
-            for (int i = targetList.Count - 1; i >= 0; i--)
+            int cols = targetDT.Columns.Count;
+            int rows = targetDT.Rows.Count;
+
+            for (int i = 0; i < rows; i++)
             {
-                if (ConditionControls.FilterDeterminStatementTruth(targetList[i], targetType, replaceAction, v_ReplaceActionParameterTable, engine))
+                for (int j = 0; j < cols; j++)
                 {
-                    targetList[i] = newValue;
+                    string value = (targetDT.Rows[i][j] == null) ? "" : targetDT.Rows[i][j].ToString();
+                    if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_ReplaceActionParameterTable, engine))
+                    {
+                        targetDT.Rows[i][j] = newValue;
+                    }
                 }
             }
         }
@@ -145,7 +152,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [ List: '" + this.v_TargetList + "', Type: '" + this.v_ReplaceValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_ReplaceValue + "']";
+            return base.GetDisplayValue() + " [ DataTable: '" + this.v_InputDataTable + "', Type: '" + this.v_NewValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_NewValue + "']";
         }
     }
 }

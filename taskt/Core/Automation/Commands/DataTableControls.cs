@@ -122,6 +122,31 @@ namespace taskt.Core
             }
         }
 
+        public static int GetColumnIndexFromName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        {
+            string col = GetColumnName(table, columnName, engine);
+            for (int i = table.Columns.Count - 1; i >= 0; i--)
+            {
+                if (table.Columns[i].ColumnName == col)
+                {
+                    return i;
+                }
+            }
+            throw new Exception("Strange Column Name " + columnName);
+        }
+
+        public static DataTable CloneColumnName(DataTable table)
+        {
+            DataTable ret = new DataTable();
+            int cols = table.Columns.Count;
+            for (int i = 0; i < cols; i++)
+            {
+                ret.Columns.Add(table.Columns[i].ColumnName);
+            }
+
+            return ret;
+        }
+
         public static string GetFieldValue(DataTable dt, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
             if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
@@ -215,9 +240,9 @@ namespace taskt.Core
             }
             else
             {
-                bool isExists = false;
                 foreach(string n in parameterNames)
-                {
+                { 
+                    bool isExists = false;
                     for (int i = dt.Rows.Count - 1; i >= 0; i--)
                     {
                         if (dt.Rows[i][parameterNameColumn].ToString() == n)

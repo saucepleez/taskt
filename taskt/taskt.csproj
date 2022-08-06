@@ -297,6 +297,11 @@
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormHexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\ConditionControls.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ReplaceDataTableValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ReplaceDataTableRowValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableColumnByRowValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ReplaceDataTableColumnValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableRowByColumnValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\DeleteDataTableColumnCommand.cs" />
@@ -325,6 +330,8 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\FilterDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ReplaceDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ReplaceListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />
