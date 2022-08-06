@@ -1325,7 +1325,7 @@ namespace taskt.Core.Automation.Commands
             {
                 case "between":
                 case "not between":
-                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>() { "Value1", "Value2" }))
+                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>() { "Value1", "Value2", "If Not Numeric" }))
                     {
                         actionParameters.Rows.Clear();
                         actionParameters.Rows.Add("Value1", "");
@@ -1334,7 +1334,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
                 default:
-                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>() { "Value"}))
+                    if (!DataTableControls.IsParameterNamesExists(actionParameters, new List<string>() { "Value", "If Not Numeric" }))
                     {
                         actionParameters.Rows.Clear();
                         actionParameters.Rows.Add("Value", "");

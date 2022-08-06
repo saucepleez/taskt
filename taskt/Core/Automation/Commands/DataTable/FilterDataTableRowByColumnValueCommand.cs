@@ -141,7 +141,9 @@ namespace taskt.Core.Automation.Commands
             string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
             string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
 
-            var res = DataTableControls.CloneColumn(targetDT);
+            var res = DataTableControls.CloneColumnName(targetDT);
+
+            int cols = targetDT.Columns.Count;
 
             int rows = targetDT.Rows.Count;
             for (int i = 0; i < rows; i++)
@@ -149,7 +151,12 @@ namespace taskt.Core.Automation.Commands
                 string value = (targetDT.Rows[i][colIndex] == null) ? "" : targetDT.Rows[i][colIndex].ToString();
                 if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_FilterActionParameterTable, engine))
                 {
-
+                    int r = res.Rows.Count;
+                    res.Rows.Add();
+                    for (int j = 0; j < cols; j++)
+                    {
+                        res.Rows[r][j] = targetDT.Rows[i][j];
+                    }
                 }
             }
 

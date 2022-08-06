@@ -135,7 +135,7 @@ namespace taskt.Core
             throw new Exception("Strange Column Name " + columnName);
         }
 
-        public static DataTable CloneColumn(DataTable table)
+        public static DataTable CloneColumnName(DataTable table)
         {
             DataTable ret = new DataTable();
             int cols = table.Columns.Count;

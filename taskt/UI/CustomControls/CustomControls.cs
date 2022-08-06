@@ -469,6 +469,7 @@ namespace taskt.UI
             {"DeleteDataTableColumnCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"DeleteDataTableRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"FilterDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
+            {"FilterDataTableRowByColumnValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataRowCountCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"GetDataRowValueCommand", "taskt.Properties.Resources.command_spreadsheet"},
