@@ -60,6 +60,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(GetDataTableColumnListCommand))]
     [XmlInclude(typeof(GetDataTableRowCountCommand))]
     [XmlInclude(typeof(GetDataTableValueCommand))]
+    [XmlInclude(typeof(ReplaceDataTableColumnValueCommand))]
     [XmlInclude(typeof(ParseDatasetRowCommand))]
     [XmlInclude(typeof(RemoveDataRowCommand))]
     [XmlInclude(typeof(SetDataTableColumnValuesByDataTableCommand))]
