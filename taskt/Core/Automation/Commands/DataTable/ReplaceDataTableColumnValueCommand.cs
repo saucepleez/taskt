@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetColumnIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select filter target value type")]
+        [PropertyDescription("Please select replace target value type")]
         [InputSpecification("")]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select filter action")]
+        [PropertyDescription("Please select replace action")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
