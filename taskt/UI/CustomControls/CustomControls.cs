@@ -481,6 +481,7 @@ namespace taskt.UI
             {"LoadDataTableCommand", "taskt.Properties.Resources.command_spreadsheet" },
             {"ReplaceDataTableColumnValueCommand", "taskt.Properties.Resources.command_function"},
             {"ReplaceDataTableRowValueCommand", "taskt.Properties.Resources.command_function"},
+            {"ReplaceDataTableValueCommand", "taskt.Properties.Resources.command_function"},
             {"ParseDatasetRowCommand", "taskt.Properties.Resources.command_function"},
             {"RemoveDataRowCommand", "taskt.Properties.Resources.command_spreadsheet"},
             {"SetDataTableColumnValuesByDataTableCommand", "taskt.Properties.Resources.command_spreadsheet"},
