@@ -11,24 +11,35 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.SubGruop("List Actions")]
-    [Attributes.ClassAttributes.Description("This command allows you to filter List value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter List value.")]
+    [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("DataTable Action")]
+    [Attributes.ClassAttributes.Description("This command allows you to Filter Columns by reference to Row values.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Filter Columns by reference to Row values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class FilterListCommand : ScriptCommand
+    public class FilterDataTableColumnByRowValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name to Filter")]
+        [PropertyDescription("Please select a DataTable Variable Name to Filter")]
         [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [SampleUsage("**vTable** or **{{{vTable}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_InputList { get; set; }
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_InputDataTable { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Please enter the Index of the Row")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a valid Column index value")]
+        [SampleUsage("**id** or **0** or **{{{vRow}}}** or **-1**")]
+        [Remarks("If **-1** is specified for Row Index, it means the last row.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_TargetRowIndex { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please select filter target value type")]
@@ -65,16 +76,16 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name of the Filtered List")]
+        [PropertyDescription("Please select a DataTable Variable Name of the Filtered DataTable")]
         [InputSpecification("")]
-        [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
+        [SampleUsage("**vNewTable** or **{{{vNewTable}}}**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_OutputList { get; set; }
+        [PropertyValidationRule("Filtered DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_OutputDataTable { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
@@ -88,37 +99,59 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private DataGridView FilterParametersGridViewHelper;
 
-        public FilterListCommand()
+        public FilterDataTableColumnByRowValueCommand()
         {
-            this.CommandName = "FilterListCommand";
-            this.SelectionName = "Filter List";
+            this.CommandName = "FilterDataTableColumnByRowValueCommand";
+            this.SelectionName = "Filter DataTable Column By Row Value";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
             this.v_TargetType = "Text";
-            //this.v_FilterAction = "Contains";
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            var targetDT = v_InputDataTable.GetDataTableVariable(engine);
+
+            int rowIndex = DataTableControls.GetRowIndex(v_InputDataTable, v_TargetRowIndex, engine);
 
             string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
             string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
 
-            List<string> res = new List<string>();
+            var res = new DataTable();
 
-            foreach(string item in targetList)
+            int cols = targetDT.Columns.Count;
+            int rows = targetDT.Rows.Count;
+
+            for (int i = 0; i < cols; i++)
             {
-                if (ConditionControls.FilterDeterminStatementTruth(item, targetType, filterAction, v_FilterActionParameterTable, engine))
+                string value = (targetDT.Rows[rowIndex][i] == null) ? "" : targetDT.Rows[rowIndex][i].ToString();
+                if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_FilterActionParameterTable, engine))
                 {
-                    res.Add(item);
+                    if (res.Rows.Count == 0)
+                    {
+                        // first add column
+                        res.Columns.Add(targetDT.Columns[i].ColumnName);
+                        for (int j = 0; j < rows; j++)
+                        {
+                            res.Rows.Add(targetDT.Rows[j][i]);
+                        }
+                    }
+                    else
+                    {
+                        int c = res.Columns.Count;
+                        res.Columns.Add(targetDT.Columns[i].ColumnName);
+                        for (int j = 0; j < rows; j++)
+                        {
+                            res.Rows[j][c] = targetDT.Rows[j][i];
+                        }
+                    }
                 }
             }
 
-            res.StoreInUserVariable(engine, v_OutputList);
+            res.StoreInUserVariable(engine, v_OutputDataTable);
         }
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)
@@ -153,7 +186,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [ List: '" + this.v_InputList + "', Type: '" + this.v_OutputList + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputList + "']";
+            return base.GetDisplayValue() + " [ DataTable: '" + this.v_InputDataTable + "', Row: " + this.v_TargetRowIndex + ", Type: '" + this.v_OutputDataTable + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDataTable + "']";
         }
     }
 }

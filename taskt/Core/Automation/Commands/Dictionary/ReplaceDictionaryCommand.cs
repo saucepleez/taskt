@@ -11,24 +11,24 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("List Commands")]
-    [Attributes.ClassAttributes.SubGruop("List Actions")]
-    [Attributes.ClassAttributes.Description("This command allows you to relace List value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace List value.")]
+    [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
+    [Attributes.ClassAttributes.Description("This command allows you to relace Dictionary value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class ReplaceListCommand : ScriptCommand
+    public class ReplaceDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name to Replace")]
+        [PropertyDescription("Please select a Dictionary Variable Name to Replace")]
         [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [SampleUsage("**vDic** or **{{{vDic}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_TargetList { get; set; }
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public string v_TargetDictionary { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please select replace target value type")]
@@ -83,10 +83,10 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private DataGridView ReplaceParametersGridViewHelper;
 
-        public ReplaceListCommand()
+        public ReplaceDictionaryCommand()
         {
-            this.CommandName = "ReplaceListCommand";
-            this.SelectionName = "Replace List";
+            this.CommandName = "ReplaceDictionaryCommand";
+            this.SelectionName = "Replace Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
@@ -97,18 +97,20 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_TargetList.GetListVariable(engine);
+            var targetDic = v_TargetDictionary.GetDictionaryVariable(engine);
 
             string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
             string replaceAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
 
             string newValue = v_ReplaceValue.ConvertToUserVariable(engine);
 
-            for (int i = targetList.Count - 1; i >= 0; i--)
+            var keys = targetDic.Keys.ToList();
+
+            foreach (var key in keys)
             {
-                if (ConditionControls.FilterDeterminStatementTruth(targetList[i], targetType, replaceAction, v_ReplaceActionParameterTable, engine))
+                if (ConditionControls.FilterDeterminStatementTruth(targetDic[key], targetType, replaceAction, v_ReplaceActionParameterTable, engine))
                 {
-                    targetList[i] = newValue;
+                    targetDic[key] = newValue;
                 }
             }
         }
@@ -145,7 +147,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [ List: '" + this.v_TargetList + "', Type: '" + this.v_ReplaceValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_ReplaceValue + "']";
+            return base.GetDisplayValue() + " [ Dictionary: '" + this.v_TargetDictionary + "', Type: '" + this.v_ReplaceValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_ReplaceValue + "']";
         }
     }
 }

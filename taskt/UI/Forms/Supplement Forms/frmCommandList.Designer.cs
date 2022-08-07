@@ -35,10 +35,10 @@
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.tvCommands = new System.Windows.Forms.TreeView();
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.txtSearchKeyword = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.picCommandClear = new System.Windows.Forms.PictureBox();
             this.picCommandSearch = new System.Windows.Forms.PictureBox();
+            this.txtSearchKeyword = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
@@ -141,6 +141,30 @@
             this.panelHeader.Size = new System.Drawing.Size(377, 40);
             this.panelHeader.TabIndex = 2;
             // 
+            // picCommandClear
+            // 
+            this.picCommandClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picCommandClear.Image = global::taskt.Properties.Resources.command_error;
+            this.picCommandClear.Location = new System.Drawing.Point(354, 13);
+            this.picCommandClear.Name = "picCommandClear";
+            this.picCommandClear.Size = new System.Drawing.Size(20, 20);
+            this.picCommandClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandClear.TabIndex = 23;
+            this.picCommandClear.TabStop = false;
+            this.picCommandClear.Click += new System.EventHandler(this.picCommandClear_Click);
+            // 
+            // picCommandSearch
+            // 
+            this.picCommandSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picCommandSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.picCommandSearch.Location = new System.Drawing.Point(324, 10);
+            this.picCommandSearch.Name = "picCommandSearch";
+            this.picCommandSearch.Size = new System.Drawing.Size(24, 24);
+            this.picCommandSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandSearch.TabIndex = 22;
+            this.picCommandSearch.TabStop = false;
+            this.picCommandSearch.Click += new System.EventHandler(this.picCommandSearch_Click);
+            // 
             // txtSearchKeyword
             // 
             this.txtSearchKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -162,28 +186,6 @@
             this.label1.Size = new System.Drawing.Size(83, 21);
             this.label1.TabIndex = 0;
             this.label1.Text = "&Command";
-            // 
-            // picCommandClear
-            // 
-            this.picCommandClear.Image = global::taskt.Properties.Resources.command_error;
-            this.picCommandClear.Location = new System.Drawing.Point(354, 13);
-            this.picCommandClear.Name = "picCommandClear";
-            this.picCommandClear.Size = new System.Drawing.Size(20, 20);
-            this.picCommandClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picCommandClear.TabIndex = 23;
-            this.picCommandClear.TabStop = false;
-            this.picCommandClear.Click += new System.EventHandler(this.picCommandClear_Click);
-            // 
-            // picCommandSearch
-            // 
-            this.picCommandSearch.Image = global::taskt.Properties.Resources.command_search;
-            this.picCommandSearch.Location = new System.Drawing.Point(324, 10);
-            this.picCommandSearch.Name = "picCommandSearch";
-            this.picCommandSearch.Size = new System.Drawing.Size(24, 24);
-            this.picCommandSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picCommandSearch.TabIndex = 22;
-            this.picCommandSearch.TabStop = false;
-            this.picCommandSearch.Click += new System.EventHandler(this.picCommandSearch_Click);
             // 
             // frmCommandList
             // 
