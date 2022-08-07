@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3e79750f-20db-4dbf-9959-ad5248920283" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get DateTime Differences command sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3e79750f-20db-4dbf-9959-ad5248920283" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="vDateA is 11/25/2018 (MM/dd/yyyy)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDateTimeCommand" CommandID="01772426-6b65-41c6-beb5-4c88be53471c" CommandName="CreateDateTimeCommand" IsCommented="false" SelectionName="Create DateTime" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DateTime="vDateA" v_Year="2018" v_Month="11" v_Day="25" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3e79750f-20db-4dbf-9959-ad5248920283" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="vDateA is 12/07/2018 (MM/dd/yyyy)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDateTimeCommand" CommandID="01772426-6b65-41c6-beb5-4c88be53471c" CommandName="CreateDateTimeCommand" IsCommented="false" SelectionName="Create DateTime" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_DateTime="vDateB" v_Year="2018" v_Month="12" v_Day="7" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3e79750f-20db-4dbf-9959-ad5248920283" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get days" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDateTimeDifferencesCommand" CommandID="7b6edb7f-0a98-436a-93fb-b97f6a70491c" CommandName="GetDateTimeDifferencesCommand" IsCommented="false" SelectionName="Get DateTime Differences" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_DateTime1="⦃vDateA⦄" v_DateTime2="⦃vDateB⦄" v_Format="Total Days" v_Result="vDiff" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f26518a8-fbbc-440a-bc49-0bedca135e4f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vDiff⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3e79750f-20db-4dbf-9959-ad5248920283" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Get hours" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDateTimeDifferencesCommand" CommandID="7b6edb7f-0a98-436a-93fb-b97f6a70491c" CommandName="GetDateTimeDifferencesCommand" IsCommented="false" SelectionName="Get DateTime Differences" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_DateTime1="⦃vDateA⦄" v_DateTime2="⦃vDateB⦄" v_Format="Total Hours" v_Result="vDiff" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f26518a8-fbbc-440a-bc49-0bedca135e4f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vDiff⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>2022-08-07T17:26:45.9006483+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vDateA</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vDateB</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vDiff</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
