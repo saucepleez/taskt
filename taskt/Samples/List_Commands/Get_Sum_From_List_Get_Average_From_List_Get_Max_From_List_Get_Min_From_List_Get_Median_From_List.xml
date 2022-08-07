@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1cac3a52-41da-4412-ba22-268eb6f6aba0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get Sum From List, Get Average From List, Get Max From List, Get Min From List, Get Median From List command sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1cac3a52-41da-4412-ba22-268eb6f6aba0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="vList is [ 1, 2, 3, 4, 5, 6 ]" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateListCommand" CommandID="b5890bb9-3cab-428f-86d3-6cdbaf4da3bc" CommandName="CreateListCommand" IsCommented="false" SelectionName="Create List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="vList">
+        <v_ListValues>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ListValues080722.081959" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="ListValues080722.081959">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Values" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819591" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Values>1</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819592" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Values>2</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819593" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Values>3</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819594" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Values>4</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819595" msdata:rowOrder="4" diffgr:hasChanges="modified">
+                <Values>5</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819596" msdata:rowOrder="5" diffgr:hasChanges="modified">
+                <Values>6</Values>
+              </ListValues080722.081959>
+            </DocumentElement>
+            <diffgr:before>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819591" msdata:rowOrder="0">
+                <Values>1</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819592" msdata:rowOrder="1">
+                <Values>2</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819593" msdata:rowOrder="2">
+                <Values>3</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819594" msdata:rowOrder="3">
+                <Values>4</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819595" msdata:rowOrder="4">
+                <Values>5</Values>
+              </ListValues080722.081959>
+              <ListValues080722.081959 diffgr:id="ListValues080722.0819596" msdata:rowOrder="5">
+                <Values>6</Values>
+              </ListValues080722.081959>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ListValues>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1cac3a52-41da-4412-ba22-268eb6f6aba0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Sum" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetSumFromListCommand" CommandID="b9340d13-2e99-4906-9d18-3656c8084819" CommandName="GetSumFromListCommand" IsCommented="false" SelectionName="Get Sum From List" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_Result="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f919e51b-db96-4c75-9bbe-a250fa4c8ffa" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Sum: ⦃vResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1cac3a52-41da-4412-ba22-268eb6f6aba0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get Average" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetAverageFromListCommand" CommandID="f787d31e-e835-443b-b813-fec7453eba1c" CommandName="GetAverageFromListCommand" IsCommented="false" SelectionName="Get Average From List" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_Result="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f919e51b-db96-4c75-9bbe-a250fa4c8ffa" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Average: ⦃vResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1cac3a52-41da-4412-ba22-268eb6f6aba0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Get Max" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetMaxFromListCommand" CommandID="c1cc5683-2653-4ed7-aafc-35bbdbf53704" CommandName="GetMaxFromListCommand" IsCommented="false" SelectionName="Get Max From List" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_Result="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f919e51b-db96-4c75-9bbe-a250fa4c8ffa" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Max: ⦃vResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1cac3a52-41da-4412-ba22-268eb6f6aba0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Get Min" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetMinFromListCommand" CommandID="d4800cbc-7b65-4ef7-9738-9a0f862cf79c" CommandName="GetMinFromListCommand" IsCommented="false" SelectionName="Get Min From List" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_Result="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f919e51b-db96-4c75-9bbe-a250fa4c8ffa" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Min: ⦃vResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1cac3a52-41da-4412-ba22-268eb6f6aba0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Get Median" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetMedianFromListCommand" CommandID="03023926-77ec-4c0a-b16e-d3e45f0c26c5" CommandName="GetMedianFromListCommand" IsCommented="false" SelectionName="Get Median From List" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_Result="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f919e51b-db96-4c75-9bbe-a250fa4c8ffa" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Median: ⦃vResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>2022-08-07T20:24:10.3484028+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
