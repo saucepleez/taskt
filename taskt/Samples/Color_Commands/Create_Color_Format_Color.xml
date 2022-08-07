@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c21d3122-89e4-4702-8e4c-c40e03fead33" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Create Color, Format Color sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c21d3122-89e4-4702-8e4c-c40e03fead33" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="R: 255, G: 128, B: 64" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateColorCommand" CommandID="0860b905-92c4-4e31-b39b-b72ecc11cab4" CommandName="CreateColorCommand" IsCommented="false" SelectionName="Create Color" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_Color="vColor" v_Red="255" v_Green="128" v_Blue="64" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c21d3122-89e4-4702-8e4c-c40e03fead33" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Convert to HEX" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatColorCommand" CommandID="74b97b32-0e72-4cf1-b229-2d57147b7e70" CommandName="FormatColorCommand" IsCommented="false" SelectionName="Format Color" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Color="⦃vColor⦄" v_Format="Hex" v_Result="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="5b9604e9-aa78-4601-bcab-bc09e71fcf8a" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c21d3122-89e4-4702-8e4c-c40e03fead33" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Convert to CSS RGB" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatColorCommand" CommandID="74b97b32-0e72-4cf1-b229-2d57147b7e70" CommandName="FormatColorCommand" IsCommented="false" SelectionName="Format Color" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Color="⦃vColor⦄" v_Format="CSS RGB" v_Result="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="5b9604e9-aa78-4601-bcab-bc09e71fcf8a" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c21d3122-89e4-4702-8e4c-c40e03fead33" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Convert to Excel Color" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatColorCommand" CommandID="74b97b32-0e72-4cf1-b229-2d57147b7e70" CommandName="FormatColorCommand" IsCommented="false" SelectionName="Format Color" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Color="⦃vColor⦄" v_Format="Excel Color" v_Result="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="5b9604e9-aa78-4601-bcab-bc09e71fcf8a" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c21d3122-89e4-4702-8e4c-c40e03fead33" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Convert to Dictionary" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatColorCommand" CommandID="74b97b32-0e72-4cf1-b229-2d57147b7e70" CommandName="FormatColorCommand" IsCommented="false" SelectionName="Format Color" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Color="⦃vColor⦄" v_Format="RGBA Dictionary" v_Result="vDic" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConvertDictionaryToJSONCommand" CommandID="fa9d702f-bc2f-4442-abcb-b2c33c9df3f9" CommandName="ConvertDictionaryToJSONCommand" IsCommented="false" SelectionName="Convert Dictionary To JSON" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InputData="vDic" v_OutputVariable="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="5b9604e9-aa78-4601-bcab-bc09e71fcf8a" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c21d3122-89e4-4702-8e4c-c40e03fead33" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" v_Comment="Convert to DataTable" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatColorCommand" CommandID="74b97b32-0e72-4cf1-b229-2d57147b7e70" CommandName="FormatColorCommand" IsCommented="false" SelectionName="Format Color" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_Color="⦃vColor⦄" v_Format="RGBA DataTable" v_Result="vTable" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConvertDataTableToJSONCommand" CommandID="1cdb5bae-f568-4916-8d43-63b051c6f283" CommandName="ConvertDataTableToJSONCommand" IsCommented="false" SelectionName="Convert DataTable To JSON" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_DataTableName="⦃vTable⦄" v_OutputVariableName="vText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="5b9604e9-aa78-4601-bcab-bc09e71fcf8a" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>2022-08-07T18:43:23.4628466+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vColor</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vDic</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vTable</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
