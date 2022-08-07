@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63a2bb70-6aee-47b2-89d7-8b1b8027aa7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get Element From Element By XPath, Click Element command sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63a2bb70-6aee-47b2-89d7-8b1b8027aa7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandID="db93f86e-f45d-4e00-981f-6aa17cebde2d" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63a2bb70-6aee-47b2-89d7-8b1b8027aa7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Notepad Window Element" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationGetElementFromWindowCommand" CommandID="9bec4eb6-a3df-4b41-8309-ad52b4aae839" CommandName="UIAutomationGetElementFromWindowCommand" IsCommented="false" SelectionName="Get Element From Window" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_AutomationElementVariable="vWin" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63a2bb70-6aee-47b2-89d7-8b1b8027aa7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get Element Tree from ⦃vWin⦄ (Notepad Element)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationGetElementTreeXMLFromElementCommand" CommandID="89fee009-1132-4ef5-b146-3bae421fe391" CommandName="UIAutomationGetElementTreeXMLFromElementCommand" IsCommented="false" SelectionName="Get Element Tree XML From Element" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_XMLVariable="vXML" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d6bfd883-ce1f-43a3-a06b-5c21ed0e6da6" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vXML⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63a2bb70-6aee-47b2-89d7-8b1b8027aa7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Search Help menu item" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63a2bb70-6aee-47b2-89d7-8b1b8027aa7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="GUI Inspect Tool will help you look up XPath to find a element" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationGetElementFromElementByXPathCommand" CommandID="32afba56-b0ea-44b6-86a1-54717d22f712" CommandName="UIAutomationGetElementFromElementByXPathCommand" IsCommented="false" SelectionName="Get Element From Element By XPath" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_AutomationElementVariable="vElem">
+        <v_SearchXPath>/MenuBar[1]/MenuItem[5]</v_SearchXPath>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63a2bb70-6aee-47b2-89d7-8b1b8027aa7b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Click element" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationClickElementCommand" CommandID="faf4a329-fa95-4c32-9a8d-fb8670119996" CommandName="UIAutomationClickElementCommand" IsCommented="false" SelectionName="Click Element" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄">
+        <v_ActionParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAAc午ionPara13Table080722.071305" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="UIAAc午ionPara13Table080722.071305">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
+                        <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <UIAAc午ionPara13Table080722.071305 diffgr:id="UIAAc午ionPara13Table080722.0713051" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <ParameterName>Click Type</ParameterName>
+                <ParameterValue>Left Click</ParameterValue>
+              </UIAAc午ionPara13Table080722.071305>
+              <UIAAc午ionPara13Table080722.071305 diffgr:id="UIAAc午ionPara13Table080722.0713052" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <ParameterName>X Adjustment</ParameterName>
+                <ParameterValue>0</ParameterValue>
+              </UIAAc午ionPara13Table080722.071305>
+              <UIAAc午ionPara13Table080722.071305 diffgr:id="UIAAc午ionPara13Table080722.0713053" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <ParameterName>Y Adjustment</ParameterName>
+                <ParameterValue>0</ParameterValue>
+              </UIAAc午ionPara13Table080722.071305>
+            </DocumentElement>
+            <diffgr:before>
+              <UIAAc午ionPara13Table080722.071305 diffgr:id="UIAAc午ionPara13Table080722.0713051" msdata:rowOrder="0">
+                <ParameterName>Click Type</ParameterName>
+                <ParameterValue>Left Click</ParameterValue>
+              </UIAAc午ionPara13Table080722.071305>
+              <UIAAc午ionPara13Table080722.071305 diffgr:id="UIAAc午ionPara13Table080722.0713052" msdata:rowOrder="1">
+                <ParameterName>X Adjustment</ParameterName>
+                <ParameterValue>0</ParameterValue>
+              </UIAAc午ionPara13Table080722.071305>
+              <UIAAc午ionPara13Table080722.071305 diffgr:id="UIAAc午ionPara13Table080722.0713053" msdata:rowOrder="2">
+                <ParameterName>Y Adjustment</ParameterName>
+                <ParameterValue>0</ParameterValue>
+              </UIAAc午ionPara13Table080722.071305>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ActionParameters>
+      </ScriptCommand>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>2022-08-07T19:14:48.2562296+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vWin</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vXML</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vElem</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
