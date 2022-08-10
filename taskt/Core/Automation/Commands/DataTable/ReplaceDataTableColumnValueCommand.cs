@@ -91,6 +91,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**newValue** or **{{{vNewValue}}}**")]
         [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_NewValue { get; set; }
 
         [XmlIgnore]

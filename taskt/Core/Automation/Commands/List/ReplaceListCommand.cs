@@ -69,6 +69,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
         [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_ReplaceValue { get; set; }
 
         [XmlIgnore]
