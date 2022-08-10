@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 using taskt.Core.Automation.Attributes;
 namespace taskt.Core
 {
- /// <summary>
- /// This class generates markdown files for use in the official taskt wiki
- /// </summary>
- public class DocumentationGeneration
-    {
+     /// <summary>
+     /// This class generates markdown files for use in the official taskt wiki
+     /// </summary>
+     public class DocumentationGeneration
+     {
         /// <summary>
         /// Returns a path that contains the generated markdown files
         /// </summary>
         /// <returns></returns>
-     public string GenerateMarkdownFiles()
-     {
+        public string GenerateMarkdownFiles()
+        {
+            var en = new System.Globalization.CultureInfo("en-US");
 
             //create directory if required
             var docsFolderName = "docs";
@@ -28,11 +29,11 @@ namespace taskt.Core
 
             //get all commands
             var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                      .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
-                      .Where(t => t.Name != "ScriptCommand")
-                      .Where(t => t.IsAbstract == false)
-                      .Where(t => t.BaseType.Name == "ScriptCommand")
-                      .ToList();
+                        .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+                        .Where(t => t.Name != "ScriptCommand")
+                        .Where(t => t.IsAbstract == false)
+                        .Where(t => t.BaseType.Name == "ScriptCommand")
+                        .ToList();
 
 
             var highLevelCommandInfo = new List<CommandMetaData>();
@@ -141,14 +142,14 @@ namespace taskt.Core
                 sb.AppendLine("## Developer/Additional Reference");
                 sb.AppendLine("Automation Class Name: " + commandClass.Name);
                 sb.AppendLine("Parent Namespace: " + commandClass.Namespace);
-                sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt"));
+                sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt", en));
 
 
                 sb.AppendLine(Environment.NewLine);
 
                 sb.AppendLine("## Help");
-                sb.AppendLine("[Open/Report an issue on GitHub](https://github.com/saucepleez/taskt/issues/new)");
-                sb.AppendLine("[Ask a question on Gitter](https://gitter.im/taskt-rpa/Lobby)");
+                sb.AppendLine("[Open/Report an issue on GitHub](" + MyURLs.GitIssueURL + ")");
+                sb.AppendLine("[Ask a question on Gitter](" + MyURLs.GitterURL + ")");
 
                 //create kebob destination and command file nmae
                 var kebobDestination = groupName.Replace(" ", "-").Replace("/", "-").ToLower();
@@ -196,14 +197,14 @@ namespace taskt.Core
                 sb.AppendLine("|" + cmd.Group + "|[" + cmd.Name + "](" + cmd.Location + ")|" + cmd.Description + "|");
             }
 
-            sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt"));
+            sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt", en));
 
             sb.AppendLine(Environment.NewLine);
 
 
             sb.AppendLine("## Help");
-            sb.AppendLine("[Open/Report an issue on GitHub](https://github.com/saucepleez/taskt/issues/new)");
-            sb.AppendLine("[Ask a question on Gitter](https://gitter.im/taskt-rpa/Lobby)");
+            sb.AppendLine("[Open/Report an issue on GitHub](" + MyURLs.GitIssueURL + ")");
+            sb.AppendLine("[Ask a question on Gitter](" + MyURLs.GitterURL + ")");
 
             //write file
             fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
