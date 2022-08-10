@@ -148,8 +148,8 @@ namespace taskt.Core
                 sb.AppendLine(Environment.NewLine);
 
                 sb.AppendLine("## Help");
-                sb.AppendLine("[Open/Report an issue on GitHub](" + MyURLs.GitIssueURL + ")");
-                sb.AppendLine("[Ask a question on Gitter](" + MyURLs.GitterURL + ")");
+                sb.AppendLine("- [Open/Report an issue on GitHub](" + MyURLs.GitIssueURL + ")");
+                sb.AppendLine("- [Ask a question on Gitter](" + MyURLs.GitterURL + ")");
 
                 //create kebob destination and command file nmae
                 var kebobDestination = groupName.Replace(" ", "-").Replace("/", "-").ToLower();
@@ -203,8 +203,8 @@ namespace taskt.Core
 
 
             sb.AppendLine("## Help");
-            sb.AppendLine("[Open/Report an issue on GitHub](" + MyURLs.GitIssueURL + ")");
-            sb.AppendLine("[Ask a question on Gitter](" + MyURLs.GitterURL + ")");
+            sb.AppendLine("- [Open/Report an issue on GitHub](" + MyURLs.GitIssueURL + ")");
+            sb.AppendLine("- [Ask a question on Gitter](" + MyURLs.GitterURL + ")");
 
             //write file
             fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
