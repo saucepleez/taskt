@@ -200,5 +200,10 @@ namespace taskt.Core
         {
             return formatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
         }
+
+        public static bool isURL(string path)
+        {
+            return (path.StartsWith("http:") || path.StartsWith("https:"));
+        }
     }
 }
