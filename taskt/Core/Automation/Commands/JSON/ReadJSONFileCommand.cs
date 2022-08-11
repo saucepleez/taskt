@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the text file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
+        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}** or **http://example.com/api/** or **{{{vURL}}}**")]
         [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_FilePath { get; set; }
@@ -47,12 +47,15 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            //var filePath = FilePathControls.formatFilePath(v_FilePath.ConvertToUserVariable(sender), engine);
-            //if (!FilePathControls.hasExtension(filePath))
-            //{
-            //    filePath += ".json";
-            //}
-            string filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "json", true);
+            string filePath;
+            if (!FilePathControls.isURL(v_FilePath))
+            {
+                 filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "json", true);
+            }
+            else
+            {
+                filePath = v_FilePath.ConvertToUserVariable(engine);
+            }
 
             ScriptCommand readFile = new ReadTextFileCommand
             {
