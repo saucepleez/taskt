@@ -1395,7 +1395,7 @@ namespace taskt.Core.Automation.Commands
                 case "is not numeric":
                     break;
                 default:
-                    if (parameters["Case Sensitive"].ToLower() == "yes")
+                    if (parameters["Case Sensitive"].ToLower() == "no")
                     {
                         trgText = trgText.ToLower();
                         value = parameters["Value"].ToLower();

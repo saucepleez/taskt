@@ -64,6 +64,24 @@ namespace taskt.Core.Automation.Attributes.ClassAttributes
             this.subGruopName = group;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class EnableAutomateDisplayText : System.Attribute
+    {
+        public bool enableAutomateDisplayText = false;
+        public EnableAutomateDisplayText(bool enableAutomateDisplayText)
+        {
+            this.enableAutomateDisplayText = enableAutomateDisplayText;
+        }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class EnableAutomateRender : System.Attribute
+    {
+        public bool enableAutomateRender = false;
+        public EnableAutomateRender(bool enableAutomateRender)
+        {
+            this.enableAutomateRender = enableAutomateRender;
+        }
+    }
 }
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
@@ -432,12 +450,24 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             NotSelectionOption = 32
         }
     }
+    [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyFirstValue : System.Attribute
     {
         public string firstValue = "";
         public PropertyFirstValue(string firstValue)
         {
             this.firstValue = firstValue;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public  sealed class PropertyDisplayText : System.Attribute
+    {
+        public bool parameterDisplay = false;
+        public string parameterName = "";
+        public PropertyDisplayText(bool show, string name)
+        {
+            this.parameterDisplay = show;
+            this.parameterName = name;
         }
     }
 }

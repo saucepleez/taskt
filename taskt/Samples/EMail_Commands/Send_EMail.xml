@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a5735a7b-0e0d-48d7-93d9-b58199ddff44" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Send Email sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MailKitSendEmailCommand" CommandID="4562b99e-e023-4784-a58d-c4d86ab30283" CommandName="MailKitSendEmailCommand" IsCommented="false" SelectionName="Send Email" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_SMTPHost="smtp.mymail.com" v_SMTPPort="587" v_SMTPUserName="username@mymail.com" v_SMTPPassword="mypassword" v_SMTPFromEmail="username@mymail.com" v_SMTPToEmail="john@yourcompany.com" v_SMTPSubject="Hello, John!" v_SMTPBody="Please type your message." v_SMTPSecureOption="Auto" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>1990-01-01T00:00:00</LastRunTime>
+    <RunTimes>0</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>

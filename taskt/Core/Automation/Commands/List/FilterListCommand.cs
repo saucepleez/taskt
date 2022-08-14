@@ -69,6 +69,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
         [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]

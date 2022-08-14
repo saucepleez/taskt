@@ -91,6 +91,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**vNewTable** or **{{{vNewTable}}}**")]
         [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]

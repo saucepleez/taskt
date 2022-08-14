@@ -342,7 +342,9 @@
     <Compile Include="Core\Automation\Commands\List\GetSumFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetVarianceFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\MathListControls.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\CreateNumberVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\IncreaseNumericalVariableCommand.cs" />

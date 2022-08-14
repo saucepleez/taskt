@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Net;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -21,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("Enter or Select the path to the text file.")]
-        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
+        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}** or **http://example.com/mytext.txt** or **{{{vURL}}}**")]
         [Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
@@ -64,43 +65,34 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //convert variables
-            //var filePath = v_FilePath.ConvertToUserVariable(sender);
-
-            //filePath = FilePathControls.formatFilePath(filePath, engine);
-            //if (!System.IO.File.Exists(filePath) && !FilePathControls.hasExtension(filePath))
-            //{
-            //    filePath += ".txt";
-            //}
-
-            string filePath;
-            if (FilePathControls.containsFileCounter(v_FilePath, engine))
-            {
-                filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", true);
-            }
-            else
-            {
-                filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt", true, true);
-            }
-
-            //var readPreference = v_ReadOption.ConvertToUserVariable(sender).ToUpperInvariant();
-            //if (String.IsNullOrEmpty(readPreference))
-            //{
-            //    readPreference = "CONTENT";
-            //}
-            var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);
+            bool isURL = FilePathControls.isURL(v_FilePath.ConvertToUserVariable(engine));
 
             string result;
-            //if (readPreference == "LINE COUNT")
-            if (readPreference == "line count")
+            if (!isURL)
             {
-                //read text from file
-                result = System.IO.File.ReadAllLines(filePath).Length.ToString();
+                string filePath;
+                if (FilePathControls.containsFileCounter(v_FilePath, engine))
+                {
+                    filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", true);
+                }
+                else
+                {
+                    filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt", true, true);
+                }
+                result = System.IO.File.ReadAllText(filePath);
             }
             else
             {
-                //read text from file
-                result = System.IO.File.ReadAllText(filePath);
+                WebClient webClient = new WebClient();
+                webClient.Encoding = System.Text.Encoding.UTF8;
+                result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
+            }
+
+            var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);
+            if (readPreference == "line count")
+            {
+                result = result.Replace("\r\n", "\n");  // \n\n -> \n
+                result = result.Split(new char[] { '\n', '\r' }).Length.ToString();
             }
 
             //assign text to user variable
@@ -109,15 +101,6 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ReadOption", this, editor));
-
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
 
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
@@ -129,23 +112,5 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Read: '" + v_ReadOption + "', File: '" + v_FilePath + "', Store: '" + v_userVariableName + "']";
         }
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_FilePath))
-        //    {
-        //        this.validationResult += "File is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_userVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
