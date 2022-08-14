@@ -64,6 +64,24 @@ namespace taskt.Core.Automation.Attributes.ClassAttributes
             this.subGruopName = group;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class EnableAutomateDisplayText : System.Attribute
+    {
+        public bool enableAutomateDisplayText = false;
+        public EnableAutomateDisplayText(bool enableAutomateDisplayText)
+        {
+            this.enableAutomateDisplayText = enableAutomateDisplayText;
+        }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class EnableAutomateRender : System.Attribute
+    {
+        public bool disableAutomateRender = false;
+        public EnableAutomateRender(bool disableAutomateRender)
+        {
+            this.disableAutomateRender = disableAutomateRender;
+        }
+    }
 }
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
