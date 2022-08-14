@@ -44,6 +44,8 @@ namespace taskt.Core.Automation.Engine
 
         private Serilog.Core.Logger engineLogger = null;
 
+        private const int INNER_VARIABLES = 4;
+
         public AutomationEngineInstance(bool enableLog = true)
         {
             //initialize logger
@@ -197,6 +199,32 @@ namespace taskt.Core.Automation.Engine
 
                 VariableList = automationScript.Variables;
 
+                // add hidden inner variable
+                VariableList.AddRange(
+                    new Script.ScriptVariable[]
+                    {
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_0",
+                            VariableValue = ""
+                        },
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_1",
+                            VariableValue = ""
+                        },
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_2",
+                            VariableValue = ""
+                        },
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_3",
+                            VariableValue = ""
+                        }
+                    }
+                );
 
                 ReportProgress("Creating App Instance Tracking List");
                 //create app instances and merge in global instances
@@ -361,6 +389,10 @@ namespace taskt.Core.Automation.Engine
                     throw ex;
                 }
             }
+            finally
+            {
+                ClearInnerVariables();
+            }
         }
         public void AddAppInstance(string instanceName, object appObject) {
 
@@ -455,8 +487,6 @@ namespace taskt.Core.Automation.Engine
 
         public void StoreComplexObjectInVariable(string variableName, object value)
         {
-
-
             Script.ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
 
             if (storeVariable == null)
@@ -474,6 +504,19 @@ namespace taskt.Core.Automation.Engine
                 storeVariable.VariableValue = value;
             }
         }
+
+        private void ClearInnerVariables()
+        {
+            for (int i = 0; i < INNER_VARIABLES; i++)
+            {
+                Script.ScriptVariable v = VariableList.Where(x => x.VariableName == "__INNER_" + i.ToString()).FirstOrDefault();
+                if (v != null)
+                {
+                    v.VariableValue = "";
+                }
+            }
+        }
+
         public void CancelScript()
         {
             IsCancellationPending = true;
