@@ -520,15 +520,71 @@ namespace taskt.Core.Automation.Commands
 
         public virtual string GetDisplayValue()
         {
+            string displayValue;
             if (String.IsNullOrEmpty(v_Comment))
             {
-                return SelectionName;
+                displayValue = SelectionName;
             }
             else
             {
-                return SelectionName + " [" + v_Comment + "]";
+                displayValue = SelectionName + " [" + v_Comment + "]";
+            }
+            Attributes.ClassAttributes.EnableAutomateDisplayText autoDisp = (Attributes.ClassAttributes.EnableAutomateDisplayText)this.GetType().GetCustomAttribute(typeof(Attributes.ClassAttributes.EnableAutomateDisplayText));
+
+            if ((autoDisp == null) || (!autoDisp.enableAutomateDisplayText))
+            {
+                return displayValue;
+            }
+            else
+            {
+                string t = "";
+                var props = this.GetType().GetProperties();
+                foreach (var prop in props)
+                {
+                    t += getPropertyDisplayValue(prop, this);
+                }
+
+                if (t == "")
+                {
+                    return displayValue;
+                }
+                else
+                {
+                    return displayValue + " [ " + t.Trim().Substring(0, t.Length - 1) + " ]";
+                }
             }
         }
+
+        private static string getPropertyDisplayValue(PropertyInfo prop, ScriptCommand command)
+        {
+            if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+            {
+                object value = prop.GetValue(command);
+                if (value is System.Data.DataTable)
+                {
+                    return "";
+                }
+
+                Attributes.PropertyAttributes.PropertyDisplayText dispProp = (Attributes.PropertyAttributes.PropertyDisplayText)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyDisplayText));
+                if ((dispProp == null) || (!dispProp.parameterDisplay))
+                {
+                    return "";
+                }
+                else
+                {
+                    if (value == null)
+                    {
+                        value = "";
+                    }
+                    return dispProp.parameterName + ": '" + value + "', ";
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
+
 
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
         {
@@ -720,16 +776,6 @@ namespace taskt.Core.Automation.Commands
             }
             return false;
         }
-
-        //public System.Reflection.PropertyInfo GetProperty(string propertyName)
-        //{
-        //    return this.GetType().GetProperty(propertyName);
-        //}
-
-        //public static List<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo> GetAdditionalParameterInfo(System.Reflection.PropertyInfo prop)
-        //{
-        //    return prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true).Cast<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
-        //}
 
         public virtual void convertToIntermediate(Core.EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
@@ -1086,49 +1132,6 @@ namespace taskt.Core.Automation.Commands
 
         public bool checkInstanceMatched(string keyword, string instanceType, bool caseSensitive)
         {
-            //Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
-            //switch (instanceType.ToLower())
-            //{
-            //    case "database":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
-            //        break;
-            //    case "datatable":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
-            //        break;
-            //    case "dictionary":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
-            //        break;
-            //    case "excel":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
-            //        break;
-            //    case "ie":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
-            //        break;
-            //    case "json":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
-            //        break;
-            //    case "list":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
-            //        break;
-            //    case "nlg":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG;
-            //        break;
-            //    case "stopwatch":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
-            //        break;
-            //    case "web browser":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
-            //        break;
-            //    case "word":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
-            //        break;
-            //    case "none":
-            //        return false;
-            //        break;
-            //    default:
-            //        return false;
-            //        break;
-            //}
             Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
             Func<string, string> convFunc;
@@ -1233,47 +1236,6 @@ namespace taskt.Core.Automation.Commands
 
         public bool ReplaceInstance(string keyword, string replacedText, string instanceType, bool caseSensitive)
         {
-            //Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType;
-            //switch (instanceType.ToLower())
-            //{
-            //    case "database":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
-            //        break;
-            //    case "datatable":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
-            //        break;
-            //    case "dictionary":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
-            //        break;
-            //    case "excel":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
-            //        break;
-            //    case "ie":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
-            //        break;
-            //    case "json":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
-            //        break;
-            //    case "list":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
-            //        break;
-            //    case "stopwatch":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
-            //        break;
-            //    case "web browser":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
-            //        break;
-            //    case "word":
-            //        comparedType = Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
-            //        break;
-            //    case "none":
-            //        return false;
-            //        break;
-            //    default:
-            //        return false;
-            //        break;
-            //}
-
             Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
             Func<string, string> convFunc;
