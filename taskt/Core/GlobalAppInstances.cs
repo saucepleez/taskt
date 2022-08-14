@@ -26,11 +26,5 @@ namespace taskt.Core
         {
             return AppInstances;
         }
-
-
     }
-
-    
-
-
 }
