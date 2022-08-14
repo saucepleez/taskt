@@ -450,12 +450,24 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             NotSelectionOption = 32
         }
     }
+    [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyFirstValue : System.Attribute
     {
         public string firstValue = "";
         public PropertyFirstValue(string firstValue)
         {
             this.firstValue = firstValue;
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public  sealed class PropertyDisplayText : System.Attribute
+    {
+        public bool parameterDisplay = false;
+        public string parameterName = "";
+        public PropertyDisplayText(bool show, string name)
+        {
+            this.parameterDisplay = show;
+            this.parameterName = name;
         }
     }
 }
