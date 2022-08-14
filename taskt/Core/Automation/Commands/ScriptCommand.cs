@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -595,7 +596,17 @@ namespace taskt.Core.Automation.Commands
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor)
         {
             RenderedControls = new List<Control>();
-            return RenderedControls;
+
+            Attributes.ClassAttributes.EnableAutomateRender render = (Attributes.ClassAttributes.EnableAutomateRender)this.GetType().GetCustomAttribute(typeof(Attributes.ClassAttributes.EnableAutomateRender));
+            if ((render == null) || (!render.enableAutomateRender))
+            {
+                return RenderedControls;
+            }
+            else
+            {
+                RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+                return RenderedControls;
+            }
         }
 
         public virtual List<Control> Render()
