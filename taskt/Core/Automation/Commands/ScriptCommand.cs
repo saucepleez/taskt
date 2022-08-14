@@ -293,7 +293,9 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(NLGSetParameterCommand))]
 
     // Numeric
+    [XmlInclude(typeof(CreateNumberVariableCommand))]
     [XmlInclude(typeof(DecreaseNumericalVariableCommand))]
+    [XmlInclude(typeof(FormatNumberCommand))]
     [XmlInclude(typeof(IncreaseNumericalVariableCommand))]
     [XmlInclude(typeof(MathCalculationCommand))]
     [XmlInclude(typeof(RandomNumberCommand))]
@@ -551,7 +553,8 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    return displayValue + " [ " + t.Trim().Substring(0, t.Length - 1) + " ]";
+                    t = t.Trim();
+                    return displayValue + " [ " + t.Substring(0, t.Length - 1) + " ]";
                 }
             }
         }

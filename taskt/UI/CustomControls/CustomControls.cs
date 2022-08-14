@@ -709,7 +709,9 @@ namespace taskt.UI
             {"NLGSetParameterCommand", "taskt.Properties.Resources.command_nlg"},
 
             // Numeric
+            {"CreateNumericVariableCommand", "taskt.Properties.Resources.command_function"},
             {"DecreaseNumericVariableCommand", "taskt.Properties.Resources.command_function"},
+            {"FormatNumberCommand", "taskt.Properties.Resources.command_function"},
             {"IncreaseNumericVariableCommand", "taskt.Properties.Resources.command_function"},
             {"MathCalculationCommand", "taskt.Properties.Resources.command_function"},
             {"RandomNumberCommand", "taskt.Properties.Resources.command_function"},
