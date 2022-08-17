@@ -4397,6 +4397,10 @@ namespace taskt.UI.Forms
         private void aboutStripMenuItem_Click(object sender, EventArgs e)
         {
             showAboutForm();
+
+            // DBG
+            var fm = new taskt.UI.Forms.Supplement_Forms.frmJSONPathHelper();
+            fm.ShowDialog();
         }
         #endregion
 
