@@ -18,6 +18,11 @@ namespace taskt.UI.Forms.Supplement_Forms
             InitializeComponent();
         }
 
+        private void frmJSONPathHelper_Load(object sender, EventArgs e)
+        {
+            lblMessage.Text = "";
+        }
+
         #region Open JSON
         private void picOpenFromFile_Click(object sender, EventArgs e)
         {
@@ -32,10 +37,18 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void OpenFromFileProcess(string path)
         {
-            using (var sr = new System.IO.StreamReader(path))
+            try
             {
-                txtRawJSON.Text = sr.ReadToEnd();
-                lblMessage.Text = "File Open.";
+                using (var sr = new System.IO.StreamReader(path))
+                {
+                    txtRawJSON.Text = sr.ReadToEnd();
+                    lblMessage.Text = "File Open.";
+                }
+                ParseJSONProcess();
+            }
+            catch
+            {
+                lblMessage.Text = "Fail Open File.";
             }
         }
 
@@ -188,9 +201,85 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void tvJSON_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             txtJSONPathResult.Text = (string)e.Node.Tag;
+            txtJSONPath.Text = getJSONPath(e.Node);
+        }
+
+        private string getJSONPath(TreeNode node)
+        {
+            string jsonPath = "";
+
+            TreeNode p = node;
+            while (p.Parent != null)
+            {
+                string nodeText = p.Text;
+                int idx = nodeText.LastIndexOf("-");
+                string nodePath = nodeText.Substring(0, idx).Trim();
+                string nodeType = nodeText.Substring(idx + 1).Trim();
+
+                if (nodePath.StartsWith("\"") && nodePath.EndsWith("\""))
+                {
+                    nodePath = nodePath.Substring(1, nodePath.Length - 2);
+                }
+
+                switch (nodeType)
+                {
+                    case "Value":
+                    case "Object":
+                        jsonPath = nodePath + "." + jsonPath;
+                        break;
+                    case "Array":
+                        jsonPath = nodePath + jsonPath;
+                        break;
+                    default:
+                        break;
+                }
+
+                p = p.Parent;
+            }
+
+            if (jsonPath.Length > 1)
+            {
+                // remove last dot
+                jsonPath = jsonPath.Substring(0, jsonPath.Length - 1);
+            }
+            jsonPath = "$." + jsonPath; // set first $.
+
+            return jsonPath;
+        }
+
+        #endregion
+
+        #region txtJSONPath
+        private void txtJSONPath_DoubleClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtJSONPath.Text);
+            lblMessage.Text = "JSONPath Copied.";
         }
         #endregion
 
-       
+        #region Footer buttons
+        private void uiBtnAdd_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void uiBtnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+        #endregion
+
+
+        #region Properties
+        public string JSONPath
+        {
+            get
+            {
+                return this.txtJSONPath.Text;
+            }
+        }
+        #endregion
     }
 }

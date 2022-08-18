@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelFooter = new System.Windows.Forms.Panel();
             this.lblMessage = new System.Windows.Forms.Label();
@@ -46,10 +47,11 @@
             this.splitJsonParse = new System.Windows.Forms.SplitContainer();
             this.tvJSON = new System.Windows.Forms.TreeView();
             this.txtJSONPathResult = new System.Windows.Forms.TextBox();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelJSONPath = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtJSONPath = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
@@ -112,7 +114,6 @@
             this.lblMessage.Size = new System.Drawing.Size(65, 20);
             this.lblMessage.TabIndex = 20;
             this.lblMessage.Text = "Copied!!";
-            this.lblMessage.Visible = false;
             // 
             // uiBtnAdd
             // 
@@ -130,6 +131,7 @@
             this.uiBtnAdd.TabIndex = 18;
             this.uiBtnAdd.TabStop = false;
             this.uiBtnAdd.Text = "Ok";
+            this.uiBtnAdd.Click += new System.EventHandler(this.uiBtnAdd_Click);
             // 
             // uiBtnCancel
             // 
@@ -147,6 +149,7 @@
             this.uiBtnCancel.TabIndex = 19;
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
+            this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // panelHeader
             // 
@@ -171,6 +174,7 @@
             // 
             // splitBody
             // 
+            this.splitBody.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.splitBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitBody.Location = new System.Drawing.Point(3, 43);
             this.splitBody.Name = "splitBody";
@@ -215,6 +219,8 @@
             // 
             // btnParse
             // 
+            this.btnParse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnParse.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.btnParse.Location = new System.Drawing.Point(157, 3);
             this.btnParse.Name = "btnParse";
             this.btnParse.Size = new System.Drawing.Size(75, 34);
@@ -232,6 +238,7 @@
             this.picOpenFromURL.Size = new System.Drawing.Size(38, 38);
             this.picOpenFromURL.TabIndex = 2;
             this.picOpenFromURL.TabStop = false;
+            this.myToolTip.SetToolTip(this.picOpenFromURL, "Open From URL");
             this.picOpenFromURL.Click += new System.EventHandler(this.picOpenFromURL_Click);
             // 
             // picOpenFromFile
@@ -243,11 +250,13 @@
             this.picOpenFromFile.Size = new System.Drawing.Size(38, 38);
             this.picOpenFromFile.TabIndex = 1;
             this.picOpenFromFile.TabStop = false;
+            this.myToolTip.SetToolTip(this.picOpenFromFile, "Open From File");
             this.picOpenFromFile.Click += new System.EventHandler(this.picOpenFromFile_Click);
             // 
             // txtRawJSON
             // 
             this.txtRawJSON.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtRawJSON.Font = new System.Drawing.Font("MS UI Gothic", 11F);
             this.txtRawJSON.Location = new System.Drawing.Point(3, 43);
             this.txtRawJSON.Multiline = true;
             this.txtRawJSON.Name = "txtRawJSON";
@@ -292,6 +301,7 @@
             // tvJSON
             // 
             this.tvJSON.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvJSON.Font = new System.Drawing.Font("MS UI Gothic", 11F);
             this.tvJSON.Location = new System.Drawing.Point(0, 0);
             this.tvJSON.Name = "tvJSON";
             this.tvJSON.Size = new System.Drawing.Size(320, 246);
@@ -301,17 +311,14 @@
             // txtJSONPathResult
             // 
             this.txtJSONPathResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtJSONPathResult.Font = new System.Drawing.Font("MS UI Gothic", 11F);
             this.txtJSONPathResult.Location = new System.Drawing.Point(0, 0);
             this.txtJSONPathResult.Multiline = true;
             this.txtJSONPathResult.Name = "txtJSONPathResult";
+            this.txtJSONPathResult.ReadOnly = true;
             this.txtJSONPathResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtJSONPathResult.Size = new System.Drawing.Size(142, 246);
             this.txtJSONPathResult.TabIndex = 0;
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "JSON (*.json)|*.json|All FIles (*.*)|*.*";
             // 
             // panelJSONPath
             // 
@@ -324,6 +331,19 @@
             this.panelJSONPath.Size = new System.Drawing.Size(466, 40);
             this.panelJSONPath.TabIndex = 1;
             // 
+            // txtJSONPath
+            // 
+            this.txtJSONPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtJSONPath.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtJSONPath.Location = new System.Drawing.Point(80, 7);
+            this.txtJSONPath.Name = "txtJSONPath";
+            this.txtJSONPath.ReadOnly = true;
+            this.txtJSONPath.Size = new System.Drawing.Size(379, 27);
+            this.txtJSONPath.TabIndex = 22;
+            this.myToolTip.SetToolTip(this.txtJSONPath, "Double-Click to copy JSONPath in Clipboard");
+            this.txtJSONPath.DoubleClick += new System.EventHandler(this.txtJSONPath_DoubleClick);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -334,14 +354,11 @@
             this.label2.Size = new System.Drawing.Size(75, 20);
             this.label2.TabIndex = 21;
             this.label2.Text = "JSONPath:";
-            this.label2.Visible = false;
             // 
-            // txtJSONPath
+            // openFileDialog1
             // 
-            this.txtJSONPath.Location = new System.Drawing.Point(84, 6);
-            this.txtJSONPath.Name = "txtJSONPath";
-            this.txtJSONPath.Size = new System.Drawing.Size(379, 19);
-            this.txtJSONPath.TabIndex = 22;
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "JSON (*.json)|*.json|All FIles (*.*)|*.*";
             // 
             // frmJSONPathHelper
             // 
@@ -351,6 +368,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "frmJSONPathHelper";
             this.Text = "JSON Parser";
+            this.Load += new System.EventHandler(this.frmJSONPathHelper_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelFooter.ResumeLayout(false);
             this.panelFooter.PerformLayout();
@@ -403,5 +421,6 @@
         private System.Windows.Forms.Panel panelJSONPath;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtJSONPath;
+        private System.Windows.Forms.ToolTip myToolTip;
     }
 }
