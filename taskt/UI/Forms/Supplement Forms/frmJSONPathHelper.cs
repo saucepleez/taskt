@@ -41,6 +41,10 @@ namespace taskt.UI.Forms.Supplement_Forms
                 }
             }
         }
+        private void picClear_Click(object sender, EventArgs e)
+        {
+            txtRawJSON.Text = "";
+        }
 
         private void OpenFromFileProcess(string path)
         {
@@ -83,12 +87,14 @@ namespace taskt.UI.Forms.Supplement_Forms
         #region JSON Parse
         private void ParseJSONProcess()
         {
+            tvJSON.BeginUpdate();
+            tvJSON.Nodes.Clear();
+
             try
             {
                 // root is object ?
                 JObject json = JObject.Parse(txtRawJSON.Text);
-                tvJSON.Nodes.Clear();
-
+                
                 TreeNode node = new TreeNode("\"\" - Object");
                 node.Tag = json.ToString();
 
@@ -122,6 +128,8 @@ namespace taskt.UI.Forms.Supplement_Forms
                     lblMessage.Text = "Invalid JSON!";
                 }
             }
+
+            tvJSON.EndUpdate();
         }
 
         private void createJSONTree(JToken root, TreeNode tree)
@@ -301,6 +309,26 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 return this.txtJSONPath.Text;
             }
+        }
+
+        #endregion
+
+        #region Drag&Drop
+        private void txtRawJSON_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+        private void txtRawJSON_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            OpenFromFileProcess(fileNames[0]);
         }
         #endregion
     }

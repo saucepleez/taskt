@@ -39,6 +39,7 @@
             this.splitBody = new System.Windows.Forms.SplitContainer();
             this.tableRawJSON = new System.Windows.Forms.TableLayoutPanel();
             this.panalRawJSONButtons = new System.Windows.Forms.Panel();
+            this.picClear = new System.Windows.Forms.PictureBox();
             this.btnParse = new System.Windows.Forms.Button();
             this.picOpenFromURL = new System.Windows.Forms.PictureBox();
             this.picOpenFromFile = new System.Windows.Forms.PictureBox();
@@ -63,6 +64,7 @@
             this.splitBody.SuspendLayout();
             this.tableRawJSON.SuspendLayout();
             this.panalRawJSONButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picClear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenFromURL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenFromFile)).BeginInit();
             this.tableJSONParse.SuspendLayout();
@@ -207,6 +209,7 @@
             // 
             // panalRawJSONButtons
             // 
+            this.panalRawJSONButtons.Controls.Add(this.picClear);
             this.panalRawJSONButtons.Controls.Add(this.btnParse);
             this.panalRawJSONButtons.Controls.Add(this.picOpenFromURL);
             this.panalRawJSONButtons.Controls.Add(this.picOpenFromFile);
@@ -216,6 +219,18 @@
             this.panalRawJSONButtons.Name = "panalRawJSONButtons";
             this.panalRawJSONButtons.Size = new System.Drawing.Size(235, 40);
             this.panalRawJSONButtons.TabIndex = 2;
+            // 
+            // picClear
+            // 
+            this.picClear.BackgroundImage = global::taskt.Properties.Resources.command_error;
+            this.picClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picClear.Location = new System.Drawing.Point(94, 2);
+            this.picClear.Name = "picClear";
+            this.picClear.Size = new System.Drawing.Size(38, 38);
+            this.picClear.TabIndex = 3;
+            this.picClear.TabStop = false;
+            this.myToolTip.SetToolTip(this.picClear, "Clear JSON");
+            this.picClear.Click += new System.EventHandler(this.picClear_Click);
             // 
             // btnParse
             // 
@@ -255,6 +270,7 @@
             // 
             // txtRawJSON
             // 
+            this.txtRawJSON.AllowDrop = true;
             this.txtRawJSON.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtRawJSON.Font = new System.Drawing.Font("MS UI Gothic", 11F);
             this.txtRawJSON.Location = new System.Drawing.Point(3, 43);
@@ -263,6 +279,9 @@
             this.txtRawJSON.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtRawJSON.Size = new System.Drawing.Size(229, 240);
             this.txtRawJSON.TabIndex = 1;
+            this.myToolTip.SetToolTip(this.txtRawJSON, "Drag & Drop JSON file here");
+            this.txtRawJSON.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtRawJSON_DragDrop);
+            this.txtRawJSON.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtRawJSON_DragEnter);
             // 
             // tableJSONParse
             // 
@@ -383,6 +402,7 @@
             this.tableRawJSON.ResumeLayout(false);
             this.tableRawJSON.PerformLayout();
             this.panalRawJSONButtons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picClear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenFromURL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenFromFile)).EndInit();
             this.tableJSONParse.ResumeLayout(false);
@@ -422,5 +442,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtJSONPath;
         private System.Windows.Forms.ToolTip myToolTip;
+        private System.Windows.Forms.PictureBox picClear;
     }
 }
