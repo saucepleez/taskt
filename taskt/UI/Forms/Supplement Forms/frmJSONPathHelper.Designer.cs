@@ -385,6 +385,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(711, 389);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmJSONPathHelper";
             this.Text = "JSON Parser";
             this.Load += new System.EventHandler(this.frmJSONPathHelper_Load);
