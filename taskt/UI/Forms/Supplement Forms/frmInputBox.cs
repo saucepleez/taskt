@@ -17,7 +17,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             InitializeComponent();
         }
 
-        public frmInputBox(string title = "Input Form", string message = "Please input", string defaultValue = "")
+        public frmInputBox(string title = "Input Form", string message = "Please input", string defaultValue = "") : this()
         {
             this.Text = title;
             lblMessage.Text = message;

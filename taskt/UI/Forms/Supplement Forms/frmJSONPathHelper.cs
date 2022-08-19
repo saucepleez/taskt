@@ -33,6 +33,13 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void picOpenFromURL_Click(object sender, EventArgs e)
         {
+            using (var fm = new frmInputBox("Input URL", "Please specify JSON URL", "https://"))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    OpenFromURLProcess(fm.InputValue);
+                }
+            }
         }
 
         private void OpenFromFileProcess(string path)
@@ -49,6 +56,21 @@ namespace taskt.UI.Forms.Supplement_Forms
             catch
             {
                 lblMessage.Text = "Fail Open File.";
+            }
+        }
+        private void OpenFromURLProcess(string url)
+        {
+            try
+            {
+                var wc = new System.Net.WebClient();
+                wc.Encoding = Encoding.UTF8;
+                txtRawJSON.Text = wc.DownloadString(url);
+                lblMessage.Text = "URL Open.";
+                ParseJSONProcess();
+            }
+            catch
+            {
+                lblMessage.Text = "Fail Open From URL.";
             }
         }
 

@@ -65,6 +65,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.btnCancel.Location = new System.Drawing.Point(127, 83);
             this.btnCancel.Name = "btnCancel";
@@ -85,7 +86,9 @@
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtInputValue);
             this.Controls.Add(this.lblMessage);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmInputBox";
             this.Text = "Input Form";
             this.Load += new System.EventHandler(this.frmInputBox_Load);
