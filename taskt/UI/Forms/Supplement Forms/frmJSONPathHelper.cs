@@ -291,13 +291,11 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
-            this.Close();
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            this.Close();
         }
         #endregion
 
