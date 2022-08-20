@@ -15,6 +15,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Increase Value in Numerical Variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Increase Value in Numerical Variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class IncreaseNumericalVariableCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -26,6 +28,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_VariableName { get; set; }
 
         [XmlAttribute]
@@ -36,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "1")]
+        [PropertyDisplayText(true, "Increase")]
         public string v_Value { get; set; }
 
         public IncreaseNumericalVariableCommand()
@@ -70,18 +75,18 @@ namespace taskt.Core.Automation.Commands
 
             (variableValue + add).ToString().StoreInUserVariable(engine, variableName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Variable: '" + v_VariableName + "', Increase: '" + v_Value + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Variable: '" + v_VariableName + "', Increase: '" + v_Value + "']";
+        //}
     }
 }
