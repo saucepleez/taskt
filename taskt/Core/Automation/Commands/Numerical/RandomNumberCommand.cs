@@ -25,11 +25,11 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
+        [PropertyIsOptional(true, "Integer Number")]
         [PropertyShowSampleUsageInDescription(false)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Integer Number")]
         [PropertyUISelectionOption("Real Number")]
-        [PropertyValidationRule("Random Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Random Type")]
         public string v_RandomType { get; set; }
 
