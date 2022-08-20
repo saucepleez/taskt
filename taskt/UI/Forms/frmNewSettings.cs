@@ -1227,22 +1227,22 @@ namespace taskt.UI.Forms
             p.StartInfo.RedirectStandardInput = false;
             p.StartInfo.CreateNoWindow = true;
 
-            p.StartInfo.Arguments = @"/c " + resourcePath + "\\ChromeDriver.exe -V";
+            p.StartInfo.Arguments = @"/c """ + resourcePath + "\\ChromeDriver.exe\" -V";
             p.Start();
             string chromeVersion = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
 
-            p.StartInfo.Arguments = @"/c " + resourcePath + "\\msedgedriver.exe -V";
+            p.StartInfo.Arguments = @"/c """ + resourcePath + "\\msedgedriver.exe\" -V";
             p.Start();
             string edgeVersion = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
 
-            p.StartInfo.Arguments = @"/c " + resourcePath + "\\geckodriver.exe -V";
+            p.StartInfo.Arguments = @"/c """ + resourcePath + "\\geckodriver.exe\" -V";
             p.Start();
             string geckoVersion = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
 
-            p.StartInfo.Arguments = @"/c " + resourcePath + "\\IEDriverServer.exe -V";
+            p.StartInfo.Arguments = @"/c """ + resourcePath + "\\IEDriverServer.exe\" -V";
             p.Start();
             string ieVersion = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
