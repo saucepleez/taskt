@@ -15,6 +15,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Format DateTime Text.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format DateTime Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FormatDateTimeCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("DateTime Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
@@ -39,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Format")]
         public string v_Format { get; set; }
 
         [XmlAttribute]
@@ -51,6 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Result Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_Result { get; set; }
 
         public FormatDateTimeCommand()
@@ -72,20 +77,20 @@ namespace taskt.Core.Automation.Commands
             myDT.ToString(format).StoreInUserVariable(engine, v_Result);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [DateTime: '" + v_DateTime + "', Format: '" + v_Format + "', Store: '" + v_Result + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [DateTime: '" + v_DateTime + "', Format: '" + v_Format + "', Store: '" + v_Result + "']";
+        //}
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
     }
 }

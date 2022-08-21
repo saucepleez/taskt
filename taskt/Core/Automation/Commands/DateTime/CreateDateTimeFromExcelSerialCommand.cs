@@ -15,6 +15,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create DateTime from Excel Serial Value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create DateTime from Excel Serial Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDateTimeFromExcelSerialCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
@@ -40,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Serial", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Serial")]
         public string v_Serial { get; set; }
 
         public CreateDateTimeFromExcelSerialCommand()
@@ -68,20 +72,20 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + "[Name: '" + v_DateTime + "' From '" + v_Serial + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + "[Name: '" + v_DateTime + "' From '" + v_Serial + "']";
+        //}
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
     }
 }

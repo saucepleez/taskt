@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create Color from Excel Color.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create Color from Excel Color.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateColorFromExcelColorCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -30,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_Color { get; set; }
 
         [XmlAttribute]
@@ -41,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Excel Color", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Color Value")]
         public string v_ExcelColor { get; set; }
 
         public CreateColorFromExcelColorCommand()
@@ -68,20 +72,20 @@ namespace taskt.Core.Automation.Commands
             co.StoreInUserVariable(engine, v_Color);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Name: '" + v_Color + "', From: '" + v_ExcelColor + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Name: '" + v_Color + "', From: '" + v_ExcelColor + "']";
+        //}
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
     }
 }

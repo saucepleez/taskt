@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Format Color Value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Format Color Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FormatColorCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_Color { get; set; }
 
         [XmlAttribute]
@@ -51,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("RGBA Dictionary")]
         [PropertyUISelectionOption("RGBA DataTable")]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Format")]
         public string v_Format { get; set; }
 
         [XmlAttribute]
@@ -62,6 +66,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_Result { get; set; }
 
         public FormatColorCommand()
@@ -177,21 +182,21 @@ namespace taskt.Core.Automation.Commands
             res.StoreInUserVariable(engine, v_Result);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Name: '" + v_Color + "', Format: '" + v_Format + "', Store: '" + v_Result + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Name: '" + v_Color + "', Format: '" + v_Format + "', Store: '" + v_Result + "']";
+        //}
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
         public override void addInstance(InstanceCounter counter)
         {

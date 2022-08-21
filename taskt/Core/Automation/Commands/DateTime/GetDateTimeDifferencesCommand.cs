@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Get 2 DateTime Differences.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get 2 DateTime Differences.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetDateTimeDifferencesCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("DateTime1", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DateTime1")]
         public string v_DateTime1 { get; set; }
 
         [XmlAttribute]
@@ -42,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("DateTime2", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DateTime2")]
         public string v_DateTime2 { get; set; }
 
         [XmlAttribute]
@@ -61,6 +65,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("DateTime")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Format")]
         public string v_Format { get; set; }
 
         [XmlAttribute]
@@ -73,6 +78,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Result Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_Result { get; set; }
 
         public GetDateTimeDifferencesCommand()
@@ -139,21 +145,21 @@ namespace taskt.Core.Automation.Commands
             result.StoreInUserVariable(engine, v_Result);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [DateTime1: '" + v_DateTime1 + "', DateTime2: '" + v_DateTime2 + "', Format: '" + v_Format + "', Store: '" + v_Result + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [DateTime1: '" + v_DateTime1 + "', DateTime2: '" + v_DateTime2 + "', Format: '" + v_Format + "', Store: '" + v_Result + "']";
+        //}
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
         public override void addInstance(InstanceCounter counter)
         {

@@ -15,6 +15,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to perform a math calculation and apply it to a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a math calculation.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MathCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -26,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Compute", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Compute")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
@@ -37,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyFirstValue("")]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(false, "")]
         public string v_ThousandSeperator { get; set; }
 
         [XmlAttribute]
@@ -48,6 +52,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, ".")]
         [PropertyFirstValue(".")]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(false, "")]
         public string v_DecimalSeperator { get; set; }
 
         [XmlAttribute]
@@ -58,6 +63,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
         public string v_applyToVariableName { get; set; }
 
         public MathCalculationCommand()
@@ -119,30 +125,30 @@ namespace taskt.Core.Automation.Commands
                 throw ex;
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            //create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ThousandSeperator", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DecimalSeperator", this, editor));
+        //    //create standard group controls
+        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ThousandSeperator", this, editor));
+        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DecimalSeperator", this, editor));
 
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
+        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+        //    //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+        //    //RenderedControls.Add(VariableNameControl);
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
+        //    return RenderedControls;
 
-        }
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [Apply Calculation Result to '{v_applyToVariableName}']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [Apply Calculation Result to '{v_applyToVariableName}']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

@@ -40,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Message Body")]
         [PropertyUISelectionOption("Text Message Body")]
         [PropertyUISelectionOption("HTML Message Body")]
+        [PropertyUISelectionOption("Subject")]
         [PropertyUISelectionOption("Message-ID")]
         [PropertyUISelectionOption("Date")]
         [PropertyUISelectionOption("Resent-Message-ID")]
@@ -105,6 +106,10 @@ namespace taskt.Core.Automation.Commands
                     break;
                 case "resent-message-id":
                     res = mail.ResentMessageId;
+                    break;
+
+                case "subject":
+                    res = mail.Subject;
                     break;
 
                 // Date

@@ -4299,7 +4299,13 @@ namespace taskt.UI.Forms
 
         private void guiInspectToolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect();
+            var fm = new Supplement_Forms.frmGUIInspect();
+            fm.Show();
+        }
+
+        private void jsonPathHelperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fm = new Supplement_Forms.frmJSONPathHelper();
             fm.Show();
         }
         #endregion

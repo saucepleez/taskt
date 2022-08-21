@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme1 = new taskt.Core.Theme();
+            taskt.Core.Theme theme2 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -76,6 +76,7 @@
             this.showSearchBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionToolStripSep3 = new System.Windows.Forms.ToolStripSeparator();
             this.showGUIInspectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showJSONPathHelperToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -602,7 +603,8 @@
             this.optionToolStripSep2,
             this.showSearchBarToolStripMenuItem,
             this.optionToolStripSep3,
-            this.showGUIInspectToolToolStripMenuItem});
+            this.showGUIInspectToolToolStripMenuItem,
+            this.showJSONPathHelperToolToolStripMenuItem});
             this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
@@ -692,6 +694,14 @@
             this.showGUIInspectToolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.showGUIInspectToolToolStripMenuItem.Text = "&GUI Inspect Tool";
             this.showGUIInspectToolToolStripMenuItem.Click += new System.EventHandler(this.guiInspectToolToolStripMenuItem_Click);
+            // 
+            // showJSONPathHelperToolToolStripMenuItem
+            // 
+            this.showJSONPathHelperToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.showJSONPathHelperToolToolStripMenuItem.Name = "showJSONPathHelperToolToolStripMenuItem";
+            this.showJSONPathHelperToolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.showJSONPathHelperToolToolStripMenuItem.Text = "&JSONPath Helper";
+            this.showJSONPathHelperToolToolStripMenuItem.Click += new System.EventHandler(this.jsonPathHelperToolStripMenuItem_Click);
             // 
             // scriptActionsToolStripMenuItem
             // 
@@ -1265,9 +1275,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme1;
+            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme2;
             // 
             // lblMainLogo
             // 
@@ -2301,6 +2311,7 @@
         private System.Windows.Forms.ToolStripMenuItem ViewJSONCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator optionToolStripSep3;
         private System.Windows.Forms.ToolStripMenuItem showGUIInspectToolToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showJSONPathHelperToolToolStripMenuItem;
     }
 }
 
