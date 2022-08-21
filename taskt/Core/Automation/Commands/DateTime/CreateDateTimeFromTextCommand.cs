@@ -15,6 +15,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create DateTime from Text.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create DateTime from Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDateTimeFromTextCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
@@ -40,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Text")]
         public string v_Text { get; set; }
 
         public CreateDateTimeFromTextCommand()
@@ -68,20 +72,20 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Name: '" + v_DateTime + "' From '" + v_Text + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Name: '" + v_DateTime + "' From '" + v_Text + "']";
+        //}
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
     }
 }
