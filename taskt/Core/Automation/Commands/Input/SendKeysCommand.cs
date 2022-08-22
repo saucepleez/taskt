@@ -63,6 +63,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_EncryptionOption { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please specify waiting time after keystrokes (ms)")]
+        [InputSpecification("")]
+        [SampleUsage("**500** or **{{{vWaitTime}}}")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyIsOptional(true, "500")]
+        [PropertyFirstValue("500")]
+        public string v_WaitTime { get; set; }
+
         [XmlIgnore]
         [NonSerialized]
         private TextBox InputText;
@@ -78,6 +88,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (taskt.Core.Automation.Engine.AutomationEngineInstance)sender;
+
             string targetWindowName = v_WindowName.ConvertToUserVariable(sender);
             var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
             if (String.IsNullOrEmpty(searchMethod))
@@ -104,6 +116,20 @@ namespace taskt.Core.Automation.Commands
             if (EncryptionOption == "Encrypted")
             {
                 textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+            }
+
+            if (String.IsNullOrEmpty(v_WaitTime))
+            {
+                v_WaitTime = "500";
+            }
+            int waitTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
+            if (waitTime < 0)
+            {
+                throw new Exception("Wait time is less than 0 ms.");
+            }
+            else if (waitTime < 100)
+            {
+                waitTime = 100;
             }
 
             if (textToSend == "{WIN_KEY}")
@@ -136,7 +162,7 @@ namespace taskt.Core.Automation.Commands
                 SendKeys.SendWait(textToSend);
             }
 
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(waitTime);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -167,6 +193,8 @@ namespace taskt.Core.Automation.Commands
             //RenderedControls.Add(helperControl);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EncryptionOption", this, editor));
+
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WaitTime", this, editor));
 
             return RenderedControls;
 
