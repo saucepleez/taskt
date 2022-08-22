@@ -104,6 +104,8 @@ namespace taskt.UI.Forms.Supplement_Forms
                 tvJSON.Nodes.Add(node);
                 tvJSON.ExpandAll();
 
+                tvJSON.Nodes[0].EnsureVisible();
+
                 lblMessage.Text = "JSON parsed.";
             }
             catch
@@ -121,6 +123,8 @@ namespace taskt.UI.Forms.Supplement_Forms
 
                     tvJSON.Nodes.Add(node);
                     tvJSON.ExpandAll();
+
+                    tvJSON.Nodes[0].EnsureVisible();
 
                     lblMessage.Text = "JSON parsed.";
                 }
@@ -268,7 +272,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 p = p.Parent;
             }
 
-            if (jsonPath.Length > 1)
+            if ((jsonPath.Length > 1) && (jsonPath.EndsWith(".")))
             {
                 // remove last dot
                 jsonPath = jsonPath.Substring(0, jsonPath.Length - 1);
