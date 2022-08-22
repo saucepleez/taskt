@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Please specify waiting time after keystrokes (ms)")]
         [InputSpecification("")]
         [SampleUsage("**500** or **{{{vWaitTime}}}")]
-        [Remarks("")]
+        [Remarks("If less than 100 is specified, it will be 100")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyIsOptional(true, "500")]
         [PropertyFirstValue("500")]
