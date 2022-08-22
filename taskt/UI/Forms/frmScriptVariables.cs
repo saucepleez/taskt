@@ -282,19 +282,29 @@ namespace taskt.UI.Forms
                 }
                 return;
             }
-            if (!isVariableExists(variableName))
+            if (checkVariableNameIsValid(variableName))
             {
-                //add newly edited node
-                tvScriptVariables.BeginUpdate();
-                AddUserVariableNode(bufferedUserVariableParentNode, variableName, "");
-                AddUserVariableNode(tvScriptVariables.Nodes[1], variableName, "");
-                tvScriptVariables.Nodes[1].ExpandAll();
-                tvScriptVariables.Sort();
-                tvScriptVariables.EndUpdate();
+                if (!isVariableExists(variableName))
+                {
+                    //add newly edited node
+                    tvScriptVariables.BeginUpdate();
+                    AddUserVariableNode(bufferedUserVariableParentNode, variableName, "");
+                    AddUserVariableNode(tvScriptVariables.Nodes[1], variableName, "");
+                    tvScriptVariables.Nodes[1].ExpandAll();
+                    tvScriptVariables.Sort();
+                    tvScriptVariables.EndUpdate();
+                }
+                else
+                {
+                    using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' is already exists.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
+                }
             }
             else
             {
-                using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' is already exists.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }
