@@ -68,6 +68,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 var wc = new System.Net.WebClient();
                 wc.Encoding = Encoding.UTF8;
+                wc.Headers.Add("user-agent", "request");
                 txtRawJSON.Text = wc.DownloadString(url);
                 lblMessage.Text = "URL Open.";
                 ParseJSONProcess();
