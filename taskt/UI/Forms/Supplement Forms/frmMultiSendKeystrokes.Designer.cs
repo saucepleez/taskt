@@ -36,17 +36,18 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelBody = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lnkWindoNameVariable = new taskt.UI.CustomControls.CommandItemControl();
-            this.txtWindowName = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmbSearchMethod = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtTextToSend = new System.Windows.Forms.TextBox();
-            this.lnkKeyStrokesVariable = new taskt.UI.CustomControls.CommandItemControl();
+            this.lnkWindowNameUpToDate = new taskt.UI.CustomControls.CommandItemControl();
+            this.cmbWindowName = new System.Windows.Forms.ComboBox();
             this.txtWaitTime = new System.Windows.Forms.TextBox();
             this.lnkWaitTimeVariable = new taskt.UI.CustomControls.CommandItemControl();
             this.label5 = new System.Windows.Forms.Label();
+            this.lnkKeyStrokesVariable = new taskt.UI.CustomControls.CommandItemControl();
+            this.txtTextToSend = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cmbSearchMethod = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lnkWindoNameVariable = new taskt.UI.CustomControls.CommandItemControl();
+            this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
@@ -143,6 +144,8 @@
             // 
             this.panelBody.AutoScroll = true;
             this.panelBody.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.panelBody.Controls.Add(this.lnkWindowNameUpToDate);
+            this.panelBody.Controls.Add(this.cmbWindowName);
             this.panelBody.Controls.Add(this.txtWaitTime);
             this.panelBody.Controls.Add(this.lnkWaitTimeVariable);
             this.panelBody.Controls.Add(this.label5);
@@ -151,7 +154,6 @@
             this.panelBody.Controls.Add(this.label4);
             this.panelBody.Controls.Add(this.cmbSearchMethod);
             this.panelBody.Controls.Add(this.label3);
-            this.panelBody.Controls.Add(this.txtWindowName);
             this.panelBody.Controls.Add(this.lnkWindoNameVariable);
             this.panelBody.Controls.Add(this.label2);
             this.panelBody.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -159,6 +161,169 @@
             this.panelBody.Name = "panelBody";
             this.panelBody.Size = new System.Drawing.Size(556, 404);
             this.panelBody.TabIndex = 2;
+            // 
+            // lnkWindowNameUpToDate
+            // 
+            this.lnkWindowNameUpToDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkWindowNameUpToDate.CommandDisplay = "Up-to-date";
+            this.lnkWindowNameUpToDate.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkWindowNameUpToDate.CommandImage")));
+            this.lnkWindowNameUpToDate.DataSource = null;
+            this.lnkWindowNameUpToDate.DrawIcon = global::taskt.Properties.Resources.taskt_command_helper;
+            this.lnkWindowNameUpToDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkWindowNameUpToDate.ForeColor = System.Drawing.Color.White;
+            this.lnkWindowNameUpToDate.FunctionalDescription = null;
+            this.lnkWindowNameUpToDate.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
+            this.lnkWindowNameUpToDate.ImplementationDescription = null;
+            this.lnkWindowNameUpToDate.Location = new System.Drawing.Point(6, 50);
+            this.lnkWindowNameUpToDate.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkWindowNameUpToDate.Name = "lnkWindowNameUpToDate";
+            this.lnkWindowNameUpToDate.Size = new System.Drawing.Size(528, 18);
+            this.lnkWindowNameUpToDate.TabIndex = 12;
+            this.lnkWindowNameUpToDate.Click += new System.EventHandler(this.lnkWindowNameUpToDate_Click);
+            // 
+            // cmbWindowName
+            // 
+            this.cmbWindowName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbWindowName.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cmbWindowName.FormattingEnabled = true;
+            this.cmbWindowName.Location = new System.Drawing.Point(9, 69);
+            this.cmbWindowName.Name = "cmbWindowName";
+            this.cmbWindowName.Size = new System.Drawing.Size(521, 28);
+            this.cmbWindowName.TabIndex = 11;
+            this.cmbWindowName.Click += new System.EventHandler(this.cmbWindowName_Click);
+            this.cmbWindowName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cmbWindowName_KeyUp);
+            // 
+            // txtWaitTime
+            // 
+            this.txtWaitTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtWaitTime.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtWaitTime.Location = new System.Drawing.Point(9, 409);
+            this.txtWaitTime.Name = "txtWaitTime";
+            this.txtWaitTime.Size = new System.Drawing.Size(521, 27);
+            this.txtWaitTime.TabIndex = 10;
+            this.txtWaitTime.Text = "500";
+            // 
+            // lnkWaitTimeVariable
+            // 
+            this.lnkWaitTimeVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkWaitTimeVariable.CommandDisplay = "Insert Variable";
+            this.lnkWaitTimeVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkWaitTimeVariable.CommandImage")));
+            this.lnkWaitTimeVariable.DataSource = null;
+            this.lnkWaitTimeVariable.DrawIcon = global::taskt.Properties.Resources.taskt_variable_helper;
+            this.lnkWaitTimeVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkWaitTimeVariable.ForeColor = System.Drawing.Color.White;
+            this.lnkWaitTimeVariable.FunctionalDescription = null;
+            this.lnkWaitTimeVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
+            this.lnkWaitTimeVariable.ImplementationDescription = null;
+            this.lnkWaitTimeVariable.Location = new System.Drawing.Point(5, 388);
+            this.lnkWaitTimeVariable.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkWaitTimeVariable.Name = "lnkWaitTimeVariable";
+            this.lnkWaitTimeVariable.Size = new System.Drawing.Size(528, 18);
+            this.lnkWaitTimeVariable.TabIndex = 9;
+            this.lnkWaitTimeVariable.Click += new System.EventHandler(this.lnkWaitTimeVariable_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(3, 367);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(323, 21);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Waiting time after Keystrokes (Default is 500)";
+            // 
+            // lnkKeyStrokesVariable
+            // 
+            this.lnkKeyStrokesVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkKeyStrokesVariable.CommandDisplay = "Insert Variable";
+            this.lnkKeyStrokesVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkKeyStrokesVariable.CommandImage")));
+            this.lnkKeyStrokesVariable.DataSource = null;
+            this.lnkKeyStrokesVariable.DrawIcon = global::taskt.Properties.Resources.taskt_variable_helper;
+            this.lnkKeyStrokesVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkKeyStrokesVariable.ForeColor = System.Drawing.Color.White;
+            this.lnkKeyStrokesVariable.FunctionalDescription = null;
+            this.lnkKeyStrokesVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
+            this.lnkKeyStrokesVariable.ImplementationDescription = null;
+            this.lnkKeyStrokesVariable.Location = new System.Drawing.Point(7, 200);
+            this.lnkKeyStrokesVariable.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkKeyStrokesVariable.Name = "lnkKeyStrokesVariable";
+            this.lnkKeyStrokesVariable.Size = new System.Drawing.Size(528, 18);
+            this.lnkKeyStrokesVariable.TabIndex = 7;
+            this.lnkKeyStrokesVariable.Click += new System.EventHandler(this.lnkKeyStrokesVariable_Click);
+            // 
+            // txtTextToSend
+            // 
+            this.txtTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTextToSend.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtTextToSend.Location = new System.Drawing.Point(9, 221);
+            this.txtTextToSend.Multiline = true;
+            this.txtTextToSend.Name = "txtTextToSend";
+            this.txtTextToSend.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtTextToSend.Size = new System.Drawing.Size(521, 130);
+            this.txtTextToSend.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(3, 179);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(93, 21);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Text to Send";
+            // 
+            // cmbSearchMethod
+            // 
+            this.cmbSearchMethod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbSearchMethod.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cmbSearchMethod.FormattingEnabled = true;
+            this.cmbSearchMethod.Location = new System.Drawing.Point(9, 133);
+            this.cmbSearchMethod.Name = "cmbSearchMethod";
+            this.cmbSearchMethod.Size = new System.Drawing.Size(521, 28);
+            this.cmbSearchMethod.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(5, 109);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(321, 21);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Window Search Method (Default is Contains)";
+            // 
+            // lnkWindoNameVariable
+            // 
+            this.lnkWindoNameVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkWindoNameVariable.CommandDisplay = "Insert Variable";
+            this.lnkWindoNameVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkWindoNameVariable.CommandImage")));
+            this.lnkWindoNameVariable.DataSource = null;
+            this.lnkWindoNameVariable.DrawIcon = global::taskt.Properties.Resources.taskt_variable_helper;
+            this.lnkWindoNameVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkWindoNameVariable.ForeColor = System.Drawing.Color.White;
+            this.lnkWindoNameVariable.FunctionalDescription = null;
+            this.lnkWindoNameVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
+            this.lnkWindoNameVariable.ImplementationDescription = null;
+            this.lnkWindoNameVariable.Location = new System.Drawing.Point(5, 30);
+            this.lnkWindoNameVariable.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkWindoNameVariable.Name = "lnkWindoNameVariable";
+            this.lnkWindoNameVariable.Size = new System.Drawing.Size(528, 18);
+            this.lnkWindoNameVariable.TabIndex = 1;
+            this.lnkWindoNameVariable.Click += new System.EventHandler(this.lnkWindoNameVariable_Click);
             // 
             // label2
             // 
@@ -171,143 +336,6 @@
             this.label2.Size = new System.Drawing.Size(114, 21);
             this.label2.TabIndex = 0;
             this.label2.Text = "Window Name";
-            // 
-            // lnkWindoNameVariable
-            // 
-            this.lnkWindoNameVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkWindoNameVariable.CommandDisplay = null;
-            this.lnkWindoNameVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkWindoNameVariable.CommandImage")));
-            this.lnkWindoNameVariable.DataSource = null;
-            this.lnkWindoNameVariable.DrawIcon = ((System.Drawing.Image)(resources.GetObject("lnkWindoNameVariable.DrawIcon")));
-            this.lnkWindoNameVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkWindoNameVariable.ForeColor = System.Drawing.Color.White;
-            this.lnkWindoNameVariable.FunctionalDescription = null;
-            this.lnkWindoNameVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
-            this.lnkWindoNameVariable.ImplementationDescription = null;
-            this.lnkWindoNameVariable.Location = new System.Drawing.Point(5, 30);
-            this.lnkWindoNameVariable.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkWindoNameVariable.Name = "lnkWindoNameVariable";
-            this.lnkWindoNameVariable.Size = new System.Drawing.Size(528, 18);
-            this.lnkWindoNameVariable.TabIndex = 1;
-            // 
-            // txtWindowName
-            // 
-            this.txtWindowName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtWindowName.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtWindowName.Location = new System.Drawing.Point(9, 51);
-            this.txtWindowName.Name = "txtWindowName";
-            this.txtWindowName.Size = new System.Drawing.Size(521, 27);
-            this.txtWindowName.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(5, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(177, 21);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Window Search Method";
-            // 
-            // cmbSearchMethod
-            // 
-            this.cmbSearchMethod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbSearchMethod.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.cmbSearchMethod.FormattingEnabled = true;
-            this.cmbSearchMethod.Location = new System.Drawing.Point(9, 115);
-            this.cmbSearchMethod.Name = "cmbSearchMethod";
-            this.cmbSearchMethod.Size = new System.Drawing.Size(521, 28);
-            this.cmbSearchMethod.TabIndex = 4;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(3, 161);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 21);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Text to Send";
-            // 
-            // txtTextToSend
-            // 
-            this.txtTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTextToSend.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtTextToSend.Location = new System.Drawing.Point(9, 203);
-            this.txtTextToSend.Multiline = true;
-            this.txtTextToSend.Name = "txtTextToSend";
-            this.txtTextToSend.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtTextToSend.Size = new System.Drawing.Size(521, 130);
-            this.txtTextToSend.TabIndex = 6;
-            // 
-            // lnkKeyStrokesVariable
-            // 
-            this.lnkKeyStrokesVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkKeyStrokesVariable.CommandDisplay = null;
-            this.lnkKeyStrokesVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkKeyStrokesVariable.CommandImage")));
-            this.lnkKeyStrokesVariable.DataSource = null;
-            this.lnkKeyStrokesVariable.DrawIcon = ((System.Drawing.Image)(resources.GetObject("lnkKeyStrokesVariable.DrawIcon")));
-            this.lnkKeyStrokesVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkKeyStrokesVariable.ForeColor = System.Drawing.Color.White;
-            this.lnkKeyStrokesVariable.FunctionalDescription = null;
-            this.lnkKeyStrokesVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
-            this.lnkKeyStrokesVariable.ImplementationDescription = null;
-            this.lnkKeyStrokesVariable.Location = new System.Drawing.Point(7, 182);
-            this.lnkKeyStrokesVariable.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkKeyStrokesVariable.Name = "lnkKeyStrokesVariable";
-            this.lnkKeyStrokesVariable.Size = new System.Drawing.Size(528, 18);
-            this.lnkKeyStrokesVariable.TabIndex = 7;
-            // 
-            // txtWaitTime
-            // 
-            this.txtWaitTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtWaitTime.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtWaitTime.Location = new System.Drawing.Point(9, 391);
-            this.txtWaitTime.Name = "txtWaitTime";
-            this.txtWaitTime.Size = new System.Drawing.Size(521, 27);
-            this.txtWaitTime.TabIndex = 10;
-            this.txtWaitTime.Text = "500";
-            // 
-            // lnkWaitTimeVariable
-            // 
-            this.lnkWaitTimeVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkWaitTimeVariable.CommandDisplay = null;
-            this.lnkWaitTimeVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkWaitTimeVariable.CommandImage")));
-            this.lnkWaitTimeVariable.DataSource = null;
-            this.lnkWaitTimeVariable.DrawIcon = ((System.Drawing.Image)(resources.GetObject("lnkWaitTimeVariable.DrawIcon")));
-            this.lnkWaitTimeVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkWaitTimeVariable.ForeColor = System.Drawing.Color.White;
-            this.lnkWaitTimeVariable.FunctionalDescription = null;
-            this.lnkWaitTimeVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
-            this.lnkWaitTimeVariable.ImplementationDescription = null;
-            this.lnkWaitTimeVariable.Location = new System.Drawing.Point(5, 370);
-            this.lnkWaitTimeVariable.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkWaitTimeVariable.Name = "lnkWaitTimeVariable";
-            this.lnkWaitTimeVariable.Size = new System.Drawing.Size(528, 18);
-            this.lnkWaitTimeVariable.TabIndex = 9;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(3, 349);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(213, 21);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Waiting time after Keystrokes";
             // 
             // frmMultiSendKeystrokes
             // 
@@ -347,10 +375,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbSearchMethod;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtWindowName;
         private CustomControls.CommandItemControl lnkWindoNameVariable;
         private System.Windows.Forms.TextBox txtWaitTime;
         private CustomControls.CommandItemControl lnkWaitTimeVariable;
         private System.Windows.Forms.Label label5;
+        private CustomControls.CommandItemControl lnkWindowNameUpToDate;
+        private System.Windows.Forms.ComboBox cmbWindowName;
     }
 }
