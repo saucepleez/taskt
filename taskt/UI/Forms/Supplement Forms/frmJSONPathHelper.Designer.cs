@@ -338,6 +338,8 @@
             this.txtJSONPathResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtJSONPathResult.Size = new System.Drawing.Size(142, 246);
             this.txtJSONPathResult.TabIndex = 0;
+            this.myToolTip.SetToolTip(this.txtJSONPathResult, "Double-Click to copy Value in Clipboard");
+            this.txtJSONPathResult.DoubleClick += new System.EventHandler(this.txtJSONPathResult_DoubleClick);
             // 
             // panelJSONPath
             // 

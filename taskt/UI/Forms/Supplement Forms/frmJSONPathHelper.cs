@@ -294,17 +294,29 @@ namespace taskt.UI.Forms.Supplement_Forms
                 lblMessage.Text = "JSONPath Copied.";
             }
         }
+
+        private void txtJSONPathResult_DoubleClick(object sender, EventArgs e)
+        {
+            txtJSONPathResult.SelectAll();
+            if (!String.IsNullOrEmpty(txtJSONPathResult.Text))
+            {
+                Clipboard.SetText(txtJSONPathResult.Text);
+                lblMessage.Text = "Result Copied.";
+            }
+        }
         #endregion
 
         #region Footer buttons
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
         #endregion
 
@@ -338,5 +350,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             OpenFromFileProcess(fileNames[0]);
         }
         #endregion
+
     }
 }
