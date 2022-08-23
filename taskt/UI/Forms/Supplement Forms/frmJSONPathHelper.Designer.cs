@@ -388,7 +388,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmJSONPathHelper";
-            this.Text = "JSON Parser";
+            this.Text = "JSONPath Helper";
             this.Load += new System.EventHandler(this.frmJSONPathHelper_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelFooter.ResumeLayout(false);
