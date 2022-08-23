@@ -287,8 +287,12 @@ namespace taskt.UI.Forms.Supplement_Forms
         #region txtJSONPath
         private void txtJSONPath_DoubleClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(txtJSONPath.Text);
-            lblMessage.Text = "JSONPath Copied.";
+            txtJSONPath.SelectAll();
+            if (!String.IsNullOrEmpty(txtJSONPath.Text))
+            {
+                Clipboard.SetText(txtJSONPath.Text);
+                lblMessage.Text = "JSONPath Copied.";
+            }
         }
         #endregion
 
