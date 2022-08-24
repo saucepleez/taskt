@@ -280,9 +280,9 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(3, 179);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 21);
+            this.label4.Size = new System.Drawing.Size(254, 21);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Text to Send";
+            this.label4.Text = "Send to Text (Separate by NewLine)";
             // 
             // cmbSearchMethod
             // 
