@@ -270,7 +270,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
 
             lstCommands.Items[idx].Selected = true;
-            Console.WriteLine(lstCommands.SelectedIndices[0]);
+            //Console.WriteLine(lstCommands.SelectedIndices[0]);
 
             // search to buttom, create SendKeystrokes list
             while (idx < lastRow)
