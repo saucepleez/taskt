@@ -197,6 +197,7 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
+            this.multiSendKeystrokesEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1728,6 +1729,7 @@
             this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editThisCodeToolStripMenuItem,
+            this.multiSendKeystrokesEditToolStripMenuItem,
             this.helpThisCommandToolStripMenuItem1,
             this.whereThisCommandToolStripMenuItem,
             this.lstContextStripSep1,
@@ -1751,7 +1753,7 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(345, 466);
+            this.lstContextStrip.Size = new System.Drawing.Size(345, 512);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -2077,6 +2079,13 @@
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
             // 
+            // multiSendKeystrokesEditToolStripMenuItem
+            // 
+            this.multiSendKeystrokesEditToolStripMenuItem.Name = "multiSendKeystrokesEditToolStripMenuItem";
+            this.multiSendKeystrokesEditToolStripMenuItem.Size = new System.Drawing.Size(344, 24);
+            this.multiSendKeystrokesEditToolStripMenuItem.Text = "Multi SendKyestrokes Edit";
+            this.multiSendKeystrokesEditToolStripMenuItem.Click += new System.EventHandler(this.multiSendKeystrokesEditToolStripMenuItem_Click);
+            // 
             // frmScriptBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2312,6 +2321,7 @@
         private System.Windows.Forms.ToolStripSeparator optionToolStripSep3;
         private System.Windows.Forms.ToolStripMenuItem showGUIInspectToolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showJSONPathHelperToolToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem multiSendKeystrokesEditToolStripMenuItem;
     }
 }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
@@ -14,9 +15,16 @@ namespace taskt.UI.Forms.Supplement_Forms
     {
         private Core.ApplicationSettings appSetttings;
         private List<Core.Script.ScriptVariable> scriptVariables;
+        private CreationMode mode;
+
+        public enum CreationMode
+        {
+            New,
+            Edit
+        }
 
         #region form events
-        public frmMultiSendKeystrokes(Core.ApplicationSettings appSetttings, List<Core.Script.ScriptVariable> scriptVariables)
+        public frmMultiSendKeystrokes(Core.ApplicationSettings appSetttings, List<Core.Script.ScriptVariable> scriptVariables, List<ScriptCommand> keyCommands = null)
         {
             InitializeComponent();
             this.appSetttings = appSetttings;
@@ -25,6 +33,28 @@ namespace taskt.UI.Forms.Supplement_Forms
             cmbSearchMethod.Items.AddRange(
                 new string[] { "", "Contains", "Starts with", "Ends with", "Exact Match"}
             );
+
+            if ((keyCommands == null) || (keyCommands.Count == 0))
+            {
+                mode = CreationMode.New;
+            }
+            else
+            {
+                mode = CreationMode.Edit;
+
+                SendKeysCommand firstKeystroke = (SendKeysCommand)keyCommands[0];
+                cmbWindowName.Text = firstKeystroke.v_WindowName;
+                cmbSearchMethod.Text = firstKeystroke.v_SearchMethod;
+                txtWaitTime.Text = firstKeystroke.v_WaitTime;
+
+                string keystrokes = "";
+                foreach(var cmd in keyCommands)
+                {
+                    SendKeysCommand c = (SendKeysCommand)cmd;
+                    keystrokes += c.v_TextToSend + "\r\n";
+                }
+                txtTextToSend.Text = keystrokes.Substring(0, keystrokes.Length - 2);
+            }
         }
 
         private void frmMultiSendKeystrokes_Load(object sender, EventArgs e)
@@ -95,40 +125,56 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         #endregion
 
+        #region footer buttons
+        private void uiBtnAdd_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+        }
+
+        private void uiBtnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
+        #endregion
+
         #region Properties
-        public string WindowName
+        public List<ScriptCommand> SendKeystrokesCommands()
         {
-            get
+            string[] sendTexts = txtTextToSend.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+            if (sendTexts.Length == 0)
             {
-                return this.cmbWindowName.Text;
+                return null;
             }
+
+            List<ScriptCommand> commands = new List<ScriptCommand>();
+            foreach (string s in sendTexts)
+            {
+                commands.Add(
+                    new SendKeysCommand()
+                    {
+                        v_WindowName = cmbWindowName.Text,
+                        v_SearchMethod = cmbSearchMethod.Text,
+                        v_TextToSend = s,
+                        v_EncryptionOption = "",
+                        v_WaitTime = txtWaitTime.Text
+                    }
+                );
+            }
+
+            return commands;
         }
 
-        public string SearchMethod
+        public CreationMode Mode
         {
             get
             {
-                return this.SearchMethod;
-            }
-        }
-
-        public string TextToSend
-        {
-            get
-            {
-                return this.txtTextToSend.Text;
-            }
-        }
-
-        public string WaitTime
-        {
-            get
-            {
-                return this.txtWaitTime.Text;
+                return this.mode;
             }
         }
         #endregion
 
+        #region private methods
         private void UpdateWindowNames()
         {
             string currentWindow = cmbWindowName.Text;
@@ -170,5 +216,104 @@ namespace taskt.UI.Forms.Supplement_Forms
                 txt.Text += variableName;
             }
         }
+        #endregion
+
+        #region public methods
+        public static List<ScriptCommand> GetConsecutiveSendKeystrokesCommands(ListView lstCommands, Core.ApplicationSettings appSettings, int startIndex = -1) 
+        {
+            if (startIndex < 0)
+            {
+                if (lstCommands.SelectedIndices.Count > 0)
+                {
+                    startIndex = lstCommands.SelectedIndices[0];
+                }
+                else
+                {
+                    startIndex = 0;
+                }
+            }
+
+            List<ScriptCommand> commands = new List<ScriptCommand>();
+
+            int lastRow = lstCommands.Items.Count;
+            
+
+            ScriptCommand selectedCommand = (ScriptCommand)lstCommands.Items[startIndex].Tag;
+            if (!(selectedCommand is SendKeysCommand))
+            {
+                return commands;
+            }
+
+            // search to top
+            SendKeysCommand tryFirstKeystroke = (SendKeysCommand)selectedCommand;
+            int idx = startIndex;
+            while (idx >= 1)
+            {
+                ScriptCommand cmd = (ScriptCommand)lstCommands.Items[idx-1].Tag;
+                if (cmd is SendKeysCommand)
+                {
+                    SendKeysCommand currentSendKeys = (SendKeysCommand)cmd;
+                    if (isSameWindow(tryFirstKeystroke, currentSendKeys, appSettings))
+                    {
+                        tryFirstKeystroke = currentSendKeys;
+                        idx--;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            lstCommands.Items[idx].Selected = true;
+            Console.WriteLine(lstCommands.SelectedIndices[0]);
+
+            // search to buttom, create SendKeystrokes list
+            while (idx < lastRow)
+            {
+                ScriptCommand cmd = (ScriptCommand)lstCommands.Items[idx].Tag;
+                if (cmd is SendKeysCommand)
+                {
+                    SendKeysCommand currentSendKeys = (SendKeysCommand)cmd;
+                    if (isSameWindow(tryFirstKeystroke, currentSendKeys, appSettings))
+                    {
+                        commands.Add(currentSendKeys);
+                        idx++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return commands;
+        }
+
+        private static bool isSameWindow(SendKeysCommand a, SendKeysCommand b, Core.ApplicationSettings appSettings)
+        {
+            if (a.v_WindowName == b.v_WindowName)
+            {
+                return true;
+            }
+            else if ((b.v_WindowName == appSettings.EngineSettings.CurrentWindowKeyword) || 
+                    (b.v_WindowName == appSettings.EngineSettings.wrapVariableMarker("Env.ActiveWindowTitle")))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
     }
 }

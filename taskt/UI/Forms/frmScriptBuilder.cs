@@ -4625,6 +4625,36 @@ namespace taskt.UI.Forms
 
         #endregion
 
+        private void multiSendKeystrokesEditToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var commands = Supplement_Forms.frmMultiSendKeystrokes.GetConsecutiveSendKeystrokesCommands(lstScriptActions, appSettings);
+            if (commands.Count == 0)
+            {
+                return;
+            }
+
+            using(var fm = new Supplement_Forms.frmMultiSendKeystrokes(appSettings, scriptVariables, commands))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    ChangeSaveState(true);
+
+                    var newXMLCommands = taskt.Core.Script.Script.SerializeScript(fm.SendKeystrokesCommands());
+
+                    // remove current
+                    int selectedIndex = lstScriptActions.SelectedIndices[0];
+                    for (int i = selectedIndex + commands.Count - 1; i >= selectedIndex; i--)
+                    {
+                        lstScriptActions.Items.RemoveAt(i);
+                    }
+
+                    int startIndex = (selectedIndex > 0) ? selectedIndex - 1 : 0;
+
+                    var newCommands = taskt.Core.Script.Script.DeserializeScript(newXMLCommands);
+                    InsertExecutionCommands(newCommands.Commands, startIndex);
+                }
+            }
+        }
     }
 
 }
