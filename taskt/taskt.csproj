@@ -771,6 +771,12 @@
     <Compile Include="UI\Forms\Supplement Forms\frmEngineContextViewer.Designer.cs">
       <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmFormatChecker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmFormatChecker.Designer.cs">
+      <DependentUpon>frmFormatChecker.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1001,6 +1007,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmEngineContextViewer.resx">
       <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmFormatChecker.resx">
+      <DependentUpon>frmFormatChecker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLBuilder.resx">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>

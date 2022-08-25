@@ -30,22 +30,25 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelFooter = new System.Windows.Forms.Panel();
             this.uiBtnAdd = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtValue = new System.Windows.Forms.TextBox();
-            this.txtFormat = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnNow = new System.Windows.Forms.Button();
+            this.btnFolder = new System.Windows.Forms.Button();
+            this.bntFile = new System.Windows.Forms.Button();
+            this.cmbType = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.txtResult = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cmbType = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.txtFormat = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtValue = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelFooter.SuspendLayout();
@@ -81,6 +84,17 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(495, 40);
             this.panelHeader.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Emoji", 16F);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(3, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(167, 30);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Format Checker";
             // 
             // panelFooter
             // 
@@ -127,23 +141,13 @@
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Emoji", 16F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(167, 30);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Format Checker";
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btnHelp);
+            this.panel1.Controls.Add(this.btnNow);
+            this.panel1.Controls.Add(this.btnFolder);
+            this.panel1.Controls.Add(this.bntFile);
             this.panel1.Controls.Add(this.cmbType);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.txtResult);
@@ -159,49 +163,66 @@
             this.panel1.Size = new System.Drawing.Size(495, 269);
             this.panel1.TabIndex = 2;
             // 
-            // label2
+            // btnNow
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 20);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "&Value";
+            this.btnNow.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnNow.Location = new System.Drawing.Point(234, 7);
+            this.btnNow.Name = "btnNow";
+            this.btnNow.Size = new System.Drawing.Size(51, 23);
+            this.btnNow.TabIndex = 10;
+            this.btnNow.Text = "Now";
+            this.btnNow.UseVisualStyleBackColor = true;
+            this.btnNow.Click += new System.EventHandler(this.btnNow_Click);
             // 
-            // txtValue
+            // btnFolder
             // 
-            this.txtValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.btnFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnFolder.Location = new System.Drawing.Point(164, 7);
+            this.btnFolder.Name = "btnFolder";
+            this.btnFolder.Size = new System.Drawing.Size(51, 23);
+            this.btnFolder.TabIndex = 9;
+            this.btnFolder.Text = "Folder";
+            this.btnFolder.UseVisualStyleBackColor = true;
+            this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
+            // 
+            // bntFile
+            // 
+            this.bntFile.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.bntFile.Location = new System.Drawing.Point(95, 7);
+            this.bntFile.Name = "bntFile";
+            this.bntFile.Size = new System.Drawing.Size(51, 23);
+            this.bntFile.TabIndex = 8;
+            this.bntFile.Text = "File";
+            this.bntFile.UseVisualStyleBackColor = true;
+            this.bntFile.Click += new System.EventHandler(this.bntFile_Click);
+            // 
+            // cmbType
+            // 
+            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtValue.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtValue.Location = new System.Drawing.Point(16, 36);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(467, 29);
-            this.txtValue.TabIndex = 1;
+            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbType.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Items.AddRange(new object[] {
+            "Number",
+            "DateTime",
+            "File Folder"});
+            this.cmbType.Location = new System.Drawing.Point(16, 104);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(338, 28);
+            this.cmbType.TabIndex = 3;
             // 
-            // txtFormat
+            // label5
             // 
-            this.txtFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFormat.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtFormat.Location = new System.Drawing.Point(16, 167);
-            this.txtFormat.Name = "txtFormat";
-            this.txtFormat.Size = new System.Drawing.Size(467, 29);
-            this.txtFormat.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(12, 144);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 20);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "&Format";
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(12, 77);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 20);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "&Type";
             // 
             // txtResult
             // 
@@ -226,63 +247,65 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "&Result";
             // 
-            // label5
+            // txtFormat
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(12, 77);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 20);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "&Type";
-            // 
-            // cmbType
-            // 
-            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbType.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
-            "Number",
-            "DateTime",
-            "File Folder"});
-            this.cmbType.Location = new System.Drawing.Point(16, 104);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(338, 28);
-            this.cmbType.TabIndex = 3;
+            this.txtFormat.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtFormat.Location = new System.Drawing.Point(16, 167);
+            this.txtFormat.Name = "txtFormat";
+            this.txtFormat.Size = new System.Drawing.Size(467, 29);
+            this.txtFormat.TabIndex = 5;
+            this.txtFormat.TextChanged += new System.EventHandler(this.txtFormat_TextChanged);
             // 
-            // button1
+            // label3
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.Location = new System.Drawing.Point(95, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(51, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "File";
-            this.button1.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(12, 144);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 20);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "&Format";
             // 
-            // button2
+            // txtValue
             // 
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button2.Location = new System.Drawing.Point(164, 7);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(51, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Folder";
-            this.button2.UseVisualStyleBackColor = true;
+            this.txtValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtValue.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtValue.Location = new System.Drawing.Point(16, 36);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(467, 29);
+            this.txtValue.TabIndex = 1;
+            this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
             // 
-            // button3
+            // label2
             // 
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button3.Location = new System.Drawing.Point(234, 7);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(51, 23);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Now";
-            this.button3.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(12, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 20);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "&Value";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "All Files (*.*)|*.*";
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnHelp.Location = new System.Drawing.Point(95, 138);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(51, 23);
+            this.btnHelp.TabIndex = 11;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
             // 
             // frmFormatChecker
             // 
@@ -324,8 +347,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtValue;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnNow;
+        private System.Windows.Forms.Button btnFolder;
+        private System.Windows.Forms.Button bntFile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button btnHelp;
     }
 }
