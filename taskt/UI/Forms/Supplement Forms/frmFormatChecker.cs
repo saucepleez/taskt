@@ -114,6 +114,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                     }
                     break;
                 case "File Folder":
+                    txtResult.Text = Core.FilePathControls.formatFileFolderPath(value, fmt);
                     break;
                 default:
                     break;
@@ -133,6 +134,10 @@ namespace taskt.UI.Forms.Supplement_Forms
                     System.Diagnostics.Process.Start(DateTimeFormatURL2);
                     break;
                 case "File Folder":
+                    using (var fm = new Supplemental.frmDialog(Core.FilePathControls.getFormatHelp(), "File Folder Formats", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    {
+                        fm.ShowDialog();
+                    }
                     break;
             }
         }
