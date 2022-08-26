@@ -245,5 +245,32 @@ namespace taskt.Core
                     break;
             }
         }
+
+        public static string getFormatHelp()
+        {
+            string help =
+                @"File
+FileName
+fn
+    File name.
+Folder
+Directory
+dir
+    Folder name.
+FileWithoutExtension
+FileNameWithoutExtension
+fnwoext
+    File name without extension.
+Extension
+ext
+    File extension.
+Drive
+DriveName
+root
+    Drive name.
+
+!!These are Case insensitive!!";
+            return help;
+        }
     }
 }
