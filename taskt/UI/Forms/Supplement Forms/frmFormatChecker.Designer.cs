@@ -35,6 +35,7 @@
             this.uiBtnAdd = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.btnNow = new System.Windows.Forms.Button();
             this.btnFolder = new System.Windows.Forms.Button();
             this.bntFile = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnHelp = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelFooter.SuspendLayout();
@@ -123,6 +123,7 @@
             this.uiBtnAdd.TabIndex = 20;
             this.uiBtnAdd.TabStop = false;
             this.uiBtnAdd.Text = "Ok";
+            this.uiBtnAdd.Click += new System.EventHandler(this.uiBtnAdd_Click);
             // 
             // uiBtnCancel
             // 
@@ -140,6 +141,7 @@
             this.uiBtnCancel.TabIndex = 21;
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
+            this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // panel1
             // 
@@ -162,6 +164,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(495, 269);
             this.panel1.TabIndex = 2;
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnHelp.Location = new System.Drawing.Point(95, 138);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(51, 23);
+            this.btnHelp.TabIndex = 11;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // btnNow
             // 
@@ -296,17 +309,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.Filter = "All Files (*.*)|*.*";
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnHelp.Location = new System.Drawing.Point(95, 138);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(51, 23);
-            this.btnHelp.TabIndex = 11;
-            this.btnHelp.Text = "Help";
-            this.btnHelp.UseVisualStyleBackColor = true;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // frmFormatChecker
             // 

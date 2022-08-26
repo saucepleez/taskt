@@ -161,8 +161,38 @@ namespace taskt.UI.Forms.Supplement_Forms
                     break;
             }
         }
+
         #endregion
 
-       
+        #region footer buttons
+        private void uiBtnAdd_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void uiBtnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+        #endregion
+
+        #region properties
+        public string Format
+        {
+            get
+            {
+                return this.txtFormat.Text;
+            }
+        }
+        public string Value
+        {
+            get
+            {
+                return this.txtValue.Text;
+            }
+        }
+        #endregion
     }
 }
