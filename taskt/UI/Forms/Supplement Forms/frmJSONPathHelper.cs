@@ -306,6 +306,13 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         #endregion
 
+        #region txtRawJSON
+        private void txtRawJSON_DoubleClick(object sender, EventArgs e)
+        {
+            ParseJSONProcess();
+        }
+        #endregion
+
         #region Footer buttons
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
@@ -350,6 +357,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             OpenFromFileProcess(fileNames[0]);
         }
         #endregion
+
 
     }
 }
