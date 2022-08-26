@@ -12,12 +12,6 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmFormatChecker : ThemedForm
     {
-        private const string NumberFormatURL1 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings";
-        private const string NumberFormatURL2 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings";
-
-        private const string DateTimeFormatURL1 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings";
-        private const string DateTimeFormatURL2 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings";
-
         public frmFormatChecker()
         {
             InitializeComponent();
@@ -126,12 +120,12 @@ namespace taskt.UI.Forms.Supplement_Forms
             switch (cmbType.Text)
             {
                 case "Number":
-                    System.Diagnostics.Process.Start(NumberFormatURL1);
-                    System.Diagnostics.Process.Start(NumberFormatURL2);
+                    System.Diagnostics.Process.Start(Core.MyURLs.NumberFormatURL1);
+                    System.Diagnostics.Process.Start(Core.MyURLs.NumberFormatURL2);
                     break;
                 case "DateTime":
-                    System.Diagnostics.Process.Start(DateTimeFormatURL1);
-                    System.Diagnostics.Process.Start(DateTimeFormatURL2);
+                    System.Diagnostics.Process.Start(Core.MyURLs.DateTimeFormatURL1);
+                    System.Diagnostics.Process.Start(Core.MyURLs.DateTimeFormatURL2);
                     break;
                 case "File Folder":
                     using (var fm = new Supplemental.frmDialog(Core.FilePathControls.getFormatHelp(), "File Folder Formats", Supplemental.frmDialog.DialogType.OkOnly, 0))

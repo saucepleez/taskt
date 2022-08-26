@@ -23,6 +23,14 @@ namespace taskt.Core
         public const string GeckoDriverURL = "https://github.com/mozilla/geckodriver/releases/";
         public const string IEDriverURL = "https://www.selenium.dev/downloads/";
 
+        // format documents
+        public const string NumberFormatURL1 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings";
+        public const string NumberFormatURL2 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings";
+
+        public const string DateTimeFormatURL1 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings";
+        public const string DateTimeFormatURL2 = "https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings";
+
+
         public static string GetWikiURL(string commandName, string groupName)
         {
             string page = commandName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
