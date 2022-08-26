@@ -4354,6 +4354,12 @@ namespace taskt.UI.Forms
             var fm = new Supplement_Forms.frmJSONPathHelper();
             fm.Show();
         }
+
+        private void showFormatCheckerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fm = new UI.Forms.Supplement_Forms.frmFormatChecker();
+            fm.Show();
+        }
         #endregion
 
         #region Script Actions menu event handler
@@ -4666,9 +4672,9 @@ namespace taskt.UI.Forms
             this.lastEditorPosition = editor.Location;
         }
 
+
         #endregion
 
-        
     }
 
 }
