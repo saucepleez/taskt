@@ -95,41 +95,42 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
                 case "Path":
-                    switch(formatting.ToLower())
-                    {
-                        case "file":
-                        case "filename":
-                        case "fn":
-                            formattedString = Path.GetFileName(variableString);
-                            break;
+                    //switch(formatting.ToLower())
+                    //{
+                    //    case "file":
+                    //    case "filename":
+                    //    case "fn":
+                    //        formattedString = Path.GetFileName(variableString);
+                    //        break;
 
-                        case "folder":
-                        case "directory":
-                        case "dir":
-                            formattedString = Path.GetDirectoryName(variableString);
-                            break;
+                    //    case "folder":
+                    //    case "directory":
+                    //    case "dir":
+                    //        formattedString = Path.GetDirectoryName(variableString);
+                    //        break;
 
-                        case "filewithoutextension":
-                        case "filenamewithoutextension":
-                        case "fnwoext":
-                            formattedString = Path.GetFileNameWithoutExtension(variableString);
-                            break;
+                    //    case "filewithoutextension":
+                    //    case "filenamewithoutextension":
+                    //    case "fnwoext":
+                    //        formattedString = Path.GetFileNameWithoutExtension(variableString);
+                    //        break;
 
-                        case "extension":
-                        case "ext":
-                            formattedString = Path.GetExtension(variableString);
-                            break;
+                    //    case "extension":
+                    //    case "ext":
+                    //        formattedString = Path.GetExtension(variableString);
+                    //        break;
 
-                        case "drive":
-                        case "drivename":
-                        case "root":
-                            formattedString = Path.GetPathRoot(variableString);
-                            break;
+                    //    case "drive":
+                    //    case "drivename":
+                    //    case "root":
+                    //        formattedString = Path.GetPathRoot(variableString);
+                    //        break;
 
-                        default:
-                            formattedString = "";
-                            break;
-                    }
+                    //    default:
+                    //        formattedString = "";
+                    //        break;
+                    //}
+                    formattedString = FilePathControls.formatFileFolderPath(variableString, formatting);
                     break;
                     
                 default:
