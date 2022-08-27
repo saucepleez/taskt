@@ -18,8 +18,12 @@ namespace taskt_updater
         public frmUpdating(string packageURL)
         {
             InitializeComponent();
-            bgwUpdate.RunWorkerAsync(packageURL);
-      
+            bgwUpdate.RunWorkerAsync(packageURL);   
+        }
+
+        private void frmUpdating_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void bgwUpdate_DoWork(object sender, DoWorkEventArgs e)
@@ -72,13 +76,10 @@ namespace taskt_updater
                 }
             }
 
-
-
             //create deployment folder reference
             var deploymentFolder = tempUpdateFolder + "taskt\\";
 
             bgwUpdate.ReportProgress(0, "Deployed to " + deploymentFolder);
-
 
             bgwUpdate.ReportProgress(0, "Updating Files...");
 
@@ -125,15 +126,9 @@ namespace taskt_updater
                 {
                     stack.Push(new Folders(folder, Path.Combine(folders.Target, Path.GetFileName(folder))));
                 }
-
             }
         }
 
-
-        private void frmUpdating_Load(object sender, EventArgs e)
-        {
-      
-        }
 
         private void bgwUpdate_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
