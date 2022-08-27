@@ -194,5 +194,18 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
         }
         #endregion
+
+        #region self call
+        public static void ShowFormatCheckerFormLinkClicked(TextBox formatTextBox, string type = "")
+        {
+             using (var fm = new frmFormatChecker(type))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    formatTextBox.Text = fm.Format;
+                }
+            }
+        }
+        #endregion
     }
 }

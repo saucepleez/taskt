@@ -36,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Please specify DateTime Format")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Format Checker", "lnkFormatChecker_Click")]
         [InputSpecification("")]
         [SampleUsage("**MM/dd/yyyy** or **HH:mm:ss** or **{{{vFormat}}}**")]
         [Remarks("Please refer to the Microsoft DateTime.ToString() page for format details")]
@@ -75,6 +76,12 @@ namespace taskt.Core.Automation.Commands
             string format = v_Format.ConvertToUserVariable(engine);
 
             myDT.ToString(format).StoreInUserVariable(engine, v_Result);
+        }
+
+        private void lnkFormatChecker_Click(object sender, EventArgs e)
+        {
+            TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
+            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt, "DateTime");
         }
 
         //public override string GetDisplayValue()
