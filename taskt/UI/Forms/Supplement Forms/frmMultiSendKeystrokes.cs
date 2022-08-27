@@ -253,7 +253,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 if (cmd is SendKeysCommand)
                 {
                     SendKeysCommand currentSendKeys = (SendKeysCommand)cmd;
-                    if (isSameWindow(tryFirstKeystroke, currentSendKeys, appSettings))
+                    if (isSameWindowToBottom(currentSendKeys, tryFirstKeystroke,  appSettings))
                     {
                         tryFirstKeystroke = currentSendKeys;
                         idx--;
@@ -279,7 +279,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 if (cmd is SendKeysCommand)
                 {
                     SendKeysCommand currentSendKeys = (SendKeysCommand)cmd;
-                    if (isSameWindow(tryFirstKeystroke, currentSendKeys, appSettings))
+                    if (isSameWindowToBottom(tryFirstKeystroke, currentSendKeys, appSettings))
                     {
                         commands.Add(currentSendKeys);
                         idx++;
@@ -297,14 +297,14 @@ namespace taskt.UI.Forms.Supplement_Forms
             return commands;
         }
 
-        private static bool isSameWindow(SendKeysCommand a, SendKeysCommand b, Core.ApplicationSettings appSettings)
+        private static bool isSameWindowToBottom(SendKeysCommand aboveCommand, SendKeysCommand bottomCommand, Core.ApplicationSettings appSettings)
         {
-            if (a.v_WindowName == b.v_WindowName)
+            if (aboveCommand.v_WindowName == bottomCommand.v_WindowName)
             {
                 return true;
             }
-            else if ((b.v_WindowName == appSettings.EngineSettings.CurrentWindowKeyword) || 
-                    (b.v_WindowName == appSettings.EngineSettings.wrapVariableMarker("Env.ActiveWindowTitle")))
+            else if ((bottomCommand.v_WindowName == appSettings.EngineSettings.CurrentWindowKeyword) || 
+                    (bottomCommand.v_WindowName == appSettings.EngineSettings.wrapVariableMarker("Env.ActiveWindowTitle")))
             {
                 return true;
             }
