@@ -105,7 +105,6 @@
             this.uiBtnCancel.TabIndex = 25;
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
-            this.uiBtnCancel.Visible = false;
             this.uiBtnCancel.Click += new System.EventHandler(this.uiBtnCancel_Click);
             // 
             // panelBody
