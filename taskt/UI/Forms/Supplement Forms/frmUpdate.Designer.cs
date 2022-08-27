@@ -75,7 +75,7 @@
             // 
             this.uiBtnOk.BackColor = System.Drawing.Color.Transparent;
             this.uiBtnOk.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiBtnOk.DisplayText = "OK";
+            this.uiBtnOk.DisplayText = "Update";
             this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOk.Image = global::taskt.Properties.Resources.various_ok_button;
@@ -86,7 +86,7 @@
             this.uiBtnOk.Size = new System.Drawing.Size(88, 45);
             this.uiBtnOk.TabIndex = 24;
             this.uiBtnOk.TabStop = false;
-            this.uiBtnOk.Text = "OK";
+            this.uiBtnOk.Text = "Update";
             this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // uiBtnCancel
