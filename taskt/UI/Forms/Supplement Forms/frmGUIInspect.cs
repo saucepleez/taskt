@@ -397,12 +397,14 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void txtXPath_DoubleClick(object sender, EventArgs e)
         {
             txtXPath.SelectAll();
-            Clipboard.SetText(txtXPath.Text);
-
-            //lblMessage.Text = "XPath Copied!!";
-            //lblMessage.Visible = true;
-            //timerLabelShowTime.Start();
-            showMessageTimer("XPath Copied!!");
+            if (!String.IsNullOrEmpty(txtXPath.Text))
+            {
+                Clipboard.SetText(txtXPath.Text);
+                //lblMessage.Text = "XPath Copied!!";
+                //lblMessage.Visible = true;
+                //timerLabelShowTime.Start();
+                showMessageTimer("XPath Copied!!");
+            }
         }
 
         private void timerLabelShowTime_Tick(object sender, EventArgs e)

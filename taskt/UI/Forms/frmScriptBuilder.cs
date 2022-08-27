@@ -2790,6 +2790,15 @@ namespace taskt.UI.Forms
                         insertCommentToolStripMenuItem.Visible = true;
                     }
 
+                    if ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag is Core.Automation.Commands.SendKeysCommand)
+                    {
+                        multiSendKeystrokesEditToolStripMenuItem.Visible = true;
+                    }
+                    else
+                    {
+                        multiSendKeystrokesEditToolStripMenuItem.Visible = false;
+                    }
+
                     lstContextStrip.Show(Cursor.Position);
                 }
             }
@@ -2893,6 +2902,43 @@ namespace taskt.UI.Forms
         private void editThisCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lstScriptActions_DoubleClick(null, null);
+        }
+        private void multiSendKeystrokesEditToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var commands = Supplement_Forms.frmMultiSendKeystrokes.GetConsecutiveSendKeystrokesCommands(lstScriptActions, appSettings);
+            if (commands.Count == 0)
+            {
+                return;
+            }
+
+            using (var fm = new Supplement_Forms.frmMultiSendKeystrokes(appSettings, scriptVariables, commands))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    ChangeSaveState(true);
+
+                    var newCommands = fm.SendKeystrokesCommands();
+
+                    // remove current
+                    int selectedIndex = lstScriptActions.SelectedIndices[0];
+                    for (int i = selectedIndex + commands.Count - 1; i >= selectedIndex; i--)
+                    {
+                        lstScriptActions.Items.RemoveAt(i);
+                    }
+
+                    lstScriptActions.BeginUpdate();
+
+                    int idx = selectedIndex;
+                    foreach (var cmd in newCommands)
+                    {
+                        var lstCommand = CreateScriptCommandListViewItem(cmd);
+                        lstScriptActions.Items.Insert(idx, lstCommand);
+                        idx++;
+                    }
+
+                    lstScriptActions.EndUpdate();
+                }
+            }
         }
 
         private void whereThisCommandToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4308,6 +4354,12 @@ namespace taskt.UI.Forms
             var fm = new Supplement_Forms.frmJSONPathHelper();
             fm.Show();
         }
+
+        private void showFormatCheckerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fm = new UI.Forms.Supplement_Forms.frmFormatChecker();
+            fm.Show();
+        }
         #endregion
 
         #region Script Actions menu event handler
@@ -4619,6 +4671,7 @@ namespace taskt.UI.Forms
             this.lastEditorSize = editor.Size;
             this.lastEditorPosition = editor.Location;
         }
+
 
         #endregion
 

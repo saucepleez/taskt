@@ -218,7 +218,7 @@
             this.panalRawJSONButtons.Margin = new System.Windows.Forms.Padding(0);
             this.panalRawJSONButtons.Name = "panalRawJSONButtons";
             this.panalRawJSONButtons.Size = new System.Drawing.Size(235, 40);
-            this.panalRawJSONButtons.TabIndex = 2;
+            this.panalRawJSONButtons.TabIndex = 0;
             // 
             // picClear
             // 
@@ -240,7 +240,8 @@
             this.btnParse.Name = "btnParse";
             this.btnParse.Size = new System.Drawing.Size(75, 34);
             this.btnParse.TabIndex = 1;
-            this.btnParse.Text = "Parse";
+            this.btnParse.Text = "Pars&e";
+            this.myToolTip.SetToolTip(this.btnParse, "Double-Click on the text box below to Parse");
             this.btnParse.UseVisualStyleBackColor = true;
             this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
             // 
@@ -279,9 +280,10 @@
             this.txtRawJSON.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtRawJSON.Size = new System.Drawing.Size(229, 240);
             this.txtRawJSON.TabIndex = 1;
-            this.myToolTip.SetToolTip(this.txtRawJSON, "Drag & Drop JSON file here");
+            this.myToolTip.SetToolTip(this.txtRawJSON, "Drag & Drop JSON file here\r\nDouble-Click to Parse JSON");
             this.txtRawJSON.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtRawJSON_DragDrop);
             this.txtRawJSON.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtRawJSON_DragEnter);
+            this.txtRawJSON.DoubleClick += new System.EventHandler(this.txtRawJSON_DoubleClick);
             // 
             // tableJSONParse
             // 
@@ -338,6 +340,8 @@
             this.txtJSONPathResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtJSONPathResult.Size = new System.Drawing.Size(142, 246);
             this.txtJSONPathResult.TabIndex = 0;
+            this.myToolTip.SetToolTip(this.txtJSONPathResult, "Double-Click to copy Value in Clipboard");
+            this.txtJSONPathResult.DoubleClick += new System.EventHandler(this.txtJSONPathResult_DoubleClick);
             // 
             // panelJSONPath
             // 
@@ -372,7 +376,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 20);
             this.label2.TabIndex = 21;
-            this.label2.Text = "JSONPath:";
+            this.label2.Text = "JSON&Path:";
             // 
             // openFileDialog1
             // 
@@ -388,7 +392,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmJSONPathHelper";
-            this.Text = "JSON Parser";
+            this.Text = "JSONPath Helper";
             this.Load += new System.EventHandler(this.frmJSONPathHelper_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelFooter.ResumeLayout(false);

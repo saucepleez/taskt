@@ -33,6 +33,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Please specify Number Format")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyCustomUIHelper("Format Checker", "lnkFormatChecker_Click")]
         [InputSpecification("")]
         [SampleUsage("**0.#** or **C** or **{{{vFormat}}}**")]
         [Remarks("")]
@@ -71,6 +72,11 @@ namespace taskt.Core.Automation.Commands
             string format = v_Format.ConvertToUserVariable(engine);
 
             value.ToString(format).StoreInUserVariable(engine, v_Result);
+        }
+        private void lnkFormatChecker_Click(object sender, EventArgs e)
+        {
+            TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
+            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt, "Number");
         }
     }
 }

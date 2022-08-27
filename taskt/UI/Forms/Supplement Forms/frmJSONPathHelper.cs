@@ -68,6 +68,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 var wc = new System.Net.WebClient();
                 wc.Encoding = Encoding.UTF8;
+                wc.Headers.Add("user-agent", "request");
                 txtRawJSON.Text = wc.DownloadString(url);
                 lblMessage.Text = "URL Open.";
                 ParseJSONProcess();
@@ -103,6 +104,8 @@ namespace taskt.UI.Forms.Supplement_Forms
                 tvJSON.Nodes.Add(node);
                 tvJSON.ExpandAll();
 
+                tvJSON.Nodes[0].EnsureVisible();
+
                 lblMessage.Text = "JSON parsed.";
             }
             catch
@@ -120,6 +123,8 @@ namespace taskt.UI.Forms.Supplement_Forms
 
                     tvJSON.Nodes.Add(node);
                     tvJSON.ExpandAll();
+
+                    tvJSON.Nodes[0].EnsureVisible();
 
                     lblMessage.Text = "JSON parsed.";
                 }
@@ -267,7 +272,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 p = p.Parent;
             }
 
-            if (jsonPath.Length > 1)
+            if ((jsonPath.Length > 1) && (jsonPath.EndsWith(".")))
             {
                 // remove last dot
                 jsonPath = jsonPath.Substring(0, jsonPath.Length - 1);
@@ -282,8 +287,29 @@ namespace taskt.UI.Forms.Supplement_Forms
         #region txtJSONPath
         private void txtJSONPath_DoubleClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(txtJSONPath.Text);
-            lblMessage.Text = "JSONPath Copied.";
+            txtJSONPath.SelectAll();
+            if (!String.IsNullOrEmpty(txtJSONPath.Text))
+            {
+                Clipboard.SetText(txtJSONPath.Text);
+                lblMessage.Text = "JSONPath Copied.";
+            }
+        }
+
+        private void txtJSONPathResult_DoubleClick(object sender, EventArgs e)
+        {
+            txtJSONPathResult.SelectAll();
+            if (!String.IsNullOrEmpty(txtJSONPathResult.Text))
+            {
+                Clipboard.SetText(txtJSONPathResult.Text);
+                lblMessage.Text = "Result Copied.";
+            }
+        }
+        #endregion
+
+        #region txtRawJSON
+        private void txtRawJSON_DoubleClick(object sender, EventArgs e)
+        {
+            ParseJSONProcess();
         }
         #endregion
 
@@ -291,11 +317,13 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
         #endregion
 
@@ -329,5 +357,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             OpenFromFileProcess(fileNames[0]);
         }
         #endregion
+
+
     }
 }

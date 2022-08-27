@@ -1115,6 +1115,11 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(parameterTable, parameterNameColumn, parameterValueColumn);
 
+            if (String.IsNullOrEmpty(actionType))
+            {
+                actionType = "";
+            }
+
             switch (actionType.ToLower())
             {
                 case "numeric compare":

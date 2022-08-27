@@ -136,6 +136,7 @@ namespace taskt.Core.Automation.Commands
     // Excel
     [XmlInclude(typeof(ExcelActivateSheetCommand))]
     [XmlInclude(typeof(ExcelAddWorkbookCommand))]
+    [XmlInclude(typeof(ExcelAddWorksheetCommand))]
     [XmlInclude(typeof(ExcelAppendCellCommand))]
     [XmlInclude(typeof(ExcelAppendRowCommand))]
     [XmlInclude(typeof(ExcelCheckCellValueExistsCommand))]
@@ -330,8 +331,10 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(SystemActionCommand))]
 
     // Task
+    [XmlInclude(typeof(LoadTaskCommand))]
     [XmlInclude(typeof(RunTaskCommand))]
     [XmlInclude(typeof(StopTaskCommand))]
+    [XmlInclude(typeof(UnloadTaskCommand))]
 
     // Text
     [XmlInclude(typeof(CheckTextCommand))]
@@ -434,9 +437,7 @@ namespace taskt.Core.Automation.Commands
     //[XmlInclude(typeof(DatabaseRunQueryCommand))]
     //[XmlInclude(typeof(AddDataTableColumnAndFillValuesByListCommand))]
     //[XmlInclude(typeof(AddDataTableColumnsAndFillValuesByDataTableCommand))]
-    [XmlInclude(typeof(ExcelAddWorksheetCommand))]
-    [XmlInclude(typeof(LoadTaskCommand))]
-    [XmlInclude(typeof(UnloadTaskCommand))]
+   
 
     public abstract class ScriptCommand
     {

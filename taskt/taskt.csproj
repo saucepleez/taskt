@@ -122,8 +122,8 @@
     <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.10.1.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da, processorArchitecture=MSIL">
       <HintPath>..\packages\TaskScheduler.2.10.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
     </Reference>
-    <Reference Include="MimeKit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
-      <HintPath>..\packages\MimeKit.3.3.0\lib\net48\MimeKit.dll</HintPath>
+    <Reference Include="MimeKit, Version=3.4.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.3.4.0\lib\net48\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -143,8 +143,8 @@
     <Reference Include="Serilog.Sinks.File, Version=5.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.5.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
-    <Reference Include="SharpCompress, Version=0.32.1.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpCompress.0.32.1\lib\net461\SharpCompress.dll</HintPath>
+    <Reference Include="SharpCompress, Version=0.32.2.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpCompress.0.32.2\lib\net461\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="SharpSimpleNLG, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpSimpleNLG.1.3.0\lib\net472\SharpSimpleNLG.dll</HintPath>
@@ -278,10 +278,10 @@
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WebDriver, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.4.3.0\lib\net48\WebDriver.dll</HintPath>
+      <HintPath>..\packages\Selenium.WebDriver.4.4.0\lib\net48\WebDriver.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Support, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.Support.4.3.0\lib\net48\WebDriver.Support.dll</HintPath>
+      <HintPath>..\packages\Selenium.Support.4.4.0\lib\net48\WebDriver.Support.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net, Version=0.15.2.11, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.15.2\lib\net45\WebSocket4Net.dll</HintPath>
@@ -771,6 +771,12 @@
     <Compile Include="UI\Forms\Supplement Forms\frmEngineContextViewer.Designer.cs">
       <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmFormatChecker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmFormatChecker.Designer.cs">
+      <DependentUpon>frmFormatChecker.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -818,6 +824,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.Designer.cs">
       <DependentUpon>frmKeysBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.Designer.cs">
+      <DependentUpon>frmMultiSendKeystrokes.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.cs">
       <SubType>Form</SubType>
@@ -996,6 +1008,9 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmEngineContextViewer.resx">
       <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmFormatChecker.resx">
+      <DependentUpon>frmFormatChecker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLBuilder.resx">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
     </EmbeddedResource>
@@ -1022,6 +1037,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmKeysBuilder.resx">
       <DependentUpon>frmKeysBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.resx">
+      <DependentUpon>frmMultiSendKeystrokes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>

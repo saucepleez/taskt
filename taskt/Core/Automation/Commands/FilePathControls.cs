@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -204,6 +205,72 @@ namespace taskt.Core
         public static bool isURL(string path)
         {
             return (path.StartsWith("http:") || path.StartsWith("https:"));
+        }
+
+        public static string formatFileFolderPath(string path, string format)
+        {
+            switch (format.ToLower())
+            {
+                case "file":
+                case "filename":
+                case "fn":
+                    return Path.GetFileName(path);
+                    break;
+
+                case "folder":
+                case "directory":
+                case "dir":
+                    return Path.GetDirectoryName(path);
+                    break;
+
+                case "filewithoutextension":
+                case "filenamewithoutextension":
+                case "fnwoext":
+                    return Path.GetFileNameWithoutExtension(path);
+                    break;
+
+                case "extension":
+                case "ext":
+                    return Path.GetExtension(path);
+                    break;
+
+                case "drive":
+                case "drivename":
+                case "root":
+                    return Path.GetPathRoot(path);
+                    break;
+
+                default:
+                    return "";
+                    break;
+            }
+        }
+
+        public static string getFormatHelp()
+        {
+            string help =
+                @"File
+FileName
+fn
+    File name.
+Folder
+Directory
+dir
+    Folder name.
+FileWithoutExtension
+FileNameWithoutExtension
+fnwoext
+    File name without extension.
+Extension
+ext
+    File extension.
+Drive
+DriveName
+root
+    Drive name.
+
+!!These are Case insensitive!!";
+            return help;
         }
     }
 }

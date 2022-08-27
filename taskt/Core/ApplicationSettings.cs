@@ -413,6 +413,10 @@ namespace taskt.Core
                     return false;
                 }
             }
+            if (vName.StartsWith("__INNER_"))
+            {
+                return false;
+            }
             return true;
         }
     }
