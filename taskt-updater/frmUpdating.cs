@@ -138,8 +138,6 @@ namespace taskt_updater
 
         private void bgwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-
-            
             if (e.Error is null)
             {
                 System.Diagnostics.Process.Start(topLevelFolder + "\\taskt.exe");
