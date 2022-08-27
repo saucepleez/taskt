@@ -27,9 +27,6 @@ namespace taskt_updater
             {
                 Application.Run(new frmUpdating(args[0]));
             }
-
-
-           
         }
     }
 }
