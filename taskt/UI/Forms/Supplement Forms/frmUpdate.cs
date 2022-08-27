@@ -12,7 +12,6 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmUpdate : ThemedForm
     {
-      
         public frmUpdate(Core.UpdateManifest manifest)
         {
             InitializeComponent();
