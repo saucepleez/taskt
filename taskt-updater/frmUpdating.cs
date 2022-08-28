@@ -14,7 +14,24 @@ namespace taskt_updater
 {
     public partial class frmUpdating : Form
     {
+        private const string TASKT_WORK_DIR_NAME = "temp";
+
         string topLevelFolder = Application.StartupPath;
+        string myPath = Application.ExecutablePath;
+
+        private class Folders
+        {
+            public string Source { get; private set; }
+            public string Target { get; private set; }
+
+            public Folders(string source, string target)
+            {
+                Source = source;
+                Target = target;
+            }
+        }
+
+        #region form events
         public frmUpdating(string packageURL)
         {
             InitializeComponent();
@@ -25,15 +42,16 @@ namespace taskt_updater
         {
 
         }
+        #endregion
 
+        #region BackGroundWorker Events
         private void bgwUpdate_DoWork(object sender, DoWorkEventArgs e)
         {
             //get package
             bgwUpdate.ReportProgress(0, "Setting Up...");
 
-
             //define update folder
-            var tempUpdateFolder = topLevelFolder + "\\temp\\";
+            var tempUpdateFolder = topLevelFolder + "\\" + TASKT_WORK_DIR_NAME + "\\";
 
             //delete existing
             if (Directory.Exists(tempUpdateFolder))
@@ -76,8 +94,12 @@ namespace taskt_updater
                 }
             }
 
+            string tasktExctractDirName = Path.GetFileName(localPackagePath);
+            int dotPosition = tasktExctractDirName.LastIndexOf(".");
+            tasktExctractDirName = tasktExctractDirName.Substring(0, dotPosition);
+
             //create deployment folder reference
-            var deploymentFolder = tempUpdateFolder + "taskt\\";
+            var deploymentFolder = tempUpdateFolder + tasktExctractDirName + "\\";
 
             bgwUpdate.ReportProgress(0, "Deployed to " + deploymentFolder);
 
@@ -87,8 +109,42 @@ namespace taskt_updater
             CopyDirectory(deploymentFolder, topLevelFolder);
 
             //clean up old folder
-            // System.IO.Directory.Delete(tempUpdateFolder);
+            System.IO.Directory.Delete(tempUpdateFolder);
         }
+
+        private void bgwUpdate_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            lblUpdate.Text = e.UserState.ToString();
+            //MessageBox.Show(e.UserState.ToString());
+        }
+
+        private void bgwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error is null)
+            {
+                //try
+                //{
+                //    string tasktExePath = topLevelFolder + "\\taskt.exe";
+                //    System.Diagnostics.Process.Start(tasktExePath);
+                //    bgwUpdate.ReportProgress(0, "All Done!");
+                //}
+                //catch
+                //{
+                //    bgwUpdate.ReportProgress(0, "Fail execute taskt. Please run self.");
+                //}
+
+                bgwUpdate.ReportProgress(0, "All Done!");
+                lblUpdate.Text = "All Done!";
+                System.Threading.Thread.Sleep(1000);    // Wait a bit
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(e.Error.ToString());
+            }
+        }
+        #endregion
+
         public void ExtractZipToDirectory(ZipArchive archive, string destinationDirectoryName, bool overwrite)
         {
             if (!overwrite)
@@ -119,48 +175,33 @@ namespace taskt_updater
                 Directory.CreateDirectory(folders.Target);
                 foreach (var file in Directory.GetFiles(folders.Source, "*.*"))
                 {
-                    File.Copy(file, Path.Combine(folders.Target, Path.GetFileName(file)), true);
+                    var destPath = Path.Combine(folders.Target, Path.GetFileName(file));
+                    Console.WriteLine(destPath);
+                    if (destPath != myPath)
+                    {
+                        try
+                        {
+                            File.Copy(file, destPath, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Path: " + destPath + "\r\n" + ex.Message);
+                        }
+                    }
                 }
 
                 foreach (var folder in Directory.GetDirectories(folders.Source))
                 {
-                    stack.Push(new Folders(folder, Path.Combine(folders.Target, Path.GetFileName(folder))));
+                    try
+                    {
+                        stack.Push(new Folders(folder, Path.Combine(folders.Target, Path.GetFileName(folder))));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
-        }
-
-
-        private void bgwUpdate_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            lblUpdate.Text = e.UserState.ToString();
-            //MessageBox.Show(e.UserState.ToString());
-        }
-
-        private void bgwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error is null)
-            {
-                System.Diagnostics.Process.Start(topLevelFolder + "\\taskt.exe");
-
-                this.Close();
-                //MessageBox.Show("All Done");
-                lblUpdate.Text = "All Done!";
-            }
-            else
-            {
-                MessageBox.Show(e.Error.ToString());
-            }
-        }
-    }
-    public class Folders
-    {
-        public string Source { get; private set; }
-        public string Target { get; private set; }
-
-        public Folders(string source, string target)
-        {
-            Source = source;
-            Target = target;
         }
     }
 }

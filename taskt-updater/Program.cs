@@ -18,6 +18,15 @@ namespace taskt_updater
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Debug
+            if (args.Length == 0)
+            {
+                //args[0] = "https://github.com/rcktrncn/taskt-up-test/releases/download/v3.5.1.5/taskt-uob_v3.5.1.5.zip";
+                string[] newArg = new string[1];
+                newArg[0] = "https://github.com/rcktrncn/taskt-up-test/releases/download/v3.5.1.5/taskt-uob_v3.5.1.5.zip";
+                args = newArg;
+            }
+
             if (args.Count() == 0)
             {
                 MessageBox.Show("Update Tool requires a package argument!");
@@ -25,7 +34,14 @@ namespace taskt_updater
             }
             else
             {
-                Application.Run(new frmUpdating(args[0]));
+                try
+                {
+                    Application.Run(new frmUpdating(args[0]));
+                }
+                catch (System.Reflection.TargetInvocationException)
+                {
+
+                }
             }
         }
     }
